@@ -9,91 +9,125 @@ import SwiftUI
 
 struct WelcomeView: View {
     @StateObject private var viewModel = WelcomeViewModel()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        ZStack {
-            TabView(selection: $viewModel.currentPageIndex) {
-                ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                    OnboardingPageView(pageIndex: index)
-                        .tag(index)
+        VStack (alignment: .leading) {
+            progressBar
+            welcomeText
+            Spacer()
+            infoPages
+            Spacer()
+            continueButton
+        }
+    }
+    
+    var progressBar: some View {
+        HStack(spacing: 3) {
+            ForEach(0..<viewModel.totalPages, id: \.self) { index in
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 1)
+                            .fill(Color("SecondaryTextColor").opacity(0.25))
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: geo.size.width * viewModel.progressValues[index])
+                    }
                 }
+                .frame(height: 3)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .ignoresSafeArea()
+        }
+        .padding(.top, 16)
+        .padding(.horizontal, 16)
+    }
+    var welcomeText: some View {
+        HStack (spacing: 12) {
+            Image("OnboardingAppLogo")
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .frame(width: 32, height: 32)
+                .padding(.leading, 16)
             
-            VStack {
-                // Story progress bar
-                VStack (alignment: .leading) {
-                    HStack(spacing: 4) {
-                        ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                            GeometryReader { geo in
-                                ZStack(alignment: .leading) {
-                                    RoundedRectangle(cornerRadius: 2)
-                                        .fill(Color("SecondaryTextColor").opacity(0.3))
-                                    RoundedRectangle(cornerRadius: 2)
-                                        .fill(Color(Color.white))
-                                        .frame(width: geo.size.width * viewModel.progressValues[index])
-                                }
-                            }
-                            .frame(height: 4)
+            Text(NSLocalizedString("welcomeTitle", comment: ""))
+                .font(.headline)
+                .foregroundColor(Color("SecondaryTextColor"))
+        }
+        .padding(.top, 8)
+    }
+    var infoPages: some View {
+        TabView(selection: $viewModel.currentPageIndex) {
+            ForEach(0..<viewModel.totalPages, id: \.self) { index in
+                WelcomePageView(pageIndex: index, showTitle: $viewModel.showTitle, showDescription: $viewModel.showDescription)
+                    .tag(index)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .contentShape(Rectangle())
+                    .onTapGesture { location in
+                        let screenWidth = UIScreen.main.bounds.width
+                        if location.x < screenWidth * 0.3 {
+                            viewModel.previousPage()
+                        } else if location.x > screenWidth * 0.7 {
+                            viewModel.nextPage()
                         }
                     }
-                    .padding(.top, 16)
-                    .padding(.horizontal, 16)
-                    
-                    
-                    
-                    HStack (alignment: .center){
-                        Image("OnboardingAppLogo")
-                            .resizable()
-                            .frame(width: 32, height: 32, alignment: .leading)
-                            .padding(.leading, 16)
-                            .padding(.trailing, 8)
-                            
-                        
-                        Text(NSLocalizedString("welcomeTitle", comment: ""))
-                            .font(.custom("Inter", size: 18))
-                            .foregroundColor(Color("TextColor"))
-                            .fontWeight(.bold)
-                    }
-                    .padding(.top, 8)
-                }
-                
-                Spacer()
-                
-                
-                // Login And Register Buttons
-                HStack(spacing: 16) {
-                    Button(action: {
-                        // login action
-                    }) {
-                        Text(NSLocalizedString("login", comment: ""))
-                            .font(.custom("Inter", size: 16))
-                            .foregroundColor(Color("AccentColor"))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color("SecondaryColor"))
-                            .cornerRadius(28)
-                    }
-                    
-                    Button(action: {
-                        // register action
-                    }) {
-                        Text(NSLocalizedString("register", comment: ""))
-                            .font(.custom("Inter", size: 16))
-                            .foregroundColor(Color("BackgroundColor"))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color("PrimaryColor"))
-                            .cornerRadius(28)
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 32)
-                
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .onChange(of: viewModel.currentPageIndex) { _ in
+            viewModel.fadeOutAnimations()
+        }
+        .padding(.horizontal, 8)
+        .padding(.top, 36)
+    }
+    
+    
+    var continueButton : some View {
+        Button(action: {
+            // Continue to onboarding
+        }) {
+            Text(NSLocalizedString("continue", comment: ""))
+                .font(.title2)
+                .foregroundColor(Color("TextColor"))
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color("PrimaryColor"))
+                .cornerRadius(28)
+        }
+        .padding(16)
+    }
+    
+    var authButtons: some View {
+        
+        HStack(spacing: 16) {
+            Button(action: {
+                // Login action
+            }) {
+                Text(NSLocalizedString("login", comment: ""))
+                    .font(.headline)
+                    .foregroundColor(Color("TextColor"))
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 28)
+                            .stroke(Color("PrimaryColor"), lineWidth: 2)
+                    )
+                    .cornerRadius(28)
             }
             
+            Button(action: {
+                // Register action
+            }) {
+                Text(NSLocalizedString("register", comment: ""))
+                    .font(.headline)
+                    .foregroundColor(Color("TextColor"))
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color("PrimaryColor"))
+                    .cornerRadius(28)
+            }
         }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 48)
     }
 }
 

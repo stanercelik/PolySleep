@@ -7,79 +7,55 @@
 
 import SwiftUI
 
-struct OnboardingPageView: View {
+import SwiftUI
+
+struct WelcomePageView: View {
     let pageIndex: Int
+    @Binding var showTitle: Bool
+    @Binding var showDescription: Bool
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 42) {
+            if showTitle {
+                Text(pageTitle)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("TextColor"))
+                    .transition(.opacity)
+            }
+            
+            if showDescription {
+                Text(pageDescription)
+                    .foregroundColor(Color("SecondaryTextColor"))
+                    .font(.headline)
+                    .transition(.opacity)
+            }
+            
+            Spacer()
+        }
+    }
+    
+    private var pageTitle: String {
         switch pageIndex {
-        case 0:
-            page1
-        case 1:
-            page2
-        case 2:
-            page3
-        default:
-            page4
+        case 0: return NSLocalizedString("firstPageTitle", comment: "")
+        case 1: return NSLocalizedString("secondPageTitle", comment: "")
+        case 2: return NSLocalizedString("thirdPageTitle", comment: "")
+        default: return NSLocalizedString("fourthPageTitle", comment: "")
         }
     }
     
-    private var page1: some View {
-        ZStack {
-            Color("PrimaryColor").ignoresSafeArea()
-            VStack(spacing: 8) {
-                Text("asd")
-                    .font(.custom("Inter", size: 24))
-                    .foregroundColor(Color("TextColor"))
-                Text("asda")
-                    .font(.custom("Inter", size: 16))
-                    .foregroundColor(Color("SecondaryTextColor"))
-            }
-        }
-    }
-    
-    private var page2: some View {
-        ZStack {
-            Color("SecondaryColor").ignoresSafeArea()
-            VStack(spacing: 8) {
-                Text("LocalizedStrings.page2Title")
-                    .font(.custom("Inter", size: 24))
-                    .foregroundColor(Color("TextColor"))
-                Text("LocalizedStrings.page2Subtitle")
-                    .font(.custom("Inter", size: 16))
-                    .foregroundColor(Color("SecondaryTextColor"))
-            }
-        }
-    }
-    
-    private var page3: some View {
-        ZStack {
-            Color("AccentColor").ignoresSafeArea()
-            VStack(spacing: 8) {
-                Text("LocalizedStrings.page3Title")
-                    .font(.custom("Inter", size: 24))
-                    .foregroundColor(Color("TextColor"))
-                Text("LocalizedStrings.page3Subtitle")
-                    .font(.custom("Inter", size: 16))
-                    .foregroundColor(Color("SecondaryTextColor"))
-            }
-        }
-    }
-    
-    private var page4: some View {
-        ZStack {
-            Color(Color.purple).ignoresSafeArea()
-            VStack(spacing: 8) {
-                Text("LocalizedStrings.page4Title")
-                    .font(.custom("Inter", size: 24))
-                    .foregroundColor(Color("TextColor"))
-                Text("LocalizedStrings.page4Subtitle")
-                    .font(.custom("Inter", size: 16))
-                    .foregroundColor(Color("SecondaryTextColor"))
-            }
+    private var pageDescription: String {
+        switch pageIndex {
+        case 0: return NSLocalizedString("firstPageDesc", comment: "")
+        case 1: return NSLocalizedString("secondPageDesc", comment: "")
+        case 2: return NSLocalizedString("thirdPageDesc", comment: "")
+        default: return NSLocalizedString("fourthPageDesc", comment: "")
         }
     }
 }
 
 #Preview {
-    OnboardingPageView(pageIndex: 0)
+    @Previewable @State var showTitle: Bool = true
+    @Previewable @State var showDescription: Bool = true
+    WelcomePageView(pageIndex: 0,showTitle: $showTitle ,showDescription: $showDescription)
 }
