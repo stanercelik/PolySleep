@@ -1,0 +1,81 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "asd" : {
+
+    },
+    "asda" : {
+
+    },
+    "LocalizedStrings.page2Subtitle" : {
+
+    },
+    "LocalizedStrings.page2Title" : {
+
+    },
+    "LocalizedStrings.page3Subtitle" : {
+
+    },
+    "LocalizedStrings.page3Title" : {
+
+    },
+    "LocalizedStrings.page4Subtitle" : {
+
+    },
+    "LocalizedStrings.page4Title" : {
+
+    },
+    "login" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Yap"
+          }
+        }
+      }
+    },
+    "register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydol"
+          }
+        }
+      }
+    },
+    "welcomeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to PolySleep!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "PolySleep’e Hoşgeldin!"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
