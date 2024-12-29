@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct WelcomePageView: View {
     let pageIndex: Int
     @Binding var showTitle: Bool

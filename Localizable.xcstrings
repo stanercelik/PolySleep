@@ -81,6 +81,9 @@
         }
       }
     },
+    "Hello, World!" : {
+
+    },
     "login" : {
       "extractionState" : "manual",
       "localizations" : {

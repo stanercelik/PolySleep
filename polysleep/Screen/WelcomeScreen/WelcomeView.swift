@@ -1,9 +1,7 @@
+// WelcomeView.swift
+// polysleep
 //
-//  WelcomeView.swift
-//  polysleep
-//
-//  Created by Taner Çelik on 27.12.2024.
-//
+// Created by Taner Çelik on 27.12.2024.
 
 import SwiftUI
 
@@ -11,8 +9,51 @@ struct WelcomeView: View {
     @StateObject private var viewModel = WelcomeViewModel()
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var buttonCenter: CGPoint = .zero
+    @State private var circleDiameter: CGFloat = 0
+    
     var body: some View {
-        VStack (alignment: .leading) {
+        GeometryReader { geo in
+                    ZStack {
+                        // 1) Main Content
+                        mainContent
+                            .opacity(viewModel.isOnboardingPresented ? 0 : 1)
+                        
+                        // 2) First Circle
+                        Circle()
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: circleDiameter, height: circleDiameter)
+                            .scaleEffect(viewModel.isPrimaryCircleExpanded ? 2 : 0.01, anchor: .center)
+                            .position(buttonCenter)
+                            .opacity(viewModel.isPrimaryCircleExpanded ? 1 : 0)
+                        
+                        // 3) Second Circle
+                        Circle()
+                            .fill(Color("BackgroundColor"))
+                            .frame(width: circleDiameter, height: circleDiameter)
+                            .scaleEffect(viewModel.isBackgroundCircleExpanded ? 2 : 0.01, anchor: .center)
+                            .position(buttonCenter)
+                            .opacity(viewModel.isBackgroundCircleExpanded ? 1 : 0)
+                        
+                        // 4) Onboarding View
+                        if viewModel.isOnboardingPresented {
+                            OnboardingView()
+                                .transition(.opacity)
+                                .zIndex(1)
+                        }
+                    }
+                    .onAppear {
+                        let screenWidth = geo.size.width
+                        let screenHeight = geo.size.height
+                        circleDiameter = max(screenWidth, screenHeight) * 2
+                    }
+                }
+                .toolbar(.hidden, for: .navigationBar)
+                .ignoresSafeArea()
+    }
+    
+    private var mainContent: some View {
+        VStack(alignment: .leading) {
             progressBar
             welcomeText
             Spacer()
@@ -20,9 +61,12 @@ struct WelcomeView: View {
             Spacer()
             continueButton
         }
+        .padding(.top, 72)
+        .padding(.bottom, 64)
+        .padding(.horizontal, 16)
     }
     
-    var progressBar: some View {
+    private var progressBar: some View {
         HStack(spacing: 3) {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
                 GeometryReader { geo in
@@ -37,17 +81,15 @@ struct WelcomeView: View {
                 .frame(height: 3)
             }
         }
-        .padding(.top, 16)
-        .padding(.horizontal, 16)
     }
-    var welcomeText: some View {
-        HStack (spacing: 12) {
+    
+    private var welcomeText: some View {
+        HStack(spacing: 12) {
             Image("OnboardingAppLogo")
                 .resizable()
                 .renderingMode(.template)
                 .foregroundColor(colorScheme == .dark ? .white : .black)
                 .frame(width: 32, height: 32)
-                .padding(.leading, 16)
             
             Text(NSLocalizedString("welcomeTitle", comment: ""))
                 .font(.headline)
@@ -55,21 +97,26 @@ struct WelcomeView: View {
         }
         .padding(.top, 8)
     }
-    var infoPages: some View {
+    
+    private var infoPages: some View {
         TabView(selection: $viewModel.currentPageIndex) {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                WelcomePageView(pageIndex: index, showTitle: $viewModel.showTitle, showDescription: $viewModel.showDescription)
-                    .tag(index)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .contentShape(Rectangle())
-                    .onTapGesture { location in
-                        let screenWidth = UIScreen.main.bounds.width
-                        if location.x < screenWidth * 0.3 {
-                            viewModel.previousPage()
-                        } else if location.x > screenWidth * 0.7 {
-                            viewModel.nextPage()
-                        }
+                WelcomePageView(
+                    pageIndex: index,
+                    showTitle: $viewModel.showTitle,
+                    showDescription: $viewModel.showDescription
+                )
+                .tag(index)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
+                .onTapGesture { location in
+                    let screenWidth = UIScreen.main.bounds.width
+                    if location.x < screenWidth * 0.3 {
+                        viewModel.previousPage()
+                    } else if location.x > screenWidth * 0.7 {
+                        viewModel.nextPage()
                     }
+                }
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
@@ -80,10 +127,9 @@ struct WelcomeView: View {
         .padding(.top, 36)
     }
     
-    
-    var continueButton : some View {
+    private var continueButton: some View {
         Button(action: {
-            // Continue to onboarding
+            viewModel.animateAndPresentOnboarding()
         }) {
             Text(NSLocalizedString("continue", comment: ""))
                 .font(.title2)
@@ -93,41 +139,20 @@ struct WelcomeView: View {
                 .background(Color("PrimaryColor"))
                 .cornerRadius(28)
         }
-        .padding(16)
-    }
-    
-    var authButtons: some View {
-        
-        HStack(spacing: 16) {
-            Button(action: {
-                // Login action
-            }) {
-                Text(NSLocalizedString("login", comment: ""))
-                    .font(.headline)
-                    .foregroundColor(Color("TextColor"))
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 28)
-                            .stroke(Color("PrimaryColor"), lineWidth: 2)
-                    )
-                    .cornerRadius(28)
+        .padding(.bottom, 16)
+        .opacity(viewModel.isContinueButtonVisible ? 1 : 0)
+        .overlay(
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear {
+                        let frame = proxy.frame(in: .global)
+                        buttonCenter = CGPoint(
+                            x: frame.midX,
+                            y: frame.midY
+                        )
+                    }
             }
-            
-            Button(action: {
-                // Register action
-            }) {
-                Text(NSLocalizedString("register", comment: ""))
-                    .font(.headline)
-                    .foregroundColor(Color("TextColor"))
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color("PrimaryColor"))
-                    .cornerRadius(28)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 48)
+        )
     }
 }
 
