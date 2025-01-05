@@ -1,0 +1,157 @@
+# PolySleep App Development Rules
+# Version: 1.0.0
+
+# General Guidelines
+global_styles:
+  use_dynamic_type: true
+  fonts:
+    primary: "SF Pro Text"
+    secondary: "SF Pro Display"
+    sizes: [12, 14, 16, 18, 22]  # in points
+  spacing:
+    base_unit: 8  # in points
+    content_margin: 16  # in points
+  corner_radius: 12  # in points
+  dark_mode_support: true
+  haptic_feedback: true
+  animations:
+    transition_style: "ease-in-out"
+    duration: 0.2  # in seconds
+
+# Sleep Features
+sleep_schedule:
+  chart:
+    min_size: 300  # in points
+    touch_target: 44  # in points
+    colors:
+      core_sleep: "primary"
+      nap: "secondary"
+      background: "systemBackground"
+    accessibility:
+      voice_over_labels: true
+      haptic_feedback: true
+  info_cards:
+    corner_radius: 16
+    shadow:
+      radius: 5
+      opacity: 0.1
+    spacing: 16
+    padding: 16
+
+# Data Models
+models:
+  sleep_block:
+    required_fields:
+      - type  # "core" or "nap"
+      - start_time
+      - duration
+      - quality_rating  # 1-5 scale
+    validation:
+      duration:
+        min: 10  # minutes
+        max: 480  # minutes
+      quality_rating:
+        min: 1
+        max: 5
+
+# Architecture
+architecture:
+  pattern: MVVM
+  view_models:
+    prohibited:
+      - force_unwrapping
+      - ui_manipulation
+    required:
+      - data_management
+      - analytics
+      - notifications
+
+# UI Components
+views:
+  common_components:
+    buttons:
+      min_size: [44, 44]  # width, height in points
+      states: ["default", "pressed", "disabled"]
+    text_fields:
+      height: 44
+      clear_button: true
+      inline_validation: true
+    cards:
+      shadow: true
+      corner_radius: 16
+  accessibility:
+    minimum_contrast_ratio: 4.5
+    voice_over_support: true
+    dynamic_type: true
+    reduced_motion: true
+
+# Navigation
+navigation:
+  tab_bar:
+    items:
+      - schedule
+      - history
+      - analysis
+      - settings
+    labels:
+      visible: true
+      dynamic_type: true
+
+# Localization
+localization:
+  languages: ["en", "tr"]
+  format: "xcstrings"
+  date_formats:
+    time: "HH:mm"
+    date: "yyyy-MM-dd"
+
+# Performance
+performance:
+  animation_fps: 60
+  memory_limits:
+    warning_threshold: 100MB
+  background_tasks:
+    timeout: 30  # seconds
+
+# Testing
+testing:
+  coverage:
+    minimum: 80  # percentage
+  required_tests:
+    - "Schedule creation"
+    - "Sleep block validation"
+    - "Analytics calculation"
+    - "Notification scheduling"
+
+# Code Guidelines
+code_guidelines:
+  clean_code:
+    max_function_length: 50  # lines
+    avoid_force_unwrapping: true
+    reuse_shared_utilities: true
+  structure:
+    align_with_existing_project: true
+    separate_files: ["Views", "ViewModels", "Models"]
+  error_handling:
+    user_messages:
+      localized: true
+      actionable: true
+    logging:
+      levels: ["error", "warning", "info"]
+      production_level: "error"
+
+# Logging and Automation
+logging_and_automation:
+  enforce_rules:
+    - SwiftLint
+    - SwiftFormat
+  CI_pipeline:
+    check_compliance: true
+
+
+# Notes
+notes:
+  - "Follow Apple's Human Interface Guidelines (HIG)."
+  - "Ensure seamless transitions between views with SwiftUI animations."
+  - "Test across multiple devices, including different screen sizes and orientations."
+  - "Optimize for battery and performance efficiency."

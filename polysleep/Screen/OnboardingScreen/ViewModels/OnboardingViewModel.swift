@@ -11,30 +11,43 @@ import SwiftUI
 final class OnboardingViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var currentPage = 0
-    let totalPages = 8  // Total number of onboarding pages
+    let totalPages = 8
+    
+    // Question 1: Previous Sleep Experience
     @Published var previousSleepExperience: PreviousSleepExperience?
-    @Published var knowledgeLevel: KnowledgeLevel?
-    @Published var selectedAgeRange: AgeRange?
-    @Published var hasMedicalCondition: Bool? = nil
-    @Published var sleepQuality: SleepQuality?
-    @Published var sleepDuration: SleepDuration?
-    @Published var sleepScheduleType: SleepScheduleType?
+    
+    // Question 2: Age Range
+    @Published var ageRange: AgeRange?
+    
+    // Question 3: Work Schedule
     @Published var workSchedule: WorkSchedule?
-    @Published var lifestyle: Lifestyle?
-    @Published var sleepEnvironment: SleepEnvironment?
+    
+    // Question 4: Nap Environment
     @Published var napEnvironment: NapEnvironment?
+    
+    // Question 5: Lifestyle
+    @Published var lifestyle: Lifestyle?
+    
+    // Question 6: Knowledge Level
+    @Published var knowledgeLevel: KnowledgeLevel?
+    
+    // Question 7: Health Status
+    @Published var healthStatus: HealthStatus?
+    
+    // Question 8: Motivation Level
+    @Published var motivationLevel: MotivationLevel?
     
     // MARK: - Computed Properties
     var canMoveNext: Bool {
         switch currentPage {
-        case 0: return previousSleepExperience != nil
-        case 1: return knowledgeLevel != nil
-        case 2: return selectedAgeRange != nil
-        case 3: return hasMedicalCondition != nil
-        case 4: return sleepQuality != nil
-        case 5: return sleepDuration != nil
-        case 6: return sleepScheduleType != nil
-        case 7: return true // SleepScheduleView
+        case 0: return previousSleepExperience != nil // Previous Sleep Experience
+        case 1: return ageRange != nil // Age Range
+        case 2: return workSchedule != nil // Work Schedule
+        case 3: return napEnvironment != nil // Nap Environment
+        case 4: return lifestyle != nil // Lifestyle
+        case 5: return knowledgeLevel != nil // Knowledge Level
+        case 6: return healthStatus != nil // Health Status
+        case 7: return motivationLevel != nil // Motivation Level
         default: return false
         }
     }
@@ -53,6 +66,36 @@ final class OnboardingViewModel: ObservableObject {
             withAnimation {
                 currentPage -= 1
             }
+        }
+    }
+    
+    // Save user responses to UserDefaults
+    func saveResponses() {
+        let defaults = UserDefaults.standard
+        
+        if let experience = previousSleepExperience {
+            defaults.set(experience.rawValue, forKey: "onboarding.sleepExperience")
+        }
+        if let age = ageRange {
+            defaults.set(age.rawValue, forKey: "onboarding.ageRange")
+        }
+        if let work = workSchedule {
+            defaults.set(work.rawValue, forKey: "onboarding.workSchedule")
+        }
+        if let nap = napEnvironment {
+            defaults.set(nap.rawValue, forKey: "onboarding.napEnvironment")
+        }
+        if let life = lifestyle {
+            defaults.set(life.rawValue, forKey: "onboarding.lifestyle")
+        }
+        if let knowledge = knowledgeLevel {
+            defaults.set(knowledge.rawValue, forKey: "onboarding.knowledgeLevel")
+        }
+        if let health = healthStatus {
+            defaults.set(health.rawValue, forKey: "onboarding.healthStatus")
+        }
+        if let motivation = motivationLevel {
+            defaults.set(motivation.rawValue, forKey: "onboarding.motivationLevel")
         }
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     @Environment(\.dismiss) private var dismiss
+    @State private var navigateToSleepSchedule = false
+    @State private var opacity = 1.0
     
     var body: some View {
         NavigationStack {
@@ -26,80 +28,61 @@ struct OnboardingView: View {
                     ScrollView {
                         VStack(spacing: 24) {
                             switch viewModel.currentPage {
-                            case 0:
+                            case 0: // Previous Sleep Experience
                                 OnboardingSelectionView(
                                     title: "onboarding.sleepExperience",
                                     description: "onboarding.sleepExperienceQuestion",
                                     options: PreviousSleepExperience.allCases,
                                     selectedOption: $viewModel.previousSleepExperience
                                 )
-                            case 1:
-                                OnboardingSelectionView(
-                                    title: "onboarding.knowledgeLevel",
-                                    description: "onboarding.knowledgeQuestion",
-                                    options: KnowledgeLevel.allCases,
-                                    selectedOption: $viewModel.knowledgeLevel
-                                )
-                            case 2:
+                            case 1: // Age Range
                                 OnboardingSelectionView(
                                     title: "onboarding.ageRange",
                                     description: "onboarding.ageRangeDescription",
                                     options: AgeRange.allCases,
-                                    selectedOption: $viewModel.selectedAgeRange
+                                    selectedOption: $viewModel.ageRange
                                 )
-                            case 3:
-                                MedicalConditionView(hasMedicalCondition: $viewModel.hasMedicalCondition)
-                            case 4:
-                                OnboardingSelectionView(
-                                    title: "onboarding.sleepQuality",
-                                    description: "onboarding.sleepQualityQuestion",
-                                    options: SleepQuality.allCases,
-                                    selectedOption: $viewModel.sleepQuality
-                                )
-                            case 5:
-                                OnboardingSelectionView(
-                                    title: "onboarding.sleepDuration",
-                                    description: "onboarding.sleepDurationQuestion",
-                                    options: SleepDuration.allCases,
-                                    selectedOption: $viewModel.sleepDuration
-                                )
-                            case 6:
-                                OnboardingSelectionView(
-                                    title: "onboarding.sleepSchedule",
-                                    description: "onboarding.sleepScheduleQuestion",
-                                    options: SleepScheduleType.allCases,
-                                    selectedOption: $viewModel.sleepScheduleType
-                                )
-                            case 7:
-                                SleepScheduleView()
-                                    .frame(height: UIScreen.main.bounds.height * 0.7)
-                            case 8:
+                            case 2: // Work Schedule
                                 OnboardingSelectionView(
                                     title: "onboarding.workSchedule",
                                     description: "onboarding.workScheduleQuestion",
                                     options: WorkSchedule.allCases,
                                     selectedOption: $viewModel.workSchedule
                                 )
-                            case 9:
+                            case 3: // Nap Environment
+                                OnboardingSelectionView(
+                                    title: "onboarding.napEnvironment",
+                                    description: "onboarding.napEnvironmentDescription",
+                                    options: NapEnvironment.allCases,
+                                    selectedOption: $viewModel.napEnvironment
+                                )
+                            case 4: // Lifestyle
                                 OnboardingSelectionView(
                                     title: "onboarding.lifestyle",
-                                    description: "onboarding.lifestyleQuestion",
+                                    description: "onboarding.lifestyleDescription",
                                     options: Lifestyle.allCases,
                                     selectedOption: $viewModel.lifestyle
                                 )
-                            case 10:
+                            case 5: // Knowledge Level
                                 OnboardingSelectionView(
-                                    title: "onboarding.sleepEnvironment",
-                                    description: "onboarding.sleepEnvironmentQuestion",
-                                    options: SleepEnvironment.allCases,
-                                    selectedOption: $viewModel.sleepEnvironment
+                                    title: "onboarding.knowledgeLevel",
+                                    description: "onboarding.knowledgeLevelDescription",
+                                    options: KnowledgeLevel.allCases,
+                                    selectedOption: $viewModel.knowledgeLevel
                                 )
-                            case 11:
+                            case 6: // Health Status
                                 OnboardingSelectionView(
-                                    title: "onboarding.napEnvironment",
-                                    description: "onboarding.napEnvironmentQuestion",
-                                    options: NapEnvironment.allCases,
-                                    selectedOption: $viewModel.napEnvironment
+                                    title: "onboarding.healthStatus",
+                                    description: "onboarding.healthStatusDescription",
+                                    options: HealthStatus.allCases,
+                                    selectedOption: $viewModel.healthStatus
+                                )
+                            case 7: // Motivation Level
+                                OnboardingSelectionView(
+                                    title: "onboarding.motivationLevel",
+                                    description: "onboarding.motivationLevelDescription",
+                                    options: MotivationLevel.allCases,
+                                    selectedOption: $viewModel.motivationLevel
                                 )
                             default:
                                 EmptyView()
@@ -114,18 +97,33 @@ struct OnboardingView: View {
                         canMoveNext: viewModel.canMoveNext,
                         currentPage: viewModel.currentPage,
                         totalPages: viewModel.totalPages,
-                        onNext: viewModel.moveNext,
-                        onBack: viewModel.moveBack
+                        onNext: {
+                            if viewModel.currentPage < viewModel.totalPages - 1 {
+                                withAnimation {
+                                    viewModel.currentPage += 1
+                                }
+                            } else {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    opacity = 0
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    navigateToSleepSchedule = true
+                                }
+                            }
+                        },
+                        onBack: {
+                            withAnimation {
+                                viewModel.currentPage -= 1
+                            }
+                        }
                     )
                 }
+                .opacity(opacity)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("onboarding.cancel") {
-                        dismiss()
-                    }
-                }
+            .navigationDestination(isPresented: $navigateToSleepSchedule) {
+                SleepScheduleView()
+                    .navigationBarBackButtonHidden(true)
             }
         }
     }

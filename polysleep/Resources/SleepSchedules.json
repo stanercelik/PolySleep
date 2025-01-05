@@ -1,0 +1,367 @@
+{
+  "sleepSchedules": [
+    {
+      "id": "biphasic",
+      "name": "Biphasic Sleep",
+      "description": {
+        "en": "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
+        "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni, özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir."
+      },
+      "totalSleepHours": 6.5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 360
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 30
+        }
+      ]
+    },
+    {
+      "id": "biphasic-extended",
+      "name": "Extended Biphasic Sleep",
+      "description": {
+        "en": "A longer core sleep at night (5-6 hours) plus a slightly longer midday nap (60-90 minutes). This allows more total rest while still splitting sleep into two segments.",
+        "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık biraz daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da toplam uykuyu artırır."
+      },
+      "totalSleepHours": 7.5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:00",
+          "duration": 360
+        },
+        {
+          "type": "nap",
+          "startTime": "13:00",
+          "duration": 90
+        }
+      ]
+    },
+    {
+      "id": "everyman",
+      "name": "Everyman",
+      "description": {
+        "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps.",
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa şekerlemeden oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı hedefler."
+      },
+      "totalSleepHours": 4.5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 180
+        },
+        {
+          "type": "nap",
+          "startTime": "04:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "08:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 20
+        }
+      ]
+    },
+    {
+      "id": "everyman-e2",
+      "name": "Everyman 2 (E2)",
+      "description": {
+        "en": "One core sleep of about 4-5 hours plus 2 short naps (20-30 mins each) during the day.",
+        "tr": "Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzen."
+      },
+      "totalSleepHours": 5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 240
+        },
+        {
+          "type": "nap",
+          "startTime": "07:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "13:00",
+          "duration": 20
+        }
+      ]
+    },
+    {
+      "id": "everyman-e3",
+      "name": "Everyman 3 (E3)",
+      "description": {
+        "en": "One core sleep (3-4 hours) plus 3 short naps (20 mins each) spread throughout the day.",
+        "tr": "3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık şekerleme."
+      },
+      "totalSleepHours": 4.5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "01:00",
+          "duration": 180
+        },
+        {
+          "type": "nap",
+          "startTime": "06:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "12:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "18:00",
+          "duration": 20
+        }
+      ]
+    },
+    {
+      "id": "everyman-e4",
+      "name": "Everyman 4 (E4)",
+      "description": {
+        "en": "One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
+        "tr": "Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerleme. E2/E3’e göre daha yoğun."
+      },
+      "totalSleepHours": 3.5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 180
+        },
+        {
+          "type": "nap",
+          "startTime": "07:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "11:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "15:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "20:00",
+          "duration": 20
+        }
+      ]
+    },
+    {
+      "id": "dymaxion",
+      "name": "Dymaxion",
+      "description": {
+        "en": "Four 30-minute naps spaced evenly throughout the day, for a total of just two hours of sleep. It's considered highly challenging to sustain.",
+        "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir."
+      },
+      "totalSleepHours": 2,
+      "schedule": [
+        {
+          "type": "nap",
+          "startTime": "02:00",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "08:00",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "20:00",
+          "duration": 30
+        }
+      ]
+    },
+    {
+      "id": "dymaxion-alt",
+      "name": "Dymaxion (Alternative)",
+      "description": {
+        "en": "Same concept as classic Dymaxion (4x30-minute naps) but offset times to fit certain night-shift or late-night routines.",
+        "tr": "Klasik Dymaxion (günde 4 kez 30 dakikalık) konseptini koruyarak, geç/gece vardiyası veya farklı rutinler için saatleri uyarlayan versiyon."
+      },
+      "totalSleepHours": 2,
+      "schedule": [
+        {
+          "type": "nap",
+          "startTime": "01:30",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "07:30",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "13:30",
+          "duration": 30
+        },
+        {
+          "type": "nap",
+          "startTime": "19:30",
+          "duration": 30
+        }
+      ]
+    },
+    {
+      "id": "uberman",
+      "name": "Uberman",
+      "description": {
+        "en": "A highly extreme pattern featuring six (sometimes more) short naps of about 20 minutes each, spread every 4 hours.",
+        "tr": "Yaklaşık her 4 saatte bir, 20 dakikalık altı (veya daha fazla) kısa uykudan oluşan, son derece ekstrem bir uyku düzeni."
+      },
+      "totalSleepHours": 2,
+      "schedule": [
+        {
+          "type": "nap",
+          "startTime": "00:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "04:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "08:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "12:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "16:00",
+          "duration": 20
+        },
+        {
+          "type": "nap",
+          "startTime": "20:00",
+          "duration": 20
+        }
+      ]
+    },
+    {
+      "id": "triphasic",
+      "name": "Triphasic",
+      "description": {
+        "en": "A schedule with three separate sleep blocks, each lasting 1 to 2 hours, often aligned around dusk, dawn, and midday.",
+        "tr": "Üç ayrı uyku bloğundan oluşan, her biri 1 ila 2 saat süren ve genellikle gün batımı, gün doğumu ve öğle saatlerine denk gelecek şekilde planlanan bir düzen."
+      },
+      "totalSleepHours": 4,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:30",
+          "duration": 90
+        },
+        {
+          "type": "core",
+          "startTime": "06:30",
+          "duration": 90
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 60
+        }
+      ]
+    },
+    {
+      "id": "triphasic-alt",
+      "name": "Triphasic (Alternative)",
+      "description": {
+        "en": "Three sleep blocks (1.5-2 hours each) aligned around personal peak times. Often set around 22:00, 04:00, and 10:00 or variations thereof.",
+        "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanabilir."
+      },
+      "totalSleepHours": 5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 90
+        },
+        {
+          "type": "core",
+          "startTime": "04:00",
+          "duration": 90
+        },
+        {
+          "type": "core",
+          "startTime": "10:00",
+          "duration": 120
+        }
+      ]
+    },
+    {
+      "id": "segmented",
+      "name": "Segmented Sleep",
+      "description": {
+        "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest.",
+        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzen: gün batımından sonra birkaç saatlik uyku, bir uyanıklık dönemi ve ardından ikinci bir dinlenme bloğu."
+      },
+      "totalSleepHours": 6,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "21:00",
+          "duration": 180
+        },
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 180
+        }
+      ]
+    },
+    {
+      "id": "segmented-alt",
+      "name": "Segmented Sleep (Late-Wake)",
+      "description": {
+        "en": "An alternative segmented schedule with a first sleep soon after dusk (21:00-00:00) and a second sleep closer to morning (02:00-05:00), leaving a long wake period in the late morning.",
+        "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uyku, sabaha karşı (02:00-05:00) ikinci uyku şeklinde alternatif bir düzen. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır."
+      },
+      "totalSleepHours": 5,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "21:00",
+          "duration": 180
+        },
+        {
+          "type": "core",
+          "startTime": "03:00",
+          "duration": 180
+        }
+      ]
+    }
+  ]
+}
