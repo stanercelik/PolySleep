@@ -10,7 +10,6 @@ import SwiftUI
 struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     @Environment(\.dismiss) private var dismiss
-    @State private var navigateToSleepSchedule = false
     @State private var opacity = 1.0
     
     var body: some View {
@@ -80,12 +79,11 @@ struct OnboardingView: View {
                             case 7: // Motivation Level
                                 OnboardingSelectionView(
                                     title: "onboarding.motivationLevel",
-                                    description: "onboarding.motivationLevelDescription",
+                                    description: "onboarding.motivationLevelQuestion",
                                     options: MotivationLevel.allCases,
                                     selectedOption: $viewModel.motivationLevel
                                 )
-                            default:
-                                EmptyView()
+                            default: EmptyView() // Ensure no extra screen is shown
                             }
                         }
                         .padding()
@@ -107,84 +105,28 @@ struct OnboardingView: View {
                                     opacity = 0
                                 }
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    navigateToSleepSchedule = true
+                                    viewModel.navigateToSleepSchedule()
                                 }
                             }
                         },
                         onBack: {
-                            withAnimation {
-                                viewModel.currentPage -= 1
+                            if viewModel.currentPage > 0 {
+                                withAnimation {
+                                    viewModel.currentPage -= 1
+                                }
                             }
                         }
                     )
                 }
                 .opacity(opacity)
+                .padding(.top, 16)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(isPresented: $navigateToSleepSchedule) {
+            .navigationDestination(isPresented: $viewModel.shouldNavigateToSleepSchedule) {
                 SleepScheduleView()
                     .navigationBarBackButtonHidden(true)
             }
         }
-    }
-}
-
-// MARK: - Medical Condition View
-struct MedicalConditionView: View {
-    @Binding var hasMedicalCondition: Bool?
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            Text("onboarding.medicalCondition", bundle: .main)
-                .font(.title2)
-                .bold()
-                .multilineTextAlignment(.center)
-            
-            Text("onboarding.medicalConditionDescription", bundle: .main)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-            
-            VStack(spacing: 12) {
-                Button {
-                    hasMedicalCondition = true
-                } label: {
-                    HStack {
-                        Text("onboarding.yes", bundle: .main)
-                        Spacer()
-                        if hasMedicalCondition == true {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                        }
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.secondarySystemBackground))
-                    )
-                }
-                
-                Button {
-                    hasMedicalCondition = false
-                } label: {
-                    HStack {
-                        Text("onboarding.no", bundle: .main)
-                        Spacer()
-                        if hasMedicalCondition == false {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                        }
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.secondarySystemBackground))
-                    )
-                }
-            }
-            .buttonStyle(.plain)
-        }
-        .padding()
     }
 }
 

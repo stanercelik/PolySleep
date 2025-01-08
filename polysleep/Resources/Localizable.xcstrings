@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "-" : {
+
+    },
     "%@ (%@)" : {
       "localizations" : {
         "en" : {
@@ -189,7 +192,7 @@
         }
       }
     },
-    "onboarding.ageRange.eighteen_twentyfour" : {
+    "onboarding.ageRange.18to24" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -206,24 +209,24 @@
         }
       }
     },
-    "onboarding.ageRange.fortyfive_plus" : {
+    "onboarding.ageRange.25to34" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "45+"
+            "value" : "25-34"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "45+"
+            "value" : "25-34"
           }
         }
       }
     },
-    "onboarding.ageRange.thirtyfive_fortyfour" : {
+    "onboarding.ageRange.35to44" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -240,19 +243,53 @@
         }
       }
     },
-    "onboarding.ageRange.twentyfive_thirtyfour" : {
+    "onboarding.ageRange.45to54" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25-34"
+            "value" : "45-54"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25-34"
+            "value" : "45-54"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.55plus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "55+"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "55+"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.under18" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under 18"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 yaş altı"
           }
         }
       }
@@ -578,7 +615,6 @@
       }
     },
     "onboarding.healthStatusDescription" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -612,6 +648,7 @@
       }
     },
     "onboarding.healthStatusQuestion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -660,36 +697,36 @@
         }
       }
     },
+    "onboarding.knowledgeLevel.advanced" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Well experienced"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok deneyimli"
+          }
+        }
+      }
+    },
     "onboarding.knowledgeLevel.beginner" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beginner"
+            "value" : "Just starting out"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yeni Başlayan"
-          }
-        }
-      }
-    },
-    "onboarding.knowledgeLevel.expert" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expert"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uzman"
+            "value" : "Yeni başlayan"
           }
         }
       }
@@ -700,13 +737,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intermediate"
+            "value" : "Some experience"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orta Seviye"
+            "value" : "Biraz deneyimli"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevelDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How familiar are you with polyphasic sleep? This helps us provide the right level of guidance and information."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlik ve bilgi sunmamıza yardımcı olur."
           }
         }
       }
@@ -728,11 +781,21 @@
         }
       }
     },
-    "onboarding.knowledgeQuestion" : {
-
-    },
     "onboarding.lifestyle" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Lifestyle"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yaşam Tarzınız"
+          }
+        }
+      }
     },
     "onboarding.lifestyle.calm" : {
       "extractionState" : "stale",
@@ -740,13 +803,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calm (Home-work routine or regular but not intense pace)"
+            "value" : "Mostly calm"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sakin (Ev-iş arası veya düzenli ama yoğun olmayan tempo)"
+            "value" : "Genellikle sakin"
           }
         }
       }
@@ -757,13 +820,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moderately Active (Social or sports activities a few times a week)"
+            "value" : "Moderately active"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orta Derecede Aktif (Haftada birkaç gün sosyal veya sportif aktivite)"
+            "value" : "Orta düzeyde aktif"
           }
         }
       }
@@ -774,18 +837,35 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Very Active (Intense sports, social life, always out)"
+            "value" : "Very active daily"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Çok Aktif (Yoğun spor, sosyal hayat, sürekli dışarıdasınız)"
+            "value" : "Çok aktif"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyleDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How would you describe your daily activity level? This helps us recommend a sleep schedule that matches your energy needs."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük aktivite düzeyinizi nasıl tanımlarsınız? Bu, enerji ihtiyaçlarınıza uygun bir uyku programı önerebilmemize yardımcı olur."
           }
         }
       }
     },
     "onboarding.lifestyleQuestion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -802,6 +882,7 @@
       }
     },
     "onboarding.medicalCondition" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -818,6 +899,7 @@
       }
     },
     "onboarding.medicalConditionDescription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -840,6 +922,12 @@
             "state" : "translated",
             "value" : "Motivation Level"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivasyon Seviyeniz"
+          }
         }
       }
     },
@@ -849,13 +937,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "High Motivation (Ready for a challenging transition)"
+            "value" : "Highly motivated"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yüksek Motivasyon (Zorlu geçişi göze alırım)"
+            "value" : "Çok istekli"
           }
         }
       }
@@ -866,13 +954,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Low Motivation (Want an easy transition)"
+            "value" : "Somewhat motivated"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Düşük Motivasyon (Rahat bir geçiş istiyorum)"
+            "value" : "Biraz istekli"
           }
         }
       }
@@ -883,19 +971,35 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moderate Motivation (Will try but may quit if too difficult)"
+            "value" : "Moderately motivated"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orta Motivasyon (Deneyebilirim ama çok zor olursa bırakırım)"
+            "value" : "Orta düzeyde istekli"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevelDescription" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How committed are you to adapting to a new sleep schedule? Successful adaptation requires dedication and consistency."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni bir uyku düzenine adapte olmaya ne kadar kararlısınız? Başarılı bir adaptasyon kararlılık ve tutarlılık gerektirir."
           }
         }
       }
     },
     "onboarding.motivationLevelQuestion" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -910,9 +1014,6 @@
           }
         }
       }
-    },
-    "onboarding.motivationQuestion" : {
-
     },
     "onboarding.napEnvironment" : {
       "localizations" : {
@@ -936,13 +1037,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ideal (quiet, dark, rest room available)"
+            "value" : "Perfect for napping"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İdeal (sessiz, karanlık, dinlenme odası mevcut)"
+            "value" : "Uyku molası için mükemmel"
           }
         }
       }
@@ -953,13 +1054,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Limited (can nap occasionally but environment is restricted)"
+            "value" : "Some limitations"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sınırlı (ara sıra nap yapabiliyorum ama ortam kısıtlı)"
+            "value" : "Bazı kısıtlamalar var"
           }
         }
       }
@@ -970,13 +1071,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suitable (usually quiet but not always)"
+            "value" : "Good for napping"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uygun (genelde sessiz ama her zaman değil)"
+            "value" : "Uyku molası için uygun"
           }
         }
       }
@@ -987,18 +1088,35 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unsuitable (not possible at work/home or social environment)"
+            "value" : "Not suitable for napping"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uygun Değil (işte/evde veya sosyal ortamda mümkün değil)"
+            "value" : "Uyku molası için uygun değil"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironmentDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How suitable is your environment for taking naps during the day? Consider factors like noise level, light control, and comfort."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün içinde uyku molası vermek için ortamınız ne kadar uygun? Gürültü seviyesi, ışık kontrolü ve konfor gibi faktörleri göz önünde bulundurun."
           }
         }
       }
     },
     "onboarding.napEnvironmentQuestion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1469,7 +1587,20 @@
       }
     },
     "onboarding.workSchedule" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çalışma Programın"
+          }
+        }
+      }
     },
     "onboarding.workSchedule.flexible" : {
       "extractionState" : "stale",
@@ -1621,13 +1752,29 @@
       }
     },
     "sleepBlock.core" : {
-      "comment" : "Core sleep block"
+      "comment" : "Core sleep block",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
     },
     "sleepBlock.description" : {
       "comment" : "Sleep block description format"
     },
     "sleepBlock.nap" : {
-      "comment" : "Nap block"
+      "comment" : "Nap block",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kısa Uyku"
+          }
+        }
+      }
     },
     "sleepSchedule.adaptation" : {
       "localizations" : {
@@ -1736,6 +1883,12 @@
     "sleepSchedule.description" : {
       "comment" : "Sleep schedule description",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Description"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1841,7 +1994,24 @@
         }
       }
     },
+    "sleepSchedule.timeRanges" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Schedule Details"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Programı Detayları"
+          }
+        }
+      }
+    },
     "sleepSchedule.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -2,7 +2,7 @@ import Foundation
 
 struct SleepScheduleRecommendation {
     let schedule: SleepScheduleModel
-    let confidenceScore: Double // 0-1, how confident we are this schedule suits the user
+    let confidenceScore: Double // between 0 and 1
     let warnings: [Warning]
     let adaptationPeriod: Int // in days
     
@@ -76,19 +76,37 @@ class SleepScheduleRecommender {
     private func calculateScheduleScore(_ schedule: SleepScheduleModel, factors: UserFactors) -> Double {
         var score = 1.0
         
+        // Base score adjustment based on schedule difficulty
+        switch schedule.difficultyLevel {
+        case .beginner:
+            score *= 1.2  // Favor beginner-friendly schedules
+        case .intermediate:
+            score *= 1.0  // Neutral score
+        case .advanced:
+            score *= 0.8  // Slight penalty for advanced schedules
+        case .extreme:
+            score *= 0.6  // Significant penalty for extreme schedules
+        }
+        
         // 1. Previous Sleep Experience
         switch factors.sleepExperience {
         case .none:
-            if schedule.isExtreme {
-                score *= 0.3 // Significant penalty for extreme schedules
+            switch schedule.difficultyLevel {
+            case .beginner: break
+            case .intermediate: score *= 0.8
+            case .advanced: score *= 0.5
+            case .extreme: score *= 0.3
             }
         case .some:
-            if schedule.isExtreme {
-                score *= 0.5
+            switch schedule.difficultyLevel {
+            case .beginner, .intermediate: break
+            case .advanced: score *= 0.7
+            case .extreme: score *= 0.5
             }
         case .moderate:
-            if schedule.isExtreme {
-                score *= 0.8
+            switch schedule.difficultyLevel {
+            case .beginner, .intermediate, .advanced: break
+            case .extreme: score *= 0.8
             }
         case .extensive:
             // No penalty for experienced users
@@ -99,20 +117,23 @@ class SleepScheduleRecommender {
         switch factors.ageRange {
         case .under18:
             score *= 0.7 // Generally not recommended for under 18
+            if schedule.difficultyLevel == .extreme {
+                score *= 0.5
+            }
         case .age18to24, .age25to34:
             // Prime age for adaptation, no penalty
             break
         case .age35to44:
-            if schedule.isExtreme {
+            if schedule.difficultyLevel == .extreme {
                 score *= 0.8
             }
         case .age45to54:
-            if schedule.isExtreme {
-                score *= 0.6
+            if schedule.difficultyLevel == .advanced || schedule.difficultyLevel == .extreme {
+                score *= 0.7
             }
         case .age55Plus:
-            if schedule.isExtreme {
-                score *= 0.4
+            if schedule.difficultyLevel == .advanced || schedule.difficultyLevel == .extreme {
+                score *= 0.5
             }
         }
         
@@ -150,15 +171,16 @@ class SleepScheduleRecommender {
         // 5. Lifestyle Considerations
         switch factors.lifestyle {
         case .veryActive:
-            if schedule.isExtreme {
-                score *= 0.6
-            }
-            if napCount > 2 {
-                score *= 0.7
+            switch schedule.difficultyLevel {
+            case .beginner: break
+            case .intermediate: score *= 0.9
+            case .advanced, .extreme: score *= 0.7
             }
         case .moderatelyActive:
-            if schedule.isExtreme {
-                score *= 0.8
+            switch schedule.difficultyLevel {
+            case .beginner, .intermediate: break
+            case .advanced: score *= 0.9
+            case .extreme: score *= 0.8
             }
         case .calm:
             // No penalty for calm lifestyle
@@ -168,12 +190,17 @@ class SleepScheduleRecommender {
         // 6. Knowledge Level Impact
         switch factors.knowledgeLevel {
         case .beginner:
-            if schedule.isExtreme {
-                score *= 0.4
+            switch schedule.difficultyLevel {
+            case .beginner: break
+            case .intermediate: score *= 0.8
+            case .advanced: score *= 0.6
+            case .extreme: score *= 0.4
             }
         case .intermediate:
-            if schedule.isExtreme {
-                score *= 0.7
+            switch schedule.difficultyLevel {
+            case .beginner, .intermediate: break
+            case .advanced: score *= 0.8
+            case .extreme: score *= 0.6
             }
         case .advanced:
             // No penalty for advanced users
@@ -186,18 +213,18 @@ class SleepScheduleRecommender {
             // No penalty
             break
         case .managedConditions:
-            if schedule.isExtreme {
-                score *= 0.5
-            }
-            if schedule.totalSleepHours < 6 {
-                score *= 0.7
+            switch schedule.difficultyLevel {
+            case .beginner: break
+            case .intermediate: score *= 0.8
+            case .advanced: score *= 0.6
+            case .extreme: score *= 0.4
             }
         case .seriousConditions:
-            if schedule.isExtreme {
-                score *= 0.2
-            }
-            if schedule.totalSleepHours < 6 {
-                score *= 0.4
+            switch schedule.difficultyLevel {
+            case .beginner: score *= 0.8
+            case .intermediate: score *= 0.6
+            case .advanced: score *= 0.4
+            case .extreme: score *= 0.2
             }
         }
         
@@ -206,14 +233,18 @@ class SleepScheduleRecommender {
         case .high:
             score *= 1.2 // Bonus for high motivation
         case .moderate:
-            if schedule.isExtreme {
-                score *= 0.8
+            switch schedule.difficultyLevel {
+            case .beginner, .intermediate: break
+            case .advanced: score *= 0.8
+            case .extreme: score *= 0.7
             }
         case .low:
-            if schedule.isExtreme {
-                score *= 0.4
+            switch schedule.difficultyLevel {
+            case .beginner: score *= 0.9
+            case .intermediate: score *= 0.8
+            case .advanced: score *= 0.6
+            case .extreme: score *= 0.4
             }
-            score *= 0.9 // General penalty for low motivation
         }
         
         return score
@@ -231,7 +262,7 @@ class SleepScheduleRecommender {
         }
         
         // Experience warnings
-        if schedule.isExtreme && factors.sleepExperience == .none {
+        if schedule.difficultyLevel == .extreme && factors.sleepExperience == .none {
             warnings.append(.init(
                 severity: .warning,
                 messageKey: "sleepSchedule.warning.noExperience"
@@ -255,7 +286,7 @@ class SleepScheduleRecommender {
         }
         
         // Motivation warnings
-        if schedule.isExtreme && factors.motivationLevel == .low {
+        if schedule.difficultyLevel == .extreme && factors.motivationLevel == .low {
             warnings.append(.init(
                 severity: .warning,
                 messageKey: "sleepSchedule.warning.lowMotivation"
@@ -269,7 +300,7 @@ class SleepScheduleRecommender {
         var basePeriod: Int
         
         // Base adaptation period based on schedule type
-        if schedule.isExtreme {
+        if schedule.difficultyLevel == .extreme {
             basePeriod = 28 // 4 weeks for extreme schedules
         } else if schedule.schedule.filter({ !$0.isCore }).count > 2 {
             basePeriod = 21 // 3 weeks for schedules with many naps
@@ -317,7 +348,25 @@ class SleepScheduleRecommender {
 // Helper extensions for SleepScheduleModel
 extension SleepScheduleModel {
     var isExtreme: Bool {
-        return id == "dymaxion" || id == "uberman"
+        // Consider a schedule extreme if:
+        // 1. It's Dymaxion or Uberman
+        // 2. Total sleep is less than 4.5 hours
+        // 3. Has more than 3 naps
+        return id == "dymaxion" || id == "uberman" ||
+               totalSleepHours < 4.5 ||
+               schedule.filter { !$0.isCore }.count > 3
+    }
+    
+    var difficultyLevel: DifficultyLevel {
+        if isExtreme {
+            return .extreme
+        } else if totalSleepHours < 6.0 || schedule.filter { !$0.isCore }.count > 2 {
+            return .advanced
+        } else if schedule.filter { !$0.isCore }.count > 1 {
+            return .intermediate
+        } else {
+            return .beginner
+        }
     }
     
     var hasNapsInWorkHours: Bool {
@@ -328,6 +377,13 @@ extension SleepScheduleModel {
             return false
         }
     }
+}
+
+enum DifficultyLevel {
+    case beginner
+    case intermediate
+    case advanced
+    case extreme
 }
 
 private enum TimeFormatter {

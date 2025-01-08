@@ -4,32 +4,39 @@ struct CircularSleepChart: View {
     let schedule: SleepScheduleModel
     @Environment(\.colorScheme) var colorScheme
     
-    private let circleRadius: CGFloat = 150
-    private let strokeWidth: CGFloat = 50
-    private let hourMarkers = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22] // Changed to 2-hour intervals
+    private let circleRadius: CGFloat = 110
+    private let strokeWidth: CGFloat = 40
+    private let hourMarkers = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
     private let innerRadius: CGFloat = 110
     private let tickLength: CGFloat = 10
     
     var body: some View {
-        ZStack {
+
+        ZStack(alignment: .topLeading) {
             backgroundCircle
             hourTickMarks
             hourMarkersView
             sleepBlocksView
             innerTimeLabelsView
         }
-        .frame(width: circleRadius * 2 + strokeWidth, height: circleRadius * 2 + strokeWidth)
-        .padding(.horizontal, strokeWidth)
-        .padding(.vertical, strokeWidth / 2)
+        .frame(width: circleRadius * 2 + strokeWidth,
+               height: circleRadius * 2 + strokeWidth)
+        .offset(
+            x: ((circleRadius * 2 + strokeWidth) / 2) - circleRadius,
+            y: ((circleRadius * 2 + strokeWidth) / 2) - circleRadius
+        )
+
+        .frame(maxWidth: .infinity, alignment: .center)
+        
         .accessibilityElement(children: .combine)
         .accessibilityLabel(generateAccessibilityLabel())
     }
     
+    // MARK: - Alt görünümler
+    
     private var backgroundCircle: some View {
         Circle()
             .stroke(Color("SecondaryTextColor").opacity(0.12), lineWidth: strokeWidth)
-            .frame(width: circleRadius * 2)
-            .padding(.bottom, strokeWidth)
             .padding(.trailing, strokeWidth)
     }
     
@@ -60,7 +67,7 @@ struct CircularSleepChart: View {
         }
         .stroke(style: StrokeStyle(
             lineWidth: 1,
-            dash: hour % 3 == 0 ? [] : [4, 4] // Solid lines for main markers
+            dash: hour % 3 == 0 ? [] : [4, 4]
         ))
         .foregroundColor(Color("SecondaryTextColor").opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
@@ -73,7 +80,7 @@ struct CircularSleepChart: View {
     
     private func hourMarkerLabel(for hour: Int) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
-        let radius = circleRadius + strokeWidth * 1.2
+        let radius = circleRadius + strokeWidth
         let xPosition = circleRadius + radius * cos(angle * .pi / 180)
         let yPosition = circleRadius + radius * sin(angle * .pi / 180)
         
@@ -117,17 +124,28 @@ struct CircularSleepChart: View {
     private var innerTimeLabelsView: some View {
         ForEach(schedule.schedule.indices, id: \.self) { index in
             let block = schedule.schedule[index]
-            let startTime = timeComponents(from: Int(block.startTime) ?? 0)
-            let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-            
-            VStack {
-                innerTimeLabel(time: String(format: "%02d:%02d", startTime.hour, startTime.minute), angle: angleForTime(hour: startTime.hour, minute: startTime.minute), isStart: true)
-                innerTimeLabel(time: String(format: "%02d:%02d", endTime.hour, endTime.minute), angle: angleForTime(hour: endTime.hour, minute: endTime.minute), isStart: false)
+            if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
+                let startTime = timeComponents(from: startTimeInt)
+                let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
+                
+                Group {
+                    // Start time label
+                    innerTimeLabel(
+                        time: String(format: "%02d:%02d", startTime.hour, startTime.minute),
+                        angle: angleForTime(hour: startTime.hour, minute: startTime.minute)
+                    )
+                    
+                    // End time label
+                    innerTimeLabel(
+                        time: String(format: "%02d:%02d", endTime.hour, endTime.minute),
+                        angle: angleForTime(hour: endTime.hour, minute: endTime.minute)
+                    )
+                }
             }
         }
     }
     
-    private func innerTimeLabel(time: String, angle: Double, isStart: Bool) -> some View {
+    private func innerTimeLabel(time: String, angle: Double) -> some View {
         let radius = circleRadius - strokeWidth
         let xPosition = circleRadius + radius * cos(angle * .pi / 180)
         let yPosition = circleRadius + radius * sin(angle * .pi / 180)
@@ -135,9 +153,11 @@ struct CircularSleepChart: View {
         return Text(time)
             .font(.system(size: 10, weight: .medium))
             .foregroundColor(Color("SecondaryTextColor"))
+            .rotationEffect(.degrees(0)) // Keep text straight
             .position(x: xPosition, y: yPosition)
-            .rotationEffect(.degrees(angle + 90))
     }
+    
+    // MARK: - Yardımcı fonksiyonlar
     
     private func timeComponents(from time: Int) -> (hour: Int, minute: Int) {
         let timeString = String(format: "%04d", time)
@@ -165,16 +185,13 @@ struct CircularSleepChart: View {
             let startTime = timeComponents(from: Int(block.startTime) ?? 1)
             let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
             
-            // Format the time strings
             let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
             let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
             
-            // Get block type
-            let blockType = block.type == "core" ? 
-                NSLocalizedString("sleepBlock.core", comment: "Core sleep block") : 
-                NSLocalizedString("sleepBlock.nap", comment: "Nap block")
+            let blockType = block.type == "core"
+                ? NSLocalizedString("sleepBlock.core", comment: "Core sleep block")
+                : NSLocalizedString("sleepBlock.nap", comment: "Nap block")
             
-            // Create the description string
             let description = String(
                 format: NSLocalizedString(
                     "sleepBlock.description",
@@ -200,6 +217,8 @@ struct CircularSleepChart: View {
         )
     }
 }
+
+
 
 struct CircularSleepChart_Previews: PreviewProvider {
     static var previews: some View {

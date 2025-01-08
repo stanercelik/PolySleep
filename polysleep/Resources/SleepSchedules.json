@@ -5,7 +5,7 @@
       "name": "Biphasic Sleep",
       "description": {
         "en": "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
-        "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni, özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir."
+        "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir."
       },
       "totalSleepHours": 6.5,
       "schedule": [
@@ -26,7 +26,7 @@
       "name": "Extended Biphasic Sleep",
       "description": {
         "en": "A longer core sleep at night (5-6 hours) plus a slightly longer midday nap (60-90 minutes). This allows more total rest while still splitting sleep into two segments.",
-        "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık biraz daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da toplam uykuyu artırır."
+        "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır."
       },
       "totalSleepHours": 7.5,
       "schedule": [
@@ -47,7 +47,7 @@
       "name": "Everyman",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa şekerlemeden oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı hedefler."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler."
       },
       "totalSleepHours": 4.5,
       "schedule": [
@@ -77,8 +77,8 @@
       "id": "everyman-e2",
       "name": "Everyman 2 (E2)",
       "description": {
-        "en": "One core sleep of about 4-5 hours plus 2 short naps (20-30 mins each) during the day.",
-        "tr": "Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzen."
+        "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep of about 4-5 hours plus 2 short naps (20-30 mins each) during the day.",
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir."
       },
       "totalSleepHours": 5,
       "schedule": [
@@ -103,8 +103,8 @@
       "id": "everyman-e3",
       "name": "Everyman 3 (E3)",
       "description": {
-        "en": "One core sleep (3-4 hours) plus 3 short naps (20 mins each) spread throughout the day.",
-        "tr": "3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık şekerleme."
+        "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep (3-4 hours) plus 3 short naps (20 mins each) spread throughout the day.",
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. 3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık kısa uykulardan oluşan düzen."
       },
       "totalSleepHours": 4.5,
       "schedule": [
@@ -134,8 +134,8 @@
       "id": "everyman-e4",
       "name": "Everyman 4 (E4)",
       "description": {
-        "en": "One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
-        "tr": "Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerleme. E2/E3’e göre daha yoğun."
+        "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3’e göre daha ağır bir düzendir."
       },
       "totalSleepHours": 3.5,
       "schedule": [
@@ -233,7 +233,7 @@
       "name": "Uberman",
       "description": {
         "en": "A highly extreme pattern featuring six (sometimes more) short naps of about 20 minutes each, spread every 4 hours.",
-        "tr": "Yaklaşık her 4 saatte bir, 20 dakikalık altı (veya daha fazla) kısa uykudan oluşan, son derece ekstrem bir uyku düzeni."
+        "tr": "Yaklaşık her 4 saatte bir, 20 dakikalık altı (veya daha fazla) kısa uykudan oluşan, son derece ekstrem bir uyku düzenidir."
       },
       "totalSleepHours": 2,
       "schedule": [
@@ -300,7 +300,7 @@
       "name": "Triphasic (Alternative)",
       "description": {
         "en": "Three sleep blocks (1.5-2 hours each) aligned around personal peak times. Often set around 22:00, 04:00, and 10:00 or variations thereof.",
-        "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanabilir."
+        "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanır."
       },
       "totalSleepHours": 5,
       "schedule": [
@@ -325,8 +325,8 @@
       "id": "segmented",
       "name": "Segmented Sleep",
       "description": {
-        "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest.",
-        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzen: gün batımından sonra birkaç saatlik uyku, bir uyanıklık dönemi ve ardından ikinci bir dinlenme bloğu."
+        "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest. Ideal for a relaxed start.",
+        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir"
       },
       "totalSleepHours": 6,
       "schedule": [
@@ -347,7 +347,7 @@
       "name": "Segmented Sleep (Late-Wake)",
       "description": {
         "en": "An alternative segmented schedule with a first sleep soon after dusk (21:00-00:00) and a second sleep closer to morning (02:00-05:00), leaving a long wake period in the late morning.",
-        "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uyku, sabaha karşı (02:00-05:00) ikinci uyku şeklinde alternatif bir düzen. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır."
+        "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uykudan, sabaha karşı (02:00-05:00) ikinci uykudan oluşan alternatif bir düzendir. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır."
       },
       "totalSleepHours": 5,
       "schedule": [

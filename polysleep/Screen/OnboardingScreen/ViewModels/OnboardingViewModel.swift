@@ -37,27 +37,36 @@ final class OnboardingViewModel: ObservableObject {
     // Question 8: Motivation Level
     @Published var motivationLevel: MotivationLevel?
     
+    // MARK: - Navigation State
+    @Published var shouldNavigateToSleepSchedule = false
+    
     // MARK: - Computed Properties
     var canMoveNext: Bool {
         switch currentPage {
-        case 0: return previousSleepExperience != nil // Previous Sleep Experience
-        case 1: return ageRange != nil // Age Range
-        case 2: return workSchedule != nil // Work Schedule
-        case 3: return napEnvironment != nil // Nap Environment
-        case 4: return lifestyle != nil // Lifestyle
-        case 5: return knowledgeLevel != nil // Knowledge Level
-        case 6: return healthStatus != nil // Health Status
-        case 7: return motivationLevel != nil // Motivation Level
+        case 0: return previousSleepExperience != nil
+        case 1: return ageRange != nil
+        case 2: return workSchedule != nil
+        case 3: return napEnvironment != nil
+        case 4: return lifestyle != nil 
+        case 5: return knowledgeLevel != nil 
+        case 6: return healthStatus != nil 
+        case 7: return motivationLevel != nil
         default: return false
         }
     }
     
     // MARK: - Methods
     func moveNext() {
-        if currentPage < totalPages - 1 {
+        if currentPage < totalPages {
             withAnimation {
                 currentPage += 1
             }
+            
+        }
+        // If we are on the last page trigger navigation
+        else {
+            saveResponses()
+            shouldNavigateToSleepSchedule = true
         }
     }
     
@@ -97,5 +106,10 @@ final class OnboardingViewModel: ObservableObject {
         if let motivation = motivationLevel {
             defaults.set(motivation.rawValue, forKey: "onboarding.motivationLevel")
         }
+    }
+    
+    // MARK: - Navigation Methods
+    func navigateToSleepSchedule() {
+        shouldNavigateToSleepSchedule = true
     }
 }

@@ -33,7 +33,7 @@ struct OnboardingNavigationButtons: View {
             
             Spacer()
             
-            if currentPage < totalPages - 1 {
+            if currentPage < totalPages {
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         onNext()
@@ -41,7 +41,7 @@ struct OnboardingNavigationButtons: View {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }) {
                     HStack(spacing: 8) {
-                        Text(currentPage == totalPages - 2 ? "onboarding.seeResults" : "onboarding.next")
+                        Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next")
                             .font(.body.weight(.semibold))
                         
                         Image(systemName: "chevron.right")
@@ -58,7 +58,7 @@ struct OnboardingNavigationButtons: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!canMoveNext)
-                .accessibilityLabel(currentPage == totalPages - 2 ? 
+                .accessibilityLabel(currentPage == totalPages - 1 ? 
                     NSLocalizedString("accessibility.seeResults", comment: "") :
                     NSLocalizedString("accessibility.nextPage", comment: ""))
                 .accessibilityHint(canMoveNext ? "" : NSLocalizedString("accessibility.completeCurrentPage", comment: ""))

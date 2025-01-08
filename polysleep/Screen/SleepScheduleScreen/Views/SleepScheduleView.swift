@@ -4,35 +4,64 @@ struct SleepScheduleView: View {
     @StateObject private var viewModel = SleepScheduleViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) { 
-                Text(String(localized: "sleepSchedule.recommendedPattern"))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.top, 32)
+        ScrollView() {
+            VStack(spacing: 24) {
                 
-                CircularSleepChart(schedule: viewModel.schedule)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 64)
-                    .frame(maxWidth: .infinity, maxHeight: 400) 
+                VStack(alignment: .leading){
+                    HStack(){
+                        Text(String(localized: "sleepSchedule.recommendedPattern"))
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                            .accessibility(addTraits: .isHeader)
+                        
+                        Spacer()
+                    }
                     
+                    Text(viewModel.schedule.name)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("PrimaryColor"))
+                        .accessibility(addTraits: .isHeader)
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 42)
+                .padding(.top, 24)
+                    
+                        CircularSleepChart(schedule: viewModel.schedule)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                
+                                .fill(Color("CardBackground").opacity(0.8))
+                                .frame(height: UIScreen.main.bounds.height * 0.4)
+                                .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 0)
+                        )
 
-                scheduleInfoCard
-                
-                /*if !viewModel.schedule.schedule.isEmpty {
-                    warningsSection
-                    sleepAnalysisSection
-                }*/
-                
-                Spacer(minLength: 16)
-            }
-        }
-        .background(Color("BackgroundColor"))
-        .navigationTitle(String(localized: "sleepSchedule.title"))
+                        
+                        .padding(.horizontal)
+                        .padding(.bottom, 46)
+
+                        scheduleDescription
+                            .padding(.horizontal)
+                            
+
+                        scheduleTimeRanges
+                            .padding(.horizontal)
+                            
+                        
+                        scheduleInfoCard
+
+                        Spacer(minLength: 24)
+                    }
+            .frame(maxWidth: UIScreen.main.bounds.width, alignment: .center)
+                }
+        
+                .scrollIndicators(.hidden)
+                .background(Color("BackgroundColor"))
     }
     
     private var scheduleInfoCard: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 20) {
             InfoRow(
                 title: String(localized: "sleepSchedule.totalSleep"),
                 value: String(format: "%.1f", viewModel.schedule.totalSleepHours),
@@ -54,11 +83,11 @@ struct SleepScheduleView: View {
                 icon: "calendar"
             )
         }
-        .padding(16)
+        .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color("CardBackground"))
-                .shadow(radius: 5, x: 0, y: 2)
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground").opacity(0.8))
+                .shadow(color: Color.black.opacity(0.1), radius: 20)
         )
         .padding(.horizontal)
     }
@@ -86,6 +115,101 @@ struct SleepScheduleView: View {
             }
         }
         .padding(.vertical, 8)
+    }
+    
+    private var scheduleTimeRanges: some View {
+        VStack(alignment: .center, spacing: 16) {
+            Text(String(localized: "sleepSchedule.timeRanges"))
+                .font(.headline)
+                .foregroundColor(Color("TextColor"))
+                .accessibility(addTraits: .isHeader)
+                .padding(.top, 12)
+            
+            VStack(alignment: .center, spacing: 16) {
+                ForEach(viewModel.schedule.schedule.indices, id: \.self) { index in
+                    let block = viewModel.schedule.schedule[index]
+                    SleepBlockRow(block: block)
+                        
+                }
+            }
+            .padding(.bottom)
+            
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.1), radius: 20)
+        )
+    }
+    
+    private var scheduleDescription: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(viewModel.schedule.name + ":")
+                .font(.headline)
+                .foregroundColor(Color("TextColor"))
+                .accessibility(addTraits: .isHeader)
+            
+            Text(viewModel.schedule.description.localized())
+                .font(.body)
+                .foregroundColor(Color("SecondaryTextColor"))
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground").opacity(0.8))
+                .shadow(color: Color.black.opacity(0.1), radius: 20)
+        )
+    }
+    
+    private struct SleepBlockRow: View {
+        let block: SleepScheduleModel.SleepBlock
+        
+        var body: some View {
+            HStack() {
+                Spacer()
+                // Time range
+                HStack() {
+                    Text(block.startTime)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                    Text("-")
+                    Text(block.endTime)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                }
+                .foregroundColor(Color("TextColor"))
+                
+                Spacer()
+                
+                // Duration with icon
+                HStack(spacing: 4) {
+                    Image(systemName: "clock.fill")
+                        .font(.caption)
+                    Text(block.formattedDuration)
+                        .fontWeight(.medium)
+                }
+                .foregroundColor(Color("SecondaryTextColor"))
+                
+                Spacer()
+                
+                // Block type with icon
+                HStack(spacing: 4) {
+                    Image(systemName: block.isCore ? "bed.double.fill" : "powersleep")
+                        .font(.caption)
+                    Text(block.isCore ? 
+                         String(localized: "sleepBlock.core") : 
+                         String(localized: "sleepBlock.nap"))
+                        .fontWeight(.regular)
+                }
+                .foregroundColor(block.isCore ? Color("PrimaryColor") : Color("SecondaryColor"))
+                
+                Spacer()
+            }
+            .font(.body)
+            
+        }
     }
     
     private struct WarningRow: View {
@@ -129,7 +253,7 @@ struct SleepScheduleView: View {
         private var warningText: some View {
             Text(LocalizedStringKey(warning.messageKey))
                 .font(.subheadline)
-                .foregroundColor(Color("PrimaryTextColor"))
+                .foregroundColor(Color("TextColor"))
                 .fixedSize(horizontal: false, vertical: true)
         }
     }

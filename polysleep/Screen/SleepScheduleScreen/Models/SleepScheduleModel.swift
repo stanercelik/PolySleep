@@ -1,13 +1,13 @@
 import Foundation
 
-struct SleepScheduleModel: Codable, Identifiable {
+struct SleepScheduleModel: Codable, Identifiable, Equatable {
     let id: String
     let name: String
     let description: LocalizedDescription
     let totalSleepHours: Double
     let schedule: [SleepBlock]
     
-    struct LocalizedDescription: Codable {
+    struct LocalizedDescription: Codable, Equatable {
         let en: String
         let tr: String
         
@@ -17,7 +17,7 @@ struct SleepScheduleModel: Codable, Identifiable {
         }
     }
     
-    struct SleepBlock: Codable {
+    struct SleepBlock: Codable, Equatable {
         let type: String
         let startTime: String
         let duration: Int
@@ -34,9 +34,37 @@ struct SleepScheduleModel: Codable, Identifiable {
             }
             return "\(minutes)m"
         }
+        
+        var endTime: String {
+            let components = startTime.split(separator: ":")
+            guard components.count == 2,
+                  let hour = Int(components[0]),
+                  let minute = Int(components[1]) else {
+                return startTime
+            }
+            
+            var totalMinutes = hour * 60 + minute + duration
+            if totalMinutes >= 24 * 60 {
+                totalMinutes -= 24 * 60
+            }
+            
+            let endHour = totalMinutes / 60
+            let endMinute = totalMinutes % 60
+            
+            return String(format: "%02d:%02d", endHour, endMinute)
+        }
+        
+        var timeRangeDescription: String {
+            let blockType = isCore ? 
+                NSLocalizedString("sleepBlock.core", comment: "Core sleep block") : 
+                NSLocalizedString("sleepBlock.nap", comment: "Nap block")
+            
+            let durationStr = formattedDuration
+            return "\(startTime)-\(endTime)   \(durationStr) \(blockType.lowercased())"
+        }
     }
 }
 
-struct SleepSchedulesResponse: Codable {
+struct SleepSchedulesResponse: Codable, Equatable {
     let sleepSchedules: [SleepScheduleModel]
 }

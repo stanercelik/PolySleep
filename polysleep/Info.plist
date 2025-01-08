@@ -3,8 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>UIAppFonts</key>
-	<array>
-		<string>Assets/Fonts/Inter-VariableFont-opsz,wght.ttf</string>
-	</array>
+	<array/>
 </dict>
 </plist>
