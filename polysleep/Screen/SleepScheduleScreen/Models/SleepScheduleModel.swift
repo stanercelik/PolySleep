@@ -1,70 +1,129 @@
 import Foundation
 
-struct SleepScheduleModel: Codable, Identifiable, Equatable {
-    let id: String
-    let name: String
-    let description: LocalizedDescription
-    let totalSleepHours: Double
-    let schedule: [SleepBlock]
+/// Time formatter helper for consistent time string handling
+public enum TimeFormatter {
+    static func time(from string: String) -> Int? {
+        let components = string.split(separator: ":")
+        guard components.count == 2,
+              let hour = Int(components[0]) else {
+            return nil
+        }
+        return hour
+    }
     
-    struct LocalizedDescription: Codable, Equatable {
-        let en: String
-        let tr: String
+    static func addMinutes(_ minutes: Int, to timeString: String) -> Int {
+        guard let startHour = time(from: timeString) else { return 0 }
+        let totalMinutes = startHour * 60 + minutes
+        return (totalMinutes / 60) % 24 // Wrap around 24 hours
+    }
+}
+
+/// Represents a sleep block within a schedule (either core sleep or nap)
+public struct SleepBlock: Codable, Identifiable {
+    public var id = UUID()
+    public let startTime: String
+    public let duration: Int
+    public let type: String
+    public let isCore: Bool
+    
+    public var endHour: Int {
+        TimeFormatter.addMinutes(duration, to: startTime)
+    }
+    
+    public init(startTime: String, duration: Int, type: String, isCore: Bool) {
+        self.startTime = startTime
+        self.duration = duration
+        self.type = type
+        self.isCore = isCore
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case startTime, duration, type, isCore
+    }
+}
+
+/// Represents a localized description
+public struct LocalizedDescription: Codable {
+    public let en: String
+    public let tr: String
+
+     public init(en: String, tr: String) {
+        self.en = en
+        self.tr = tr
+    }
+    
+    public func localized() -> String {
+        // For now, just return English. In a real app, this would use the system language
+        return en
+    }
+}
+
+/// Represents a complete sleep schedule with all its properties
+public struct SleepScheduleModel: Codable, Identifiable {
+    public let id: String
+    public let name: String
+    public let description: LocalizedDescription
+    public let totalSleepHours: Double
+    public let schedule: [SleepBlock]
+    
+    public init(
+        id: String,
+        name: String,
+        description: LocalizedDescription,
+        totalSleepHours: Double,
+        schedule: [SleepBlock]
+    ) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.totalSleepHours = totalSleepHours
+        self.schedule = schedule
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, name, description, totalSleepHours, schedule
+    }
+}
+
+// MARK: - Schedule Analysis
+extension SleepScheduleModel {
+    /// Check if schedule has naps during typical work hours (9-17)
+    var hasNapsInWorkHours: Bool {
+        let workStart = 9
+        let workEnd = 17
         
-        func localized() -> String {
-            let language = Bundle.main.preferredLocalizations.first ?? "en"
-            return language == "tr" ? tr : en
+        return schedule.contains { block in
+            guard !block.isCore,
+                  let blockHour = TimeFormatter.time(from: block.startTime) else {
+                return false
+            }
+            return blockHour >= workStart && blockHour <= workEnd
         }
     }
     
-    struct SleepBlock: Codable, Equatable {
-        let type: String
-        let startTime: String
-        let duration: Int
+    /// Calculate difficulty level based on schedule characteristics
+    var difficulty: DifficultyLevel {
+        let napCount = schedule.filter { !$0.isCore }.count
+        let totalSleepTime = totalSleepHours
         
-        var isCore: Bool {
-            type == "core"
-        }
-        
-        var formattedDuration: String {
-            let hours = duration / 60
-            let minutes = duration % 60
-            if hours > 0 {
-                return minutes > 0 ? "\(hours)h \(minutes)m" : "\(hours)h"
-            }
-            return "\(minutes)m"
-        }
-        
-        var endTime: String {
-            let components = startTime.split(separator: ":")
-            guard components.count == 2,
-                  let hour = Int(components[0]),
-                  let minute = Int(components[1]) else {
-                return startTime
-            }
-            
-            var totalMinutes = hour * 60 + minute + duration
-            if totalMinutes >= 24 * 60 {
-                totalMinutes -= 24 * 60
-            }
-            
-            let endHour = totalMinutes / 60
-            let endMinute = totalMinutes % 60
-            
-            return String(format: "%02d:%02d", endHour, endMinute)
-        }
-        
-        var timeRangeDescription: String {
-            let blockType = isCore ? 
-                NSLocalizedString("sleepBlock.core", comment: "Core sleep block") : 
-                NSLocalizedString("sleepBlock.nap", comment: "Nap block")
-            
-            let durationStr = formattedDuration
-            return "\(startTime)-\(endTime)   \(durationStr) \(blockType.lowercased())"
+        switch (napCount, totalSleepTime) {
+        case (0, 6...8):
+            return .beginner
+        case (1, 5...7):
+            return .intermediate
+        case (2, 4...6):
+            return .advanced
+        default:
+            return .extreme
         }
     }
 }
 
-struct SleepSchedulesResponse: Codable, Equatable {
-    let sleepSchedules: [SleepScheduleModel]
+/// Container for multiple sleep schedules
+public struct SleepSchedulesContainer: Codable {
+    public let sleepSchedules: [SleepScheduleModel]
+    
+    public init(sleepSchedules: [SleepScheduleModel]) {
+        self.sleepSchedules = sleepSchedules
+    }
 }

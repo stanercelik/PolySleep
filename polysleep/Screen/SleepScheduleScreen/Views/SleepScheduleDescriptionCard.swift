@@ -2,94 +2,139 @@ import SwiftUI
 
 struct SleepScheduleDescriptionCard: View {
     let schedule: SleepScheduleModel
+    let isRecommended: Bool
+    @Binding var selectedSchedule: SleepScheduleModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(schedule.name)
-                .font(.title2)
-                .bold()
-                .foregroundColor(Color("TextColor"))
-                .accessibilityAddTraits(.isHeader)
-            
-            Text(schedule.description.localized())
-                .font(.body)
-                .foregroundColor(Color("SecondaryTextColor"))
-            
-            scheduleSection
-            
-            totalSleepSection
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color("BackgroundColor"))
-                .shadow(radius: 5)
-        )
-        .padding(.horizontal)
-    }
-    
-    private var scheduleSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            ForEach(schedule.schedule, id: \.startTime) { block in
-                HStack(spacing: 12) {
-                    Image(systemName: block.isCore ? "moon.fill" : "sun.min.fill")
-                        .foregroundColor(Color("PrimaryColor"))
+        Button(action: {
+            withAnimation {
+                selectedSchedule = schedule
+            }
+        }) {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Text(schedule.name)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.appText)
                     
-                    VStack(alignment: .leading) {
-                        Text(block.isCore ? 
-                            NSLocalizedString("sleepSchedule.core", comment: "") :
-                            NSLocalizedString("sleepSchedule.nap", comment: ""))
-                            .font(.subheadline)
-                            .foregroundColor(Color("TextColor"))
-                        
-                        Text("\(block.startTime) (\(block.formattedDuration))")
-                            .font(.caption)
-                            .foregroundColor(Color("SecondaryTextColor"))
+                    Spacer()
+                    
+                    if isRecommended {
+                        recommendedBadge
                     }
                 }
+                
+                Text(schedule.description.localized())
+                    .font(.body)
+                    .foregroundColor(Color.appSecondaryText)
+                
+                scheduleDetails
+                
+                if schedule.id == selectedSchedule.id {
+                    selectedIndicator
+                }
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(cardBackgroundColor)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(borderColor, lineWidth: schedule.id == selectedSchedule.id ? 2 : 0)
+            )
         }
-        .padding()
+    }
+    
+    private var recommendedBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "star.fill")
+                .font(.caption)
+            Text("Recommended")
+                .font(.caption)
+                .fontWeight(.medium)
+        }
+        .foregroundColor(.white)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
         .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color("SecondaryColor").opacity(0.5))
+            Capsule()
+                .fill(Color.appPrimary)
         )
     }
     
-    private var totalSleepSection: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "bed.double.fill")
-                .foregroundColor(Color("AccentColor"))
+    private var scheduleDetails: some View {
+        VStack(spacing: 12) {
+            scheduleInfoRow(
+                icon: "bed.double.fill",
+                title: "Total Sleep",
+                value: String(format: "%.1f hours", schedule.totalSleepHours)
+            )
             
-            Text(String(format: NSLocalizedString("sleepSchedule.totalSleep", comment: ""),
-                       String(format: "%.1f", schedule.totalSleepHours)))
-                .font(.subheadline)
-                .foregroundColor(Color("TextColor"))
+            scheduleInfoRow(
+                icon: "powersleep",
+                title: "Naps",
+                value: "\(schedule.schedule.filter { !$0.isCore }.count)"
+            )
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color("SecondaryColor").opacity(0.5))
-        )
+    }
+    
+    private var selectedIndicator: some View {
+        HStack {
+            Spacer()
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(Color.appPrimary)
+                .font(.title3)
+        }
+    }
+    
+    private func scheduleInfoRow(icon: String, title: String, value: String) -> some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(Color.appPrimary)
+                .frame(width: 24)
+            
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(Color.appSecondaryText)
+            
+            Spacer()
+            
+            Text(value)
+                .font(.subheadline)
+                .foregroundColor(Color.appText)
+        }
+    }
+    
+    private var cardBackgroundColor: Color {
+        schedule.id == selectedSchedule.id ? Color.appCardBackground : Color.appCardBackground.opacity(0.5)
+    }
+    
+    private var borderColor: Color {
+        schedule.id == selectedSchedule.id ? Color.appPrimary : Color.clear
     }
 }
 
 #Preview {
-    // Sample data for preview
-    let sampleSchedule = SleepScheduleModel(
-        id: "biphasic",
-        name: "Biphasic Sleep",
-        description: .init(
-            en: "A sleep pattern with one core sleep period and one nap",
-            tr: "Bir ana uyku ve bir şekerleme içeren uyku düzeni"
-        ),
-        totalSleepHours: 6.5,
+    let schedule = SleepScheduleModel(
+        id: "monophasic",
+        name: "Monophasic",
+        description: LocalizedDescription(en: "Traditional single sleep period during the night", tr: "Geleneksel tek parça gece uykusu"),
+        totalSleepHours: 8.0,
         schedule: [
-            .init(type: "core", startTime: "23:00", duration: 360),
-            .init(type: "nap", startTime: "14:00", duration: 30)
+            SleepBlock(
+                startTime: "23:00",
+                duration: 480,
+                type: "core",
+                isCore: true
+            )
         ]
     )
     
-    return SleepScheduleDescriptionCard(schedule: sampleSchedule)
-        .preferredColorScheme(.light)
+    SleepScheduleDescriptionCard(
+        schedule: schedule,
+        isRecommended: true,
+        selectedSchedule: .constant(schedule)
+    )
 }

@@ -21,7 +21,7 @@ struct WelcomeView: View {
                         
                         // 2) First Circle
                         Circle()
-                            .fill(Color("PrimaryColor"))
+                            .fill(Color.appPrimary)
                             .frame(width: circleDiameter, height: circleDiameter)
                             .scaleEffect(viewModel.isPrimaryCircleExpanded ? 2 : 0.01, anchor: .center)
                             .position(buttonCenter)
@@ -29,7 +29,7 @@ struct WelcomeView: View {
                         
                         // 3) Second Circle
                         Circle()
-                            .fill(Color("BackgroundColor"))
+                            .fill(Color.appBackground)
                             .frame(width: circleDiameter, height: circleDiameter)
                             .scaleEffect(viewModel.isBackgroundCircleExpanded ? 2 : 0.01, anchor: .center)
                             .position(buttonCenter)
@@ -72,9 +72,9 @@ struct WelcomeView: View {
                 GeometryReader { geo in
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 1)
-                            .fill(Color("SecondaryTextColor").opacity(0.25))
+                            .fill(Color.appSecondaryText.opacity(0.25))
                         RoundedRectangle(cornerRadius: 2)
-                            .fill(Color("PrimaryColor"))
+                            .fill(Color.appPrimary)
                             .frame(width: geo.size.width * viewModel.progressValues[index])
                     }
                 }
@@ -93,7 +93,7 @@ struct WelcomeView: View {
             
             Text(NSLocalizedString("welcomeTitle", comment: ""))
                 .font(.headline)
-                .foregroundColor(Color("SecondaryTextColor"))
+                .foregroundColor(Color.appSecondaryText)
         }
         .padding(.top, 8)
     }
@@ -133,10 +133,10 @@ struct WelcomeView: View {
         }) {
             Text(NSLocalizedString("continue", comment: ""))
                 .font(.title2)
-                .foregroundColor(Color("TextColor"))
+                .foregroundColor(Color.appText)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color("PrimaryColor"))
+                .background(Color.appPrimary)
                 .cornerRadius(28)
         }
         .padding(.bottom, 16)

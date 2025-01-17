@@ -1,15 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "-" : {
-
-    },
-    "%@ (%@)" : {
+    "%@ - %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ (%2$@)"
+            "value" : "%1$@ - %2$@"
           }
         }
       }
@@ -60,6 +57,18 @@
           }
         }
       }
+    },
+    "difficulty.advanced" : {
+      "comment" : "Advanced difficulty"
+    },
+    "difficulty.beginner" : {
+      "comment" : "Beginner difficulty"
+    },
+    "difficulty.extreme" : {
+      "comment" : "Extreme difficulty"
+    },
+    "difficulty.intermediate" : {
+      "comment" : "Intermediate difficulty"
     },
     "firstPageDesc" : {
       "localizations" : {
@@ -171,7 +180,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uyku rutininizde önemli bir değişikliği 2-4 hafta denemeye istekli misiniz?"
+            "value" : "Uykudan başlamak bunun için en iyi yol! By switching to polyphasic sleep, you can unlock a more productive and energetic version of yourself."
           }
         }
       }
@@ -1702,6 +1711,9 @@
         }
       }
     },
+    "Recommended" : {
+
+    },
     "register" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1777,6 +1789,7 @@
       }
     },
     "sleepSchedule.adaptation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1793,6 +1806,7 @@
       }
     },
     "sleepSchedule.adaptationDays" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1809,6 +1823,7 @@
       }
     },
     "sleepSchedule.analysis.adaptation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1825,6 +1840,7 @@
       }
     },
     "sleepSchedule.analysis.duration" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1835,6 +1851,7 @@
       }
     },
     "sleepSchedule.analysis.naps" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1845,6 +1862,7 @@
       }
     },
     "sleepSchedule.analysis.quality" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1855,6 +1873,7 @@
       }
     },
     "sleepSchedule.analysis.schedule" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1865,6 +1884,7 @@
       }
     },
     "sleepSchedule.core" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1898,6 +1918,7 @@
       }
     },
     "sleepSchedule.nap" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1914,6 +1935,7 @@
       }
     },
     "sleepSchedule.naps" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1925,6 +1947,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Şekerleme Sayısı"
+          }
+        }
+      }
+    },
+    "sleepSchedule.qualityTracking" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Quality"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kalitesi"
+          }
+        }
+      }
+    },
+    "sleepSchedule.rateQuality" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalite Değerlendir"
           }
         }
       }
@@ -1946,6 +2002,7 @@
       }
     },
     "sleepSchedule.scheduleType" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1961,7 +2018,42 @@
         }
       }
     },
+    "sleepSchedule.setGoal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Sleep Goal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Hedefi Belirle"
+          }
+        }
+      }
+    },
+    "sleepSchedule.share" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programı Paylaş"
+          }
+        }
+      }
+    },
     "sleepSchedule.sleepAnalysis" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2028,6 +2120,7 @@
       }
     },
     "sleepSchedule.totalSleep" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2039,6 +2132,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toplam Uyku"
+          }
+        }
+      }
+    },
+    "sleepSchedule.trend" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trend"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eğilim"
           }
         }
       }
@@ -2129,6 +2239,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Şekerleme ortamınız bu program için ideal olmayabilir. Şekerleme koşullarınızı iyileştirmeyi veya farklı bir program seçmeyi düşünün."
+          }
+        }
+      }
+    },
+    "sleepSchedule.weeklyAverage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly Average: %.1f/5"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftalık Ortalama: %.1f/5"
           }
         }
       }

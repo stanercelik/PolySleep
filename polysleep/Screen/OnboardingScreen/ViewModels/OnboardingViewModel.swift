@@ -47,9 +47,9 @@ final class OnboardingViewModel: ObservableObject {
         case 1: return ageRange != nil
         case 2: return workSchedule != nil
         case 3: return napEnvironment != nil
-        case 4: return lifestyle != nil 
-        case 5: return knowledgeLevel != nil 
-        case 6: return healthStatus != nil 
+        case 4: return lifestyle != nil
+        case 5: return knowledgeLevel != nil
+        case 6: return healthStatus != nil
         case 7: return motivationLevel != nil
         default: return false
         }
@@ -57,16 +57,12 @@ final class OnboardingViewModel: ObservableObject {
     
     // MARK: - Methods
     func moveNext() {
-        if currentPage < totalPages {
+        if currentPage < totalPages - 1 {
             withAnimation {
                 currentPage += 1
             }
-            
-        }
-        // If we are on the last page trigger navigation
-        else {
-            saveResponses()
-            shouldNavigateToSleepSchedule = true
+        } else {
+            completeOnboarding()
         }
     }
     
@@ -78,33 +74,28 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
     
-    // Save user responses to UserDefaults
-    func saveResponses() {
-        let defaults = UserDefaults.standard
+    private func completeOnboarding() {
+        print("\nSaving onboarding answers to UserDefaults...")
         
-        if let experience = previousSleepExperience {
-            defaults.set(experience.rawValue, forKey: "onboarding.sleepExperience")
-        }
-        if let age = ageRange {
-            defaults.set(age.rawValue, forKey: "onboarding.ageRange")
-        }
-        if let work = workSchedule {
-            defaults.set(work.rawValue, forKey: "onboarding.workSchedule")
-        }
-        if let nap = napEnvironment {
-            defaults.set(nap.rawValue, forKey: "onboarding.napEnvironment")
-        }
-        if let life = lifestyle {
-            defaults.set(life.rawValue, forKey: "onboarding.lifestyle")
-        }
-        if let knowledge = knowledgeLevel {
-            defaults.set(knowledge.rawValue, forKey: "onboarding.knowledgeLevel")
-        }
-        if let health = healthStatus {
-            defaults.set(health.rawValue, forKey: "onboarding.healthStatus")
-        }
-        if let motivation = motivationLevel {
-            defaults.set(motivation.rawValue, forKey: "onboarding.motivationLevel")
+        // Save all answers to UserDefaults
+        let defaults = UserDefaults.standard
+        defaults.set(previousSleepExperience?.rawValue, forKey: "onboarding.sleepExperience")
+        defaults.set(ageRange?.rawValue, forKey: "onboarding.ageRange")
+        defaults.set(workSchedule?.rawValue, forKey: "onboarding.workSchedule")
+        defaults.set(napEnvironment?.rawValue, forKey: "onboarding.napEnvironment")
+        defaults.set(lifestyle?.rawValue, forKey: "onboarding.lifestyle")
+        defaults.set(knowledgeLevel?.rawValue, forKey: "onboarding.knowledgeLevel")
+        defaults.set(healthStatus?.rawValue, forKey: "onboarding.healthStatus")
+        defaults.set(motivationLevel?.rawValue, forKey: "onboarding.motivationLevel")
+        
+        // NEW: Ek soru da kaydetmek istersek:
+        // defaults.set(circadianPreference?.rawValue, forKey: "onboarding.circadianPreference")
+        
+        print("All answers saved. Navigating to Sleep Schedule...")
+        
+        // Navigate to sleep schedule
+        withAnimation {
+            shouldNavigateToSleepSchedule = true
         }
     }
     

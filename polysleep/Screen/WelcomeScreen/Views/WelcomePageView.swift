@@ -18,13 +18,13 @@ struct WelcomePageView: View {
                 Text(pageTitle)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color.appText)
                     .transition(.opacity)
             }
             
             if showDescription {
                 Text(pageDescription)
-                    .foregroundColor(Color("SecondaryTextColor"))
+                    .foregroundColor(Color.appSecondaryText)
                     .font(.headline)
                     .transition(.opacity)
             }

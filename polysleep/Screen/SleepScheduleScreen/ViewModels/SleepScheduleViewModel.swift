@@ -1,88 +1,135 @@
-import Foundation
 import SwiftUI
-import Combine
 
 class SleepScheduleViewModel: ObservableObject {
-    @Published private(set) var schedule: SleepScheduleModel
-    @Published var currentQuality: Int = 0
-    @Published var sleepAnalysis: String?
-    @Published private(set) var warnings: [SleepScheduleRecommendation.Warning] = []
-    @Published private(set) var adaptationPeriod: Int = 14
-    @Published private(set) var confidenceScore: Double = 1.0
+    @Published var schedule: SleepScheduleModel
+    @Published private(set) var recommendedSchedule: SleepScheduleModel?
+    @Published private(set) var defaultSchedule: SleepScheduleModel
     
-    private let userDefaults = UserDefaults.standard
+    let adaptationPeriod: Int = 14
     private let recommender = SleepScheduleRecommender()
     
     init() {
-        // Initialize with a default schedule first
-        self.schedule = SleepScheduleModel(
-            id: "monophasic",
-            name: "Monophasic",
-            description: .init(
-                en: "Traditional single sleep period during the night",
-                tr: "Geleneksel tek parça gece uykusu"
-            ),
-            totalSleepHours: 8.0,
-            schedule: [
-                .init(type: "core", startTime: "23:00", duration: 480)
-            ]
+        // Initialize with default monophasic schedule
+        let coreBlock = SleepBlock(
+            startTime: "23:00",
+            duration: 480, // 8 hours
+            type: "core",
+            isCore: true
         )
         
-        // Then load the recommended schedule
-        loadRecommendedSchedule()
-        updateSleepAnalysis()
+        let monophasicSchedule = SleepScheduleModel(
+            id: "monophasic",
+            name: "Monophasic",
+            description: LocalizedDescription(en: "Traditional single sleep period during the night",
+                                              tr: "Geleneksel tek parça gece uykusu"),
+            totalSleepHours: 8.0,
+            schedule: [coreBlock]
+        )
+        
+        self.defaultSchedule = monophasicSchedule
+        self.schedule = monophasicSchedule
+        
+        // Debug: Test recommendations with different settings
+        testRecommendations()
     }
     
-    private func loadRecommendedSchedule() {
+    // Debug function to test recommendations with different settings
+    private func testRecommendations() {
+        print("\n=== Testing Sleep Schedule Recommendations ===")
+        
+        // Set UserDefaults for testing
+        let defaults = UserDefaults.standard
+        
+        // Aşağıdaki örnek değerleri istediğiniz gibi güncelleyin
+        defaults.set("extensive", forKey: "onboarding.sleepExperience")
+        defaults.set("age25to34", forKey: "onboarding.ageRange")
+        defaults.set("flexible", forKey: "onboarding.workSchedule")
+        defaults.set("ideal", forKey: "onboarding.napEnvironment")
+        defaults.set("moderatelyActive", forKey: "onboarding.lifestyle")
+        defaults.set("advanced", forKey: "onboarding.knowledgeLevel")
+        defaults.set("healthy", forKey: "onboarding.healthStatus")
+        defaults.set("high", forKey: "onboarding.motivationLevel")
+        
+        // Get recommendation with these settings
         if let recommendation = recommender.recommendSchedule() {
+            print("\nRecommended Schedule: \(recommendation.schedule.name)")
+            print("Confidence Score: \(recommendation.confidenceScore)")
+            print("Adaptation Period: \(recommendation.adaptationPeriod) days")
+            
+            if !recommendation.warnings.isEmpty {
+                print("\nWarnings:")
+                recommendation.warnings.forEach { warning in
+                    print("- [\(warning.severity)]: \(warning.messageKey)")
+                }
+            }
+        }
+        
+        print("\n=== End of Test ===\n")
+    }
+    
+    // Call this function after onboarding is complete
+    func updateRecommendations() {
+        print("\n=== Getting Sleep Schedule Recommendations ===")
+        
+        // Print current UserDefaults values
+        let defaults = UserDefaults.standard
+        print("\nCurrent User Settings:")
+        print("Sleep Experience: \(defaults.string(forKey: "onboarding.sleepExperience") ?? "not set")")
+        print("Age Range: \(defaults.string(forKey: "onboarding.ageRange") ?? "not set")")
+        print("Work Schedule: \(defaults.string(forKey: "onboarding.workSchedule") ?? "not set")")
+        print("Nap Environment: \(defaults.string(forKey: "onboarding.napEnvironment") ?? "not set")")
+        print("Lifestyle: \(defaults.string(forKey: "onboarding.lifestyle") ?? "not set")")
+        print("Knowledge Level: \(defaults.string(forKey: "onboarding.knowledgeLevel") ?? "not set")")
+        print("Health Status: \(defaults.string(forKey: "onboarding.healthStatus") ?? "not set")")
+        print("Motivation Level: \(defaults.string(forKey: "onboarding.motivationLevel") ?? "not set")")
+        
+        // Get recommendation based on user settings
+        if let recommendation = recommender.recommendSchedule() {
+            print("\nRecommended Schedule: \(recommendation.schedule.name)")
+            print("Confidence Score: \(recommendation.confidenceScore)")
+            print("Adaptation Period: \(recommendation.adaptationPeriod) days")
+            
+            if !recommendation.warnings.isEmpty {
+                print("\nWarnings:")
+                recommendation.warnings.forEach { warning in
+                    print("- [\(warning.severity)]: \(warning.messageKey)")
+                }
+            }
+            
+            self.recommendedSchedule = recommendation.schedule
             self.schedule = recommendation.schedule
-            self.warnings = recommendation.warnings
-            self.adaptationPeriod = recommendation.adaptationPeriod
-            self.confidenceScore = recommendation.confidenceScore
+        } else {
+            print("\nNo recommendation available, using default schedule")
+            self.schedule = defaultSchedule
+        }
+        
+        print("\n=== End of Recommendations ===\n")
+    }
+    
+    func updateToRecommendedSchedule() {
+        if let recommended = recommendedSchedule {
+            schedule = recommended
         }
     }
     
-    func updateSleepQuality(_ rating: Int) {
-        currentQuality = rating
-        updateSleepAnalysis()
-    }
-    
-    private func determineRecommendedSchedule() -> String {
-        let sleepExperience = userDefaults.integer(forKey: "onboarding.sleepExperience")
-        let napEnvironment = userDefaults.bool(forKey: "onboarding.napEnvironment")
-        let energyLevel = userDefaults.integer(forKey: "onboarding.energyLevel")
+    func shareSchedule() {
+        let scheduleText = """
+        Sleep Schedule: \(schedule.name)
+        Total Sleep: \(schedule.totalSleepHours) hours
         
-        // Conservative recommendation for beginners or those without nap environment
-        if sleepExperience < 3 || !napEnvironment {
-            return "monophasic"
+        Schedule Details:
+        \(schedule.schedule.map { "• \($0.startTime) - \(String(format: "%02d:00", $0.endHour)) (\($0.type))" }.joined(separator: "\n"))
+        """
+        
+        let activityVC = UIActivityViewController(
+            activityItems: [scheduleText],
+            applicationActivities: nil
+        )
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let rootVC = window.rootViewController {
+            rootVC.present(activityVC, animated: true)
         }
-        
-        // For experienced users with nap environment
-        if sleepExperience >= 4 && napEnvironment {
-            return energyLevel >= 4 ? "everyman" : "biphasic"
-        }
-        
-        // Default to biphasic for moderate experience
-        return "biphasic"
-    }
-    
-    private func updateSleepAnalysis() {
-        var analysis = [String]()
-        
-        if currentQuality > 0 {
-            analysis.append(String(format: String(localized: "sleepSchedule.analysis.quality"), currentQuality))
-        }
-        
-        analysis.append(String(format: String(localized: "sleepSchedule.analysis.schedule"), schedule.name))
-        analysis.append(String(format: String(localized: "sleepSchedule.analysis.duration"), schedule.totalSleepHours))
-        
-        let napCount = schedule.schedule.filter { $0.type != "core" }.count
-        if napCount > 0 {
-            analysis.append(String(format: String(localized: "sleepSchedule.analysis.naps"), napCount))
-        }
-        
-        analysis.append(String(format: String(localized: "sleepSchedule.analysis.adaptation"), adaptationPeriod))
-        
-        sleepAnalysis = analysis.joined(separator: "\n")
     }
 }

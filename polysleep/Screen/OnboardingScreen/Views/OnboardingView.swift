@@ -15,12 +15,12 @@ struct OnboardingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("BackgroundColor")
+                Color.appBackground
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
                     ProgressView(value: Double(viewModel.currentPage), total: Double(viewModel.totalPages))
-                        .tint(Color("PrimaryColor"))
+                        .tint(Color.appPrimary)
                         .padding(.horizontal)
                         .accessibilityValue("\(viewModel.currentPage + 1) of \(viewModel.totalPages) pages")
                     

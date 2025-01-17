@@ -36,7 +36,7 @@ struct CircularSleepChart: View {
     
     private var backgroundCircle: some View {
         Circle()
-            .stroke(Color("SecondaryTextColor").opacity(0.12), lineWidth: strokeWidth)
+            .stroke(Color.appSecondaryText.opacity(0.12), lineWidth: strokeWidth)
             .padding(.trailing, strokeWidth)
     }
     
@@ -69,7 +69,7 @@ struct CircularSleepChart: View {
             lineWidth: 1,
             dash: hour % 3 == 0 ? [] : [4, 4]
         ))
-        .foregroundColor(Color("SecondaryTextColor").opacity(hour % 3 == 0 ? 0.3 : 0.2))
+        .foregroundColor(Color.appSecondaryText.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
     private var hourMarkersView: some View {
@@ -86,7 +86,7 @@ struct CircularSleepChart: View {
         
         return Text(String(format: "%02d:00", hour))
             .font(.system(size: 12, weight: .medium))
-            .foregroundColor(Color("SecondaryTextColor"))
+            .foregroundColor(Color.appSecondaryText)
             .position(x: xPosition, y: yPosition)
     }
     
@@ -96,7 +96,7 @@ struct CircularSleepChart: View {
         }
     }
     
-    private func sleepBlockArc(for block: SleepScheduleModel.SleepBlock) -> some View {
+    private func sleepBlockArc(for block: SleepBlock) -> some View {
         guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
             return AnyView(EmptyView())
         }
@@ -116,7 +116,7 @@ struct CircularSleepChart: View {
                     clockwise: false
                 )
             }
-            .stroke(block.type == "core" ? Color("PrimaryColor") : Color("SecondaryColor"), lineWidth: strokeWidth)
+            .stroke(block.type == "core" ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
             .opacity(0.85)
         )
     }
@@ -152,7 +152,7 @@ struct CircularSleepChart: View {
         
         return Text(time)
             .font(.system(size: 10, weight: .medium))
-            .foregroundColor(Color("SecondaryTextColor"))
+            .foregroundColor(Color.appSecondaryText)
             .rotationEffect(.degrees(0)) // Keep text straight
             .position(x: xPosition, y: yPosition)
     }
@@ -222,24 +222,47 @@ struct CircularSleepChart: View {
 
 struct CircularSleepChart_Previews: PreviewProvider {
     static var previews: some View {
+        let schedule = SleepScheduleModel(
+            id: "everyman",
+            name: "Everyman",
+            description: LocalizedDescription(
+                en: "A schedule with one core sleep and multiple naps",
+                tr: "Bir ana uyku ve birden fazla şekerleme içeren uyku düzeni"
+            ),
+            totalSleepHours: 4.6,
+            schedule: [
+                SleepBlock(
+                    startTime: "22:00",
+                    duration: 240,
+                    type: "core",
+                    isCore: true
+                ),
+                SleepBlock(
+                    startTime: "06:00",
+                    duration: 20,
+                    type: "nap",
+                    isCore: false
+                ),
+                SleepBlock(
+                    startTime: "12:00",
+                    duration: 20,
+                    type: "nap",
+                    isCore: false
+                ),
+                SleepBlock(
+                    startTime: "18:00",
+                    duration: 20,
+                    type: "nap",
+                    isCore: false
+                )
+            ]
+        )
+        
         Group {
             // Everyman Schedule Preview
-            CircularSleepChart(schedule: SleepScheduleModel(
-                id: "everyman",
-                name: "Everyman",
-                description: .init(
-                    en: "A schedule with one core sleep and three 20-minute naps",
-                    tr: "Bir ana uyku ve üç adet 20 dakikalık şekerleme içeren uyku düzeni"
-                ),
-                totalSleepHours: 4,
-                schedule: [
-                    .init(type: "core", startTime: "22:00", duration: 180),
-                    .init(type: "nap", startTime: "06:00", duration: 20),
-                    .init(type: "nap", startTime: "12:00", duration: 20),
-                    .init(type: "nap", startTime: "17:00", duration: 20)
-                ]
-            ))
-            .previewDisplayName("Everyman Schedule - Light")
+            CircularSleepChart(schedule: schedule)
+                .frame(width: 300, height: 300)
+                .previewDisplayName("Everyman Schedule - Light")
             
             // Dual Core Schedule Preview
             CircularSleepChart(schedule: SleepScheduleModel(
@@ -251,9 +274,9 @@ struct CircularSleepChart_Previews: PreviewProvider {
                 ),
                 totalSleepHours: 5,
                 schedule: [
-                    .init(type: "core", startTime: "22:00", duration: 180),
-                    .init(type: "core", startTime: "04:00", duration: 90),
-                    .init(type: "nap", startTime: "14:00", duration: 20)
+                    .init(startTime: "22:00", duration: 180, type: "core", isCore: true),
+                    .init(startTime: "04:00", duration: 90, type: "core", isCore: true),
+                    .init(startTime: "14:00", duration: 20, type: "nap", isCore: false)
                 ]
             ))
             .preferredColorScheme(.dark)
@@ -269,12 +292,12 @@ struct CircularSleepChart_Previews: PreviewProvider {
                 ),
                 totalSleepHours: 2,
                 schedule: [
-                    .init(type: "nap", startTime: "02:00", duration: 20),
-                    .init(type: "nap", startTime: "06:00", duration: 20),
-                    .init(type: "nap", startTime: "10:00", duration: 20),
-                    .init(type: "nap", startTime: "14:00", duration: 20),
-                    .init(type: "nap", startTime: "18:00", duration: 20),
-                    .init(type: "nap", startTime: "22:00", duration: 20)
+                    .init(startTime: "02:00",  duration: 20, type: "nap", isCore: false),
+                    .init(startTime: "06:00",  duration: 20, type: "nap", isCore: false),
+                    .init(startTime: "10:00",  duration: 20, type: "nap", isCore: false),
+                    .init(startTime: "14:00",  duration: 20, type: "nap", isCore: false),
+                    .init(startTime: "18:00",  duration: 20, type: "nap", isCore: false),
+                    .init(startTime: "22:00",  duration: 20, type: "nap", isCore: false)
                 ]
             ))
             .previewDisplayName("Uberman Schedule")

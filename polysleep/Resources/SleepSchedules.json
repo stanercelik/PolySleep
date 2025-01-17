@@ -1,6 +1,23 @@
 {
   "sleepSchedules": [
     {
+      "id": "monophasic",
+      "name": "Monophasic Sleep",
+      "description": {
+        "en": "The traditional sleep pattern with one consolidated block of sleep at night, typically lasting 7-9 hours. This is the most common and natural sleep pattern for most people.",
+        "tr": "Geleneksel uyku düzeni, genellikle gece boyunca 7-9 saat süren tek parça uykudan oluşur. Bu, çoğu insan için en yaygın ve doğal uyku düzenidir."
+      },
+      "totalSleepHours": 8,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 480,
+          "isCore": true
+        }
+      ]
+    },
+    {
       "id": "biphasic",
       "name": "Biphasic Sleep",
       "description": {
@@ -12,12 +29,14 @@
         {
           "type": "core",
           "startTime": "23:00",
-          "duration": 360
+          "duration": 360,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "14:00",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         }
       ]
     },
@@ -33,12 +52,14 @@
         {
           "type": "core",
           "startTime": "00:00",
-          "duration": 360
+          "duration": 360,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "13:00",
-          "duration": 90
+          "duration": 90,
+          "isCore": false
         }
       ]
     },
@@ -54,22 +75,26 @@
         {
           "type": "core",
           "startTime": "22:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "04:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "08:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "14:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         }
       ]
     },
@@ -85,17 +110,20 @@
         {
           "type": "core",
           "startTime": "23:00",
-          "duration": 240
+          "duration": 240,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "07:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "13:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         }
       ]
     },
@@ -111,22 +139,26 @@
         {
           "type": "core",
           "startTime": "01:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "06:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "12:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "18:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         }
       ]
     },
@@ -142,27 +174,32 @@
         {
           "type": "core",
           "startTime": "02:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "07:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "11:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "15:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "20:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         }
       ]
     },
@@ -178,22 +215,26 @@
         {
           "type": "nap",
           "startTime": "02:00",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "08:00",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "14:00",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "20:00",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         }
       ]
     },
@@ -209,22 +250,26 @@
         {
           "type": "nap",
           "startTime": "01:30",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "07:30",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "13:30",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "19:30",
-          "duration": 30
+          "duration": 30,
+          "isCore": false
         }
       ]
     },
@@ -240,32 +285,38 @@
         {
           "type": "nap",
           "startTime": "00:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "04:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "08:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "12:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "16:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         },
         {
           "type": "nap",
           "startTime": "20:00",
-          "duration": 20
+          "duration": 20,
+          "isCore": false
         }
       ]
     },
@@ -281,17 +332,20 @@
         {
           "type": "core",
           "startTime": "00:30",
-          "duration": 90
+          "duration": 90,
+          "isCore": true
         },
         {
           "type": "core",
           "startTime": "06:30",
-          "duration": 90
+          "duration": 90,
+          "isCore": true
         },
         {
           "type": "nap",
           "startTime": "14:00",
-          "duration": 60
+          "duration": 60,
+          "isCore": false
         }
       ]
     },
@@ -307,17 +361,20 @@
         {
           "type": "core",
           "startTime": "22:00",
-          "duration": 90
+          "duration": 90,
+          "isCore": true
         },
         {
           "type": "core",
           "startTime": "04:00",
-          "duration": 90
+          "duration": 90,
+          "isCore": true
         },
         {
           "type": "core",
           "startTime": "10:00",
-          "duration": 120
+          "duration": 120,
+          "isCore": true
         }
       ]
     },
@@ -333,12 +390,14 @@
         {
           "type": "core",
           "startTime": "21:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         },
         {
           "type": "core",
           "startTime": "02:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         }
       ]
     },
@@ -354,12 +413,14 @@
         {
           "type": "core",
           "startTime": "21:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         },
         {
           "type": "core",
           "startTime": "03:00",
-          "duration": 180
+          "duration": 180,
+          "isCore": true
         }
       ]
     }
