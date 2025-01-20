@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OnboardingSelectionView<T: Identifiable & RawRepresentable & Hashable>: View where T.RawValue == String {
+struct OnboardingSelectionView<T: Identifiable & LocalizableEnum & Hashable>: View {
     let title: LocalizedStringKey
     let description: LocalizedStringKey?
     let options: [T]
@@ -29,7 +29,7 @@ struct OnboardingSelectionView<T: Identifiable & RawRepresentable & Hashable>: V
                 VStack(spacing: 12) {
                     ForEach(options) { option in
                         SelectionButton(
-                            title: NSLocalizedString(option.rawValue, comment: ""),
+                            title: NSLocalizedString(option.localizedKey, comment: ""),
                             isSelected: selectedOption.map { $0 == option } ?? false,
                             action: { 
                                 withAnimation(.easeInOut(duration: 0.2)) {
@@ -103,7 +103,7 @@ struct OnboardingBoolSelectionView: View {
     }
 }
 
-struct OnboardingMultiSelectionView<T: Identifiable & RawRepresentable & Hashable>: View where T.RawValue == String {
+struct OnboardingMultiSelectionView<T: Identifiable & LocalizableEnum & Hashable>: View {
     let title: LocalizedStringKey
     let description: LocalizedStringKey?
     let options: [T]
@@ -132,9 +132,9 @@ struct OnboardingMultiSelectionView<T: Identifiable & RawRepresentable & Hashabl
                 VStack(spacing: 12) {
                     ForEach(options) { option in
                         MultiSelectionButton(
-                            title: NSLocalizedString(option.rawValue, comment: ""),
+                            title: NSLocalizedString(option.localizedKey, comment: ""),
                             isSelected: selectedOptions.contains(option),
-                            action: {
+                            action: { 
                                 withAnimation(.easeInOut(duration: 0.2)) {
                                     if selectedOptions.contains(option) {
                                         selectedOptions.remove(option)
@@ -159,7 +159,7 @@ struct OnboardingMultiSelectionView<T: Identifiable & RawRepresentable & Hashabl
         OnboardingSelectionView(
             title: "Single Selection",
             description: "Please select one option",
-            options: ["Option 1", "Option 2", "Option 3"].map { PreviewOption(id: $0, rawValue: $0) },
+            options: PreviewOption.allCases.map { $0 },
             selectedOption: .constant(nil)
         )
         
@@ -172,7 +172,7 @@ struct OnboardingMultiSelectionView<T: Identifiable & RawRepresentable & Hashabl
         OnboardingMultiSelectionView(
             title: "Multi Selection",
             description: "Select multiple options",
-            options: ["Option 1", "Option 2", "Option 3"].map { PreviewOption(id: $0, rawValue: $0) },
+            options: PreviewOption.allCases.map { $0 },
             selectedOptions: .constant([])
         )
     }
@@ -180,18 +180,11 @@ struct OnboardingMultiSelectionView<T: Identifiable & RawRepresentable & Hashabl
     .background(Color("BackgroundColor"))
 }
 
-private struct PreviewOption: Identifiable, RawRepresentable, Hashable {
+private enum PreviewOption: String, CaseIterable, Identifiable, LocalizableEnum {
+    case option1 = "Option 1"
+    case option2 = "Option 2"
+    case option3 = "Option 3"
     
-    let id: String
-    let rawValue: String
-    
-    init(id: String, rawValue: String) {
-        self.id = id
-        self.rawValue = rawValue
-    }
-    
-    init?(rawValue: String) {
-        self.id = rawValue
-        self.rawValue = rawValue
-    }
+    var id: String { rawValue }
+    var localizedKey: String { rawValue }
 }

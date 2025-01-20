@@ -6,11 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct OnboardingView: View {
-    @StateObject private var viewModel = OnboardingViewModel()
     @Environment(\.dismiss) private var dismiss
-    @State private var opacity = 1.0
+    let modelContext: ModelContext
+    @StateObject private var viewModel: OnboardingViewModel
+    
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+        _viewModel = StateObject(wrappedValue: OnboardingViewModel(modelContext: modelContext))
+    }
     
     var body: some View {
         NavigationStack {
@@ -19,6 +25,7 @@ struct OnboardingView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 20) {
+                    // ProgressView -> 11 Pages
                     ProgressView(value: Double(viewModel.currentPage), total: Double(viewModel.totalPages))
                         .tint(Color.appPrimary)
                         .padding(.horizontal)
@@ -27,98 +34,112 @@ struct OnboardingView: View {
                     ScrollView {
                         VStack(spacing: 24) {
                             switch viewModel.currentPage {
-                            case 0: // Previous Sleep Experience
+                            case 0:
                                 OnboardingSelectionView(
                                     title: "onboarding.sleepExperience",
                                     description: "onboarding.sleepExperienceQuestion",
                                     options: PreviousSleepExperience.allCases,
                                     selectedOption: $viewModel.previousSleepExperience
                                 )
-                            case 1: // Age Range
+                            case 1:
                                 OnboardingSelectionView(
                                     title: "onboarding.ageRange",
                                     description: "onboarding.ageRangeDescription",
                                     options: AgeRange.allCases,
                                     selectedOption: $viewModel.ageRange
                                 )
-                            case 2: // Work Schedule
+                            case 2:
                                 OnboardingSelectionView(
                                     title: "onboarding.workSchedule",
                                     description: "onboarding.workScheduleQuestion",
                                     options: WorkSchedule.allCases,
                                     selectedOption: $viewModel.workSchedule
                                 )
-                            case 3: // Nap Environment
+                            case 3:
                                 OnboardingSelectionView(
                                     title: "onboarding.napEnvironment",
                                     description: "onboarding.napEnvironmentDescription",
                                     options: NapEnvironment.allCases,
                                     selectedOption: $viewModel.napEnvironment
                                 )
-                            case 4: // Lifestyle
+                            case 4:
                                 OnboardingSelectionView(
                                     title: "onboarding.lifestyle",
                                     description: "onboarding.lifestyleDescription",
                                     options: Lifestyle.allCases,
                                     selectedOption: $viewModel.lifestyle
                                 )
-                            case 5: // Knowledge Level
+                            case 5:
                                 OnboardingSelectionView(
                                     title: "onboarding.knowledgeLevel",
                                     description: "onboarding.knowledgeLevelDescription",
                                     options: KnowledgeLevel.allCases,
                                     selectedOption: $viewModel.knowledgeLevel
                                 )
-                            case 6: // Health Status
+                            case 6:
                                 OnboardingSelectionView(
                                     title: "onboarding.healthStatus",
                                     description: "onboarding.healthStatusDescription",
                                     options: HealthStatus.allCases,
                                     selectedOption: $viewModel.healthStatus
                                 )
-                            case 7: // Motivation Level
+                            case 7:
                                 OnboardingSelectionView(
                                     title: "onboarding.motivationLevel",
                                     description: "onboarding.motivationLevelQuestion",
                                     options: MotivationLevel.allCases,
                                     selectedOption: $viewModel.motivationLevel
                                 )
-                            default: EmptyView() // Ensure no extra screen is shown
+                            case 8:
+                                OnboardingSelectionView(
+                                    title: "onboarding.sleepGoal",
+                                    description: "onboarding.sleepGoalDescription",
+                                    options: SleepGoal.allCases,
+                                    selectedOption: $viewModel.sleepGoal
+                                )
+                            case 9:
+                                OnboardingSelectionView(
+                                    title: "onboarding.socialObligations",
+                                    description: "onboarding.socialObligationsDescription",
+                                    options: SocialObligations.allCases,
+                                    selectedOption: $viewModel.socialObligations
+                                )
+                            case 10:
+                                OnboardingSelectionView(
+                                    title: "onboarding.disruptionTolerance",
+                                    description: "onboarding.disruptionToleranceDescription",
+                                    options: DisruptionTolerance.allCases,
+                                    selectedOption: $viewModel.disruptionTolerance
+                                )
+                            case 11:
+                                OnboardingSelectionView(
+                                    title: "onboarding.chronotype",
+                                    description: "onboarding.chronotypeDescription",
+                                    options: Chronotype.allCases,
+                                    selectedOption: $viewModel.chronotype
+                                )
+                                
+                            default:
+                                EmptyView()
                             }
                         }
                         .padding()
-                        .transition(.opacity.combined(with: .move(edge: .trailing)))
                         .animation(.easeInOut, value: viewModel.currentPage)
                     }
                     
+                    // Navigation buttons
                     OnboardingNavigationButtons(
                         canMoveNext: viewModel.canMoveNext,
                         currentPage: viewModel.currentPage,
                         totalPages: viewModel.totalPages,
                         onNext: {
-                            if viewModel.currentPage < viewModel.totalPages - 1 {
-                                withAnimation {
-                                    viewModel.currentPage += 1
-                                }
-                            } else {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    opacity = 0
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    viewModel.navigateToSleepSchedule()
-                                }
-                            }
+                            viewModel.moveNext()
                         },
                         onBack: {
-                            if viewModel.currentPage > 0 {
-                                withAnimation {
-                                    viewModel.currentPage -= 1
-                                }
-                            }
+                            viewModel.moveBack()
                         }
                     )
                 }
-                .opacity(opacity)
                 .padding(.top, 16)
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -130,6 +151,16 @@ struct OnboardingView: View {
     }
 }
 
+
 #Preview {
-    OnboardingView()
+    do {
+        let schema = Schema([UserFactor.self])
+        let modelConfiguration = ModelConfiguration(schema: schema)
+        let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+        let context = container.mainContext
+        return OnboardingView(modelContext: context)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }

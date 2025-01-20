@@ -1,6 +1,8 @@
 import SwiftUI
+import SwiftData
 
 struct SleepScheduleView: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = SleepScheduleViewModel()
     
     var body: some View {
@@ -17,7 +19,6 @@ struct SleepScheduleView: View {
                         .padding(.horizontal)
                     
                     if let recommendedSchedule = viewModel.recommendedSchedule {
-                        
                         SleepScheduleDescriptionCard(
                             schedule: recommendedSchedule,
                             isRecommended: true,
@@ -29,8 +30,6 @@ struct SleepScheduleView: View {
                     scheduleTimeRanges
                         .padding(.horizontal)
                     
-                    
-                    
                     Spacer(minLength: 24)
                 }
                 .padding()
@@ -38,7 +37,7 @@ struct SleepScheduleView: View {
         }
         .onAppear {
             print("\nSleepScheduleView appeared, updating recommendations...")
-            viewModel.updateRecommendations()
+            viewModel.setModelContext(modelContext)
         }
     }
     
@@ -51,23 +50,17 @@ struct SleepScheduleView: View {
                     .foregroundColor(Color.appText)
                     .accessibility(addTraits: .isHeader)
                     .lineLimit(1)
-                
-                
-                
                 Spacer()
-                
                 shareButton
-                    
             }
+            
             Text(viewModel.schedule.name)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(Color.appPrimary)
                 .accessibility(addTraits: .isHeader)
-            
         }
         .padding(.horizontal)
-        
     }
     
     private var scheduleTimeRanges: some View {
@@ -78,15 +71,29 @@ struct SleepScheduleView: View {
             
             ForEach(viewModel.schedule.schedule) { block in
                 HStack {
-                    Text("\(block.startTime) - \(String(format: "%02d:00", block.endHour))")
+                    Text("\(block.startTime) - \(block.endTime)")
                         .font(.body)
                         .foregroundColor(Color.appText)
                     
                     Spacer()
                     
-                    Text(block.type.capitalized)
-                        .font(.body)
+                    let hours = block.duration / 60
+                    let minutes = block.duration % 60
+                    Text(hours > 0
+                         ? minutes > 0
+                           ? "\(hours)h \(minutes)m"
+                           : "\(hours)h"
+                         : "\(minutes)m"
+                    )
+                    .font(.body)
+                    .foregroundColor(Color.appSecondaryText)
+                    
+                    Text("・")
                         .foregroundColor(Color.appSecondaryText)
+                    
+                    Text(block.isCore ? String(localized: "sleepSchedule.core") : String(localized: "sleepSchedule.nap"))
+                        .font(.body)
+                        .foregroundColor(block.isCore ? Color.appPrimary : Color.appSecondary)
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
@@ -99,7 +106,9 @@ struct SleepScheduleView: View {
     }
     
     private var shareButton: some View {
-        Button(action: { viewModel.shareSchedule() }) {
+        Button(action: {
+            viewModel.shareSchedule()
+        }) {
             Image(systemName: "square.and.arrow.up")
                 .font(.title3)
                 .foregroundColor(.white)
@@ -108,12 +117,20 @@ struct SleepScheduleView: View {
                 .clipShape(Circle())
                 .shadow(color: Color.black.opacity(0.1), radius: 10)
         }
-        .frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
 
 struct SleepScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        SleepScheduleView()
+        // SwiftData Preview
+        do {
+            let schema = Schema([UserFactor.self])
+            let config = ModelConfiguration(schema: schema)
+            let container = try ModelContainer(for: schema, configurations: [config])
+            return SleepScheduleView()
+                .modelContainer(container)
+        } catch {
+            return Text("Preview Error: \(error.localizedDescription)")
+        }
     }
 }

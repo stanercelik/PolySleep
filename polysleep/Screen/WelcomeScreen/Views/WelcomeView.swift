@@ -8,6 +8,7 @@ import SwiftUI
 struct WelcomeView: View {
     @StateObject private var viewModel = WelcomeViewModel()
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var modelContext
     
     @State private var buttonCenter: CGPoint = .zero
     @State private var circleDiameter: CGFloat = 0
@@ -37,7 +38,7 @@ struct WelcomeView: View {
                         
                         // 4) Onboarding View
                         if viewModel.isOnboardingPresented {
-                            OnboardingView()
+                            OnboardingView(modelContext: modelContext)
                                 .transition(.opacity)
                                 .zIndex(1)
                         }

@@ -1,10 +1,36 @@
+//
+//  SleepScheduleRecommender.swift
+//  polysleep
+//
+//  Created by Taner Çelik on 29.12.2024.
+//
+ 
 import Foundation
-import SwiftUI
+import SwiftData
 
-// MARK: - SleepScheduleRecommendation Structure
+// MARK: - UserFactors Yapısı
+/// Tüm yeni eklediğimiz alanlarla birlikte güncel yapı.
+struct UserFactors {
+    let sleepExperience: PreviousSleepExperience
+    let ageRange: AgeRange
+    let workSchedule: WorkSchedule
+    let napEnvironment: NapEnvironment
+    let lifestyle: Lifestyle
+    let knowledgeLevel: KnowledgeLevel
+    let healthStatus: HealthStatus
+    let motivationLevel: MotivationLevel
+    
+    // Yeni eklediğimiz 4 faktör:
+    let sleepGoal: SleepGoal
+    let socialObligations: SocialObligations
+    let disruptionTolerance: DisruptionTolerance
+    let chronotype: Chronotype
+}
+
+// MARK: - SleepScheduleRecommendation Yapısı
 public struct SleepScheduleRecommendation {
     let schedule: SleepScheduleModel
-    let confidenceScore: Double // 0..1
+    let confidenceScore: Double // 0..1 veya 0..1.5 aralığında
     let warnings: [Warning]
     let adaptationPeriod: Int // days
     
@@ -20,532 +46,196 @@ public struct SleepScheduleRecommendation {
     }
 }
 
-// MARK: - SleepScheduleRecommender Service
-
+// MARK: - SleepScheduleRecommender Servisi
 final class SleepScheduleRecommender {
-    private let userDefaults: UserDefaults
+    private let modelContext: ModelContext
     
-    // User factors struct for loading from UserDefaults
-    private struct UserFactors {
-        let sleepExperience: PreviousSleepExperience
-        let ageRange: AgeRange
-        let workSchedule: WorkSchedule
-        let napEnvironment: NapEnvironment
-        let lifestyle: Lifestyle
-        let knowledgeLevel: KnowledgeLevel
-        let healthStatus: HealthStatus
-        let motivationLevel: MotivationLevel
-        
-        init(from userDefaults: UserDefaults) {
-            self.sleepExperience = PreviousSleepExperience(
-                rawValue: userDefaults.string(forKey: "onboarding.sleepExperience") ?? ""
-            ) ?? .none
-            
-            self.ageRange = AgeRange(
-                rawValue: userDefaults.string(forKey: "onboarding.ageRange") ?? ""
-            ) ?? .age25to34
-            
-            self.workSchedule = WorkSchedule(
-                rawValue: userDefaults.string(forKey: "onboarding.workSchedule") ?? ""
-            ) ?? .regular
-            
-            self.napEnvironment = NapEnvironment(
-                rawValue: userDefaults.string(forKey: "onboarding.napEnvironment") ?? ""
-            ) ?? .unsuitable
-            
-            self.lifestyle = Lifestyle(
-                rawValue: userDefaults.string(forKey: "onboarding.lifestyle") ?? ""
-            ) ?? .moderatelyActive
-            
-            self.knowledgeLevel = KnowledgeLevel(
-                rawValue: userDefaults.string(forKey: "onboarding.knowledgeLevel") ?? ""
-            ) ?? .beginner
-            
-            self.healthStatus = HealthStatus(
-                rawValue: userDefaults.string(forKey: "onboarding.healthStatus") ?? ""
-            ) ?? .healthy
-            
-            self.motivationLevel = MotivationLevel(
-                rawValue: userDefaults.string(forKey: "onboarding.motivationLevel") ?? ""
-            ) ?? .moderate
-        }
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
     }
     
-    // MARK: - Init
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-    }
-    
-    // MARK: - Public Method
+    /// Ana fonksiyon: Veritabanındaki kullanıcı faktörlerini alır, puanlama yapar ve uygun schedule önerir.
     func recommendSchedule() -> SleepScheduleRecommendation? {
         print("\n=== Starting Sleep Schedule Recommendation ===")
         
-        let factors = UserFactors(from: userDefaults)
-        print("\nUser Factors loaded:")
-        print("- Sleep Experience: \(factors.sleepExperience.rawValue)")
-        print("- Age Range: \(factors.ageRange.rawValue)")
-        print("- Work Schedule: \(factors.workSchedule.rawValue)")
-        print("- Nap Environment: \(factors.napEnvironment.rawValue)")
-        print("- Lifestyle: \(factors.lifestyle.rawValue)")
-        print("- Knowledge Level: \(factors.knowledgeLevel.rawValue)")
-        print("- Health Status: \(factors.healthStatus.rawValue)")
-        print("- Motivation Level: \(factors.motivationLevel.rawValue)")
+        guard let userFactor = loadUserFactors() else {
+            print("❌ Failed to load user factors from database!")
+            return nil
+        }
         
+        // Enum dönüşümleri
+        let sleepExperience    = PreviousSleepExperience(rawValue: userFactor.sleepExperience)
+        let ageRange           = AgeRange(rawValue: userFactor.ageRange)
+        let workSchedule       = WorkSchedule(rawValue: userFactor.workSchedule)
+        let napEnvironment     = NapEnvironment(rawValue: userFactor.napEnvironment)
+        let lifestyle          = Lifestyle(rawValue: userFactor.lifestyle)
+        let knowledgeLevel     = KnowledgeLevel(rawValue: userFactor.knowledgeLevel)
+        let healthStatus       = HealthStatus(rawValue: userFactor.healthStatus)
+        let motivationLevel    = MotivationLevel(rawValue: userFactor.motivationLevel)
+        
+        // Yeni faktörler
+        let sleepGoal          = SleepGoal(rawValue: userFactor.sleepGoal)
+        let socialObligations  = SocialObligations(rawValue: userFactor.socialObligations)
+        let disruptionTolerance = DisruptionTolerance(rawValue: userFactor.disruptionTolerance)
+        let chronotype         = Chronotype(rawValue: userFactor.chronotype)
+        
+        // Hangi enum dönüştürülemedi?
+        if sleepExperience == nil    { print("❌ SleepExperience enum error: \(userFactor.sleepExperience)") }
+        if ageRange == nil           { print("❌ AgeRange enum error: \(userFactor.ageRange)") }
+        if workSchedule == nil       { print("❌ WorkSchedule enum error: \(userFactor.workSchedule)") }
+        if napEnvironment == nil     { print("❌ NapEnvironment enum error: \(userFactor.napEnvironment)") }
+        if lifestyle == nil          { print("❌ Lifestyle enum error: \(userFactor.lifestyle)") }
+        if knowledgeLevel == nil     { print("❌ KnowledgeLevel enum error: \(userFactor.knowledgeLevel)") }
+        if healthStatus == nil       { print("❌ HealthStatus enum error: \(userFactor.healthStatus)") }
+        if motivationLevel == nil    { print("❌ MotivationLevel enum error: \(userFactor.motivationLevel)") }
+        
+        // Yeni dört faktör için kontrol
+        if sleepGoal == nil          { print("❌ SleepGoal enum error: \(userFactor.sleepGoal)") }
+        if socialObligations == nil  { print("❌ SocialObligations enum error: \(userFactor.socialObligations)") }
+        if disruptionTolerance == nil { print("❌ DisruptionTolerance enum error: \(userFactor.disruptionTolerance)") }
+        if chronotype == nil         { print("❌ Chronotype enum error: \(userFactor.chronotype)") }
+        
+        // Hepsi nil değilse kullan
+        guard
+            let sleepExp  = sleepExperience,
+            let ageR      = ageRange,
+            let workSch   = workSchedule,
+            let napEnv    = napEnvironment,
+            let lifeS     = lifestyle,
+            let knowL     = knowledgeLevel,
+            let healthSt  = healthStatus,
+            let motivL    = motivationLevel,
+            let sGoal     = sleepGoal,
+            let sOblig    = socialObligations,
+            let dToler    = disruptionTolerance,
+            let cType     = chronotype
+        else {
+            print("❌ Failed to convert one or more enums!")
+            return nil
+        }
+        
+        // Tüm faktörleri tek bir struct içine koy
+        let factors = UserFactors(
+            sleepExperience:    sleepExp,
+            ageRange:           ageR,
+            workSchedule:       workSch,
+            napEnvironment:     napEnv,
+            lifestyle:          lifeS,
+            knowledgeLevel:     knowL,
+            healthStatus:       healthSt,
+            motivationLevel:    motivL,
+            sleepGoal:          sGoal,
+            socialObligations:  sOblig,
+            disruptionTolerance:dToler,
+            chronotype:         cType
+        )
+        
+        print("\nUser Factors loaded:")
+        print("- Sleep Experience:  \(sleepExp.rawValue)")
+        print("- Age Range:         \(ageR.rawValue)")
+        print("- Work Schedule:     \(workSch.rawValue)")
+        print("- Nap Environment:   \(napEnv.rawValue)")
+        print("- Lifestyle:         \(lifeS.rawValue)")
+        print("- Knowledge Level:   \(knowL.rawValue)")
+        print("- Health Status:     \(healthSt.rawValue)")
+        print("- Motivation Level:  \(motivL.rawValue)")
+        print("- Sleep Goal:        \(sGoal.rawValue)")
+        print("- Social Obligations:\(sOblig.rawValue)")
+        print("- Disruption Tol.:   \(dToler.rawValue)")
+        print("- Chronotype:        \(cType.rawValue)")
+        
+        // JSON'dan schedule'ları yükle
         guard let schedules = loadSleepSchedules() else {
-            print("❌ Failed to load sleep schedules!")
+            print("❌ Failed to load sleep schedules from JSON!")
             return nil
         }
         
         print("\nEvaluating \(schedules.count) sleep schedules...")
         
-        var allScores: [(id: String, score: Double)] = []
-        
-        // Calculate score for each schedule
-        let scoredSchedules = schedules.map { schedule -> (SleepScheduleModel, Double) in
+        // Her schedule için puan hesapla
+        var allScores: [(SleepScheduleModel, Double)] = []
+        for schedule in schedules {
             let score = calculateScheduleScore(schedule, factors: factors)
-            allScores.append((schedule.id, score))
-            return (schedule, score)
+            allScores.append((schedule, score))
         }
         
-        // Print scores in descending order
-        print("\nAll Schedule Scores (sorted):")
-        allScores.sorted { $0.score > $1.score }.forEach { score in
-            print("\(score.id): \(String(format: "%.3f", score.score))")
-        }
+        // Skorları yüksekten düşüğe sırala
+        allScores.sort { $0.1 > $1.1 }
         
-        // Select the schedule with the highest score
-        guard let (bestSchedule, score) = scoredSchedules.max(by: { $0.1 < $1.1 }) else {
+        print("\n=== Sleep Schedule Scores (Sorted) ===")
+        print("Format: Schedule Name (Total Sleep) - Score - Difficulty")
+        print("------------------------------------------------")
+        for (schedule, score) in allScores {
+            print("\(schedule.name.padRight(toLength: 20)) - Score: \(String(format: "%.3f", score)) - \(schedule.difficulty.rawValue)")
+        }
+        print("------------------------------------------------")
+        
+        // En yüksek skorlu schedule
+        guard let (bestSchedule, bestScore) = allScores.first else {
             print("❌ No valid schedule found!")
             return nil
         }
         
-        print("\n✅ Best Schedule Selected:")
-        print("- Schedule: \(bestSchedule.id)")
-        print("- Score: \(String(format: "%.3f", score))")
-        print("- Total Sleep: \(bestSchedule.totalSleepHours) hours")
-        print("- Number of Naps: \(bestSchedule.schedule.filter { !$0.isCore }.count)")
+        print("\n✅ Recommended Schedule: \(bestSchedule.name)")
+        print("- Total Score: \(String(format: "%.3f", bestScore))")
+        print("- Difficulty:  \(bestSchedule.difficulty.rawValue)")
         
+        // Warnings oluştur
         let warnings = generateWarnings(for: bestSchedule, factors: factors)
-        if !warnings.isEmpty {
-            print("\nWarnings Generated:")
-            warnings.forEach { warning in
-                print("- [\(warning.severity)]: \(warning.messageKey)")
-            }
-        }
         
-        let adaptationPeriod = calculateAdaptationPeriod(for: bestSchedule, factors: factors)
-        print("\nAdaptation Period: \(adaptationPeriod) days")
+        // Adaptasyon süresi hesapla
+        let adaptationPeriod = calculateAdaptationPeriod(experience: sleepExp, motivation: motivL)
         
-        print("\n=== Recommendation Complete ===\n")
-        
+        // Sonuç dön
         return SleepScheduleRecommendation(
             schedule: bestSchedule,
-            confidenceScore: score,
+            confidenceScore: bestScore,
             warnings: warnings,
             adaptationPeriod: adaptationPeriod
         )
     }
     
-    /// Calculate the score for a given schedule
-    private func calculateScheduleScore(_ schedule: SleepScheduleModel, factors: UserFactors) -> Double {
-        var score = 1.0
-        print("\n=== Calculating score for \(schedule.id) ===")
-        print("Initial score: \(score)")
+    // MARK: - UserFactors Yükleme
+    /// Veritabanından (SwiftData) son girilen `UserFactor` kaydını alır
+    private func loadUserFactors() -> UserFactor? {
+        print("\n=== Loading User Factors ===")
+        let descriptor = FetchDescriptor<UserFactor>()
         
-        let napCount = schedule.schedule.filter { !$0.isCore }.count
-        print("Number of naps: \(napCount)")
-        
-        // 1. Initial scoring (daha belirgin ayrımlar)
-        switch schedule.id {
-        case "monophasic":
-            // Geleneksel / basit => en düşük baz
-            score = 0.6
-            print("Base schedule initial score (monophasic): \(score)")
+        do {
+            let factors = try modelContext.fetch(descriptor)
+            print("Found \(factors.count) user factors in database")
             
-        case "segmented", "segmented-alt":
-            // Orta seviye => biraz daha yüksek
-            score = 0.7
-            print("Base schedule initial score (segmented): \(score)")
-            
-        case "biphasic", "biphasic-extended":
-            // Daha popüler/kolay çoklu => biraz daha yüksek
-            score = 0.8
-            print("Base schedule initial score (biphasic): \(score)")
-            
-        case "triphasic", "triphasic-alt":
-            // Üç parçaya ayrılmış => biraz daha "ileri"
-            score = 0.9
-            print("Base schedule initial score (triphasic): \(score)")
-            
-        case "everyman", "everyman-e2", "everyman-e3", "everyman-e4":
-            // Orta-ileri polifazik => yüksek baz
-            score = 1.0
-            print("Base schedule initial score (everyman): \(score)")
-            
-        case "dymaxion", "dymaxion-alt":
-            // Daha ekstrem => bazda biraz daha düşük
-            score = 0.5
-            print("Base schedule initial score (dymaxion): \(score)")
-            
-        case "uberman":
-            // En ekstrem => düşük baz
-            score = 0.4
-            print("Base schedule initial score (uberman): \(score)")
-            
-        default:
-            print("Default schedule initial score: \(score)")
-        }
-
-        // 2. Experience-based adjustments
-        switch factors.sleepExperience {
-        case .none:
-            // Yeni başlayanlar: fazla nap varsa biraz ceza
-            if napCount > 1 {
-                score *= 0.9
-                print("Penalty for no experience with multiple naps: \(score)")
-            }
-        case .some:
-            // Biraz denemiş, ama çok uzun sürmemiş
-            if napCount > 2 {
-                score *= 0.95
-                print("Minor penalty for some experience with many naps: \(score)")
-            }
-        case .moderate:
-            // Bir süre kullanmış
-            if napCount >= 2 {
-                score *= 1.1
-                print("Bonus for moderate experience with multiple naps: \(score)")
-            }
-        case .extensive:
-            // Uzun süre kullanmış
-            // Naps = multiple => +%20
-            if napCount >= 2 {
-                score *= 1.2
-                print("Major bonus for extensive experience with multiple naps: \(score)")
-            }
-        }
-
-        // 3. Knowledge level + schedule complexity
-        switch schedule.id {
-        case "uberman", "dymaxion", "dymaxion-alt":
-            // Bu planlar çok ekstrem; advanced knowledge + high motivation varsa büyük bonus
-            if factors.knowledgeLevel == .advanced && factors.motivationLevel == .high {
-                score *= 1.5  // Yüksek bonus
-                print("Extreme schedule with advanced knowledge & high motivation: \(score)")
+            if let factor = factors.first {
+                print("User Factor Values:")
+                print("- Sleep Experience:  \(factor.sleepExperience)")
+                print("- Age Range:         \(factor.ageRange)")
+                print("- Work Schedule:     \(factor.workSchedule)")
+                print("- Nap Environment:   \(factor.napEnvironment)")
+                print("- Lifestyle:         \(factor.lifestyle)")
+                print("- Knowledge Level:   \(factor.knowledgeLevel)")
+                print("- Health Status:     \(factor.healthStatus)")
+                print("- Motivation Level:  \(factor.motivationLevel)")
+                print("- Sleep Goal:        \(factor.sleepGoal)")
+                print("- Social Obligations:\(factor.socialObligations)")
+                print("- Disruption Tol.:   \(factor.disruptionTolerance)")
+                print("- Chronotype:        \(factor.chronotype)")
+                
+                return factor
             } else {
-                // Yoksa bir miktar ceza
-                score *= 0.8
-                print("Penalty for extreme schedule without advanced knowledge: \(score)")
+                print("❌ No user factors found in database")
+                return nil
             }
-            
-        case "everyman", "everyman-e2", "everyman-e3", "everyman-e4":
-            // Knowledge seviyesi advanced değilse çok hafif ceza
-            if factors.knowledgeLevel != .advanced {
-                score *= 0.9
-                print("Slight penalty for Everyman if not advanced knowledge: \(score)")
-            }
-            
-        case "triphasic", "triphasic-alt":
-            // Intermediate veya advanced ise hafif bonus
-            if factors.knowledgeLevel == .advanced || factors.knowledgeLevel == .intermediate {
-                score *= 1.1
-                print("Triphasic knowledge bonus: \(score)")
-            }
-            
-        default:
-            // Monophasic, biphasic, segmented gibi planlar
-            // Knowledge level farkı büyük etki etmesin
-            print("No specific knowledge adjustment for this schedule type.")
-        }
-
-        // 4. Environment and schedule compatibility
-        if napCount > 0 {
-            // Daha çok nap => environment önemli
-            switch factors.napEnvironment {
-            case .ideal:
-                score *= 1.2
-                print("Ideal nap environment bonus: \(score)")
-            case .suitable:
-                score *= 1.1
-                print("Suitable nap environment bonus: \(score)")
-            case .unsuitable:
-                score *= 0.85
-                print("Unsuitable nap environment penalty: \(score)")
-            case .limited:
-                score *= 0.9
-                print("Limited nap environment penalty: \(score)")
-            }
-        } else {
-            // Nap yok (monophasic, segmented, vb.)
-            // Ortamın etkisi az
-            print("No naps => environment less critical here.")
-        }
-
-        // 5. Work schedule compatibility
-        switch factors.workSchedule {
-        case .flexible:
-            // Flexible + naps => büyük bonus
-            if napCount > 1 {
-                score *= 1.3
-                print("Flexible schedule big bonus for multiple naps: \(score)")
-            } else if napCount == 1 {
-                score *= 1.1
-                print("Flexible schedule minor bonus for single nap: \(score)")
-            }
-        case .irregular:
-            // Irregular => bazen polyphasic işleyebilir
-            if napCount >= 3 {
-                score *= 1.1
-                print("Irregular schedule minor bonus for many naps: \(score)")
-            }
-        case .regular:
-            // Regular => multiple naps ceza
-            if napCount > 1 {
-                score *= 0.85
-                print("Regular work schedule penalty for multiple naps: \(score)")
-            }
-        case .shift:
-            // Shift => polyphasic bazen avantajlı
-            if napCount > 0 {
-                score *= 1.1
-                print("Shift work schedule bonus for naps: \(score)")
-            }
-        }
-
-        // 6. Polyphasic suitability (yaş + lifestyle)
-        let suitability = calculatePolyphasicSuitability(for: schedule, napCount: napCount, factors: factors)
-        score *= suitability
-        print("Polyphasic suitability: \(suitability), New score: \(score)")
-        
-        // 7. Knowledge adjustment (daha genel)
-        let knowledgeScore = calculateKnowledgeAdjustment(napCount: napCount, level: factors.knowledgeLevel)
-        score *= knowledgeScore
-        print("Knowledge adjustment: \(knowledgeScore), New score: \(score)")
-        
-        // 8. Motivation adjustment
-        let motivationScore = calculateMotivationAdjustment(napCount: napCount, level: factors.motivationLevel)
-        score *= motivationScore
-        print("Motivation adjustment: \(motivationScore), New score: \(score)")
-        
-        // 9. Nap environment quality (second pass, if schedule has naps)
-        if napCount > 0 {
-            let envScore = calculateNapEnvironmentScore(environment: factors.napEnvironment)
-            score *= envScore
-            print("Nap environment second pass: \(envScore), New score: \(score)")
-        }
-        
-        // 10. Penalty for NO naps if environment is good (some subtle effect)
-        if napCount == 0 {
-            switch factors.napEnvironment {
-            case .ideal:
-                score *= 0.95
-                print("Penalty for no naps despite ideal environment: \(score)")
-            case .suitable:
-                score *= 0.97
-                print("Penalty for no naps despite suitable environment: \(score)")
-            default:
-                break
-            }
-        }
-        
-        // 11. Global push for polyphasic under perfect conditions
-        if napCount >= 2 &&
-           (factors.workSchedule == .flexible || factors.workSchedule == .irregular) &&
-           factors.napEnvironment == .ideal &&
-           factors.motivationLevel == .high {
-            
-            score *= 1.2
-            print("Bonus for perfect polyphasic conditions: \(score)")
-        }
-        
-        print("Final score for \(schedule.id): \(String(format: "%.3f", score))")
-        print("=====================================")
-        
-        return score
-    }
-    
-    // MARK: - Helper Score Functions
-    
-    private func calculatePolyphasicSuitability(for schedule: SleepScheduleModel,
-                                                napCount: Int,
-                                                factors: UserFactors) -> Double {
-        var suitability = 1.0
-        
-        // Yaş
-        switch factors.ageRange {
-        case .under18:
-            // Çok genç => belki polyphasic ~ risky
-            if napCount > 2 { suitability *= 0.7 }
-        case .age18to24:
-            // Gençler polyphasic’e genelde daha uygun
-            if napCount > 2 { suitability *= 1.05 }
-        case .age25to34:
-            if napCount > 2 { suitability *= 1.0 }
-        case .age35to44:
-            if napCount > 2 { suitability *= 0.95 }
-        case .age45to54:
-            if napCount > 2 { suitability *= 0.85 }
-        case .age55Plus:
-            if napCount > 1 { suitability *= 0.8 }
-        }
-        
-        // Yaşam tarzı
-        switch factors.lifestyle {
-        case .calm:
-            // Sakin yaşam => az nap = normal
-            if napCount >= 3 { suitability *= 0.9 }
-        case .moderatelyActive:
-            suitability *= 1.0
-        case .veryActive:
-            // Çok aktif => belki 2+ nap avantaj
-            if napCount >= 2 { suitability *= 1.1 }
-        }
-        
-        return suitability
-    }
-    
-    private func calculateKnowledgeAdjustment(napCount: Int, level: KnowledgeLevel) -> Double {
-        // Varsayılan: Çok naps = zor => advanced knowledge bonus
-        var factor = 1.0
-        
-        switch level {
-        case .beginner:
-            // NapCount 2+ ise penalty
-            if napCount >= 2 {
-                factor = 0.85
-            }
-        case .intermediate:
-            if napCount >= 3 {
-                factor = 0.9
-            }
-        case .advanced:
-            // NapCount fazla ise bonus
-            if napCount >= 3 {
-                factor = 1.1
-            }
-        }
-        
-        return factor
-    }
-    
-    private func calculateMotivationAdjustment(napCount: Int, level: MotivationLevel) -> Double {
-        // Yüksek motivasyon => çoklu naps'a artı
-        var factor = 1.0
-        switch level {
-        case .low:
-            // Fazla nap => ceza
-            if napCount >= 2 {
-                factor = 0.8
-            }
-        case .moderate:
-            if napCount >= 3 {
-                factor = 0.9
-            }
-        case .high:
-            if napCount >= 3 {
-                factor = 1.15
-            }
-        }
-        
-        return factor
-    }
-    
-    private func calculateNapEnvironmentScore(environment: NapEnvironment) -> Double {
-        // Tek sefer daha küçük, çok naps > environment critical (handled above)
-        switch environment {
-        case .unsuitable:
-            return 0.9
-        case .limited:
-            return 0.95
-        case .suitable:
-            return 1.0
-        case .ideal:
-            return 1.05
+        } catch {
+            print("❌ Error fetching user factors: \(error)")
+            return nil
         }
     }
     
-    // MARK: - Warning and Adaptation
-    
-    private func generateWarnings(for schedule: SleepScheduleModel,
-                                  factors: UserFactors) -> [SleepScheduleRecommendation.Warning] {
-        var warnings: [SleepScheduleRecommendation.Warning] = []
-        
-        if schedule.difficulty == .extreme {
-            switch factors.sleepExperience {
-            case .none, .some:
-                warnings.append(
-                    .init(severity: .critical, messageKey: "warning.experienceTooLow")
-                )
-            case .moderate:
-                warnings.append(
-                    .init(severity: .warning, messageKey: "warning.moderateExperience")
-                )
-            case .extensive:
-                warnings.append(
-                    .init(severity: .info, messageKey: "warning.challengingSchedule")
-                )
-            }
-        }
-        
-        if schedule.difficulty == .extreme && factors.healthStatus != .healthy {
-            warnings.append(
-                .init(severity: .critical, messageKey: "warning.healthConcerns")
-            )
-        }
-        
-        let hasNaps = schedule.schedule.contains { !$0.isCore }
-        if hasNaps && factors.napEnvironment == .unsuitable {
-            warnings.append(
-                .init(severity: .warning, messageKey: "warning.unsuitableNapEnvironment")
-            )
-        }
-        
-        if schedule.hasNapsInWorkHours && factors.workSchedule == .regular {
-            warnings.append(
-                .init(severity: .warning, messageKey: "warning.workScheduleConflict")
-            )
-        }
-        
-        return warnings
-    }
-    
-    private func calculateAdaptationPeriod(for schedule: SleepScheduleModel,
-                                           factors: UserFactors) -> Int {
-        let basePeriod: Int = {
-            switch schedule.difficulty {
-            case .extreme:      return 28
-            case .advanced:     return 21
-            case .intermediate: return 14
-            case .beginner:     return 7
-            }
-        }()
-        
-        let experienceMultiplier: Double = {
-            switch factors.sleepExperience {
-            case .extensive: return 0.7
-            case .moderate:  return 0.8
-            case .some:      return 0.9
-            case .none:      return 1.0
-            }
-        }()
-        
-        let motivationMultiplier: Double = {
-            switch factors.motivationLevel {
-            case .high:     return 0.8
-            case .moderate: return 0.9
-            case .low:      return 1.0
-            }
-        }()
-        
-        return Int(Double(basePeriod) * experienceMultiplier * motivationMultiplier)
-    }
-    
-    // MARK: - JSON Loading
-    
+    // MARK: - Schedules JSON Yükleme
+    /// Bundle içindeki SleepSchedules.json dosyasını yükler ve decode eder
     private func loadSleepSchedules() -> [SleepScheduleModel]? {
-        print("\nAttempting to load sleep schedules...")
         guard let url = Bundle.main.url(forResource: "SleepSchedules", withExtension: "json") else {
-            print("Could not find SleepSchedules.json in bundle")
+            print("Could not find SleepSchedules.json in the main bundle")
             return nil
         }
         
@@ -553,11 +243,283 @@ final class SleepScheduleRecommender {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             let container = try decoder.decode(SleepSchedulesContainer.self, from: data)
-            print("Successfully loaded \(container.sleepSchedules.count) schedules")
+            print("Successfully loaded \(container.sleepSchedules.count) schedules from JSON")
             return container.sleepSchedules
         } catch {
-            print("Error loading sleep schedules: \(error)")
+            print("Error loading schedules: \(error)")
             return nil
         }
+    }
+    
+    // MARK: - Score Hesaplama
+    private func calculateScheduleScore(_ schedule: SleepScheduleModel, factors: UserFactors) -> Double {
+        var score = 1.0
+        
+        // 1) Sleep Experience
+        switch factors.sleepExperience {
+        case .none:        score *= 0.7
+        case .some:        score *= 0.8
+        case .moderate:    score *= 0.9
+        case .extensive:   score *= 1.0
+        }
+        
+        // 2) Age Range
+        switch factors.ageRange {
+        case .under18:
+            // 18 yaş altıysanız, çok ekstrem düzenleri istemeyebiliriz
+            score *= 0.6
+        case .age18to24:
+            score *= 1.0
+        case .age25to34:
+            score *= 0.9
+        case .age35to44:
+            score *= 0.8
+        case .age45to54:
+            score *= 0.7
+        case .age55Plus:
+            score *= 0.6
+        }
+        
+        // 3) Work Schedule
+        switch factors.workSchedule {
+        case .flexible:
+            score *= 1.0
+        case .regular:
+            score *= 0.9
+        case .irregular:
+            score *= 0.7
+        case .shift:
+            score *= 0.6
+        }
+        
+        // 4) Nap Environment (only matters if napCount>0)
+        let napCount = schedule.schedule.filter { !$0.isCore }.count
+        if napCount > 0 {
+            switch factors.napEnvironment {
+            case .ideal:      score *= 1.0
+            case .suitable:   score *= 0.9
+            case .limited:    score *= 0.7
+            case .unsuitable: score *= 0.5
+            }
+        }
+        
+        // 5) Lifestyle
+        switch factors.lifestyle {
+        case .calm:
+            score *= 1.0
+        case .moderatelyActive:
+            score *= 0.9
+        case .veryActive:
+            score *= 0.7
+        }
+        
+        // 6) Knowledge Level
+        switch factors.knowledgeLevel {
+        case .beginner:
+            score *= 0.8
+        case .intermediate:
+            score *= 0.9
+        case .advanced:
+            score *= 1.0
+        }
+        
+        // 7) Health Status
+        switch factors.healthStatus {
+        case .healthy:
+            score *= 1.0
+        case .managedConditions:
+            score *= 0.7
+        case .seriousConditions:
+            score *= 0.4
+        }
+        
+        // 8) Motivation
+        switch factors.motivationLevel {
+        case .low:
+            score *= 0.7
+        case .moderate:
+            score *= 0.85
+        case .high:
+            score *= 1.0
+        }
+        
+        // ----------------------------------------------
+        // YENİ 4 FAKTÖR
+        // 9) Sleep Goal
+        switch factors.sleepGoal {
+        case .moreProductivity:
+            // Daha fazla üretkenlik -> daha sık (polyphasic) ufak bonus
+            if napCount >= 2 {
+                score *= 1.1
+            }
+        case .balancedLifestyle:
+            // Dengeli yaşam -> çok fazla nap (5+) ceza
+            if napCount >= 5 {
+                score *= 0.8
+            }
+        case .improveHealth:
+            // Sağlığı iyileştirme -> 4 saatin altı total sleep ceza
+            if schedule.totalSleepHours < 4.0 {
+                score *= 0.6
+            }
+        case .curiosity:
+            // Deneysellik -> 2+ nap için hafif bonus
+            if napCount >= 2 {
+                score *= 1.05
+            }
+        }
+        
+        // 10) Social Obligations
+        switch factors.socialObligations {
+        case .significant:
+            // Çok sosyal yükümlülük -> çok nap'li schedule ceza
+            if napCount >= 3 {
+                score *= 0.75
+            }
+        case .moderate:
+            // Orta -> 6+ naps ceza
+            if napCount >= 6 {
+                score *= 0.7
+            }
+        case .minimal:
+            // Az -> polifazik'e bonus
+            if napCount >= 4 {
+                score *= 1.1
+            }
+        }
+        
+        // 11) Disruption Tolerance
+        switch factors.disruptionTolerance {
+        case .verySensitive:
+            // Uykusu bölünmeye hassas -> 2+ nap varsa ceza
+            if napCount >= 2 {
+                score *= 0.75
+            }
+        case .somewhatSensitive:
+            // Orta hassas -> 3+ nap varsa ceza
+            if napCount >= 3 {
+                score *= 0.85
+            }
+        case .notSensitive:
+            // Bölünmeye tolerant -> 3+ nap'a bonus
+            if napCount >= 3 {
+                score *= 1.1
+            }
+        }
+        
+        // 12) Chronotype
+        switch factors.chronotype {
+        case .morningLark:
+            // Sabahçı -> eğer core sleep çok geç başlıyorsa biraz ceza
+            let hasLateCore = schedule.schedule.contains { block in
+                block.isCore && (TimeFormatter.time(from: block.startTime)?.hour ?? 0) >= 2
+            }
+            if hasLateCore {
+                score *= 0.8
+            }
+        case .nightOwl:
+            // Gece kuşu -> eğer core sleep 22:00 gibi erken başlıyorsa ceza
+            let hasEarlyCore = schedule.schedule.contains { block in
+                block.isCore && (TimeFormatter.time(from: block.startTime)?.hour ?? 0) < 22
+            }
+            if hasEarlyCore {
+                score *= 0.8
+            }
+        case .neutral:
+            // Nötr -> ek bir şey yok
+            break
+        }
+        
+        // ----------------------------------------------
+        // MONOPHASIC LOGİĞİNE EK PENALTY / BONUS
+        
+        if schedule.id == "monophasic" {
+            // 18 yaş altı veya ciddi sağlık problemi varsa -> Monophasic bonus
+            if (factors.ageRange == .under18) || (factors.healthStatus == .seriousConditions) {
+                score *= 1.3
+            }
+            
+            // Yetişkin, sağlıklı, motivasyonu düşük olmayanlar -> Monophasic cezası
+            let isAdult       = (factors.ageRange != .under18)
+            let isHealthy     = (factors.healthStatus == .healthy)
+            let hasMotivation = (factors.motivationLevel == .moderate || factors.motivationLevel == .high)
+            
+            if isAdult && isHealthy && hasMotivation {
+                score *= 0.3
+            }
+        }
+        
+        // Son olarak 0..1.5 aralığına clamp
+        let finalScore = max(0.0, min(1.5, score))
+        return finalScore
+    }
+    
+    // MARK: - Warnings
+    /// Ek uyarı mekanizması
+    private func generateWarnings(for schedule: SleepScheduleModel, factors: UserFactors) -> [SleepScheduleRecommendation.Warning] {
+        var warnings: [SleepScheduleRecommendation.Warning] = []
+        
+        // Difficulty = .extreme ve deneyim düşükse
+        if schedule.difficulty == .extreme {
+            switch factors.sleepExperience {
+            case .none, .some:
+                warnings.append(.init(severity: .critical, messageKey: "warning.experienceTooLow"))
+            case .moderate:
+                warnings.append(.init(severity: .warning, messageKey: "warning.moderateExperience"))
+            case .extensive:
+                warnings.append(.init(severity: .info, messageKey: "warning.challengingSchedule"))
+            }
+        }
+        
+        // Health durumunu da ek bir kontrol
+        if schedule.difficulty == .extreme && factors.healthStatus != .healthy {
+            warnings.append(.init(severity: .critical, messageKey: "warning.healthConcerns"))
+        }
+        
+        // Naps varsa ama ortam “unsuitable” ise
+        let hasNaps = schedule.schedule.contains { !$0.isCore }
+        if hasNaps && factors.napEnvironment == .unsuitable {
+            warnings.append(.init(severity: .warning, messageKey: "warning.unsuitableNapEnvironment"))
+        }
+        
+        // Work hours (09:00-17:00) ile çakışma
+        if schedule.hasNapsInWorkHours && factors.workSchedule == .regular {
+            warnings.append(.init(severity: .warning, messageKey: "warning.workScheduleConflict"))
+        }
+        
+        return warnings
+    }
+    
+    // MARK: - Adaptation Period
+    /// Deneyim ve motivasyona göre adaptasyon süresi (basit örnek)
+    private func calculateAdaptationPeriod(experience: PreviousSleepExperience, motivation: MotivationLevel) -> Int {
+        let basePeriod = 14
+        let expMult: Double
+        switch experience {
+        case .none:      expMult = 1.2
+        case .some:      expMult = 1.0
+        case .moderate:  expMult = 0.8
+        case .extensive: expMult = 0.6
+        }
+        
+        let motMult: Double
+        switch motivation {
+        case .low:       motMult = 1.2
+        case .moderate:  motMult = 1.0
+        case .high:      motMult = 0.8
+        }
+        
+        return Int(Double(basePeriod) * expMult * motMult)
+    }
+}
+
+// MARK: - String Helpers
+fileprivate extension String {
+    /// Sağ tarafı belirli bir uzunluğa kadar boşlukla doldurmak için
+    func padRight(toLength length: Int) -> String {
+        if self.count >= length {
+            return String(self.prefix(length))
+        }
+        return self + String(repeating: " ", count: length - self.count)
     }
 }

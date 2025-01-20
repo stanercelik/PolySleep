@@ -2,19 +2,26 @@ import Foundation
 
 /// Time formatter helper for consistent time string handling
 public enum TimeFormatter {
-    static func time(from string: String) -> Int? {
+    static func time(from string: String) -> (hour: Int, minute: Int)? {
         let components = string.split(separator: ":")
         guard components.count == 2,
-              let hour = Int(components[0]) else {
+              let hour = Int(components[0]),
+              let minute = Int(components[1]) else {
             return nil
         }
-        return hour
+        return (hour, minute)
     }
     
-    static func addMinutes(_ minutes: Int, to timeString: String) -> Int {
-        guard let startHour = time(from: timeString) else { return 0 }
-        let totalMinutes = startHour * 60 + minutes
-        return (totalMinutes / 60) % 24 // Wrap around 24 hours
+    static func formatTime(_ hour: Int, _ minute: Int) -> String {
+        return String(format: "%02d:%02d", hour % 24, minute % 60)
+    }
+    
+    static func addMinutes(_ minutes: Int, to timeString: String) -> String {
+        guard let (startHour, startMinute) = time(from: timeString) else { return "00:00" }
+        let totalMinutes = startHour * 60 + startMinute + minutes
+        let hour = (totalMinutes / 60) % 24
+        let minute = totalMinutes % 60
+        return formatTime(hour, minute)
     }
 }
 
@@ -26,8 +33,13 @@ public struct SleepBlock: Codable, Identifiable {
     public let type: String
     public let isCore: Bool
     
-    public var endHour: Int {
+    public var endTime: String {
         TimeFormatter.addMinutes(duration, to: startTime)
+    }
+    
+    public var endHour: Int {
+        guard let (hour, _) = TimeFormatter.time(from: endTime) else { return 0 }
+        return hour
     }
     
     public init(startTime: String, duration: Int, type: String, isCore: Bool) {
@@ -94,7 +106,7 @@ extension SleepScheduleModel {
         
         return schedule.contains { block in
             guard !block.isCore,
-                  let blockHour = TimeFormatter.time(from: block.startTime) else {
+                  let (blockHour, _) = TimeFormatter.time(from: block.startTime) else {
                 return false
             }
             return blockHour >= workStart && blockHour <= workEnd

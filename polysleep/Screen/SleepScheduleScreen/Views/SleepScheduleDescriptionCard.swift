@@ -1,14 +1,23 @@
 import SwiftUI
+import SwiftData
 
 struct SleepScheduleDescriptionCard: View {
     let schedule: SleepScheduleModel
     let isRecommended: Bool
     @Binding var selectedSchedule: SleepScheduleModel
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         Button(action: {
             withAnimation {
                 selectedSchedule = schedule
+                let store = SleepScheduleStore(scheduleId: schedule.id)
+                modelContext.insert(store)
+                do {
+                    try modelContext.save()
+                } catch {
+                    print("Error saving schedule: \(error)")
+                }
             }
         }) {
             VStack(alignment: .leading, spacing: 16) {
@@ -25,15 +34,18 @@ struct SleepScheduleDescriptionCard: View {
                     }
                 }
                 
-                Text(schedule.description.localized())
-                    .font(.body)
-                    .foregroundColor(Color.appSecondaryText)
+                
+                    HStack(spacing: 8) {
+                        Text(Locale.current.language.languageCode?.identifier == "tr" ? schedule.description.tr : schedule.description.en
+                        )
+                            .font(.body)
+                            .foregroundColor(Color.appSecondaryText)
+                        
+                        Spacer()
+                }
+                
                 
                 scheduleDetails
-                
-                if schedule.id == selectedSchedule.id {
-                    selectedIndicator
-                }
             }
             .padding()
             .background(
@@ -51,7 +63,7 @@ struct SleepScheduleDescriptionCard: View {
         HStack(spacing: 4) {
             Image(systemName: "star.fill")
                 .font(.caption)
-            Text("Recommended")
+            Text(String(localized: "Recommended"))
                 .font(.caption)
                 .fontWeight(.medium)
         }
@@ -68,13 +80,13 @@ struct SleepScheduleDescriptionCard: View {
         VStack(spacing: 12) {
             scheduleInfoRow(
                 icon: "bed.double.fill",
-                title: "Total Sleep",
-                value: String(format: "%.1f hours", schedule.totalSleepHours)
+                title: String(localized: "sleepSchedule.totalSleep"),
+                value: String(format: "%.1f h", schedule.totalSleepHours)
             )
             
             scheduleInfoRow(
                 icon: "powersleep",
-                title: "Naps",
+                title: String(localized: "sleepSchedule.naps"),
                 value: "\(schedule.schedule.filter { !$0.isCore }.count)"
             )
         }
@@ -92,18 +104,18 @@ struct SleepScheduleDescriptionCard: View {
     private func scheduleInfoRow(icon: String, title: String, value: String) -> some View {
         HStack {
             Image(systemName: icon)
-                .foregroundColor(Color.appPrimary)
+                .foregroundColor(Color.appAccent)
                 .frame(width: 24)
             
             Text(title)
                 .font(.subheadline)
-                .foregroundColor(Color.appSecondaryText)
+                .foregroundColor(Color.appText)
             
             Spacer()
             
             Text(value)
                 .font(.subheadline)
-                .foregroundColor(Color.appText)
+                .foregroundColor(Color.appSecondaryText)
         }
     }
     
@@ -120,7 +132,7 @@ struct SleepScheduleDescriptionCard: View {
     let schedule = SleepScheduleModel(
         id: "monophasic",
         name: "Monophasic",
-        description: LocalizedDescription(en: "Traditional single sleep period during the night", tr: "Geleneksel tek parça gece uykusu"),
+        description: LocalizedDescription(en: "Traditional single sleep period during the night", tr: "Geleaslkdlaksjdlkasjdkasjlkdajsşdad adk sa oda op dkapodk opak dapod o aod a a janeksel tek parça gece uykusu"),
         totalSleepHours: 8.0,
         schedule: [
             SleepBlock(

@@ -1,57 +1,64 @@
-//
-//  OnboardingViewModel.swift
-//  polysleep
-//
-//  Created by Taner Çelik on 29.12.2024.
-//
-
 import SwiftUI
+import SwiftData
 
 @MainActor
 final class OnboardingViewModel: ObservableObject {
+    // MARK: - Dependencies
+    private let modelContext: ModelContext
+    
     // MARK: - Published Properties
     @Published var currentPage = 0
-    let totalPages = 8
+    let totalPages = 12
     
-    // Question 1: Previous Sleep Experience
     @Published var previousSleepExperience: PreviousSleepExperience?
     
-    // Question 2: Age Range
     @Published var ageRange: AgeRange?
     
-    // Question 3: Work Schedule
     @Published var workSchedule: WorkSchedule?
     
-    // Question 4: Nap Environment
     @Published var napEnvironment: NapEnvironment?
     
-    // Question 5: Lifestyle
     @Published var lifestyle: Lifestyle?
     
-    // Question 6: Knowledge Level
     @Published var knowledgeLevel: KnowledgeLevel?
     
-    // Question 7: Health Status
     @Published var healthStatus: HealthStatus?
     
-    // Question 8: Motivation Level
     @Published var motivationLevel: MotivationLevel?
+    
+    @Published var sleepGoal: SleepGoal?
+    
+    @Published var socialObligations: SocialObligations?
+    
+    @Published var disruptionTolerance: DisruptionTolerance?
+    
+    @Published var chronotype: Chronotype?
+    
     
     // MARK: - Navigation State
     @Published var shouldNavigateToSleepSchedule = false
     
+    // MARK: - Initialization
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+    }
+    
     // MARK: - Computed Properties
     var canMoveNext: Bool {
         switch currentPage {
-        case 0: return previousSleepExperience != nil
-        case 1: return ageRange != nil
-        case 2: return workSchedule != nil
-        case 3: return napEnvironment != nil
-        case 4: return lifestyle != nil
-        case 5: return knowledgeLevel != nil
-        case 6: return healthStatus != nil
-        case 7: return motivationLevel != nil
-        default: return false
+            case 0: return previousSleepExperience != nil
+            case 1: return ageRange != nil
+            case 2: return workSchedule != nil
+            case 3: return napEnvironment != nil
+            case 4: return lifestyle != nil
+            case 5: return knowledgeLevel != nil
+            case 6: return healthStatus != nil
+            case 7: return motivationLevel != nil
+            case 8: return sleepGoal != nil
+            case 9: return socialObligations != nil
+            case 10: return disruptionTolerance != nil
+            case 11: return chronotype != nil
+            default: return false
         }
     }
     
@@ -62,7 +69,7 @@ final class OnboardingViewModel: ObservableObject {
                 currentPage += 1
             }
         } else {
-            completeOnboarding()
+            saveUserPreferences()
         }
     }
     
@@ -74,33 +81,82 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
     
-    private func completeOnboarding() {
-        print("\nSaving onboarding answers to UserDefaults...")
+    // MARK: - Saving
+    func saveUserPreferences() {
+        print("\n=== Saving User Preferences ===")
         
-        // Save all answers to UserDefaults
-        let defaults = UserDefaults.standard
-        defaults.set(previousSleepExperience?.rawValue, forKey: "onboarding.sleepExperience")
-        defaults.set(ageRange?.rawValue, forKey: "onboarding.ageRange")
-        defaults.set(workSchedule?.rawValue, forKey: "onboarding.workSchedule")
-        defaults.set(napEnvironment?.rawValue, forKey: "onboarding.napEnvironment")
-        defaults.set(lifestyle?.rawValue, forKey: "onboarding.lifestyle")
-        defaults.set(knowledgeLevel?.rawValue, forKey: "onboarding.knowledgeLevel")
-        defaults.set(healthStatus?.rawValue, forKey: "onboarding.healthStatus")
-        defaults.set(motivationLevel?.rawValue, forKey: "onboarding.motivationLevel")
-        
-        // NEW: Ek soru da kaydetmek istersek:
-        // defaults.set(circadianPreference?.rawValue, forKey: "onboarding.circadianPreference")
-        
-        print("All answers saved. Navigating to Sleep Schedule...")
-        
-        // Navigate to sleep schedule
-        withAnimation {
-            shouldNavigateToSleepSchedule = true
+        guard let sleepExperience = previousSleepExperience,
+              let ageRange = ageRange,
+              let workSchedule = workSchedule,
+              let napEnvironment = napEnvironment,
+              let lifestyle = lifestyle,
+              let knowledgeLevel = knowledgeLevel,
+              let healthStatus = healthStatus,
+              let motivationLevel = motivationLevel,
+              let sleepGoal = sleepGoal,
+              let socialObligations = socialObligations,
+              let disruptionTolerance = disruptionTolerance,
+              let chronotype = chronotype
+        else {
+            print("❌ Error: Some user preferences are not set")
+            return
         }
-    }
-    
-    // MARK: - Navigation Methods
-    func navigateToSleepSchedule() {
-        shouldNavigateToSleepSchedule = true
+        
+        print("\nSaving values:")
+        print("- Sleep Experience: \(sleepExperience.rawValue)")
+        print("- Age Range: \(ageRange.rawValue)")
+        print("- Work Schedule: \(workSchedule.rawValue)")
+        print("- Nap Environment: \(napEnvironment.rawValue)")
+        print("- Lifestyle: \(lifestyle.rawValue)")
+        print("- Knowledge Level: \(knowledgeLevel.rawValue)")
+        print("- Health Status: \(healthStatus.rawValue)")
+        print("- Motivation Level: \(motivationLevel.rawValue)")
+        print("- Sleep Goal: \(sleepGoal.rawValue)")
+        print("- Social Obligations: \(socialObligations.rawValue)")
+        print("- Disruption Tolerance: \(disruptionTolerance.rawValue)")
+        print("- Chronotype: \(chronotype.rawValue)")
+        
+        // Delete previues user factor
+        do {
+            let descriptor = FetchDescriptor<UserFactor>()
+            let existingFactors = try modelContext.fetch(descriptor)
+            print("\nFound \(existingFactors.count) existing user factors in DB. Deleting them...")
+            
+            for factor in existingFactors {
+                modelContext.delete(factor)
+            }
+            
+            if !existingFactors.isEmpty {
+                print("Deleted \(existingFactors.count) existing user factors")
+            }
+        } catch {
+            print("❌ Error deleting existing user factors: \(error)")
+        }
+        
+        // Create a new userfactor and save it
+        let userFactor = UserFactor(
+            sleepExperience: sleepExperience,
+            ageRange: ageRange,
+            workSchedule: workSchedule,
+            napEnvironment: napEnvironment,
+            lifestyle: lifestyle,
+            knowledgeLevel: knowledgeLevel,
+            healthStatus: healthStatus,
+            motivationLevel: motivationLevel,
+            sleepGoal: sleepGoal,
+            socialObligations: socialObligations,
+            disruptionTolerance: disruptionTolerance,
+            chronotype: chronotype
+        )
+        
+        modelContext.insert(userFactor)
+        
+        do {
+            try modelContext.save()
+            print("✅ Successfully saved new user factor")
+            shouldNavigateToSleepSchedule = true
+        } catch {
+            print("❌ Error saving user factor: \(error)")
+        }
     }
 }
