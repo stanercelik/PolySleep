@@ -132,12 +132,8 @@ struct OnboardingView: View {
                         canMoveNext: viewModel.canMoveNext,
                         currentPage: viewModel.currentPage,
                         totalPages: viewModel.totalPages,
-                        onNext: {
-                            viewModel.moveNext()
-                        },
-                        onBack: {
-                            viewModel.moveBack()
-                        }
+                        onNext: viewModel.moveNext,
+                        onBack: viewModel.movePrevious
                     )
                 }
                 .padding(.top, 16)
@@ -147,10 +143,33 @@ struct OnboardingView: View {
                 SleepScheduleView()
                     .navigationBarBackButtonHidden(true)
             }
+            
+            if viewModel.showStartButton {
+                VStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            viewModel.startUsingApp()
+                        }
+                    }) {
+                        Text("Uygulamayı Kullanmaya Başla")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.appPrimary)
+                            )
+                            .padding(.horizontal)
+                    }
+                    .padding(.bottom, 32)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
         }
     }
 }
-
 
 #Preview {
     do {

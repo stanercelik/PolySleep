@@ -4,63 +4,118 @@ import SwiftData
 struct SleepScheduleView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = SleepScheduleViewModel()
+    @Query private var userPreferences: [UserPreferences]
+    @State private var navigateToMainScreen = false
+    @State private var scrollOffset: CGFloat = 0
+    @State private var animatedProgress: CGFloat = 0
     
+    private let headerHeight: CGFloat = 80
+    private let chartHeight: CGFloat = UIScreen.main.bounds.height * 0.4
+
     var body: some View {
-        ZStack {
-            Color.appBackground
-                .ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 24) {
-                    headerSection
-                    
-                    CircularSleepChart(schedule: viewModel.schedule)
-                        .frame(height: UIScreen.main.bounds.height * 0.4)
-                        .padding(.horizontal)
-                    
-                    if let recommendedSchedule = viewModel.recommendedSchedule {
-                        SleepScheduleDescriptionCard(
-                            schedule: recommendedSchedule,
-                            isRecommended: true,
-                            selectedSchedule: $viewModel.schedule
+        NavigationStack {
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
+                
+                TrackableScrollView(offset: $scrollOffset) {
+                    VStack(spacing: 24) {
+                        headerSection
+                            .opacity(1 - animatedProgress)
+                            .animation(.easeInOut(duration: 0.3), value: animatedProgress)
+                        
+                        CircularSleepChart(
+                            schedule: viewModel.schedule, textOpacity: 1 - animatedProgress
                         )
+                        .frame(
+                            width: animatedProgress > 0.3 ? 120 : UIScreen.main.bounds.width * 0.8,
+                            height: animatedProgress > 0.3 ? 120 : chartHeight
+                        )
+                        .padding(.leading, 34)
+                        
+                        if let recommendedSchedule = viewModel.recommendedSchedule {
+                            if animatedProgress < 0.3 {
+                                SleepScheduleDescriptionCard(
+                                    schedule: recommendedSchedule,
+                                    isRecommended: true,
+                                    selectedSchedule: .constant(recommendedSchedule)
+                                )
+                                .padding(.horizontal)
+                                .transition(.opacity)
+                                .animation(.easeInOut(duration: 0.3), value: animatedProgress)
+                            }
+                        }
+                        
+                        scheduleTimeRanges
+                            .padding(.horizontal)
+                        
+                        NavigationLink(destination: MainTabBarView(), isActive: $navigateToMainScreen) {
+                            EmptyView()
+                        }
+                        
+                        Button(action: {
+                            if let preferences = userPreferences.first {
+                                preferences.hasCompletedOnboarding = true
+                                navigateToMainScreen = true
+                            }
+                        }) {
+                            Text("Continue")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(Color.accentColor)
+                                .cornerRadius(10)
+                        }
                         .padding(.horizontal)
+                        .padding(.top, 20)
+                        
+                        Spacer(minLength: 24)
                     }
-                    
-                    scheduleTimeRanges
-                        .padding(.horizontal)
-                    
-                    Spacer(minLength: 24)
+                    .padding()
                 }
-                .padding()
+                .coordinateSpace(name: "scrollView")
             }
-        }
-        .onAppear {
-            print("\nSleepScheduleView appeared, updating recommendations...")
-            viewModel.setModelContext(modelContext)
+            .navigationTitle(viewModel.schedule.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                viewModel.setModelContext(modelContext)
+            }
+            .onChange(of: scrollOffset) { oldValue, newValue in
+                let newProgress = min(max(-newValue / (headerHeight + chartHeight), 0), 1)
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    animatedProgress = newProgress
+                }
+            }
+            .onChange(of: viewModel.recommendedSchedule) { oldValue, newValue in
+                if let schedule = newValue {
+                    // Save the recommended schedule to the store
+                    let store = SleepScheduleStore(
+                        scheduleId: schedule.id,
+                        name: schedule.name,
+                        scheduleDescription: schedule.description,
+                        totalSleepHours: schedule.totalSleepHours,
+                        schedule: schedule.schedule
+                    )
+                    modelContext.insert(store)
+                    try? modelContext.save()
+                }
+            }
         }
     }
     
     private var headerSection: some View {
-        VStack(alignment: .leading) {
             HStack {
-                Text(String(localized: "sleepSchedule.recommendedPattern"))
-                    .font(.headline)
+                Text(viewModel.schedule.name)
+                    .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.appText)
+                    .foregroundColor(Color.appPrimary)
                     .accessibility(addTraits: .isHeader)
-                    .lineLimit(1)
                 Spacer()
                 shareButton
             }
-            
-            Text(viewModel.schedule.name)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(Color.appPrimary)
-                .accessibility(addTraits: .isHeader)
-        }
-        .padding(.horizontal)
+            .padding(.horizontal, 8)
+
     }
     
     private var scheduleTimeRanges: some View {
@@ -127,10 +182,14 @@ struct SleepScheduleView_Previews: PreviewProvider {
             let schema = Schema([UserFactor.self])
             let config = ModelConfiguration(schema: schema)
             let container = try ModelContainer(for: schema, configurations: [config])
-            return SleepScheduleView()
-                .modelContainer(container)
+            return AnyView(
+                SleepScheduleView()
+                    .modelContainer(container)
+            )
         } catch {
-            return Text("Preview Error: \(error.localizedDescription)")
+            return AnyView(
+                Text("Preview Error: \(error.localizedDescription)")
+            )
         }
     }
 }

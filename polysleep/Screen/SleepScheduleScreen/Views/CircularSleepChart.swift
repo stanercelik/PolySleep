@@ -2,37 +2,38 @@ import SwiftUI
 
 struct CircularSleepChart: View {
     let schedule: SleepScheduleModel
+    /// textOpacity: 1 → yazılar tam görünür, 0 → yazılar kaybolur.
+    let textOpacity: Double
     @Environment(\.colorScheme) var colorScheme
-    
+
     private let circleRadius: CGFloat = 110
     private let strokeWidth: CGFloat = 40
     private let hourMarkers = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
-    private let innerRadius: CGFloat = 110
-    private let tickLength: CGFloat = 10
-    
-    var body: some View {
 
+    var body: some View {
         ZStack(alignment: .topLeading) {
+            // Arka plan dairesi her zaman görünsün.
             backgroundCircle
-            hourTickMarks
-            hourMarkersView
+            // Uyku blokları çiziliyor.
             sleepBlocksView
+            
+            // Yazı içeren görünümler: Saat tick mark’ları, marker'lar ve iç zaman etiketleri.
+            // textOpacity ile opaklıkları scroll ilerledikçe azalıyor.
+            hourTickMarks
+                .opacity(textOpacity)
+            hourMarkersView
+                .opacity(textOpacity)
             innerTimeLabelsView
+                .opacity(textOpacity)
         }
         .frame(width: circleRadius * 2 + strokeWidth,
                height: circleRadius * 2 + strokeWidth)
-        .offset(
-            x: ((circleRadius * 2 + strokeWidth) / 2) - circleRadius,
-            y: ((circleRadius * 2 + strokeWidth) / 2) - circleRadius
-        )
-
-        .frame(maxWidth: .infinity, alignment: .center)
-        
+        .animation(.easeInOut(duration: 0.3), value: textOpacity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(generateAccessibilityLabel())
     }
     
-    // MARK: - Alt görünümler
+    // MARK: - Alt Görünümler
     
     private var backgroundCircle: some View {
         Circle()
@@ -55,7 +56,6 @@ struct CircularSleepChart: View {
             x: circleRadius + outerRadius * cos(angle * .pi / 180),
             y: circleRadius + outerRadius * sin(angle * .pi / 180)
         )
-        
         let endPoint = CGPoint(
             x: circleRadius + innerRadius * cos(angle * .pi / 180),
             y: circleRadius + innerRadius * sin(angle * .pi / 180)
@@ -65,10 +65,7 @@ struct CircularSleepChart: View {
             path.move(to: startPoint)
             path.addLine(to: endPoint)
         }
-        .stroke(style: StrokeStyle(
-            lineWidth: 1,
-            dash: hour % 3 == 0 ? [] : [4, 4]
-        ))
+        .stroke(style: StrokeStyle(lineWidth: 1, dash: hour % 3 == 0 ? [] : [4, 4]))
         .foregroundColor(Color.appSecondaryText.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
@@ -100,7 +97,6 @@ struct CircularSleepChart: View {
         guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
             return AnyView(EmptyView())
         }
-        
         let startTime = timeComponents(from: startTimeInt)
         let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
         let durationHours = Double(block.duration) / 60.0
@@ -127,15 +123,11 @@ struct CircularSleepChart: View {
             if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
                 let startTime = timeComponents(from: startTimeInt)
                 let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-                
                 Group {
-                    // Start time label
                     innerTimeLabel(
                         time: String(format: "%02d:%02d", startTime.hour, startTime.minute),
                         angle: angleForTime(hour: startTime.hour, minute: startTime.minute)
                     )
-                    
-                    // End time label
                     innerTimeLabel(
                         time: String(format: "%02d:%02d", endTime.hour, endTime.minute),
                         angle: angleForTime(hour: endTime.hour, minute: endTime.minute)
@@ -149,15 +141,14 @@ struct CircularSleepChart: View {
         let radius = circleRadius - strokeWidth
         let xPosition = circleRadius + radius * cos(angle * .pi / 180)
         let yPosition = circleRadius + radius * sin(angle * .pi / 180)
-        
         return Text(time)
             .font(.system(size: 10, weight: .medium))
             .foregroundColor(Color.appSecondaryText)
-            .rotationEffect(.degrees(0)) // Keep text straight
+            .rotationEffect(.degrees(0))
             .position(x: xPosition, y: yPosition)
     }
     
-    // MARK: - Yardımcı fonksiyonlar
+    // MARK: - Yardımcı Fonksiyonlar
     
     private func timeComponents(from time: Int) -> (hour: Int, minute: Int) {
         let timeString = String(format: "%04d", time)
@@ -180,129 +171,72 @@ struct CircularSleepChart: View {
     
     private func generateAccessibilityLabel() -> String {
         var descriptions: [String] = []
-        
         for (index, block) in schedule.schedule.enumerated() {
             let startTime = timeComponents(from: Int(block.startTime) ?? 1)
             let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-            
             let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
             let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
-            
-            let blockType = block.type == "core"
-                ? NSLocalizedString("sleepBlock.core", comment: "Core sleep block")
-                : NSLocalizedString("sleepBlock.nap", comment: "Nap block")
-            
+            let blockType = block.type == "core" ?
+                NSLocalizedString("sleepBlock.core", comment: "Core sleep block") :
+                NSLocalizedString("sleepBlock.nap", comment: "Nap block")
             let description = String(
-                format: NSLocalizedString(
-                    "sleepBlock.description",
-                    comment: "Sleep block description format"
-                ),
-                arguments: [
-                    "\(index + 1)",
-                    blockType,
-                    startTimeStr,
-                    endTimeStr
-                ]
+                format: NSLocalizedString("sleepBlock.description", comment: "Sleep block description format"),
+                arguments: ["\(index + 1)", blockType, startTimeStr, endTimeStr]
             )
             descriptions.append(description)
         }
-        
         let scheduleDescription = descriptions.joined(separator: ". ")
         return String(
-            format: NSLocalizedString(
-                "sleepSchedule.description",
-                comment: "Sleep schedule description"
-            ),
+            format: NSLocalizedString("sleepSchedule.description", comment: "Sleep schedule description"),
             arguments: [scheduleDescription]
         )
     }
 }
 
-
-
-struct CircularSleepChart_Previews: PreviewProvider {
-    static var previews: some View {
-        let schedule = SleepScheduleModel(
-            id: "everyman",
-            name: "Everyman",
-            description: LocalizedDescription(
-                en: "A schedule with one core sleep and multiple naps",
-                tr: "Bir ana uyku ve birden fazla şekerleme içeren uyku düzeni"
+#Preview {
+    let schedule = SleepScheduleModel(
+        id: "everyman",
+        name: "Everyman",
+        description: LocalizedDescription(
+            en: "A schedule with one core sleep and multiple naps",
+            tr: "Bir ana uyku ve birden fazla şekerleme içeren uyku düzeni"
+        ),
+        totalSleepHours: 4.6,
+        schedule: [
+            SleepBlock(
+                startTime: "22:00",
+                duration: 240,
+                type: "core",
+                isCore: true
             ),
-            totalSleepHours: 4.6,
-            schedule: [
-                SleepBlock(
-                    startTime: "22:00",
-                    duration: 240,
-                    type: "core",
-                    isCore: true
-                ),
-                SleepBlock(
-                    startTime: "06:00",
-                    duration: 20,
-                    type: "nap",
-                    isCore: false
-                ),
-                SleepBlock(
-                    startTime: "12:00",
-                    duration: 20,
-                    type: "nap",
-                    isCore: false
-                ),
-                SleepBlock(
-                    startTime: "18:00",
-                    duration: 20,
-                    type: "nap",
-                    isCore: false
-                )
-            ]
-        )
-        
-        Group {
-            // Everyman Schedule Preview
-            CircularSleepChart(schedule: schedule)
-                .frame(width: 300, height: 300)
-                .previewDisplayName("Everyman Schedule - Light")
-            
-            // Dual Core Schedule Preview
-            CircularSleepChart(schedule: SleepScheduleModel(
-                id: "dualcore",
-                name: "Dual Core",
-                description: .init(
-                    en: "A schedule with two core sleeps and one nap",
-                    tr: "İki ana uyku ve bir şekerleme içeren uyku düzeni"
-                ),
-                totalSleepHours: 5,
-                schedule: [
-                    .init(startTime: "22:00", duration: 180, type: "core", isCore: true),
-                    .init(startTime: "04:00", duration: 90, type: "core", isCore: true),
-                    .init(startTime: "14:00", duration: 20, type: "nap", isCore: false)
-                ]
-            ))
-            .preferredColorScheme(.dark)
-            .previewDisplayName("Dual Core Schedule - Dark")
-            
-            // Uberman Schedule Preview
-            CircularSleepChart(schedule: SleepScheduleModel(
-                id: "uberman",
-                name: "Uberman",
-                description: .init(
-                    en: "An extreme schedule with six 20-minute naps throughout the day",
-                    tr: "Gün boyunca altı adet 20 dakikalık şekerleme içeren ekstrem bir uyku düzeni"
-                ),
-                totalSleepHours: 2,
-                schedule: [
-                    .init(startTime: "02:00",  duration: 20, type: "nap", isCore: false),
-                    .init(startTime: "06:00",  duration: 20, type: "nap", isCore: false),
-                    .init(startTime: "10:00",  duration: 20, type: "nap", isCore: false),
-                    .init(startTime: "14:00",  duration: 20, type: "nap", isCore: false),
-                    .init(startTime: "18:00",  duration: 20, type: "nap", isCore: false),
-                    .init(startTime: "22:00",  duration: 20, type: "nap", isCore: false)
-                ]
-            ))
-            .previewDisplayName("Uberman Schedule")
-        }
-        .previewLayout(.sizeThatFits)
-        .padding()
+            SleepBlock(
+                startTime: "06:00",
+                duration: 20,
+                type: "nap",
+                isCore: false
+            ),
+            SleepBlock(
+                startTime: "12:00",
+                duration: 20,
+                type: "nap",
+                isCore: false
+            ),
+            SleepBlock(
+                startTime: "18:00",
+                duration: 20,
+                type: "nap",
+                isCore: false
+            )
+        ]
+    )
+    Group {
+        CircularSleepChart(schedule: schedule, textOpacity: 1)
+            .frame(width: 300, height: 300)
+            .previewDisplayName("Everyman Schedule - Text On")
+        CircularSleepChart(schedule: schedule, textOpacity: 0)
+            .frame(width: 300, height: 300)
+            .previewDisplayName("Everyman Schedule - Text Off")
     }
+    .previewLayout(.sizeThatFits)
+    .padding()
 }

@@ -23,22 +23,52 @@ struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    let container: ModelContainer
+    let modelContainer: ModelContainer
     
     init() {
         do {
-            let schema = Schema([UserFactor.self])
-            let modelConfiguration = ModelConfiguration(schema: schema)
-            container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            let config = ModelConfiguration(isStoredInMemoryOnly: false)
+            modelContainer = try ModelContainer(
+                for: SleepScheduleStore.self,
+                UserPreferences.self,
+                UserFactor.self,
+                configurations: config
+            )
         } catch {
-            fatalError("❌ Could not initialize SwiftData container: \(error)")
+            fatalError("Could not initialize ModelContainer: \(error)")
         }
     }
     
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            ContentView()
         }
-        .modelContainer(container)
+        .modelContainer(modelContainer)
+    }
+}
+
+struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var userPreferences: [UserPreferences]
+    @Query private var sleepSchedules: [SleepScheduleStore]
+    
+    var body: some View {
+        Group {
+            if let preferences = userPreferences.first {
+                if preferences.hasCompletedOnboarding {
+                    MainTabBarView()
+                } else {
+                    WelcomeView()
+                }
+            } else {
+                // Only create UserPreferences once when app first launches
+                WelcomeView()
+                    .onAppear {
+                        let newPreferences = UserPreferences()
+                        modelContext.insert(newPreferences)
+                        try? modelContext.save()
+                    }
+            }
+        }
     }
 }

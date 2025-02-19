@@ -26,7 +26,7 @@ public enum TimeFormatter {
 }
 
 /// Represents a sleep block within a schedule (either core sleep or nap)
-public struct SleepBlock: Codable, Identifiable {
+public struct SleepBlock: Codable, Identifiable, Equatable {
     public var id = UUID()
     public let startTime: String
     public let duration: Int
@@ -55,7 +55,7 @@ public struct SleepBlock: Codable, Identifiable {
 }
 
 /// Represents a localized description
-public struct LocalizedDescription: Codable {
+public struct LocalizedDescription: Codable, Equatable {
     public let en: String
     public let tr: String
 
@@ -71,7 +71,7 @@ public struct LocalizedDescription: Codable {
 }
 
 /// Represents a complete sleep schedule with all its properties
-public struct SleepScheduleModel: Codable, Identifiable {
+public struct SleepScheduleModel: Codable, Identifiable, Equatable {
     public let id: String
     public let name: String
     public let description: LocalizedDescription

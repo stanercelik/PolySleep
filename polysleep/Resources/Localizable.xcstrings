@@ -61,6 +61,9 @@
     "accessibility.selected" : {
 
     },
+    "Ana Sayfa" : {
+
+    },
     "continue" : {
       "localizations" : {
         "en" : {
@@ -76,6 +79,9 @@
           }
         }
       }
+    },
+    "Continue" : {
+
     },
     "difficulty.advanced" : {
       "comment" : "Advanced difficulty"
@@ -2079,6 +2085,9 @@
         }
       }
     },
+    "Profil" : {
+
+    },
     "Recommended" : {
       "localizations" : {
         "tr" : {
@@ -2358,6 +2367,7 @@
       }
     },
     "sleepSchedule.recommendedPattern" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2662,6 +2672,9 @@
           }
         }
       }
+    },
+    "Uygulamayı Kullanmaya Başla" : {
+
     },
     "welcomeTitle" : {
       "extractionState" : "manual",
