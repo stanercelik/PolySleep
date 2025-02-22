@@ -17,6 +17,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld of %lld pages" : {
       "localizations" : {
         "en" : {
@@ -61,6 +64,9 @@
     "💡" : {
 
     },
+    "💤" : {
+
+    },
     "🛏️" : {
 
     },
@@ -85,7 +91,97 @@
     "accessibility.selected" : {
 
     },
+    "All Sleep" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Uykular"
+          }
+        }
+      }
+    },
+    "All Time" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Zamanlar"
+          }
+        }
+      }
+    },
     "Ana Sayfa" : {
+
+    },
+    "Başlangıç Tarihi" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Date"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlangıç Tarihi"
+          }
+        }
+      }
+    },
+    "Bitiş Tarihi" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End Date"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitiş Tarihi"
+          }
+        }
+      }
+    },
+    "Bu dönemde kayıt bulunamadı" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No records found for this period"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu dönemde kayıt bulunamadı"
+          }
+        }
+      }
+    },
+    "Çar" : {
+
+    },
+    "Cmt" : {
 
     },
     "common.cancel" : {
@@ -158,6 +254,43 @@
     "Continue" : {
 
     },
+    "Core Sleep" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "Core Sleep Only" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep Only"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece Ana Uyku"
+          }
+        }
+      }
+    },
+    "Cum" : {
+
+    },
     "difficulty.advanced" : {
       "comment" : "Advanced difficulty"
     },
@@ -169,6 +302,54 @@
     },
     "difficulty.intermediate" : {
       "comment" : "Intermediate difficulty"
+    },
+    "Düzenle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenle"
+          }
+        }
+      }
+    },
+    "Filtrele" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrele"
+          }
+        }
+      }
+    },
+    "Filtreler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filters"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtreler"
+          }
+        }
+      }
     },
     "firstPageDesc" : {
       "localizations" : {
@@ -233,6 +414,9 @@
           }
         }
       }
+    },
+    "Geçmiş" : {
+
     },
     "general.cancel" : {
       "localizations" : {
@@ -314,6 +498,23 @@
         }
       }
     },
+    "Highest Rated" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest Rated"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Yüksek Puanlı"
+          }
+        }
+      }
+    },
     "hours" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -344,6 +545,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giriş Yap"
+          }
+        }
+      }
+    },
+    "Lowest Rated" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowest Rated"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Düşük Puanlı"
           }
         }
       }
@@ -726,6 +944,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toplam Uyku Süresi"
+          }
+        }
+      }
+    },
+    "Naps Only" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naps Only"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece Şekerlemeler"
+          }
+        }
+      }
+    },
+    "Newest First" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Newest First"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Yeniden Eskiye"
+          }
+        }
+      }
+    },
+    "Oldest First" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oldest First"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Eskiden Yeniye"
           }
         }
       }
@@ -2622,7 +2891,49 @@
         }
       }
     },
+    "Özel Tarih Aralığı" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Date Range"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Tarih Aralığı"
+          }
+        }
+      }
+    },
+    "Paz" : {
+
+    },
+    "Per" : {
+
+    },
+    "Power Nap" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kısa Uyku"
+          }
+        }
+      }
+    },
     "Profil" : {
+
+    },
+    "Pzt" : {
 
     },
     "Recommended" : {
@@ -2651,6 +2962,9 @@
           }
         }
       }
+    },
+    "Sal" : {
+
     },
     "schedule.customized" : {
       "localizations" : {
@@ -2713,6 +3027,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hayatının ortalama 27 yılının, yani 1/3’ünün uykuda geçtiğini biliyor muydun?"
+          }
+        }
+      }
+    },
+    "Sıralama" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıralama"
+          }
+        }
+      }
+    },
+    "Sleep History" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Geçmişi"
+          }
+        }
+      }
+    },
+    "Sleep Type" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Type"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Tipi"
           }
         }
       }
@@ -2973,6 +3337,54 @@
     "sleepSchedule.totalSleep" : {
 
     },
+    "sonraki uykuya kadar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "until next sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sonraki uykuya kadar"
+          }
+        }
+      }
+    },
+    "Tamam" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        }
+      }
+    },
+    "Tarih Seç" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Date"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarih Seç"
+          }
+        }
+      }
+    },
     "thirdPageDesc" : {
       "localizations" : {
         "en" : {
@@ -3005,7 +3417,61 @@
         }
       }
     },
+    "This Month" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Month"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Ay"
+          }
+        }
+      }
+    },
+    "This Week" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün"
+          }
+        }
+      }
+    },
     "Uygulamayı Kullanmaya Başla" : {
+
+    },
+    "Uyku Tipi" : {
 
     },
     "welcomeTitle" : {

@@ -14,12 +14,19 @@ struct MainTabBarView: View {
                 }
                 .tag(0)
             
+            HistoryView()
+                .tabItem {
+                    Image(systemName: "clock.fill")
+                    Text("Geçmiş")
+                }
+                .tag(1)
+            
             ProfileScreenView()
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Profil")
                 }
-                .tag(1)
+                .tag(2)
         }
         .accentColor(Color("AccentColor"))
         .onAppear {
