@@ -1,14 +1,50 @@
 import SwiftUI
 
+enum CircularChartSize {
+    case small
+    case medium
+    case large
+    
+    var radius: CGFloat {
+        switch self {
+        case .small: return 80
+        case .medium: return 100
+        case .large: return 110
+        }
+    }
+    
+    var strokeWidth: CGFloat {
+        switch self {
+        case .small: return 25
+        case .medium: return 35
+        case .large: return 40
+        }
+    }
+}
+
 struct CircularSleepChart: View {
     let schedule: SleepScheduleModel
     /// textOpacity: 1 → yazılar tam görünür, 0 → yazılar kaybolur.
     let textOpacity: Double
+    let isEditing: Bool
+    let chartSize: CircularChartSize
     @Environment(\.colorScheme) var colorScheme
 
-    private let circleRadius: CGFloat = 110
-    private let strokeWidth: CGFloat = 40
+    private var circleRadius: CGFloat { chartSize.radius }
+    private var strokeWidth: CGFloat { chartSize.strokeWidth }
     private let hourMarkers = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
+
+    init(
+        schedule: SleepScheduleModel,
+        textOpacity: Double = 1.0,
+        isEditing: Bool = false,
+        chartSize: CircularChartSize = .large
+    ) {
+        self.schedule = schedule
+        self.textOpacity = textOpacity
+        self.isEditing = isEditing
+        self.chartSize = chartSize
+    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -17,7 +53,7 @@ struct CircularSleepChart: View {
             // Uyku blokları çiziliyor.
             sleepBlocksView
             
-            // Yazı içeren görünümler: Saat tick mark’ları, marker'lar ve iç zaman etiketleri.
+            // Yazı içeren görünümler: Saat tick mark'ları, marker'lar ve iç zaman etiketleri.
             // textOpacity ile opaklıkları scroll ilerledikçe azalıyor.
             hourTickMarks
                 .opacity(textOpacity)
@@ -25,10 +61,16 @@ struct CircularSleepChart: View {
                 .opacity(textOpacity)
             innerTimeLabelsView
                 .opacity(textOpacity)
+            
+            // Düzenleme modu göstergesi
+            if isEditing {
+                editingIndicator
+            }
         }
         .frame(width: circleRadius * 2 + strokeWidth,
                height: circleRadius * 2 + strokeWidth)
         .animation(.easeInOut(duration: 0.3), value: textOpacity)
+        .animation(.easeInOut(duration: 0.3), value: isEditing)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(generateAccessibilityLabel())
     }
@@ -148,6 +190,13 @@ struct CircularSleepChart: View {
             .position(x: xPosition, y: yPosition)
     }
     
+    private var editingIndicator: some View {
+        Circle()
+            .stroke(Color.appAccent.opacity(0.3), lineWidth: 2)
+            .frame(width: circleRadius * 2 + strokeWidth + 4,
+                   height: circleRadius * 2 + strokeWidth + 4)
+    }
+    
     // MARK: - Yardımcı Fonksiyonlar
     
     private func timeComponents(from time: Int) -> (hour: Int, minute: Int) {
@@ -236,6 +285,15 @@ struct CircularSleepChart: View {
         CircularSleepChart(schedule: schedule, textOpacity: 0)
             .frame(width: 300, height: 300)
             .previewDisplayName("Everyman Schedule - Text Off")
+        CircularSleepChart(schedule: schedule, textOpacity: 1, isEditing: true)
+            .frame(width: 300, height: 300)
+            .previewDisplayName("Everyman Schedule - Editing Mode")
+        CircularSleepChart(schedule: schedule, textOpacity: 1, chartSize: .small)
+            .frame(width: 200, height: 200)
+            .previewDisplayName("Everyman Schedule - Small")
+        CircularSleepChart(schedule: schedule, textOpacity: 1, chartSize: .medium)
+            .frame(width: 250, height: 250)
+            .previewDisplayName("Everyman Schedule - Medium")
     }
     .previewLayout(.sizeThatFits)
     .padding()

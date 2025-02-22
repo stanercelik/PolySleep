@@ -2,9 +2,9 @@ import Foundation
 import SwiftData
 
 struct MainScreenModel {
-    let schedule: UserScheduleModel
-    let currentDay: Int
-    let totalDays: Int
+    var schedule: UserScheduleModel
+    var currentDay: Int
+    var totalDays: Int
     var expandedTimeBlock: Bool
     
     init(schedule: UserScheduleModel, currentDay: Int = 1, totalDays: Int = 21, expandedTimeBlock: Bool = false) {

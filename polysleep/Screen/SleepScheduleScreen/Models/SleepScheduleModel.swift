@@ -33,8 +33,16 @@ public struct SleepBlock: Codable, Identifiable, Equatable {
     public let type: String
     public let isCore: Bool
     
+    public var startTimeComponents: (hour: Int, minute: Int) {
+        TimeFormatter.time(from: startTime) ?? (0, 0)
+    }
+    
     public var endTime: String {
         TimeFormatter.addMinutes(duration, to: startTime)
+    }
+    
+    public var endTimeComponents: (hour: Int, minute: Int) {
+        TimeFormatter.time(from: endTime) ?? (0, 0)
     }
     
     public var endHour: Int {

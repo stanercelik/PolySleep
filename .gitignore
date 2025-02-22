@@ -1,4 +1,5 @@
-# windsurf rules
 .windsurfrules
-.prd.md
+prd.md
+widget_prd.md
+design_prd.md
 GoogleService-Info.plist

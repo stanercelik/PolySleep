@@ -1,30 +1,115 @@
 import Foundation
 
 struct UserScheduleModel {
-    let id: String
-    let name: String
-    let description: LocalizedDescription
-    let totalSleepHours: Double
-    let schedule: [SleepBlock]
+    var id: String
+    var name: String
+    var description: LocalizedDescription
+    var totalSleepHours: Double
+    var schedule: [SleepBlock]
+    
+    private func sortBlocks(_ blocks: [SleepBlock]) -> [SleepBlock] {
+        return blocks.sorted { block1, block2 in
+            let time1 = TimeFormatter.time(from: block1.startTime)!
+            let time2 = TimeFormatter.time(from: block2.startTime)!
+            let minutes1 = time1.hour * 60 + time1.minute
+            let minutes2 = time2.hour * 60 + time2.minute
+            return minutes1 < minutes2
+        }
+    }
+
+    init(id: String, name: String, description: LocalizedDescription, totalSleepHours: Double, schedule: [SleepBlock]) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.totalSleepHours = totalSleepHours
+        self.schedule = schedule
+        self.schedule = sortBlocks(self.schedule)
+    }
     
     static var defaultSchedule: UserScheduleModel {
-        UserScheduleModel(
+        let schedule = [
+            SleepBlock(
+                startTime: "23:00",
+                duration: 120,
+                type: "core",
+                isCore: true
+            ),
+            SleepBlock(
+                startTime: "04:00",
+                duration: 30,
+                type: "nap",
+                isCore: false
+            ),
+            SleepBlock(
+                startTime: "08:00",
+                duration: 30,
+                type: "nap",
+                isCore: false
+            ),
+            SleepBlock(
+                startTime: "12:00",
+                duration: 30,
+                type: "nap",
+                isCore: false
+            ),
+            SleepBlock(
+                startTime: "19:00",
+                duration: 120,
+                type: "core",
+                isCore: true
+            )
+        ]
+        
+        return UserScheduleModel(
             id: "default",
-            name: "Default",
+            name: "Triphasica AAasklnda",
             description: LocalizedDescription(
-                en: "Default sleep schedule",
-                tr: "Varsayılan uyku programı"
+                en: "Default sleepddadkaşldkalsdasd schedule",
+                tr: "Varsayılan uyku prasdasdasdasdaogramı"
             ),
             totalSleepHours: 8.0,
-            schedule: [
-                SleepBlock(
-                    startTime: "23:00",
-                    duration: 480,
-                    type: "core",
-                    isCore: true
-                )
-            ]
+            schedule: schedule
         )
+    }
+    
+    var nextBlock: SleepBlock? {
+        guard !schedule.isEmpty else { return nil }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = currentTime.hour! * 60 + currentTime.minute!
+        
+        for block in schedule {
+            let startComponents = TimeFormatter.time(from: block.startTime)!
+            let startMinutes = startComponents.hour * 60 + startComponents.minute
+            
+            if startMinutes > currentMinutes {
+                return block
+            }
+        }
+        
+        // Bugün kalan blok yoksa, yarının ilk bloğunu döndür
+        return schedule.first
+    }
+    
+    var remainingTimeToNextBlock: Int {
+        guard let next = nextBlock else { return 0 }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = currentTime.hour! * 60 + currentTime.minute!
+        
+        let startComponents = TimeFormatter.time(from: next.startTime)!
+        let startMinutes = startComponents.hour * 60 + startComponents.minute
+        
+        if startMinutes <= currentMinutes {
+            // Yarının bloğu ise, 24 saat ekle
+            return (24 * 60 - currentMinutes) + startMinutes
+        } else {
+            return startMinutes - currentMinutes
+        }
     }
 }
 
