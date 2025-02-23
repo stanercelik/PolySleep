@@ -599,6 +599,38 @@
         }
       }
     },
+    "mainScreen.customizedSchedule.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This schedule has been customized from its original settings."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu program orijinal ayarlarından özelleştirilmiştir."
+          }
+        }
+      }
+    },
+    "mainScreen.customizedSchedule.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customized Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özelleştirilmiş Program"
+          }
+        }
+      }
+    },
     "mainScreen.dailyProgress" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3320,22 +3352,102 @@
       }
     },
     "sleepSchedule.core" : {
-
+      "comment" : "Ana Uyku",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
     },
     "sleepSchedule.description" : {
-      "comment" : "Sleep schedule description"
+      "comment" : "Sleep schedule description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uyku Planı Açıklaman"
+          }
+        }
+      }
     },
     "sleepSchedule.nap" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Şekerleme"
+          }
+        }
+      }
     },
     "sleepSchedule.naps" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naps"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kısa Uykular"
+          }
+        }
+      }
     },
     "sleepSchedule.timeRanges" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time Ranges"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaman Aralıkları"
+          }
+        }
+      }
     },
     "sleepSchedule.totalSleep" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toplam Uyku"
+          }
+        }
+      }
     },
     "sonraki uykuya kadar" : {
       "localizations" : {

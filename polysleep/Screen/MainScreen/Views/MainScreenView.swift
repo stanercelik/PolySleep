@@ -49,7 +49,8 @@ struct MainScreenView: View {
                     scrollOffset = value
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(viewModel.model.schedule.name)
+            .navigationBarTitleDisplayMode(.large)
             
             .navigationBarItems(trailing:
                 Image(systemName: viewModel.isEditing ? "checkmark" : "pencil")
@@ -99,55 +100,33 @@ struct MainContent: View {
 struct HeaderView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     let progress: CGFloat
+    @State private var showCustomizedInfo: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if viewModel.isEditing {
-                HStack(spacing: 8) {
-                    if viewModel.isEditingTitle {
-                        HStack {
-                            TextField(
-                                String(localized: "schedule.name.placeholder"),
-                                text: $viewModel.editingTitle
-                            )
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .submitLabel(.done)
-                            .onSubmit {
-                                viewModel.saveTitleChanges()
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Button(action: {
-                                viewModel.saveTitleChanges()
-                            }) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.title2)
-                                    .foregroundColor(.appAccent)
-                            }
-                        }
-                    } else {
-                        Text(viewModel.model.schedule.name)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .onTapGesture {
-                                viewModel.startTitleEditing()
-                            }
-                        
-                        Image(systemName: "pencil")
-                            .font(.caption)
-                            .foregroundColor(.appAccent)
-                    }
-                }
-            } else {
+            HStack(spacing: 8) {
                 Text(viewModel.model.schedule.name)
                     .font(.title2)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if viewModel.model.schedule.isCustomized {
+                    Image(systemName: "exclamationmark.circle.fill")
+                        .foregroundColor(.appAccent)
+                        .font(.caption)
+                        .onTapGesture {
+                            showCustomizedInfo = true
+                        }
+                }
             }
         }
         .padding(.horizontal)
         .padding(.bottom, 38)
+        .alert(String(localized: "mainScreen.customizedSchedule.title"), isPresented: $showCustomizedInfo) {
+            Button(String(localized: "general.ok"), role: .cancel) {}
+        } message: {
+            Text(String(localized: "mainScreen.customizedSchedule.message"))
+        }
     }
 }
 

@@ -211,7 +211,37 @@ class MainScreenViewModel: ObservableObject {
         let components = timeString.split(separator: "-")
         let startTime = components[0].trimmingCharacters(in: .whitespaces)
         let parts = startTime.split(separator: ":")
-        return Int(parts[0])! * 60 + Int(parts[1])!
+        let hours = Int(parts[0])!
+        let minutes = Int(parts[1])!
+        return hours * 60 + minutes
+    }
+    
+    private func normalizeMinutes(_ minutes: Int) -> Int {
+        return (minutes + 24 * 60) % (24 * 60)
+    }
+    
+    private func isOverlapping(start1: Int, end1: Int, start2: Int, end2: Int) -> Bool {
+        let normalizedStart1 = normalizeMinutes(start1)
+        let normalizedEnd1 = normalizeMinutes(end1)
+        let normalizedStart2 = normalizeMinutes(start2)
+        let normalizedEnd2 = normalizeMinutes(end2)
+        
+        // Eğer bitiş başlangıçtan küçükse, gece yarısını geçiyor demektir
+        let range1: Set<Int>
+        if normalizedEnd1 < normalizedStart1 {
+            range1 = Set(normalizedStart1...(24 * 60 - 1)).union(Set(0...normalizedEnd1))
+        } else {
+            range1 = Set(normalizedStart1...normalizedEnd1)
+        }
+        
+        let range2: Set<Int>
+        if normalizedEnd2 < normalizedStart2 {
+            range2 = Set(normalizedStart2...(24 * 60 - 1)).union(Set(0...normalizedEnd2))
+        } else {
+            range2 = Set(normalizedStart2...normalizedEnd2)
+        }
+        
+        return !range1.intersection(range2).isEmpty
     }
     
     // MARK: - Editing Functions
@@ -232,9 +262,7 @@ class MainScreenViewModel: ObservableObject {
             let blockStart = convertTimeStringToMinutes(block.startTime)
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
-            if (newStartMinutes >= blockStart && newStartMinutes < blockEnd) ||
-               (newEndMinutes > blockStart && newEndMinutes <= blockEnd) ||
-               (newStartMinutes <= blockStart && newEndMinutes >= blockEnd) {
+            if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
                 blockErrorMessage = String(localized: "sleepBlock.error.overlap")
                 showBlockError = true
                 return false
@@ -251,11 +279,14 @@ class MainScreenViewModel: ObservableObject {
         
         let duration = Calendar.current.dateComponents([.minute], from: newBlockStartTime, to: newBlockEndTime).minute ?? 0
         
+        // Süreye göre otomatik olarak ana uyku veya şekerleme belirleme
+        let isCore = duration >= 180 // 3 saat ve üzeri ana uyku olarak kabul edilir
+        
         let newBlock = SleepBlock(
             startTime: startTime,
             duration: duration,
-            type: newBlockIsCore ? "core" : "nap",
-            isCore: newBlockIsCore
+            type: isCore ? "core" : "nap",
+            isCore: isCore
         )
         
         model.schedule.schedule.append(newBlock)
@@ -322,9 +353,7 @@ class MainScreenViewModel: ObservableObject {
             let blockStart = convertTimeStringToMinutes(block.startTime)
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
-            if (newStartMinutes >= blockStart && newStartMinutes < blockEnd) ||
-               (newEndMinutes > blockStart && newEndMinutes <= blockEnd) ||
-               (newStartMinutes <= blockStart && newEndMinutes >= blockEnd) {
+            if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
                 blockErrorMessage = String(localized: "sleepBlock.error.overlap")
                 showBlockError = true
                 return false
