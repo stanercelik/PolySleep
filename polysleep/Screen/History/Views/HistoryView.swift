@@ -91,7 +91,8 @@ struct HistoryView: View {
                         .frame(width: 320)
                 }
             }
-            .navigationTitle(Text(LocalizedStringKey("Sleep History")))
+             .navigationTitle(Text(LocalizedStringKey("Sleep History")))
+            .navigationBarTitleDisplayMode(.large)
             .navigationBarItems(trailing: Button(action: {
                 viewModel.isCalendarPresented = true
             }) {

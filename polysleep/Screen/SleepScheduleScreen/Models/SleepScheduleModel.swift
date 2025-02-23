@@ -85,23 +85,26 @@ public struct SleepScheduleModel: Codable, Identifiable, Equatable {
     public let description: LocalizedDescription
     public let totalSleepHours: Double
     public let schedule: [SleepBlock]
+    public let isCustomized: Bool
     
     public init(
         id: String,
         name: String,
         description: LocalizedDescription,
         totalSleepHours: Double,
-        schedule: [SleepBlock]
+        schedule: [SleepBlock],
+        isCustomized: Bool = false
     ) {
         self.id = id
         self.name = name
         self.description = description
         self.totalSleepHours = totalSleepHours
         self.schedule = schedule
+        self.isCustomized = isCustomized
     }
     
     private enum CodingKeys: String, CodingKey {
-        case id, name, description, totalSleepHours, schedule
+        case id, name, description, totalSleepHours, schedule, isCustomized
     }
 }
 

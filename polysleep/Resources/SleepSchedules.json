@@ -15,7 +15,8 @@
           "duration": 480,
           "isCore": true
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "biphasic",
@@ -38,7 +39,8 @@
           "duration": 30,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "biphasic-extended",
@@ -61,7 +63,8 @@
           "duration": 90,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "everyman",
@@ -96,7 +99,8 @@
           "duration": 20,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "everyman-e2",
@@ -125,7 +129,8 @@
           "duration": 20,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "everyman-e3",
@@ -160,7 +165,8 @@
           "duration": 20,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "everyman-e4",
@@ -201,7 +207,8 @@
           "duration": 20,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "dymaxion",
@@ -236,7 +243,8 @@
           "duration": 30,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "dymaxion-alt",
@@ -271,7 +279,8 @@
           "duration": 30,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "uberman",
@@ -318,7 +327,8 @@
           "duration": 20,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "triphasic",
@@ -347,7 +357,8 @@
           "duration": 60,
           "isCore": false
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "triphasic-alt",
@@ -376,7 +387,8 @@
           "duration": 120,
           "isCore": true
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "segmented",
@@ -399,7 +411,8 @@
           "duration": 180,
           "isCore": true
         }
-      ]
+      ],
+      "isCustomized": false
     },
     {
       "id": "segmented-alt",
@@ -422,7 +435,8 @@
           "duration": 180,
           "isCore": true
         }
-      ]
+      ],
+      "isCustomized": false
     }
   ]
 }

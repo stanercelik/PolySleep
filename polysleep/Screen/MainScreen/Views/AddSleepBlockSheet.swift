@@ -16,9 +16,6 @@ struct AddSleepBlockSheet: View {
                     DatePicker(String(localized: "sleepBlock.endTime"),
                               selection: $viewModel.newBlockEndTime,
                               displayedComponents: .hourAndMinute)
-                    
-                    Toggle(String(localized: "sleepBlock.isCore"), isOn: $viewModel.newBlockIsCore)
-                        .tint(.appAccent)
                 }
                 
                 if !viewModel.model.schedule.schedule.isEmpty {

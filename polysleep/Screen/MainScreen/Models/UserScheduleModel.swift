@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct UserScheduleModel {
     var id: String
@@ -6,6 +7,7 @@ struct UserScheduleModel {
     var description: LocalizedDescription
     var totalSleepHours: Double
     var schedule: [SleepBlock]
+    var isCustomized: Bool
     
     private func sortBlocks(_ blocks: [SleepBlock]) -> [SleepBlock] {
         return blocks.sorted { block1, block2 in
@@ -17,12 +19,13 @@ struct UserScheduleModel {
         }
     }
 
-    init(id: String, name: String, description: LocalizedDescription, totalSleepHours: Double, schedule: [SleepBlock]) {
+    init(id: String, name: String, description: LocalizedDescription, totalSleepHours: Double, schedule: [SleepBlock], isCustomized: Bool = false) {
         self.id = id
         self.name = name
         self.description = description
         self.totalSleepHours = totalSleepHours
         self.schedule = schedule
+        self.isCustomized = isCustomized
         self.schedule = sortBlocks(self.schedule)
     }
     
@@ -68,7 +71,8 @@ struct UserScheduleModel {
                 tr: "Varsayılan uyku prasdasdasdasdaogramı"
             ),
             totalSleepHours: 8.0,
-            schedule: schedule
+            schedule: schedule,
+            isCustomized: false
         )
     }
     
@@ -120,7 +124,8 @@ extension UserScheduleModel {
             name: name,
             description: description,
             totalSleepHours: totalSleepHours,
-            schedule: schedule
+            schedule: schedule,
+            isCustomized: isCustomized
         )
     }
 }
