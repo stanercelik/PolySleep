@@ -68,8 +68,8 @@ class MainScreenViewModel: ObservableObject {
         }
     }
     
-    var dailyTip: String {
-        "Düzenli uyku saatleri bağışıklık sisteminizi güçlendirir."
+    var dailyTip: LocalizedStringKey {
+        DailyTipManager.getDailyTip()
     }
     
     var dailyProgress: Double {
@@ -80,6 +80,49 @@ class MainScreenViewModel: ObservableObject {
     var currentStreak: Int {
         // Dummy Value
         return 5
+    }
+    
+    var isInSleepTime: Bool {
+        model.schedule.currentBlock != nil
+    }
+    
+    var sleepStatusMessage: String {
+        if isInSleepTime {
+            return "İyi Uykular! 💤💤"
+        } else if model.schedule.nextBlock != nil {
+            let remainingTime = model.schedule.remainingTimeToNextBlock
+            let hours = remainingTime / 60
+            let minutes = remainingTime % 60
+            
+            if hours > 0 {
+                return "Uyku saatine \(hours)s \(minutes)dk kaldı"
+            } else {
+                return "Uyku saatine \(minutes)dk kaldı"
+            }
+        } else {
+            return "Bugün başka uyku bloğu yok"
+        }
+    }
+    
+    func shareScheduleInfo() -> String {
+        var shareText = """
+        🌙 PolySleep Uyku Programım
+        
+        📋 Program: \(model.schedule.name)
+        ⏰ Toplam Uyku: \(totalSleepTimeFormatted)
+        🔄 Mevcut Seri: \(currentStreak) gün
+        📊 Günlük İlerleme: %\(Int(dailyProgress * 100))
+        
+        🛏️ Uyku Blokları:
+        """
+        
+        for block in model.schedule.schedule {
+            shareText += "\n• \(block.startTime)-\(block.endTime) (\(block.isCore ? "Ana Uyku" : "Şekerleme"))"
+        }
+        
+        shareText += "\n\n#PolySleep #UykuDüzeni"
+        
+        return shareText
     }
     
     init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), modelContext: ModelContext? = nil) {
@@ -249,7 +292,7 @@ class MainScreenViewModel: ObservableObject {
     func validateNewBlock() -> Bool {
         // Başlangıç zamanı bitiş zamanından önce olmalı
         if newBlockStartTime >= newBlockEndTime {
-            blockErrorMessage = String(localized: "sleepBlock.error.invalidTime")
+            blockErrorMessage = "sleepBlock.error.invalidTime"
             showBlockError = true
             return false
         }
@@ -263,7 +306,7 @@ class MainScreenViewModel: ObservableObject {
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
             if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = String(localized: "sleepBlock.error.overlap")
+                blockErrorMessage = "sleepBlock.error.overlap"
                 showBlockError = true
                 return false
             }
@@ -293,8 +336,8 @@ class MainScreenViewModel: ObservableObject {
         model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
         
         // Eğer schedule adı değiştirilmemişse ve blok eklendiyse
-        if !model.schedule.name.contains(String(localized: "schedule.customized")) {
-            model.schedule.name += " " + String(localized: "schedule.customized")
+        if !model.schedule.name.contains("schedule.customized") {
+            model.schedule.name += " " + "schedule.customized"
         }
         
         Task {
@@ -307,8 +350,8 @@ class MainScreenViewModel: ObservableObject {
         updatedSchedule.schedule.remove(atOffsets: offsets)
         model.schedule = updatedSchedule
         
-        if !model.schedule.name.contains(String(localized: "schedule.customized")) {
-            model.schedule.name += " " + String(localized: "schedule.customized")
+        if !model.schedule.name.contains("schedule.customized") {
+            model.schedule.name += " " + "schedule.customized"
         }
         
         Task {
@@ -335,7 +378,7 @@ class MainScreenViewModel: ObservableObject {
     func validateEditingBlock() -> Bool {
         // Başlangıç zamanı bitiş zamanından önce olmalı
         if editingBlockStartTime >= editingBlockEndTime {
-            blockErrorMessage = String(localized: "sleepBlock.error.invalidTime")
+            blockErrorMessage = "sleepBlock.error.invalidTime"
             showBlockError = true
             return false
         }
@@ -354,7 +397,7 @@ class MainScreenViewModel: ObservableObject {
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
             if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = String(localized: "sleepBlock.error.overlap")
+                blockErrorMessage = "sleepBlock.error.overlap"
                 showBlockError = true
                 return false
             }
@@ -383,8 +426,8 @@ class MainScreenViewModel: ObservableObject {
             model.schedule.schedule[index] = updatedBlock
             model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
             
-            if !model.schedule.name.contains(String(localized: "schedule.customized")) {
-                model.schedule.name += " " + String(localized: "schedule.customized")
+            if !model.schedule.name.contains("schedule.customized") {
+                model.schedule.name += " " + "schedule.customized"
             }
             
             Task {
@@ -396,8 +439,8 @@ class MainScreenViewModel: ObservableObject {
     func deleteBlock(_ block: SleepBlock) {
         model.schedule.schedule.removeAll { $0.id == block.id }
         
-        if !model.schedule.name.contains(String(localized: "schedule.customized")) {
-            model.schedule.name += " " + String(localized: "schedule.customized")
+        if !model.schedule.name.contains("schedule.customized") {
+            model.schedule.name += " " + "schedule.customized"
         }
         
         Task {
@@ -413,11 +456,11 @@ class MainScreenViewModel: ObservableObject {
     func saveTitleChanges() {
         if !editingTitle.isEmpty {
             // Eğer isim zaten özelleştirilmiş ibaresini içeriyorsa, direkt olarak yeni ismi kullan
-            if model.schedule.name.contains(String(localized: "schedule.customized")) {
+            if model.schedule.name.contains("schedule.customized") {
                 model.schedule.name = editingTitle
             } else {
                 // İlk kez değiştiriliyorsa özelleştirilmiş ibaresini ekle
-                model.schedule.name = editingTitle + " " + String(localized: "schedule.customized")
+                model.schedule.name = editingTitle + " " + "schedule.customized"
             }
             isEditingTitle = false
             Task {

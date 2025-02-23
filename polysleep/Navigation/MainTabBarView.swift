@@ -10,21 +10,21 @@ struct MainTabBarView: View {
             MainScreenView(viewModel: mainScreenViewModel)
                 .tabItem {
                     Image(systemName: "house.fill")
-                    Text("Ana Sayfa")
+                    Text("tabbar.schedule")
                 }
                 .tag(0)
             
             HistoryView()
                 .tabItem {
                     Image(systemName: "clock.fill")
-                    Text("Geçmiş")
+                    Text("tabbar.history")
                 }
                 .tag(1)
             
             ProfileScreenView()
                 .tabItem {
                     Image(systemName: "person.fill")
-                    Text("Profil")
+                    Text("tabbar.profile")
                 }
                 .tag(2)
         }

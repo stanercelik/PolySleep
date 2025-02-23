@@ -49,18 +49,40 @@ struct MainScreenView: View {
                     scrollOffset = value
                 }
             }
-            .navigationTitle(viewModel.model.schedule.name)
-            .navigationBarTitleDisplayMode(.large)
-            
-            .navigationBarItems(trailing:
-                Image(systemName: viewModel.isEditing ? "checkmark" : "pencil")
+            .navigationBarItems(
+                leading: Button(action: {
+                    let activityVC = UIActivityViewController(
+                        activityItems: [viewModel.shareScheduleInfo()],
+                        applicationActivities: nil
+                    )
+                    
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let window = windowScene.windows.first,
+                       let rootVC = window.rootViewController {
+                        rootVC.present(activityVC, animated: true)
+                    }
+                }) {
+                    Image(systemName: "square.and.arrow.up")
+                        .symbolRenderingMode(.hierarchical)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appAccent)
+                },
+                trailing: Image(systemName: viewModel.isEditing ? "checkmark" : "pencil")
                     .symbolRenderingMode(.hierarchical)
                     .fontWeight(viewModel.isEditing ? .bold : .black)
+                    .foregroundColor(viewModel.isEditing ? .appSecondary : .accentColor)
                     .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
                     .onTapGesture {
                         viewModel.isEditing.toggle()
                     }
             )
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(viewModel.sleepStatusMessage)
+                        .font(.headline)
+                        .foregroundColor(.appText)
+                }
+            }
             .onAppear {
                 viewModel.setModelContext(modelContext)
             }
@@ -68,31 +90,6 @@ struct MainScreenView: View {
         .sheet(isPresented: $viewModel.showAddBlockSheet) {
             AddSleepBlockSheet(viewModel: viewModel)
         }
-    }
-}
-
-// MARK: - Main Content
-struct MainContent: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    @Binding var scrollOffset: CGFloat
-    let progress: CGFloat
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            HeaderView(viewModel: viewModel, progress: progress)
-            
-            CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
-                .frame(height: 200)
-                .padding(.horizontal)
-                .padding(.vertical, 42)
-            
-            SleepBlocksSection(viewModel: viewModel)
-            
-            InfoCardsSection(viewModel: viewModel)
-            
-            TipSection(viewModel: viewModel)
-        }
-        .padding(.bottom, 16)
     }
 }
 

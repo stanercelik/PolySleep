@@ -2999,6 +2999,7 @@
 
     },
     "schedule.customized" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3193,6 +3194,7 @@
       }
     },
     "sleepBlock.error.invalidTime" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3209,6 +3211,7 @@
       }
     },
     "sleepBlock.error.overlap" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3465,6 +3468,57 @@
         }
       }
     },
+    "tabbar.history" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Geçmiş"
+          }
+        }
+      }
+    },
+    "tabbar.profile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Profil"
+          }
+        }
+      }
+    },
+    "tabbar.schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Düzeni"
+          }
+        }
+      }
+    },
     "Tamam" : {
       "localizations" : {
         "en" : {
@@ -3559,6 +3613,516 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "tip.sleep.adaptation" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Although polyphasic sleep may cause headaches or increased caffeine needs during adaptation, these effects decrease once the routine is established."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Polifazik uyku, adaptasyon sürecinde baş ağrısı veya kafein ihtiyacı artışı yaratabilse de düzene girildiğinde bu etkiler azalır."
+          }
+        }
+      }
+    },
+    "tip.sleep.alertness" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Polyphasic sleep can reduce the frequency of yawning over time and create an 'I'm awake and ready at any moment!' feeling."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Polifazik uyku, zamanla esneme sıklığını azaltıp 'Her an uyanık ve hazırım!' hissi yaşatabilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.ancient" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏺 Polyphasic sleep is a practice detected in ancient times and was preferred by sages during intense meditation processes."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏺 Polifazik uyku, antik dönemde de tespit edilen bir uygulama olup, bilgeler tarafından yoğun meditasyon süreçlerinde tercih edilmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.animals" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐱 Polyphasic sleep is a natural rest cycle observed in many animals, such as cats and elephants."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐱 Polifazik uyku, kediler ve filler gibi pek çok hayvanda gözlemlenen doğal bir dinlenme döngüsüdür."
+          }
+        }
+      }
+    },
+    "tip.sleep.athletes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ Polyphasic sleep can speed up the recovery process for athletes and athletes who need to stay active throughout the day."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ Polifazik uyku, gün içinde sürekli aktif kalmaya ihtiyaç duyan sporcular ve atletler için toparlanma sürecini hızlandırabilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.bat" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦇 Polyphasic sleep attracts interest as it resembles the short rest patterns of bats that use echolocation in the dark."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦇 Polifazik uyku, karanlıkta ekolokasyon yapan yarasaların kısa dinlenme patternlerine benzerlik göstermesiyle de ilgi uyandırır."
+          }
+        }
+      }
+    },
+    "tip.sleep.biological" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧬 Polyphasic sleep takes a person beyond the definitions of 'night owl' or 'morning person' and encourages exploring their biological limits."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧬 Polifazik uyku, kişiyi 'gece kuşu' veya 'sabah insanı' tanımlarının ötesine taşıyıp kendi biyolojik sınırlarını keşfetmeye teşvik eder."
+          }
+        }
+      }
+    },
+    "tip.sleep.brain_cycles" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Polyphasic sleep increases the potential to stay alive without sleeping eight hours at night by intensifying and shortening the brain's sleep cycles."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Polifazik uyku, beynin uyku döngülerini sıklaştırıp kısaltarak, gece boyunca sekiz saat uyunmadan da canlı kalma potansiyelini artırır."
+          }
+        }
+      }
+    },
+    "tip.sleep.chess" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "♟️ Polyphasic sleep has been tried with mini-breaks as 'brain doping' in strategy games or chess tournaments."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "♟️ Polifazik uyku, strateji oyunlarında veya satranç turnuvalarında 'beyin doping' niyetine mini aralarla denenmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.creativity_boost" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎨 Polyphasic sleep can nourish creative thinking and problem-solving skills as REM phase is entered more frequently."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎨 Polifazik uyku, REM fazına daha sık girildiğinden yaratıcı düşünceyi ve problem çözme becerisini besleyebilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.dreams" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💭 Polyphasic sleep can make it easier to remember dreams more clearly and sometimes facilitate lucid dreaming with frequent sleep intervals."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💭 Polifazik uyku, rüyaları daha net hatırlamayı ve bazen de lusid rüya görmeyi kolaylaştırabilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.eeg" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Polyphasic sleep is being studied with EEG studies and attracts scientific attention due to increased deep rest segments."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Polifazik uyku, EEG çalışmalarıyla da incelenmekte ve sıklaşan derin dinlenme bölümleri sayesinde bilimin dikkatini çekmektedir."
+          }
+        }
+      }
+    },
+    "tip.sleep.energy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ Polyphasic sleep can delay burnout in long-term tasks by having the body use energy in small portions."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ Polifazik uyku, vücudun enerjiyi küçük parçalara bölerek kullanması sayesinde uzun süreli görevlerde tükenmişliği geciktirebilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.esports" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎮 Polyphasic sleep has been tested among e-Sports players in preparation for tournaments requiring intense focus."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎮 Polifazik uyku, e-Spor oyuncuları arasında yoğun odaklanma gerektiren turnuvalara hazırlık amacıyla test edilmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.famous" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Polyphasic sleep is known as a pattern attributed to the sleep schedules of geniuses like Leonardo da Vinci and Nikola Tesla."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Polifazik uyku, Leonardo da Vinci ve Nikola Tesla gibi dahilerin uyku programlarına atfedilen bir düzen olarak bilinir."
+          }
+        }
+      }
+    },
+    "tip.sleep.farmer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌾 Polyphasic sleep has been adopted by some farmers in the past to care for animals at different hours."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌾 Polifazik uyku, geçmişte bazı çiftçiler tarafından farklı saatlerde hayvan bakımı yapabilmek için benimsenmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.history" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚔️ Polyphasic sleep has been used throughout history to increase endurance in long campaigns and harsh conditions, from Roman legions to Samurai."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚔️ Polifazik uyku, geçmişte uzun seferlerde ve zorlu koşullarda dayanıklılığı artırmak için Roma lejyonlarından Samuraylara kadar kullanılmıştır."
+          }
+        }
+      }
+    },
+    "tip.sleep.japanese" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎌 Polyphasic sleep shows similarity to a socially accepted rest method in Japanese culture called 'inemuri' with instant naps."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎌 Polifazik uyku, Japon kültüründe 'inemuri' şeklinde anlık şekerlemelerle benzerlik göstererek sosyal kabul görmüş bir dinlenme yöntemiyle örtüşür."
+          }
+        }
+      }
+    },
+    "tip.sleep.melatonin" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Polyphasic sleep can help establish a new balance in the sleep-wake cycle by dividing the body's melatonin release rhythm into parts."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Polifazik uyku, bedenin melatonin salınım ritmini parçalara ayırarak uyku-uyanıklık döngüsünde yeni bir denge kurmaya yardımcı olabilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.memory_boost" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Polyphasic sleep offers the opportunity to strengthen memory and consolidate information as the brain quickly reaches REM stage through short sleep periods."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Polifazik uyku, kısa uyku periyotları sayesinde beynin REM evresine hızla ulaşıp bilgileri pekiştirme ve hafızayı güçlendirme olanağı sunar."
+          }
+        }
+      }
+    },
+    "tip.sleep.metabolism" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃 Polyphasic sleep can contribute positively to physical health through research showing that short sleeps balance metabolism."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃 Polifazik uyku, kısa uykuların metabolizmayı dengelediğini gösteren araştırmalar sayesinde fiziksel sağlığa da olumlu katkıda bulunabilir."
+          }
+        }
+      }
+    },
+    "tip.sleep.mountaineer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⛰️ Just like mountaineers who need to adapt to high altitudes, your body needs time to adjust to a new sleep schedule. Be patient and consistent!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⛰️ Tıpkı yüksek irtifaya alışması gereken dağcılar gibi, vücudunuzun da yeni uyku düzenine adapte olması için zamana ihtiyacı var. Sabırlı ve tutarlı olun!"
+          }
+        }
+      }
+    },
+    "tip.sleep.nasa" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Polyphasic sleep is among the best-performing methods in NASA's short nap research recommended for astronauts."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Polifazik uyku, NASA'nın astronotlara önerdiği kısa şekerleme araştırmalarında en iyi performans sağlayan yöntemler arasında yer alır."
+          }
+        }
+      }
+    },
+    "tip.sleep.natural_wake" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Polyphasic sleep stands out for providing a natural waking pattern without using morning alarms when properly adapted."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Polifazik uyku, doğru adapte olunduğunda sabah alarmı kullanmadan doğal bir uyanma düzeni sağlamasıyla dikkat çeker."
+          }
+        }
+      }
+    },
+    "tip.sleep.parent" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 Polyphasic sleep has come up as a theoretical solution for parents who need to stay awake day and night for baby care."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 Polifazik uyku, bebek bakımında gece gündüz uyanık kalma ihtiyacı duyan ebeveynler için teorik bir çare olarak gündeme gelmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.sailor" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚢 Polyphasic sleep is a sleep approach that sailors on ocean patrol in the mid-20th century combined with their shift system."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚢 Polifazik uyku, 20. yüzyıl ortalarında okyanus devriyesi yapan denizcilerin vardiya sistemiyle harmanladığı bir uyku yaklaşımıdır."
+          }
+        }
+      }
+    },
+    "tip.sleep.startup" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💼 Polyphasic sleep has helped some famous entrepreneurs grow their projects faster by saving time during start-up processes."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💼 Polifazik uyku, bazı ünlü girişimcilerin start-up süreçlerinde zamandan tasarruf ederek projelerini daha hızlı büyütmelerine yardımcı olmuştur."
+          }
+        }
+      }
+    },
+    "tip.sleep.stress_mechanism" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛡️ Polyphasic sleep is a defense mechanism that the human brain can temporarily adopt on its own in crisis or extreme stress situations."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛡️ Polifazik uyku, insan beyninin kriz veya aşırı stres durumlarında kendiliğinden geçici olarak benimseyebildiği bir savunma mekanizmasıdır."
+          }
+        }
+      }
+    },
+    "tip.sleep.time_management" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌚ Polyphasic sleep has become a common arrangement for those seeking to break free from traditional time management approaches."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌚ Polifazik uyku, zaman yönetimi konusunda geleneksel yaklaşımlardan bağımsızlaşmak isteyenlerin sık başvurduğu bir düzen haline gelmiştir."
+          }
+        }
+      }
+    },
+    "tip.sleep.travel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚗 Polyphasic sleep can also be preferred by drivers or long-distance travelers to stay safe on the road with short breaks."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚗 Polifazik uyku, sürücüler veya uzun mesafe yolculuk yapan kişiler tarafından yolda kısa molalarla güvende kalmak için de tercih edilebilir."
           }
         }
       }

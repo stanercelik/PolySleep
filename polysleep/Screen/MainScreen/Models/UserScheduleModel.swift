@@ -93,8 +93,36 @@ struct UserScheduleModel {
             }
         }
         
-        // Bugün kalan blok yoksa, yarının ilk bloğunu döndür
         return schedule.first
+    }
+    
+    var currentBlock: SleepBlock? {
+        guard !schedule.isEmpty else { return nil }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = currentTime.hour! * 60 + currentTime.minute!
+        
+        for block in schedule {
+            let startComponents = TimeFormatter.time(from: block.startTime)!
+            let startMinutes = startComponents.hour * 60 + startComponents.minute
+            
+            let endComponents = TimeFormatter.time(from: block.endTime)!
+            let endMinutes = endComponents.hour * 60 + endComponents.minute
+            
+            if endMinutes < startMinutes {
+                if currentMinutes >= startMinutes || currentMinutes <= endMinutes {
+                    return block
+                }
+            } else {
+                if currentMinutes >= startMinutes && currentMinutes <= endMinutes {
+                    return block
+                }
+            }
+        }
+        
+        return nil
     }
     
     var remainingTimeToNextBlock: Int {
@@ -109,7 +137,6 @@ struct UserScheduleModel {
         let startMinutes = startComponents.hour * 60 + startComponents.minute
         
         if startMinutes <= currentMinutes {
-            // Yarının bloğu ise, 24 saat ekle
             return (24 * 60 - currentMinutes) + startMinutes
         } else {
             return startMinutes - currentMinutes
