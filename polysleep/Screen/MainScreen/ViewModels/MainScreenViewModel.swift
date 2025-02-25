@@ -40,6 +40,9 @@ class MainScreenViewModel: ObservableObject {
     @Published var editingBlockEndTime: Date = Date().addingTimeInterval(3600)
     @Published var editingBlockIsCore: Bool = false
     @Published var isEditingTitle: Bool = false
+    @Published var showSleepQualityRating = false
+    @Published var hasDeferredSleepQualityRating = false
+    @Published var lastSleepBlock: (start: Date, end: Date)?
     
     private var modelContext: ModelContext?
     private var timer: Timer?
@@ -202,6 +205,7 @@ class MainScreenViewModel: ObservableObject {
             .sink { [weak self] _ in
                 Task { @MainActor in
                     self?.updateNextSleepBlock()
+                    self?.checkAndShowSleepQualityRating()
                 }
             }
     }
@@ -512,6 +516,44 @@ class MainScreenViewModel: ObservableObject {
             try context.save()
         } catch {
             print("Error saving changes: \(error)")
+        }
+    }
+    
+    /// Uyku bloğu tamamlandığında uyku kalitesi değerlendirmesini göster
+    private func checkAndShowSleepQualityRating() {
+        guard !showSleepQualityRating, !hasDeferredSleepQualityRating else { return }
+        
+        let now = Date()
+        // Son 30 dakika içinde biten bir uyku bloğu var mı kontrol et
+        if let lastBlock = model.schedule.schedule.first(where: { block in
+            let endTime = TimeFormatter.time(from: block.endTime)!
+            let endDate = Calendar.current.date(
+                bySettingHour: endTime.hour,
+                minute: endTime.minute,
+                second: 0,
+                of: now
+            ) ?? now
+            return endDate <= now && now.timeIntervalSince(endDate) <= 1800 // 30 dakika
+        }) {
+            let startTime = TimeFormatter.time(from: lastBlock.startTime)!
+            let endTime = TimeFormatter.time(from: lastBlock.endTime)!
+            
+            let startDate = Calendar.current.date(
+                bySettingHour: startTime.hour,
+                minute: startTime.minute,
+                second: 0,
+                of: now
+            ) ?? now
+            
+            let endDate = Calendar.current.date(
+                bySettingHour: endTime.hour,
+                minute: endTime.minute,
+                second: 0,
+                of: now
+            ) ?? now
+            
+            lastSleepBlock = (start: startDate, end: endDate)
+            showSleepQualityRating = true
         }
     }
 }

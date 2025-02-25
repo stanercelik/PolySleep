@@ -45,7 +45,7 @@ struct HistoryView: View {
                         .padding(.horizontal)
                     }
                     .padding(.vertical, 12)
-                    .background(Color("BackgroundColor"))
+                    .background(Color.appBackground)
                     
                     if viewModel.historyItems.isEmpty {
                         VStack(spacing: 16) {
@@ -56,7 +56,7 @@ struct HistoryView: View {
                                 .foregroundColor(Color("SecondaryTextColor"))
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color("BackgroundColor"))
+                        .background(Color.appBackground)
                     } else {
                         ScrollView {
                             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
@@ -108,7 +108,7 @@ struct HistoryView: View {
                     DayDetailView(historyItem: historyItem)
                 }
             }
-            .background(Color("BackgroundColor").ignoresSafeArea())
+            .background(Color.appBackground.ignoresSafeArea())
         }
     }
 }
@@ -156,7 +156,7 @@ struct DayHeader: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 12)
-        .background(Color("BackgroundColor"))
+        .background(Color.appBackground)
     }
 }
 

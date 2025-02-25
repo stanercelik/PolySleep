@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 
 enum SortOption: String, CaseIterable {
     case newestFirst = "Newest First"
@@ -7,16 +8,16 @@ enum SortOption: String, CaseIterable {
     case lowestRated = "Lowest Rated"
 }
 
-enum SleepType {
+enum SleepType: Int, Codable {
     case core
     case powerNap
     
     var title: String {
         switch self {
         case .core:
-            return "Core Sleep"
+            return NSLocalizedString("sleep.type.core", comment: "")
         case .powerNap:
-            return "Power Nap"
+            return NSLocalizedString("sleep.type.nap", comment: "")
         }
     }
     
@@ -30,59 +31,83 @@ enum SleepType {
     }
 }
 
-struct SleepEntry: Identifiable {
-    let id = UUID()
-    let type: SleepType
-    let startTime: Date
-    let endTime: Date
-    let rating: Int
+@Model
+final class SleepEntry: Identifiable {
+    var id: String
+    var type: SleepType
+    var startTime: Date
+    var endTime: Date
+    var rating: Int
+    var parentHistory: HistoryModel?
     
     var duration: TimeInterval {
         endTime.timeIntervalSince(startTime)
     }
+    
+    init(type: SleepType, startTime: Date, endTime: Date, rating: Int) {
+        self.id = UUID().uuidString
+        self.type = type
+        self.startTime = startTime
+        self.endTime = endTime
+        self.rating = rating
+    }
 }
 
-struct HistoryModel: Identifiable {
-    let id = UUID()
+struct HistoryItem: Identifiable {
+    let id: String
     let date: Date
-    var sleepEntries: [SleepEntry]
+    let sleepEntries: [SleepEntry]
     
     var totalSleepDuration: TimeInterval {
         sleepEntries.reduce(0) { $0 + $1.duration }
     }
     
     var averageRating: Double {
+        guard !sleepEntries.isEmpty else { return 0 }
         let totalRating = sleepEntries.reduce(0) { $0 + $1.rating }
         return Double(totalRating) / Double(sleepEntries.count)
     }
-    
-    var completionStatus: CompletionStatus {
-        let hasCoreSleep = sleepEntries.contains { $0.type == .core }
-        let hasPowerNap = sleepEntries.contains { $0.type == .powerNap }
-        
-        if hasCoreSleep && hasPowerNap {
-            return .complete
-        } else if hasCoreSleep || hasPowerNap {
-            return .partial
-        } else {
-            return .missed
-        }
-    }
 }
 
-enum CompletionStatus {
-    case complete
+enum CompletionStatus: Int, Codable {
+    case completed
     case partial
     case missed
     
     var color: String {
         switch self {
-        case .complete:
-            return "SecondaryColor"
+        case .completed:
+            return "SuccessColor"
         case .partial:
-            return "AccentColor"
+            return "WarningColor"
         case .missed:
             return "ErrorColor"
         }
+    }
+}
+
+@Model
+final class HistoryModel {
+    var id: String
+    var date: Date
+    @Relationship(deleteRule: .cascade) var sleepEntries: [SleepEntry]
+    var completionStatus: CompletionStatus
+    
+    var totalSleepDuration: TimeInterval {
+        sleepEntries.reduce(0) { $0 + $1.duration }
+    }
+    
+    var averageRating: Double {
+        guard !sleepEntries.isEmpty else { return 0 }
+        let totalRating = sleepEntries.reduce(0) { $0 + $1.rating }
+        return Double(totalRating) / Double(sleepEntries.count)
+    }
+    
+    init(date: Date, sleepEntries: [SleepEntry] = []) {
+        self.id = UUID().uuidString
+        self.date = date
+        self.sleepEntries = sleepEntries
+        self.completionStatus = .missed // Varsayılan olarak missed
+        sleepEntries.forEach { $0.parentHistory = self }
     }
 }

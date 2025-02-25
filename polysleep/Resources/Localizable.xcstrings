@@ -125,9 +125,6 @@
         }
       }
     },
-    "Ana Sayfa" : {
-
-    },
     "Başlangıç Tarihi" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -414,9 +411,6 @@
           }
         }
       }
-    },
-    "Geçmiş" : {
-
     },
     "general.cancel" : {
       "localizations" : {
@@ -1758,13 +1752,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Well experienced"
+            "value" : "🤓 Well experienced"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çok deneyimli"
+            "state" : "needs_review",
+            "value" : "🤓 Çok deneyimli"
           }
         }
       }
@@ -1775,13 +1769,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Just starting out"
+            "value" : "🤔 Just starting out"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yeni başlayan"
+            "state" : "needs_review",
+            "value" : "🤔 Yeni başlayan"
           }
         }
       }
@@ -1792,13 +1786,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Some experience"
+            "value" : "😎 Some experience"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Biraz deneyimli"
+            "state" : "needs_review",
+            "value" : "😎 Biraz deneyimli"
           }
         }
       }
@@ -3114,6 +3108,38 @@
         }
       }
     },
+    "sleep.type.core" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "sleep.type.nap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
     "sleepBlock.add" : {
       "localizations" : {
         "en" : {
@@ -3354,6 +3380,175 @@
         }
       }
     },
+    "sleepQuality.later" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha sonra"
+          }
+        }
+      }
+    },
+    "sleepQuality.notification.body" : {
+
+    },
+    "sleepQuality.notification.title" : {
+
+    },
+    "sleepQuality.question" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How did you sleep between %@ and %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ve %@ arasında nasıl uyudun?"
+          }
+        }
+      }
+    },
+    "sleepQuality.question %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "sleepQuality.question %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.bad" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berbat"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.excellent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.good" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.poor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.veryGood" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok İyi"
+          }
+        }
+      }
+    },
+    "sleepQuality.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydet"
+          }
+        }
+      }
+    },
+    "sleepQuality.snackbar.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can rate your sleep from the History page"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uykunu Geçmiş sayfasından puanlayabilirsin"
+          }
+        }
+      }
+    },
     "sleepSchedule.core" : {
       "comment" : "Ana Uyku",
       "localizations" : {
@@ -3365,7 +3560,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ana Uyku"
           }
         }
@@ -4003,7 +4198,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚀 Polifazik uyku, NASA'nın astronotlara önerdiği kısa şekerleme araştırmalarında en iyi performans sağlayan yöntemler arasında yer alır."
+            "value" : "🚀 Polifazik uyku, NASA'nın astronotlara önerdiği kısa şekerleme araştırmalarında en iyi performans gösteren yöntemler arasında yer alır."
           }
         }
       }

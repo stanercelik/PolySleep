@@ -137,31 +137,18 @@ class HistoryViewModel: ObservableObject {
             // Core Sleep
             let coreSleepStart = calendar.date(bySettingHour: 23, minute: Int.random(in: 0...59), second: 0, of: date)!
             let coreSleepEnd = calendar.date(byAdding: .hour, value: 6, to: coreSleepStart)!
-            let coreSleep = SleepEntry(
-                type: .core,
-                startTime: coreSleepStart,
-                endTime: coreSleepEnd,
-                rating: Int.random(in: 3...5)
-            )
+            let coreSleep = SleepEntry(type: .core, startTime: coreSleepStart, endTime: coreSleepEnd, rating: Int.random(in: 3...5))
             
             // Power Nap
             var entries = [coreSleep]
             if Bool.random() {
                 let napStart = calendar.date(bySettingHour: 14, minute: Int.random(in: 0...59), second: 0, of: date)!
                 let napEnd = calendar.date(byAdding: .minute, value: 30, to: napStart)!
-                let powerNap = SleepEntry(
-                    type: .powerNap,
-                    startTime: napStart,
-                    endTime: napEnd,
-                    rating: Int.random(in: 2...5)
-                )
+                let powerNap = SleepEntry(type: .powerNap, startTime: napStart, endTime: napEnd, rating: Int.random(in: 2...5))
                 entries.append(powerNap)
             }
             
-            let historyItem = HistoryModel(
-                date: date,
-                sleepEntries: entries
-            )
+            let historyItem = HistoryModel(date: date, sleepEntries: entries)
             mockItems.append(historyItem)
         }
         

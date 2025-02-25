@@ -31,6 +31,17 @@ struct MainScreenView: View {
                     
                     VStack(spacing: 16) {
                         HeaderView(viewModel: viewModel, progress: progress)
+                            .notificationDot(isShowing: viewModel.hasDeferredSleepQualityRating)
+                        
+                        if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
+                            SleepQualityRatingView(
+                                startTime: lastBlock.start,
+                                endTime: lastBlock.end,
+                                isPresented: $viewModel.showSleepQualityRating
+                            )
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                            .padding(.horizontal)
+                        }
                         
                         CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
                             .frame(height: 200)
@@ -70,7 +81,7 @@ struct MainScreenView: View {
                 trailing: Image(systemName: viewModel.isEditing ? "checkmark" : "pencil")
                     .symbolRenderingMode(.hierarchical)
                     .fontWeight(viewModel.isEditing ? .bold : .black)
-                    .foregroundColor(viewModel.isEditing ? .appSecondary : .accentColor)
+                    .foregroundColor(viewModel.isEditing ? .appSecondary : .appAccent)
                     .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
                     .onTapGesture {
                         viewModel.isEditing.toggle()
