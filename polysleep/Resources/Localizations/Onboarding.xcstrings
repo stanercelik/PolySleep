@@ -1,0 +1,1530 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "accessibility.completeCurrentPage" : {
+      "comment" : "Accessibility hint for completing the current onboarding step",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please complete this page first"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lütfen önce bu sayfayı tamamlayın"
+          }
+        }
+      }
+    },
+    "accessibility.description" : {
+      "comment" : "Accessibility label for descriptive text in onboarding",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açıklama"
+          }
+        }
+      }
+    },
+    "accessibility.nextPage" : {
+      "comment" : "Accessibility label for next page button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Page"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonraki Sayfa"
+          }
+        }
+      }
+    },
+    "accessibility.notSelected" : {
+      "comment" : "Accessibility value for an unselected option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not selected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçilmedi"
+          }
+        }
+      }
+    },
+    "accessibility.previousPage" : {
+      "comment" : "Accessibility label for previous page button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous Page"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceki Sayfa"
+          }
+        }
+      }
+    },
+    "accessibility.seeResults" : {
+      "comment" : "Accessibility label for see results button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See Results"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonuçları Gör"
+          }
+        }
+      }
+    },
+    "accessibility.selected" : {
+      "comment" : "Accessibility value for a selected option",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçili"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange" : {
+      "comment" : "Section title for age range",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Age Range"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yaş Aralığınız"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.18to24" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧑 18-24"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧑 18-24"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.25to34" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨 25-34"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨 25-34"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.35to44" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦰 35-44"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦰 35-44"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.45to54" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦳 45-54"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦳 45-54"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.55plus" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👴 55+"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👴 55+"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange.under18" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 Under 18"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 18 Altı"
+          }
+        }
+      }
+    },
+    "onboarding.ageRangeDescription" : {
+      "comment" : "Description about age range importance",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polyphasic sleep adaptation may vary during adolescence or in older ages."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergenlik çağında veya ileri yaşlarda polifazik uyku düzeni adaptasyonu farklılık gösterebilir."
+          }
+        }
+      }
+    },
+    "onboarding.back" : {
+      "comment" : "Button text to move back to previous page",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        }
+      }
+    },
+    "onboarding.chronotype" : {
+      "comment" : "Section title for user’s chronotype",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Chronotype"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kronotipi"
+          }
+        }
+      }
+    },
+    "onboarding.chronotype.morningLark" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Morning Lark"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Sabahçıl"
+          }
+        }
+      }
+    },
+    "onboarding.chronotype.neutral" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Neutral"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Nötr"
+          }
+        }
+      }
+    },
+    "onboarding.chronotype.nightOwl" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Night Owl"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Gececi"
+          }
+        }
+      }
+    },
+    "onboarding.chronotypeDescription" : {
+      "comment" : "Description about morning or evening preference",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you naturally more active in the morning or evening?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğal olarak sabah mı yoksa akşam mı daha aktifsiniz?"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionTolerance" : {
+      "comment" : "Section title for how user handles disruptions",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disruption Tolerance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Bozulma Toleransı"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionTolerance.notSensitive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔇 Not Sensitive"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔇 Hassas Değil"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionTolerance.somewhatSensitive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔕 Somewhat Sensitive"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔕 Biraz Hassas"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionTolerance.verySensitive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 Very Sensitive"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 Çok Hassas"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionToleranceDescription" : {
+      "comment" : "Description about tolerance to sleep schedule disruptions",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How well do you handle disruptions to your sleep schedule?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku düzeninizin bozulmasıyla ne kadar iyi başa çıkabiliyorsunuz?"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatus" : {
+      "comment" : "Section title for user’s health status",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health Status"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sağlık Durumu"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatus.healthy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💪 Healthy"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💪 Sağlıklı"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatus.managedConditions" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏥 Managed Conditions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏥 Kontrollü Rahatsızlıklar"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatus.seriousConditions" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 Serious Conditions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 Ciddi Rahatsızlıklar"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatusDescription" : {
+      "comment" : "Description about user’s medications or chronic conditions",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you have any medications you use regularly or chronic conditions?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devamlı kullandığınız ilaç veya kronik rahatsızlıklarınız var mı?"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevel" : {
+      "comment" : "Section title for knowledge level about polyphasic sleep",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knowledge Level"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilgi Seviyeniz"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevel.advanced" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤓 Well experienced"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🤓 Çok deneyimli"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevel.beginner" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤔 Just starting out"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "🤔 Yeni başlayan"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevel.intermediate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😎 Some experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "😎 Biraz deneyimli"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevelDescription" : {
+      "comment" : "Description about user’s familiarity with polyphasic sleep",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How familiar are you with polyphasic sleep? This helps us provide the right level of guidance and information."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlik ve bilgi sunmamıza yardımcı olur."
+          }
+        }
+      }
+    },
+    "onboarding.lifestyle" : {
+      "comment" : "Section title for daily lifestyle",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Lifestyle"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yaşam Tarzınız"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyle.calm" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧘‍♂️ Calm"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧘‍♂️ Sakin"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyle.moderatelyActive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ Moderately Active"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ Orta Düzey Aktif"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyle.veryActive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ Very Active"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ Çok Aktif"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyleDescription" : {
+      "comment" : "Description about user’s daily activity level",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How would you describe your daily activity level? This helps us recommend a sleep schedule that matches your energy needs."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük aktivite düzeyinizi nasıl tanımlarsınız? Bu, enerji ihtiyaçlarınıza uygun bir uyku programı önerebilmemize yardımcı olur."
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevel" : {
+      "comment" : "Section title for user’s motivation level",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivation Level"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivasyon Seviyeniz"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevel.high" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 High"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 Yüksek"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevel.low" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💫 Low"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💫 Düşük"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevel.moderate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✨ Moderate"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✨ Orta"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevelQuestion" : {
+      "comment" : "Description about readiness for a challenging adaptation process",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How ready are you for a challenging adaptation process?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne Kadar Sert Bir Adaptasyon Sürecine Hazırsınız?"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment" : {
+      "comment" : "Section title for daytime nap environment",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap Environment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Ortamı"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment.ideal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ Ideal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ İdeal"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment.limited" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🪑 Limited"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🪑 Kısıtlı"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment.suitable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛋️ Suitable"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛋️ Uygun"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment.unsuitable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Unsuitable"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Uygunsuz"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironmentDescription" : {
+      "comment" : "Description about environment suitability for naps",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How suitable is your environment for taking naps during the day? Consider factors like noise level, light control, and comfort."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün içinde uyku molası vermek için ortamınız ne kadar uygun? Gürültü seviyesi, ışık kontrolü ve konfor gibi faktörleri göz önünde bulundurun."
+          }
+        }
+      }
+    },
+    "onboarding.next" : {
+      "comment" : "Button text for going to next step/page",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleri"
+          }
+        }
+      }
+    },
+    "onboarding.no" : {
+      "comment" : "No label for boolean selections",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hayır"
+          }
+        }
+      }
+    },
+    "onboarding.seeResults" : {
+      "comment" : "Button text for final step to see results or schedule",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See Results"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonuçları Gör"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience" : {
+      "comment" : "Section title for previous sleep experience",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Deneyiminiz"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.beginner" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Beginner"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Yeni Başlayan"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.extensive" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "☀️ Extensive Experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "☀️ Kapsamlı"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.intermediate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌄 Intermediate"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌄 Orta Seviye"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.moderate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌃 Several Months Experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌃 Daha önce birkaç ay veya daha uzun süre kullandım"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.none" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 No Experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 Hiç"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience.some" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Some Experience"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Biraz"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperienceQuestion" : {
+      "comment" : "Description/question about previous sleep experience",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do you have any previous polyphasic (or different) sleep experience?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceki Polifazik (veya Farklı) Uyku Deneyiminiz Var mı?"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal" : {
+      "comment" : "Section title for user’s main sleep goal",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Goal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Hedefi"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal.balancedLifestyle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Balanced Lifestyle"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Dengeli Yaşam"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal.curiosity" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔍 Curiosity"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔍 Merak"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal.improveHealth" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❤️ Improve Health"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❤️ Sağlığı İyileştirme"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal.moreProductivity" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ More Productivity"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ Daha Fazla Üretkenlik"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoalDescription" : {
+      "comment" : "Description about user’s primary goal for adopting polyphasic sleep",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is your primary goal for adopting a polyphasic sleep schedule?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku düzenini benimsemekteki temel hedefiniz nedir?"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligations" : {
+      "comment" : "Section title for social commitments/responsibilities",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Social Obligations"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sosyal Yükümlülükler"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligations.minimal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧍 Minimal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧍 Minimal"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligations.moderate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👤 Moderate"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👤 Orta Düzey"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligations.significant" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👥 Significant"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👥 Önemli"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligationsDescription" : {
+      "comment" : "Description about user’s flexibility for social commitments",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How flexible are your social commitments and daily responsibilities?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sosyal taahhütleriniz ve günlük sorumluluklarınız ne kadar esnek?"
+          }
+        }
+      }
+    },
+    "onboarding.startUsingApp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Using App!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kullanmaya Başla!"
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule" : {
+      "comment" : "Section title for user’s work schedule",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çalışma Programın"
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule.flexible" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Flexible"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Esnek"
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule.irregular" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎲 Irregular"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎲 Düzensiz"
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule.regular" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📅 Regular"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📅 Düzenli"
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule.shift" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Shift"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Vardiyalı"
+          }
+        }
+      }
+    },
+    "onboarding.workScheduleQuestion" : {
+      "comment" : "Description about user’s current work or daily schedule",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is your current work or daily schedule?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevcut İş veya Gündelik Programınız Nasıl?"
+          }
+        }
+      }
+    },
+    "onboarding.yes" : {
+      "comment" : "Yes label for boolean selections",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evet"
+          }
+        }
+      }
+    },
+    "sleepSchedule.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "sleepSchedule.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
+    "sleepSchedule.naps" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naps"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerlemeler"
+          }
+        }
+      }
+    },
+    "sleepSchedule.timeRanges" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Blokları"
+          }
+        }
+      }
+    },
+    "sleepSchedule.totalSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Uyku"
+          }
+        }
+      }
+    },
+    "Uygulamayı Kullanmaya Başla" : {
+      "comment" : "Button text for starting to use the app after onboarding",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Using the App"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamayı Kullanmaya Başla"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
