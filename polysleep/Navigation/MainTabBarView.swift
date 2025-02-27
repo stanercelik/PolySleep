@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct MainTabBarView: View {
     @State private var selectedTab = 0
@@ -10,23 +11,30 @@ struct MainTabBarView: View {
             MainScreenView(viewModel: mainScreenViewModel)
                 .tabItem {
                     Image(systemName: "house.fill")
-                    Text("tabbar.schedule")
+                    Text("tabbar.schedule", tableName: "Common")
                 }
                 .tag(0)
             
             HistoryView()
                 .tabItem {
                     Image(systemName: "clock.fill")
-                    Text("tabbar.history")
+                    Text("tabbar.history", tableName: "Common")
                 }
                 .tag(1)
+            
+            AnalyticsView()
+                .tabItem {
+                    Image(systemName: "chart.bar.fill")
+                    Text("tabbar.analytics", tableName: "Common")
+                }
+                .tag(2)
             
             ProfileScreenView()
                 .tabItem {
                     Image(systemName: "person.fill")
-                    Text("tabbar.profile")
+                    Text("tabbar.profile", tableName: "Common")
                 }
-                .tag(2)
+                .tag(3)
         }
         .accentColor(Color("AccentColor"))
         .onAppear {
