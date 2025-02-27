@@ -1,9 +1,25 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add Sleep Entry" : {
+      "comment" : "Accessibility label for add sleep entry button",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Sleep Entry"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kaydı Ekle"
+          }
+        }
+      }
+    },
     "Bu dönemde kayıt bulunamadı" : {
       "comment" : "Message displayed when there is no history in the current filter",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -21,7 +37,6 @@
     },
     "Düzenle" : {
       "comment" : "Button text for editing day detail",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,9 +52,25 @@
         }
       }
     },
+    "Filtrele" : {
+      "comment" : "Navigation title for filter menu",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrele"
+          }
+        }
+      }
+    },
     "Filtreler" : {
       "comment" : "Header text for filter section",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -55,9 +86,11 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Özel Tarih Aralığı" : {
       "comment" : "Header text for custom date range filter",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -75,7 +108,6 @@
     },
     "Sleep History" : {
       "comment" : "Navigation title for history view",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -91,9 +123,28 @@
         }
       }
     },
+    "sleep.type.core" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "sleep.type.nap" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
     "sleepEntry.delete" : {
       "comment" : "Swipe action label for deleting a sleep entry",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -109,27 +160,8 @@
         }
       }
     },
-    "sonraki uykuya kadar" : {
-      "comment" : "Text displayed to indicate time until next sleep",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "until next sleep"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sonraki uykuya kadar"
-          }
-        }
-      }
-    },
     "Tamam" : {
       "comment" : "Button text to confirm filter changes",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -147,7 +179,6 @@
     },
     "Tarih Seç" : {
       "comment" : "Button text to select a date range",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -165,7 +196,6 @@
     },
     "Toplam Uyku" : {
       "comment" : "Label for total sleep in day header",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -181,9 +211,26 @@
         }
       }
     },
+    "until.next.sleep" : {
+      "comment" : "Text displayed to indicate time until next sleep",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "until next sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sonraki uykuya kadar"
+          }
+        }
+      }
+    },
     "Uyku Tipi" : {
       "comment" : "Header text for selecting sleep type",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

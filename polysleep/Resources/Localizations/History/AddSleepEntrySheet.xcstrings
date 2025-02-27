@@ -21,7 +21,6 @@
     },
     "general.cancel" : {
       "comment" : "General Cancel button text",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -39,7 +38,6 @@
     },
     "general.ok" : {
       "comment" : "Common OK button text",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -57,7 +55,6 @@
     },
     "general.save" : {
       "comment" : "General Save button text",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -219,7 +216,6 @@
     },
     "sleepEntry.add" : {
       "comment" : "Navigation title for adding a new sleep entry",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -237,7 +233,6 @@
     },
     "sleepEntry.date" : {
       "comment" : "Section title for selecting date",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -273,7 +268,6 @@
     },
     "sleepEntry.error.title" : {
       "comment" : "Alert title for sleep entry errors",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -291,7 +285,6 @@
     },
     "sleepEntry.howDidYouFeel" : {
       "comment" : "Question about how user felt after sleep",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -309,7 +302,6 @@
     },
     "sleepEntry.noBlocks" : {
       "comment" : "Message shown when there are no available sleep blocks",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -327,7 +319,6 @@
     },
     "sleepEntry.quality" : {
       "comment" : "Section header for choosing sleep quality or feeling",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -345,7 +336,6 @@
     },
     "sleepEntry.rating" : {
       "comment" : "Section header for rating",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -363,7 +353,6 @@
     },
     "sleepEntry.selectBlock" : {
       "comment" : "Section title for selecting a sleep block",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -381,7 +370,6 @@
     },
     "sleepEntry.selectDate" : {
       "comment" : "Label for selecting date in a date picker",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -2,8 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "analytics.averageScore" : {
-      "comment" : "Label for average sleep score",
-      "extractionState" : "stale",
+      "comment" : "Average sleep score metric title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20,8 +19,7 @@
       }
     },
     "analytics.dailyAverage" : {
-      "comment" : "Label for daily average sleep duration",
-      "extractionState" : "stale",
+      "comment" : "Daily average sleep time metric title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -38,8 +36,7 @@
       }
     },
     "analytics.insufficientData.button" : {
-      "comment" : "Button text to view sleep history",
-      "extractionState" : "stale",
+      "comment" : "Insufficient data button title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -56,8 +53,7 @@
       }
     },
     "analytics.insufficientData.message" : {
-      "comment" : "Message for insufficient data warning",
-      "extractionState" : "stale",
+      "comment" : "Insufficient data message",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -74,8 +70,7 @@
       }
     },
     "analytics.insufficientData.title" : {
-      "comment" : "Title for insufficient data warning",
-      "extractionState" : "stale",
+      "comment" : "Insufficient data title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -92,8 +87,7 @@
       }
     },
     "analytics.loading" : {
-      "comment" : "Loading message for analytics data",
-      "extractionState" : "stale",
+      "comment" : "Loading indicator text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -109,14 +103,13 @@
         }
       }
     },
-    "analytics.sleepBreakdown.coreType" : {
-      "comment" : "Label for the core sleep in breakdown",
-      "extractionState" : "stale",
+    "analytics.sleepBreakdown.core" : {
+      "comment" : "Core sleep type",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Core Sleep"
+            "value" : "Core"
           }
         },
         "tr" : {
@@ -128,8 +121,7 @@
       }
     },
     "analytics.sleepBreakdown.daily" : {
-      "comment" : "Label for 'daily' in breakdown",
-      "extractionState" : "stale",
+      "comment" : "Daily sleep breakdown text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -145,27 +137,25 @@
         }
       }
     },
-    "analytics.sleepBreakdown.napType" : {
-      "comment" : "Label for the naps in breakdown",
-      "extractionState" : "stale",
+    "analytics.sleepBreakdown.nap" : {
+      "comment" : "Nap sleep type",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Naps"
+            "value" : "Nap"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Şekerlemeler"
+            "value" : "Şekerleme"
           }
         }
       }
     },
     "analytics.sleepBreakdown.perDay" : {
-      "comment" : "Label for 'per day' in breakdown",
-      "extractionState" : "stale",
+      "comment" : "Sleep breakdown per day text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -182,8 +172,7 @@
       }
     },
     "analytics.sleepBreakdown.title" : {
-      "comment" : "Title for the sleep breakdown section",
-      "extractionState" : "stale",
+      "comment" : "Sleep breakdown section title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -200,8 +189,7 @@
       }
     },
     "analytics.sleepBreakdown.total" : {
-      "comment" : "Label for 'total' in breakdown",
-      "extractionState" : "stale",
+      "comment" : "Total sleep breakdown text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -218,8 +206,7 @@
       }
     },
     "analytics.summary.title" : {
-      "comment" : "Title for summary section",
-      "extractionState" : "stale",
+      "comment" : "Summary section title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -236,8 +223,7 @@
       }
     },
     "analytics.timeGained.comparison" : {
-      "comment" : "Comparison text for time gained",
-      "extractionState" : "stale",
+      "comment" : "Time gained comparison text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -254,8 +240,7 @@
       }
     },
     "analytics.timeGained.hours" : {
-      "comment" : "Label for hours in time gained",
-      "extractionState" : "stale",
+      "comment" : "Time gained hours text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -272,8 +257,7 @@
       }
     },
     "analytics.timeGained.message" : {
-      "comment" : "Message explaining how much time is gained",
-      "extractionState" : "stale",
+      "comment" : "Time gained message",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -290,8 +274,7 @@
       }
     },
     "analytics.timeGained.title" : {
-      "comment" : "Title for the time gained section",
-      "extractionState" : "stale",
+      "comment" : "Time gained section title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -380,8 +363,7 @@
       }
     },
     "analytics.title" : {
-      "comment" : "Title for the analytics section",
-      "extractionState" : "stale",
+      "comment" : "Analytics title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -398,8 +380,7 @@
       }
     },
     "analytics.totalSleep" : {
-      "comment" : "Label for total sleep duration",
-      "extractionState" : "stale",
+      "comment" : "Total sleep time metric title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -416,8 +397,7 @@
       }
     },
     "analytics.trend.coreSleep" : {
-      "comment" : "Label for core sleep in trend chart",
-      "extractionState" : "stale",
+      "comment" : "Core sleep text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -434,8 +414,7 @@
       }
     },
     "analytics.trend.nap1" : {
-      "comment" : "Label for the first nap in a trend chart",
-      "extractionState" : "stale",
+      "comment" : "Nap 1 text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -452,8 +431,7 @@
       }
     },
     "analytics.trend.nap2" : {
-      "comment" : "Label for the second nap in a trend chart",
-      "extractionState" : "stale",
+      "comment" : "Nap 2 text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -470,8 +448,7 @@
       }
     },
     "analytics.trend.score" : {
-      "comment" : "Label for sleep score in a trend chart",
-      "extractionState" : "stale",
+      "comment" : "Sleep score text",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -488,8 +465,7 @@
       }
     },
     "analytics.trend.title" : {
-      "comment" : "Title for the trend section",
-      "extractionState" : "stale",
+      "comment" : "Trend section title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -506,8 +482,7 @@
       }
     },
     "analytics.trend.total" : {
-      "comment" : "Label for total sleep in a trend chart",
-      "extractionState" : "stale",
+      "comment" : "Total sleep time text",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -52,6 +52,16 @@
         }
       }
     },
+    "general.ok" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        }
+      }
+    },
     "general.save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -256,6 +266,54 @@
         }
       }
     },
+    "schedule.customized" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customized"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenlenmiş"
+          }
+        }
+      }
+    },
+    "sleepBlock.add" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Sleep Block"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Bloğu Ekle"
+          }
+        }
+      }
+    },
+    "sleepBlock.edit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenle"
+          }
+        }
+      }
+    },
     "sleepBlock.endTime" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -324,6 +382,9 @@
         }
       }
     },
+    "sleepBlock.existing.title" : {
+
+    },
     "sleepBlock.isCore" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -354,6 +415,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Başlangıç Zamanı"
+          }
+        }
+      }
+    },
+    "sleepBlock.type.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "sleepBlock.type.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
           }
         }
       }
