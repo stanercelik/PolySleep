@@ -36,89 +36,88 @@ struct OnboardingView: View {
                             switch viewModel.currentPage {
                             case 0:
                                 OnboardingSelectionView(
-                                    title: "onboarding.sleepExperience",
-                                    description: "onboarding.sleepExperienceQuestion",
+                                    title: LocalizedStringKey("onboarding.sleepExperience"),
+                                    description: LocalizedStringKey("onboarding.sleepExperienceQuestion"),
                                     options: PreviousSleepExperience.allCases,
                                     selectedOption: $viewModel.previousSleepExperience
                                 )
                             case 1:
                                 OnboardingSelectionView(
-                                    title: "onboarding.ageRange",
-                                    description: "onboarding.ageRangeDescription",
+                                    title: LocalizedStringKey("onboarding.ageRange"),
+                                    description: LocalizedStringKey("onboarding.ageRangeDescription"),
                                     options: AgeRange.allCases,
                                     selectedOption: $viewModel.ageRange
                                 )
                             case 2:
                                 OnboardingSelectionView(
-                                    title: "onboarding.workSchedule",
-                                    description: "onboarding.workScheduleQuestion",
+                                    title: LocalizedStringKey("onboarding.workSchedule"),
+                                    description: LocalizedStringKey("onboarding.workScheduleQuestion"),
                                     options: WorkSchedule.allCases,
                                     selectedOption: $viewModel.workSchedule
                                 )
                             case 3:
                                 OnboardingSelectionView(
-                                    title: "onboarding.napEnvironment",
-                                    description: "onboarding.napEnvironmentDescription",
+                                    title: LocalizedStringKey("onboarding.napEnvironment"),
+                                    description: LocalizedStringKey("onboarding.napEnvironmentDescription"),
                                     options: NapEnvironment.allCases,
                                     selectedOption: $viewModel.napEnvironment
                                 )
                             case 4:
                                 OnboardingSelectionView(
-                                    title: "onboarding.lifestyle",
-                                    description: "onboarding.lifestyleDescription",
+                                    title: LocalizedStringKey("onboarding.lifestyle"),
+                                    description: LocalizedStringKey("onboarding.lifestyleDescription"),
                                     options: Lifestyle.allCases,
                                     selectedOption: $viewModel.lifestyle
                                 )
                             case 5:
                                 OnboardingSelectionView(
-                                    title: "onboarding.knowledgeLevel",
-                                    description: "onboarding.knowledgeLevelDescription",
+                                    title: LocalizedStringKey("onboarding.knowledgeLevel"),
+                                    description: LocalizedStringKey("onboarding.knowledgeLevelDescription"),
                                     options: KnowledgeLevel.allCases,
                                     selectedOption: $viewModel.knowledgeLevel
                                 )
                             case 6:
                                 OnboardingSelectionView(
-                                    title: "onboarding.healthStatus",
-                                    description: "onboarding.healthStatusDescription",
+                                    title: LocalizedStringKey("onboarding.healthStatus"),
+                                    description: LocalizedStringKey("onboarding.healthStatusDescription"),
                                     options: HealthStatus.allCases,
                                     selectedOption: $viewModel.healthStatus
                                 )
                             case 7:
                                 OnboardingSelectionView(
-                                    title: "onboarding.motivationLevel",
-                                    description: "onboarding.motivationLevelQuestion",
+                                    title: LocalizedStringKey("onboarding.motivationLevel"),
+                                    description: LocalizedStringKey("onboarding.motivationLevelQuestion"),
                                     options: MotivationLevel.allCases,
                                     selectedOption: $viewModel.motivationLevel
                                 )
                             case 8:
                                 OnboardingSelectionView(
-                                    title: "onboarding.sleepGoal",
-                                    description: "onboarding.sleepGoalDescription",
+                                    title: LocalizedStringKey("onboarding.sleepGoal"),
+                                    description: LocalizedStringKey("onboarding.sleepGoalDescription"),
                                     options: SleepGoal.allCases,
                                     selectedOption: $viewModel.sleepGoal
                                 )
                             case 9:
                                 OnboardingSelectionView(
-                                    title: "onboarding.socialObligations",
-                                    description: "onboarding.socialObligationsDescription",
+                                    title: LocalizedStringKey("onboarding.socialObligations"),
+                                    description: LocalizedStringKey("onboarding.socialObligationsDescription"),
                                     options: SocialObligations.allCases,
                                     selectedOption: $viewModel.socialObligations
                                 )
                             case 10:
                                 OnboardingSelectionView(
-                                    title: "onboarding.disruptionTolerance",
-                                    description: "onboarding.disruptionToleranceDescription",
+                                    title: LocalizedStringKey("onboarding.disruptionTolerance"),
+                                    description: LocalizedStringKey("onboarding.disruptionToleranceDescription"),
                                     options: DisruptionTolerance.allCases,
                                     selectedOption: $viewModel.disruptionTolerance
                                 )
                             case 11:
                                 OnboardingSelectionView(
-                                    title: "onboarding.chronotype",
-                                    description: "onboarding.chronotypeDescription",
+                                    title: LocalizedStringKey("onboarding.chronotype"),
+                                    description: LocalizedStringKey("onboarding.chronotypeDescription"),
                                     options: Chronotype.allCases,
                                     selectedOption: $viewModel.chronotype
                                 )
-                                
                             default:
                                 EmptyView()
                             }
@@ -152,7 +151,7 @@ struct OnboardingView: View {
                             viewModel.startUsingApp()
                         }
                     }) {
-                        Text("Uygulamayı Kullanmaya Başla")
+                        Text("onboarding.startUsingApp", tableName: "Onboarding")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)

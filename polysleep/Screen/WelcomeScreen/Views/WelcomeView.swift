@@ -92,7 +92,7 @@ struct WelcomeView: View {
                 .foregroundColor(colorScheme == .dark ? .white : .black)
                 .frame(width: 32, height: 32)
             
-            Text(NSLocalizedString("welcomeTitle", comment: ""))
+            Text("welcomeTitle", tableName: "Welcome")
                 .font(.headline)
                 .foregroundColor(Color.appSecondaryText)
         }
@@ -132,7 +132,7 @@ struct WelcomeView: View {
         Button(action: {
             viewModel.animateAndPresentOnboarding()
         }) {
-            Text(NSLocalizedString("continue", comment: ""))
+            Text("continue", tableName: "Welcome")
                 .font(.title2)
                 .foregroundColor(Color.appText)
                 .padding()

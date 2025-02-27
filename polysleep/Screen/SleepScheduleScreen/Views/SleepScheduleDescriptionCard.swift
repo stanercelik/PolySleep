@@ -85,12 +85,12 @@ struct ScheduleDetails: View {
         VStack(spacing: 12) {
             ScheduleInfoRow(
                 icon: "bed.double.fill",
-                title: String(localized: "sleepSchedule.totalSleep"),
+                title: NSLocalizedString("sleepSchedule.totalSleep", tableName: "Onboarding", comment: ""),
                 value: String(format: "%.1f h", schedule.totalSleepHours)
             )
             ScheduleInfoRow(
                 icon: "powersleep",
-                title: String(localized: "sleepSchedule.naps"),
+                title: NSLocalizedString("sleepSchedule.naps",tableName: "Onboarding", comment: ""),
                 value: "\(schedule.schedule.filter { !$0.isCore }.count)"
             )
         }

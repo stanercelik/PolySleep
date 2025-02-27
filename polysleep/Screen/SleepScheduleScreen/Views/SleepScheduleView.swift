@@ -59,7 +59,7 @@ struct SleepScheduleView: View {
                                 navigateToMainScreen = true
                             }
                         }) {
-                            Text("Continue")
+                            Text("onboarding.startUsingApp", tableName: "Onboarding")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
@@ -120,7 +120,7 @@ struct SleepScheduleView: View {
     
     private var scheduleTimeRanges: some View {
         VStack(alignment: .center, spacing: 16) {
-            Text(String(localized: "sleepSchedule.timeRanges"))
+            Text("sleepSchedule.timeRanges", tableName: "Onboarding")
                 .font(.headline)
                 .foregroundColor(Color.appText)
             
@@ -146,7 +146,7 @@ struct SleepScheduleView: View {
                     Text("・")
                         .foregroundColor(Color.appSecondaryText)
                     
-                    Text(block.isCore ? String(localized: "sleepSchedule.core") : String(localized: "sleepSchedule.nap"))
+                    Text(block.isCore ? NSLocalizedString("sleepSchedule.core", tableName: "Onboarding", comment: "") : NSLocalizedString("sleepSchedule.nap", tableName: "Onboarding", comment: ""))
                         .font(.body)
                         .foregroundColor(block.isCore ? Color.appPrimary : Color.appSecondary)
                 }

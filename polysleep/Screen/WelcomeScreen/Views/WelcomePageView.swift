@@ -35,19 +35,19 @@ struct WelcomePageView: View {
     
     private var pageTitle: String {
         switch pageIndex {
-        case 0: return NSLocalizedString("firstPageTitle", comment: "")
-        case 1: return NSLocalizedString("secondPageTitle", comment: "")
-        case 2: return NSLocalizedString("thirdPageTitle", comment: "")
-        default: return NSLocalizedString("fourthPageTitle", comment: "")
+        case 0: return NSLocalizedString("firstPageTitle", tableName: "Welcome", comment: "")
+        case 1: return NSLocalizedString("secondPageTitle", tableName: "Welcome", comment: "")
+        case 2: return NSLocalizedString("thirdPageTitle", tableName: "Welcome", comment: "")
+        default: return NSLocalizedString("fourthPageTitle", tableName: "Welcome", comment: "")
         }
     }
     
     private var pageDescription: String {
         switch pageIndex {
-        case 0: return NSLocalizedString("firstPageDesc", comment: "")
-        case 1: return NSLocalizedString("secondPageDesc", comment: "")
-        case 2: return NSLocalizedString("thirdPageDesc", comment: "")
-        default: return NSLocalizedString("fourthPageDesc", comment: "")
+        case 0: return NSLocalizedString("firstPageDesc", tableName: "Welcome", comment: "")
+        case 1: return NSLocalizedString("secondPageDesc", tableName: "Welcome", comment: "")
+        case 2: return NSLocalizedString("thirdPageDesc", tableName: "Welcome", comment: "")
+        default: return NSLocalizedString("fourthPageDesc", tableName: "Welcome", comment: "")
         }
     }
 }
