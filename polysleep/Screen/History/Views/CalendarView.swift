@@ -59,8 +59,9 @@ struct CalendarView: View {
             .padding(.horizontal)
             
             HStack(spacing: gridSpacing) {
-                ForEach(0..<daysInWeek, id: \.self) { index in
-                    Text(["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"][index])
+                ForEach(0..<7, id: \.self) { index in
+                    let weekday = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"][index]
+                    Text("weekday.\(weekday)", tableName: "CalendarView")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(Color("SecondaryTextColor"))
                         .frame(width: cellSize)

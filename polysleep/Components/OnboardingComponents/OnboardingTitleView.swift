@@ -13,7 +13,7 @@ struct OnboardingTitleView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: sizeCategory.isAccessibilityCategory ? 12 : 8) {
-            Text(title)
+            Text(title, tableName: "Onboarding")
                 .font(.system(.title2, design: .rounded, weight: .bold))
                 .foregroundColor(Color("TextColor"))
                 .multilineTextAlignment(.leading)
@@ -23,12 +23,12 @@ struct OnboardingTitleView: View {
                 .accessibilityHeading(.h1)
             
             if let description = description {
-                Text(description)
+                Text(description, tableName: "Onboarding")
                     .font(.system(.body, design: .rounded))
                     .foregroundStyle(Color("SecondaryTextColor"))
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityLabel(NSLocalizedString("accessibility.description", comment: ""))
+                    .accessibilityLabel(NSLocalizedString("accessibility.description", tableName: "Onboarding", comment: ""))
             }
         }
         .padding(.bottom, sizeCategory.isAccessibilityCategory ? 16 : 8)

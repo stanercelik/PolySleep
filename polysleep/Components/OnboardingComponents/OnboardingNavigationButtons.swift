@@ -20,7 +20,7 @@ struct OnboardingNavigationButtons: View {
                     HStack(spacing: 8) {
                         Image(systemName: "chevron.left")
                             .font(.body.weight(.semibold))
-                        Text("onboarding.back")
+                        Text("onboarding.back", tableName: "Onboarding")
                             .font(.body.weight(.semibold))
                     }
                     .foregroundStyle(Color("PrimaryColor"))
@@ -28,7 +28,7 @@ struct OnboardingNavigationButtons: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(NSLocalizedString("accessibility.previousPage", comment: ""))
+                .accessibilityLabel(NSLocalizedString("accessibility.previousPage", tableName: "Onboarding", comment: ""))
             }
             
             Spacer()
@@ -41,7 +41,7 @@ struct OnboardingNavigationButtons: View {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }) {
                     HStack(spacing: 8) {
-                        Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next")
+                        Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next", tableName: "Onboarding")
                             .font(.body.weight(.semibold))
                         
                         Image(systemName: "chevron.right")
@@ -59,9 +59,9 @@ struct OnboardingNavigationButtons: View {
                 .buttonStyle(.plain)
                 .disabled(!canMoveNext)
                 .accessibilityLabel(currentPage == totalPages - 1 ? 
-                    NSLocalizedString("accessibility.seeResults", comment: "") :
-                    NSLocalizedString("accessibility.nextPage", comment: ""))
-                .accessibilityHint(canMoveNext ? "" : NSLocalizedString("accessibility.completeCurrentPage", comment: ""))
+                                    NSLocalizedString("accessibility.seeResults", tableName: "Onboarding", comment: "") :
+                                        NSLocalizedString("accessibility.nextPage", tableName: "Onboarding", comment: ""))
+                .accessibilityHint(canMoveNext ? "" : NSLocalizedString("accessibility.completeCurrentPage", tableName: "Onboarding", comment: ""))
             }
         }
         .padding(.horizontal, 16)

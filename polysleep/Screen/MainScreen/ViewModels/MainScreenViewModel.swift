@@ -431,7 +431,7 @@ class MainScreenViewModel: ObservableObject {
             model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
             
             if !model.schedule.name.contains("schedule.customized") {
-                model.schedule.name += " " + "schedule.customized"
+                model.schedule.name += " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
             }
             
             Task {
@@ -444,7 +444,7 @@ class MainScreenViewModel: ObservableObject {
         model.schedule.schedule.removeAll { $0.id == block.id }
         
         if !model.schedule.name.contains("schedule.customized") {
-            model.schedule.name += " " + "schedule.customized"
+            model.schedule.name += " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
         }
         
         Task {
@@ -464,7 +464,7 @@ class MainScreenViewModel: ObservableObject {
                 model.schedule.name = editingTitle
             } else {
                 // İlk kez değiştiriliyorsa özelleştirilmiş ibaresini ekle
-                model.schedule.name = editingTitle + " " + "schedule.customized"
+                model.schedule.name = editingTitle + " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
             }
             isEditingTitle = false
             Task {

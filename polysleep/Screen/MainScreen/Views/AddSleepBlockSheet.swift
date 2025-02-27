@@ -9,17 +9,17 @@ struct AddSleepBlockSheet: View {
         NavigationView {
             Form {
                 Section {
-                    DatePicker(String(localized: "sleepBlock.startTime"),
+                    DatePicker(NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
                               selection: $viewModel.newBlockStartTime,
                               displayedComponents: .hourAndMinute)
                     
-                    DatePicker(String(localized: "sleepBlock.endTime"),
+                    DatePicker(NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: ""),
                               selection: $viewModel.newBlockEndTime,
                               displayedComponents: .hourAndMinute)
                 }
                 
                 if !viewModel.model.schedule.schedule.isEmpty {
-                    Section(header: Text(String(localized: "sleepBlock.existing.title"))) {
+                    Section(header: Text("sleepBlock.existing.title", tableName: "MainScreen")) {
                         ForEach(viewModel.model.schedule.schedule.sorted { block1, block2 in
                             let time1 = TimeFormatter.time(from: block1.startTime)!
                             let time2 = TimeFormatter.time(from: block2.startTime)!
@@ -33,7 +33,7 @@ struct AddSleepBlockSheet: View {
                                 Text("\(block.startTime) - \(block.endTime)")
                                     .foregroundColor(.primary)
                                 Spacer()
-                                Text(String(localized: block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap"))
+                                Text(NSLocalizedString(block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap", tableName: "MainScreen", comment: ""))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -42,17 +42,17 @@ struct AddSleepBlockSheet: View {
                     }
                 }
             }
-            .navigationTitle(String(localized: "sleepBlock.add"))
+            .navigationTitle(NSLocalizedString("sleepBlock.add", tableName: "MainScreen", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "general.cancel")) {
+                    Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "general.save")) {
+                    Button(NSLocalizedString("general.save", tableName: "MainScreen", comment: "" )) {
                         if viewModel.validateNewBlock() {
                             viewModel.addNewBlock()
                             dismiss()
@@ -60,9 +60,9 @@ struct AddSleepBlockSheet: View {
                     }
                 }
             }
-            .alert(String(localized: "sleepBlock.error.title"),
+            .alert(NSLocalizedString("sleepBlock.error.title", tableName: "MainScreen", comment: ""),
                    isPresented: $viewModel.showBlockError) {
-                Button(String(localized: "general.ok"), role: .cancel) {}
+                Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: ""), role: .cancel) {}
             } message: {
                 Text(viewModel.blockErrorMessage)
             }

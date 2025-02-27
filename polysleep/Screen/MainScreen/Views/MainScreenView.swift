@@ -130,10 +130,10 @@ struct HeaderView: View {
         }
         .padding(.horizontal)
         .padding(.bottom, 38)
-        .alert(String(localized: "mainScreen.customizedSchedule.title"), isPresented: $showCustomizedInfo) {
-            Button(String(localized: "general.ok"), role: .cancel) {}
+        .alert(NSLocalizedString("mainScreen.customizedSchedule.title", tableName: "MainScreen", comment: ""), isPresented: $showCustomizedInfo) {
+            Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: ""), role: .cancel) {}
         } message: {
-            Text(String(localized: "mainScreen.customizedSchedule.message"))
+            Text(NSLocalizedString("mainScreen.customizedSchedule.message", tableName: "MainScreen", comment: ""))
         }
     }
 }
@@ -144,7 +144,7 @@ struct SleepBlocksSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "mainScreen.sleepBlocks"))
+            Text("mainScreen.sleepBlocks", tableName: "MainScreen")
                 .font(.title3)
                 .foregroundColor(.appText)
                 .padding(.horizontal)
@@ -153,6 +153,14 @@ struct SleepBlocksSection: View {
                 HStack(spacing: 12) {
                     if viewModel.isEditing {
                         AddBlockButton(viewModel: viewModel)
+                            .transition(.asymmetric(
+                                insertion: .scale(scale: 0.1, anchor: .leading)
+                                    .combined(with: .opacity)
+                                    .combined(with: .offset(x: -20, y: 0)),
+                                removal: .scale(scale: 0.1, anchor: .leading)
+                                    .combined(with: .opacity)
+                                    .combined(with: .offset(x: -20, y: 0))
+                            ))
                     }
                     
                     ForEach(viewModel.model.schedule.schedule) { block in
@@ -165,6 +173,7 @@ struct SleepBlocksSection: View {
                     }
                 }
                 .padding(.horizontal)
+                .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.isEditing)
             }
         }
     }
@@ -182,7 +191,7 @@ struct AddBlockButton: View {
                 Image(systemName: "plus.circle.fill")
                     .font(.title2)
                 
-                Text(String(localized: "mainScreen.addSleepBlock"))
+                Text(NSLocalizedString("mainScreen.addSleepBlock", tableName: "MainScreen", comment: ""))
                     .font(.callout)
                     .multilineTextAlignment(.center)
             }
@@ -210,12 +219,12 @@ struct SleepBlockCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(block.isCore ? String(localized: "🛏️") : String(localized: "⚡️"))
+                Text(block.isCore ? String("🛏️") : String("⚡️"))
                     .font(.title2)
                 Text(
                     block.isCore
-                    ? String(localized: "mainScreen.sleepBlockCore")
-                    : String(localized: "mainScreen.sleepBlockNap")
+                    ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
+                    : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
                 )
                 .font(.headline)
             }
@@ -236,12 +245,12 @@ struct SleepBlockCard: View {
             }
         }
         .confirmationDialog("", isPresented: $showingActionSheet) {
-            Button(String(localized: "general.edit")) {
+            Button(NSLocalizedString("general.edit", tableName: "MainScreen", comment: "")) {
                 viewModel.prepareForEditing(block)
                 showingEditSheet = true
             }
             
-            Button(String(localized: "general.delete"), role: .destructive) {
+            Button(NSLocalizedString("general.delete", tableName: "MainScreen", comment: ""), role: .destructive) {
                 viewModel.deleteBlock(block)
             }
         }
@@ -260,35 +269,35 @@ struct EditSleepBlockSheet: View {
         NavigationView {
             Form {
                 Section {
-                    Toggle(String(localized: "sleepBlock.isCore"), isOn: $viewModel.editingBlockIsCore)
+                    Toggle(NSLocalizedString("sleepBlock.isCore", tableName: "MainScreen", comment: ""), isOn: $viewModel.editingBlockIsCore)
                         .tint(.appAccent)
                 }
                 
                 Section {
                     DatePicker(
-                        String(localized: "sleepBlock.startTime"),
+                        NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
                         selection: $viewModel.editingBlockStartTime,
                         displayedComponents: .hourAndMinute
                     )
                     
                     DatePicker(
-                        String(localized: "sleepBlock.endTime"),
+                        NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: ""),
                         selection: $viewModel.editingBlockEndTime,
                         displayedComponents: .hourAndMinute
                     )
                 }
             }
-            .navigationTitle(String(localized: "sleepBlock.edit"))
+            .navigationTitle(NSLocalizedString("sleepBlock.edit", tableName: "MainScreen", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "general.cancel")) {
+                    Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "general.save")) {
+                    Button(NSLocalizedString("general.save", tableName: "MainScreen", comment: "")) {
                         if viewModel.validateEditingBlock() {
                             viewModel.updateBlock()
                             dismiss()
@@ -297,10 +306,10 @@ struct EditSleepBlockSheet: View {
                 }
             }
             .alert(
-                String(localized: "sleepBlock.error.title"),
+                NSLocalizedString("sleepBlock.error.title", tableName: "MainScreen", comment: ""),
                 isPresented: $viewModel.showBlockError
             ) {
-                Button(String(localized: "general.ok"), role: .cancel) {}
+                Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: ""), role: .cancel) {}
             } message: {
                 Text(viewModel.blockErrorMessage)
             }
@@ -317,14 +326,14 @@ struct InfoCardsSection: View {
             HStack(spacing: 8) {
                 InfoCard(
                     icon: "💤",
-                    title: String(localized: "mainScreen.totalSleep"),
+                    title: NSLocalizedString("mainScreen.totalSleep", tableName: "MainScreen", comment: ""),
                     value: viewModel.totalSleepTimeFormatted,
                     color: .appPrimary
                 )
                 
                 InfoCard(
                     icon: "📈",
-                    title: String(localized: "mainScreen.progress"),
+                    title: NSLocalizedString("mainScreen.progress", tableName: "MainScreen", comment: ""),
                     value: "\(Int(viewModel.dailyProgress * 100))%",
                     color: .appAccent
                 )
@@ -333,14 +342,14 @@ struct InfoCardsSection: View {
             HStack(spacing: 8) {
                 InfoCard(
                     icon: "🔥",
-                    title: String(localized: "mainScreen.streak"),
+                    title: NSLocalizedString("mainScreen.streak", tableName: "MainScreen", comment: ""),
                     value: "\(viewModel.currentStreak)",
                     color: .appSecondary
                 )
                 
                 InfoCard(
                     icon: "🕒",
-                    title: String(localized: "mainScreen.nextSleepBlock"),
+                    title: NSLocalizedString("mainScreen.nextSleepBlock", tableName: "MainScreen", comment: ""),
                     value: viewModel.nextSleepBlockFormatted,
                     color: .appSecondary
                 )
@@ -356,7 +365,7 @@ struct TipSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(String(localized: "mainScreen.todaysTip"))
+            Text(NSLocalizedString("mainScreen.todaysTip", tableName: "MainScreen", comment: ""))
                 .font(.headline)
                 .foregroundColor(.appText)
             
@@ -364,7 +373,7 @@ struct TipSection: View {
                 Text("💡")
                     .font(.title2)
                 
-                Text(viewModel.dailyTip)
+                Text(viewModel.dailyTip, tableName: "Tips")
                     .font(.subheadline)
                     .foregroundColor(.appSecondaryText)
                     .multilineTextAlignment(.leading)

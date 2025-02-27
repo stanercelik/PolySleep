@@ -39,7 +39,7 @@ struct SelectionButton: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(title)
-        .accessibilityValue(isSelected ? NSLocalizedString("accessibility.selected", comment: "") : NSLocalizedString("accessibility.notSelected", comment: ""))
+        .accessibilityValue(isSelected ? NSLocalizedString("accessibility.selected", tableName: "Onboarding", comment: "") : NSLocalizedString("accessibility.notSelected", tableName: "Onboarding", comment: ""))
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
@@ -83,7 +83,7 @@ struct MultiSelectionButton: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(title)
-        .accessibilityValue(isSelected ? NSLocalizedString("accessibility.selected", comment: "") : NSLocalizedString("accessibility.notSelected", comment: ""))
+        .accessibilityValue(isSelected ? NSLocalizedString("accessibility.selected", tableName: "Onboarding", comment: "") : NSLocalizedString("accessibility.notSelected", tableName: "Onboarding", comment: ""))
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }

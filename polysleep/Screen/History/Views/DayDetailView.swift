@@ -45,7 +45,7 @@ struct DayDetailView: View {
             Button(action: {
                 // TODO: Düzenleme ekranına git
             }) {
-                Text(LocalizedStringKey("Düzenle"))
+                Text(NSLocalizedString("Düzenle", tableName: "History", comment: ""))
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -121,7 +121,7 @@ struct HistorySleepBlockCard: View {
                     HStack {
                         Image(systemName: "arrow.right")
                         Text("\(hours)h \(minutes)m")
-                        Text(LocalizedStringKey("sonraki uykuya kadar"))
+                        Text(NSLocalizedString("until.next.sleep", tableName: "History", comment: ""))
                     }
                     .font(.system(size: 14))
                     .foregroundColor(Color("SecondaryTextColor"))

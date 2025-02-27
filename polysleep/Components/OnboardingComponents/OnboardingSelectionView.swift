@@ -29,7 +29,7 @@ struct OnboardingSelectionView<T: Identifiable & LocalizableEnum & Hashable>: Vi
                 VStack(spacing: 12) {
                     ForEach(options) { option in
                         SelectionButton(
-                            title: NSLocalizedString(option.localizedKey, comment: ""),
+                            title: NSLocalizedString(option.localizedKey, tableName: T.tableName, comment: ""),
                             isSelected: selectedOption.map { $0 == option } ?? false,
                             action: { 
                                 withAnimation(.easeInOut(duration: 0.2)) {
@@ -132,7 +132,7 @@ struct OnboardingMultiSelectionView<T: Identifiable & LocalizableEnum & Hashable
                 VStack(spacing: 12) {
                     ForEach(options) { option in
                         MultiSelectionButton(
-                            title: NSLocalizedString(option.localizedKey, comment: ""),
+                            title: NSLocalizedString(option.localizedKey, tableName: T.tableName, comment: ""),
                             isSelected: selectedOptions.contains(option),
                             action: { 
                                 withAnimation(.easeInOut(duration: 0.2)) {

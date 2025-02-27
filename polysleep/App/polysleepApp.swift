@@ -36,6 +36,8 @@ struct polysleepApp: App {
                 for: SleepScheduleStore.self,
                 UserPreferences.self,
                 UserFactor.self,
+                HistoryModel.self,
+                SleepEntry.self,
                 configurations: config
             )
         } catch {
@@ -46,6 +48,7 @@ struct polysleepApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.locale, .current)
         }
         .modelContainer(modelContainer)
     }
