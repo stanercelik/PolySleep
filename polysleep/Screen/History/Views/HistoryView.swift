@@ -1,98 +1,46 @@
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
     @StateObject private var viewModel = HistoryViewModel()
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(spacing: 0) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
-                            Button(action: {
-                                viewModel.isFilterMenuPresented = true
-                            }) {
-                                Image(systemName: "slider.horizontal.3")
-                                    .foregroundColor(Color("AccentColor"))
-                                    .padding(8)
-                                    .background(Color("CardBackground"))
-                                    .cornerRadius(8)
-                            }
-                            
-                            ForEach(TimeFilter.allCases, id: \.self) { filter in
-                                FilterButton(
-                                    title: LocalizedStringKey(filter.rawValue),
-                                    isSelected: !viewModel.isCustomFilterVisible && viewModel.selectedFilter == filter
-                                )
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.2)) {
-                                        viewModel.setFilter(filter)
-                                    }
-                                }
-                            }
-                            
-                            if viewModel.isCustomFilterVisible, let range = viewModel.selectedDateRange {
-                                FilterButton(
-                                    title: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) - \(range.upperBound.formatted(date: .abbreviated, time: .omitted))",
-                                    isSelected: true
-                                )
-                                .onTapGesture {
-                                    viewModel.isCalendarPresented = true
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .padding(.vertical, 12)
-                    .background(Color.appBackground)
+                    // Filtre butonları
+                    filterButtonsSection
                     
+                    // Ana içerik
                     if viewModel.historyItems.isEmpty {
-                        VStack(spacing: 16) {
-                            Text("💤")
-                                .font(.system(size: 48))
-                            Text(LocalizedStringKey("Bu dönemde kayıt bulunamadı"))
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Color("SecondaryTextColor"))
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.appBackground)
+                        emptyStateView
                     } else {
-                        ScrollView {
-                            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                                ForEach(viewModel.historyItems) { item in
-                                    Section {
-                                        VStack(spacing: 0) {
-                                            ForEach(item.sleepEntries) { entry in
-                                                SleepEntryRow(entry: entry)
-                                                if entry.id != item.sleepEntries.last?.id {
-                                                    Divider()
-                                                        .background(Color("SecondaryTextColor").opacity(0.2))
-                                                }
-                                            }
-                                        }
-                                        .background(Color("CardBackground"))
-                                        .cornerRadius(12)
-                                        .shadow(color: Color("PrimaryColor").opacity(0.1), radius: 8, x: 0, y: 2)
-                                        .padding(.horizontal)
-                                        .padding(.bottom, 24)
-                                    } header: {
-                                        DayHeader(date: item.date, totalSleep: item.totalSleepDuration)
-                                    }
-                                }
-                            }
-                            .padding(.top, 8)
-                        }
+                        historyListView
                     }
                 }
                 
+                // Takvim popup
                 PopupView(isPresented: $viewModel.isCalendarPresented) {
                     CalendarView(viewModel: viewModel)
                         .frame(width: 320)
                 }
             }
-             .navigationTitle(Text(LocalizedStringKey("Sleep History")))
+            .navigationTitle(Text("Sleep History", tableName: "History"))
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        viewModel.isAddSleepEntryPresented = true
+                    }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color("AccentColor"))
+                            .font(.system(size: 18, weight: .semibold))
+                    }
+                    .accessibilityLabel(Text("Add Sleep Entry", tableName: "History"))
+                }
+            }
             .navigationBarItems(trailing: Button(action: {
                 viewModel.isCalendarPresented = true
             }) {
@@ -108,7 +56,124 @@ struct HistoryView: View {
                     DayDetailView(historyItem: historyItem)
                 }
             }
+            .sheet(isPresented: $viewModel.isAddSleepEntryPresented) {
+                AddSleepEntrySheet(viewModel: viewModel)
+            }
             .background(Color.appBackground.ignoresSafeArea())
+            .onAppear {
+                viewModel.setModelContext(modelContext)
+            }
+        }
+    }
+    
+    // MARK: - Subviews
+    
+    // Filtre butonları bölümü
+    private var filterButtonsSection: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                Button(action: {
+                    viewModel.isFilterMenuPresented = true
+                }) {
+                    Image(systemName: "slider.horizontal.3")
+                        .foregroundColor(Color("AccentColor"))
+                        .padding(8)
+                        .background(Color("CardBackground"))
+                        .cornerRadius(8)
+                }
+                
+                filterButtonsView
+                
+                customDateFilterButton
+            }
+            .padding(.horizontal)
+        }
+        .padding(.vertical, 12)
+        .background(Color.appBackground)
+    }
+    
+    private var filterButtonsView: some View {
+        ForEach(TimeFilter.allCases, id: \.self) { filter in
+            FilterButton(
+                title: LocalizedStringKey(filter.rawValue),
+                isSelected: !viewModel.isCustomFilterVisible && viewModel.selectedFilter == filter
+            )
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    viewModel.setFilter(filter)
+                }
+            }
+        }
+    }
+    
+    private var customDateFilterButton: some View {
+        Group {
+            if viewModel.isCustomFilterVisible, let range = viewModel.selectedDateRange {
+                FilterButton(
+                    title: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) - \(range.upperBound.formatted(date: .abbreviated, time: .omitted))",
+                    isSelected: true
+                )
+                .onTapGesture {
+                    viewModel.isCalendarPresented = true
+                }
+            }
+        }
+    }
+    
+    // Boş durum görünümü
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Text("💤")
+                .font(.system(size: 48))
+            Text("Bu dönemde kayıt bulunamadı", tableName: "History")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(Color("SecondaryTextColor"))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.appBackground)
+    }
+    
+    // Geçmiş listesi görünümü
+    private var historyListView: some View {
+        ZStack {
+            Color.appBackground.edgesIgnoringSafeArea(.all)
+            
+            List {
+                historyItemsView
+            }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+        }
+    }
+    
+    // Geçmiş öğeleri
+    private var historyItemsView: some View {
+        ForEach(viewModel.historyItems) { item in
+            Section {
+                sleepEntriesView(for: item)
+            } header: {
+                DayHeader(date: item.date, totalSleep: item.totalSleepDuration)
+                    .textCase(nil)
+                    .foregroundColor(Color("TextColor"))
+                    .font(.system(size: 16, weight: .semibold))
+                    .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 16))
+            }
+            .listRowBackground(Color("CardBackground"))
+            .listRowSeparator(.hidden)
+        }
+    }
+    
+    // Uyku kayıtları
+    private func sleepEntriesView(for item: HistoryModel) -> some View {
+        ForEach(item.sleepEntries) { entry in
+            SleepEntryRow(entry: entry)
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        viewModel.deleteSleepEntry(entry)
+                    } label: {
+                        Label(NSLocalizedString("sleepEntry.delete", tableName: "History", comment: ""), systemImage: "trash")
+                    }
+                }
         }
     }
 }
@@ -138,24 +203,55 @@ struct DayHeader: View {
         return "\(hours)h \(minutes)m"
     }
     
-    var body: some View {
-        HStack {
-            Text(date.formatted(date: .abbreviated, time: .omitted))
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color("TextColor"))
-            
-            Spacer()
-            
-            HStack(spacing: 4) {
-                Image(systemName: "moon.stars.fill")
-                    .foregroundColor(Color("AccentColor"))
-                Text(totalSleepText)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color("SecondaryTextColor"))
-            }
+    private var dayQualityColor: Color {
+        // Uyku kalitesine göre renk belirleme (8 saat üzeri ideal, 6-8 saat iyi, 6 saat altı yetersiz)
+        let hours = totalSleep / 3600
+        if hours >= 8 {
+            return Color("SuccessColor")
+        } else if hours >= 6 {
+            return Color("WarningColor")
+        } else {
+            return Color("ErrorColor")
         }
-        .padding(.horizontal)
-        .padding(.vertical, 12)
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Text(date.formatted(.dateTime.weekday(.wide)))
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("SecondaryTextColor"))
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 8) {
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(totalSleepText)
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(Color("TextColor"))
+                        
+                        Text("Toplam Uyku", tableName: "History")
+                            .font(.system(size: 10))
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                    
+                    Circle()
+                        .fill(dayQualityColor)
+                        .frame(width: 12, height: 12)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            
+            Divider()
+                .background(Color("SecondaryTextColor").opacity(0.1))
+        }
         .background(Color.appBackground)
     }
 }
@@ -175,39 +271,83 @@ struct SleepEntryRow: View {
         return "\(hours)h \(minutes)m"
     }
     
+    private var sleepTypeColor: Color {
+        switch entry.type {
+        case .core:
+            return Color("PrimaryColor")
+        case .powerNap:
+            return Color("SecondaryColor")
+        }
+    }
+    
     var body: some View {
-        HStack {
-            Image(systemName: entry.type.icon)
-                .font(.system(size: 24))
-                .foregroundColor(Color("AccentColor"))
-                .frame(width: 40)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(LocalizedStringKey(entry.type.title))
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(Color("TextColor"))
+        HStack(spacing: 16) {
+            VStack(spacing: 4) {
+                Image(systemName: entry.type.icon)
+                    .font(.system(size: 20))
+                    .foregroundColor(.white)
+                    .frame(width: 36, height: 36)
+                    .background(sleepTypeColor)
+                    .cornerRadius(8)
                 
-                Text(timeRangeText)
-                    .font(.system(size: 14))
-                    .foregroundColor(Color("SecondaryTextColor"))
+                Rectangle()
+                    .fill(sleepTypeColor.opacity(0.2))
+                    .frame(width: 2)
+                    .frame(maxHeight: .infinity)
+                    .padding(.vertical, 2)
             }
             
-            Spacer()
-            
-            VStack(alignment: .trailing, spacing: 4) {
-                HStack(spacing: 2) {
-                    ForEach(1...5, id: \.self) { index in
-                        Image(systemName: index <= entry.rating ? "star.fill" : "star")
-                            .foregroundColor(index <= entry.rating ? Color("SecondaryColor") : Color("SecondaryTextColor").opacity(0.3))
-                            .font(.system(size: 12))
-                    }
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(LocalizedStringKey(entry.type.title))
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Spacer()
+                    
+                    starsView
                 }
                 
-                Text(durationText)
-                    .font(.system(size: 14))
-                    .foregroundColor(Color("SecondaryTextColor"))
+                HStack(spacing: 16) {
+                    timeView
+                    durationView
+                }
+            }
+            .padding(.vertical, 12)
+        }
+        .padding(.horizontal, 16)
+        .contentShape(Rectangle())
+    }
+    
+    private var starsView: some View {
+        HStack(spacing: 2) {
+            ForEach(1...5, id: \.self) { index in
+                Image(systemName: index <= entry.rating ? "star.fill" : "star")
+                    .foregroundColor(index <= entry.rating ? Color("SecondaryColor") : Color("SecondaryTextColor").opacity(0.3))
+                    .font(.system(size: 12))
             }
         }
-        .padding()
+    }
+    
+    private var timeView: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "clock")
+                .font(.system(size: 12))
+                .foregroundColor(Color("SecondaryTextColor"))
+            Text(timeRangeText)
+                .font(.system(size: 14))
+                .foregroundColor(Color("SecondaryTextColor"))
+        }
+    }
+    
+    private var durationView: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "hourglass")
+                .font(.system(size: 12))
+                .foregroundColor(Color("SecondaryTextColor"))
+            Text(durationText)
+                .font(.system(size: 14))
+                .foregroundColor(Color("SecondaryTextColor"))
+        }
     }
 }

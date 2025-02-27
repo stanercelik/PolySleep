@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import SwiftData
 
 enum TimeFilter: String, CaseIterable {
     case today = "Today"
@@ -24,13 +25,20 @@ class HistoryViewModel: ObservableObject {
     @Published var isCustomFilterVisible = false
     @Published var selectedDay: Date?
     @Published var isDayDetailPresented = false
+    @Published var isAddSleepEntryPresented = false
     
     private var allHistoryItems: [HistoryModel] = []
     private var lastCustomDateRange: ClosedRange<Date>?
+    private var modelContext: ModelContext?
     
     init() {
-        loadMockData()
+        loadData()
         filterAndSortItems()
+    }
+    
+    func setModelContext(_ context: ModelContext) {
+        self.modelContext = context
+        loadData()
     }
     
     func setFilter(_ filter: TimeFilter) {
@@ -61,6 +69,113 @@ class HistoryViewModel: ObservableObject {
         let calendar = Calendar.current
         return allHistoryItems.first { item in
             calendar.isDate(item.date, inSameDayAs: date)
+        }
+    }
+    
+    // Yeni uyku kaydı ekleme
+    func addSleepEntry(_ entry: SleepEntry) {
+        // Giriş parametresi olarak verilen UUID'yi kullan, yeni oluşturma
+        // entry.id = UUID()
+        
+        let calendar = Calendar.current
+        let entryDate = calendar.startOfDay(for: entry.startTime)
+        
+        // Aynı güne ait bir kayıt var mı kontrol et
+        if let existingItemIndex = allHistoryItems.firstIndex(where: { calendar.isDate($0.date, equalTo: entryDate, toGranularity: .day) }) {
+            // Varsa, o güne ait kayıtlara ekle
+            // Önce aynı zaman aralığında bir kayıt var mı kontrol et
+            let existingEntries = allHistoryItems[existingItemIndex].sleepEntries
+            let hasDuplicateEntry = existingEntries.contains { existingEntry in
+                let sameStartHour = calendar.component(.hour, from: existingEntry.startTime) == calendar.component(.hour, from: entry.startTime)
+                let sameStartMinute = calendar.component(.minute, from: existingEntry.startTime) == calendar.component(.minute, from: entry.startTime)
+                let sameEndHour = calendar.component(.hour, from: existingEntry.endTime) == calendar.component(.hour, from: entry.endTime)
+                let sameEndMinute = calendar.component(.minute, from: existingEntry.endTime) == calendar.component(.minute, from: entry.endTime)
+                
+                return sameStartHour && sameStartMinute && sameEndHour && sameEndMinute
+            }
+            
+            if !hasDuplicateEntry {
+                // ModelContext'e ekle
+                if let modelContext = modelContext {
+                    modelContext.insert(entry)
+                }
+                
+                // Mevcut HistoryModel'e ekle
+                allHistoryItems[existingItemIndex].sleepEntries.append(entry)
+                
+                // Kayıtları başlangıç saatine göre sırala
+                allHistoryItems[existingItemIndex].sleepEntries.sort { $0.startTime < $1.startTime }
+                
+                // Tamamlanma durumunu güncelle
+                updateCompletionStatus(for: allHistoryItems[existingItemIndex])
+            }
+        } else {
+            // Yoksa, yeni bir gün kaydı oluştur
+            let newItem = HistoryModel(date: entryDate, sleepEntries: [entry])
+            
+            // ModelContext'e ekle
+            if let modelContext = modelContext {
+                modelContext.insert(newItem)
+                modelContext.insert(entry)
+            }
+            
+            allHistoryItems.append(newItem)
+        }
+        
+        // Filtreleri uygula ve sırala
+        filterAndSortItems()
+        
+        // SwiftData'ya kaydet
+        saveData()
+    }
+    
+    // Uyku kaydını silme
+    func deleteSleepEntry(_ entry: SleepEntry) {
+        // Tüm geçmiş öğelerini kontrol et
+        for (itemIndex, historyItem) in allHistoryItems.enumerated() {
+            // Silinecek kaydı bul
+            if let entryIndex = historyItem.sleepEntries.firstIndex(where: { $0.id == entry.id }) {
+                // ModelContext'ten sil
+                if let modelContext = modelContext {
+                    modelContext.delete(entry)
+                }
+                
+                // Kaydı sil
+                allHistoryItems[itemIndex].sleepEntries.remove(at: entryIndex)
+                
+                // Tamamlanma durumunu güncelle
+                updateCompletionStatus(for: allHistoryItems[itemIndex])
+                
+                // Eğer günde başka kayıt kalmadıysa, günü de sil
+                if allHistoryItems[itemIndex].sleepEntries.isEmpty {
+                    // ModelContext'ten sil
+                    if let modelContext = modelContext {
+                        modelContext.delete(allHistoryItems[itemIndex])
+                    }
+                    
+                    allHistoryItems.remove(at: itemIndex)
+                }
+                
+                // Filtreleri uygula ve sırala
+                filterAndSortItems()
+                
+                // SwiftData'ya kaydet
+                saveData()
+                
+                return
+            }
+        }
+    }
+    
+    private func updateCompletionStatus(for historyItem: HistoryModel) {
+        let totalSleepDuration = historyItem.totalSleepDuration
+        
+        if totalSleepDuration >= 21600 { // 6 saat veya daha fazla
+            historyItem.completionStatus = .completed
+        } else if totalSleepDuration >= 10800 { // 3 saat veya daha fazla
+            historyItem.completionStatus = .partial
+        } else {
+            historyItem.completionStatus = .missed
         }
     }
     
@@ -125,34 +240,52 @@ class HistoryViewModel: ObservableObject {
         historyItems = filteredItems.sorted { $0.date > $1.date }
     }
     
-    // Mock Data
-    private func loadMockData() {
-        let calendar = Calendar.current
-        let now = Date()
-        var mockItems: [HistoryModel] = []
-        
-        for dayOffset in 0...30 {
-            let date = calendar.date(byAdding: .day, value: -dayOffset, to: now)!
+    // SwiftData ile veri yükleme
+    private func loadData() {
+        guard let modelContext = modelContext else {
+            // ModelContext henüz ayarlanmamış, örnek veri oluştur
+            let calendar = Calendar.current
+            let now = Date()
             
-            // Core Sleep
-            let coreSleepStart = calendar.date(bySettingHour: 23, minute: Int.random(in: 0...59), second: 0, of: date)!
-            let coreSleepEnd = calendar.date(byAdding: .hour, value: 6, to: coreSleepStart)!
-            let coreSleep = SleepEntry(type: .core, startTime: coreSleepStart, endTime: coreSleepEnd, rating: Int.random(in: 3...5))
+            // Bugün için boş bir kayıt oluştur
+            let todayItem = HistoryModel(date: now, sleepEntries: [])
+            allHistoryItems = [todayItem]
             
-            // Power Nap
-            var entries = [coreSleep]
-            if Bool.random() {
-                let napStart = calendar.date(bySettingHour: 14, minute: Int.random(in: 0...59), second: 0, of: date)!
-                let napEnd = calendar.date(byAdding: .minute, value: 30, to: napStart)!
-                let powerNap = SleepEntry(type: .powerNap, startTime: napStart, endTime: napEnd, rating: Int.random(in: 2...5))
-                entries.append(powerNap)
-            }
-            
-            let historyItem = HistoryModel(date: date, sleepEntries: entries)
-            mockItems.append(historyItem)
+            filterAndSortItems()
+            return
         }
         
-        allHistoryItems = mockItems.sorted { $0.date > $1.date }
-        historyItems = allHistoryItems
+        // SwiftData'dan tüm HistoryModel kayıtlarını al
+        let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
+        
+        do {
+            allHistoryItems = try modelContext.fetch(descriptor)
+            
+            // Eğer hiç kayıt yoksa, bugün için boş bir kayıt oluştur
+            if allHistoryItems.isEmpty {
+                let now = Date()
+                let todayItem = HistoryModel(date: now, sleepEntries: [])
+                allHistoryItems = [todayItem]
+            }
+            
+            filterAndSortItems()
+        } catch {
+            print("HistoryModel verilerini yüklerken hata oluştu: \(error)")
+        }
+    }
+    
+    // SwiftData'ya kaydetme
+    private func saveData() {
+        guard let modelContext = modelContext else {
+            print("ModelContext ayarlanmamış, veriler kaydedilemedi")
+            return
+        }
+        
+        do {
+            try modelContext.save()
+            print("Veriler başarıyla kaydedildi")
+        } catch {
+            print("Verileri kaydederken hata oluştu: \(error)")
+        }
     }
 }

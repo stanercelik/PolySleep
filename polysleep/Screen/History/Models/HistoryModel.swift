@@ -15,9 +15,9 @@ enum SleepType: Int, Codable {
     var title: String {
         switch self {
         case .core:
-            return NSLocalizedString("sleep.type.core", comment: "")
+            return NSLocalizedString("sleep.type.core", tableName: "History" ,comment: "")
         case .powerNap:
-            return NSLocalizedString("sleep.type.nap", comment: "")
+            return NSLocalizedString("sleep.type.nap", tableName: "History", comment: "")
         }
     }
     
@@ -33,7 +33,7 @@ enum SleepType: Int, Codable {
 
 @Model
 final class SleepEntry: Identifiable {
-    var id: String
+    var id: UUID
     var type: SleepType
     var startTime: Date
     var endTime: Date
@@ -44,8 +44,8 @@ final class SleepEntry: Identifiable {
         endTime.timeIntervalSince(startTime)
     }
     
-    init(type: SleepType, startTime: Date, endTime: Date, rating: Int) {
-        self.id = UUID().uuidString
+    init(id: UUID, type: SleepType, startTime: Date, endTime: Date, rating: Int) {
+        self.id = id
         self.type = type
         self.startTime = startTime
         self.endTime = endTime
@@ -107,7 +107,17 @@ final class HistoryModel {
         self.id = UUID().uuidString
         self.date = date
         self.sleepEntries = sleepEntries
-        self.completionStatus = .missed // Varsayılan olarak missed
-        sleepEntries.forEach { $0.parentHistory = self }
+        self.completionStatus = .missed
+        
+        // Tamamlanma durumunu hesapla
+        if !sleepEntries.isEmpty {
+            let totalSleep = sleepEntries.reduce(0) { $0 + $1.duration }
+            
+            if totalSleep >= 21600 { // 6 saat veya daha fazla
+                self.completionStatus = .completed
+            } else if totalSleep >= 10800 { // 3 saat veya daha fazla
+                self.completionStatus = .partial
+            }
+        }
     }
 }
