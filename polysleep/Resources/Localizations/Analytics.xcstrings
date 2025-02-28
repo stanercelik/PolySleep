@@ -344,6 +344,23 @@
         }
       }
     },
+    "analytics.timeRange.quarter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 Months"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 Ay"
+          }
+        }
+      }
+    },
     "analytics.timeRange.week" : {
       "comment" : "Time range option for a week",
       "extractionState" : "stale",

@@ -54,6 +54,12 @@
     },
     "general.ok" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okay"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -130,6 +136,23 @@
         }
       }
     },
+    "mainScreen.customizedScheduleTooltip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ schedule has been modified."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ programı üzerinde değişiklik yapıldı."
+          }
+        }
+      }
+    },
     "mainScreen.nextSleepBlock" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -160,6 +183,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İlerleme"
+          }
+        }
+      }
+    },
+    "mainScreen.scheduleDescription.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Description"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program Açıklaması"
           }
         }
       }
@@ -267,6 +307,7 @@
       }
     },
     "schedule.customized" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -383,7 +424,20 @@
       }
     },
     "sleepBlock.existing.title" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existing Sleep Blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Var Olan Uyku Blokları"
+          }
+        }
+      }
     },
     "sleepBlock.isCore" : {
       "extractionState" : "manual",
@@ -449,6 +503,175 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Şekerleme"
+          }
+        }
+      }
+    },
+    "sleepQuality.later" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha Sonra"
+          }
+        }
+      }
+    },
+    "sleepQuality.question" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How was your sleep between"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu saatler arasında uykun nasıldı"
+          }
+        }
+      }
+    },
+    "sleepQuality.question %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How was your sleep between %1$@ - %2$@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ ve %2$@ saatleri arasındaki uykun nasıldı?"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.bad" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.excellent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.good" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.poor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orta"
+          }
+        }
+      }
+    },
+    "sleepQuality.rating.veryGood" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok İyi"
+          }
+        }
+      }
+    },
+    "sleepQuality.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydet"
+          }
+        }
+      }
+    },
+    "sleepQuality.snackbar.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can still rate your sleep in History page!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçmiş sayfasından uykunu puanlayabilirsin!"
           }
         }
       }
