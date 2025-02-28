@@ -24,7 +24,6 @@ enum CircularChartSize {
 
 struct CircularSleepChart: View {
     let schedule: SleepScheduleModel
-    /// textOpacity: 1 → yazılar tam görünür, 0 → yazılar kaybolur.
     let textOpacity: Double
     let isEditing: Bool
     let chartSize: CircularChartSize
@@ -47,81 +46,86 @@ struct CircularSleepChart: View {
     }
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            // Arka plan dairesi her zaman görünsün.
-            backgroundCircle
-            // Uyku blokları çiziliyor.
-            sleepBlocksView
+        GeometryReader { geometry in
+            let size = min(geometry.size.width, geometry.size.height)
+            let center = CGPoint(x: size / 2, y: size / 2)
             
-            // Yazı içeren görünümler: Saat tick mark'ları, marker'lar ve iç zaman etiketleri.
-            // textOpacity ile opaklıkları scroll ilerledikçe azalıyor.
-            hourTickMarks
-                .opacity(textOpacity)
-            hourMarkersView
-                .opacity(textOpacity)
-            innerTimeLabelsView
-                .opacity(textOpacity)
-            
-            // Düzenleme modu göstergesi
-            if isEditing {
-                editingIndicator
+            ZStack {
+                backgroundCircle(center: center, size: size)
+                sleepBlocksView(center: center, size: size)
+                hourTickMarks(center: center, size: size)
+                    .opacity(textOpacity)
+                hourMarkersView(center: center, size: size)
+                    .opacity(textOpacity)
+                innerTimeLabelsView(center: center, size: size)
+                    .opacity(textOpacity)
             }
+            .frame(width: size, height: size)
+            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            
         }
-        .frame(width: circleRadius * 2 + strokeWidth,
-               height: circleRadius * 2 + strokeWidth)
+        .aspectRatio(1, contentMode: .fit)
         .animation(.easeInOut(duration: 0.3), value: textOpacity)
         .animation(.easeInOut(duration: 0.3), value: isEditing)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(generateAccessibilityLabel())
+        
     }
     
     // MARK: - Alt Görünümler
     
-    private var backgroundCircle: some View {
+    private func backgroundCircle(center: CGPoint, size: CGFloat) -> some View {
         Circle()
             .stroke(Color.appSecondaryText.opacity(0.12), lineWidth: strokeWidth)
-            .padding(.trailing, strokeWidth)
+            .frame(width: circleRadius * 2, height: circleRadius * 2)
+            .position(center)
     }
     
-    private var hourTickMarks: some View {
-        ForEach(0..<24, id: \.self) { hour in
-            createTickMark(for: hour)
+    private func hourTickMarks(center: CGPoint, size: CGFloat) -> some View {
+        ZStack {
+            ForEach(0..<24, id: \.self) { hour in
+                createTickMark(for: hour, center: center)
+            }
         }
     }
     
-    private func createTickMark(for hour: Int) -> some View {
+    private func createTickMark(for hour: Int, center: CGPoint) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
+        
+        // Tick mark'ın başlangıç ve bitiş noktaları için radius değerleri
         let outerRadius = circleRadius + strokeWidth / 2
         let innerRadius = circleRadius - strokeWidth / 2
         
-        let startPoint = CGPoint(
-            x: circleRadius + outerRadius * cos(angle * .pi / 180),
-            y: circleRadius + outerRadius * sin(angle * .pi / 180)
-        )
-        let endPoint = CGPoint(
-            x: circleRadius + innerRadius * cos(angle * .pi / 180),
-            y: circleRadius + innerRadius * sin(angle * .pi / 180)
-        )
+        // Tick mark'ın başlangıç noktası (dış çemberde)
+        let startX = center.x + outerRadius * cos(angle * .pi / 180)
+        let startY = center.y + outerRadius * sin(angle * .pi / 180)
+        
+        // Tick mark'ın bitiş noktası (iç çemberde)
+        let endX = center.x + innerRadius * cos(angle * .pi / 180)
+        let endY = center.y + innerRadius * sin(angle * .pi / 180)
         
         return Path { path in
-            path.move(to: startPoint)
-            path.addLine(to: endPoint)
+            path.move(to: CGPoint(x: startX, y: startY))
+            path.addLine(to: CGPoint(x: endX, y: endY))
         }
         .stroke(style: StrokeStyle(lineWidth: 1, dash: hour % 3 == 0 ? [] : [4, 4]))
         .foregroundColor(Color.appSecondaryText.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
-    private var hourMarkersView: some View {
-        ForEach(hourMarkers, id: \.self) { hour in
-            hourMarkerLabel(for: hour)
+    private func hourMarkersView(center: CGPoint, size: CGFloat) -> some View {
+        ZStack {
+            ForEach(hourMarkers, id: \.self) { hour in
+                hourMarkerLabel(for: hour, center: center)
+            }
         }
     }
     
-    private func hourMarkerLabel(for hour: Int) -> some View {
+    private func hourMarkerLabel(for hour: Int, center: CGPoint) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
-        let radius = circleRadius + strokeWidth
-        let xPosition = circleRadius + radius * cos(angle * .pi / 180)
-        let yPosition = circleRadius + radius * sin(angle * .pi / 180)
+        // Saat etiketleri için, dış çemberin biraz dışında konumlandırıyoruz
+        let labelRadius = circleRadius + strokeWidth / 2 + 20
+        let xPosition = center.x + labelRadius * cos(angle * .pi / 180)
+        let yPosition = center.y + labelRadius * sin(angle * .pi / 180)
         
         return Text(String(format: "%02d:00", hour))
             .font(.system(size: 12, weight: .medium))
@@ -129,13 +133,15 @@ struct CircularSleepChart: View {
             .position(x: xPosition, y: yPosition)
     }
     
-    private var sleepBlocksView: some View {
-        ForEach(schedule.schedule.indices, id: \.self) { index in
-            sleepBlockArc(for: schedule.schedule[index])
+    private func sleepBlocksView(center: CGPoint, size: CGFloat) -> some View {
+        ZStack {
+            ForEach(schedule.schedule.indices, id: \.self) { index in
+                sleepBlockArc(for: schedule.schedule[index], center: center)
+            }
         }
     }
     
-    private func sleepBlockArc(for block: SleepBlock) -> some View {
+    private func sleepBlockArc(for block: SleepBlock, center: CGPoint) -> some View {
         guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
             return AnyView(EmptyView())
         }
@@ -147,7 +153,7 @@ struct CircularSleepChart: View {
         return AnyView(
             Path { path in
                 path.addArc(
-                    center: CGPoint(x: circleRadius, y: circleRadius),
+                    center: center,
                     radius: circleRadius,
                     startAngle: .degrees(startAngle),
                     endAngle: .degrees(endAngle),
@@ -159,42 +165,78 @@ struct CircularSleepChart: View {
         )
     }
     
-    private var innerTimeLabelsView: some View {
-        ForEach(schedule.schedule.indices, id: \.self) { index in
-            let block = schedule.schedule[index]
-            if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
-                let startTime = timeComponents(from: startTimeInt)
-                let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-                Group {
-                    innerTimeLabel(
-                        time: String(format: "%02d:%02d", startTime.hour, startTime.minute),
-                        angle: angleForTime(hour: startTime.hour, minute: startTime.minute)
-                    )
-                    innerTimeLabel(
-                        time: String(format: "%02d:%02d", endTime.hour, endTime.minute),
-                        angle: angleForTime(hour: endTime.hour, minute: endTime.minute)
-                    )
+    private func innerTimeLabelsView(center: CGPoint, size: CGFloat) -> some View {
+        ZStack {
+            ForEach(schedule.schedule.indices, id: \.self) { index in
+                let block = schedule.schedule[index]
+                if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
+                    let startTime = timeComponents(from: startTimeInt)
+                    let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
+                    
+                    // Başlangıç ve bitiş açıları
+                    let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
+                    let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
+                    
+                    // Etiketleri konumlandır
+                    if block.duration <= 30 {
+                        // Kısa bloklar için etiketleri birleştir
+                        let midAngle = (startAngle + endAngle) / 2
+                        combinedTimeLabel(
+                            startTime: String(format: "%02d:%02d", startTime.hour, startTime.minute),
+                            endTime: String(format: "%02d:%02d", endTime.hour, endTime.minute),
+                            angle: midAngle,
+                            center: center
+                        )
+                    } else {
+                        // Uzun bloklar için ayrı etiketler
+                        Group {
+                            innerTimeLabel(
+                                time: String(format: "%02d:%02d", startTime.hour, startTime.minute),
+                                angle: startAngle,
+                                center: center
+                            )
+                            innerTimeLabel(
+                                time: String(format: "%02d:%02d", endTime.hour, endTime.minute),
+                                angle: endAngle,
+                                center: center
+                            )
+                        }
+                    }
                 }
             }
         }
     }
     
-    private func innerTimeLabel(time: String, angle: Double) -> some View {
-        let radius = circleRadius - strokeWidth
-        let xPosition = circleRadius + radius * cos(angle * .pi / 180)
-        let yPosition = circleRadius + radius * sin(angle * .pi / 180)
+    private func combinedTimeLabel(startTime: String, endTime: String, angle: Double, center: CGPoint) -> some View {
+        let radius = circleRadius - strokeWidth / 2 - 15
+        let xPosition = center.x + radius * cos(angle * .pi / 180)
+        let yPosition = center.y + radius * sin(angle * .pi / 180)
+        
+        return VStack(spacing: 2) {
+            Text(startTime)
+                .font(.system(size: 9, weight: .medium))
+            Text(endTime)
+                .font(.system(size: 9, weight: .medium))
+        }
+        .foregroundColor(Color.appSecondaryText)
+        .padding(2)
+        .background(Color.black.opacity(0.3))
+        .cornerRadius(4)
+        .position(x: xPosition, y: yPosition)
+    }
+    
+    private func innerTimeLabel(time: String, angle: Double, center: CGPoint) -> some View {
+        // İç etiketler için, iç çemberin biraz içinde konumlandırıyoruz
+        let radius = circleRadius - strokeWidth / 2 - 15
+        let xPosition = center.x + radius * cos(angle * .pi / 180)
+        let yPosition = center.y + radius * sin(angle * .pi / 180)
         return Text(time)
             .font(.system(size: 10, weight: .medium))
             .foregroundColor(Color.appSecondaryText)
-            .rotationEffect(.degrees(0))
+            .padding(2)
+            .background(Color.black.opacity(0.3))
+            .cornerRadius(4)
             .position(x: xPosition, y: yPosition)
-    }
-    
-    private var editingIndicator: some View {
-        Circle()
-            .stroke(Color.appAccent.opacity(0.3), lineWidth: 2)
-            .frame(width: circleRadius * 2 + strokeWidth + 4,
-                   height: circleRadius * 2 + strokeWidth + 4)
     }
     
     // MARK: - Yardımcı Fonksiyonlar
@@ -282,18 +324,6 @@ struct CircularSleepChart: View {
         CircularSleepChart(schedule: schedule, textOpacity: 1)
             .frame(width: 300, height: 300)
             .previewDisplayName("Everyman Schedule - Text On")
-        CircularSleepChart(schedule: schedule, textOpacity: 0)
-            .frame(width: 300, height: 300)
-            .previewDisplayName("Everyman Schedule - Text Off")
-        CircularSleepChart(schedule: schedule, textOpacity: 1, isEditing: true)
-            .frame(width: 300, height: 300)
-            .previewDisplayName("Everyman Schedule - Editing Mode")
-        CircularSleepChart(schedule: schedule, textOpacity: 1, chartSize: .small)
-            .frame(width: 200, height: 200)
-            .previewDisplayName("Everyman Schedule - Small")
-        CircularSleepChart(schedule: schedule, textOpacity: 1, chartSize: .medium)
-            .frame(width: 250, height: 250)
-            .previewDisplayName("Everyman Schedule - Medium")
     }
     .previewLayout(.sizeThatFits)
     .padding()
