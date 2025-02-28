@@ -1,66 +1,145 @@
 import SwiftUI
+import SwiftData
 
 struct SleepQualityRatingView: View {
     let startTime: Date
     let endTime: Date
     @Binding var isPresented: Bool
     @State private var selectedRating: Int = 2 // Default to middle (Good)
+    @State private var sliderValue: Double = 2 // 0-4 arası değer (5 emoji için)
     @State private var isDeferredRating = false
     @State private var showSnackbar = false
+    @State private var previousEmojiLabel: String = ""
+    @State private var labelOffset: CGFloat = 0
     @StateObject private var notificationManager = SleepQualityNotificationManager.shared
+    // ViewModel'e erişim için ObservedObject ekleyelim
+    @ObservedObject var viewModel: MainScreenViewModel
+    @Environment(\.modelContext) private var modelContext
     
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
-    private let ratingKeys = [
-        "sleepQuality.rating.bad",
-        "sleepQuality.rating.poor",
-        "sleepQuality.rating.good",
-        "sleepQuality.rating.veryGood",
-        "sleepQuality.rating.excellent"
+    private let emojiLabels = [
+        "😩": "awful",
+        "😪": "bad",
+        "😐": "okay",
+        "😊": "good",
+        "😄": "great"
     ]
     
+    // Slider değerine göre emoji seçimi
+    private var currentEmoji: String {
+        let index = min(Int(sliderValue.rounded()), emojis.count - 1)
+        return emojis[index]
+    }
+    
+    // Slider değerine göre emoji etiketi
+    private var currentEmojiLabel: String {
+        return emojiLabels[currentEmoji] ?? ""
+    }
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Text(LocalizedStringKey("sleepQuality.question \(startTime.formatted(date: .omitted, time: .shortened)) \(endTime.formatted(date: .omitted, time: .shortened))"))
-                .font(.title2)
-                .fontWeight(.semibold)
+        VStack(spacing: 16) {
+            Text(LocalizedStringKey("sleepQuality.question \(startTime.formatted(date: .omitted, time: .shortened)) \(endTime.formatted(date: .omitted, time: .shortened))"), tableName: "MainScreen")
+                .font(.headline)
+                .fontWeight(.medium)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-            // Custom Emoji Slider
-            CustomEmojiSlider(
-                selectedRating: $selectedRating,
-                emojis: emojis,
-                labels: ratingKeys
-            )
-            .padding(.vertical)
+            // Kompakt Emoji ve Yıldız Puanlama
+            VStack(alignment: .center, spacing: 16) {
+                HStack(spacing: 12) {
+                    Text(currentEmoji)
+                        .font(.system(size: 52))
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        ZStack {
+                            Text(previousEmojiLabel)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(Color("SecondaryTextColor"))
+                                .opacity(labelOffset != 0 ? 0.3 : 0)
+                                .offset(y: labelOffset)
+                            
+                            Text(currentEmojiLabel)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(Color("SecondaryTextColor"))
+                                .offset(y: labelOffset)
+                        }
+                        .frame(height: 20)
+                        .clipped()
+                        
+                        HStack(spacing: 4) {
+                            ForEach(0..<5) { index in
+                                Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
+                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
+                                    .font(.system(size: 12))
+                            }
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                
+                Slider(value: $sliderValue, in: 0...4, step: 1)
+                    .tint(getSliderColor())
+                    .onChange(of: sliderValue) { newValue in
+                        // Haptic feedback
+                        let generator = UIImpactFeedbackGenerator(style: .light)
+                        generator.impactOccurred()
+                        
+                        // Etiket animasyonu için
+                        if currentEmojiLabel != previousEmojiLabel {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                labelOffset = 20 // Aşağı doğru kaydır
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                labelOffset = -20 // Yukarı konumla
+                                previousEmojiLabel = currentEmojiLabel
+                                
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    labelOffset = 0 // Ortaya getir
+                                }
+                            }
+                        }
+                    }
+            }
+            .padding(.horizontal)
             
             // Action Buttons
             HStack(spacing: 16) {
                 Button(action: {
-                    withAnimation(.spring(response: 0.3)) {
-                        showSnackbar = true
-                        notificationManager.addPendingRating(startTime: startTime, endTime: endTime)
-                        
-                        // Snackbar gösterildikten sonra view'ı kapat
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                                isPresented = false
-                            }
+                    // Önce isPresented'ı false yaparak görünümü kapat
+                    isPresented = false
+                    
+                    // Uyku kalitesi değerlendirmesinin tamamlandığını işaretle
+                    viewModel.markSleepQualityRatingAsCompleted()
+                    
+                    // Sonra snackbar göster ve bildirim ekle
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        withAnimation(.spring(response: 0.3)) {
+                            showSnackbar = true
+                            notificationManager.addPendingRating(startTime: startTime, endTime: endTime)
                         }
                     }
                 }) {
-                    Text(LocalizedStringKey("sleepQuality.later"))
+                    Text(LocalizedStringKey("sleepQuality.later"), tableName: "MainScreen")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
                 
                 Button(action: {
-                    withAnimation(.spring(response: 0.3)) {
+                    // Önce isPresented'ı false yaparak görünümü kapat
+                    isPresented = false
+                    
+                    // Uyku kalitesi değerlendirmesinin tamamlandığını işaretle
+                    viewModel.markSleepQualityRatingAsCompleted()
+                    
+                    // Sonra uyku kalitesini kaydet
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         saveSleepQuality()
-                        isPresented = false
                     }
                 }) {
-                    Text(LocalizedStringKey("sleepQuality.save"))
+                    Text(LocalizedStringKey("sleepQuality.save"), tableName: "MainScreen")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -70,107 +149,56 @@ struct SleepQualityRatingView: View {
         .padding()
         .background(Color("CardBackground"))
         .cornerRadius(12)
-        .shadow(radius: 8)
-        .snackbar(isPresented: $showSnackbar, message: NSLocalizedString("sleepQuality.snackbar.message", comment: ""))
+        .shadow(radius: 4)
     }
     
     private func saveSleepQuality() {
-        // TODO: Implement save functionality
-        print("Sleep quality saved: \(selectedRating)")
+        // Seçilen puanı al (0-4 arası)
+        let rating = Int(sliderValue.rounded())
+        print("Sleep quality saved: \(rating)")
+        
+        // Uyku bloğu için uygun SleepType belirle
+        let sleepType: SleepType
+        
+        // Uyku süresi 90 dakikadan fazlaysa core sleep, değilse power nap olarak kabul et
+        let duration = endTime.timeIntervalSince(startTime)
+        sleepType = duration > 5400 ? .core : .powerNap
+        
+        // Yeni bir SleepEntry oluştur
+        let sleepEntry = SleepEntry(
+            id: UUID(),
+            type: sleepType,
+            startTime: startTime,
+            endTime: endTime,
+            rating: rating
+        )
+        
+        // History ViewModel'i oluştur ve ModelContext'i ayarla
+        let historyViewModel = HistoryViewModel()
+        historyViewModel.setModelContext(modelContext)
+        
+        // SleepEntry'yi History'ye ekle
+        historyViewModel.addSleepEntry(sleepEntry)
+        
+        // Bekleyen bildirimi kaldır
         notificationManager.removePendingRating(startTime: startTime, endTime: endTime)
     }
-}
-
-struct CustomEmojiSlider: View {
-    @Binding var selectedRating: Int
-    let emojis: [String]
-    let labels: [String]
     
-    @GestureState private var dragLocation: CGFloat = 0
-    @State private var previousRating: Int = 0
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            // Emojis
-            HStack(spacing: 0) {
-                ForEach(0..<emojis.count, id: \.self) { index in
-                    Text(emojis[index])
-                        .font(.system(size: 32))
-                        .frame(maxWidth: .infinity)
-                        .scaleEffect(selectedRating == index ? 1.2 : 0.8)
-                        .animation(.spring(response: 0.3), value: selectedRating)
-                }
-            }
-            
-            // Custom Slider Track
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    // Background Track
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(height: 8)
-                    
-                    // Filled Track
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color("AccentColor"))
-                        .frame(width: sliderPosition(in: geometry.size.width), height: 8)
-                    
-                    // Thumb
-                    Circle()
-                        .fill(Color("AccentColor"))
-                        .frame(width: 24, height: 24)
-                        .offset(x: sliderPosition(in: geometry.size.width) - 12)
-                        .shadow(radius: 4)
-                }
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .updating($dragLocation) { value, state, _ in
-                            state = value.location.x
-                        }
-                        .onChanged { value in
-                            updateSelection(at: value.location.x, in: geometry.size.width)
-                        }
-                        .onEnded { value in
-                            withAnimation(.spring(response: 0.3)) {
-                                updateSelection(at: value.location.x, in: geometry.size.width)
-                            }
-                            // Haptic feedback
-                            if previousRating != selectedRating {
-                                let generator = UIImpactFeedbackGenerator(style: .light)
-                                generator.impactOccurred()
-                                previousRating = selectedRating
-                            }
-                        }
-                )
-            }
-            .frame(height: 24)
-            .padding(.horizontal)
-            
-            // Labels
-            HStack(spacing: 0) {
-                ForEach(0..<labels.count, id: \.self) { index in
-                    Text(LocalizedStringKey(labels[index]))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity)
-                        .opacity(selectedRating == index ? 1 : 0.6)
-                }
-            }
-        }
-    }
-    
-    private func sliderPosition(in width: CGFloat) -> CGFloat {
-        let segmentWidth = width / CGFloat(emojis.count - 1)
-        return CGFloat(selectedRating) * segmentWidth
-    }
-    
-    private func updateSelection(at position: CGFloat, in width: CGFloat) {
-        let segmentWidth = width / CGFloat(emojis.count - 1)
-        var newRating = Int(round(position / segmentWidth))
-        newRating = min(max(newRating, 0), emojis.count - 1)
-        
-        if newRating != selectedRating {
-            selectedRating = newRating
+    private func getSliderColor() -> Color {
+        let index = Int(sliderValue.rounded())
+        switch index {
+        case 0:
+            return Color.red
+        case 1:
+            return Color.orange
+        case 2:
+            return Color.yellow
+        case 3:
+            return Color.blue
+        case 4:
+            return Color.green
+        default:
+            return Color.yellow
         }
     }
 }
