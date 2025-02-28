@@ -4,16 +4,6 @@ import SwiftData
 struct MainScreenView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
-    @State private var scrollOffset: CGFloat = 0
-    
-    private let headerHeight: CGFloat = 100
-    private let chartHeight: CGFloat = 200
-    
-    /// Scroll ilerlemesine göre (0...1) ilerleme değeri
-    private var progress: CGFloat {
-        let maxOffset: CGFloat = headerHeight
-        return min(max(-scrollOffset / maxOffset, 0), 1)
-    }
     
     var body: some View {
         NavigationStack {
@@ -22,42 +12,31 @@ struct MainScreenView: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    GeometryReader { geometry in
-                        Color.clear
-                            .preference(key: ScrollOffsetPreferenceKey.self,
-                                        value: geometry.frame(in: .named("scroll")).minY)
-                    }
-                    .frame(height: 0)
-                    
-                    VStack(spacing: 16) {
-                        HeaderView(viewModel: viewModel, progress: progress)
-                            .notificationDot(isShowing: viewModel.hasDeferredSleepQualityRating)
+                    VStack(spacing: 24) {
+                        HeaderView(viewModel: viewModel)
                         
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
                             SleepQualityRatingView(
                                 startTime: lastBlock.start,
                                 endTime: lastBlock.end,
-                                isPresented: $viewModel.showSleepQualityRating
+                                isPresented: $viewModel.showSleepQualityRating,
+                                viewModel: viewModel
                             )
                             .transition(.move(edge: .top).combined(with: .opacity))
                             .padding(.horizontal)
                         }
                         
                         CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
-                            .frame(height: 200)
+                            .frame(height: UIScreen.main.bounds.height * 0.35)
                             .padding(.horizontal)
-                            .padding(.vertical, 42)
                         
                         SleepBlocksSection(viewModel: viewModel)
                         
                         InfoCardsSection(viewModel: viewModel)
                         
                         TipSection(viewModel: viewModel)
+                            .padding(.bottom, 16)
                     }
-                }
-                .coordinateSpace(name: "scroll")
-                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                    scrollOffset = value
                 }
             }
             .navigationBarItems(
@@ -76,12 +55,13 @@ struct MainScreenView: View {
                     Image(systemName: "square.and.arrow.up")
                         .symbolRenderingMode(.hierarchical)
                         .fontWeight(.semibold)
-                        .foregroundColor(.appAccent)
+                        .foregroundColor(.appPrimary)
                 },
-                trailing: Image(systemName: viewModel.isEditing ? "checkmark" : "pencil")
+                trailing: Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
                     .symbolRenderingMode(.hierarchical)
                     .fontWeight(viewModel.isEditing ? .bold : .black)
-                    .foregroundColor(viewModel.isEditing ? .appSecondary : .appAccent)
+                    .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
+                    .font(.title3)
                     .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
                     .onTapGesture {
                         viewModel.isEditing.toggle()
@@ -89,9 +69,13 @@ struct MainScreenView: View {
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(viewModel.sleepStatusMessage)
-                        .font(.headline)
-                        .foregroundColor(.appText)
+                    HStack(spacing: 4) {
+                        Text(viewModel.isInSleepTime ? "💤" : "⏰")
+                            .font(.headline)
+                        Text(viewModel.sleepStatusMessage)
+                            .font(.headline)
+                            .foregroundColor(.appText)
+                    }
                 }
             }
             .onAppear {
@@ -107,34 +91,82 @@ struct MainScreenView: View {
 // MARK: - Header
 struct HeaderView: View {
     @ObservedObject var viewModel: MainScreenViewModel
-    let progress: CGFloat
-    @State private var showCustomizedInfo: Bool = false
+    @State private var showCustomizedTooltip: Bool = false
+    @State private var showScheduleDescription: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(spacing: 8) {
+            // Program adı ve bilgi düğmesi
             HStack(spacing: 8) {
                 Text(viewModel.model.schedule.name)
                     .font(.title2)
                     .fontWeight(.bold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+                
+                Button(action: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                        showScheduleDescription.toggle()
+                    }
+                }) {
+                    HStack(spacing: 4) {
+                        Text(NSLocalizedString("mainScreen.scheduleDescription.title", tableName: "MainScreen", comment: ""))
+                            .font(.caption)
+                            .fontWeight(.medium)
+                        
+                        Image(systemName: showScheduleDescription ? "chevron.up" : "chevron.down")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.appText)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.appPrimary.opacity(0.2))
+                    )
+                }
+            }
+            
+            // Toplam uyku süresi
+            HStack {
+                Text("⏱️ Toplam Uyku: \(viewModel.totalSleepTimeFormatted)")
+                    .font(.caption)
+                    .foregroundColor(.appSecondaryText)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                if viewModel.model.schedule.isCustomized {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .foregroundColor(.appAccent)
-                        .font(.caption)
-                        .onTapGesture {
-                            showCustomizedInfo = true
-                        }
+                Spacer()
+            }
+            
+            // Program açıklaması (açılır/kapanır panel)
+            if showScheduleDescription {
+                VStack(alignment: .leading, spacing: 0) {
+                    Divider()
+                        .background(Color.appAccent.opacity(0.2))
+                        .padding(.vertical, 8)
+                    
+                    Text(viewModel.scheduleDescription)
+                        .font(.footnote)
+                        .foregroundColor(.appText)
+                        .lineSpacing(4)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.appCardBackground.opacity(0.7))
+                                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                        )
                 }
+                .transition(.asymmetric(
+                    insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
+                    removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
+                ))
             }
         }
         .padding(.horizontal)
-        .padding(.bottom, 38)
-        .alert(NSLocalizedString("mainScreen.customizedSchedule.title", tableName: "MainScreen", comment: ""), isPresented: $showCustomizedInfo) {
-            Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: ""), role: .cancel) {}
-        } message: {
-            Text(NSLocalizedString("mainScreen.customizedSchedule.message", tableName: "MainScreen", comment: ""))
-        }
+        .padding(.vertical, 8)
+        .background(Color.appBackground)
     }
 }
 
@@ -143,11 +175,15 @@ struct SleepBlocksSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("mainScreen.sleepBlocks", tableName: "MainScreen")
-                .font(.title3)
-                .foregroundColor(.appText)
-                .padding(.horizontal)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("🛌 ")
+                    .font(.title3)
+                Text("mainScreen.sleepBlocks", tableName: "MainScreen")
+                    .font(.title3)
+                    .foregroundColor(.appText)
+            }
+            .padding(.horizontal)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -221,18 +257,19 @@ struct SleepBlockCard: View {
             HStack {
                 Text(block.isCore ? String("🛏️") : String("⚡️"))
                     .font(.title2)
-                Text(
-                    block.isCore
-                    ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
-                    : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
-                )
-                .font(.headline)
+                Text("\(block.startTime) - \(block.endTime)")
+                    .font(.headline)
+                    .foregroundColor(.appText)
             }
-            .foregroundColor(block.isCore ? .green : .blue)
             
-            Text("\(block.startTime) - \(block.endTime)")
-                .font(.subheadline)
-                .foregroundColor(.appText)
+            Text(
+                block.isCore
+                ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
+                : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
+            )
+            .font(.subheadline)
+            .foregroundColor(.appSecondaryText)
+            
         }
         .padding()
         .background(
@@ -323,32 +360,23 @@ struct InfoCardsSection: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            HStack(spacing: 8) {
-                InfoCard(
-                    icon: "💤",
-                    title: NSLocalizedString("mainScreen.totalSleep", tableName: "MainScreen", comment: ""),
-                    value: viewModel.totalSleepTimeFormatted,
-                    color: .appPrimary
-                )
-                
-                InfoCard(
-                    icon: "📈",
-                    title: NSLocalizedString("mainScreen.progress", tableName: "MainScreen", comment: ""),
-                    value: "\(Int(viewModel.dailyProgress * 100))%",
-                    color: .appAccent
-                )
+            HStack {
+                Text("📊 Günlük Durum")
+                    .font(.title3)
+                    .foregroundColor(.appText)
+                Spacer()
             }
             
             HStack(spacing: 8) {
                 InfoCard(
-                    icon: "🔥",
-                    title: NSLocalizedString("mainScreen.streak", tableName: "MainScreen", comment: ""),
-                    value: "\(viewModel.currentStreak)",
-                    color: .appSecondary
+                    icon: "🔄",
+                    title: NSLocalizedString("mainScreen.progress", tableName: "MainScreen", comment: ""),
+                    value: "\(Int(viewModel.dailyProgress * 100))%",
+                    color: .appAccent
                 )
                 
                 InfoCard(
-                    icon: "🕒",
+                    icon: "⏰",
                     title: NSLocalizedString("mainScreen.nextSleepBlock", tableName: "MainScreen", comment: ""),
                     value: viewModel.nextSleepBlockFormatted,
                     color: .appSecondary
@@ -364,15 +392,16 @@ struct TipSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(NSLocalizedString("mainScreen.todaysTip", tableName: "MainScreen", comment: ""))
-                .font(.headline)
-                .foregroundColor(.appText)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("💡 ")
+                    .font(.title3)
+                Text(NSLocalizedString("mainScreen.todaysTip", tableName: "MainScreen", comment: ""))
+                    .font(.title3)
+                    .foregroundColor(.appText)
+            }
             
-            HStack(spacing: 12) {
-                Text("💡")
-                    .font(.title2)
-                
+            HStack(alignment: .top) {
                 Text(viewModel.dailyTip, tableName: "Tips")
                     .font(.subheadline)
                     .foregroundColor(.appSecondaryText)
@@ -404,10 +433,10 @@ struct InfoCard: View {
     let color: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 4) {
                 Text(icon)
-                    .font(.headline)
+                    .font(.title3)
                     .foregroundColor(color)
                 
                 Text(title)

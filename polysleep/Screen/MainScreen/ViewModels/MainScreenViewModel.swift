@@ -43,6 +43,7 @@ class MainScreenViewModel: ObservableObject {
     @Published var showSleepQualityRating = false
     @Published var hasDeferredSleepQualityRating = false
     @Published var lastSleepBlock: (start: Date, end: Date)?
+    @Published private var sleepQualityRatingCompleted = false
     
     private var modelContext: ModelContext?
     private var timer: Timer?
@@ -53,6 +54,16 @@ class MainScreenViewModel: ObservableObject {
         let hours = totalMinutes / 60
         let minutes = totalMinutes % 60
         return String(format: "%dh %02dm", hours, minutes)
+    }
+    
+    var scheduleDescription: String {
+        // Sistem diline göre açıklama döndür
+        let locale = Locale.current.language.languageCode?.identifier ?? "en"
+        if locale == "tr" {
+            return model.schedule.description.tr
+        } else {
+            return model.schedule.description.en
+        }
     }
     
     var nextSleepBlockFormatted: String {
@@ -75,9 +86,86 @@ class MainScreenViewModel: ObservableObject {
         DailyTipManager.getDailyTip()
     }
     
+    // Günlük ilerleme hesaplama fonksiyonu
     var dailyProgress: Double {
-        // Dummy Value
-        0.65
+        calculateDailyProgress()
+    }
+    
+    // Günlük ilerlemeyi hesaplayan fonksiyon
+    func calculateDailyProgress() -> Double {
+        let todayBlocks = getTodaySleepBlocks()
+        
+        if todayBlocks.isEmpty {
+            return 0.0
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfDay = calendar.startOfDay(for: now)
+        
+        var completedMinutes = 0
+        var totalMinutes = 0
+        
+        for block in todayBlocks {
+            let blockStartDate = combineDateWithTime(date: startOfDay, timeString: block.startTime)
+            let blockEndDate = combineDateWithTime(date: startOfDay, timeString: block.endTime)
+            
+            // Eğer bitiş zamanı başlangıç zamanından önceyse, ertesi güne geçmiş demektir
+            var adjustedEndDate = blockEndDate
+            if blockEndDate < blockStartDate {
+                adjustedEndDate = calendar.date(byAdding: .day, value: 1, to: blockEndDate)!
+            }
+            
+            let blockDuration = Int(adjustedEndDate.timeIntervalSince(blockStartDate) / 60)
+            totalMinutes += blockDuration
+            
+            // Blok tamamlanmış mı kontrol et
+            if now > adjustedEndDate {
+                // Blok tamamen tamamlanmış
+                completedMinutes += blockDuration
+            } else if now > blockStartDate {
+                // Blok kısmen tamamlanmış
+                let completedDuration = Int(now.timeIntervalSince(blockStartDate) / 60)
+                completedMinutes += min(completedDuration, blockDuration)
+            }
+        }
+        
+        // İlerleme oranını hesapla
+        return totalMinutes > 0 ? Double(completedMinutes) / Double(totalMinutes) : 0.0
+    }
+    
+    private func getTodaySleepBlocks() -> [SleepBlock] {
+        return model.schedule.schedule
+    }
+    
+    private func combineDateWithTime(date: Date, timeString: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        guard let time = dateFormatter.date(from: timeString) else {
+            return date
+        }
+        
+        let calendar = Calendar.current
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+        
+        return calendar.date(bySettingHour: timeComponents.hour ?? 0, 
+                            minute: timeComponents.minute ?? 0, 
+                            second: 0, 
+                            of: date) ?? date
+    }
+    
+    var dailyReminder: String {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: Date())
+        
+        if hour < 12 {
+            return "Gün içindeki şekerlemeleri kaçırmamak için alarmlarınızı kontrol edin."
+        } else if hour < 18 {
+            return "Akşam yemeğini uyku bloğundan en az 2 saat önce yemeyi unutmayın."
+        } else {
+            return "Ana uyku bloğundan önce ekran kullanımını azaltın ve rahatlatıcı bir rutin oluşturun."
+        }
     }
     
     var currentStreak: Int {
@@ -103,7 +191,7 @@ class MainScreenViewModel: ObservableObject {
                 return "Uyku saatine \(minutes)dk kaldı"
             }
         } else {
-            return "Bugün başka uyku bloğu yok"
+            return "Bugün için uyku planı yok"
         }
     }
     
@@ -141,7 +229,8 @@ class MainScreenViewModel: ObservableObject {
                         name: savedSchedule.name,
                         description: savedSchedule.scheduleDescription,
                         totalSleepHours: savedSchedule.totalSleepHours,
-                        schedule: savedSchedule.schedule
+                        schedule: savedSchedule.schedule,
+                        isCustomized: savedSchedule.isCustomized
                     )
                 }
             } catch {
@@ -164,7 +253,8 @@ class MainScreenViewModel: ObservableObject {
                     name: savedSchedule.name,
                     description: savedSchedule.scheduleDescription,
                     totalSleepHours: savedSchedule.totalSleepHours,
-                    schedule: savedSchedule.schedule
+                    schedule: savedSchedule.schedule,
+                    isCustomized: savedSchedule.isCustomized
                 )
             }
         } catch {
@@ -185,7 +275,8 @@ class MainScreenViewModel: ObservableObject {
                     name: latestSchedule.name,
                     description: latestSchedule.scheduleDescription,
                     totalSleepHours: latestSchedule.totalSleepHours,
-                    schedule: latestSchedule.schedule
+                    schedule: latestSchedule.schedule,
+                    isCustomized: latestSchedule.isCustomized
                 )
                 
                 selectedSchedule = scheduleModel
@@ -339,10 +430,8 @@ class MainScreenViewModel: ObservableObject {
         model.schedule.schedule.append(newBlock)
         model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
         
-        // Eğer schedule adı değiştirilmemişse ve blok eklendiyse
-        if !model.schedule.name.contains("schedule.customized") {
-            model.schedule.name += " " + "schedule.customized"
-        }
+        // Programın özelleştirildiğini işaretle
+        model.schedule.isCustomized = true
         
         Task {
             await saveSchedule()
@@ -354,9 +443,8 @@ class MainScreenViewModel: ObservableObject {
         updatedSchedule.schedule.remove(atOffsets: offsets)
         model.schedule = updatedSchedule
         
-        if !model.schedule.name.contains("schedule.customized") {
-            model.schedule.name += " " + "schedule.customized"
-        }
+        // Programın özelleştirildiğini işaretle
+        model.schedule.isCustomized = true
         
         Task {
             await saveSchedule()
@@ -430,9 +518,8 @@ class MainScreenViewModel: ObservableObject {
             model.schedule.schedule[index] = updatedBlock
             model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
             
-            if !model.schedule.name.contains("schedule.customized") {
-                model.schedule.name += " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
-            }
+            // Programın özelleştirildiğini işaretle
+            model.schedule.isCustomized = true
             
             Task {
                 await saveSchedule()
@@ -443,9 +530,8 @@ class MainScreenViewModel: ObservableObject {
     func deleteBlock(_ block: SleepBlock) {
         model.schedule.schedule.removeAll { $0.id == block.id }
         
-        if !model.schedule.name.contains("schedule.customized") {
-            model.schedule.name += " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
-        }
+        // Programın özelleştirildiğini işaretle
+        model.schedule.isCustomized = true
         
         Task {
             await saveSchedule()
@@ -459,13 +545,8 @@ class MainScreenViewModel: ObservableObject {
     
     func saveTitleChanges() {
         if !editingTitle.isEmpty {
-            // Eğer isim zaten özelleştirilmiş ibaresini içeriyorsa, direkt olarak yeni ismi kullan
-            if model.schedule.name.contains("schedule.customized") {
-                model.schedule.name = editingTitle
-            } else {
-                // İlk kez değiştiriliyorsa özelleştirilmiş ibaresini ekle
-                model.schedule.name = editingTitle + " " + NSLocalizedString("schedule.customized",tableName: "MainScreen", comment: "")
-            }
+            model.schedule.name = editingTitle
+            model.schedule.isCustomized = true
             isEditingTitle = false
             Task {
                 await saveSchedule()
@@ -490,7 +571,8 @@ class MainScreenViewModel: ObservableObject {
                 name: model.schedule.name,
                 scheduleDescription: model.schedule.description,
                 totalSleepHours: model.schedule.totalSleepHours,
-                schedule: model.schedule.schedule
+                schedule: model.schedule.schedule,
+                isCustomized: model.schedule.isCustomized
             )
             
             // Değerleri güncelle
@@ -499,6 +581,7 @@ class MainScreenViewModel: ObservableObject {
             scheduleStore.scheduleDescription = model.schedule.description
             scheduleStore.totalSleepHours = model.schedule.totalSleepHours
             scheduleStore.schedule = model.schedule.schedule
+            scheduleStore.isCustomized = model.schedule.isCustomized
             
             if existingSchedules.isEmpty {
                 context.insert(scheduleStore)
@@ -521,7 +604,8 @@ class MainScreenViewModel: ObservableObject {
     
     /// Uyku bloğu tamamlandığında uyku kalitesi değerlendirmesini göster
     private func checkAndShowSleepQualityRating() {
-        guard !showSleepQualityRating, !hasDeferredSleepQualityRating else { return }
+        // Eğer uyku kalitesi değerlendirmesi zaten tamamlandıysa, tekrar gösterme
+        guard !showSleepQualityRating, !hasDeferredSleepQualityRating, !sleepQualityRatingCompleted else { return }
         
         let now = Date()
         // Son 30 dakika içinde biten bir uyku bloğu var mı kontrol et
@@ -555,5 +639,17 @@ class MainScreenViewModel: ObservableObject {
             lastSleepBlock = (start: startDate, end: endDate)
             showSleepQualityRating = true
         }
+    }
+    
+    private func saveSleepQuality(rating: Int, startTime: Date, endTime: Date) {
+        // TODO: Implement actual save functionality
+        print("Sleep quality saved from notification: \(rating)")
+        SleepQualityNotificationManager.shared.removePendingRating(startTime: startTime, endTime: endTime)
+    }
+    
+    /// Uyku kalitesi değerlendirmesinin tamamlandığını işaretler
+    /// Bu metot, SleepQualityRatingView'dan çağrılır
+    func markSleepQualityRatingAsCompleted() {
+        sleepQualityRatingCompleted = true
     }
 }
