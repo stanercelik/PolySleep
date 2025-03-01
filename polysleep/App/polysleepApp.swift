@@ -6,19 +6,34 @@
 //
 
 import SwiftUI
-import FirebaseCore
 import SwiftData
+import Supabase
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    
     // Initialize notification manager
     let notificationManager = SleepQualityNotificationManager.shared
     notificationManager.requestAuthorization()
 
     return true
+  }
+  
+  func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    // URL şemasını işle
+    if url.scheme == "polysleep" {
+        // Supabase auth callback'i işle
+        Task {
+            do {
+                try await SupabaseService.shared.client.auth.session(from: url)
+                return true
+            } catch {
+                print("Supabase auth callback error: \(error)")
+                return false
+            }
+        }
+    }
+    return false
   }
 }
 
@@ -43,12 +58,31 @@ struct polysleepApp: App {
         } catch {
             fatalError("Could not initialize ModelContainer: \(error)")
         }
+        
+        // Supabase servisini başlat
+        _ = SupabaseService.shared
+        
+        // Auth Manager'ı başlat
+        _ = AuthManager.shared
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.locale, .current)
+                .onOpenURL { url in
+                    // URL şemasını işle
+                    if url.scheme == "polysleep" {
+                        // Supabase auth callback'i işle
+                        Task {
+                            do {
+                                try await SupabaseService.shared.client.auth.session(from: url)
+                            } catch {
+                                print("Supabase auth callback error: \(error)")
+                            }
+                        }
+                    }
+                }
         }
         .modelContainer(modelContainer)
     }
