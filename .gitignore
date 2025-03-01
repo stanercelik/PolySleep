@@ -1,5 +1,7 @@
-.windsurfrules
-prd.md
-widget_prd.md
-design_prd.md
+#.windsurfrules
+#prd.md
+#widget_prd.md
+#design_prd.md
 GoogleService-Info.plist
+.env
+SupabaseConfig.swift

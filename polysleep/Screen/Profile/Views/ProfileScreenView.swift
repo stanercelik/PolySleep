@@ -1,11 +1,15 @@
 import SwiftUI
 import SwiftData
+import Supabase
 
 struct ProfileScreenView: View {
     @StateObject var viewModel = ProfileScreenViewModel()
     @Environment(\.modelContext) private var modelContext
     @State private var showEmojiPicker = false
     @State private var isPickingCoreEmoji = true
+    @State private var showLoginSheet = false
+    @State private var navigateToSettings = false
+    @StateObject private var authManager = AuthManager.shared
     
     var body: some View {
         NavigationStack {
@@ -15,6 +19,12 @@ struct ProfileScreenView: View {
                 
                 ScrollView {
                     VStack(spacing: 24) {
+                        // Premium Butonu
+                        PremiumButton()
+                        
+                        // Profil Bilgileri
+                        ProfileHeaderSection(showLoginSheet: $showLoginSheet, navigateToSettings: $navigateToSettings, authManager: authManager)
+                        
                         // Streak Bölümü
                         StreakSection(viewModel: viewModel)
                         
@@ -46,15 +56,269 @@ struct ProfileScreenView: View {
                 )
                 .presentationDetents([.medium])
             }
+            .sheet(isPresented: $showLoginSheet) {
+                LoginSheetView(authManager: authManager)
+                    .presentationDetents([.height(350)])
+            }
             .sheet(isPresented: $viewModel.showBadgeDetail, content: {
                 if let badge = viewModel.selectedBadge {
                     BadgeDetailView(badge: badge)
                         .presentationDetents([.medium])
                 }
             })
+            .navigationDestination(isPresented: $navigateToSettings) {
+                Text("Ayarlar") // Burada gerçek Ayarlar sayfası olacak
+            }
             .onAppear {
                 viewModel.setModelContext(modelContext)
             }
+        }
+    }
+}
+
+// MARK: - Premium Butonu
+struct PremiumButton: View {
+    var body: some View {
+        Button(action: {
+            // Premium işlevselliği
+        }) {
+            HStack {
+                Text("profile.premium.button", tableName: "Profile")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Text("profile.premium.go", tableName: "Profile")
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(Color.white.opacity(0.3))
+                    )
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.appSecondary)
+            )
+        }
+        .padding(.top, 16)
+    }
+}
+
+// MARK: - Profil Başlık Bölümü
+struct ProfileHeaderSection: View {
+    @Binding var showLoginSheet: Bool
+    @Binding var navigateToSettings: Bool
+    @ObservedObject var authManager: AuthManager
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            HStack(alignment: .top, spacing: 16) {
+                // Profil resmi (giriş yapılmışsa kullanıcı bilgisi, yapılmamışsa anonim)
+                Button(action: {
+                    if !authManager.isAuthenticated {
+                        showLoginSheet = true
+                    }
+                }) {
+                    if authManager.isAuthenticated, let user = authManager.currentUser {
+                        // Kullanıcı giriş yapmışsa
+                        Text(String(user.email?.prefix(1) ?? "U"))
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 60, height: 60)
+                            .background(
+                                Circle()
+                                    .fill(Color.appPrimary)
+                            )
+                    } else {
+                        // Anonim profil resmi
+                        Image(systemName: "person.crop.circle.fill")
+                            .font(.system(size: 60))
+                            .foregroundColor(.appSecondaryText)
+                            .background(
+                                Circle()
+                                    .fill(Color.appCardBackground)
+                                    .frame(width: 60, height: 60)
+                            )
+                    }
+                }
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    // Başlık
+                    Text("profile.backup.title", tableName: "Profile")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    // Rozetler
+                    HStack(spacing: 8) {
+                        // Maksimum 3 rozet göster
+                        ForEach(0..<min(3, 3)) { _ in
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 16))
+                                .foregroundColor(.appAccent)
+                        }
+                        
+                        // Başarı sayısı
+                        Text("3 \(Text("profile.achievements", tableName: "Profile"))")
+                            .font(.caption)
+                            .foregroundColor(.appSecondaryText)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .fill(Color.appCardBackground)
+                            )
+                    }
+                }
+                
+                Spacer()
+                
+                // Ayarlar butonu
+                Button(action: {
+                    navigateToSettings = true
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 22))
+                        .foregroundColor(.appSecondaryText)
+                }
+            }
+            
+            // Kullanıcı giriş yapmışsa çıkış butonu göster
+            if authManager.isAuthenticated, let user = authManager.currentUser {
+                VStack(spacing: 12) {
+                    // Kullanıcı email bilgisi
+                    Text("\(Text("profile.login.status.signed", tableName: "Profile")): \(user.email ?? "")")
+                        .font(.subheadline)
+                        .foregroundColor(.appSecondaryText)
+                    
+                    // Çıkış butonu
+                    Button(action: {
+                        Task {
+                            await authManager.signOut()
+                        }
+                    }) {
+                        Text("profile.login.signout", tableName: "Profile")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.red.opacity(0.8))
+                            )
+                    }
+                }
+                .padding(.top, 8)
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+        )
+    }
+}
+
+// MARK: - Giriş Sheet Görünümü
+struct LoginSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var authManager: AuthManager
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            // Başlık
+            Text("profile.login.title", tableName: "Profile")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.appText)
+                .padding(.top, 24)
+            
+            // Açıklama
+            Text("profile.login.description", tableName: "Profile")
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.appSecondaryText)
+                .padding(.horizontal, 24)
+            
+            // Giriş butonları
+            VStack(spacing: 16) {
+                // Apple ile giriş
+                Button(action: {
+                    Task {
+                        await authManager.signInWithApple()
+                        if authManager.isAuthenticated {
+                            dismiss()
+                        }
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "apple.logo")
+                            .font(.system(size: 20))
+                        
+                        Text("profile.login.apple", tableName: "Profile")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.black)
+                    )
+                }
+                .disabled(authManager.isLoading)
+                
+                // Google ile giriş
+                Button(action: {
+                    Task {
+                        await authManager.signInWithGoogle()
+                        if authManager.isAuthenticated {
+                            dismiss()
+                        }
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "g.circle.fill")
+                            .font(.system(size: 20))
+                        
+                        Text("profile.login.google", tableName: "Profile")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.blue)
+                    )
+                }
+                .disabled(authManager.isLoading)
+            }
+            .padding(.horizontal, 24)
+            
+            // Hata mesajı
+            if let error = authManager.authError {
+                Text(error)
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.horizontal, 24)
+            }
+            
+            // Yükleniyor göstergesi
+            if authManager.isLoading {
+                ProgressView()
+                    .padding(.top, 8)
+            }
+            
+            Spacer()
         }
     }
 }
@@ -163,7 +427,7 @@ struct BadgesSection: View {
                 .font(.headline)
                 .foregroundColor(.appText)
             
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
                 ForEach(viewModel.badges) { badge in
                     BadgeView(badge: badge)
                         .onTapGesture {
