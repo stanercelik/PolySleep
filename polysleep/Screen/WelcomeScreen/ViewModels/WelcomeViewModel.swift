@@ -13,6 +13,7 @@ class WelcomeViewModel: ObservableObject {
     @Published var progressValues: [CGFloat] = [0, 0, 0, 0]
     @Published var showTitle: Bool = false
     @Published var showDescription: Bool = false
+    @Published var showImage: Bool = false
     
     private let pageDuration: TimeInterval = 10
     private var elapsedTime: TimeInterval = 0
@@ -96,10 +97,10 @@ class WelcomeViewModel: ObservableObject {
     }
     
     // Title and Description Animations
-
     private func startAnimations() {
         showTitle = false
         showDescription = false
+        showImage = false
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             withAnimation(.easeInOut(duration: 0.5)) {
@@ -109,15 +110,17 @@ class WelcomeViewModel: ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     self.showDescription = true
+                    self.showImage = true
                 }
             }
         }
     }
     
     func fadeOutAnimations() {
-        withAnimation(.easeInOut(duration: 0.5)) {
+        withAnimation(.easeInOut(duration: 0.3)) {
             showTitle = false
             showDescription = false
+            showImage = false
         }
     }
     

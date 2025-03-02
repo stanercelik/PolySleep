@@ -105,7 +105,8 @@ struct WelcomeView: View {
                 WelcomePageView(
                     pageIndex: index,
                     showTitle: $viewModel.showTitle,
-                    showDescription: $viewModel.showDescription
+                    showDescription: $viewModel.showDescription,
+                    showImage: $viewModel.showImage
                 )
                 .tag(index)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
