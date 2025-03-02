@@ -65,10 +65,10 @@ struct UserScheduleModel {
         
         return UserScheduleModel(
             id: "default",
-            name: "Triphasica AAasklnda",
+            name: "Trifazik Uyku Programı",
             description: LocalizedDescription(
-                en: "Default sleepddadkaşldkalsdasd schedule",
-                tr: "Varsayılan uyku prasdasdasdasdaogramı"
+                en: "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance.",
+                tr: "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
             ),
             totalSleepHours: 8.0,
             schedule: schedule,

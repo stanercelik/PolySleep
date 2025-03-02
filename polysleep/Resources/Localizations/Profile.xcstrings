@@ -52,6 +52,23 @@
         }
       }
     },
+    "profile.streak.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streak"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seri"
+          }
+        }
+      }
+    },
     "profile.streak.current" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -405,6 +422,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giriş yapıldı"
+          }
+        }
+      }
+    },
+    "profile.login.success" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Successfully signed in"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarıyla giriş yapıldı"
           }
         }
       }

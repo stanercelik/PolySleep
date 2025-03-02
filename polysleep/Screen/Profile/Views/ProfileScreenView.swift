@@ -10,6 +10,7 @@ struct ProfileScreenView: View {
     @State private var showLoginSheet = false
     @State private var navigateToSettings = false
     @StateObject private var authManager = AuthManager.shared
+    @State private var showSuccessMessage = false
     
     var body: some View {
         NavigationStack {
@@ -40,6 +41,30 @@ struct ProfileScreenView: View {
                     .padding(.horizontal)
                     .padding(.bottom, 24)
                 }
+                
+                // Başarılı giriş mesajı
+                if showSuccessMessage {
+                    VStack {
+                        Text("profile.login.success", tableName: "Profile")
+                            .padding()
+                            .background(Color.appPrimary)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 2)
+                            .padding(.top, 16)
+                        
+                        Spacer()
+                    }
+                    .transition(.move(edge: .top))
+                    .animation(.easeInOut, value: showSuccessMessage)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation {
+                                showSuccessMessage = false
+                            }
+                        }
+                    }
+                }
             }
             .navigationTitle("Profil")
             .navigationBarTitleDisplayMode(.inline)
@@ -57,8 +82,10 @@ struct ProfileScreenView: View {
                 .presentationDetents([.medium])
             }
             .sheet(isPresented: $showLoginSheet) {
-                LoginSheetView(authManager: authManager)
-                    .presentationDetents([.height(350)])
+                LoginSheetView(authManager: authManager, onSuccessfulLogin: {
+                    showSuccessMessage = true
+                })
+                .presentationDetents([.height(350)])
             }
             .sheet(isPresented: $viewModel.showBadgeDetail, content: {
                 if let badge = viewModel.selectedBadge {
@@ -127,14 +154,30 @@ struct ProfileHeaderSection: View {
                 }) {
                     if authManager.isAuthenticated, let user = authManager.currentUser {
                         // Kullanıcı giriş yapmışsa
-                        Text(String(user.email?.prefix(1) ?? "U"))
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 60, height: 60)
-                            .background(
-                                Circle()
-                                    .fill(Color.appPrimary)
-                            )
+                        Group {
+                            if user.userMetadata["provider"] as? String == "apple" {
+                                // Apple ile giriş yapıldıysa
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.black)
+                                        .frame(width: 60, height: 60)
+                                    
+                                    Image(systemName: "applelogo")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(.white)
+                                }
+                            } else {
+                                // Diğer sağlayıcılar için
+                                Text(String(user.email?.prefix(1) ?? "U"))
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .frame(width: 60, height: 60)
+                                    .background(
+                                        Circle()
+                                            .fill(Color.appPrimary)
+                                    )
+                            }
+                        }
                     } else {
                         // Anonim profil resmi
                         Image(systemName: "person.crop.circle.fill")
@@ -150,10 +193,31 @@ struct ProfileHeaderSection: View {
                 
                 VStack(alignment: .leading, spacing: 6) {
                     // Başlık
-                    Text("profile.backup.title", tableName: "Profile")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.appText)
+                    if authManager.isAuthenticated, let user = authManager.currentUser {
+                        if user.userMetadata["provider"] as? String == "apple" {
+                            if let fullName = user.userMetadata["full_name"] as? String, !fullName.isEmpty {
+                                Text(fullName)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.appText)
+                            } else {
+                                Text("Apple")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.appText)
+                            }
+                        } else {
+                            Text("profile.backup.title", tableName: "Profile")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.appText)
+                        }
+                    } else {
+                        Text("profile.backup.title", tableName: "Profile")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.appText)
+                    }
                     
                     // Rozetler
                     HStack(spacing: 8) {
@@ -205,7 +269,6 @@ struct ProfileHeaderSection: View {
                     }) {
                         Text("profile.login.signout", tableName: "Profile")
                             .font(.subheadline)
-                            .fontWeight(.medium)
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
@@ -231,6 +294,7 @@ struct ProfileHeaderSection: View {
 struct LoginSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var authManager: AuthManager
+    var onSuccessfulLogin: () -> Void
     
     var body: some View {
         VStack(spacing: 24) {
@@ -252,10 +316,17 @@ struct LoginSheetView: View {
             VStack(spacing: 16) {
                 // Apple ile giriş
                 Button(action: {
+                    print("PolySleep Debug: Apple ID ile giriş butonu tıklandı")
                     Task {
+                        print("PolySleep Debug: Apple ID ile giriş Task başladı")
                         await authManager.signInWithApple()
+                        print("PolySleep Debug: Apple ID ile giriş Task tamamlandı")
                         if authManager.isAuthenticated {
+                            print("PolySleep Debug: Kullanıcı kimliği doğrulandı, sheet kapatılıyor")
                             dismiss()
+                            onSuccessfulLogin()
+                        } else {
+                            print("PolySleep Debug: Kullanıcı kimliği doğrulanamadı")
                         }
                     }
                 }) {
@@ -282,6 +353,7 @@ struct LoginSheetView: View {
                         await authManager.signInWithGoogle()
                         if authManager.isAuthenticated {
                             dismiss()
+                            onSuccessfulLogin()
                         }
                     }
                 }) {
@@ -328,7 +400,11 @@ struct StreakSection: View {
     @ObservedObject var viewModel: ProfileScreenViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("profile.streak.title", tableName: "Profile")
+                .font(.headline)
+                .foregroundColor(.appText)
+            
             HStack(spacing: 20) {
                 // Mevcut Streak
                 VStack(spacing: 8) {
@@ -375,7 +451,12 @@ struct StreakSection: View {
                 )
             }
         }
-        .padding(.top, 8)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+        )
     }
 }
 
@@ -530,6 +611,7 @@ struct BadgeDetailView: View {
                     )
             }
             .padding(.horizontal)
+            .padding(.bottom)
         }
         .padding(.top, 40)
         .padding(.bottom, 24)

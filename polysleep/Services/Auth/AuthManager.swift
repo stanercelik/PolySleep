@@ -61,21 +61,28 @@ class AuthManager: ObservableObject {
     /// Apple ID ile giriş yapar
     @MainActor
     func signInWithApple() async {
+        print("PolySleep Debug: AuthManager.signInWithApple başladı")
         isLoading = true
         authError = nil
         
+        defer {
+            isLoading = false
+        }
+        
         do {
+            print("PolySleep Debug: supabaseService.signInWithApple çağrılıyor")
             if let user = try await supabaseService.signInWithApple() {
+                print("PolySleep Debug: Apple ID ile giriş başarılı: \(user.email ?? "email yok")")
                 currentUser = user
                 isAuthenticated = true
             } else {
+                print("PolySleep Debug: Apple ID ile giriş başarısız: kullanıcı bilgileri alınamadı")
                 authError = "Kullanıcı bilgileri alınamadı"
             }
         } catch {
+            print("PolySleep Debug: Apple ID ile giriş hatası: \(error.localizedDescription)")
             authError = error.localizedDescription
         }
-        
-        isLoading = false
     }
     
     /// Google ile giriş yapar
