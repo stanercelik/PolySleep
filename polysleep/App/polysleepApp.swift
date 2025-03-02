@@ -53,6 +53,7 @@ struct polysleepApp: App {
                 UserFactor.self,
                 HistoryModel.self,
                 SleepEntry.self,
+                OnboardingAnswer.self,
                 configurations: config
             )
         } catch {

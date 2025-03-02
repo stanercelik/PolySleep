@@ -94,7 +94,7 @@ struct ProfileScreenView: View {
                 }
             })
             .navigationDestination(isPresented: $navigateToSettings) {
-                Text("Ayarlar") // Burada gerçek Ayarlar sayfası olacak
+                SettingsView()
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)

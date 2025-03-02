@@ -105,21 +105,54 @@ final class OnboardingViewModel: ObservableObject {
         print("- Disruption Tolerance: \(disruptionTolerance.rawValue)")
         print("- Chronotype: \(chronotype.rawValue)")
         
-        // Delete previous user factor
+        // Delete previous user factor and answers
         do {
-            let descriptor = FetchDescriptor<UserFactor>()
-            let existingFactors = try modelContext.fetch(descriptor)
+            let factorDescriptor = FetchDescriptor<UserFactor>()
+            let existingFactors = try modelContext.fetch(factorDescriptor)
             print("\nFound \(existingFactors.count) existing user factors in DB. Deleting them...")
             
             for factor in existingFactors {
                 modelContext.delete(factor)
             }
             
-            if !existingFactors.isEmpty {
-                print("Deleted \(existingFactors.count) existing user factors")
+            let answerDescriptor = FetchDescriptor<OnboardingAnswer>()
+            let existingAnswers = try modelContext.fetch(answerDescriptor)
+            print("\nFound \(existingAnswers.count) existing answers in DB. Deleting them...")
+            
+            for answer in existingAnswers {
+                modelContext.delete(answer)
+            }
+            
+            if !existingFactors.isEmpty || !existingAnswers.isEmpty {
+                print("Deleted \(existingFactors.count) existing user factors and \(existingAnswers.count) answers")
             }
         } catch {
-            print("❌ Error deleting existing user factors: \(error)")
+            print("❌ Error deleting existing data: \(error)")
+        }
+        
+        // Save onboarding answers
+        let answers: [(String, String, String)] = [
+            ("onboarding.sleepExperience", sleepExperience.localizedKey, sleepExperience.rawValue),
+            ("onboarding.ageRange", ageRange.localizedKey, ageRange.rawValue),
+            ("onboarding.workSchedule", workSchedule.localizedKey, workSchedule.rawValue),
+            ("onboarding.napEnvironment", napEnvironment.localizedKey, napEnvironment.rawValue),
+            ("onboarding.lifestyle", lifestyle.localizedKey, lifestyle.rawValue),
+            ("onboarding.knowledgeLevel", knowledgeLevel.localizedKey, knowledgeLevel.rawValue),
+            ("onboarding.healthStatus", healthStatus.localizedKey, healthStatus.rawValue),
+            ("onboarding.motivationLevel", motivationLevel.localizedKey, motivationLevel.rawValue),
+            ("onboarding.sleepGoal", sleepGoal.localizedKey, sleepGoal.rawValue),
+            ("onboarding.socialObligations", socialObligations.localizedKey, socialObligations.rawValue),
+            ("onboarding.disruptionTolerance", disruptionTolerance.localizedKey, disruptionTolerance.rawValue),
+            ("onboarding.chronotype", chronotype.localizedKey, chronotype.rawValue)
+        ]
+        
+        for (title, question, answer) in answers {
+            let onboardingAnswer = OnboardingAnswer(
+                question: NSLocalizedString(title, tableName: "Onboarding", comment: ""),
+                answer: NSLocalizedString(question, tableName: "Onboarding", comment: ""),
+                rawAnswer: answer
+            )
+            modelContext.insert(onboardingAnswer)
         }
         
         // Create a new userfactor and save it
@@ -142,7 +175,7 @@ final class OnboardingViewModel: ObservableObject {
         
         do {
             try modelContext.save()
-            print("✅ Successfully saved user factor")
+            print("✅ Successfully saved user factor and onboarding answers")
             
             // Get recommended schedule
             if let recommendation = recommender.recommendSchedule() {
