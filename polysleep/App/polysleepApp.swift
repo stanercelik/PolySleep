@@ -41,6 +41,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @AppStorage("isDarkMode") private var isDarkMode = false
     
     let modelContainer: ModelContainer
     
@@ -71,6 +72,7 @@ struct polysleepApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.locale, .current)
+                .preferredColorScheme(isDarkMode ? .dark : .light)
                 .onOpenURL { url in
                     // URL şemasını işle
                     if url.scheme == "polysleep" {
