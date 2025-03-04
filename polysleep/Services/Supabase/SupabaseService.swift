@@ -128,7 +128,24 @@ class SupabaseService {
     /// - Returns: Giriş yapan kullanıcı bilgileri
     @MainActor
     func signInAnonymously() async throws -> User {
-        let response = try await client.auth.signUp()
+        // Daha önce anonim kullanıcı oluşturulmuş mu kontrol et
+        let userDefaults = UserDefaults.standard
+        let existingAnonymousUser = userDefaults.string(forKey: "anonymousUserId")
+        
+        // Eğer daha önce bir anonim kullanıcı oluşturulmuşsa ve hala aktifse, 
+        // mevcut oturumu kullan
+        if let existingAnonymousUser = existingAnonymousUser,
+           let currentUser = try? await client.auth.session.user,
+           currentUser.id.uuidString == existingAnonymousUser {
+            return currentUser
+        }
+        
+        // Yeni anonim kullanıcı oluştur
+        let response = try await client.auth.signInAnonymously()
+        
+        // Kullanıcı ID'sini kaydet
+        userDefaults.set(response.user.id.uuidString, forKey: "anonymousUserId")
+        
         return response.user
     }
     

@@ -125,7 +125,12 @@ class AuthManager: ObservableObject {
     /// Anonim giriş yapar
     @MainActor
     func signInAnonymously() async throws {
+        // UserDefaults'tan anonim giriş yapıldı mı kontrol et
+        let userDefaults = UserDefaults.standard
+        
         do {
+            // SupabaseService'deki signInAnonymously metodunu çağır
+            // Bu metot zaten UserDefaults kontrolü yapar
             let user = try await supabaseService.signInAnonymously()
             self.currentUser = user
             await refreshAuthState()

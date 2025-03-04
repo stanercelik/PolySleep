@@ -64,14 +64,6 @@ struct polysleepApp: App {
         
         // Supabase servisini başlat
         _ = SupabaseService.shared
-        
-        Task {
-            do {
-                try await authManager.signInAnonymously()
-            } catch {
-                print("Anonim giriş hatası: \(error)")
-            }
-        }
     }
     
     var body: some Scene {
@@ -79,6 +71,16 @@ struct polysleepApp: App {
             ContentView()
                 .environment(\.locale, .current)
                 .preferredColorScheme(isDarkMode ? .dark : .light)
+                .task {
+                    do {
+                        // Anonim giriş yap, SupabaseService.signInAnonymously 
+                        // metodu UserDefaults kontrolü yaptığı için 
+                        // her seferinde yeni kullanıcı oluşturmayacak
+                        try await AuthManager.shared.signInAnonymously()
+                    } catch {
+                        print(LocalizedStringKey("error.anonymous_signin"), error.localizedDescription)
+                    }
+                }
                 .onOpenURL { url in
                     // URL şemasını işle
                     if url.scheme == "polysleep" {
