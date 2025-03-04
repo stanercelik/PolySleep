@@ -42,6 +42,7 @@ struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isDarkMode") private var isDarkMode = false
+    @StateObject private var authManager = AuthManager.shared
     
     let modelContainer: ModelContainer
     
@@ -64,8 +65,13 @@ struct polysleepApp: App {
         // Supabase servisini başlat
         _ = SupabaseService.shared
         
-        // Auth Manager'ı başlat
-        _ = AuthManager.shared
+        Task {
+            do {
+                try await authManager.signInAnonymously()
+            } catch {
+                print("Anonim giriş hatası: \(error)")
+            }
+        }
     }
     
     var body: some Scene {

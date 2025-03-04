@@ -124,6 +124,14 @@ class SupabaseService {
         throw AuthError.signInFailed("Google ile giriş yapma işlemi henüz tamamlanmadı. Lütfen URL callback işlemini AppDelegate veya SceneDelegate'de ele alın.")
     }
     
+    /// Anonim giriş yapar
+    /// - Returns: Giriş yapan kullanıcı bilgileri
+    @MainActor
+    func signInAnonymously() async throws -> User {
+        let response = try await client.auth.signUp()
+        return response.user
+    }
+    
     /// Mevcut oturumu kapatır
     @MainActor
     func signOut() async throws {

@@ -121,4 +121,21 @@ class AuthManager: ObservableObject {
         
         isLoading = false
     }
+    
+    /// Anonim giriş yapar
+    @MainActor
+    func signInAnonymously() async throws {
+        do {
+            let user = try await supabaseService.signInAnonymously()
+            self.currentUser = user
+            await refreshAuthState()
+        } catch {
+            throw error
+        }
+    }
+    
+    @MainActor
+    private func refreshAuthState() async {
+        self.isAuthenticated = self.currentUser != nil
+    }
 }
