@@ -6,7 +6,6 @@
 //
  
 import Foundation
-import SwiftData
 
 // MARK: - UserFactors Yapısı
 /// Tüm yeni eklediğimiz alanlarla birlikte güncel yapı.
@@ -48,52 +47,63 @@ public struct SleepScheduleRecommendation {
 
 // MARK: - SleepScheduleRecommender Servisi
 final class SleepScheduleRecommender {
-    private let modelContext: ModelContext
+    // Basit bir başlatıcı
+    init() {}
     
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-    }
-    
-    /// Ana fonksiyon: Veritabanındaki kullanıcı faktörlerini alır, puanlama yapar ve uygun schedule önerir.
-    func recommendSchedule() -> SleepScheduleRecommendation? {
+    /// Ana fonksiyon: Supabase'den kullanıcı faktörlerini alır, puanlama yapar ve uygun schedule önerir.
+    func recommendSchedule() async throws -> SleepScheduleRecommendation? {
         print("\n=== Starting Sleep Schedule Recommendation ===")
         
-        guard let userFactor = loadUserFactors() else {
-            print("❌ Failed to load user factors from database!")
+        // Supabase'den kullanıcı faktörlerini yükle
+        guard let userAnswers = try await loadUserFactorsFromSupabase() else {
+            print("❌ Failed to load user factors from Supabase!")
             return nil
         }
         
-        // Enum dönüşümleri
-        let sleepExperience    = PreviousSleepExperience(rawValue: userFactor.sleepExperience)
-        let ageRange           = AgeRange(rawValue: userFactor.ageRange)
-        let workSchedule       = WorkSchedule(rawValue: userFactor.workSchedule)
-        let napEnvironment     = NapEnvironment(rawValue: userFactor.napEnvironment)
-        let lifestyle          = Lifestyle(rawValue: userFactor.lifestyle)
-        let knowledgeLevel     = KnowledgeLevel(rawValue: userFactor.knowledgeLevel)
-        let healthStatus       = HealthStatus(rawValue: userFactor.healthStatus)
-        let motivationLevel    = MotivationLevel(rawValue: userFactor.motivationLevel)
+        // Anahtarlardan "onboarding." ön ekini kaldıralım
+        var processedAnswers: [String: String] = [:]
+        for (key, value) in userAnswers {
+            if key.hasPrefix("onboarding.") {
+                let processedKey = String(key.dropFirst("onboarding.".count))
+                processedAnswers[processedKey] = value
+            } else {
+                processedAnswers[key] = value
+            }
+        }
+        
+        print("📋 İşlenmiş cevaplar: \(processedAnswers)")
+        
+        // Enum dönüşümleri - işlenmiş anahtarlarla
+        let sleepExperience    = PreviousSleepExperience(rawValue: processedAnswers["sleepExperience"] ?? "")
+        let ageRange           = AgeRange(rawValue: processedAnswers["ageRange"] ?? "")
+        let workSchedule       = WorkSchedule(rawValue: processedAnswers["workSchedule"] ?? "")
+        let napEnvironment     = NapEnvironment(rawValue: processedAnswers["napEnvironment"] ?? "")
+        let lifestyle          = Lifestyle(rawValue: processedAnswers["lifestyle"] ?? "")
+        let knowledgeLevel     = KnowledgeLevel(rawValue: processedAnswers["knowledgeLevel"] ?? "")
+        let healthStatus       = HealthStatus(rawValue: processedAnswers["healthStatus"] ?? "")
+        let motivationLevel    = MotivationLevel(rawValue: processedAnswers["motivationLevel"] ?? "")
         
         // Yeni faktörler
-        let sleepGoal          = SleepGoal(rawValue: userFactor.sleepGoal)
-        let socialObligations  = SocialObligations(rawValue: userFactor.socialObligations)
-        let disruptionTolerance = DisruptionTolerance(rawValue: userFactor.disruptionTolerance)
-        let chronotype         = Chronotype(rawValue: userFactor.chronotype)
+        let sleepGoal          = SleepGoal(rawValue: processedAnswers["sleepGoal"] ?? "")
+        let socialObligations  = SocialObligations(rawValue: processedAnswers["socialObligations"] ?? "")
+        let disruptionTolerance = DisruptionTolerance(rawValue: processedAnswers["disruptionTolerance"] ?? "")
+        let chronotype         = Chronotype(rawValue: processedAnswers["chronotype"] ?? "")
         
         // Hangi enum dönüştürülemedi?
-        if sleepExperience == nil    { print("❌ SleepExperience enum error: \(userFactor.sleepExperience)") }
-        if ageRange == nil           { print("❌ AgeRange enum error: \(userFactor.ageRange)") }
-        if workSchedule == nil       { print("❌ WorkSchedule enum error: \(userFactor.workSchedule)") }
-        if napEnvironment == nil     { print("❌ NapEnvironment enum error: \(userFactor.napEnvironment)") }
-        if lifestyle == nil          { print("❌ Lifestyle enum error: \(userFactor.lifestyle)") }
-        if knowledgeLevel == nil     { print("❌ KnowledgeLevel enum error: \(userFactor.knowledgeLevel)") }
-        if healthStatus == nil       { print("❌ HealthStatus enum error: \(userFactor.healthStatus)") }
-        if motivationLevel == nil    { print("❌ MotivationLevel enum error: \(userFactor.motivationLevel)") }
+        if sleepExperience == nil    { print("❌ SleepExperience enum error: \(processedAnswers["sleepExperience"] ?? "")") }
+        if ageRange == nil           { print("❌ AgeRange enum error: \(processedAnswers["ageRange"] ?? "")") }
+        if workSchedule == nil       { print("❌ WorkSchedule enum error: \(processedAnswers["workSchedule"] ?? "")") }
+        if napEnvironment == nil     { print("❌ NapEnvironment enum error: \(processedAnswers["napEnvironment"] ?? "")") }
+        if lifestyle == nil          { print("❌ Lifestyle enum error: \(processedAnswers["lifestyle"] ?? "")") }
+        if knowledgeLevel == nil     { print("❌ KnowledgeLevel enum error: \(processedAnswers["knowledgeLevel"] ?? "")") }
+        if healthStatus == nil       { print("❌ HealthStatus enum error: \(processedAnswers["healthStatus"] ?? "")") }
+        if motivationLevel == nil    { print("❌ MotivationLevel enum error: \(processedAnswers["motivationLevel"] ?? "")") }
         
         // Yeni dört faktör için kontrol
-        if sleepGoal == nil          { print("❌ SleepGoal enum error: \(userFactor.sleepGoal)") }
-        if socialObligations == nil  { print("❌ SocialObligations enum error: \(userFactor.socialObligations)") }
-        if disruptionTolerance == nil { print("❌ DisruptionTolerance enum error: \(userFactor.disruptionTolerance)") }
-        if chronotype == nil         { print("❌ Chronotype enum error: \(userFactor.chronotype)") }
+        if sleepGoal == nil          { print("❌ SleepGoal enum error: \(processedAnswers["sleepGoal"] ?? "")") }
+        if socialObligations == nil  { print("❌ SocialObligations enum error: \(processedAnswers["socialObligations"] ?? "")") }
+        if disruptionTolerance == nil { print("❌ DisruptionTolerance enum error: \(processedAnswers["disruptionTolerance"] ?? "")") }
+        if chronotype == nil         { print("❌ Chronotype enum error: \(processedAnswers["chronotype"] ?? "")") }
         
         // Hepsi nil değilse kullan
         guard
@@ -196,39 +206,68 @@ final class SleepScheduleRecommender {
     }
     
     // MARK: - UserFactors Yükleme
-    /// Veritabanından (SwiftData) son girilen `UserFactor` kaydını alır
-    private func loadUserFactors() -> UserFactor? {
-        print("\n=== Loading User Factors ===")
-        let descriptor = FetchDescriptor<UserFactor>()
-        
+    /// Supabase'den kullanıcı cevaplarını alır
+    private func loadUserFactorsFromSupabase() async throws -> [String: String]? {
         do {
-            let factors = try modelContext.fetch(descriptor)
-            print("Found \(factors.count) user factors in database")
+            // Ana metot ile deneyelim
+            let answers = try await SupabaseService.shared.getAllOnboardingAnswersRaw()
             
-            if let factor = factors.first {
-                print("User Factor Values:")
-                print("- Sleep Experience:  \(factor.sleepExperience)")
-                print("- Age Range:         \(factor.ageRange)")
-                print("- Work Schedule:     \(factor.workSchedule)")
-                print("- Nap Environment:   \(factor.napEnvironment)")
-                print("- Lifestyle:         \(factor.lifestyle)")
-                print("- Knowledge Level:   \(factor.knowledgeLevel)")
-                print("- Health Status:     \(factor.healthStatus)")
-                print("- Motivation Level:  \(factor.motivationLevel)")
-                print("- Sleep Goal:        \(factor.sleepGoal)")
-                print("- Social Obligations:\(factor.socialObligations)")
-                print("- Disruption Tol.:   \(factor.disruptionTolerance)")
-                print("- Chronotype:        \(factor.chronotype)")
-                
-                return factor
-            } else {
-                print("❌ No user factors found in database")
-                return nil
+            // Sonuçların boş olup olmadığını kontrol et
+            if answers.isEmpty {
+                print("❌ Onboarding cevapları boş döndü, alternatif metodu deniyorum...")
+                // Boş kayıtlar varsa, her soru için ayrı ayrı almayı deneyelim
+                return try await loadUserFactorsFromSupabaseAlternative()
             }
+            
+            print("✅ Onboarding cevapları başarıyla alındı: \(answers)")
+            return answers
         } catch {
-            print("❌ Error fetching user factors: \(error)")
+            print("❌ Error loading user factors from Supabase: \(error.localizedDescription)")
+            print("🔄 Alternatif metodu deniyorum...")
+            
+            // Hata durumunda alternatif metodu deneyelim
+            return try await loadUserFactorsFromSupabaseAlternative()
+        }
+    }
+    
+    /// Alternatif metot: Her soruyu ayrı ayrı alır
+    private func loadUserFactorsFromSupabaseAlternative() async throws -> [String: String]? {
+        print("🔍 Alternatif metot ile onboarding cevaplarını almaya çalışıyorum...")
+        
+        var result: [String: String] = [:]
+        let questions = [
+            "onboarding.sleepExperience", "onboarding.ageRange", "onboarding.workSchedule", "onboarding.napEnvironment",
+            "onboarding.lifestyle", "onboarding.knowledgeLevel", "onboarding.healthStatus", "onboarding.motivationLevel",
+            "onboarding.sleepGoal", "onboarding.socialObligations", "onboarding.disruptionTolerance", "onboarding.chronotype"
+        ]
+        
+        for question in questions {
+            do {
+                if let answer = try await SupabaseService.shared.getOnboardingAnswer(for: question) {
+                    // "onboarding." önekini kaldır ve sadece anahtar kısmını al
+                    let key = question.replacingOccurrences(of: "onboarding.", with: "")
+                    result[key] = answer
+                    print("✅ \(key): \(answer)")
+                }
+            } catch {
+                print("❌ \(question) için cevap alınamadı: \(error.localizedDescription)")
+            }
+        }
+        
+        if result.isEmpty {
+            print("❌ Hiçbir onboarding cevabı alınamadı.")
             return nil
         }
+        
+        print("🔍 Alternatif metot ile \(result.count) onboarding cevabı alındı.")
+        return result
+    }
+    
+    /// UserFactor modelini SwiftData'dan yükle - Artık kullanılmıyor
+    @available(*, deprecated, message: "Bu metot artık kullanılmıyor, loadUserFactorsFromSupabase kullanın")
+    private func loadUserFactors() -> UserFactor? {
+        print("❌ Bu metot artık kullanılmıyor!")
+        return nil
     }
     
     // MARK: - Schedules JSON Yükleme
@@ -255,12 +294,22 @@ final class SleepScheduleRecommender {
     private func calculateScheduleScore(_ schedule: SleepScheduleModel, factors: UserFactors) -> Double {
         var score = 1.0
         
+        print("\nPuanlama - \(schedule.name):")
+        
         // 1) Sleep Experience
         switch factors.sleepExperience {
-        case .none:        score *= 0.7
-        case .some:        score *= 0.8
-        case .moderate:    score *= 0.9
-        case .extensive:   score *= 1.0
+        case .none:        
+            score *= 0.7
+            print("- Sleep Experience (.none): 0.7 -> score: \(score)")
+        case .some:        
+            score *= 0.8
+            print("- Sleep Experience (.some): 0.8 -> score: \(score)")
+        case .moderate:    
+            score *= 0.9
+            print("- Sleep Experience (.moderate): 0.9 -> score: \(score)")
+        case .extensive:   
+            score *= 1.0
+            print("- Sleep Experience (.extensive): 1.0 -> score: \(score)")
         }
         
         // 2) Age Range
@@ -268,38 +317,56 @@ final class SleepScheduleRecommender {
         case .under18:
             // 18 yaş altıysanız, çok ekstrem düzenleri istemeyebiliriz
             score *= 0.6
+            print("- Age Range (.under18): 0.6 -> score: \(score)")
         case .age18to24:
             score *= 1.0
+            print("- Age Range (.age18to24): 1.0 -> score: \(score)")
         case .age25to34:
             score *= 0.9
+            print("- Age Range (.age25to34): 0.9 -> score: \(score)")
         case .age35to44:
             score *= 0.8
+            print("- Age Range (.age35to44): 0.8 -> score: \(score)")
         case .age45to54:
             score *= 0.7
+            print("- Age Range (.age45to54): 0.7 -> score: \(score)")
         case .age55Plus:
             score *= 0.6
+            print("- Age Range (.age55Plus): 0.6 -> score: \(score)")
         }
         
         // 3) Work Schedule
         switch factors.workSchedule {
         case .flexible:
             score *= 1.0
+            print("- Work Schedule (.flexible): 1.0 -> score: \(score)")
         case .regular:
             score *= 0.9
+            print("- Work Schedule (.regular): 0.9 -> score: \(score)")
         case .irregular:
             score *= 0.7
+            print("- Work Schedule (.irregular): 0.7 -> score: \(score)")
         case .shift:
             score *= 0.6
+            print("- Work Schedule (.shift): 0.6 -> score: \(score)")
         }
         
         // 4) Nap Environment (only matters if napCount>0)
         let napCount = schedule.schedule.filter { !$0.isCore }.count
         if napCount > 0 {
             switch factors.napEnvironment {
-            case .ideal:      score *= 1.0
-            case .suitable:   score *= 0.9
-            case .limited:    score *= 0.7
-            case .unsuitable: score *= 0.5
+            case .ideal:
+                score *= 1.0
+                print("- Nap Environment (.ideal): 1.0 -> score: \(score)")
+            case .suitable:
+                score *= 0.9
+                print("- Nap Environment (.suitable): 0.9 -> score: \(score)")
+            case .limited:
+                score *= 0.7
+                print("- Nap Environment (.limited): 0.7 -> score: \(score)")
+            case .unsuitable:
+                score *= 0.5
+                print("- Nap Environment (.unsuitable): 0.5 -> score: \(score)")
             }
         }
         
@@ -307,40 +374,52 @@ final class SleepScheduleRecommender {
         switch factors.lifestyle {
         case .calm:
             score *= 1.0
+            print("- Lifestyle (.calm): 1.0 -> score: \(score)")
         case .moderatelyActive:
             score *= 0.9
+            print("- Lifestyle (.moderatelyActive): 0.9 -> score: \(score)")
         case .veryActive:
             score *= 0.7
+            print("- Lifestyle (.veryActive): 0.7 -> score: \(score)")
         }
         
         // 6) Knowledge Level
         switch factors.knowledgeLevel {
         case .beginner:
             score *= 0.8
+            print("- Knowledge Level (.beginner): 0.8 -> score: \(score)")
         case .intermediate:
             score *= 0.9
+            print("- Knowledge Level (.intermediate): 0.9 -> score: \(score)")
         case .advanced:
             score *= 1.0
+            print("- Knowledge Level (.advanced): 1.0 -> score: \(score)")
         }
         
         // 7) Health Status
         switch factors.healthStatus {
         case .healthy:
             score *= 1.0
+            print("- Health Status (.healthy): 1.0 -> score: \(score)")
         case .managedConditions:
             score *= 0.7
+            print("- Health Status (.managedConditions): 0.7 -> score: \(score)")
         case .seriousConditions:
             score *= 0.4
+            print("- Health Status (.seriousConditions): 0.4 -> score: \(score)")
         }
         
         // 8) Motivation
         switch factors.motivationLevel {
         case .low:
             score *= 0.7
+            print("- Motivation Level (.low): 0.7 -> score: \(score)")
         case .moderate:
             score *= 0.85
+            print("- Motivation Level (.moderate): 0.85 -> score: \(score)")
         case .high:
             score *= 1.0
+            print("- Motivation Level (.high): 1.0 -> score: \(score)")
         }
         
         // ----------------------------------------------
@@ -351,21 +430,33 @@ final class SleepScheduleRecommender {
             // Daha fazla üretkenlik -> daha sık (polyphasic) ufak bonus
             if napCount >= 2 {
                 score *= 1.1
+                print("- Sleep Goal (.moreProductivity, napCount>=2): 1.1 -> score: \(score)")
+            } else {
+                print("- Sleep Goal (.moreProductivity, napCount<2): Değişiklik yok -> score: \(score)")
             }
         case .balancedLifestyle:
             // Dengeli yaşam -> çok fazla nap (5+) ceza
             if napCount >= 5 {
                 score *= 0.8
+                print("- Sleep Goal (.balancedLifestyle, napCount>=5): 0.8 -> score: \(score)")
+            } else {
+                print("- Sleep Goal (.balancedLifestyle, napCount<5): Değişiklik yok -> score: \(score)")
             }
         case .improveHealth:
             // Sağlığı iyileştirme -> 4 saatin altı total sleep ceza
             if schedule.totalSleepHours < 4.0 {
                 score *= 0.6
+                print("- Sleep Goal (.improveHealth, totalSleepHours<4): 0.6 -> score: \(score)")
+            } else {
+                print("- Sleep Goal (.improveHealth, totalSleepHours>=4): Değişiklik yok -> score: \(score)")
             }
         case .curiosity:
             // Deneysellik -> 2+ nap için hafif bonus
             if napCount >= 2 {
                 score *= 1.05
+                print("- Sleep Goal (.curiosity, napCount>=2): 1.05 -> score: \(score)")
+            } else {
+                print("- Sleep Goal (.curiosity, napCount<2): Değişiklik yok -> score: \(score)")
             }
         }
         
@@ -375,16 +466,25 @@ final class SleepScheduleRecommender {
             // Çok sosyal yükümlülük -> çok nap'li schedule ceza
             if napCount >= 3 {
                 score *= 0.75
+                print("- Social Obligations (.significant, napCount>=3): 0.75 -> score: \(score)")
+            } else {
+                print("- Social Obligations (.significant, napCount<3): Değişiklik yok -> score: \(score)")
             }
         case .moderate:
             // Orta -> 6+ naps ceza
             if napCount >= 6 {
                 score *= 0.7
+                print("- Social Obligations (.moderate, napCount>=6): 0.7 -> score: \(score)")
+            } else {
+                print("- Social Obligations (.moderate, napCount<6): Değişiklik yok -> score: \(score)")
             }
         case .minimal:
             // Az -> polifazik'e bonus
             if napCount >= 4 {
                 score *= 1.1
+                print("- Social Obligations (.minimal, napCount>=4): 1.1 -> score: \(score)")
+            } else {
+                print("- Social Obligations (.minimal, napCount<4): Değişiklik yok -> score: \(score)")
             }
         }
         
@@ -394,16 +494,25 @@ final class SleepScheduleRecommender {
             // Uykusu bölünmeye hassas -> 2+ nap varsa ceza
             if napCount >= 2 {
                 score *= 0.75
+                print("- Disruption Tolerance (.verySensitive, napCount>=2): 0.75 -> score: \(score)")
+            } else {
+                print("- Disruption Tolerance (.verySensitive, napCount<2): Değişiklik yok -> score: \(score)")
             }
         case .somewhatSensitive:
             // Orta hassas -> 3+ nap varsa ceza
             if napCount >= 3 {
                 score *= 0.85
+                print("- Disruption Tolerance (.somewhatSensitive, napCount>=3): 0.85 -> score: \(score)")
+            } else {
+                print("- Disruption Tolerance (.somewhatSensitive, napCount<3): Değişiklik yok -> score: \(score)")
             }
         case .notSensitive:
             // Bölünmeye tolerant -> 3+ nap'a bonus
             if napCount >= 3 {
                 score *= 1.1
+                print("- Disruption Tolerance (.notSensitive, napCount>=3): 1.1 -> score: \(score)")
+            } else {
+                print("- Disruption Tolerance (.notSensitive, napCount<3): Değişiklik yok -> score: \(score)")
             }
         }
         
@@ -416,6 +525,9 @@ final class SleepScheduleRecommender {
             }
             if hasLateCore {
                 score *= 0.8
+                print("- Chronotype (.morningLark, hasLateCore): 0.8 -> score: \(score)")
+            } else {
+                print("- Chronotype (.morningLark, !hasLateCore): Değişiklik yok -> score: \(score)")
             }
         case .nightOwl:
             // Gece kuşu -> eğer core sleep 22:00 gibi erken başlıyorsa ceza
@@ -424,9 +536,13 @@ final class SleepScheduleRecommender {
             }
             if hasEarlyCore {
                 score *= 0.8
+                print("- Chronotype (.nightOwl, hasEarlyCore): 0.8 -> score: \(score)")
+            } else {
+                print("- Chronotype (.nightOwl, !hasEarlyCore): Değişiklik yok -> score: \(score)")
             }
         case .neutral:
             // Nötr -> ek bir şey yok
+            print("- Chronotype (.neutral): Değişiklik yok -> score: \(score)")
             break
         }
         
@@ -436,7 +552,8 @@ final class SleepScheduleRecommender {
         if schedule.id == "monophasic" {
             // 18 yaş altı veya ciddi sağlık problemi varsa -> Monophasic bonus
             if (factors.ageRange == .under18) || (factors.healthStatus == .seriousConditions) {
-                score *= 1.3
+                score *= 1.1
+                print("- Monophasic (under18 veya seriousConditions): 1.1 -> score: \(score)")
             }
             
             // Yetişkin, sağlıklı, motivasyonu düşük olmayanlar -> Monophasic cezası
@@ -445,12 +562,14 @@ final class SleepScheduleRecommender {
             let hasMotivation = (factors.motivationLevel == .moderate || factors.motivationLevel == .high)
             
             if isAdult && isHealthy && hasMotivation {
-                score *= 0.3
+                score *= 0.2
+                print("- Monophasic (yetişkin + healthy + motivated): 0.2 -> score: \(score)")
             }
         }
         
         // Son olarak 0..1.5 aralığına clamp
         let finalScore = max(0.0, min(1.5, score))
+        print("- Final (clamped) score: \(finalScore)\n")
         return finalScore
     }
     

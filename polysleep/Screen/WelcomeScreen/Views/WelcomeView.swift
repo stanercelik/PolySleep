@@ -38,7 +38,7 @@ struct WelcomeView: View {
                         
                         // 4) Onboarding View
                         if viewModel.isOnboardingPresented {
-                            OnboardingView(modelContext: modelContext)
+                            OnboardingView()
                                 .transition(.opacity)
                                 .zIndex(1)
                         }

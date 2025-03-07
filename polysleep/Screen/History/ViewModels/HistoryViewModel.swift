@@ -224,7 +224,7 @@ class HistoryViewModel: ObservableObject {
         
         // Sleep Type Filter
         filteredItems = filteredItems.map { item in
-            var newItem = item
+            let newItem = item
             switch selectedSleepTypeFilter {
             case .all:
                 break
@@ -244,7 +244,7 @@ class HistoryViewModel: ObservableObject {
     private func loadData() {
         guard let modelContext = modelContext else {
             // ModelContext henüz ayarlanmamış, örnek veri oluştur
-            let calendar = Calendar.current
+            _ = Calendar.current
             let now = Date()
             
             // Bugün için boş bir kayıt oluştur

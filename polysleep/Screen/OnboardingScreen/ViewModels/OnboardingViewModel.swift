@@ -4,7 +4,6 @@ import SwiftData
 @MainActor
 final class OnboardingViewModel: ObservableObject {
     // MARK: - Dependencies
-    private let modelContext: ModelContext
     private let recommender: SleepScheduleRecommender
     
     // MARK: - Published Properties
@@ -12,6 +11,9 @@ final class OnboardingViewModel: ObservableObject {
     let totalPages = 12
     @Published var shouldNavigateToSleepSchedule = false
     @Published var showStartButton = false
+    @Published var isLoadingRecommendation = false
+    @Published var showError = false
+    @Published var errorMessage = ""
     
     // User selections
     @Published var previousSleepExperience: PreviousSleepExperience?
@@ -28,9 +30,14 @@ final class OnboardingViewModel: ObservableObject {
     @Published var chronotype: Chronotype?
     
     // MARK: - Initialization
+    init() {
+        self.recommender = SleepScheduleRecommender()
+    }
+    
+    // Geriye dönük uyumluluk için eski başlatıcıyı da saklıyoruz
+    @available(*, deprecated, message: "SwiftData kullanımı kaldırıldı, boş başlatıcıyı kullanın")
     init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        self.recommender = SleepScheduleRecommender(modelContext: modelContext)
+        self.recommender = SleepScheduleRecommender()
     }
     
     // MARK: - Computed Properties
@@ -59,7 +66,9 @@ final class OnboardingViewModel: ObservableObject {
                 currentPage += 1
             }
         } else {
-            saveUserPreferences()
+            Task {
+                await saveUserPreferences()
+            }
             showStartButton = true
         }
     }
@@ -71,7 +80,7 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     // MARK: - Saving
-    func saveUserPreferences() {
+    func saveUserPreferences() async {
         print("\n=== Saving User Preferences ===")
         
         guard let sleepExperience = previousSleepExperience,
@@ -88,6 +97,7 @@ final class OnboardingViewModel: ObservableObject {
               let chronotype = chronotype
         else {
             print("❌ Error: Some user preferences are not set")
+            await showErrorMessage("Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın.")
             return
         }
         
@@ -105,109 +115,91 @@ final class OnboardingViewModel: ObservableObject {
         print("- Disruption Tolerance: \(disruptionTolerance.rawValue)")
         print("- Chronotype: \(chronotype.rawValue)")
         
-        // Delete previous user factor and answers
-        do {
-            let factorDescriptor = FetchDescriptor<UserFactor>()
-            let existingFactors = try modelContext.fetch(factorDescriptor)
-            print("\nFound \(existingFactors.count) existing user factors in DB. Deleting them...")
-            
-            for factor in existingFactors {
-                modelContext.delete(factor)
-            }
-            
-            let answerDescriptor = FetchDescriptor<OnboardingAnswer>()
-            let existingAnswers = try modelContext.fetch(answerDescriptor)
-            print("\nFound \(existingAnswers.count) existing answers in DB. Deleting them...")
-            
-            for answer in existingAnswers {
-                modelContext.delete(answer)
-            }
-            
-            if !existingFactors.isEmpty || !existingAnswers.isEmpty {
-                print("Deleted \(existingFactors.count) existing user factors and \(existingAnswers.count) answers")
-            }
-        } catch {
-            print("❌ Error deleting existing data: \(error)")
-        }
-        
-        // Save onboarding answers
-        let answers: [(String, String, String)] = [
-            ("onboarding.sleepExperience", sleepExperience.localizedKey, sleepExperience.rawValue),
-            ("onboarding.ageRange", ageRange.localizedKey, ageRange.rawValue),
-            ("onboarding.workSchedule", workSchedule.localizedKey, workSchedule.rawValue),
-            ("onboarding.napEnvironment", napEnvironment.localizedKey, napEnvironment.rawValue),
-            ("onboarding.lifestyle", lifestyle.localizedKey, lifestyle.rawValue),
-            ("onboarding.knowledgeLevel", knowledgeLevel.localizedKey, knowledgeLevel.rawValue),
-            ("onboarding.healthStatus", healthStatus.localizedKey, healthStatus.rawValue),
-            ("onboarding.motivationLevel", motivationLevel.localizedKey, motivationLevel.rawValue),
-            ("onboarding.sleepGoal", sleepGoal.localizedKey, sleepGoal.rawValue),
-            ("onboarding.socialObligations", socialObligations.localizedKey, socialObligations.rawValue),
-            ("onboarding.disruptionTolerance", disruptionTolerance.localizedKey, disruptionTolerance.rawValue),
-            ("onboarding.chronotype", chronotype.localizedKey, chronotype.rawValue)
+        // Supabase'e kaydet
+        // Onboarding cevaplarını hazırla
+        let answers: [(String, String)] = [
+            ("onboarding.sleepExperience", sleepExperience.rawValue),
+            ("onboarding.ageRange", ageRange.rawValue),
+            ("onboarding.workSchedule", workSchedule.rawValue),
+            ("onboarding.napEnvironment", napEnvironment.rawValue),
+            ("onboarding.lifestyle", lifestyle.rawValue),
+            ("onboarding.knowledgeLevel", knowledgeLevel.rawValue),
+            ("onboarding.healthStatus", healthStatus.rawValue),
+            ("onboarding.motivationLevel", motivationLevel.rawValue),
+            ("onboarding.sleepGoal", sleepGoal.rawValue),
+            ("onboarding.socialObligations", socialObligations.rawValue),
+            ("onboarding.disruptionTolerance", disruptionTolerance.rawValue),
+            ("onboarding.chronotype", chronotype.rawValue)
         ]
         
-        for (title, question, answer) in answers {
+        var savedAnswers: [OnboardingAnswer] = []
+        
+        for (question, answer) in answers {
             let onboardingAnswer = OnboardingAnswer(
-                question: NSLocalizedString(title, tableName: "Onboarding", comment: ""),
-                answer: NSLocalizedString(question, tableName: "Onboarding", comment: ""),
-                rawAnswer: answer
+                question: question,
+                answer: answer
             )
-            modelContext.insert(onboardingAnswer)
+            savedAnswers.append(onboardingAnswer)
         }
         
-        // Create a new userfactor and save it
-        let userFactor = UserFactor(
-            sleepExperience: sleepExperience,
-            ageRange: ageRange,
-            workSchedule: workSchedule,
-            napEnvironment: napEnvironment,
-            lifestyle: lifestyle,
-            knowledgeLevel: knowledgeLevel,
-            healthStatus: healthStatus,
-            motivationLevel: motivationLevel,
-            sleepGoal: sleepGoal,
-            socialObligations: socialObligations,
-            disruptionTolerance: disruptionTolerance,
-            chronotype: chronotype
-        )
-        
-        modelContext.insert(userFactor)
+        // Supabase'e senkronize et
+        do {
+            let success = try await SupabaseService.shared.syncOnboardingAnswersToSupabase(answers: savedAnswers)
+            if success {
+                print("✅ Successfully synced onboarding answers to Supabase")
+                
+                // Recommend Schedule kısmında async/await kullanmak için
+                await getRecommendedSchedule()
+            } else {
+                print("⚠️ Some onboarding answers failed to sync with Supabase")
+                await showErrorMessage("Bazı tercihler kaydedilemedi. Lütfen internet bağlantınızı kontrol edin.")
+            }
+        } catch {
+            print("❌ Error syncing onboarding answers to Supabase: \(error.localizedDescription)")
+            await showErrorMessage("Tercihler kaydedilemedi: \(error.localizedDescription)")
+        }
+    }
+    
+    private func showErrorMessage(_ message: String) async {
+        await MainActor.run {
+            errorMessage = message
+            showError = true
+        }
+    }
+    
+    func getRecommendedSchedule() async {
+        await MainActor.run {
+            isLoadingRecommendation = true
+        }
         
         do {
-            try modelContext.save()
-            print("✅ Successfully saved user factor and onboarding answers")
-            
-            // Get recommended schedule
-            if let recommendation = recommender.recommendSchedule() {
+            if let recommendation = try await recommender.recommendSchedule() {
                 print("\n=== Recommended Schedule ===")
                 print("Name: \(recommendation.schedule.name)")
                 print("Confidence Score: \(recommendation.confidenceScore)")
-                print("Adaptation Period: \(recommendation.adaptationPeriod) days")
                 
-                // Save schedule to SwiftData
-                let scheduleStore = SleepScheduleStore(
-                    scheduleId: recommendation.schedule.id,
-                    name: recommendation.schedule.name,
-                    totalSleepHours: recommendation.schedule.totalSleepHours,
-                    schedule: recommendation.schedule.schedule
+                // Önerilen programı schedules tablosuna kaydet
+                let success = try await SupabaseService.shared.saveRecommendedSchedule(
+                    schedule: recommendation.schedule,
+                    adaptationPeriod: recommendation.adaptationPeriod
                 )
                 
-                modelContext.insert(scheduleStore)
-                try modelContext.save()
-                print("✅ Successfully saved recommended schedule")
-                
-                // Show any warnings
-                if !recommendation.warnings.isEmpty {
-                    print("\nWarnings:")
-                    for warning in recommendation.warnings {
-                        print("- [\(warning.severity)] \(warning.messageKey)")
-                    }
+                if success {
+                    print("✅ Successfully saved recommended schedule to Supabase")
+                } else {
+                    print("⚠️ Failed to save recommended schedule to Supabase")
                 }
+            } else {
+                print("❌ Failed to get recommendation")
+                await showErrorMessage("Uyku programı önerisi oluşturulamadı.")
             }
-            
-            shouldNavigateToSleepSchedule = true
         } catch {
-            print("❌ Error saving data: \(error)")
+            print("❌ Error getting recommendation: \(error.localizedDescription)")
+            await showErrorMessage("Uyku programı önerisi alınamadı: \(error.localizedDescription)")
+        }
+        
+        await MainActor.run {
+            isLoadingRecommendation = false
         }
     }
     

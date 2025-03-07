@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @AppStorage("isDarkMode") private var isDarkMode = false
+    @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("appLanguage") private var appLanguage = "tr"
     @AppStorage("coreNotificationTime") private var coreNotificationTime: Double = 30 // Dakika
     @AppStorage("napNotificationTime") private var napNotificationTime: Double = 15 // Dakika

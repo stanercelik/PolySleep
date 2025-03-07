@@ -54,8 +54,14 @@ class AuthManager: ObservableObject {
     /// Mevcut kullanıcıyı kontrol eder
     @MainActor
     private func checkCurrentUser() async {
-        self.currentUser = await supabaseService.getCurrentUser()
-        self.isAuthenticated = self.currentUser != nil
+        do {
+            self.currentUser = try await supabaseService.getCurrentUser()
+            self.isAuthenticated = self.currentUser != nil
+        } catch {
+            print("PolySleep Debug: Kullanıcı bilgisi alınamadı: \(error.localizedDescription)")
+            self.currentUser = nil
+            self.isAuthenticated = false
+        }
     }
     
     /// Apple ID ile giriş yapar
@@ -126,7 +132,7 @@ class AuthManager: ObservableObject {
     @MainActor
     func signInAnonymously() async throws {
         // UserDefaults'tan anonim giriş yapıldı mı kontrol et
-        let userDefaults = UserDefaults.standard
+        _ = UserDefaults.standard
         
         do {
             // SupabaseService'deki signInAnonymously metodunu çağır

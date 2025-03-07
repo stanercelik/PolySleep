@@ -41,7 +41,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @AppStorage("isDarkMode") private var isDarkMode = false
+    @AppStorage("isDarkMode") private var isDarkMode = true
     @StateObject private var authManager = AuthManager.shared
     
     let modelContainer: ModelContainer

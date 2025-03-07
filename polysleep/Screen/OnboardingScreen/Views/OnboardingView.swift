@@ -6,17 +6,10 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
-    let modelContext: ModelContext
-    @StateObject private var viewModel: OnboardingViewModel
-    
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        _viewModel = StateObject(wrappedValue: OnboardingViewModel(modelContext: modelContext))
-    }
+    @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
         NavigationStack {
@@ -136,11 +129,39 @@ struct OnboardingView: View {
                     )
                 }
                 .padding(.top, 16)
+                
+                // Loading indicator
+                if viewModel.isLoadingRecommendation {
+                    ZStack {
+                        Color.black.opacity(0.5)
+                            .ignoresSafeArea()
+                        
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .scaleEffect(1.5)
+                                .tint(.white)
+                            
+                            Text("Uyku programınız hesaplanıyor...")
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        }
+                        .padding(24)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.appPrimary.opacity(0.7))
+                        )
+                    }
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $viewModel.shouldNavigateToSleepSchedule) {
                 SleepScheduleView()
                     .navigationBarBackButtonHidden(true)
+            }
+            .alert("Hata", isPresented: $viewModel.showError) {
+                Button("Tamam", role: .cancel) {}
+            } message: {
+                Text(viewModel.errorMessage)
             }
             
             if viewModel.showStartButton {
@@ -171,14 +192,5 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    do {
-        let schema = Schema([UserFactor.self])
-        let modelConfiguration = ModelConfiguration(schema: schema)
-        let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
-        let context = container.mainContext
-        return OnboardingView(modelContext: context)
-            .modelContainer(container)
-    } catch {
-        return Text("Failed to create preview: \(error.localizedDescription)")
-    }
+    return OnboardingView()
 }

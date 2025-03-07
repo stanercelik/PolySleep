@@ -32,7 +32,7 @@ struct PersonalInfoView: View {
                 
                 // Kişisel Bilgiler
                 Section(header: Text("personalInfo.answers", tableName: "Profile")) {
-                    ForEach(onboardingAnswers.sorted { $0.date > $1.date }) { answer in
+                    /* ForEach(onboardingAnswers.sorted { $0.date > $1.date }) { answer in
                         VStack(alignment: .leading, spacing: 8) {
                             Text(answer.question)
                                 .font(.headline)
@@ -46,7 +46,7 @@ struct PersonalInfoView: View {
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 4)
-                    }
+                    }*/
                 }
             }
         }

@@ -33,32 +33,41 @@ class SleepScheduleViewModel: ObservableObject {
     }
     
     func setModelContext(_ context: ModelContext) {
-        self.recommender = SleepScheduleRecommender(modelContext: context)
-        updateRecommendations()
+        self.recommender = SleepScheduleRecommender()
+        Task {
+            await updateRecommendations()
+        }
     }
     
-    func updateRecommendations() {
+    func updateRecommendations() async {
         print("\n=== Getting Sleep Schedule Recommendations ===")
         
-        guard let recommender = recommender,
-              let recommendation = recommender.recommendSchedule()
-        else {
-            print("No recommendation available, using default schedule")
+        guard let recommender = recommender else {
+            print("No recommender available")
             return
         }
         
-        self.recommendedSchedule = recommendation.schedule
-        
-        // İsterseniz warnings’leri yazdırabilirsiniz
-        for warning in recommendation.warnings {
-            print("Warning (\(warning.severity)): \(warning.messageKey)")
+        do {
+            guard let recommendation = try await recommender.recommendSchedule() else {
+                print("No recommendation available, using default schedule")
+                return
+            }
+            
+            self.recommendedSchedule = recommendation.schedule
+            
+            // İsterseniz warnings'leri yazdırabilirsiniz
+            for warning in recommendation.warnings {
+                print("Warning (\(warning.severity)): \(warning.messageKey)")
+            }
+            
+            print("Confidence Score: \(recommendation.confidenceScore)")
+            print("Adaptation Period: \(recommendation.adaptationPeriod) days")
+            
+            // İsterseniz otomatik olarak schedule'ı güncelleyebilirsiniz:
+            schedule = recommendation.schedule
+        } catch {
+            print("Error getting recommendations: \(error.localizedDescription)")
         }
-        
-        print("Confidence Score: \(recommendation.confidenceScore)")
-        print("Adaptation Period: \(recommendation.adaptationPeriod) days")
-        
-        // İsterseniz otomatik olarak schedule'ı güncelleyebilirsiniz:
-        schedule = recommendation.schedule
     }
     
     func shareSchedule() {
