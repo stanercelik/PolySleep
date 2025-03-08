@@ -210,7 +210,7 @@ final class SleepScheduleRecommender {
     private func loadUserFactorsFromSupabase() async throws -> [String: String]? {
         do {
             // Ana metot ile deneyelim
-            let answers = try await SupabaseService.shared.getAllOnboardingAnswersRaw()
+            let answers = try await SupabaseOnboardingService.shared.getAllOnboardingAnswersRaw()
             
             // Sonuçların boş olup olmadığını kontrol et
             if answers.isEmpty {
@@ -243,7 +243,7 @@ final class SleepScheduleRecommender {
         
         for question in questions {
             do {
-                if let answer = try await SupabaseService.shared.getOnboardingAnswer(for: question) {
+                if let answer = try await SupabaseOnboardingService.shared.getOnboardingAnswer(for: question) {
                     // "onboarding." önekini kaldır ve sadece anahtar kısmını al
                     let key = question.replacingOccurrences(of: "onboarding.", with: "")
                     result[key] = answer
@@ -272,6 +272,7 @@ final class SleepScheduleRecommender {
     
     // MARK: - Schedules JSON Yükleme
     /// Bundle içindeki SleepSchedules.json dosyasını yükler ve decode eder
+    /// Sadece isPremium=false olan schedule'ları döndürür
     private func loadSleepSchedules() -> [SleepScheduleModel]? {
         guard let url = Bundle.main.url(forResource: "SleepSchedules", withExtension: "json") else {
             print("Could not find SleepSchedules.json in the main bundle")
@@ -282,12 +283,257 @@ final class SleepScheduleRecommender {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             let container = try decoder.decode(SleepSchedulesContainer.self, from: data)
+            
+            // Sadece isPremium=false olan schedule'ları filtrele
+            let freeSchedules = container.sleepSchedules.filter { !$0.isPremium }
+            
             print("Successfully loaded \(container.sleepSchedules.count) schedules from JSON")
-            return container.sleepSchedules
+            print("Filtered to \(freeSchedules.count) free schedules (isPremium=false)")
+            
+            return freeSchedules
         } catch {
             print("Error loading schedules: \(error)")
             return nil
         }
+    }
+    
+    // MARK: - Schedule Yükleme
+    /// Belirli bir ID'ye sahip uyku programını döndürür
+    func getScheduleById(_ id: String) -> SleepScheduleModel? {
+        // Tüm hazır programları içeren bir sözlük oluştur
+        let schedules: [String: SleepScheduleModel] = [
+            "monophasic": SleepScheduleModel(
+                id: "monophasic",
+                name: "Monofazik Uyku",
+                description: LocalizedDescription(
+                    en: "The Monophasic Sleep Schedule consists of a single sleep period, typically at night. This is the most common sleep pattern in modern society. It aims to consolidate all sleep into one block, usually 7-8 hours in length.",
+                    tr: "Monofazik Uyku Programı, tipik olarak gece olan tek bir uyku periyodundan oluşur. Bu, modern toplumda en yaygın uyku düzenidir. Genellikle 7-8 saat uzunluğunda tüm uykuyu tek bir blokta toplamayı amaçlar."
+                ),
+                totalSleepHours: 7.5,
+                schedule: [
+                    SleepBlock(
+                        startTime: "23:00",
+                        duration: 450,
+                        type: "core",
+                        isCore: true
+                    )
+                ],
+                isPremium: false
+            ),
+            "biphasic": SleepScheduleModel(
+                id: "biphasic",
+                name: "Bifazik Uyku",
+                description: LocalizedDescription(
+                    en: "The Biphasic Sleep Schedule consists of two sleep periods: a longer core sleep at night and a short nap during the day. This pattern is common in Mediterranean cultures (siesta) and may align better with our natural circadian rhythms.",
+                    tr: "Bifazik Uyku Programı, iki uyku periyodundan oluşur: gece daha uzun bir ana uyku ve gündüz kısa bir şekerleme. Bu düzen, Akdeniz kültürlerinde (siesta) yaygındır ve doğal sirkadiyen ritimlerimizle daha iyi uyum sağlayabilir."
+                ),
+                totalSleepHours: 6.5,
+                schedule: [
+                    SleepBlock(
+                        startTime: "23:30",
+                        duration: 360,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "14:00",
+                        duration: 30,
+                        type: "nap",
+                        isCore: false
+                    )
+                ],
+                isPremium: false
+            ),
+            "everyman": SleepScheduleModel(
+                id: "everyman",
+                name: "Everyman Uyku",
+                description: LocalizedDescription(
+                    en: "The Everyman Sleep Schedule consists of one core sleep period and multiple naps throughout the day. This schedule reduces total sleep time while maintaining cognitive function through strategic nap placement.",
+                    tr: "Everyman Uyku Programı, bir ana uyku periyodu ve gün boyunca birden fazla şekerlemeden oluşur. Bu program, stratejik şekerleme yerleşimi ile bilişsel işlevi korurken toplam uyku süresini azaltır."
+                ),
+                totalSleepHours: 5.5,
+                schedule: [
+                    SleepBlock(
+                        startTime: "00:00",
+                        duration: 270,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "08:30",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "14:30",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "20:30",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    )
+                ],
+                isPremium: false
+            ),
+            "dymaxion": SleepScheduleModel(
+                id: "dymaxion",
+                name: "Dymaxion Uyku",
+                description: LocalizedDescription(
+                    en: "The Dymaxion Sleep Schedule, developed by Buckminster Fuller, consists of four 30-minute naps spread throughout the day, for a total of just 2 hours of sleep per day. This is an extreme schedule that very few people can adapt to.",
+                    tr: "Buckminster Fuller tarafından geliştirilen Dymaxion Uyku Programı, günde toplam sadece 2 saat uyku için gün boyunca dağılmış dört 30 dakikalık şekerlemeden oluşur. Bu, çok az insanın uyum sağlayabileceği aşırı bir programdır."
+                ),
+                totalSleepHours: 2.0,
+                schedule: [
+                    SleepBlock(
+                        startTime: "02:00",
+                        duration: 30,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "08:00",
+                        duration: 30,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "14:00",
+                        duration: 30,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "20:00",
+                        duration: 30,
+                        type: "nap",
+                        isCore: false
+                    )
+                ],
+                isPremium: true
+            ),
+            "uberman": SleepScheduleModel(
+                id: "uberman",
+                name: "Uberman Uyku",
+                description: LocalizedDescription(
+                    en: "The Uberman Sleep Schedule consists of six 20-minute naps spread evenly throughout the day, for a total of 2 hours of sleep. This is one of the most difficult schedules to adapt to and maintain.",
+                    tr: "Uberman Uyku Programı, günde toplam 2 saat uyku için gün boyunca eşit olarak dağılmış altı 20 dakikalık şekerlemeden oluşur. Bu, uyum sağlaması ve sürdürmesi en zor programlardan biridir."
+                ),
+                totalSleepHours: 2.0,
+                schedule: [
+                    SleepBlock(
+                        startTime: "02:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "06:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "10:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "14:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "18:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "22:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    )
+                ],
+                isPremium: true
+            ),
+            "triphasic": SleepScheduleModel(
+                id: "triphasic",
+                name: "Trifazik Uyku recommender",
+                description: LocalizedDescription(
+                    en: "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day, aligned with natural dips in alertness. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time.",
+                    tr: "Trifazik Uyku Programı, gün boyunca dağılmış, uyanıklıktaki doğal düşüşlerle uyumlu üç uyku periyodundan oluşur. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar."
+                ),
+                totalSleepHours: 4.5,
+                schedule: [
+                    SleepBlock(
+                        startTime: "22:00",
+                        duration: 90,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "06:30",
+                        duration: 90,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "14:30",
+                        duration: 90,
+                        type: "core",
+                        isCore: true
+                    )
+                ],
+                isPremium: true
+            ),
+            "dual-core": SleepScheduleModel(
+                id: "dual-core",
+                name: "Çift Çekirdekli Uyku",
+                description: LocalizedDescription(
+                    en: "The Dual Core Sleep Schedule consists of two core sleep periods and one or more naps. This schedule attempts to align with natural circadian dips and may be more sustainable than schedules with only short naps.",
+                    tr: "Çift Çekirdekli Uyku Programı, iki ana uyku periyodu ve bir veya daha fazla şekerlemeden oluşur. Bu program, doğal sirkadiyen düşüşlerle uyum sağlamaya çalışır ve sadece kısa şekerlemeler içeren programlardan daha sürdürülebilir olabilir."
+                ),
+                totalSleepHours: 5.5,
+                schedule: [
+                    SleepBlock(
+                        startTime: "22:00",
+                        duration: 180,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "05:30",
+                        duration: 90,
+                        type: "core",
+                        isCore: true
+                    ),
+                    SleepBlock(
+                        startTime: "14:00",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    ),
+                    SleepBlock(
+                        startTime: "18:30",
+                        duration: 20,
+                        type: "nap",
+                        isCore: false
+                    )
+                ],
+                isPremium: true
+            )
+        ]
+        
+        // ID'ye göre programı döndür
+        return schedules[id]
     }
     
     // MARK: - Score Hesaplama
@@ -550,15 +796,10 @@ final class SleepScheduleRecommender {
         // MONOPHASIC LOGİĞİNE EK PENALTY / BONUS
         
         if schedule.id == "monophasic" {
-            // 18 yaş altı veya ciddi sağlık problemi varsa -> Monophasic bonus
-            if (factors.ageRange == .under18) || (factors.healthStatus == .seriousConditions) {
-                score *= 1.1
-                print("- Monophasic (under18 veya seriousConditions): 1.1 -> score: \(score)")
-            }
             
             // Yetişkin, sağlıklı, motivasyonu düşük olmayanlar -> Monophasic cezası
             let isAdult       = (factors.ageRange != .under18)
-            let isHealthy     = (factors.healthStatus == .healthy)
+            let isHealthy     = (factors.healthStatus != .seriousConditions)
             let hasMotivation = (factors.motivationLevel == .moderate || factors.motivationLevel == .high)
             
             if isAdult && isHealthy && hasMotivation {

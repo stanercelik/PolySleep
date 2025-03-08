@@ -8,7 +8,7 @@ class MainScreenViewModel: ObservableObject {
     @Published var model: MainScreenModel
     @Published var isEditing: Bool = false {
         didSet {
-            if !isEditing {
+            if !isEditing && oldValue != isEditing {
                 // Düzenleme modundan çıkıldığında değişiklikleri kaydet
                 Task {
                     await saveSchedule()
@@ -44,10 +44,41 @@ class MainScreenViewModel: ObservableObject {
     @Published var hasDeferredSleepQualityRating = false
     @Published var lastSleepBlock: (start: Date, end: Date)?
     @Published private var sleepQualityRatingCompleted = false
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String? = nil
     
     private var modelContext: ModelContext?
     private var timer: Timer?
     private var timerCancellable: AnyCancellable?
+    
+    // Supabase servisi referansı
+    private var scheduleService: SupabaseScheduleService {
+        return SupabaseService.shared.schedule
+    }
+    
+    @StateObject private var authManager = AuthManager.shared
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule)) {
+        self.model = model
+        
+        // Timer'ı başlat
+        startTimer()
+        
+        // Auth durumunu dinle
+        setupAuthStateListener()
+        
+        // Supabase'den veri yükle
+        Task {
+            // Önce auth durumunun hazır olmasını bekle
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye bekle
+            
+            // Eğer varsayılan program kullanılıyorsa, Supabase'den veri yüklemeyi dene
+            if model.schedule.id == "default" {
+                await loadScheduleFromSupabase()
+            }
+        }
+    }
     
     var totalSleepTimeFormatted: String {
         let totalMinutes = model.schedule.schedule.reduce(0) { $0 + $1.duration }
@@ -57,7 +88,6 @@ class MainScreenViewModel: ObservableObject {
     }
     
     var scheduleDescription: String {
-        // Sistem diline göre açıklama döndür
         let locale = Locale.current.language.languageCode?.identifier ?? "en"
         if locale == "tr" {
             return model.schedule.description.tr
@@ -216,49 +246,17 @@ class MainScreenViewModel: ObservableObject {
         return shareText
     }
     
-    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), modelContext: ModelContext? = nil) {
-        self.model = model
-        self.modelContext = modelContext
-        startTimer()
-
-        if let context = modelContext {
-            do {
-                if let savedSchedule = try context.fetch(FetchDescriptor<SleepScheduleStore>()).first {
-                    self.model.schedule = UserScheduleModel(
-                        id: savedSchedule.scheduleId,
-                        name: savedSchedule.name,
-                        description: savedSchedule.scheduleDescription,
-                        totalSleepHours: savedSchedule.totalSleepHours,
-                        schedule: savedSchedule.schedule,
-                        isCustomized: savedSchedule.isCustomized
-                    )
-                }
-            } catch {
-                print("Error fetching saved schedule: \(error)")
-            }
-        }
-    }
-    
     deinit {
         timerCancellable?.cancel()
     }
     
+    /// ModelContext'i ayarlar
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
         
-        do {
-            if let savedSchedule = try context.fetch(FetchDescriptor<SleepScheduleStore>()).first {
-                self.model.schedule = UserScheduleModel(
-                    id: savedSchedule.scheduleId,
-                    name: savedSchedule.name,
-                    description: savedSchedule.scheduleDescription,
-                    totalSleepHours: savedSchedule.totalSleepHours,
-                    schedule: savedSchedule.schedule,
-                    isCustomized: savedSchedule.isCustomized
-                )
-            }
-        } catch {
-            print("Error fetching saved schedule: \(error)")
+        // Supabase'den verileri yükle
+        Task {
+            await loadScheduleFromSupabase()
         }
     }
     
@@ -276,7 +274,7 @@ class MainScreenViewModel: ObservableObject {
                     description: latestSchedule.scheduleDescription,
                     totalSleepHours: latestSchedule.totalSleepHours,
                     schedule: latestSchedule.schedule,
-                    isCustomized: latestSchedule.isCustomized
+                    isPremium: latestSchedule.isPremium
                 )
                 
                 selectedSchedule = scheduleModel
@@ -430,9 +428,6 @@ class MainScreenViewModel: ObservableObject {
         model.schedule.schedule.append(newBlock)
         model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
         
-        // Programın özelleştirildiğini işaretle
-        model.schedule.isCustomized = true
-        
         Task {
             await saveSchedule()
         }
@@ -442,9 +437,6 @@ class MainScreenViewModel: ObservableObject {
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.remove(atOffsets: offsets)
         model.schedule = updatedSchedule
-        
-        // Programın özelleştirildiğini işaretle
-        model.schedule.isCustomized = true
         
         Task {
             await saveSchedule()
@@ -518,9 +510,6 @@ class MainScreenViewModel: ObservableObject {
             model.schedule.schedule[index] = updatedBlock
             model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
             
-            // Programın özelleştirildiğini işaretle
-            model.schedule.isCustomized = true
-            
             Task {
                 await saveSchedule()
             }
@@ -530,66 +519,39 @@ class MainScreenViewModel: ObservableObject {
     func deleteBlock(_ block: SleepBlock) {
         model.schedule.schedule.removeAll { $0.id == block.id }
         
-        // Programın özelleştirildiğini işaretle
-        model.schedule.isCustomized = true
         
         Task {
             await saveSchedule()
         }
     }
     
-    func startTitleEditing() {
-        editingTitle = model.schedule.name
-        isEditingTitle = true
-    }
-    
-    func saveTitleChanges() {
-        if !editingTitle.isEmpty {
-            model.schedule.name = editingTitle
-            model.schedule.isCustomized = true
-            isEditingTitle = false
-            Task {
-                await saveSchedule()
-            }
-        }
-    }
-    
-    func cancelTitleEditing() {
-        editingTitle = model.schedule.name
-        isEditingTitle = false
-    }
-    
     private func saveSchedule() async {
-        guard let context = modelContext else { return }
+        isLoading = true
+        errorMessage = nil
         
         do {
-            // Mevcut schedule'ı bul veya yeni oluştur
-            let descriptor = FetchDescriptor<SleepScheduleStore>()
-            let existingSchedules = try context.fetch(descriptor)
-            let scheduleStore = existingSchedules.first ?? SleepScheduleStore(
-                scheduleId: model.schedule.id,
-                name: model.schedule.name,
-                scheduleDescription: model.schedule.description,
-                totalSleepHours: model.schedule.totalSleepHours,
-                schedule: model.schedule.schedule,
-                isCustomized: model.schedule.isCustomized
+            // Programı Supabase'e kaydet
+            let success = try await scheduleService.saveRecommendedSchedule(
+                schedule: model.schedule.toSleepScheduleModel,
+                adaptationPeriod: model.currentDay
             )
             
-            // Değerleri güncelle
-            scheduleStore.scheduleId = model.schedule.id
-            scheduleStore.name = model.schedule.name
-            scheduleStore.scheduleDescription = model.schedule.description
-            scheduleStore.totalSleepHours = model.schedule.totalSleepHours
-            scheduleStore.schedule = model.schedule.schedule
-            scheduleStore.isCustomized = model.schedule.isCustomized
-            
-            if existingSchedules.isEmpty {
-                context.insert(scheduleStore)
+            if !success {
+                print("PolySleep Debug: Program Supabase'e kaydedilemedi, yerel veritabanına kaydediliyor")
+                
+                // Yerel veritabanına kaydet
+                saveScheduleToLocalDatabase(model.schedule)
             }
             
-            try context.save()
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         } catch {
-            print("Schedule kaydetme hatası: \(error)")
+            print("PolySleep Debug: Supabase'e program kaydedilemedi: \(error)")
+            DispatchQueue.main.async {
+                self.errorMessage = NSLocalizedString("supabase.error.sync", comment: "")
+                self.isLoading = false
+            }
         }
     }
     
@@ -651,5 +613,185 @@ class MainScreenViewModel: ObservableObject {
     /// Bu metot, SleepQualityRatingView'dan çağrılır
     func markSleepQualityRatingAsCompleted() {
         sleepQualityRatingCompleted = true
+    }
+    
+    /// Supabase'den aktif uyku programını ve bloklarını yükler
+    @MainActor
+    func loadScheduleFromSupabase() async {
+        isLoading = true
+        errorMessage = nil
+        
+        // Kullanıcının oturum açıp açmadığını kontrol et
+        if !authManager.isAuthenticated {
+            print("PolySleep Debug: Kullanıcı oturumu kapalı, varsayılan program kullanılıyor")
+            loadDefaultSchedule()
+            isLoading = false
+            return
+        }
+        
+        do {
+            print("PolySleep Debug: Supabase'den aktif program yükleniyor...")
+            
+            // Aktif programı getir
+            let activeSchedule = try await scheduleService.getActiveSchedule()
+            
+            if let schedule = activeSchedule {
+                print("PolySleep Debug: Aktif program bulundu, bloklar yükleniyor...")
+                
+                // Program bloklarını getir
+                let blocks = try await scheduleService.getSleepBlocksForSchedule(scheduleId: schedule.id)
+                
+                if !blocks.isEmpty {
+                    print("PolySleep Debug: \(blocks.count) adet program bloğu yüklendi")
+                    
+                    // UserScheduleModel'e dönüştür
+                    let userScheduleModel = schedule.toUserScheduleModel(with: blocks)
+                    
+                    // Model'i güncelle
+                    self.model.schedule = userScheduleModel
+                    
+                    // Yerel veritabanına kaydet
+                    saveScheduleToLocalDatabase(userScheduleModel)
+                    isLoading = false
+                    return
+                } else {
+                    print("PolySleep Debug: Program blokları bulunamadı, varsayılan program kullanılacak")
+                }
+            } else {
+                print("PolySleep Debug: Aktif program bulunamadı, yerel veritabanı kontrol ediliyor")
+                
+                // Yerel veritabanından programı yüklemeyi dene
+                loadScheduleFromLocalDatabase()
+                
+                // Yerel veritabanında program yoksa ve model varsayılan programı kullanıyorsa
+                if model.schedule.id == "default" {
+                    print("PolySleep Debug: Yerel veritabanında program bulunamadı, varsayılan program Supabase'e kaydedilecek")
+                    
+                    // Varsayılan programı Supabase'e kaydet
+                    let success = try await scheduleService.saveRecommendedSchedule(
+                        schedule: UserScheduleModel.defaultSchedule.toSleepScheduleModel,
+                        adaptationPeriod: model.currentDay
+                    )
+                    
+                    if success {
+                        print("PolySleep Debug: Varsayılan program Supabase'e kaydedildi")
+                    } else {
+                        print("PolySleep Debug: Varsayılan program Supabase'e kaydedilemedi")
+                    }
+                }
+            }
+            
+            isLoading = false
+        } catch {
+            print("PolySleep Debug: Supabase'den program yüklenirken hata oluştu: \(error)")
+            
+            // Hata durumunda yerel veritabanından yüklemeyi dene
+            loadScheduleFromLocalDatabase()
+            
+            DispatchQueue.main.async {
+                self.errorMessage = NSLocalizedString("supabase.error.sync", comment: "")
+                self.isLoading = false
+            }
+        }
+    }
+    
+    /// Varsayılan uyku programını yükler
+    @MainActor
+    func loadDefaultSchedule() {
+        print("PolySleep Debug: Varsayılan program yükleniyor")
+        
+        // UserScheduleModel.defaultSchedule özelliğini kullan
+        let defaultSchedule = UserScheduleModel.defaultSchedule
+        
+        // Model'i güncelle
+        self.model.schedule = defaultSchedule
+        
+        // Yerel veritabanına kaydet
+        saveScheduleToLocalDatabase(defaultSchedule)
+    }
+    
+    /// Yerel veritabanından programı yükler
+    private func loadScheduleFromLocalDatabase() {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            if let savedSchedule = try modelContext.fetch(FetchDescriptor<SleepScheduleStore>()).first {
+                self.model.schedule = UserScheduleModel(
+                    id: savedSchedule.scheduleId,
+                    name: savedSchedule.name,
+                    description: savedSchedule.scheduleDescription,
+                    totalSleepHours: savedSchedule.totalSleepHours,
+                    schedule: savedSchedule.schedule,
+                    isPremium: savedSchedule.isPremium
+                )
+            } else {
+                // Yerel veritabanında program yoksa varsayılan programı yükle
+                loadDefaultSchedule()
+            }
+        } catch {
+            print("PolySleep Debug: Yerel veritabanından program yükleme hatası: \(error)")
+            loadDefaultSchedule()
+        }
+    }
+    
+    /// Programı yerel veritabanına kaydeder
+    private func saveScheduleToLocalDatabase(_ schedule: UserScheduleModel) {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            // Mevcut kayıtları temizle
+            let existingSchedules = try modelContext.fetch(FetchDescriptor<SleepScheduleStore>())
+            for existingSchedule in existingSchedules {
+                modelContext.delete(existingSchedule)
+            }
+            
+            // Yeni programı kaydet
+            let scheduleStore = SleepScheduleStore(
+                scheduleId: schedule.id,
+                name: schedule.name,
+                scheduleDescription: schedule.description,
+                totalSleepHours: schedule.totalSleepHours,
+                schedule: schedule.schedule,
+                isPremium: schedule.isPremium
+            )
+            
+            modelContext.insert(scheduleStore)
+            try modelContext.save()
+        } catch {
+            print("PolySleep Debug: Yerel veritabanına program kaydetme hatası: \(error)")
+        }
+    }
+    
+    /// Uyku programını Supabase'e kaydeder
+    func saveScheduleToSupabase() async {
+        do {
+            // Programı Supabase'e kaydet
+            _ = try await scheduleService.saveRecommendedSchedule(
+                schedule: model.schedule.toSleepScheduleModel,
+                adaptationPeriod: model.currentDay
+            )
+            
+            // Başarılı kayıt sonrası yerel veritabanına da kaydet
+            saveScheduleToLocalDatabase(model.schedule)
+        } catch {
+            print("PolySleep Debug: Supabase'e kayıt hatası: \(error)")
+            errorMessage = "supabase.error.sync"
+        }
+    }
+    
+    private func setupAuthStateListener() {
+        authManager.$isAuthenticated
+            .sink { [weak self] isAuthenticated in
+                if isAuthenticated {
+                    print("PolySleep Debug: Kullanıcı oturumu açıldı, veriler yükleniyor...")
+                    // Kullanıcı giriş yaptığında veriyi yükle
+                    Task {
+                        await self?.loadScheduleFromSupabase()
+                    }
+                } else {
+                    print("PolySleep Debug: Kullanıcı oturumu kapalı, varsayılan program kullanılıyor")
+                }
+            }
+            .store(in: &cancellables)
     }
 }

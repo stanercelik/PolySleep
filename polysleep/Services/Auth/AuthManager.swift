@@ -77,7 +77,7 @@ class AuthManager: ObservableObject {
         
         do {
             print("PolySleep Debug: supabaseService.signInWithApple çağrılıyor")
-            if let user = try await supabaseService.signInWithApple() {
+            if let user = try await SupabaseAuthService.shared.signInWithApple() {
                 print("PolySleep Debug: Apple ID ile giriş başarılı: \(user.email ?? "email yok")")
                 currentUser = user
                 isAuthenticated = true
@@ -91,26 +91,6 @@ class AuthManager: ObservableObject {
         }
     }
     
-    /// Google ile giriş yapar
-    @MainActor
-    func signInWithGoogle() async {
-        isLoading = true
-        authError = nil
-        
-        do {
-            if let user = try await supabaseService.signInWithGoogle() {
-                currentUser = user
-                isAuthenticated = true
-            } else {
-                authError = "Kullanıcı bilgileri alınamadı"
-            }
-        } catch {
-            authError = error.localizedDescription
-        }
-        
-        isLoading = false
-    }
-    
     /// Çıkış yapar
     @MainActor
     func signOut() async {
@@ -118,7 +98,7 @@ class AuthManager: ObservableObject {
         authError = nil
         
         do {
-            try await supabaseService.signOut()
+            try await SupabaseAuthService.shared.signOut()
             currentUser = nil
             isAuthenticated = false
         } catch {
@@ -137,7 +117,7 @@ class AuthManager: ObservableObject {
         do {
             // SupabaseService'deki signInAnonymously metodunu çağır
             // Bu metot zaten UserDefaults kontrolü yapar
-            let user = try await supabaseService.signInAnonymously()
+            let user = try await SupabaseAuthService.shared.signInAnonymously()
             self.currentUser = user
             await refreshAuthState()
         } catch {

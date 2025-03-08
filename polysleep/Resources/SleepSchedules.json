@@ -8,6 +8,7 @@
         "tr": "Geleneksel uyku düzeni, genellikle gece boyunca 7-9 saat süren tek parça uykudan oluşur. Bu, çoğu insan için en yaygın ve doğal uyku düzenidir."
       },
       "totalSleepHours": 8,
+      "isPremium": false,
       "schedule": [
         {
           "type": "core",
@@ -15,8 +16,7 @@
           "duration": 480,
           "isCore": true
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "biphasic",
@@ -26,6 +26,7 @@
         "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir."
       },
       "totalSleepHours": 6.5,
+      "isPremium": false,
       "schedule": [
         {
           "type": "core",
@@ -39,8 +40,7 @@
           "duration": 30,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "biphasic-extended",
@@ -50,6 +50,7 @@
         "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır."
       },
       "totalSleepHours": 7.5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -63,8 +64,7 @@
           "duration": 90,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "everyman",
@@ -74,6 +74,7 @@
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler."
       },
       "totalSleepHours": 4.5,
+      "isPremium": false,
       "schedule": [
         {
           "type": "core",
@@ -99,8 +100,7 @@
           "duration": 20,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "everyman-e2",
@@ -110,6 +110,7 @@
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir."
       },
       "totalSleepHours": 5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -129,8 +130,7 @@
           "duration": 20,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "everyman-e3",
@@ -140,6 +140,7 @@
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. 3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık kısa uykulardan oluşan düzen."
       },
       "totalSleepHours": 4.5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -165,8 +166,7 @@
           "duration": 20,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "everyman-e4",
@@ -176,6 +176,7 @@
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3’e göre daha ağır bir düzendir."
       },
       "totalSleepHours": 3.5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -207,8 +208,7 @@
           "duration": 20,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "dymaxion",
@@ -218,6 +218,7 @@
         "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir."
       },
       "totalSleepHours": 2,
+      "isPremium": false,
       "schedule": [
         {
           "type": "nap",
@@ -243,8 +244,7 @@
           "duration": 30,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "dymaxion-alt",
@@ -254,6 +254,7 @@
         "tr": "Klasik Dymaxion (günde 4 kez 30 dakikalık) konseptini koruyarak, geç/gece vardiyası veya farklı rutinler için saatleri uyarlayan versiyon."
       },
       "totalSleepHours": 2,
+      "isPremium": true,
       "schedule": [
         {
           "type": "nap",
@@ -279,8 +280,7 @@
           "duration": 30,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "uberman",
@@ -290,6 +290,7 @@
         "tr": "Yaklaşık her 4 saatte bir, 20 dakikalık altı (veya daha fazla) kısa uykudan oluşan, son derece ekstrem bir uyku düzenidir."
       },
       "totalSleepHours": 2,
+      "isPremium": true,
       "schedule": [
         {
           "type": "nap",
@@ -327,8 +328,7 @@
           "duration": 20,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "triphasic",
@@ -338,6 +338,7 @@
         "tr": "Üç ayrı uyku bloğundan oluşan, her biri 1 ila 2 saat süren ve genellikle gün batımı, gün doğumu ve öğle saatlerine denk gelecek şekilde planlanan bir düzen."
       },
       "totalSleepHours": 4,
+      "isPremium": false,
       "schedule": [
         {
           "type": "core",
@@ -357,8 +358,7 @@
           "duration": 60,
           "isCore": false
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "triphasic-alt",
@@ -368,6 +368,7 @@
         "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanır."
       },
       "totalSleepHours": 5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -387,8 +388,7 @@
           "duration": 120,
           "isCore": true
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "segmented",
@@ -398,6 +398,7 @@
         "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir"
       },
       "totalSleepHours": 6,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -411,8 +412,7 @@
           "duration": 180,
           "isCore": true
         }
-      ],
-      "isCustomized": false
+      ]
     },
     {
       "id": "segmented-alt",
@@ -422,6 +422,7 @@
         "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uykudan, sabaha karşı (02:00-05:00) ikinci uykudan oluşan alternatif bir düzendir. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır."
       },
       "totalSleepHours": 5,
+      "isPremium": true,
       "schedule": [
         {
           "type": "core",
@@ -435,8 +436,7 @@
           "duration": 180,
           "isCore": true
         }
-      ],
-      "isCustomized": false
+      ]
     }
   ]
 }

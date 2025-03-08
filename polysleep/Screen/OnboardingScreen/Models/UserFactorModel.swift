@@ -1,9 +1,28 @@
 import Foundation
 import SwiftData
+import SwiftUI
+
+// MARK: - Dependencies
+@_exported import struct Supabase.User
 
 @Model
 final class UserFactor {
-    // Mevcut alanlar
+    // MARK: - Onboarding Error
+    enum OnboardingError: Error, LocalizedError {
+        case userNotFound
+        case scheduleNotFound
+        
+        var errorDescription: String? {
+            switch self {
+            case .userNotFound:
+                return "Kullanıcı bulunamadı"
+            case .scheduleNotFound:
+                return "Program bulunamadı"
+            }
+        }
+    }
+    
+    // MARK: - Properties
     var sleepExperience: String
     var ageRange: String
     var workSchedule: String
@@ -18,6 +37,7 @@ final class UserFactor {
     var disruptionTolerance: String
     var chronotype: String
     
+    // MARK: - Initialization
     init(
         sleepExperience: PreviousSleepExperience,
         ageRange: AgeRange,
@@ -94,5 +114,24 @@ final class UserFactor {
     
     var chronotypeEnum: Chronotype? {
         Chronotype(rawValue: chronotype)
+    }
+    
+    // MARK: - Schedule Management
+    func saveSelectedSchedule(templateId: String) async throws {
+        guard let userId = AuthManager.shared.currentUser?.id else {
+            throw OnboardingError.userNotFound
+        }
+        
+        // SleepScheduleRecommender kullanarak programı oluştur
+        let recommender = SleepScheduleRecommender()
+        guard let schedule = recommender.getScheduleById(templateId) else {
+            throw OnboardingError.scheduleNotFound
+        }
+        
+        // Programı Supabase'e kaydet
+        _ = try await SupabaseScheduleService.shared.saveRecommendedSchedule(
+            schedule: schedule,
+            adaptationPeriod: 0
+        )
     }
 }

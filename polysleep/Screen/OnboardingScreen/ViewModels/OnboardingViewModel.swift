@@ -144,7 +144,7 @@ final class OnboardingViewModel: ObservableObject {
         
         // Supabase'e senkronize et
         do {
-            let success = try await SupabaseService.shared.syncOnboardingAnswersToSupabase(answers: savedAnswers)
+            let success = try await SupabaseOnboardingService.shared.syncOnboardingAnswersToSupabase(answers: savedAnswers)
             if success {
                 print("✅ Successfully synced onboarding answers to Supabase")
                 
@@ -179,7 +179,7 @@ final class OnboardingViewModel: ObservableObject {
                 print("Confidence Score: \(recommendation.confidenceScore)")
                 
                 // Önerilen programı schedules tablosuna kaydet
-                let success = try await SupabaseService.shared.saveRecommendedSchedule(
+                let success = try await SupabaseScheduleService.shared.saveRecommendedSchedule(
                     schedule: recommendation.schedule,
                     adaptationPeriod: recommendation.adaptationPeriod
                 )

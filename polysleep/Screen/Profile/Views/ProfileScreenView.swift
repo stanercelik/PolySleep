@@ -346,33 +346,6 @@ struct LoginSheetView: View {
                     )
                 }
                 .disabled(authManager.isLoading)
-                
-                // Google ile giriş
-                Button(action: {
-                    Task {
-                        await authManager.signInWithGoogle()
-                        if authManager.isAuthenticated {
-                            dismiss()
-                            onSuccessfulLogin()
-                        }
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: "g.circle.fill")
-                            .font(.system(size: 20))
-                        
-                        Text("profile.login.google", tableName: "Profile")
-                            .font(.headline)
-                    }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.blue)
-                    )
-                }
-                .disabled(authManager.isLoading)
             }
             .padding(.horizontal, 24)
             

@@ -35,6 +35,9 @@
         }
       }
     },
+    "firstPageImage" : {
+
+    },
     "firstPageTitle" : {
       "comment" : "Title text of first welcome page",
       "localizations" : {
@@ -68,6 +71,9 @@
           }
         }
       }
+    },
+    "fourthPageImage" : {
+
     },
     "fourthPageTitle" : {
       "comment" : "Title text of fourth welcome page",
@@ -103,6 +109,9 @@
         }
       }
     },
+    "secondPageImage" : {
+
+    },
     "secondPageTitle" : {
       "comment" : "Title text of second welcome page",
       "localizations" : {
@@ -136,6 +145,9 @@
           }
         }
       }
+    },
+    "thirdPageImage" : {
+
     },
     "thirdPageTitle" : {
       "comment" : "Title text of third welcome page",

@@ -375,6 +375,9 @@
         }
       }
     },
+    "notifications.time.before %@" : {
+
+    },
     "personalInfo.answers" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -85,7 +85,7 @@ public struct SleepScheduleModel: Codable, Identifiable, Equatable {
     public let description: LocalizedDescription
     public let totalSleepHours: Double
     public let schedule: [SleepBlock]
-    public let isCustomized: Bool
+    public let isPremium: Bool
     
     public init(
         id: String,
@@ -93,18 +93,18 @@ public struct SleepScheduleModel: Codable, Identifiable, Equatable {
         description: LocalizedDescription,
         totalSleepHours: Double,
         schedule: [SleepBlock],
-        isCustomized: Bool = false
+        isPremium: Bool = false
     ) {
         self.id = id
         self.name = name
         self.description = description
         self.totalSleepHours = totalSleepHours
         self.schedule = schedule
-        self.isCustomized = isCustomized
+        self.isPremium = isPremium
     }
     
     private enum CodingKeys: String, CodingKey {
-        case id, name, description, totalSleepHours, schedule, isCustomized
+        case id, name, description, totalSleepHours, schedule, isPremium
     }
 }
 

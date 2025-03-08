@@ -38,6 +38,56 @@ struct MainScreenView: View {
                             .padding(.bottom, 16)
                     }
                 }
+                
+                // Loading ve hata durumları için overlay
+                if viewModel.isLoading {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5)
+                        .tint(.appPrimary)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.appCardBackground)
+                                .frame(width: 80, height: 80)
+                                .shadow(color: Color.black.opacity(0.1), radius: 5)
+                        )
+                }
+                
+                if let errorMessage = viewModel.errorMessage {
+                    VStack(spacing: 16) {
+                        Text("⚠️")
+                            .font(.largeTitle)
+                        
+                        Text(LocalizedStringKey(errorMessage))
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.appText)
+                        
+                        Button(action: {
+                            Task {
+                                await viewModel.loadScheduleFromSupabase()
+                            }
+                        }) {
+                            Text(LocalizedStringKey("mainscreen.error.retry"))
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.appPrimary)
+                                .cornerRadius(10)
+                        }
+                    }
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color.appCardBackground)
+                            .shadow(color: Color.black.opacity(0.1), radius: 10)
+                    )
+                    .padding(.horizontal, 40)
+                }
             }
             .navigationBarItems(
                 leading: Button(action: {
@@ -57,15 +107,29 @@ struct MainScreenView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.appPrimary)
                 },
-                trailing: Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
-                    .symbolRenderingMode(.hierarchical)
-                    .fontWeight(viewModel.isEditing ? .bold : .black)
-                    .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
-                    .font(.title3)
-                    .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
-                    .onTapGesture {
-                        viewModel.isEditing.toggle()
+                trailing: HStack(spacing: 16) {
+                    Button(action: {
+                        Task {
+                            await viewModel.loadScheduleFromSupabase()
+                        }
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .symbolRenderingMode(.hierarchical)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.appPrimary)
+                            .accessibilityLabel(Text(LocalizedStringKey("mainscreen.button.refresh")))
                     }
+                    
+                    Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .fontWeight(viewModel.isEditing ? .bold : .black)
+                        .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
+                        .font(.title3)
+                        .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
+                        .onTapGesture {
+                            viewModel.isEditing.toggle()
+                        }
+                }
             )
             .toolbar {
                 ToolbarItem(placement: .principal) {
