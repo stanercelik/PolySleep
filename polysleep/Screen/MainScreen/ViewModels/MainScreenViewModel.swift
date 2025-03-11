@@ -56,7 +56,7 @@ class MainScreenViewModel: ObservableObject {
         return SupabaseService.shared.schedule
     }
     
-    @StateObject private var authManager = AuthManager.shared
+    private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
     
     init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule)) {
