@@ -7,7 +7,6 @@ struct UserSchedule: Codable {
     let name: String
     let description: String // JSON formatında LocalizedDescription
     let totalSleepHours: Double
-    let isCustomized: Bool
     let adaptationPhase: Int
     let isActive: Bool
     let createdAt: Date
@@ -19,7 +18,6 @@ struct UserSchedule: Codable {
         case name
         case description
         case totalSleepHours = "total_sleep_hours"
-        case isCustomized = "is_customized"
         case adaptationPhase = "adaptation_phase"
         case isActive = "is_active"
         case createdAt = "created_at"
@@ -47,15 +45,6 @@ struct UserSchedule: Codable {
             totalSleepHours = Double(totalSleepHoursString) ?? 0.0
         } else {
             totalSleepHours = 0.0
-        }
-        
-        // Boolean değerleri decode et
-        if let isCustomizedBool = try? container.decode(Bool.self, forKey: .isCustomized) {
-            isCustomized = isCustomizedBool
-        } else if let isCustomizedString = try? container.decode(String.self, forKey: .isCustomized) {
-            isCustomized = isCustomizedString.lowercased() == "true"
-        } else {
-            isCustomized = false
         }
         
         if let isActiveBool = try? container.decode(Bool.self, forKey: .isActive) {

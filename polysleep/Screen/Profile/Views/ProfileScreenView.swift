@@ -8,6 +8,7 @@ struct ProfileScreenView: View {
     @State private var showEmojiPicker = false
     @State private var isPickingCoreEmoji = true
     @State private var showLoginSheet = false
+    @State private var showLogoutSheet = false
     @State private var navigateToSettings = false
     @StateObject private var authManager = AuthManager.shared
     @State private var showSuccessMessage = false
@@ -24,7 +25,12 @@ struct ProfileScreenView: View {
                         PremiumButton()
                         
                         // Profil Bilgileri
-                        ProfileHeaderSection(showLoginSheet: $showLoginSheet, navigateToSettings: $navigateToSettings, authManager: authManager)
+                        ProfileHeaderSection(
+                            showLoginSheet: $showLoginSheet, 
+                            showLogoutSheet: $showLogoutSheet,
+                            navigateToSettings: $navigateToSettings, 
+                            authManager: authManager
+                        )
                         
                         // Streak Bölümü
                         StreakSection(viewModel: viewModel)
@@ -87,6 +93,10 @@ struct ProfileScreenView: View {
                 })
                 .presentationDetents([.height(350)])
             }
+            .sheet(isPresented: $showLogoutSheet) {
+                LogoutSheetView(authManager: authManager)
+                    .presentationDetents([.height(200)])
+            }
             .sheet(isPresented: $viewModel.showBadgeDetail, content: {
                 if let badge = viewModel.selectedBadge {
                     BadgeDetailView(badge: badge)
@@ -140,20 +150,29 @@ struct PremiumButton: View {
 // MARK: - Profil Başlık Bölümü
 struct ProfileHeaderSection: View {
     @Binding var showLoginSheet: Bool
+    @Binding var showLogoutSheet: Bool
     @Binding var navigateToSettings: Bool
     @ObservedObject var authManager: AuthManager
+    
+    // Kullanıcının anonim olup olmadığını kontrol eden yardımcı fonksiyon
+    private func isAnonymousUser() -> Bool {
+        guard let user = authManager.currentUser else { return false }
+        return UserDefaults.standard.string(forKey: "anonymousUserId") == user.id.uuidString
+    }
     
     var body: some View {
         VStack(spacing: 16) {
             HStack(alignment: .top, spacing: 16) {
                 // Profil resmi (giriş yapılmışsa kullanıcı bilgisi, yapılmamışsa anonim)
                 Button(action: {
-                    if !authManager.isAuthenticated {
+                    if !authManager.isAuthenticated || isAnonymousUser() {
                         showLoginSheet = true
+                    } else {
+                        showLogoutSheet = true
                     }
                 }) {
-                    if authManager.isAuthenticated, let user = authManager.currentUser {
-                        // Kullanıcı giriş yapmışsa
+                    if authManager.isAuthenticated && !isAnonymousUser(), let user = authManager.currentUser {
+                        // Kullanıcı giriş yapmışsa ve anonim değilse
                         Group {
                             if user.userMetadata["provider"] as? String == "apple" {
                                 // Apple ile giriş yapıldıysa
@@ -193,51 +212,36 @@ struct ProfileHeaderSection: View {
                 
                 VStack(alignment: .leading, spacing: 6) {
                     // Başlık
-                    if authManager.isAuthenticated, let user = authManager.currentUser {
+                    if authManager.isAuthenticated && !isAnonymousUser(), let user = authManager.currentUser {
                         if user.userMetadata["provider"] as? String == "apple" {
                             if let fullName = user.userMetadata["full_name"] as? String, !fullName.isEmpty {
                                 Text(fullName)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.appText)
                             } else {
-                                Text("Apple")
+                                Text(user.email ?? "Kullanıcı")
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.appText)
                             }
                         } else {
-                            Text("profile.backup.title", tableName: "Profile")
+                            Text(user.email ?? "Kullanıcı")
                                 .font(.headline)
                                 .fontWeight(.bold)
-                                .foregroundColor(.appText)
-                        }
-                    } else {
-                        Text("profile.backup.title", tableName: "Profile")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.appText)
-                    }
-                    
-                    // Rozetler
-                    HStack(spacing: 8) {
-                        // Maksimum 3 rozet göster
-                        ForEach(0..<min(3, 3)) { _ in
-                            Image(systemName: "star.fill")
-                                .font(.system(size: 16))
-                                .foregroundColor(.appAccent)
                         }
                         
-                        // Başarı sayısı
-                        Text("3 \(Text("profile.achievements", tableName: "Profile"))")
-                            .font(.caption)
+                        // Giriş durumu
+                        Text("profile.login.status.signed", tableName: "Profile")
+                            .font(.subheadline)
+                            .foregroundColor(.green)
+                    } else {
+                        // Kullanıcı giriş yapmamışsa veya anonim ise
+                        Text("profile.login.title", tableName: "Profile")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        
+                        Text("profile.login.status.unsigned", tableName: "Profile")
+                            .font(.subheadline)
                             .foregroundColor(.appSecondaryText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(Color.appCardBackground)
-                            )
                     }
                 }
                 
@@ -252,34 +256,6 @@ struct ProfileHeaderSection: View {
                         .foregroundColor(.appSecondaryText)
                 }
             }
-            
-            // Kullanıcı giriş yapmışsa çıkış butonu göster
-            if authManager.isAuthenticated, let user = authManager.currentUser {
-                VStack(spacing: 12) {
-                    // Kullanıcı email bilgisi
-                    Text("\(Text("profile.login.status.signed", tableName: "Profile")): \(user.email ?? "")")
-                        .font(.subheadline)
-                        .foregroundColor(.appSecondaryText)
-                    
-                    // Çıkış butonu
-                    Button(action: {
-                        Task {
-                            await authManager.signOut()
-                        }
-                    }) {
-                        Text("profile.login.signout", tableName: "Profile")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.red.opacity(0.8))
-                            )
-                    }
-                }
-                .padding(.top, 8)
-            }
         }
         .padding()
         .background(
@@ -287,6 +263,51 @@ struct ProfileHeaderSection: View {
                 .fill(Color.appCardBackground)
                 .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
         )
+    }
+}
+
+// MARK: - Çıkış Sheet Görünümü
+struct LogoutSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var authManager: AuthManager
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            // Başlık
+            Text("profile.logout.title", tableName: "Profile")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.appText)
+                .padding(.top, 24)
+            
+            // Kullanıcı email bilgisi
+            if let user = authManager.currentUser {
+                Text("\(user.email ?? "")")
+                    .font(.subheadline)
+                    .foregroundColor(.appSecondaryText)
+            }
+            
+            // Çıkış butonu
+            Button(action: {
+                Task {
+                    await authManager.signOut()
+                    dismiss()
+                }
+            }) {
+                Text("profile.login.signout", tableName: "Profile")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.red.opacity(0.8))
+                    )
+            }
+            .padding(.horizontal, 24)
+            
+            Spacer()
+        }
     }
 }
 

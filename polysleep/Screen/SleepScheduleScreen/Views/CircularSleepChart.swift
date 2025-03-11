@@ -160,7 +160,7 @@ struct CircularSleepChart: View {
                     clockwise: false
                 )
             }
-            .stroke(block.type == "core" ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
+                .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
             .opacity(0.85)
         )
     }
@@ -267,7 +267,7 @@ struct CircularSleepChart: View {
             let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
             let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
             let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
-            let blockType = block.type == "core" ?
+            let blockType = block.isCore ?
                 NSLocalizedString("sleepBlock.core", comment: "Core sleep block") :
                 NSLocalizedString("sleepBlock.nap", comment: "Nap block")
             let description = String(

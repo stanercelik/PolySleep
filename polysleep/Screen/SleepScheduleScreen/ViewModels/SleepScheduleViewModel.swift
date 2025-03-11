@@ -71,27 +71,7 @@ class SleepScheduleViewModel: ObservableObject {
     }
     
     func shareSchedule() {
-        let scheduleText = """
-        Sleep Schedule: \(schedule.name)
-        Total Sleep: \(schedule.totalSleepHours) hours
-        
-        Schedule Details:
-        \(schedule.schedule.map {
-            "• \($0.startTime) - \($0.endTime) (\($0.type))"
-        }.joined(separator: "\n"))
-        """
-        
-        let activityVC = UIActivityViewController(
-            activityItems: [scheduleText],
-            applicationActivities: nil
-        )
-        
-        // Sunum için:
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first,
-           let rootVC = window.rootViewController {
-            rootVC.present(activityVC, animated: true)
-        }
+        // TO-DO: Share function
     }
     
     func updateToRecommendedSchedule() {
