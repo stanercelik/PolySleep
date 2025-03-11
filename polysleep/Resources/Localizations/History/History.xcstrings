@@ -196,6 +196,7 @@
     },
     "Toplam Uyku" : {
       "comment" : "Label for total sleep in day header",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -228,6 +229,9 @@
           }
         }
       }
+    },
+    "Uyku Kaydı Ekle" : {
+
     },
     "Uyku Tipi" : {
       "comment" : "Header text for selecting sleep type",

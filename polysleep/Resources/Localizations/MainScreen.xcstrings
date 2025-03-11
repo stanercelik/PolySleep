@@ -102,6 +102,23 @@
         }
       }
     },
+    "mainscreen.button.refresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yenile"
+          }
+        }
+      }
+    },
     "mainScreen.customizedSchedule.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -149,6 +166,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ programı üzerinde değişiklik yapıldı."
+          }
+        }
+      }
+    },
+    "mainscreen.error.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekrar Dene"
           }
         }
       }

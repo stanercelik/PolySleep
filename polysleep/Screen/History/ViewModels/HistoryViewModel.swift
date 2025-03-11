@@ -1,6 +1,8 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import Supabase
+import Combine
 
 enum TimeFilter: String, CaseIterable {
     case today = "Today"
@@ -15,6 +17,14 @@ enum SleepTypeFilter: String, CaseIterable {
     case nap = "Naps Only"
 }
 
+/// Senkronizasyon durumunu takip etmek için kullanılan enum
+enum SyncStatus {
+    case synced
+    case pendingSync
+    case offline
+    case error(String)
+}
+
 class HistoryViewModel: ObservableObject {
     @Published var historyItems: [HistoryModel] = []
     @Published var selectedFilter: TimeFilter = .today
@@ -26,14 +36,44 @@ class HistoryViewModel: ObservableObject {
     @Published var selectedDay: Date?
     @Published var isDayDetailPresented = false
     @Published var isAddSleepEntryPresented = false
+    @Published var isSyncing = false
+    @Published var syncError: String?
+    @Published var syncStatus: SyncStatus = .synced
     
     private var allHistoryItems: [HistoryModel] = []
     private var lastCustomDateRange: ClosedRange<Date>?
     private var modelContext: ModelContext?
+    private var supabaseService: SupabaseHistoryService {
+        return SupabaseService.shared.history
+    }
+    private var networkMonitor = NetworkMonitor.shared
+    private var cancellables = Set<AnyCancellable>()
+    private var pendingSyncEntries = Set<UUID>()
     
     init() {
         loadData()
         filterAndSortItems()
+        setupNetworkMonitoring()
+    }
+    
+    /// Ağ durumunu izlemek için gerekli ayarları yapar
+    private func setupNetworkMonitoring() {
+        // İnternet bağlantısı değişikliklerini izle
+        networkMonitor.$isConnected
+            .dropFirst() // İlk değeri atla (başlangıç değeri)
+            .sink { [weak self] isConnected in
+                if isConnected {
+                    // İnternet bağlantısı sağlandığında bekleyen değişiklikleri senkronize et
+                    self?.syncStatus = .synced
+                    Task { @MainActor in
+                        await self?.syncPendingChanges()
+                    }
+                } else {
+                    // İnternet bağlantısı kesildiğinde offline durumuna geç
+                    self?.syncStatus = .offline
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func setModelContext(_ context: ModelContext) {
@@ -69,6 +109,240 @@ class HistoryViewModel: ObservableObject {
         let calendar = Calendar.current
         return allHistoryItems.first { item in
             calendar.isDate(item.date, inSameDayAs: date)
+        }
+    }
+    
+    // MARK: - Supabase Senkronizasyon Metodları
+    
+    /// Bekleyen tüm değişiklikleri senkronize eder
+    @MainActor
+    private func syncPendingChanges() async {
+        guard networkMonitor.isConnected, !pendingSyncEntries.isEmpty else { return }
+        
+        isSyncing = true
+        syncStatus = .synced
+        syncError = nil
+        
+        do {
+            // Bekleyen her kayıt için
+            for entryId in pendingSyncEntries {
+                // Yerel kayıtlarda bu ID ile bir kayıt var mı kontrol et
+                let descriptor = FetchDescriptor<SleepEntry>(
+                    predicate: #Predicate<SleepEntry> { entry in
+                        entry.id == entryId
+                    }
+                )
+                
+                guard let modelContext = modelContext else { continue }
+                let localEntries = try modelContext.fetch(descriptor)
+                
+                if let entry = localEntries.first {
+                    // Kayıt hala varsa, Supabase'e senkronize et
+                    await syncEntryToSupabase(entry)
+                } else {
+                    // Kayıt silinmişse, Supabase'den de sil
+                    await deleteEntryFromSupabase(entryId)
+                }
+                
+                // Senkronize edilen kaydı bekleyen listesinden çıkar
+                pendingSyncEntries.remove(entryId)
+            }
+            
+            // Tüm Supabase verilerini getir ve yerel verileri güncelle
+            await syncDataFromSupabase()
+            
+            isSyncing = false
+        } catch {
+            print("PolySleep Debug: Bekleyen değişiklikleri senkronize ederken hata: \(error)")
+            syncError = NSLocalizedString("supabase.error.sync", comment: "")
+            syncStatus = .error(syncError ?? "")
+            isSyncing = false
+        }
+    }
+    
+    /// Supabase'den verileri senkronize eder
+    @MainActor
+    func syncDataFromSupabase() async {
+        guard networkMonitor.isConnected else {
+            syncStatus = .offline
+            return
+        }
+        
+        isSyncing = true
+        syncError = nil
+        
+        do {
+            // Supabase'den tüm uyku kayıtlarını getir
+            let remoteEntries = try await supabaseService.fetchAllSleepEntries()
+            
+            // Yerel kayıtları güncelle
+            await updateLocalEntriesWithRemote(remoteEntries)
+            
+            syncStatus = .synced
+            isSyncing = false
+        } catch {
+            print("PolySleep Debug: Supabase senkronizasyon hatası: \(error)")
+            syncError = NSLocalizedString("supabase.error.sync", comment: "")
+            syncStatus = .error(syncError ?? "")
+            isSyncing = false
+        }
+    }
+    
+    /// Uzak kayıtlarla yerel kayıtları günceller
+    @MainActor
+    private func updateLocalEntriesWithRemote(_ remoteEntries: [SupabaseHistoryService.SleepEntryDTO]) async {
+        guard let modelContext = modelContext else { return }
+        
+        let calendar = Calendar.current
+        
+        // Her uzak kayıt için
+        for remoteEntry in remoteEntries {
+            // Yerel kayıtlarda bu ID ile bir kayıt var mı kontrol et
+            let descriptor = FetchDescriptor<SleepEntry>(
+                predicate: #Predicate<SleepEntry> { entry in
+                    entry.id == remoteEntry.id
+                }
+            )
+            
+            do {
+                let localEntries = try modelContext.fetch(descriptor)
+                
+                if localEntries.isEmpty {
+                    // Yerel kayıt yoksa, yeni bir kayıt oluştur
+                    let entryDate = remoteEntry.date
+                    let startTime = entryDate
+                    
+                    // Block ID'den uyku tipini belirle
+                    let sleepType: SleepType = remoteEntry.block_id.contains("nap") ? .powerNap : .core
+                    
+                    // Bitiş zamanını hesapla (örnek olarak, gerçek uygulamada block_id'ye göre süreyi belirleyebilirsiniz)
+                    let endTime = calendar.date(byAdding: .hour, value: sleepType == .core ? 3 : 1, to: startTime)!
+                    
+                    // Yeni uyku kaydı oluştur
+                    let newEntry = SleepEntry(
+                        id: remoteEntry.id,
+                        type: sleepType,
+                        startTime: startTime,
+                        endTime: endTime,
+                        rating: remoteEntry.rating
+                    )
+                    
+                    // Yerel veritabanına ekle
+                    modelContext.insert(newEntry)
+                    
+                    // Uygun HistoryModel'e ekle veya yeni bir HistoryModel oluştur
+                    let entryDay = calendar.startOfDay(for: entryDate)
+                    if let existingItemIndex = allHistoryItems.firstIndex(where: { calendar.isDate($0.date, equalTo: entryDay, toGranularity: .day) }) {
+                        allHistoryItems[existingItemIndex].sleepEntries.append(newEntry)
+                        updateCompletionStatus(for: allHistoryItems[existingItemIndex])
+                    } else {
+                        let newItem = HistoryModel(date: entryDay, sleepEntries: [newEntry])
+                        allHistoryItems.append(newItem)
+                    }
+                } else {
+                    // Yerel kayıt varsa, güncelle (şu an için sadece rating'i güncelliyoruz)
+                    let localEntry = localEntries[0]
+                    localEntry.rating = remoteEntry.rating
+                }
+            } catch {
+                print("PolySleep Debug: Yerel kayıt kontrolü sırasında hata: \(error)")
+            }
+        }
+        
+        // Değişiklikleri kaydet
+        try? modelContext.save()
+        
+        // Filtreleri uygula ve sırala
+        filterAndSortItems()
+    }
+    
+    /// Uyku kaydını Supabase'e senkronize eder
+    @MainActor
+    private func syncEntryToSupabase(_ entry: SleepEntry) async {
+        guard networkMonitor.isConnected else {
+            // İnternet bağlantısı yoksa, bekleyen değişiklikler listesine ekle
+            pendingSyncEntries.insert(entry.id)
+            syncStatus = .pendingSync
+            return
+        }
+        
+        do {
+            // Kullanıcı ID'sini al
+            let currentUser = try await SupabaseService.shared.getCurrentUser()
+            guard let userId = currentUser?.id else {
+                print("PolySleep Debug: Kullanıcı oturum açmamış")
+                return
+            }
+            
+            // Sync ID oluştur (yerel ve uzak kayıtları eşleştirmek için)
+            let syncId = entry.id.uuidString
+            
+            // Block ID oluştur (gerçek uygulamada daha anlamlı bir ID kullanılabilir)
+            let blockId = entry.type == .core ? "core_sleep" : "power_nap"
+            
+            // Emoji değeri (gerçek uygulamada kullanıcının seçtiği emoji kullanılabilir)
+            let emoji = entry.type == .core ? "😴" : "⚡️"
+            
+            // DTO oluştur
+            let dto = SupabaseHistoryService.SleepEntryDTO(
+                id: entry.id,
+                user_id: userId,
+                date: entry.startTime,
+                block_id: blockId,
+                emoji: emoji,
+                rating: entry.rating,
+                sync_id: syncId,
+                created_at: nil,
+                updated_at: nil
+            )
+            
+            // Kayıt zaten var mı kontrol et
+            let exists = try await supabaseService.checkSleepEntryExists(syncId: syncId)
+            
+            if exists {
+                // Kayıt varsa güncelle
+                _ = try await supabaseService.updateSleepEntry(dto)
+            } else {
+                // Kayıt yoksa ekle
+                _ = try await supabaseService.addSleepEntry(dto)
+            }
+            
+            // Bekleyen değişiklikler listesinden çıkar
+            pendingSyncEntries.remove(entry.id)
+            
+            // Tüm bekleyen değişiklikler senkronize edildiyse, durumu güncelle
+            if pendingSyncEntries.isEmpty {
+                syncStatus = .synced
+            }
+        } catch {
+            print("PolySleep Debug: Supabase'e kayıt senkronizasyonu sırasında hata: \(error)")
+            syncStatus = .error(NSLocalizedString("supabase.error.sync", comment: ""))
+        }
+    }
+    
+    /// Uyku kaydını Supabase'den siler
+    @MainActor
+    private func deleteEntryFromSupabase(_ entryId: UUID) async {
+        guard networkMonitor.isConnected else {
+            // İnternet bağlantısı yoksa, bekleyen değişiklikler listesine ekle
+            pendingSyncEntries.insert(entryId)
+            syncStatus = .pendingSync
+            return
+        }
+        
+        do {
+            try await supabaseService.deleteSleepEntry(id: entryId)
+            
+            // Bekleyen değişiklikler listesinden çıkar
+            pendingSyncEntries.remove(entryId)
+            
+            // Tüm bekleyen değişiklikler senkronize edildiyse, durumu güncelle
+            if pendingSyncEntries.isEmpty {
+                syncStatus = .synced
+            }
+        } catch {
+            print("PolySleep Debug: Supabase'den kayıt silme sırasında hata: \(error)")
+            syncStatus = .error(NSLocalizedString("supabase.error.sync", comment: ""))
         }
     }
     
@@ -108,6 +382,11 @@ class HistoryViewModel: ObservableObject {
                 
                 // Tamamlanma durumunu güncelle
                 updateCompletionStatus(for: allHistoryItems[existingItemIndex])
+                
+                // Supabase'e senkronize et
+                Task {
+                    await syncEntryToSupabase(entry)
+                }
             }
         } else {
             // Yoksa, yeni bir gün kaydı oluştur
@@ -120,6 +399,11 @@ class HistoryViewModel: ObservableObject {
             }
             
             allHistoryItems.append(newItem)
+            
+            // Supabase'e senkronize et
+            Task {
+                await syncEntryToSupabase(entry)
+            }
         }
         
         // Filtreleri uygula ve sırala
@@ -154,6 +438,11 @@ class HistoryViewModel: ObservableObject {
                     }
                     
                     allHistoryItems.remove(at: itemIndex)
+                }
+                
+                // Supabase'den sil
+                Task {
+                    await deleteEntryFromSupabase(entry.id)
                 }
                 
                 // Filtreleri uygula ve sırala
@@ -240,7 +529,7 @@ class HistoryViewModel: ObservableObject {
         historyItems = filteredItems.sorted { $0.date > $1.date }
     }
     
-    // SwiftData ile veri yükleme
+    // SwiftData ve Supabase ile veri yükleme
     private func loadData() {
         guard let modelContext = modelContext else {
             // ModelContext henüz ayarlanmamış, örnek veri oluştur
@@ -269,6 +558,11 @@ class HistoryViewModel: ObservableObject {
             }
             
             filterAndSortItems()
+            
+            // Supabase'den verileri senkronize et
+            Task {
+                await syncDataFromSupabase()
+            }
         } catch {
             print("HistoryModel verilerini yüklerken hata oluştu: \(error)")
         }

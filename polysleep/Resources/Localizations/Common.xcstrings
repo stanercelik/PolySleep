@@ -137,6 +137,74 @@
         }
       }
     },
+    "auth.error.signin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign In Error"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Hatası"
+          }
+        }
+      }
+    },
+    "auth.error.signout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Out Error"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış Hatası"
+          }
+        }
+      }
+    },
+    "auth.success.signin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signed In Successfully"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarıyla Giriş Yapıldı"
+          }
+        }
+      }
+    },
+    "auth.success.signout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signed Out Successfully"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarıyla Çıkış Yapıldı"
+          }
+        }
+      }
+    },
     "emoji.bed" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -311,6 +379,40 @@
         }
       }
     },
+    "supabase.error.fetch.blocks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch sleep blocks. Please try again."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku blokları yüklenemedi. Lütfen tekrar deneyin."
+          }
+        }
+      }
+    },
+    "supabase.error.fetch.schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch sleep schedule. Please try again."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku programı yüklenemedi. Lütfen tekrar deneyin."
+          }
+        }
+      }
+    },
     "supabase.error.sync" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -324,6 +426,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senkronizasyon Hatası"
+          }
+        }
+      }
+    },
+    "supabase.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading data from cloud..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veriler buluttan yükleniyor..."
+          }
+        }
+      }
+    },
+    "supabase.offline.mode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline Mode"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çevrimdışı Mod"
+          }
+        }
+      }
+    },
+    "supabase.pending.changes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending Changes..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklikler Bekliyor..."
           }
         }
       }
@@ -345,70 +498,19 @@
         }
       }
     },
-    "auth.error.signin" : {
+    "supabase.syncing" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign In Error"
+            "value" : "Syncing..."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Giriş Hatası"
-          }
-        }
-      }
-    },
-    "auth.error.signout" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign Out Error"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çıkış Hatası"
-          }
-        }
-      }
-    },
-    "auth.success.signin" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Signed In Successfully"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başarıyla Giriş Yapıldı"
-          }
-        }
-      }
-    },
-    "auth.success.signout" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Signed Out Successfully"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başarıyla Çıkış Yapıldı"
+            "value" : "Senkronize Ediliyor..."
           }
         }
       }

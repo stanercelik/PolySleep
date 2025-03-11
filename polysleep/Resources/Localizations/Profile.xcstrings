@@ -721,6 +721,23 @@
         }
       }
     },
+    "profile.login.status.unsigned" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not signed in"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş yapılmadı"
+          }
+        }
+      }
+    },
     "profile.login.success" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -768,6 +785,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giriş yaparak verilerinizi eşleyin"
+          }
+        }
+      }
+    },
+    "profile.logout.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap"
           }
         }
       }

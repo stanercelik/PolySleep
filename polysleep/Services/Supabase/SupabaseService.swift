@@ -32,6 +32,11 @@ class SupabaseService {
         return SupabaseScheduleService.shared
     }
     
+    /// Uyku kayıtları servisi
+    var history: SupabaseHistoryService {
+        return SupabaseHistoryService.shared
+    }
+    
     // MARK: - Yardımcı Metodlar
     
     /// Mevcut kullanıcıyı döndürür (auth servisinden)
