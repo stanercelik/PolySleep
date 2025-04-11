@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "weekday.%@" : {
-
-    },
     "weekday.fri" : {
       "comment" : "Label for Friday",
       "extractionState" : "stale",

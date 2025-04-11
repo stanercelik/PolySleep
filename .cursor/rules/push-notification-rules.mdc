@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Kural Adı: Push Bildirimleri (OneSignal)
+
+Açıklama: OneSignal ile push bildirimlerinin gönderimi ve yönetimi.
+
+- **OneSignal:** Uygulamaya push bildirimleri göndermek için kullanılacak.
+- **Kayıt:** Kullanıcı uygulamayı ilk açtığında OneSignal'a kaydedilecek (gerekli izinler alındıktan sonra).
+- **Segmentasyon:** Kullanıcılar, uyku alışkanlıkları, abonelik durumları veya diğer özelliklere göre OneSignal içinde segmentlere ayrılabilir.
+- **Bildirim İçeriği:** Bildirimler, kullanıcının uyku programına, hedeflerine veya diğer ilgili bilgilere göre kişiselleştirilebilir.
+- **Gönderim Zamanlaması:** Bildirimler, kullanıcının uyku programına veya belirli olaylara (örneğin, uyku zamanı yaklaştığında) göre zamanlanabilir.
+- **Opt-Out:** Kullanıcılar, uygulama ayarlarından bildirimleri almayı durdurabilmelidir.
+- **OneSignal API:** OneSignal'ın sağladığı API'ler kullanılarak bildirim gönderme, segment yönetimi ve diğer işlemler gerçekleştirilecektir.

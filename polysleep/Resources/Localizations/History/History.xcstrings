@@ -3,6 +3,7 @@
   "strings" : {
     "Add Sleep Entry" : {
       "comment" : "Accessibility label for add sleep entry button",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20,6 +21,7 @@
     },
     "Bu dönemde kayıt bulunamadı" : {
       "comment" : "Message displayed when there is no history in the current filter",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -35,8 +37,15 @@
         }
       }
     },
+    "Bu zaman aralığında hiç uyku kaydı bulunamadı. Bir kayıt eklemek için aşağıdaki butona tıklayabilirsiniz." : {
+
+    },
+    "Daha Fazla" : {
+
+    },
     "Düzenle" : {
       "comment" : "Button text for editing day detail",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +63,7 @@
     },
     "Filtrele" : {
       "comment" : "Navigation title for filter menu",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -86,11 +96,18 @@
         }
       }
     },
+    "Kayıt Bulunamadı" : {
+
+    },
     "Key" : {
       "extractionState" : "manual"
     },
+    "Özel Aralık" : {
+
+    },
     "Özel Tarih Aralığı" : {
       "comment" : "Header text for custom date range filter",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -106,8 +123,12 @@
         }
       }
     },
+    "Sil" : {
+
+    },
     "Sleep History" : {
       "comment" : "Navigation title for history view",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -145,6 +166,7 @@
     },
     "sleepEntry.delete" : {
       "comment" : "Swipe action label for deleting a sleep entry",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -162,6 +184,7 @@
     },
     "Tamam" : {
       "comment" : "Button text to confirm filter changes",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -179,6 +202,7 @@
     },
     "Tarih Seç" : {
       "comment" : "Button text to select a date range",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -230,11 +254,15 @@
         }
       }
     },
+    "Uyku Geçmişi" : {
+
+    },
     "Uyku Kaydı Ekle" : {
 
     },
     "Uyku Tipi" : {
       "comment" : "Header text for selecting sleep type",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

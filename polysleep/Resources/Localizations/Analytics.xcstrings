@@ -122,6 +122,7 @@
     },
     "analytics.sleepBreakdown.daily" : {
       "comment" : "Daily sleep breakdown text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -156,6 +157,7 @@
     },
     "analytics.sleepBreakdown.perDay" : {
       "comment" : "Sleep breakdown per day text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -190,6 +192,7 @@
     },
     "analytics.sleepBreakdown.total" : {
       "comment" : "Total sleep breakdown text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -224,6 +227,7 @@
     },
     "analytics.timeGained.comparison" : {
       "comment" : "Time gained comparison text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -241,6 +245,7 @@
     },
     "analytics.timeGained.hours" : {
       "comment" : "Time gained hours text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -258,6 +263,7 @@
     },
     "analytics.timeGained.message" : {
       "comment" : "Time gained message",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -415,6 +421,7 @@
     },
     "analytics.trend.coreSleep" : {
       "comment" : "Core sleep text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -432,6 +439,7 @@
     },
     "analytics.trend.nap1" : {
       "comment" : "Nap 1 text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -449,6 +457,7 @@
     },
     "analytics.trend.nap2" : {
       "comment" : "Nap 2 text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -466,6 +475,7 @@
     },
     "analytics.trend.score" : {
       "comment" : "Sleep score text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -500,6 +510,7 @@
     },
     "analytics.trend.total" : {
       "comment" : "Total sleep time text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

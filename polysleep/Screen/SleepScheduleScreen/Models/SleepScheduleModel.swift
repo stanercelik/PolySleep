@@ -23,6 +23,11 @@ public enum TimeFormatter {
         let minute = totalMinutes % 60
         return formatTime(hour, minute)
     }
+    
+    static func formattedString(from timeString: String) -> String {
+        guard let (hour, minute) = time(from: timeString) else { return timeString }
+        return formatTime(hour, minute)
+    }
 }
 
 /// Represents a sleep block within a schedule (either core sleep or nap)

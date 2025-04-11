@@ -9,6 +9,7 @@
       },
       "totalSleepHours": 8,
       "isPremium": false,
+      "adaptationPhase": 30,
       "schedule": [
         {
           "type": "core",
@@ -27,6 +28,7 @@
       },
       "totalSleepHours": 6.5,
       "isPremium": false,
+      "adaptationPhase": 45,
       "schedule": [
         {
           "type": "core",
@@ -51,6 +53,7 @@
       },
       "totalSleepHours": 7.5,
       "isPremium": true,
+      "adaptationPhase": 45,
       "schedule": [
         {
           "type": "core",
@@ -75,6 +78,7 @@
       },
       "totalSleepHours": 4.5,
       "isPremium": false,
+      "adaptationPhase": 60,
       "schedule": [
         {
           "type": "core",
@@ -111,6 +115,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
+      "adaptationPhase": 75,
       "schedule": [
         {
           "type": "core",
@@ -141,6 +146,7 @@
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
+      "adaptationPhase": 90,
       "schedule": [
         {
           "type": "core",
@@ -173,10 +179,11 @@
       "name": "Everyman 4 (E4)",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3’e göre daha ağır bir düzendir."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3'e göre daha ağır bir düzendir."
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
+      "adaptationPhase": 120,
       "schedule": [
         {
           "type": "core",
@@ -204,7 +211,7 @@
         },
         {
           "type": "nap",
-          "startTime": "20:00",
+          "startTime": "19:00",
           "duration": 20,
           "isCore": false
         }
@@ -219,6 +226,7 @@
       },
       "totalSleepHours": 2,
       "isPremium": false,
+      "adaptationPhase": 120,
       "schedule": [
         {
           "type": "nap",
@@ -255,6 +263,7 @@
       },
       "totalSleepHours": 2,
       "isPremium": true,
+      "adaptationPhase": 120,
       "schedule": [
         {
           "type": "nap",
@@ -287,10 +296,11 @@
       "name": "Uberman",
       "description": {
         "en": "A highly extreme pattern featuring six (sometimes more) short naps of about 20 minutes each, spread every 4 hours.",
-        "tr": "Yaklaşık her 4 saatte bir, 20 dakikalık altı (veya daha fazla) kısa uykudan oluşan, son derece ekstrem bir uyku düzenidir."
+        "tr": "Her 4 saatte bir 20 dakikalık altı (bazen daha fazla) kısa uykudan oluşan oldukça ekstrem bir uyku düzenidir."
       },
       "totalSleepHours": 2,
       "isPremium": true,
+      "adaptationPhase": 180,
       "schedule": [
         {
           "type": "nap",
@@ -339,6 +349,7 @@
       },
       "totalSleepHours": 4,
       "isPremium": false,
+      "adaptationPhase": 90,
       "schedule": [
         {
           "type": "core",
@@ -369,6 +380,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
+      "adaptationPhase": 90,
       "schedule": [
         {
           "type": "core",
@@ -399,6 +411,7 @@
       },
       "totalSleepHours": 6,
       "isPremium": true,
+      "adaptationPhase": 60,
       "schedule": [
         {
           "type": "core",
@@ -423,6 +436,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
+      "adaptationPhase": 60,
       "schedule": [
         {
           "type": "core",

@@ -180,6 +180,7 @@
     },
     "sleepBlock.type.core" : {
       "comment" : "Label for core sleep block",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -197,6 +198,7 @@
     },
     "sleepBlock.type.nap" : {
       "comment" : "Label for nap sleep block",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -318,7 +320,6 @@
     },
     "sleepEntry.quality" : {
       "comment" : "Section header for choosing sleep quality or feeling",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

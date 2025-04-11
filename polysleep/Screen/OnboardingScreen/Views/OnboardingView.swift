@@ -129,63 +129,40 @@ struct OnboardingView: View {
                     )
                 }
                 .padding(.top, 16)
-                
-                // Loading indicator
-                if viewModel.isLoadingRecommendation {
-                    ZStack {
-                        Color.black.opacity(0.5)
-                            .ignoresSafeArea()
-                        
-                        VStack(spacing: 16) {
-                            ProgressView()
-                                .scaleEffect(1.5)
-                                .tint(.white)
-                            
-                            Text("Uyku programınız hesaplanıyor...")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                        }
-                        .padding(24)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.appPrimary.opacity(0.7))
-                        )
-                    }
-                }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(isPresented: $viewModel.shouldNavigateToSleepSchedule) {
-                SleepScheduleView()
-                    .navigationBarBackButtonHidden(true)
+            .fullScreenCover(isPresented: $viewModel.showLoadingView, onDismiss: {
+                // Loading view kapandığında ve navigateToMainScreen true ise ana ekrana geçiş yap
+                if viewModel.navigateToMainScreen {
+                    // OnboardingCompleted bildirimini gönder
+                    NotificationCenter.default.post(name: NSNotification.Name("OnboardingCompleted"), object: nil)
+                    
+                    // Hafif bir gecikme ile ana ekrana geçiş yap
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        viewModel.handleNavigationToMainScreen()
+                    }
+                }
+            }) {
+                LoadingRecommendationView(
+                    progress: $viewModel.recommendationProgress,
+                    statusMessage: $viewModel.recommendationStatusMessage,
+                    isComplete: $viewModel.recommendationComplete,
+                    navigateToMainScreen: $viewModel.navigateToMainScreen
+                )
             }
+            .background(
+                // Görünmeyen bir view ile MainTabBarView'a geçişi sağlar
+                NavigationLink(
+                    destination: MainTabBarView()
+                        .navigationBarBackButtonHidden(true),
+                    isActive: $viewModel.goToMainScreen,
+                    label: { EmptyView() }
+                )
+            )
             .alert("Hata", isPresented: $viewModel.showError) {
                 Button("Tamam", role: .cancel) {}
             } message: {
                 Text(viewModel.errorMessage)
-            }
-            
-            if viewModel.showStartButton {
-                VStack {
-                    Spacer()
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            viewModel.startUsingApp()
-                        }
-                    }) {
-                        Text("onboarding.startUsingApp", tableName: "Onboarding")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.appPrimary)
-                            )
-                            .padding(.horizontal)
-                    }
-                    .padding(.bottom, 32)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
             }
         }
     }

@@ -13,6 +13,7 @@ struct AddSleepEntrySheet: View {
     @State private var blockErrorMessage = ""
     @State private var previousEmojiLabel: String = ""
     @State private var labelOffset: CGFloat = 0
+    @State private var animateSelection: Bool = false
     
     // MainScreenViewModel'den uyku bloklarını almak için
     @StateObject private var mainViewModel = MainScreenViewModel()
@@ -33,6 +34,15 @@ struct AddSleepEntrySheet: View {
         "😪": "bad",
         "😩": "awful"
     ]
+    
+    // Kullanıcının seçtiği emojiler
+    private var coreEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    }
+    
+    private var napEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "⚡"
+    }
     
     // Seçilen tarih için uyku bloklarını filtreleme
     private var availableBlocks: [SleepBlock] {
@@ -86,10 +96,16 @@ struct AddSleepEntrySheet: View {
     
     // MARK: - View Components
     private var datePickerSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("sleepEntry.date", tableName: "AddSleepEntrySheet")
-                .font(.headline)
-                .foregroundColor(Color("TextColor"))
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "calendar")
+                    .foregroundColor(Color.appPrimary)
+                    .font(.system(size: 18, weight: .medium))
+                
+                Text("sleepEntry.date", tableName: "AddSleepEntrySheet")
+                    .font(.headline)
+                    .foregroundColor(Color.appText)
+            }
             
             DatePicker(
                 NSLocalizedString("sleepEntry.selectDate", tableName: "AddSleepEntrySheet", comment: ""),
@@ -97,161 +113,208 @@ struct AddSleepEntrySheet: View {
                 displayedComponents: [.date]
             )
             .datePickerStyle(.compact)
-            .tint(Color("AccentColor"))
+            .tint(Color.appPrimary)
             .onChange(of: selectedDate) { _ in
                 selectedBlock = nil
+                // Hafif bir titreşim verelim
+                let generator = UIImpactFeedbackGenerator(style: .light)
+                generator.impactOccurred()
             }
-            .padding(12)
+            .padding(16)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color("CardBackground"))
+                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
             )
+            .padding(.bottom, 8)
         }
         .padding(.horizontal)
+        .padding(.top, 8)
     }
     
     private var blockSelectionSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("sleepEntry.selectBlock", tableName: "AddSleepEntrySheet")
-                .font(.headline)
-                .foregroundColor(Color("TextColor"))
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "clock")
+                    .foregroundColor(Color.appPrimary)
+                    .font(.system(size: 18, weight: .medium))
+                
+                Text("sleepEntry.selectBlock", tableName: "AddSleepEntrySheet")
+                    .font(.headline)
+                    .foregroundColor(Color.appText)
+            }
             
             if availableBlocks.isEmpty {
-                HStack {
-                    Spacer()
-                    VStack(spacing: 12) {
-                        Text("🌙")
-                            .font(.title)
-                        
-                        Text("sleepEntry.noBlocks", tableName: "AddSleepEntrySheet", comment: "")
-                            .font(.subheadline)
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    Spacer()
-                }
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color("CardBackground"))
-                )
-                .padding(.horizontal)
+                EmptyBlocksView()
             } else {
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(availableBlocks.prefix(max(5, availableBlocks.count)), id: \.id) { block in
-                            BlockSelectionButton(
-                                block: block,
-                                isSelected: selectedBlock?.id == block.id,
-                                onTap: {
-                                    if isBlockAlreadyAdded(block) {
-                                        blockErrorMessage = "sleepEntry.error.alreadyAdded"
-                                        showBlockError = true
-                                    } else {
-                                        selectedBlock = block
-                                        // Haptic feedback
-                                        let generator = UIImpactFeedbackGenerator(style: .light)
-                                        generator.impactOccurred()
-                                    }
-                                }
-                            )
-                        }
-                    }
-                    .padding(.vertical, 8)
-                }
-                .frame(height: 250)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color("CardBackground"))
-                )
+                BlocksListView()
             }
         }
         .padding(.horizontal)
     }
     
-    private struct BlockSelectionButton: View {
-        let block: SleepBlock
-        let isSelected: Bool
-        let onTap: () -> Void
-        
-        var body: some View {
-            Button(action: onTap) {
-                HStack(spacing: 12) {
-                    Text(block.isCore ? "🛏️" : "⚡️")
-                        .font(.system(size: 16))
-                        .frame(width: 28, height: 28)
-                        .background(
-                            Circle()
-                                .fill(isSelected ? Color("AccentColor").opacity(0.2) : Color.clear)
-                        )
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("\(block.startTime) - \(block.endTime)")
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(Color("TextColor"))
-                        
-                        Text(block.isCore ? NSLocalizedString("sleepBlock.type.core", tableName: "AddSleepEntrySheet", comment: "") : NSLocalizedString("sleepBlock.type.nap", tableName: "AddSleepEntrySheet", comment: ""))
-                            .font(.system(size: 12))
-                            .foregroundColor(Color("SecondaryTextColor"))
-                    }
-                    
-                    Spacer()
-                    
-                    if isSelected {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(Color("AccentColor"))
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                }
-                .padding(.vertical, 6)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(isSelected ? Color("AccentColor").opacity(0.1) : Color.clear)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(isSelected ? Color("AccentColor") : Color.clear, lineWidth: 1)
-                )
+    private func EmptyBlocksView() -> some View {
+        VStack(spacing: 16) {
+            Spacer()
+            VStack(spacing: 16) {
+                Image(systemName: "moon.zzz.fill")
+                    .font(.system(size: 50))
+                    .foregroundColor(Color.appSecondaryText.opacity(0.5))
+                
+                Text("sleepEntry.noBlocks", tableName: "AddSleepEntrySheet", comment: "")
+                    .font(.headline)
+                    .foregroundColor(Color.appSecondaryText)
+                    .multilineTextAlignment(.center)
             }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.horizontal, 8)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 40)
+            Spacer()
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+        )
+        .frame(height: 200)
+    }
+    
+    private func BlocksListView() -> some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                ForEach(availableBlocks, id: \.id) { block in
+                    BlockSelectionButton(
+                        block: block,
+                        isSelected: selectedBlock?.id == block.id,
+                        onTap: {
+                            if isBlockAlreadyAdded(block) {
+                                blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                showBlockError = true
+                            } else {
+                                withAnimation(.spring(duration: 0.3)) {
+                                    // Seçimi değiştirdiğimizde animasyon tetikle
+                                    selectedBlock = block
+                                    animateSelection = true
+                                }
+                                
+                                // Animasyonu sıfırla
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    animateSelection = false
+                                }
+                                
+                                // Haptic feedback
+                                let generator = UIImpactFeedbackGenerator(style: .medium)
+                                generator.impactOccurred()
+                            }
+                        }
+                    )
+                }
+            }
+            .padding(.vertical, 16)
+            .padding(.horizontal, 12)
+        }
+        .frame(height: 250)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+        )
+    }
+    
+    private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, onTap: @escaping () -> Void) -> some View {
+        Button(action: onTap) {
+            HStack {
+                // Blok tipi ikonu (core veya nap)
+                Text(block.isCore ? coreEmoji : napEmoji)
+                    .font(.system(size: 20))
+                    .padding(8)
+                    .background(
+                        Circle()
+                            .fill(block.isCore ? Color.appPrimary.opacity(0.2) : Color.appSecondary.opacity(0.2))
+                    )
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(block.isCore ? "Ana Uyku" : "Şekerleme")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(Color.appText)
+                    
+                    Text("\(TimeFormatter.formattedString(from: block.startTime)) - \(TimeFormatter.formattedString(from: block.endTime))")
+                        .font(.caption)
+                        .foregroundColor(Color.appSecondaryText)
+                }
+                
+                Spacer()
+                
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(Color.appSecondary)
+                        .scaleEffect(animateSelection ? 1.2 : 1.0)
+                }
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? Color.appSecondary.opacity(0.1) : Color.clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(isSelected ? Color.appSecondary : Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+            )
         }
     }
     
     private var qualitySection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Rate your sleep quality")
-                .font(.headline)
-                .foregroundColor(Color("TextColor"))
-                .padding(.horizontal)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "star.fill")
+                    .foregroundColor(Color.appPrimary)
+                    .font(.system(size: 18, weight: .medium))
+                
+                Text("sleepEntry.quality", tableName: "AddSleepEntrySheet")
+                    .font(.headline)
+                    .foregroundColor(Color.appText)
+            }
             
-            VStack(alignment: .center, spacing: 16) {
-                HStack(spacing: 12) {
-                    Text(currentEmoji)
-                        .font(.system(size: 52))
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+            VStack(alignment: .center, spacing: 24) {
+                HStack(alignment: .center, spacing: 16) {
+                    ZStack {
+                        Circle()
+                            .fill(getSliderColor().opacity(0.15))
+                            .frame(width: 70, height: 70)
+                        
+                        Text(currentEmoji)
+                            .font(.system(size: 42))
+                            .scaleEffect(animateSelection ? 1.2 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+                    }
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 8) {
                         ZStack {
                             Text(previousEmojiLabel)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Color("SecondaryTextColor"))
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(Color.appSecondaryText)
                                 .opacity(labelOffset != 0 ? 0.3 : 0)
                                 .offset(y: labelOffset)
                             
                             Text(currentEmojiLabel)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Color("SecondaryTextColor"))
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(Color.appSecondaryText)
                                 .offset(y: labelOffset)
                         }
                         .frame(height: 20)
                         .clipped()
                         
-                        HStack(spacing: 4) {
+                        Text(currentEmojiDescription)
+                            .font(.system(size: 14))
+                            .foregroundColor(Color.appSecondaryText)
+                        
+                        HStack(spacing: 6) {
                             ForEach(0..<5) { index in
                                 Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
-                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
-                                    .font(.system(size: 12))
+                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color.appSecondaryText.opacity(0.3))
+                                    .font(.system(size: 14))
                             }
                         }
                     }
@@ -260,39 +323,91 @@ struct AddSleepEntrySheet: View {
                 }
                 .padding(.horizontal)
                 
-                Slider(value: $sliderValue, in: 0...4, step: 1)
-                    .tint(getSliderColor())
-                    .padding(.horizontal)
-                    .onChange(of: sliderValue) { newValue in
-                        // Haptic feedback
-                        let generator = UIImpactFeedbackGenerator(style: .light)
-                        generator.impactOccurred()
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text("Kötü")
+                            .font(.system(size: 12))
+                            .foregroundColor(Color.appSecondaryText)
                         
-                        // Etiket animasyonu için
-                        if currentEmojiLabel != previousEmojiLabel {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                labelOffset = 20 // Aşağı doğru kaydır
+                        Spacer()
+                        
+                        Text("Mükemmel")
+                            .font(.system(size: 12))
+                            .foregroundColor(Color.appSecondaryText)
+                    }
+                    .padding(.horizontal, 4)
+                    
+                    ZStack(alignment: .leading) {
+                        // Arka plan izleri
+                        HStack(spacing: 0) {
+                            ForEach(0..<5) { index in
+                                Rectangle()
+                                    .fill(Color.appSecondaryText.opacity(0.1))
+                                    .frame(height: 6)
+                                    .cornerRadius(3)
                             }
+                        }
+                        
+                        // Aktif dolgu
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [getSliderColor(), getSliderColor().opacity(0.7)]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: (UIScreen.main.bounds.width - 88) * (CGFloat(sliderValue) / 4.0), height: 6)
+                            .cornerRadius(3)
+                        
+                        // Slider düğmesi
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: 24, height: 24)
+                            .shadow(color: getSliderColor().opacity(0.3), radius: 4, x: 0, y: 2)
+                            .overlay(
+                                Circle()
+                                    .stroke(getSliderColor(), lineWidth: 2)
+                            )
+                            .offset(x: (UIScreen.main.bounds.width - 88) * (CGFloat(sliderValue) / 4.0) - 12)
+                    }
+                    
+                    Slider(value: $sliderValue, in: 0...4, step: 1)
+                        .tint(getSliderColor())
+                        .opacity(0.01) // Görünmez ama etkileşimli
+                        .onChange(of: sliderValue) { newValue in
+                            // Haptic feedback
+                            let generator = UIImpactFeedbackGenerator(style: .light)
+                            generator.impactOccurred()
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                labelOffset = -20 // Yukarı konumla
-                                previousEmojiLabel = currentEmojiLabel
-                                
+                            // Etiket animasyonu için
+                            if currentEmojiLabel != previousEmojiLabel {
                                 withAnimation(.easeInOut(duration: 0.2)) {
-                                    labelOffset = 0 // Ortaya getir
+                                    labelOffset = 20 // Aşağı doğru kaydır
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    labelOffset = -20 // Yukarı konumla
+                                    previousEmojiLabel = currentEmojiLabel
+                                    
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        labelOffset = 0 // Ortaya getir
+                                    }
                                 }
                             }
                         }
-                    }
+                }
+                .padding(.horizontal)
             }
-            .padding(.vertical, 16)
+            .padding(.vertical, 20)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color("CardBackground"))
+                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
             )
             .padding(.horizontal)
         }
-        .padding(.vertical, 8)
+        .padding(.top, 8)
     }
     
     private func getSliderColor() -> Color {
@@ -315,18 +430,32 @@ struct AddSleepEntrySheet: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 16) {
-                    datePickerSection
-                    blockSelectionSection
-                    
-                    if selectedBlock != nil {
-                        qualitySection
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 24) {
+                        datePickerSection
+                        blockSelectionSection
+                        
+                        if selectedBlock != nil {
+                            qualitySection
+                        }
+                        
+                        // Kaydet butonu
+                        if selectedBlock != nil {
+                            SaveButton(isEnabled: isValidEntry())
+                                .padding(.horizontal)
+                                .padding(.top, 8)
+                                .padding(.bottom, 24)
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .padding(.vertical)
+                    .animation(.spring(response: 0.3), value: selectedBlock != nil)
                 }
-                .padding(.vertical)
             }
             .navigationTitle(NSLocalizedString("sleepEntry.add", tableName: "AddSleepEntrySheet", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
@@ -335,6 +464,7 @@ struct AddSleepEntrySheet: View {
                     Button(NSLocalizedString("general.cancel", tableName: "AddSleepEntrySheet", comment: "")) {
                         dismiss()
                     }
+                    .foregroundColor(Color.appPrimary)
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
@@ -348,9 +478,9 @@ struct AddSleepEntrySheet: View {
                     .disabled(!isValidEntry())
                     .opacity(isValidEntry() ? 1.0 : 0.5)
                     .font(.headline)
+                    .foregroundColor(Color.appPrimary)
                 }
             }
-            .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
             .alert(isPresented: $showBlockError) {
                 Alert(
                     title: Text("sleepEntry.error.title", tableName: "AddSleepEntrySheet"),
@@ -359,6 +489,42 @@ struct AddSleepEntrySheet: View {
                 )
             }
         }
+    }
+    
+    // Büyük kaydet butonu
+    private func SaveButton(isEnabled: Bool) -> some View {
+        Button(action: {
+            if isEnabled {
+                saveSleepEntry()
+                // Haptic feedback
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.success)
+                dismiss()
+            }
+        }) {
+            HStack {
+                Spacer()
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.headline)
+                Text(NSLocalizedString("general.save", tableName: "AddSleepEntrySheet", comment: ""))
+                    .font(.headline)
+                Spacer()
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(isEnabled ? 
+                         LinearGradient(gradient: Gradient(colors: [Color.appPrimary, Color.appPrimary.opacity(0.8)]), 
+                                      startPoint: .topLeading, 
+                                      endPoint: .bottomTrailing) :
+                         LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.3)]), 
+                                      startPoint: .topLeading, 
+                                      endPoint: .bottomTrailing))
+                    .shadow(color: isEnabled ? Color.appPrimary.opacity(0.3) : Color.clear, radius: 8, x: 0, y: 4)
+            )
+            .foregroundColor(.white)
+        }
+        .disabled(!isEnabled)
     }
     
     private func isValidEntry() -> Bool {

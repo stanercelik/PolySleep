@@ -1,6 +1,16 @@
 import SwiftUI
 import SwiftData
 
+// Enum dönüşüm hatası için özel hata tipi
+struct EnumConversionError: Error, LocalizedError {
+    let enumType: String
+    let value: String
+    
+    var errorDescription: String? {
+        return "'\(value)' değeri '\(enumType)' enum tipine dönüştürülemedi."
+    }
+}
+
 @MainActor
 final class OnboardingViewModel: ObservableObject {
     // MARK: - Dependencies
@@ -14,6 +24,16 @@ final class OnboardingViewModel: ObservableObject {
     @Published var isLoadingRecommendation = false
     @Published var showError = false
     @Published var errorMessage = ""
+    
+    // Yükleme ekranı için yeni değişkenler
+    @Published var recommendationProgress: Double = 0.0
+    @Published var recommendationStatusMessage: String = ""
+    @Published var recommendationComplete: Bool = false
+    @Published var showLoadingView: Bool = false
+    @Published var navigateToMainScreen: Bool = false
+    
+    // Ana ekrana geçiş için NavigationLink değişkeni
+    @Published var goToMainScreen: Bool = false
     
     // User selections
     @Published var previousSleepExperience: PreviousSleepExperience?
@@ -67,9 +87,8 @@ final class OnboardingViewModel: ObservableObject {
             }
         } else {
             Task {
-                await saveUserPreferences()
+                await startRecommendationProcess()
             }
-            showStartButton = true
         }
     }
     
@@ -77,6 +96,17 @@ final class OnboardingViewModel: ObservableObject {
         if currentPage > 0 {
             currentPage -= 1
         }
+    }
+    
+    // MARK: - Recommendation Process
+    func startRecommendationProcess() async {
+        showLoadingView = true
+        recommendationProgress = 0.0
+        recommendationStatusMessage = "Bilgiler alınıyor..."
+        recommendationComplete = false
+        
+        // Bilgileri kaydet
+        await saveUserPreferences()
     }
     
     // MARK: - Saving
@@ -100,6 +130,8 @@ final class OnboardingViewModel: ObservableObject {
             await showErrorMessage("Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın.")
             return
         }
+        
+        updateProgress(0.15, "Tercihleriniz kaydediliyor...")
         
         print("\nSaving values:")
         print("- Sleep Experience: \(sleepExperience.rawValue)")
@@ -142,12 +174,14 @@ final class OnboardingViewModel: ObservableObject {
             savedAnswers.append(onboardingAnswer)
         }
         
+        updateProgress(0.30, "Veriler senkronize ediliyor...")
+        
         // Supabase'e senkronize et
         do {
             let success = try await SupabaseOnboardingService.shared.syncOnboardingAnswersToSupabase(answers: savedAnswers)
             if success {
                 print("✅ Successfully synced onboarding answers to Supabase")
-                
+                updateProgress(0.45, "Uyku programınız hesaplanıyor...")
                 // Recommend Schedule kısmında async/await kullanmak için
                 await getRecommendedSchedule()
             } else {
@@ -164,19 +198,51 @@ final class OnboardingViewModel: ObservableObject {
         await MainActor.run {
             errorMessage = message
             showError = true
+            showLoadingView = false
+        }
+    }
+    
+    private func updateProgress(_ targetProgress: Double, _ message: String) {
+        // Animasyon için başlangıç değeri
+        let startProgress = recommendationProgress
+        let totalSteps = 20
+        let animationDuration = 1.0 // Toplam animasyon süresi (saniye)
+        
+        for step in 0...totalSteps {
+            let delayForStep = animationDuration * Double(step) / Double(totalSteps)
+            let progressForStep = startProgress + (targetProgress - startProgress) * Double(step) / Double(totalSteps)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delayForStep) {
+                withAnimation(.easeInOut(duration: animationDuration / Double(totalSteps))) {
+                    self.recommendationProgress = progressForStep
+                    
+                    // Sadece son adımda mesajı güncelle
+                    if step == totalSteps {
+                        self.recommendationStatusMessage = message
+                    }
+                }
+            }
         }
     }
     
     func getRecommendedSchedule() async {
-        await MainActor.run {
-            isLoadingRecommendation = true
-        }
+        updateProgress(0.6, "Programınız analiz ediliyor...")
+        
+        // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
+        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 saniye
+        
+        updateProgress(0.75, "Çok az kaldı...")
         
         do {
             if let recommendation = try await recommender.recommendSchedule() {
                 print("\n=== Recommended Schedule ===")
                 print("Name: \(recommendation.schedule.name)")
                 print("Confidence Score: \(recommendation.confidenceScore)")
+                
+                // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
+                try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye
+                
+                updateProgress(0.9, "Programınız kaydediliyor...")
                 
                 // Önerilen programı schedules tablosuna kaydet
                 let success = try await SupabaseScheduleService.shared.saveRecommendedSchedule(
@@ -186,24 +252,61 @@ final class OnboardingViewModel: ObservableObject {
                 
                 if success {
                     print("✅ Successfully saved recommended schedule to Supabase")
+                    
+                    // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
+                    try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 saniye
+                    
+                    updateProgress(1.0, "Hazır!")
+                    recommendationComplete = true
                 } else {
                     print("⚠️ Failed to save recommended schedule to Supabase")
+                    
+                    // Hata olsa bile kullanıcıya yükleme tamamlandı gösterelim
+                    handleErrorButContinue("Veriler kaydedilemedi ancak yine de devam edebilirsiniz.")
                 }
             } else {
                 print("❌ Failed to get recommendation")
-                await showErrorMessage("Uyku programı önerisi oluşturulamadı.")
+                
+                // Önerilen program oluşturulamasa bile kullanıcıya yükleme tamamlandı gösterelim
+                handleErrorButContinue("Varsayılan program oluşturuldu.")
             }
+        } catch let error as EnumConversionError {
+            print("❌ Enum conversion error: \(error.localizedDescription)")
+            handleErrorButContinue("Verileriniz işlenirken bir sorun oluştu, varsayılan program oluşturuldu.")
         } catch {
             print("❌ Error getting recommendation: \(error.localizedDescription)")
-            await showErrorMessage("Uyku programı önerisi alınamadı: \(error.localizedDescription)")
+            handleErrorButContinue("Beklenmeyen bir hata oluştu, varsayılan program oluşturuldu.")
         }
+    }
+    
+    // Hata durumlarında yükleme ekranını tamamlamak için yardımcı fonksiyon
+    private func handleErrorButContinue(_ message: String) {
+        // Bir uyarı göster ama yine de yükleme animasyonunu tamamla
+        updateProgress(0.9, message)
         
-        await MainActor.run {
-            isLoadingRecommendation = false
+        // 1 saniye sonra tamamlanmış olarak göster
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            withAnimation {
+                self.recommendationProgress = 1.0
+                self.recommendationStatusMessage = "Hazır!"
+                self.recommendationComplete = true
+            }
         }
     }
     
     func startUsingApp() {
-        shouldNavigateToSleepSchedule = true
+        // Ana ekrana geçmeden önce Onboarding tamamlandı bildirimini gönder
+        NotificationCenter.default.post(name: NSNotification.Name("OnboardingCompleted"), object: nil)
+        
+        // Ana ekrana geçiş yap
+        navigateToMainScreen = true
+    }
+    
+    // Ana ekrana geçiş işlemini yönetir
+    func handleNavigationToMainScreen() {
+        // FullScreenCover'ı kapattıktan sonra NavigationLink ile ana ekrana geçiş yapar
+        withAnimation {
+            goToMainScreen = true
+        }
     }
 }

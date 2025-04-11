@@ -34,8 +34,10 @@ class HistoryViewModel: ObservableObject {
     @Published var selectedDateRange: ClosedRange<Date>?
     @Published var isCustomFilterVisible = false
     @Published var selectedDay: Date?
+    @Published var selectedDate: Date = Date()
     @Published var isDayDetailPresented = false
     @Published var isAddSleepEntryPresented = false
+    @Published var showAddEntry = false
     @Published var isSyncing = false
     @Published var syncError: String?
     @Published var syncStatus: SyncStatus = .synced
@@ -102,6 +104,7 @@ class HistoryViewModel: ObservableObject {
     
     func selectDay(_ date: Date) {
         selectedDay = date
+        selectedDate = date
         isDayDetailPresented = true
     }
     

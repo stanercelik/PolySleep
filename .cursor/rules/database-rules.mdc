@@ -1,0 +1,89 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Kural Adı: Veritabanı Yapısı (Supabase)
+Açıklama: PolySleep uygulamasının Supabase veritabanı şeması ve Row Level Security (RLS) politikaları.
+
+## Tablolar:
+
+1.  **users:** Kullanıcı profilleri (Supabase Auth tarafından yönetilir, özel alanlar eklendi).
+    *   `id` (UUID, Primary Key)
+    *   `email` (TEXT)
+    *   `display_name` (TEXT)
+    *   `avatar_url` (TEXT)
+    *   `is_anonymous` (BOOLEAN)
+    *   `preferences` (JSONB)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+    *   `isPremium` (BOOLEAN)
+
+2.  **user_schedules:** Kullanıcıların uyku programları.
+    *   `id` (UUID, Primary Key)
+    *   `user_id` (UUID, Foreign Key -> users.id)
+    *   `name` (TEXT)
+    *   `description` (JSONB)
+    *   `total_sleep_hours` (NUMERIC)
+    *   `adaptation_phase` (INTEGER)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+    *   `is_active` (BOOLEAN)
+
+3.  **user_sleep_blocks:** Programlardaki uyku blokları.
+    *   `id` (UUID, Primary Key)
+    *   `schedule_id` (UUID, Foreign Key -> user_schedules.id)
+    *   `start_time` (TIME)
+    *   `end_time` (TIME)
+    *   `duration_minutes` (INTEGER)
+    *   `is_core` (BOOLEAN)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+    *   `sync_id` (TEXT)
+
+4.  **onboarding_answers:** Kullanıcıların onboarding cevapları.
+    *   `id` (UUID, Primary Key)
+    *   `user_id` (UUID, Foreign Key -> users.id)
+    *   `question` (TEXT)
+    *   `answer` (TEXT)
+    *   `date` (TIMESTAMP WITH TIME ZONE)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+
+5.  **sleep-entries:** Kullanıcıların history'e girdiği entryler.
+    *   `id` (UUID, Primary Key)
+    *   `user_id` (UUID, Foreign Key -> users.id)
+    *   `date` (TIMESTAMP WITH TIME ZONE)
+    *   `block_id` (TEXT)
+    *   `emoji` (TEXT)
+    *   `rating` (INTEGER)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+    *   `sync_id` (TEXT)
+
+6.  **template_schedule:** Hazır uyku programı şablonları. (Kullanılmıyor) 
+    *   `id` (UUID, Primary Key)
+    *   `name` (TEXT)
+    *   `description` (JSONB)
+    *   `total_sleep_hours` (NUMERIC)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+    *   `isPremium` (BOOLEAN)
+
+7.  **template_sleep_blocks:** Şablon programlardaki uyku blokları. (Kullanılmıyor) 
+    *   `id` (UUID, Primary Key)
+    *   `schedule_template_id` (UUID, Foreign Key -> template_schedule.id)
+    *   `start_time` (TIME)
+    *   `duration_minutes` (INTEGER)
+    *   `is_core` (BOOLEAN)
+    *   `created_at` (TIMESTAMP WITH TIME ZONE)
+    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
+
+## Row Level Security (RLS):
+
+Kullanıcıların sadece kendi verilerine erişebilmesi için RLS politikaları:
+
+*   **users:** `USING (auth.uid() = id)`
+*   **user_schedules:** `USING (auth.uid() = user_id)`
+*   **sleep_blocks:** `USING (EXISTS (SELECT 1 FROM public.user_schedules WHERE user_schedules.id = sleep_blocks.schedule_id AND user_schedules.user_id = auth.uid()))`
+*   **onboarding_answers:** `USING (auth.uid() = user_id)`

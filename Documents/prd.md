@@ -15,8 +15,7 @@
 ## 2. Teknik Mimari  
 
 ### 2.1 Teknoloji Yığını  
-- **Framework**: SwiftUI  
-- **Veri Kalıcılığı**: SwiftData  
+- **Framework**: SwiftUI
 - **Mimari Desen**: MVVM (Model-View-ViewModel)  
 - **Bildirimler**: `UserNotifications` + `AVFoundation` (Alarm için)  
 - **Monetizasyon**: RevenueCat (Abonelik Yönetimi)  
@@ -222,31 +221,182 @@ Her adımda tek bir soru, cevap seçenekleri (radyo buton, picker vb.). Metinler
 
 ## 4.4 Analytics (Analizler)
 
-### 4.4.1 Üst Başlık / Zaman Seçici
-
-- “Analizler” (H1).  
-- Segment kontrol: “7 Gün / 30 Gün / 90 Gün” (veya Picker).  
-
-### 4.4.2 Trend Grafik
-
-- **Çizgi Grafik**: Mavi (`PrimaryColor`) toplam uyku süresi, yeşil (`SecondaryColor`) Sleep Score (0-5).  
-- Dokununca tooltip: `CardBackground` üzerinde değer gösterilir.
-
-### 4.4.3 Kazanılan Zaman Kartı
-
-- Arka plan: `SecondaryColor` ile %10 opacity, 12px radius.  
-- Metin: “412 saat kazandın! Bu hafta +14 saat” (🎉 emojisi eklenebilir).
-
-### 4.4.4 Sleep Breakdown (Pasta Grafiği)
-
-- Dilimler: `AccentColor`, `PrimaryColor`, `SecondaryColor`.  
-- Altında yüzdelik ve ortalama süre bilgileri.
-
-### 4.4.5 Paylaş Butonu
-
-- Sağ üstte “Share” ikonu. Dokununca iOS Share Sheet açılır, haftalık/aylık rapor görseli oluşturulur.
+Aşağıda, **Analytics (Analizler)** sayfasının hem fonksiyonel hem de görsel tasarım detaylarını bulabilirsiniz. Bu tasarım önerisi; **Apple Human Interface Guidelines** (HIG), **SwiftUI** prensipleri ve uygulamanızın genel stil rehberini (renk, tipografi, köşe yuvarlaklıkları, vb.) referans alarak hazırlanmıştır.
 
 ---
+
+### 4.1. Genel Amaç ve Bilgi Mimarisi
+
+**Analytics (Analizler)** sayfası, kullanıcının polifazik uyku düzeniyle ilgili **uzun vadeli verileri** inceleyebileceği, performansını kıyaslayabileceği ve **derinlemesine analiz** yapabileceği bir ekrandır.  
+Bu ekranda kullanıcı;  
+1. Belirli bir zaman aralığındaki **toplam uyku süresi**, **ortalama dinçlik skoru** ve **uyku blokları dağılımı** gibi metrikleri görebilir.  
+2. Gün veya hafta bazında trend grafikleri (line chart, bar chart vb.) inceleyebilir.  
+3. **“Kazanılan zaman”**, **uyku verimliliği**, **sleep score** gibi ek özet metrikleri bulabilir.  
+4. Gerekirse raporlarını paylaşabilir veya ekran görüntüsünü alabilir.
+
+---
+
+### 4.2. Sayfa Düzeni (Layout)
+
+Analytics sayfası, tab bar veya benzeri bir navigasyon yapısı üzerinden erişildiğinde **tam ekran** açılır. Yukarıdan aşağıya doğru şu bölümler sıralanır:
+
+1. **Üst Başlık ve Zaman Seçici**  
+2. **Özet Kart(lar)**  
+3. **Trend Grafikleri**  
+4. **Sleep Breakdown (Pasta veya Bar Grafiği)**  
+5. **Kazanılan Zaman / Ek Metrikler**  
+6. **Paylaş Butonu**  
+
+Aşağıda her bölümün detaylarını bulabilirsiniz.
+
+---
+
+### 4.3. Bölüm Bazlı Detaylar
+
+#### 4.3.1 Üst Başlık ve Zaman Seçici
+
+- **Başlık (Title)**:  
+  - Metin: “Analizler” (H1, 28pt, `SF Pro Rounded Bold` veya benzeri).  
+  - Renk: `TextColor` (Light modda koyu, Dark modda açık).  
+  - Konum: Sayfanın en üstünde, sol kenara yaslı. Sağ üstte opsiyonel “Share” ikonu yer alabilir.
+
+- **Zaman Aralığı Seçici (Segmented Control veya Picker)**:  
+  - Kullanıcı, “7 Gün”, “30 Gün”, “90 Gün” veya “Özel Tarih Aralığı” gibi seçenekler arasında geçiş yapabilir.  
+  - SwiftUI `SegmentedControl` veya iOS 17 için `Picker` (menu style) kullanılabilir.  
+  - Seçim değiştikçe, alttaki grafik ve metrikler **animasyonlu** olarak güncellenir (0.3s fade veya slide transition).  
+  - UI/UX Notu:  
+    - **SegmentedControl**: Ekranın üst kısmında, başlığın hemen altında.  
+    - Seçili segmentin arka planı `AccentColor` veya `PrimaryColor` olabilir.  
+    - Dynamic Type desteği: Metinler büyüdüğünde bile butonların taşmaması için yeterli genişlik sağlanır.
+
+#### 4.3.2 Özet Kart(lar)
+
+- **Amaç**: Kullanıcıya seçilen zaman aralığı için hızlı bir bakış sağlamak.  
+- **İçerik**:  
+  1. **Toplam Uyku Süresi** (Örn. “Bu dönemde toplam 32 saat uyudun”)  
+  2. **Günlük Ortalama** (Örn. “Günlük ortalama 4.6 saat”)  
+  3. **Ortalama Sleep Score** (Örn. “3.8 / 5”)  
+- **Tasarım**:  
+  - Kart arka planı: `CardBackground` (Light modda beyaz, Dark modda koyu gri).  
+  - Köşe yuvarlaklığı: 12px veya 20px.  
+  - Hafif gölge: `0px 2px 8px rgba(0,0,0,0.1)`  
+  - İçeride veriler, **2 veya 3 sütun** halinde (örneğin satırda 2-3 metrik).  
+  - Önemli rakamlar `PrimaryColor` veya `AccentColor` ile vurgulanabilir.  
+- **Etkileşim**: Kartın kendisi genelde tıklanmaz, sadece bilgi amaçlı. İstenirse “Daha fazla bilgi” butonu eklenebilir.
+
+#### 4.3.3 Trend Grafikleri (Line Chart / Bar Chart)
+
+- **Amaç**: Kullanıcının seçilen zaman diliminde uyku trendini görmesini sağlamak. Örneğin:  
+  - Toplam Uyku Süresi (günlük veya haftalık bazda)  
+  - Sleep Score (0–5 arası veya 1–5 yıldız)  
+- **UI Önerisi**:  
+  1. **Çizgi Grafiği (Line Chart)**  
+     - X Ekseni: Tarih veya gün numarası (örn. 1-7, 1-30).  
+     - Y Ekseni: Süre (saat) veya skor (0–5).  
+     - Renk: `PrimaryColor` (mavi) veya `SecondaryColor` (yeşil) çizgi.  
+     - Noktalar (Data Points): Hafif bir nokta veya dairesel işaretçi.  
+     - **Tooltip**: Kullanıcı bir veri noktasına dokunduğunda, ufak bir `CardBackground` baloncuğu açılır ve “Tarih: 24 Şub, Uyku: 5.2 saat, Skor: 4/5” gibi bilgi gösterir.  
+  2. **Bar Chart** (Alternatif veya ek olarak)  
+     - Özellikle “Günlük Core Sleep / Nap Süresi” karşılaştırması için uygun.  
+     - Her sütun 24 saatteki toplam uyku bloklarını temsil eder, farklı renkte segmentler (Core Sleep, Nap 1, Nap 2) üst üste gelebilir.  
+- **Etkileşim ve Animasyon**:  
+  - Grafikler ilk yüklendiğinde hafif bir **draw** animasyonu ile çizilebilir.  
+  - Segment değiştirdiğinde (7 Gün / 30 Gün / 90 Gün) veri **fade** veya **slide** animasyonu ile güncellenir.  
+  - **Haptic feedback**: Kullanıcı grafik üzerinde gezindiğinde hafif titreşim hissedebilir (opsiyonel).
+
+#### 4.3.4 Sleep Breakdown (Pasta Grafiği veya Yüzdesel Dağılım)
+
+- **Amaç**: Kullanıcının Core Sleep ve Nap’lerin (örneğin Nap 1, Nap 2, Nap 3) toplam süre içindeki dağılımını görmesi.  
+- **UI Detayları**:  
+  - **Pasta Grafiği**:  
+    - Her dilim farklı renk (Core Sleep için `AccentColor`, Nap 1 için `PrimaryColor`, Nap 2 için `SecondaryColor` vb.).  
+    - Ortada toplam uyku saati (örneğin “4.5h avg / day”).  
+    - Yanında bir legend (açıklama) olabilir:  
+      - Renk kutusu + “Core Sleep %60 (2.7 saat)”  
+      - Renk kutusu + “Nap 1 %25 (1.1 saat)”  
+      - Renk kutusu + “Nap 2 %15 (0.7 saat)”  
+  - **Alternatif**: Bar veya stacked bar chart (her günün core/nap oranlarını görebilmek).  
+- **Etkileşim**: Dokunulduğunda dilim üzerinde yine bir tooltip veya mini kart açılabilir.  
+- **Stil**: 12px köşe yuvarlaklığı, net ve kontrast renkler. Apple HIG’e göre metin ve arka plan arasındaki kontrast en az 4.5:1 olmalı.
+
+#### 4.3.5 Kazanılan Zaman / Ek Metrikler
+
+- **Kazanılan Zaman**:  
+  - Kullanıcı polifazik uykuya geçtiğinde, geleneksel uyku (örneğin 8 saat) ile karşılaştırıldığında “teoride” kazandığı süre.  
+  - Örneğin: “Bu hafta +14 saat kazandın!” gibi.  
+  - Kart şeklinde sunulabilir:  
+    - Arka plan: `SecondaryColor` %10 opaklık.  
+    - Metin: “Toplam 54 saat kazanım” gibi.  
+  - Yanında küçük bir kutlama ikonu (🎉) veya rozet olabilir.  
+- **Ek Metrikler** (opsiyonel):  
+  - “Uyanma sayısı” (gece bölünmeleri).  
+  - “Dinç uyanma yüzdesi” (kullanıcının giriş yaptığı hissiyat skoruna göre).  
+  - “En sık kullanılan erteleme süresi” gibi ilginç istatistikler.
+
+#### 4.3.6 Paylaş Butonu
+
+- **Konum**: Sayfanın sağ üstünde (Title bar seviyesinde) veya en altta sabit bir buton olarak konumlanabilir.  
+- **İkon**: iOS’un varsayılan “Share” ikonu (square and arrow).  
+- **İşlev**: Dokununca iOS Share Sheet açılır. Kullanıcı;  
+  - Ekran görüntüsü,  
+  - PDF veya resim formatında rapor,  
+  - Metin bazlı özet  
+  paylaşabilir.  
+- **UI/UX Notu**:  
+  - Butona basıldığında hafif scale-down animasyonu + haptic feedback.  
+  - Paylaş sayfasında “Bu haftaki polifazik uyku istatistiklerim” gibi otomatik bir başlık oluşturulabilir.
+
+---
+
+### 4.4. Stil, Tipografi ve Renk Kullanımı
+
+1. **Renkler**:  
+   - **PrimaryColor** (Mavi) ve **AccentColor** (Turuncu) en kritik vurgular için.  
+   - **SecondaryColor** (Yeşil) başarı ve pozitif durumlar (örneğin Sleep Score yüksekse).  
+   - **CardBackground** ve **BackgroundColor** arasındaki kontrast, grafikler için arka plan oluştururken önemli.  
+2. **Tipografi**:  
+   - Başlıklar: `SF Pro Rounded Bold`, 28pt (H1)  
+   - Alt Başlıklar: `SF Pro Rounded Semibold`, 22pt (H2)  
+   - Gövde Metin: `SF Pro Text Regular`, 16pt  
+   - İstatistikler / Rakamsal Vurgular: Bold veya Semibold, 16–20pt arası.  
+3. **Köşe Yuvarlaklığı (Corner Radius)**:  
+   - Kartlar: 12px veya 20px (uygulamanın genel stiline bağlı).  
+   - Grafikleri içeren container’lar: 12px.  
+4. **Gölgeler**: Hafif veya orta yoğunlukta (örneğin `0px 2px 8px rgba(0,0,0,0.1)`).  
+5. **Animasyonlar**:  
+   - Geçiş (transition) süresi 0.3s, Ease-In-Out.  
+   - Tooltip veya popover’larda hafif fade-in animasyonu (0.2s).  
+6. **Erişilebilirlik**:  
+   - Dynamic Type’a uygun olacak şekilde metin boyutları otomatik büyümeli/küçülmeli.  
+   - VoiceOver için grafiklerde de metinsel açıklamalar sağlanmalı (örn. “Pasta grafiği: %60 Core Sleep, %25 Nap1, %15 Nap2”).
+
+---
+
+### 4.5. Kullanıcı Akışı (User Flow)
+
+1. **Segment Seçimi**: Kullanıcı “7 Gün” seçtiğinde, tüm metrikler ve grafikler 7 günlük veriyi gösterir.  
+2. **Özet Kartı**: Hızlıca toplam uyku, ortalama skor ve günlük ortalama bilgiyi okur.  
+3. **Trend Grafiği**: Gün gün toplam uyku saatlerini veya skor trendini inceler. Üzerine dokunarak spesifik güne ait detayı görür.  
+4. **Breakdown Grafiği**: Pasta grafiği üzerinden core sleep ve nap’lerin yüzdesel dağılımını anlar.  
+5. **Kazanılan Zaman**: Geleneksel uyku ile kıyaslamada bu periyotta ne kadar “fazla zaman” kaldığını görür.  
+6. **Paylaş**: Uygulamanın raporunu veya ekran görüntüsünü arkadaşlarıyla paylaşabilir.
+
+---
+
+### 4.6. Özet
+
+Bu **Analytics** sayfası tasarımı, kullanıcıya **derinlemesine uyku analizi** sunacak ve polifazik uyku düzeninde **ilerlemeyi**, **kazanımları** ve **trendleri** rahatlıkla takip etmeyi amaçlar.  
+- **Üst Başlık** ve **Zaman Seçici** ile kolay tarih aralığı değiştirme,  
+- **Özet Kart(lar)** ile hızlı bakış,  
+- **Trend Grafikleri** ve **Breakdown** grafikleriyle görsel analiz,  
+- **Kazanılan Zaman** gibi motivasyonel metrikler,  
+- **Paylaş** butonuyla sosyal veya kişisel raporlama,  
+hepsi Apple HIG prensiplerine uyacak şekilde düzenlenmiştir.
+
+Bu sayede kullanıcılar, **uyku kalitelerini** ve **verimliliklerini** daha iyi anlar, motivasyon kazanır ve uygulamanın değerini net biçimde görürler.
+
+
+
 
 ## 4.5 Profil Sayfası
 
@@ -286,7 +436,6 @@ Her adımda tek bir soru, cevap seçenekleri (radyo buton, picker vb.). Metinler
 
 - History ekranından bir güne dokunup “Kayıt Ekle” veya “Düzenle”.  
 - Başlangıç / bitiş saati, dinçlik seviyesi (yıldız/emoji).  
-- Kaydet’le SwiftData’ya işlenir.
 
 ---
 
@@ -309,8 +458,7 @@ Her adımda tek bir soru, cevap seçenekleri (radyo buton, picker vb.). Metinler
 ---
 
 # 8. Güvenlik ve Gizlilik
-
-- **Veri Şifreleme**: SwiftData şifrelemesi (`@Attribute(.encrypt)`).  
+ 
 - **GDPR Uyumluluğu**: Kişisel veriler yalnızca cihazda saklanır veya kullanıcı iznine göre iCloud ile senkronize edilir.  
 - **Gizlilik Ayarları**: Bildirim ve veri paylaşımı izinleri açıkça belirtilmeli.
 
@@ -329,3 +477,5 @@ Her adımda tek bir soru, cevap seçenekleri (radyo buton, picker vb.). Metinler
 Bu doküman, **PolySleep** uygulamasının fonksiyonel gereksinimlerini (PRD) detaylandırmaktadır. MVP aşamasında kullanıcıların hızlıca uygulamaya adapte olmalarını sağlayacak **Onboarding**, **Ana Sayfa** (24 saatlik timeline), **History**, **Analytics** ve **Profil** ekranları tanımlanmıştır.
 
 Gelecekteki sürümlerde premium abonelik, sosyal özellikler ve yapay zekâ destekli önerilerle uygulama daha geniş bir kullanıcı kitlesine hitap edecek; böylece polifazik uyku düzenleri konusunda kullanıcı dostu, işlevsel ve motive edici bir platform oluşturulmuş olacaktır.
+
+Öğrenme kısmında polifazik uyku hakkında bilgiler olacak ve ve bazı soruların cevapları olacak. 

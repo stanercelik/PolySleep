@@ -1,6 +1,80 @@
 import SwiftUI
 import SwiftData
 
+// MARK: - Redacted Shimmer Effect Modifier
+struct RedactedShimmerModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .modifier(
+                AnimatedMaskModifier(
+                    direction: .topLeading,
+                    duration: 1.5
+                )
+            )
+    }
+}
+
+struct AnimatedMaskModifier: ViewModifier {
+    enum Direction {
+        case topLeading
+        case bottomTrailing
+        
+        var start: UnitPoint {
+            switch self {
+            case .topLeading: return .topLeading
+            case .bottomTrailing: return .bottomTrailing
+            }
+        }
+        
+        var end: UnitPoint {
+            switch self {
+            case .topLeading: return .bottomTrailing
+            case .bottomTrailing: return .topLeading
+            }
+        }
+    }
+    
+    let direction: Direction
+    let duration: Double
+    @State private var isAnimated = false
+    
+    func body(content: Content) -> some View {
+        content
+            .mask(
+                LinearGradient(
+                    gradient: Gradient(
+                        stops: [
+                            .init(color: .black.opacity(0.5), location: 0),
+                            .init(color: .black, location: 0.3),
+                            .init(color: .black, location: 0.7),
+                            .init(color: .black.opacity(0.5), location: 1)
+                        ]
+                    ),
+                    startPoint: isAnimated ? direction.end : direction.start,
+                    endPoint: isAnimated ? direction.start : direction.end
+                )
+            )
+            .onAppear {
+                withAnimation(
+                    Animation.linear(duration: duration)
+                        .repeatForever(autoreverses: false)
+                ) {
+                    isAnimated = true
+                }
+            }
+    }
+}
+
+extension View {
+    @ViewBuilder func redactedShimmer(if condition: Bool) -> some View {
+        if condition {
+            self.modifier(RedactedShimmerModifier())
+        } else {
+            self
+        }
+    }
+}
+
 struct MainScreenView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
@@ -14,6 +88,9 @@ struct MainScreenView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         HeaderView(viewModel: viewModel)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                            .redactedShimmer(if: viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
                             SleepQualityRatingView(
@@ -29,33 +106,29 @@ struct MainScreenView: View {
                         CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
                             .frame(height: UIScreen.main.bounds.height * 0.35)
                             .padding(.horizontal)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                            .redactedShimmer(if: viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
                         SleepBlocksSection(viewModel: viewModel)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                            .redactedShimmer(if: viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
                         InfoCardsSection(viewModel: viewModel)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                            .redactedShimmer(if: viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
                         TipSection(viewModel: viewModel)
                             .padding(.bottom, 16)
+                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                            .redactedShimmer(if: viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.7 : 1.0)
                     }
                 }
                 
-                // Loading ve hata durumları için overlay
-                if viewModel.isLoading {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
-                    
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
-                        .tint(.appPrimary)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.appCardBackground)
-                                .frame(width: 80, height: 80)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5)
-                        )
-                }
-                
+                // Hata durumları için overlay
                 if let errorMessage = viewModel.errorMessage {
                     VStack(spacing: 16) {
                         Text("⚠️")
@@ -125,13 +198,13 @@ struct MainScreenView: View {
                         .fontWeight(viewModel.isEditing ? .bold : .black)
                         .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
                         .font(.title3)
-                        .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))
+                        /*.contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))*/
                         .onTapGesture {
                             viewModel.isEditing.toggle()
                         }
                 }
             )
-            .toolbar {
+            /*.toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: 4) {
                         Text(viewModel.isInSleepTime ? "💤" : "⏰")
@@ -141,7 +214,7 @@ struct MainScreenView: View {
                             .foregroundColor(.appText)
                     }
                 }
-            }
+            }*/
             .onAppear {
                 viewModel.setModelContext(modelContext)
             }
@@ -533,3 +606,4 @@ struct InfoCard: View {
     MainScreenView(viewModel: MainScreenViewModel())
         .modelContainer(container)
 }
+

@@ -5,6 +5,7 @@
 
 import SwiftUI
 import Combine
+import SwiftData
 
 class WelcomeViewModel: ObservableObject {
     let totalPages = 4
@@ -23,11 +24,18 @@ class WelcomeViewModel: ObservableObject {
     @Published var isBackgroundCircleExpanded: Bool = false
     @Published var isOnboardingPresented: Bool = false
     @Published var isContinueButtonVisible: Bool = true
+    
+    private var modelContext: ModelContext?
 
     private var cancellables = Set<AnyCancellable>()
 
     init() {
         resetPage()
+    }
+    
+    // Model context'i tanımlamak için kullanılacak
+    func setModelContext(_ context: ModelContext) {
+        self.modelContext = context
     }
     
     // Timer Management
@@ -149,11 +157,36 @@ class WelcomeViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             withAnimation(.easeInOut(duration: 2)) {
                 self.isOnboardingPresented = true
+                
+                // Onboarding gösterildiğinde kullanıcı tecihleri objesinde markAsOnboardingCompleted'i dinlemek için
+                // işlem tamamlanınca ViewModel'den bildirim alabilmek için NotificationCenter'ı dinliyoruz
+                NotificationCenter.default.addObserver(
+                    forName: NSNotification.Name("OnboardingCompleted"),
+                    object: nil,
+                    queue: .main) { [weak self] _ in
+                    
+                    guard let self = self, let modelContext = self.modelContext else { return }
+                    
+                    // UserPreferences güncellemesi
+                    let fetchDescriptor = FetchDescriptor<UserPreferences>()
+                    do {
+                        if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                            userPreferences.hasCompletedOnboarding = true
+                            try modelContext.save()
+                            print("✅ Onboarding marked as completed")
+                        } else {
+                            print("❌ No UserPreferences found")
+                        }
+                    } catch {
+                        print("❌ Error updating UserPreferences: \(error.localizedDescription)")
+                    }
+                }
             }
         }
     }
     
     deinit {
         stopTimer()
+        NotificationCenter.default.removeObserver(self)
     }
 }

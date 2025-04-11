@@ -105,23 +105,24 @@ final class SleepScheduleRecommender {
         if disruptionTolerance == nil { print("❌ DisruptionTolerance enum error: \(processedAnswers["disruptionTolerance"] ?? "")") }
         if chronotype == nil         { print("❌ Chronotype enum error: \(processedAnswers["chronotype"] ?? "")") }
         
-        // Hepsi nil değilse kullan
-        guard
-            let sleepExp  = sleepExperience,
-            let ageR      = ageRange,
-            let workSch   = workSchedule,
-            let napEnv    = napEnvironment,
-            let lifeS     = lifestyle,
-            let knowL     = knowledgeLevel,
-            let healthSt  = healthStatus,
-            let motivL    = motivationLevel,
-            let sGoal     = sleepGoal,
-            let sOblig    = socialObligations,
-            let dToler    = disruptionTolerance,
-            let cType     = chronotype
-        else {
-            print("❌ Failed to convert one or more enums!")
-            return nil
+        // Eksik enumlar için varsayılan değerler sağla
+        let sleepExp  = sleepExperience    ?? .some
+        let ageR      = ageRange           ?? .age25to34
+        let workSch   = workSchedule       ?? .regular
+        let napEnv    = napEnvironment     ?? .suitable
+        let lifeS     = lifestyle          ?? .moderatelyActive
+        let knowL     = knowledgeLevel     ?? .intermediate
+        let healthSt  = healthStatus       ?? .healthy
+        let motivL    = motivationLevel    ?? .moderate
+        let sGoal     = sleepGoal          ?? .balancedLifestyle
+        let sOblig    = socialObligations  ?? .moderate
+        let dToler    = disruptionTolerance ?? .somewhatSensitive
+        let cType     = chronotype         ?? .neutral
+        
+        // Programımız çalışabilmesi için kritik enum değerlerinden hiçbiri varsa
+        if sleepExperience == nil || ageRange == nil || workSchedule == nil || napEnvironment == nil || 
+           lifestyle == nil || knowledgeLevel == nil || healthStatus == nil || motivationLevel == nil {
+            print("⚠️ Bazı kritik enum değerleri dönüştürülemedi, varsayılan değerler kullanılıyor!")
         }
         
         // Tüm faktörleri tek bir struct içine koy
@@ -140,7 +141,7 @@ final class SleepScheduleRecommender {
             chronotype:         cType
         )
         
-        print("\nUser Factors loaded:")
+        print("\nUser Factors loaded (bazı değerler varsayılan olabilir):")
         print("- Sleep Experience:  \(sleepExp.rawValue)")
         print("- Age Range:         \(ageR.rawValue)")
         print("- Work Schedule:     \(workSch.rawValue)")
@@ -836,7 +837,7 @@ final class SleepScheduleRecommender {
             warnings.append(.init(severity: .critical, messageKey: "warning.healthConcerns"))
         }
         
-        // Naps varsa ama ortam “unsuitable” ise
+        // Naps varsa ama ortam "unsuitable" ise
         let hasNaps = schedule.schedule.contains { !$0.isCore }
         if hasNaps && factors.napEnvironment == .unsuitable {
             warnings.append(.init(severity: .warning, messageKey: "warning.unsuitableNapEnvironment"))

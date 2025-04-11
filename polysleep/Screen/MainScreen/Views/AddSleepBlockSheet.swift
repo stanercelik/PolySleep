@@ -7,40 +7,46 @@ struct AddSleepBlockSheet: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    DatePicker(NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
-                              selection: $viewModel.newBlockStartTime,
-                              displayedComponents: .hourAndMinute)
-                    
-                    DatePicker(NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: ""),
-                              selection: $viewModel.newBlockEndTime,
-                              displayedComponents: .hourAndMinute)
-                }
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
                 
-                if !viewModel.model.schedule.schedule.isEmpty {
-                    Section(header: Text("sleepBlock.existing.title", tableName: "MainScreen")) {
-                        ForEach(viewModel.model.schedule.schedule.sorted { block1, block2 in
-                            let time1 = TimeFormatter.time(from: block1.startTime)!
-                            let time2 = TimeFormatter.time(from: block2.startTime)!
-                            let minutes1 = time1.hour * 60 + time1.minute
-                            let minutes2 = time2.hour * 60 + time2.minute
-                            return minutes1 < minutes2
-                        }) { block in
-                            HStack {
-                                Image(systemName: block.isCore ? "moon.fill" : "moon")
-                                    .foregroundColor(block.isCore ? .appAccent : .secondary)
-                                Text("\(block.startTime) - \(block.endTime)")
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                Text(NSLocalizedString(block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap", tableName: "MainScreen", comment: ""))
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+                Form {
+                    Section {
+                        DatePicker(NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
+                                  selection: $viewModel.newBlockStartTime,
+                                  displayedComponents: .hourAndMinute)
+                        
+                        DatePicker(NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: ""),
+                                  selection: $viewModel.newBlockEndTime,
+                                  displayedComponents: .hourAndMinute)
+                    }
+                    
+                    if !viewModel.model.schedule.schedule.isEmpty {
+                        Section(header: Text("sleepBlock.existing.title", tableName: "MainScreen")) {
+                            ForEach(viewModel.model.schedule.schedule.sorted { block1, block2 in
+                                let time1 = TimeFormatter.time(from: block1.startTime)!
+                                let time2 = TimeFormatter.time(from: block2.startTime)!
+                                let minutes1 = time1.hour * 60 + time1.minute
+                                let minutes2 = time2.hour * 60 + time2.minute
+                                return minutes1 < minutes2
+                            }) { block in
+                                HStack {
+                                    Image(systemName: block.isCore ? "moon.fill" : "moon")
+                                        .foregroundColor(block.isCore ? .appAccent : .secondary)
+                                    Text("\(block.startTime) - \(block.endTime)")
+                                        .foregroundColor(.primary)
+                                    Spacer()
+                                    Text(NSLocalizedString(block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap", tableName: "MainScreen", comment: ""))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle(NSLocalizedString("sleepBlock.add", tableName: "MainScreen", comment: ""))
             .navigationBarTitleDisplayMode(.inline)

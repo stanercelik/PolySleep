@@ -224,19 +224,86 @@ class SupabaseOnboardingService {
             // Dictionary formatına çevirme - sadece en son tam oturumdaki cevapları kullan
             var result: [String: String] = [:]
             
+            // Gereken tüm soruları kontrol edelim, bunlar OnboardingEnums.swift'teki enum'ların tam isimlerini içerir
+            let requiredQuestions = [
+                "onboarding.sleepExperience", 
+                "onboarding.ageRange", 
+                "onboarding.workSchedule", 
+                "onboarding.napEnvironment",
+                "onboarding.lifestyle", 
+                "onboarding.knowledgeLevel", 
+                "onboarding.healthStatus", 
+                "onboarding.motivationLevel",
+                "onboarding.sleepGoal", 
+                "onboarding.socialObligations", 
+                "onboarding.disruptionTolerance", 
+                "onboarding.chronotype"
+            ]
+            
             if let latestSessionAnswers = answersByDate[mostCompleteSessionKey] {
+                // Önce en son oturumdaki tüm cevapları ekle
                 for answer in latestSessionAnswers {
                     result[answer.question] = answer.answer
-                    print("PolySleep Debug: Eklendi - Soru: \(answer.question), Cevap: \(answer.answer)")
+                    print("PolySleep Debug: Eklendi (son oturum) - Soru: \(answer.question), Cevap: \(answer.answer)")
                 }
-            } else {
-                // Tam bir oturum bulunamazsa en son cevapları kullan
-                for answer in onboardingAnswers {
-                    if !result.keys.contains(answer.question) {
-                        result[answer.question] = answer.answer
-                        print("PolySleep Debug: Eklendi - Soru: \(answer.question), Cevap: \(answer.answer)")
+            }
+            
+            // Eğer bütün sorular cevaplanmamışsa, önceki cevaplardan tamamla
+            for question in requiredQuestions {
+                if !result.keys.contains(question) {
+                    // Soru için en son yanıtı bul
+                    if let lastAnswer = onboardingAnswers.first(where: { $0.question == question }) {
+                        result[question] = lastAnswer.answer
+                        print("PolySleep Debug: Eklendi (önceki oturum) - Soru: \(question), Cevap: \(lastAnswer.answer)")
+                    } else {
+                        print("PolySleep Debug: Uyarı - \(question) için hiç cevap bulunamadı")
                     }
                 }
+            }
+            
+            // Özellikle sorun yaşanan son 4 enum'ın doğru değerler taşıyıp taşımadığını kontrol et
+            if let sleepGoal = result["onboarding.sleepGoal"] {
+                if !["moreProductivity", "balancedLifestyle", "improveHealth", "curiosity"].contains(sleepGoal) {
+                    print("PolySleep Debug: Uyarı - sleepGoal geçersiz değer içeriyor: \(sleepGoal)")
+                    // Varsayılan değer ata
+                    result["onboarding.sleepGoal"] = "balancedLifestyle"
+                }
+            } else {
+                // Varsayılan değer ata
+                result["onboarding.sleepGoal"] = "balancedLifestyle"
+            }
+            
+            if let socialObligations = result["onboarding.socialObligations"] {
+                if !["significant", "moderate", "minimal"].contains(socialObligations) {
+                    print("PolySleep Debug: Uyarı - socialObligations geçersiz değer içeriyor: \(socialObligations)")
+                    // Varsayılan değer ata
+                    result["onboarding.socialObligations"] = "moderate"
+                }
+            } else {
+                // Varsayılan değer ata
+                result["onboarding.socialObligations"] = "moderate"
+            }
+            
+            if let disruptionTolerance = result["onboarding.disruptionTolerance"] {
+                if !["verySensitive", "somewhatSensitive", "notSensitive"].contains(disruptionTolerance) {
+                    print("PolySleep Debug: Uyarı - disruptionTolerance geçersiz değer içeriyor: \(disruptionTolerance)")
+                    // Varsayılan değer ata
+                    result["onboarding.disruptionTolerance"] = "somewhatSensitive"
+                }
+            } else {
+                // Varsayılan değer ata
+                result["onboarding.disruptionTolerance"] = "somewhatSensitive"
+            }
+            
+            if let chronotype = result["onboarding.chronotype"] {
+                if !["morningLark", "nightOwl", "neutral"].contains(chronotype) {
+                    print("PolySleep Debug: Uyarı - chronotype geçersiz değer içeriyor: \(chronotype)")
+                    // Varsayılan değer ata
+                    result["onboarding.chronotype"] = "neutral"
+                }
+            } else {
+                // Varsayılan değer ata
+                result["onboarding.chronotype"] = "neutral" 
             }
             
             print("PolySleep Debug: Standart sorgu sonucu: \(result)")

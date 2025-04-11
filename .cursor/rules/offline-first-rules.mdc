@@ -1,0 +1,16 @@
+---
+description: offline first
+globs: 
+alwaysApply: false
+---
+## 14. Offline-First Yaklaşımı
+- Tüm uygulamada offline-first yaklaşımını benimse:
+  - İnternet bağlantısı varken:
+    - Değişiklikleri anında Supabase'e gönder
+    - Hata durumlarını uygun şekilde yönet ve kullanıcıya bildir
+  - İnternet bağlantısı yokken:
+    - Tüm değişiklikleri yerel SwiftData'da sakla
+    - Bekleyen değişiklikleri takip et
+  - İnternet bağlantısı tekrar sağlandığında:
+    - Bekleyen değişiklikleri otomatik olarak senkronize et
+    - Çakışmaları akıllıca yönet (son değişiklik kazanır)

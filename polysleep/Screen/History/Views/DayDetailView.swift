@@ -1,136 +1,341 @@
 import SwiftUI
 
 struct DayDetailView: View {
-    let historyItem: HistoryModel
+    @ObservedObject var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
     
+    // Kullanıcının seçtiği emojiler
+    private var coreEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    }
+    
+    private var napEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "⚡"
+    }
+    
+    var dayEntries: [SleepEntry] {
+        if let dayHistory = viewModel.historyItems.first(where: { 
+            Calendar.current.isDate($0.date, inSameDayAs: viewModel.selectedDate)
+        }) {
+            return dayHistory.sleepEntries
+        }
+        return []
+    }
+    
+    var hasSleepData: Bool {
+        !dayEntries.isEmpty
+    }
+    
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: viewModel.selectedDate)
+    }
+    
+    var dayOfWeek: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter.string(from: viewModel.selectedDate)
+    }
+    
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Text(historyItem.date.formatted(date: .complete, time: .omitted))
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(Color("TextColor"))
-                
-                Spacer()
-                
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(Color("SecondaryTextColor"))
-                        .padding(8)
-                        .background(Color("CardBackground"))
-                        .clipShape(Circle())
-                }
-            }
-            .padding()
-            
-            // Uyku blokları
+        NavigationStack {
             ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(Array(historyItem.sleepEntries.enumerated()), id: \.element.id) { index, entry in
-                        let nextEntry = index + 1 < historyItem.sleepEntries.count ? historyItem.sleepEntries[index + 1] : nil
-                        HistorySleepBlockCard(
-                            block: entry,
-                            nextBlock: nextEntry,
-                            nextBlockTime: nextEntry?.startTime,
-                            viewModel: HistoryViewModel()
-                        )
+                VStack(spacing: 24) {
+                    // Tarih Başlığı
+                    VStack(spacing: 4) {
+                        Text(formattedDate)
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundColor(Color("TextColor"))
+                        
+                        Text(dayOfWeek)
+                            .font(.system(size: 16))
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                    .padding(.top, 8)
+                    
+                    if hasSleepData {
+                        // Sleep Entries
+                        VStack(spacing: 16) {
+                            ForEach(dayEntries.sorted { $0.startTime < $1.startTime }) { entry in
+                                SleepEntryCard(entry: entry, coreEmoji: coreEmoji, napEmoji: napEmoji) {
+                                    viewModel.deleteSleepEntry(entry)
+                                }
+                            }
+                        }
+                        
+                        // Özet Kart
+                        SummarySectionCard(entries: dayEntries)
+                    } else {
+                        // Veri Yok Görünümü
+                        NoDataView()
                     }
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom, 30)
             }
-            
-            Button(action: {
-                // TODO: Düzenleme ekranına git
-            }) {
-                Text(NSLocalizedString("Düzenle", tableName: "History", comment: ""))
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(Color("AccentColor"))
-                    .cornerRadius(12)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color("PrimaryColor"))
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        viewModel.showAddEntry = true
+                    }) {
+                        Text("Ekle")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(Color("PrimaryColor"))
+                    }
+                }
             }
-            .padding()
         }
-        .background(Color("BackgroundColor"))
     }
 }
 
-struct HistorySleepBlockCard: View {
-    let block: SleepEntry
-    let nextBlock: SleepEntry?
-    let nextBlockTime: Date?
-    @ObservedObject var viewModel: HistoryViewModel
+// MARK: - Sleep Entry Card
+struct SleepEntryCard: View {
+    let entry: SleepEntry
+    let coreEmoji: String
+    let napEmoji: String
+    let onDelete: () -> Void
     
-    private var timeRangeText: String {
-        let startTime = block.startTime.formatted(date: .omitted, time: .shortened)
-        let endTime = block.endTime.formatted(date: .omitted, time: .shortened)
-        return "\(startTime) - \(endTime)"
+    @State private var showDeleteAlert = false
+    
+    var formattedStartTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: entry.startTime)
     }
     
-    private var durationText: String {
-        let hours = Int(block.duration / 3600)
-        let minutes = Int((block.duration.truncatingRemainder(dividingBy: 3600)) / 60)
-        return "\(hours)h \(minutes)m"
+    var formattedEndTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: entry.endTime)
     }
     
-    private var sleepEmoji: String {
-        switch block.type {
-        case .core:
-            return "🛏️"
-        case .powerNap:
-            return "⚡️"
+    var durationText: String {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: entry.startTime, to: entry.endTime)
+        let hours = components.hour ?? 0
+        let minutes = components.minute ?? 0
+        
+        if hours > 0 {
+            return "\(hours) s \(minutes) dk"
+        } else {
+            return "\(minutes) dk"
+        }
+    }
+    
+    var ratingColor: Color {
+        switch entry.rating {
+        case 5:
+            return Color.green
+        case 4:
+            return Color("SecondaryColor")
+        case 3:
+            return Color.yellow
+        case 2:
+            return Color.orange
+        default:
+            return Color.red
         }
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text(sleepEmoji)
-                    .font(.title2)
-                Text(LocalizedStringKey(block.type.title))
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(Color("TextColor"))
-                Spacer()
-                HStack(spacing: 2) {
-                    ForEach(1...5, id: \.self) { index in
-                        Image(systemName: index <= block.rating ? "star.fill" : "star")
-                            .foregroundColor(index <= block.rating ? Color("SecondaryColor") : Color("SecondaryTextColor").opacity(0.3))
-                            .font(.system(size: 14))
-                    }
-                }
-            }
-            
-            HStack {
+                // Blok tipi emojisi
+                Text(entry.isCore ? coreEmoji : napEmoji)
+                    .font(.system(size: 24))
+                    .padding(8)
+                    .background(
+                        Circle()
+                            .fill(entry.isCore ? Color("PrimaryColor").opacity(0.2) : Color("AccentColor").opacity(0.2))
+                    )
+                
                 VStack(alignment: .leading, spacing: 4) {
-                    Label(timeRangeText, systemImage: "clock")
-                    Label(durationText, systemImage: "hourglass")
+                    Text(entry.isCore ? "Ana Uyku" : "Şekerleme")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Text("\(formattedStartTime) - \(formattedEndTime)")
+                        .font(.system(size: 14))
+                        .foregroundColor(Color("SecondaryTextColor"))
                 }
-                .font(.system(size: 14))
-                .foregroundColor(Color("SecondaryTextColor"))
+                
+                Spacer()
+                
+                // Kalite yıldızları
+                HStack(spacing: 2) {
+                    ForEach(1...5, id: \.self) { star in
+                        Image(systemName: star <= entry.rating ? "star.fill" : "star")
+                            .font(.system(size: 12))
+                            .foregroundColor(star <= entry.rating ? ratingColor : Color.gray.opacity(0.3))
+                    }
+                }
+                
+                Button(action: {
+                    showDeleteAlert = true
+                }) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color.red.opacity(0.7))
+                        .padding(8)
+                }
             }
             
-            if let nextTime = nextBlockTime {
-                let gap = nextTime.timeIntervalSince(block.endTime)
-                let hours = Int(gap / 3600)
-                let minutes = Int((gap.truncatingRemainder(dividingBy: 3600)) / 60)
-                if gap > 0 {
-                    HStack {
-                        Image(systemName: "arrow.right")
-                        Text("\(hours)h \(minutes)m")
-                        Text(NSLocalizedString("until.next.sleep", tableName: "History", comment: ""))
-                    }
-                    .font(.system(size: 14))
-                    .foregroundColor(Color("SecondaryTextColor"))
+            // Süre ve emoji
+            HStack {
+                Text(durationText)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color("PrimaryColor").opacity(0.1))
+                    )
+                
+                Spacer()
+                
+                if !entry.emoji.isEmpty {
+                    Text(entry.emoji)
+                        .font(.system(size: 20))
                 }
             }
         }
         .padding()
-        .background(Color("CardBackground"))
-        .cornerRadius(12)
-        .shadow(color: Color("PrimaryColor").opacity(0.1), radius: 8, x: 0, y: 2)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+        )
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("Uyku kaydını sil"),
+                message: Text("Bu kayıt silinecek. Onaylıyor musunuz?"),
+                primaryButton: .destructive(Text("Sil")) {
+                    onDelete()
+                },
+                secondaryButton: .cancel(Text("İptal"))
+            )
+        }
+    }
+}
+
+// MARK: - Özet Kartı
+struct SummarySectionCard: View {
+    let entries: [SleepEntry]
+    
+    var totalSleepDuration: (Int, Int) {
+        let totalMinutes = entries.reduce(0) { total, entry in
+            let components = Calendar.current.dateComponents([.minute], from: entry.startTime, to: entry.endTime)
+            return total + (components.minute ?? 0)
+        }
+        
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        return (hours, minutes)
+    }
+    
+    var averageRating: Double {
+        let totalRating = entries.reduce(0) { $0 + $1.rating }
+        return Double(totalRating) / Double(max(entries.count, 1))
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Günün Özeti")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            HStack(spacing: 20) {
+                // Toplam uyku süresi
+                VStack(spacing: 8) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock.fill")
+                            .foregroundColor(Color("PrimaryColor"))
+                        
+                        Text("Toplam Uyku")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                    
+                    Text("\(totalSleepDuration.0) s \(totalSleepDuration.1) dk")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(Color("TextColor"))
+                }
+                .frame(maxWidth: .infinity)
+                
+                // Ortalama kalite
+                VStack(spacing: 8) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(Color("SecondaryColor"))
+                        
+                        Text("Ortalama Kalite")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                    
+                    Text(String(format: "%.1f/5", averageRating))
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(Color("TextColor"))
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+        )
+    }
+}
+
+// MARK: - Veri Yok Görünümü
+struct NoDataView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "moon.zzz")
+                .font(.system(size: 60))
+                .foregroundColor(Color("SecondaryTextColor").opacity(0.7))
+            
+            Text("Bu güne ait uyku kaydı yok")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            Text("Sağ üstteki 'Ekle' butonuna tıklayarak yeni uyku kaydı ekleyebilirsiniz")
+                .font(.system(size: 16))
+                .foregroundColor(Color("SecondaryTextColor"))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 20)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 60)
+    }
+}
+
+struct DayDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        let startTime = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: Date())!
+        let endTime = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Date())!
+        let entry = SleepEntry(id: UUID(), type: .core, startTime: startTime, endTime: endTime, rating: 4)
+        
+        let napStart = Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!
+        let napEnd = Calendar.current.date(bySettingHour: 14, minute: 30, second: 0, of: Date())!
+        let napEntry = SleepEntry(id: UUID(), type: .powerNap, startTime: napStart, endTime: napEnd, rating: 3)
+        
+        let model = HistoryModel(date: Date(), sleepEntries: [entry, napEntry])
+        let viewModel = HistoryViewModel()
+        
+        DayDetailView(viewModel: viewModel)
     }
 }

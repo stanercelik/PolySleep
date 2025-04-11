@@ -41,12 +41,22 @@ struct WelcomeView: View {
                             OnboardingView()
                                 .transition(.opacity)
                                 .zIndex(1)
+                                .onDisappear {
+                                    // Onboarding tamamlandı bildirimini gönder
+                                    NotificationCenter.default.post(
+                                        name: NSNotification.Name("OnboardingCompleted"),
+                                        object: nil
+                                    )
+                                }
                         }
                     }
                     .onAppear {
                         let screenWidth = geo.size.width
                         let screenHeight = geo.size.height
                         circleDiameter = max(screenWidth, screenHeight) * 2
+                        
+                        // ModelContext'i ViewModel'e ilet
+                        viewModel.setModelContext(modelContext)
                     }
                 }
                 .toolbar(.hidden, for: .navigationBar)

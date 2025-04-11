@@ -71,7 +71,7 @@ struct UserScheduleModel {
                 tr: "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
             ),
             totalSleepHours: 8.0,
-            schedule: schedule,
+            schedule: [],
             isPremium: false
         )
     }

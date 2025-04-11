@@ -1,0 +1,27 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Kural Adı: Swift ve SwiftUI Geliştirme Prensipleri
+
+Açıklama: Kod yapısı, isimlendirme, Swift ve SwiftUI en iyi pratikleri.
+
+-   MVVM mimarisi ve SwiftUI kullanımı.
+-   Protokol-odaklı programlama.
+-   Değer tipleri (struct) tercih edilmesi.
+-   CamelCase (değişkenler, fonksiyonlar), PascalCase (tipler).
+-   `is/has/should` ile başlayan boolean değişkenler.
+-   `async/await` ile asenkron işlemler.
+-   `Result` tipi ile hata yönetimi.
+-   `@Published`, `@StateObject`, `@EnvironmentObject` ile durum yönetimi.
+-   `let` kullanımı (değişmezlik).
+-   SF Symbols kullanımı.
+-   Dark Mode ve Dynamic Type desteği.
+-   SafeArea ve GeometryReader ile responsive layout.
+-   Combine ile reaktif programlama.
+-   Keychain ile hassas veri saklama.
+-   Deep Linking, Push Notifications, Background Tasks.
+-   Lokalizasyon (Localizable.xcstring).
+-   Otomatik senkronizasyon (offline-first).
+-   Hata durumlarında açıklayıcı mesajlar.

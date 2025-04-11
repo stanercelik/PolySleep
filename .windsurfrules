@@ -1,0 +1,126 @@
+# Swift & SwiftUI iOS Development Guidelines
+Always use supabase docs for supabase related tasks and don't use RPC.
+
+## 1. Code Structure
+- Follow MVVM architecture with SwiftUI.
+- Use **protocol-oriented programming** and Swift’s latest features.
+- Prefer **value types (structs)** over classes.
+- Follow Existing Code Structure
+
+## 2. Naming Conventions
+- Use **camelCase** for variables and functions.
+- Use **PascalCase** for types (structs, classes, enums).
+- Methods should be verb-based (e.g., `fetchData()`).
+- Boolean properties should start with **is/has/should**.
+- Use **Apple-style clear and descriptive names**.
+
+## 3. Swift Best Practices
+- Use **async/await** for concurrency.
+- Utilize **Result type** for error handling.
+- State management:
+  - **@Published** and **@StateObject** for state.
+  - **@EnvironmentObject** for shared state.
+- Prefer **let** over **var** for immutability.
+- Use **protocol extensions** to share common functionality.
+
+## 4. UI Development
+- Use **SwiftUI** first, fallback to UIKit only when necessary.
+- Use **SF Symbols** for icons.
+- Support **Dark Mode** and **Dynamic Type**.
+- Utilize **SafeArea & GeometryReader** for responsive layouts.
+- Ensure UI works across **all screen sizes and orientations**.
+- Handle **keyboard interactions properly**.
+- Use the Current Theme and Color Schema.
+- Use Assets.xcassets for AppIcon, AppLogo, Colors, Images... etc.
+- And If needed, create new color sets. Ensure all text contrasts meet WCAG AA/AAA standards.
+
+## 5. Performance Optimization
+- Profile with **Instruments**.
+- Implement **lazy loading** for views and images.
+- Optimize **network requests** (caching, background fetching).
+- Handle **background tasks** efficiently.
+- Use proper **state management** to avoid unnecessary re-renders.
+- Manage **memory and resource cleanup**.
+
+## 6. Data & State Management
+- Use **Combine** for reactive programming.
+- Ensure **clean data flow** in MVVM.
+- Implement **dependency injection**.
+- Handle **state restoration** properly.
+
+## 7. Security & Privacy
+- **Encrypt sensitive data**.
+- Use **Keychain** for secure storage.
+- Implement **Certificate Pinning** for network security.
+- Utilize **Biometric Authentication** (Face ID, Touch ID).
+- Enforce **App Transport Security (ATS)**.
+- Validate all **user input** to prevent security risks.
+
+## 8. Testing & Quality Assurance
+- Write **XCTest unit tests**.
+- Implement **XCUITest for UI testing**.
+- Test **common user flows and error handling**.
+- Perform **performance testing**.
+- Ensure **accessibility compliance**.
+- Cover **edge cases** in all test scenarios.
+
+## 9. Essential App Features
+- Implement **Deep Linking** support.
+- Support **Push Notifications**.
+- Handle **Background Tasks** efficiently.
+- Ensure full **Localization & Internationalization**.
+- Use Resources/Localizable.xcstring file for Localization
+- Implement robust **Error Handling**.
+- Integrate **Analytics & Logging**.
+
+## 10. Development Workflow
+- Use **SwiftUI Previews** for faster UI development.
+- Follow a **Git branching strategy**.
+- Maintain a **code review process**.
+- Set up **CI/CD pipelines** for automated builds & tests.
+- Write clear **documentation**.
+- Ensure **unit test coverage** before merging.
+
+## 11. App Store Compliance
+- Provide **privacy descriptions** for all APIs used.
+- Declare **app capabilities** in the App Store.
+- Follow **In-App Purchase guidelines**.
+- Comply with **App Review Guidelines**.
+- Optimize app size with **App Thinning**.
+- Use **proper code signing** for secure deployment.
+
+### Resources:
+- Apple’s [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
+- Swift [Documentation](https://developer.apple.com/swift/)
+- SwiftUI [Guidelines](https://developer.apple.com/documentation/swiftui/)
+- Supabase [Guidelines](https://supabase.com/docs/reference/swift/)
+
+
+## 12. Prd Documentation
+- Sana verdiğim her promptta **@prd.md** dosyasını oku, bir dizayn yapman gerekiyorsa **@design_prd.md** da beraberinde oku. Her şeyi bunlara göre yap.
+
+## 13. Localization
+- Yaptığın her değişiklikte bir text yazmışsan bunu Resources içindeki **@Localizations** dosyasında kendisine ait dosyaya yaz. Türkçesini ve ingilizcesini. Sonrasında Texti kullandığın yerde bu dosyayı kullan.
+
+## 14. Offline-First Yaklaşımı
+- Tüm uygulamada offline-first yaklaşımını benimse:
+  - İnternet bağlantısı varken:
+    - Değişiklikleri anında Supabase'e gönder
+    - Hata durumlarını uygun şekilde yönet ve kullanıcıya bildir
+  - İnternet bağlantısı yokken:
+    - Tüm değişiklikleri yerel SwiftData'da sakla
+    - Bekleyen değişiklikleri takip et
+  - İnternet bağlantısı tekrar sağlandığında:
+    - Bekleyen değişiklikleri otomatik olarak senkronize et
+    - Çakışmaları akıllıca yönet (son değişiklik kazanır)
+    - Senkronizasyon durumunu kullanıcıya bildir
+
+- Veri Yönetimi:
+  - NetworkMonitor ile internet bağlantısını sürekli izle
+  - Combine kullanarak bağlantı değişikliklerini reaktif olarak yönet
+  - SwiftData ve Supabase arasında veri tutarlılığını sağla
+
+- Kullanıcı Deneyimi:
+  - Manuel senkronizasyon butonları yerine otomatik senkronizasyon
+  - Offline modda tüm özelliklerin çalışmasını sağla
+  - Hata durumlarında açıklayıcı mesajlar göster

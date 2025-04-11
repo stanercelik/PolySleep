@@ -7,36 +7,41 @@ struct MainTabBarView: View {
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            MainScreenView(viewModel: mainScreenViewModel)
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("tabbar.schedule", tableName: "Common")
-                }
-                .tag(0)
-            
-            HistoryView()
-                .tabItem {
-                    Image(systemName: "clock.fill")
-                    Text("tabbar.history", tableName: "Common")
-                }
-                .tag(1)
-            
-            AnalyticsView()
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("tabbar.analytics", tableName: "Common")
-                }
-                .tag(2)
-            
-            ProfileScreenView()
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("tabbar.profile", tableName: "Common")
-                }
-                .tag(3)
+        ZStack {
+            Color.appBackground
+                .ignoresSafeArea()
+                
+            TabView(selection: $selectedTab) {
+                MainScreenView(viewModel: mainScreenViewModel)
+                    .tabItem {
+                        Image(systemName: "house.fill")
+                        Text("tabbar.schedule", tableName: "Common")
+                    }
+                    .tag(0)
+                
+                HistoryView()
+                    .tabItem {
+                        Image(systemName: "clock.fill")
+                        Text("tabbar.history", tableName: "Common")
+                    }
+                    .tag(1)
+                
+                AnalyticsView()
+                    .tabItem {
+                        Image(systemName: "chart.bar.fill")
+                        Text("tabbar.analytics", tableName: "Common")
+                    }
+                    .tag(2)
+                
+                ProfileScreenView()
+                    .tabItem {
+                        Image(systemName: "person.fill")
+                        Text("tabbar.profile", tableName: "Common")
+                    }
+                    .tag(3)
+            }
+            .accentColor(Color("AccentColor"))
         }
-        .accentColor(Color("AccentColor"))
         .onAppear {
             mainScreenViewModel.setModelContext(modelContext)
         }

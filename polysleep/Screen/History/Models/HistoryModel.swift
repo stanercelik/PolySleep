@@ -44,6 +44,16 @@ final class SleepEntry: Identifiable {
         endTime.timeIntervalSince(startTime)
     }
     
+    // Uyku tipinin ana uyku olup olmadığını kontrol eder
+    var isCore: Bool {
+        return type == .core
+    }
+    
+    // Emoji alanı
+    var emoji: String {
+        ""
+    }
+    
     init(id: UUID, type: SleepType, startTime: Date, endTime: Date, rating: Int) {
         self.id = id
         self.type = type
