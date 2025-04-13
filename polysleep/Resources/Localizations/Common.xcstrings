@@ -205,12 +205,6 @@
         }
       }
     },
-    "Bekleyen değişiklikler" : {
-
-    },
-    "Çevrimdışı mod" : {
-
-    },
     "emoji.bed" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -367,9 +361,6 @@
           }
         }
       }
-    },
-    "Senkronize ediliyor..." : {
-
     },
     "supabase.error.connection" : {
       "extractionState" : "manual",

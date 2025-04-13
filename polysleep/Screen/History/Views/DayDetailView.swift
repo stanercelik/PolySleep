@@ -3,6 +3,7 @@ import SwiftUI
 struct DayDetailView: View {
     @ObservedObject var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
+    @State private var isAddingSleepEntry = false
     
     // Kullanıcının seçtiği emojiler
     private var coreEmoji: String {
@@ -14,12 +15,16 @@ struct DayDetailView: View {
     }
     
     var dayEntries: [SleepEntry] {
-        if let dayHistory = viewModel.historyItems.first(where: { 
-            Calendar.current.isDate($0.date, inSameDayAs: viewModel.selectedDate)
+        if let dayHistory = viewModel.historyItems.first(where: { item in
+            Calendar.current.isDate(item.date, inSameDayAs: viewModel.selectedDay ?? Date())
         }) {
             return dayHistory.sleepEntries
         }
         return []
+    }
+    
+    var sortedDayEntries: [SleepEntry] {
+        return dayEntries.sorted { $0.startTime < $1.startTime }
     }
     
     var hasSleepData: Bool {
@@ -29,13 +34,13 @@ struct DayDetailView: View {
     var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
-        return formatter.string(from: viewModel.selectedDate)
+        return formatter.string(from: viewModel.selectedDay ?? Date())
     }
     
     var dayOfWeek: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE"
-        return formatter.string(from: viewModel.selectedDate)
+        return formatter.string(from: viewModel.selectedDay ?? Date())
     }
     
     var body: some View {
@@ -57,8 +62,8 @@ struct DayDetailView: View {
                     if hasSleepData {
                         // Sleep Entries
                         VStack(spacing: 16) {
-                            ForEach(dayEntries.sorted { $0.startTime < $1.startTime }) { entry in
-                                SleepEntryCard(entry: entry, coreEmoji: coreEmoji, napEmoji: napEmoji) {
+                            ForEach(sortedDayEntries) { entry in
+                                SleepEntryDetailCard(entry: entry, coreEmoji: coreEmoji, napEmoji: napEmoji) {
                                     viewModel.deleteSleepEntry(entry)
                                 }
                             }
@@ -87,7 +92,7 @@ struct DayDetailView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        viewModel.showAddEntry = true
+                        isAddingSleepEntry = true
                     }) {
                         Text("Ekle")
                             .font(.system(size: 16, weight: .medium))
@@ -95,12 +100,17 @@ struct DayDetailView: View {
                     }
                 }
             }
+            .sheet(isPresented: $isAddingSleepEntry) {
+                if let selectedDay = viewModel.selectedDay {
+                    AddSleepEntrySheet(viewModel: viewModel, initialDate: selectedDay)
+                }
+            }
         }
     }
 }
 
-// MARK: - Sleep Entry Card
-struct SleepEntryCard: View {
+// MARK: - Sleep Entry Detail Card
+struct SleepEntryDetailCard: View {
     let entry: SleepEntry
     let coreEmoji: String
     let napEmoji: String

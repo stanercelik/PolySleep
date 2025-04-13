@@ -7,7 +7,7 @@ struct AddSleepEntrySheet: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedEmoji = "😊"
     @State private var sliderValue: Double = 2 // 0-4 arası değer (5 emoji için)
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date
     @State private var selectedBlock: SleepBlock?
     @State private var showBlockError = false
     @State private var blockErrorMessage = ""
@@ -17,6 +17,12 @@ struct AddSleepEntrySheet: View {
     
     // MainScreenViewModel'den uyku bloklarını almak için
     @StateObject private var mainViewModel = MainScreenViewModel()
+    
+    // İlk tarih değerini dışarıdan alacak şekilde init
+    init(viewModel: HistoryViewModel, initialDate: Date? = nil) {
+        self.viewModel = viewModel
+        _selectedDate = State(initialValue: initialDate ?? Date())
+    }
     
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
     private let emojiDescriptions = [
@@ -182,11 +188,14 @@ struct AddSleepEntrySheet: View {
         ScrollView {
             VStack(spacing: 12) {
                 ForEach(availableBlocks, id: \.id) { block in
+                    let alreadyAdded = isBlockAlreadyAdded(block)
+                    
                     BlockSelectionButton(
                         block: block,
                         isSelected: selectedBlock?.id == block.id,
+                        isAlreadyAdded: alreadyAdded,
                         onTap: {
-                            if isBlockAlreadyAdded(block) {
+                            if alreadyAdded {
                                 blockErrorMessage = "sleepEntry.error.alreadyAdded"
                                 showBlockError = true
                             } else {
@@ -220,7 +229,7 @@ struct AddSleepEntrySheet: View {
         )
     }
     
-    private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, onTap: @escaping () -> Void) -> some View {
+    private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, isAlreadyAdded: Bool, onTap: @escaping () -> Void) -> some View {
         Button(action: onTap) {
             HStack {
                 // Blok tipi ikonu (core veya nap)
@@ -236,11 +245,11 @@ struct AddSleepEntrySheet: View {
                     Text(block.isCore ? "Ana Uyku" : "Şekerleme")
                         .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(Color.appText)
+                        .foregroundColor(isAlreadyAdded ? Color.appText.opacity(0.6) : Color.appText)
                     
                     Text("\(TimeFormatter.formattedString(from: block.startTime)) - \(TimeFormatter.formattedString(from: block.endTime))")
                         .font(.caption)
-                        .foregroundColor(Color.appSecondaryText)
+                        .foregroundColor(isAlreadyAdded ? Color.appSecondaryText.opacity(0.6) : Color.appSecondaryText)
                 }
                 
                 Spacer()
@@ -250,19 +259,32 @@ struct AddSleepEntrySheet: View {
                         .font(.system(size: 24))
                         .foregroundColor(Color.appSecondary)
                         .scaleEffect(animateSelection ? 1.2 : 1.0)
+                } else if isAlreadyAdded {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(Color.gray.opacity(0.6))
                 }
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? Color.appSecondary.opacity(0.1) : Color.clear)
+                    .fill(
+                        isSelected ? Color.appSecondary.opacity(0.1) : 
+                        isAlreadyAdded ? Color.gray.opacity(0.1) : Color.clear
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(isSelected ? Color.appSecondary : Color.gray.opacity(0.3), lineWidth: 1)
+                            .stroke(
+                                isSelected ? Color.appSecondary : 
+                                isAlreadyAdded ? Color.gray.opacity(0.5) : Color.gray.opacity(0.3), 
+                                lineWidth: 1
+                            )
                     )
             )
+            .opacity(isAlreadyAdded ? 0.8 : 1.0)
         }
+        .disabled(isAlreadyAdded)
     }
     
     private var qualitySection: some View {
@@ -337,51 +359,18 @@ struct AddSleepEntrySheet: View {
                     }
                     .padding(.horizontal, 4)
                     
-                    ZStack(alignment: .leading) {
-                        // Arka plan izleri
-                        HStack(spacing: 0) {
-                            ForEach(0..<5) { index in
-                                Rectangle()
-                                    .fill(Color.appSecondaryText.opacity(0.1))
-                                    .frame(height: 6)
-                                    .cornerRadius(3)
-                            }
-                        }
-                        
-                        // Aktif dolgu
-                        Rectangle()
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [getSliderColor(), getSliderColor().opacity(0.7)]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .frame(width: (UIScreen.main.bounds.width - 88) * (CGFloat(sliderValue) / 4.0), height: 6)
-                            .cornerRadius(3)
-                        
-                        // Slider düğmesi
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 24, height: 24)
-                            .shadow(color: getSliderColor().opacity(0.3), radius: 4, x: 0, y: 2)
-                            .overlay(
-                                Circle()
-                                    .stroke(getSliderColor(), lineWidth: 2)
-                            )
-                            .offset(x: (UIScreen.main.bounds.width - 88) * (CGFloat(sliderValue) / 4.0) - 12)
-                    }
-                    
-                    Slider(value: $sliderValue, in: 0...4, step: 1)
-                        .tint(getSliderColor())
-                        .opacity(0.01) // Görünmez ama etkileşimli
-                        .onChange(of: sliderValue) { newValue in
-                            // Haptic feedback
-                            let generator = UIImpactFeedbackGenerator(style: .light)
-                            generator.impactOccurred()
-                            
-                            // Etiket animasyonu için
-                            if currentEmojiLabel != previousEmojiLabel {
+                    // Star rating seçimi için butonlar ve kaydırıcı
+                    ZStack {
+                        // Etkileşimli olan gerçek slider
+                        Slider(value: $sliderValue, in: 0...4, step: 1)
+                            .accentColor(getSliderColor())
+                            .padding(.vertical, 20) // Slider'ın dokunma alanını genişlet
+                            .onChange(of: sliderValue) { newValue in
+                                // Haptic feedback
+                                let generator = UIImpactFeedbackGenerator(style: .light)
+                                generator.impactOccurred()
+                                
+                                // Etiket animasyonu için
                                 withAnimation(.easeInOut(duration: 0.2)) {
                                     labelOffset = 20 // Aşağı doğru kaydır
                                 }
@@ -395,7 +384,8 @@ struct AddSleepEntrySheet: View {
                                     }
                                 }
                             }
-                        }
+                    }
+                    .frame(height: 60) // Düğme alanını genişlet
                 }
                 .padding(.horizontal)
             }

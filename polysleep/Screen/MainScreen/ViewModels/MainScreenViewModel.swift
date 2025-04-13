@@ -190,17 +190,12 @@ class MainScreenViewModel: ObservableObject {
         let hour = calendar.component(.hour, from: Date())
         
         if hour < 12 {
-            return "Gün içindeki şekerlemeleri kaçırmamak için alarmlarınızı kontrol edin."
+            return NSLocalizedString("mainScreen.morningReminder", tableName: "MainScreen", comment: "")
         } else if hour < 18 {
-            return "Akşam yemeğini uyku bloğundan en az 2 saat önce yemeyi unutmayın."
+            return NSLocalizedString("mainScreen.afternoonReminder", tableName: "MainScreen", comment: "")
         } else {
-            return "Ana uyku bloğundan önce ekran kullanımını azaltın ve rahatlatıcı bir rutin oluşturun."
+            return NSLocalizedString("mainScreen.eveningReminder", tableName: "MainScreen", comment: "")
         }
-    }
-    
-    var currentStreak: Int {
-        // Dummy Value
-        return 5
     }
     
     var isInSleepTime: Bool {
@@ -209,39 +204,40 @@ class MainScreenViewModel: ObservableObject {
     
     var sleepStatusMessage: String {
         if isInSleepTime {
-            return "İyi Uykular! 💤💤"
+            return NSLocalizedString("mainScreen.goodNightMessage", tableName: "MainScreen", comment: "")
         } else if model.schedule.nextBlock != nil {
             let remainingTime = model.schedule.remainingTimeToNextBlock
             let hours = remainingTime / 60
             let minutes = remainingTime % 60
             
             if hours > 0 {
-                return "Uyku saatine \(hours)s \(minutes)dk kaldı"
+                return String(format: NSLocalizedString("mainScreen.sleepTimeRemaining", tableName: "MainScreen", comment: ""), "\(hours)", "\(minutes)")
             } else {
-                return "Uyku saatine \(minutes)dk kaldı"
+                return String(format: NSLocalizedString("mainScreen.sleepTimeRemainingMinutes", tableName: "MainScreen", comment: ""), "\(minutes)")
             }
         } else {
-            return "Bugün için uyku planı yok"
+            return NSLocalizedString("mainScreen.noSleepPlan", tableName: "MainScreen", comment: "")
         }
     }
     
     func shareScheduleInfo() -> String {
-        var shareText = """
-        🌙 PolySleep Uyku Programım
+        var shareText = NSLocalizedString("mainScreen.shareTitle", tableName: "MainScreen", comment: "") + "\n\n"
         
-        📋 Program: \(model.schedule.name)
-        ⏰ Toplam Uyku: \(totalSleepTimeFormatted)
-        🔄 Mevcut Seri: \(currentStreak) gün
-        📊 Günlük İlerleme: %\(Int(dailyProgress * 100))
+        shareText += String(format: NSLocalizedString("mainScreen.shareSchedule", tableName: "MainScreen", comment: ""), model.schedule.name) + "\n"
+        shareText += String(format: NSLocalizedString("mainScreen.shareTotalSleep", tableName: "MainScreen", comment: ""), totalSleepTimeFormatted) + "\n"
+        shareText += String(format: NSLocalizedString("mainScreen.shareProgress", tableName: "MainScreen", comment: ""), "\(Int(dailyProgress * 100))") + "\n\n"
         
-        🛏️ Uyku Blokları:
-        """
+        shareText += NSLocalizedString("mainScreen.shareSleepBlocks", tableName: "MainScreen", comment: "")
         
         for block in model.schedule.schedule {
-            shareText += "\n• \(block.startTime)-\(block.endTime) (\(block.isCore ? "Ana Uyku" : "Şekerleme"))"
+            let blockType = block.isCore
+                ? NSLocalizedString("mainScreen.shareCoreSleep", tableName: "MainScreen", comment: "")
+                : NSLocalizedString("mainScreen.shareNap", tableName: "MainScreen", comment: "")
+            
+            shareText += "\n• \(block.startTime)-\(block.endTime) (\(blockType))"
         }
         
-        shareText += "\n\n#PolySleep #UykuDüzeni"
+        shareText += "\n\n" + NSLocalizedString("mainScreen.shareHashtags", tableName: "MainScreen", comment: "")
         
         return shareText
     }
@@ -416,7 +412,7 @@ class MainScreenViewModel: ObservableObject {
         let duration = Calendar.current.dateComponents([.minute], from: newBlockStartTime, to: newBlockEndTime).minute ?? 0
         
         // Süreye göre otomatik olarak ana uyku veya şekerleme belirleme
-        let isCore = duration >= 180 // 3 saat ve üzeri ana uyku olarak kabul edilir
+        let isCore = duration >= 45 // 45 dakika ve üzeri ana uyku olarak kabul edilir
         
         let newBlock = SleepBlock(
             startTime: startTime,
@@ -425,21 +421,83 @@ class MainScreenViewModel: ObservableObject {
             isCore: isCore
         )
         
-        model.schedule.schedule.append(newBlock)
-        model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+        // Yerel model güncelleniyor
+        var updatedSchedule = model.schedule
+        updatedSchedule.schedule.append(newBlock)
+        updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+        self.model.schedule = updatedSchedule
         
+        // --- Bildirimleri Güncelle ---
+        print("addNewBlock: Bildirimler güncelleniyor...")
+        ScheduleManager.shared.activateSchedule(updatedSchedule)
+        // --- Bitti ---
+        
+        showAddBlockSheet = false
+        resetNewBlockValues()
+        
+        // Supabase'e kaydet (arka planda)
         Task {
             await saveSchedule()
         }
     }
     
     func removeSleepBlock(at offsets: IndexSet) {
+        // Silinecek blokları kaydet
+        let blocksToRemove = offsets.map { model.schedule.schedule[$0] }
+        
+        // Yerel model güncelleniyor
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.remove(atOffsets: offsets)
         model.schedule = updatedSchedule
         
         Task {
-            await saveSchedule()
+            isLoading = true
+            // Aktif program ID'sini al
+            if let activeSchedule = try? await scheduleService.getActiveSchedule(),
+               let scheduleId = UUID(uuidString: model.schedule.id) {
+                // Sync olup olmadığını kontrol et
+                if scheduleId == activeSchedule.id {
+                    do {
+                        // Blokları birer birer sil
+                        print("PolySleep Debug: \(blocksToRemove.count) adet blok siliniyor")
+                        var allSuccess = true
+                        
+                        for block in blocksToRemove {
+                            let success = try await scheduleService.deleteSleepBlock(blockId: block.id)
+                            if !success {
+                                allSuccess = false
+                                print("PolySleep Debug: Blok silinemedi. ID: \(block.id)")
+                            }
+                        }
+                        
+                        if allSuccess {
+                            print("PolySleep Debug: Tüm bloklar başarıyla silindi")
+                            // Yerel veritabanına kaydet
+                            saveScheduleToLocalDatabase(model.schedule)
+                        } else {
+                            print("PolySleep Debug: Bazı bloklar silinemedi, yerel değişiklikler kayıt altına alınıyor")
+                            // Tüm programı kaydet (yeni bir schedule oluşturarak)
+                            await saveSchedule()
+                        }
+                    } catch {
+                        print("PolySleep Debug: Blok silme hatası: \(error.localizedDescription)")
+                        // Hata durumunda tüm programı kaydet
+                        await saveSchedule()
+                    }
+                } else {
+                    // Schedule ID'leri uyuşmuyorsa, tüm programı yeni olarak kaydet
+                    print("PolySleep Debug: Schedule ID'leri uyuşmuyor, tüm program yeniden kaydediliyor")
+                    await saveSchedule()
+                }
+            } else {
+                // Aktif schedule bulunamazsa, tüm programı kaydet
+                print("PolySleep Debug: Aktif schedule bulunamadı, tüm program kaydediliyor")
+                await saveSchedule()
+            }
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         }
     }
     
@@ -499,17 +557,31 @@ class MainScreenViewModel: ObservableObject {
         
         let duration = Calendar.current.dateComponents([.minute], from: editingBlockStartTime, to: editingBlockEndTime).minute ?? 0
         
+        // Süreye göre otomatik olarak ana uyku veya şekerleme belirleme
+        let isCore = duration >= 45 // 45 dakika ve üzeri ana uyku olarak kabul edilir
+        
         if let index = model.schedule.schedule.firstIndex(where: { $0.id == blockId }) {
             let updatedBlock = SleepBlock(
                 startTime: startTime,
                 duration: duration,
-                type: editingBlockIsCore ? "core" : "nap",
-                isCore: editingBlockIsCore
+                type: isCore ? "core" : "nap",
+                isCore: isCore
             )
             
-            model.schedule.schedule[index] = updatedBlock
-            model.schedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+            // Yerel model güncelleniyor
+            var updatedSchedule = model.schedule
+            updatedSchedule.schedule[index] = updatedBlock
+            updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+            self.model.schedule = updatedSchedule
             
+            // --- Bildirimleri Güncelle ---
+            print("updateBlock: Bildirimler güncelleniyor...")
+            ScheduleManager.shared.activateSchedule(updatedSchedule)
+            // --- Bitti ---
+            
+            editingBlockId = nil // Düzenleme modunu kapat
+            
+            // Supabase'e kaydet (arka planda)
             Task {
                 await saveSchedule()
             }
@@ -517,9 +589,18 @@ class MainScreenViewModel: ObservableObject {
     }
     
     func deleteBlock(_ block: SleepBlock) {
-        model.schedule.schedule.removeAll { $0.id == block.id }
+        // Yerel model güncelleniyor
+        var updatedSchedule = model.schedule
+        updatedSchedule.schedule.removeAll { $0.id == block.id }
+        self.model.schedule = updatedSchedule
         
+        // --- Bildirimleri Güncelle ---
+        print("deleteBlock: Bildirimler güncelleniyor...")
+        ScheduleManager.shared.activateSchedule(updatedSchedule)
+        // --- Bitti ---
         
+        // Supabase'den sil (arka planda)
+        // saveSchedule fonksiyonu silme işlemini de içerecek şekilde güncellenmeli veya ayrı bir silme fonksiyonu çağrılmalı
         Task {
             await saveSchedule()
         }
@@ -793,5 +874,26 @@ class MainScreenViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func resetNewBlockValues() {
+        newBlockStartTime = Date()
+        newBlockEndTime = Date().addingTimeInterval(3600)
+        newBlockIsCore = false
+        showBlockError = false
+        blockErrorMessage = ""
+    }
+    
+    func prepareEditBlock(_ block: SleepBlock) {
+        editingBlockId = block.id
+        editingBlockIsCore = block.isCore
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        editingBlockStartTime = formatter.date(from: block.startTime) ?? Date()
+        editingBlockEndTime = formatter.date(from: block.endTime) ?? Date().addingTimeInterval(TimeInterval(block.duration * 60))
+        editingBlockIsCore = block.isCore
+        showBlockError = false
+        blockErrorMessage = ""
     }
 }

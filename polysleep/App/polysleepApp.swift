@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Supabase
+import OneSignalCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
@@ -15,6 +16,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // Initialize notification manager
     let notificationManager = SleepQualityNotificationManager.shared
     notificationManager.requestAuthorization()
+    
+    // OneSignal başlat
+    OneSignalNotificationService.shared.initialize()
 
     return true
   }
@@ -42,6 +46,7 @@ struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isDarkMode") private var isDarkMode = true
+    @AppStorage("appLanguage") private var appLanguage = "tr"
     @StateObject private var authManager = AuthManager.shared
     
     let modelContainer: ModelContainer
@@ -69,7 +74,7 @@ struct polysleepApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.locale, .current)
+                .environment(\.locale, Locale(identifier: appLanguage))
                 .preferredColorScheme(isDarkMode ? .dark : .light)
                 .task {
                     do {

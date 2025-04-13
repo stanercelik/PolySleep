@@ -36,13 +36,25 @@ class AuthManager: ObservableObject {
         Task {
             for await authState in supabaseService.client.auth.authStateChanges {
                 await MainActor.run {
+                    let previousAuthState = self.isAuthenticated
                     switch authState.event {
                     case .initialSession, .signedIn:
                         self.currentUser = authState.session?.user
                         self.isAuthenticated = true
+                        // Eğer önceki durum false ise ve şimdi true olduysa (giriş yapıldı)
+                        if !previousAuthState && self.isAuthenticated {
+                            print("AuthManager: Kullanıcı doğrulandı (authStateChanges). ScheduleManager yükleniyor.")
+                            ScheduleManager.shared.loadActiveSchedule()
+                        }
                     case .signedOut, .userDeleted:
                         self.currentUser = nil
                         self.isAuthenticated = false
+                        // Kullanıcı çıkış yaptıysa, schedule manager'ı temizle/güncelle
+                        if previousAuthState && !self.isAuthenticated {
+                             print("AuthManager: Kullanıcı çıkış yaptı. ScheduleManager güncelleniyor.")
+                            ScheduleManager.shared.activeSchedule = nil
+                            ScheduleManager.shared.updateNotificationsForActiveSchedule() // Temiz bildirimler
+                        }
                     default:
                         break
                     }
@@ -56,7 +68,13 @@ class AuthManager: ObservableObject {
     private func checkCurrentUser() async {
         do {
             self.currentUser = try await supabaseService.getCurrentUser()
+            let previousAuthState = self.isAuthenticated
             self.isAuthenticated = self.currentUser != nil
+            // Eğer uygulama başlarken kullanıcı zaten varsa
+            if !previousAuthState && self.isAuthenticated {
+                 print("AuthManager: Mevcut kullanıcı kontrol edildi, doğrulandı. ScheduleManager yükleniyor.")
+                 ScheduleManager.shared.loadActiveSchedule()
+            }
         } catch {
             print("PolySleep Debug: Kullanıcı bilgisi alınamadı: \(error.localizedDescription)")
             self.currentUser = nil
@@ -79,8 +97,6 @@ class AuthManager: ObservableObject {
             print("PolySleep Debug: supabaseService.signInWithApple çağrılıyor")
             if let user = try await SupabaseAuthService.shared.signInWithApple() {
                 print("PolySleep Debug: Apple ID ile giriş başarılı: \(user.email ?? "email yok")")
-                currentUser = user
-                isAuthenticated = true
             } else {
                 print("PolySleep Debug: Apple ID ile giriş başarısız: kullanıcı bilgileri alınamadı")
                 authError = "Kullanıcı bilgileri alınamadı"
@@ -99,8 +115,6 @@ class AuthManager: ObservableObject {
         
         do {
             try await SupabaseAuthService.shared.signOut()
-            currentUser = nil
-            isAuthenticated = false
         } catch {
             authError = error.localizedDescription
         }
@@ -111,22 +125,19 @@ class AuthManager: ObservableObject {
     /// Anonim giriş yapar
     @MainActor
     func signInAnonymously() async throws {
-        // UserDefaults'tan anonim giriş yapıldı mı kontrol et
         _ = UserDefaults.standard
         
         do {
-            // SupabaseService'deki signInAnonymously metodunu çağır
-            // Bu metot zaten UserDefaults kontrolü yapar
             let user = try await SupabaseAuthService.shared.signInAnonymously()
-            self.currentUser = user
-            await refreshAuthState()
+
         } catch {
             throw error
         }
     }
     
-    @MainActor
-    private func refreshAuthState() async {
-        self.isAuthenticated = self.currentUser != nil
-    }
+    // Bu fonksiyona artık gerek yok, authStateChanges dinleyici yeterli
+    // @MainActor
+    // private func refreshAuthState() async {
+    //     self.isAuthenticated = self.currentUser != nil
+    // }
 }

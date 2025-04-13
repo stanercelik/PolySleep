@@ -140,6 +140,7 @@ struct SettingsView: View {
         .scrollContentBackground(.hidden)
         .navigationTitle("settings.title")
         .navigationBarTitleDisplayMode(.inline)
+        .environment(\.locale, Locale(identifier: appLanguage))
     }
 }
 

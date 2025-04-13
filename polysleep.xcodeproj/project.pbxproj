@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		200CAD012DAB2AE500F65A10 /* polysleep.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = polysleep.xcodeproj; sourceTree = "<group>"; };
 		2032D6B02D1E9E2300170F56 /* polysleep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polysleep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2032D6C52D1E9E2400170F56 /* polysleepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = polysleepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2032D6CF2D1E9E2400170F56 /* polysleepUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = polysleepUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +101,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		200CAD022DAB2AE500F65A10 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2032D6A72D1E9E2300170F56 = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +247,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2032D6B12D1E9E2300170F56 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 200CAD022DAB2AE500F65A10 /* Products */;
+					ProjectRef = 200CAD012DAB2AE500F65A10 /* polysleep.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				2032D6AF2D1E9E2300170F56 /* polysleep */,

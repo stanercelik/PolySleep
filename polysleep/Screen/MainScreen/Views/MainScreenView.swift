@@ -181,17 +181,6 @@ struct MainScreenView: View {
                         .foregroundColor(.appPrimary)
                 },
                 trailing: HStack(spacing: 16) {
-                    Button(action: {
-                        Task {
-                            await viewModel.loadScheduleFromSupabase()
-                        }
-                    }) {
-                        Image(systemName: "arrow.clockwise")
-                            .symbolRenderingMode(.hierarchical)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.appPrimary)
-                            .accessibilityLabel(Text(LocalizedStringKey("mainscreen.button.refresh")))
-                    }
                     
                     Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
                         .symbolRenderingMode(.hierarchical)
@@ -267,7 +256,7 @@ struct HeaderView: View {
             
             // Toplam uyku süresi
             HStack {
-                Text("⏱️ Toplam Uyku: \(viewModel.totalSleepTimeFormatted)")
+                Text(String(format: NSLocalizedString("mainScreen.totalSleepLabel", tableName: "MainScreen", comment: ""), viewModel.totalSleepTimeFormatted))
                     .font(.caption)
                     .foregroundColor(.appSecondaryText)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -384,53 +373,133 @@ struct SleepBlockCard: View {
     let nextBlock: SleepBlock?
     let nextBlockTime: String
     
-    @State private var showingActionSheet = false
     @State private var showingEditSheet = false
+    @State private var showDeleteConfirmation = false
+    @State private var buttonScale = 1.0
     
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(block.isCore ? String("🛏️") : String("⚡️"))
-                    .font(.title2)
-                Text("\(block.startTime) - \(block.endTime)")
-                    .font(.headline)
-                    .foregroundColor(.appText)
+        GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                // Ana kart içeriği
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text(block.isCore ? String("🛏️") : String("⚡️"))
+                            .font(.title2)
+                        Text("\(block.startTime) - \(block.endTime)")
+                            .font(.headline)
+                            .foregroundColor(.appText)
+                    }
+                    
+                    Text(
+                        block.isCore
+                        ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
+                        : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
+                    )
+                    .font(.subheadline)
+                    .foregroundColor(.appSecondaryText)
+                    
+                }
+                .padding()
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.appCardBackground)
+                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                )
+                
+                // Düzenleme modu aktifken görünecek düzenleme ve silme butonları
+                if viewModel.isEditing {
+                    // Düzenleme butonu - Sol üstte
+                    Button(action: {
+                        hapticFeedback(style: .light)
+                        viewModel.prepareForEditing(block)
+                        showingEditSheet = true
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.appCardBackground)
+                                .frame(width: 34, height: 34)
+                                .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
+                            
+                            Circle()
+                                .fill(Color.appPrimary.opacity(0.2))
+                                .frame(width: 32, height: 32)
+                            
+                            Image(systemName: "pencil")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(Color.appPrimary)
+                        }
+                    }
+                    .scaleEffect(buttonScale)
+                    .onLongPressGesture(minimumDuration: 0.1, maximumDistance: 10) {
+                        // Uzun basıldığında
+                    } onPressingChanged: { pressing in
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            buttonScale = pressing ? 0.9 : 1.0
+                        }
+                    }
+                    .position(x: 16, y: 16)
+                    .zIndex(1)
+                    
+                    // Silme butonu - Sağ üstte
+                    Button(action: {
+                        hapticFeedback(style: .medium)
+                        showDeleteConfirmation = true
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.appCardBackground)
+                                .frame(width: 34, height: 34)
+                                .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
+                            
+                            Circle()
+                                .fill(Color.red.opacity(0.2))
+                                .frame(width: 32, height: 32)
+                            
+                            Image(systemName: "trash")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(Color.red)
+                        }
+                    }
+                    .scaleEffect(buttonScale)
+                    .onLongPressGesture(minimumDuration: 0.1, maximumDistance: 10) {
+                        // Uzun basıldığında
+                    } onPressingChanged: { pressing in
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            buttonScale = pressing ? 0.9 : 1.0
+                        }
+                    }
+                    .position(x: geometry.size.width - 16, y: 16)
+                    .zIndex(1)
+                }
             }
-            
-            Text(
-                block.isCore
-                ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
-                : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
-            )
-            .font(.subheadline)
-            .foregroundColor(.appSecondaryText)
-            
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.appCardBackground)
-        )
-        .onLongPressGesture(minimumDuration: 0.5) {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                showingActionSheet = true
+            .sheet(isPresented: $showingEditSheet) {
+                EditSleepBlockSheet(viewModel: viewModel)
+            }
+            .confirmationDialog(
+                NSLocalizedString("sleepBlock.delete.title", comment: "Uyku bloğunu sil"),
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button(NSLocalizedString("sleepBlock.delete.confirm", comment: "Sil"), role: .destructive) {
+                    withAnimation {
+                        viewModel.deleteBlock(block)
+                    }
+                    hapticFeedback(style: .rigid)
+                }
+                Button(NSLocalizedString("general.cancel", comment: "İptal"), role: .cancel) {}
+            } message: {
+                Text(NSLocalizedString("sleepBlock.delete.message", comment: "Bu uyku bloğunu silmek istediğinizden emin misiniz?"))
             }
         }
-        .confirmationDialog("", isPresented: $showingActionSheet) {
-            Button(NSLocalizedString("general.edit", tableName: "MainScreen", comment: "")) {
-                viewModel.prepareForEditing(block)
-                showingEditSheet = true
-            }
-            
-            Button(NSLocalizedString("general.delete", tableName: "MainScreen", comment: ""), role: .destructive) {
-                viewModel.deleteBlock(block)
-            }
-        }
-        .sheet(isPresented: $showingEditSheet) {
-            EditSleepBlockSheet(viewModel: viewModel)
-        }
+        .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+    }
+    
+    private func hapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.impactOccurred()
     }
 }
 
@@ -443,11 +512,6 @@ struct EditSleepBlockSheet: View {
         NavigationView {
             Form {
                 Section {
-                    Toggle(NSLocalizedString("sleepBlock.isCore", tableName: "MainScreen", comment: ""), isOn: $viewModel.editingBlockIsCore)
-                        .tint(.appAccent)
-                }
-                
-                Section {
                     DatePicker(
                         NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
                         selection: $viewModel.editingBlockStartTime,
@@ -459,6 +523,12 @@ struct EditSleepBlockSheet: View {
                         selection: $viewModel.editingBlockEndTime,
                         displayedComponents: .hourAndMinute
                     )
+                }
+                
+                Section {
+                    Text("sleepBlock.autoType", tableName: "MainScreen")
+                        .font(.footnote)
+                        .foregroundColor(.appSecondaryText)
                 }
             }
             .navigationTitle(NSLocalizedString("sleepBlock.edit", tableName: "MainScreen", comment: ""))
@@ -498,7 +568,7 @@ struct InfoCardsSection: View {
     var body: some View {
         VStack(spacing: 8) {
             HStack {
-                Text("📊 Günlük Durum")
+                Text(NSLocalizedString("mainScreen.dailyStatus", tableName: "MainScreen", comment: ""))
                     .font(.title3)
                     .foregroundColor(.appText)
                 Spacer()

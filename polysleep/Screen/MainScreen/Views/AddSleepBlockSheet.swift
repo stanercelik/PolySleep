@@ -22,6 +22,12 @@ struct AddSleepBlockSheet: View {
                                   displayedComponents: .hourAndMinute)
                     }
                     
+                    Section {
+                        Text("sleepBlock.autoType", tableName: "MainScreen")
+                            .font(.footnote)
+                            .foregroundColor(.appSecondaryText)
+                    }
+                    
                     if !viewModel.model.schedule.schedule.isEmpty {
                         Section(header: Text("sleepBlock.existing.title", tableName: "MainScreen")) {
                             ForEach(viewModel.model.schedule.schedule.sorted { block1, block2 in

@@ -37,12 +37,6 @@
         }
       }
     },
-    "Bu zaman aralığında hiç uyku kaydı bulunamadı. Bir kayıt eklemek için aşağıdaki butona tıklayabilirsiniz." : {
-
-    },
-    "Daha Fazla" : {
-
-    },
     "Düzenle" : {
       "comment" : "Button text for editing day detail",
       "extractionState" : "stale",
@@ -81,6 +75,7 @@
     },
     "Filtreler" : {
       "comment" : "Header text for filter section",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -96,14 +91,8 @@
         }
       }
     },
-    "Kayıt Bulunamadı" : {
-
-    },
     "Key" : {
       "extractionState" : "manual"
-    },
-    "Özel Aralık" : {
-
     },
     "Özel Tarih Aralığı" : {
       "comment" : "Header text for custom date range filter",
@@ -122,9 +111,6 @@
           }
         }
       }
-    },
-    "Sil" : {
-
     },
     "Sleep History" : {
       "comment" : "Navigation title for history view",
@@ -253,12 +239,6 @@
           }
         }
       }
-    },
-    "Uyku Geçmişi" : {
-
-    },
-    "Uyku Kaydı Ekle" : {
-
     },
     "Uyku Tipi" : {
       "comment" : "Header text for selecting sleep type",

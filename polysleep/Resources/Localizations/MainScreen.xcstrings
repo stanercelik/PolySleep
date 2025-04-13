@@ -102,6 +102,23 @@
         }
       }
     },
+    "mainScreen.afternoonReminder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remember to have dinner at least 2 hours before your sleep block."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam yemeğini uyku bloğundan en az 2 saat önce yemeyi unutmayın."
+          }
+        }
+      }
+    },
     "mainscreen.button.refresh" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -170,6 +187,40 @@
         }
       }
     },
+    "mainScreen.dailyStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Status"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük Durum"
+          }
+        }
+      }
+    },
+    "mainScreen.error.generic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred. Please try again later."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+          }
+        }
+      }
+    },
     "mainscreen.error.retry" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -187,6 +238,57 @@
         }
       }
     },
+    "mainScreen.eveningReminder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reduce screen time before your main sleep block and create a relaxing routine."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana uyku bloğundan önce ekran kullanımını azaltın ve rahatlatıcı bir rutin oluşturun."
+          }
+        }
+      }
+    },
+    "mainScreen.goodNightMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Well! 💤💤"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi Uykular! 💤💤"
+          }
+        }
+      }
+    },
+    "mainScreen.morningReminder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your alarms to not miss naps during the day."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün içindeki şekerlemeleri kaçırmamak için alarmlarınızı kontrol edin."
+          }
+        }
+      }
+    },
     "mainScreen.nextSleepBlock" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -200,6 +302,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sonraki Uyku"
+          }
+        }
+      }
+    },
+    "mainScreen.noSleepPlan" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No sleep plan for today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün için uyku planı yok"
           }
         }
       }
@@ -234,6 +353,159 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Program Açıklaması"
+          }
+        }
+      }
+    },
+    "mainScreen.shareCoreSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "mainScreen.shareHashtags" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#PolySleep #SleepSchedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#PolySleep #UykuDüzeni"
+          }
+        }
+      }
+    },
+    "mainScreen.shareNap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
+    "mainScreen.shareProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📊 Daily Progress: %@%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📊 Günlük İlerleme: %%%@"
+          }
+        }
+      }
+    },
+    "mainScreen.shareSchedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📋 Schedule: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📋 Program: %@"
+          }
+        }
+      }
+    },
+    "mainScreen.shareSleepBlocks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ Sleep Blocks:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ Uyku Blokları:"
+          }
+        }
+      }
+    },
+    "mainScreen.shareStreak" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Current Streak: %@ days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Mevcut Seri: %@ gün"
+          }
+        }
+      }
+    },
+    "mainScreen.shareTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 My PolySleep Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 PolySleep Uyku Programım"
+          }
+        }
+      }
+    },
+    "mainScreen.shareTotalSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Total Sleep: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Toplam Uyku: %@"
           }
         }
       }
@@ -289,6 +561,40 @@
         }
       }
     },
+    "mainScreen.sleepTimeRemaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h %@min until sleep time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku saatine %@s %@dk kaldı"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepTimeRemainingMinutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@min until sleep time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku saatine %@dk kaldı"
+          }
+        }
+      }
+    },
     "mainScreen.streak" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -340,6 +646,23 @@
         }
       }
     },
+    "mainScreen.totalSleepLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏱️ Total Sleep: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏱️ Toplam Uyku: %@"
+          }
+        }
+      }
+    },
     "schedule.customized" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -369,6 +692,91 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku Bloğu Ekle"
+          }
+        }
+      }
+    },
+    "sleepBlock.autoType" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Block type will be automatically determined based on length. Blocks longer than 45 minutes will be Core Sleep, shorter will be Nap."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok türü süreye bağlı olarak otomatik belirlenecektir. 45 dakikadan uzun bloklar Ana Uyku, daha kısa olanlar Şekerleme olacaktır."
+          }
+        }
+      }
+    },
+    "sleepBlock.delete.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sil"
+          }
+        }
+      }
+    },
+    "sleepBlock.delete.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete this sleep block?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu uyku bloğunu silmek istediğinizden emin misiniz?"
+          }
+        }
+      }
+    },
+    "sleepBlock.delete.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Sleep Block"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Bloğunu Sil"
+          }
+        }
+      }
+    },
+    "sleepBlock.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Süre"
           }
         }
       }
@@ -585,7 +993,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@ ve %2$@ saatleri arasındaki uykun nasıldı?"
           }
         }

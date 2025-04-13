@@ -5,6 +5,8 @@ struct NotificationSettingsView: View {
     @AppStorage("napNotificationTime") private var napNotificationTime: Double = 15 // Dakika
     @AppStorage("showRatingNotification") private var showRatingNotification = true
     
+    @State private var hasScheduleChanged = false
+    
     var body: some View {
         List {
             // Ana Uyku Bildirimleri
@@ -27,6 +29,9 @@ struct NotificationSettingsView: View {
                         in: 0...120,
                         step: 1
                     )
+                    .onChange(of: coreNotificationTime) { _, _ in
+                        hasScheduleChanged = true
+                    }
                     
                     HStack {
                         Text("notifications.off", tableName: "Profile")
@@ -59,6 +64,9 @@ struct NotificationSettingsView: View {
                         in: 0...120,
                         step: 1
                     )
+                    .onChange(of: napNotificationTime) { _, _ in
+                        hasScheduleChanged = true
+                    }
                     
                     HStack {
                         Text("notifications.off", tableName: "Profile")
@@ -88,6 +96,13 @@ struct NotificationSettingsView: View {
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("settings.notifications.settings")
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: hasScheduleChanged) { _, newValue in
+            if newValue {
+                // Bildirim ayarları değiştiğinde bildirimleri yeniden planla
+                scheduleNotificationsForActiveSchedule()
+                hasScheduleChanged = false
+            }
+        }
     }
     
     private func formatTime(minutes: Int) -> String {
@@ -102,6 +117,15 @@ struct NotificationSettingsView: View {
             } else {
                 return "\(hours) \(hours == 1 ? NSLocalizedString("notifications.hour", tableName: "Profile", comment: "") : NSLocalizedString("notifications.hours", tableName: "Profile", comment: "")) \(remainingMinutes) \(remainingMinutes == 1 ? NSLocalizedString("notifications.minute", tableName: "Profile", comment: "") : NSLocalizedString("notifications.minutes", tableName: "Profile", comment: ""))"
             }
+        }
+    }
+    
+    /// Aktif uyku programı için bildirimleri planlar
+    private func scheduleNotificationsForActiveSchedule() {
+        // Aktif uyku programını al
+        if let activeSchedule = ScheduleManager.shared.activeSchedule {
+            // OneSignal bildirimlerini planla
+            OneSignalNotificationService.shared.scheduleAllNotificationsForActiveSchedule(schedule: activeSchedule)
         }
     }
 }

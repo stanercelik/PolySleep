@@ -28,5 +28,11 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Uyku programınız hakkında hatırlatıcılar almak için bildirimleri etkinleştirin.</string>
 </dict>
 </plist>

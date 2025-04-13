@@ -320,3 +320,90 @@ extension LocalizedDescription {
         return ["en": en, "tr": tr]
     }
 }
+
+// MARK: - Sleep Block Operations
+extension SupabaseScheduleService {
+    /// Bir uyku programına yeni bir uyku bloğu ekler
+    /// - Parameters:
+    ///   - scheduleId: Uyku programı ID'si
+    ///   - block: Eklenecek uyku bloğu
+    /// - Returns: İşlemin başarılı olup olmadığı
+    @MainActor
+    func addSleepBlock(scheduleId: UUID, block: SleepBlock) async throws -> Bool {
+        do {
+            let blockId = UUID()
+            let blockSyncId = UUID().uuidString
+            
+            // Bloğu Supabase'e ekle
+            try await client
+                .from("user_sleep_blocks")
+                .insert([
+                    "id": blockId.uuidString,
+                    "schedule_id": scheduleId.uuidString,
+                    "start_time": block.startTime,
+                    "duration_minutes": String(block.duration),
+                    "is_core": String(block.isCore),
+                    "created_at": ISO8601DateFormatter().string(from: Date()),
+                    "updated_at": ISO8601DateFormatter().string(from: Date()),
+                    "sync_id": blockSyncId
+                ])
+                .execute()
+            
+            print("PolySleep Debug: Uyku bloğu başarıyla eklendi")
+            return true
+        } catch {
+            print("PolySleep Debug: Uyku bloğu eklenemedi: \(error)")
+            return false
+        }
+    }
+    
+    /// Bir uyku programından belirli bir uyku bloğunu siler
+    /// - Parameters:
+    ///   - blockId: Silinecek bloğun ID'si
+    /// - Returns: İşlemin başarılı olup olmadığı
+    @MainActor
+    func deleteSleepBlock(blockId: UUID) async throws -> Bool {
+        do {
+            // Bloğu Supabase'den sil
+            try await client
+                .from("user_sleep_blocks")
+                .delete()
+                .eq("id", value: blockId.uuidString)
+                .execute()
+            
+            print("PolySleep Debug: Uyku bloğu başarıyla silindi")
+            return true
+        } catch {
+            print("PolySleep Debug: Uyku bloğu silinemedi: \(error)")
+            return false
+        }
+    }
+    
+    /// Bir uyku bloğunu günceller
+    /// - Parameters:
+    ///   - blockId: Güncellenecek bloğun ID'si
+    ///   - block: Güncellenmiş uyku bloğu verisi
+    /// - Returns: İşlemin başarılı olup olmadığı
+    @MainActor
+    func updateSleepBlock(blockId: UUID, block: SleepBlock) async throws -> Bool {
+        do {
+            // Bloğu Supabase'de güncelle
+            try await client
+                .from("user_sleep_blocks")
+                .update([
+                    "start_time": block.startTime,
+                    "duration_minutes": String(block.duration),
+                    "is_core": String(block.isCore),
+                    "updated_at": ISO8601DateFormatter().string(from: Date())
+                ])
+                .eq("id", value: blockId.uuidString)
+                .execute()
+            
+            print("PolySleep Debug: Uyku bloğu başarıyla güncellendi")
+            return true
+        } catch {
+            print("PolySleep Debug: Uyku bloğu güncellenemedi: \(error)")
+            return false
+        }
+    }
+}

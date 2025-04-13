@@ -1,5 +1,5 @@
 {
-  "originHash" : "319513cbaa471ae45c672c49c8fe21a51ce4dbdb85a658d8a5b6ec6eb8252456",
+  "originHash" : "2f976aebd60f27d9ef4d63faa2a73fb5bd7e52be3b715e0ec796544d26859dc4",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -98,6 +98,15 @@
       "state" : {
         "revision" : "b7e1104502eca3a213b46303391ca4d3bc8ddec1",
         "version" : "2.30910.0"
+      }
+    },
+    {
+      "identity" : "onesignal-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OneSignal/OneSignal-iOS-SDK",
+      "state" : {
+        "revision" : "adbf5a5b0a1e4e9580c0a8ba006a2025c5cbebd6",
+        "version" : "5.2.10"
       }
     },
     {

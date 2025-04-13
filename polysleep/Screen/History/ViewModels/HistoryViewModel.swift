@@ -11,13 +11,6 @@ enum TimeFilter: String, CaseIterable {
     case allTime = "All Time"
 }
 
-enum SleepTypeFilter: String, CaseIterable {
-    case all = "All Sleep"
-    case core = "Core Sleep Only"
-    case nap = "Naps Only"
-}
-
-/// Senkronizasyon durumunu takip etmek için kullanılan enum
 enum SyncStatus {
     case synced
     case pendingSync
@@ -28,11 +21,7 @@ enum SyncStatus {
 class HistoryViewModel: ObservableObject {
     @Published var historyItems: [HistoryModel] = []
     @Published var selectedFilter: TimeFilter = .today
-    @Published var selectedSleepTypeFilter: SleepTypeFilter = .all
-    @Published var isCalendarPresented = false
     @Published var isFilterMenuPresented = false
-    @Published var selectedDateRange: ClosedRange<Date>?
-    @Published var isCustomFilterVisible = false
     @Published var selectedDay: Date?
     @Published var selectedDate: Date = Date()
     @Published var isDayDetailPresented = false
@@ -42,9 +31,9 @@ class HistoryViewModel: ObservableObject {
     @Published var syncError: String?
     @Published var syncStatus: SyncStatus = .synced
     
+    var modelContext: ModelContext?
+    
     private var allHistoryItems: [HistoryModel] = []
-    private var lastCustomDateRange: ClosedRange<Date>?
-    private var modelContext: ModelContext?
     private var supabaseService: SupabaseHistoryService {
         return SupabaseService.shared.history
     }
@@ -58,26 +47,6 @@ class HistoryViewModel: ObservableObject {
         setupNetworkMonitoring()
     }
     
-    /// Ağ durumunu izlemek için gerekli ayarları yapar
-    private func setupNetworkMonitoring() {
-        // İnternet bağlantısı değişikliklerini izle
-        networkMonitor.$isConnected
-            .dropFirst() // İlk değeri atla (başlangıç değeri)
-            .sink { [weak self] isConnected in
-                if isConnected {
-                    // İnternet bağlantısı sağlandığında bekleyen değişiklikleri senkronize et
-                    self?.syncStatus = .synced
-                    Task { @MainActor in
-                        await self?.syncPendingChanges()
-                    }
-                } else {
-                    // İnternet bağlantısı kesildiğinde offline durumuna geç
-                    self?.syncStatus = .offline
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
         loadData()
@@ -85,20 +54,6 @@ class HistoryViewModel: ObservableObject {
     
     func setFilter(_ filter: TimeFilter) {
         selectedFilter = filter
-        selectedDateRange = nil
-        isCustomFilterVisible = false
-        filterAndSortItems()
-    }
-    
-    func setSleepTypeFilter(_ filter: SleepTypeFilter) {
-        selectedSleepTypeFilter = filter
-        filterAndSortItems()
-    }
-    
-    func setDateRange(_ range: ClosedRange<Date>) {
-        selectedDateRange = range
-        lastCustomDateRange = range
-        isCustomFilterVisible = true
         filterAndSortItems()
     }
     
@@ -475,74 +430,46 @@ class HistoryViewModel: ObservableObject {
         let calendar = Calendar.current
         let now = Date()
         
-        // Time Filter
         var filteredItems: [HistoryModel]
-        if isCustomFilterVisible, let range = selectedDateRange {
+        
+        switch selectedFilter {
+        case .today:
             filteredItems = allHistoryItems.filter { item in
-                let startOfDay = calendar.startOfDay(for: item.date)
-                return startOfDay >= calendar.startOfDay(for: range.lowerBound) &&
-                       startOfDay <= calendar.startOfDay(for: range.upperBound)
+                calendar.isDate(item.date, equalTo: now, toGranularity: .day)
             }
-        } else {
-            switch selectedFilter {
-            case .today:
-                filteredItems = allHistoryItems.filter { item in
-                    calendar.isDate(item.date, equalTo: now, toGranularity: .day)
-                }
-                
-            case .thisWeek:
-                let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
-                let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
-                
-                filteredItems = allHistoryItems.filter { item in
-                    let itemDate = calendar.startOfDay(for: item.date)
-                    return itemDate >= startOfWeek && itemDate < endOfWeek
-                }
-                
-            case .thisMonth:
-                let components = calendar.dateComponents([.year, .month], from: now)
-                let startOfMonth = calendar.date(from: components)!
-                let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
-                
-                filteredItems = allHistoryItems.filter { item in
-                    let itemDate = calendar.startOfDay(for: item.date)
-                    return itemDate >= startOfMonth && itemDate <= endOfMonth
-                }
-                
-            case .allTime:
-                filteredItems = allHistoryItems
+            
+        case .thisWeek:
+            let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
+            let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
+            
+            filteredItems = allHistoryItems.filter { item in
+                let itemDate = calendar.startOfDay(for: item.date)
+                return itemDate >= startOfWeek && itemDate < endOfWeek
             }
+            
+        case .thisMonth:
+            let components = calendar.dateComponents([.year, .month], from: now)
+            let startOfMonth = calendar.date(from: components)!
+            let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
+            
+            filteredItems = allHistoryItems.filter { item in
+                let itemDate = calendar.startOfDay(for: item.date)
+                return itemDate >= startOfMonth && itemDate <= endOfMonth
+            }
+            
+        case .allTime:
+            filteredItems = allHistoryItems
         }
         
-        // Sleep Type Filter
-        filteredItems = filteredItems.map { item in
-            let newItem = item
-            switch selectedSleepTypeFilter {
-            case .all:
-                break
-            case .core:
-                newItem.sleepEntries = item.sleepEntries.filter { $0.type == .core }
-            case .nap:
-                newItem.sleepEntries = item.sleepEntries.filter { $0.type == .powerNap }
-            }
-            return newItem
-        }.filter { !$0.sleepEntries.isEmpty }
+        filteredItems = filteredItems.filter { !$0.sleepEntries.isEmpty }
         
-        // Sort by date (latest first)
         historyItems = filteredItems.sorted { $0.date > $1.date }
     }
     
     // SwiftData ve Supabase ile veri yükleme
     private func loadData() {
         guard let modelContext = modelContext else {
-            // ModelContext henüz ayarlanmamış, örnek veri oluştur
-            _ = Calendar.current
-            let now = Date()
-            
-            // Bugün için boş bir kayıt oluştur
-            let todayItem = HistoryModel(date: now, sleepEntries: [])
-            allHistoryItems = [todayItem]
-            
+            allHistoryItems = []
             filterAndSortItems()
             return
         }
@@ -553,12 +480,6 @@ class HistoryViewModel: ObservableObject {
         do {
             allHistoryItems = try modelContext.fetch(descriptor)
             
-            // Eğer hiç kayıt yoksa, bugün için boş bir kayıt oluştur
-            if allHistoryItems.isEmpty {
-                let now = Date()
-                let todayItem = HistoryModel(date: now, sleepEntries: [])
-                allHistoryItems = [todayItem]
-            }
             
             filterAndSortItems()
             
@@ -583,6 +504,23 @@ class HistoryViewModel: ObservableObject {
             print("Veriler başarıyla kaydedildi")
         } catch {
             print("Verileri kaydederken hata oluştu: \(error)")
+        }
+    }
+    
+    // Veriyi yeniden yükle
+    func reloadData() {
+        if let modelContext = modelContext {
+            try? modelContext.save()
+            
+            // Veritabanından tüm kayıtları yeniden yükle
+            let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
+            
+            do {
+                allHistoryItems = try modelContext.fetch(descriptor)
+                filterAndSortItems()
+            } catch {
+                print("Veri yeniden yüklenirken hata oluştu: \(error)")
+            }
         }
     }
 }

@@ -5,10 +5,25 @@ struct PersonalInfoView: View {
     @Query private var onboardingAnswers: [OnboardingAnswer]
     @Query private var scheduleStore: [SleepScheduleStore]
     @Environment(\.modelContext) private var modelContext
+    @State private var supabaseAnswers: [String: String] = [:]
+    @State private var isLoading = true
+    @State private var errorMessage: String?
     
     var body: some View {
         List {
-            if onboardingAnswers.isEmpty {
+            if isLoading {
+                Section {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding()
+                }
+            } else if let error = errorMessage {
+                Section {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+            } else if supabaseAnswers.isEmpty {
                 Section {
                     Text("personalInfo.noData", tableName: "Profile")
                         .foregroundColor(.secondary)
@@ -30,23 +45,21 @@ struct PersonalInfoView: View {
                     }
                 }
                 
-                // Kişisel Bilgiler
+                // Kişisel Bilgiler - Onboarding Cevapları
                 Section(header: Text("personalInfo.answers", tableName: "Profile")) {
-                    /* ForEach(onboardingAnswers.sorted { $0.date > $1.date }) { answer in
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(answer.question)
-                                .font(.headline)
-                            
-                            Text(answer.answer)
-                                .foregroundColor(.secondary)
-                                .padding(.vertical, 4)
-                            
-                            Text(dateFormatter.string(from: answer.date))
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                    ForEach(getOrderedQuestions(), id: \.self) { question in
+                        if let answer = supabaseAnswers[question] {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(getLocalizedQuestion(for: question))
+                                    .font(.headline)
+                                
+                                Text(getLocalizedAnswer(for: question, value: answer))
+                                    .foregroundColor(.secondary)
+                                    .padding(.vertical, 4)
+                            }
+                            .padding(.vertical, 4)
                         }
-                        .padding(.vertical, 4)
-                    }*/
+                    }
                 }
             }
         }
@@ -54,6 +67,9 @@ struct PersonalInfoView: View {
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("settings.about.personalInfo")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await loadOnboardingAnswers()
+        }
     }
     
     private var dateFormatter: DateFormatter {
@@ -61,6 +77,53 @@ struct PersonalInfoView: View {
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         return formatter
+    }
+    
+    private func loadOnboardingAnswers() async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            supabaseAnswers = try await SupabaseOnboardingService.shared.getAllOnboardingAnswersRaw()
+            isLoading = false
+        } catch {
+            isLoading = false
+            errorMessage = "Onboarding cevaplarınız yüklenemedi. Lütfen internet bağlantınızı kontrol edin."
+            print("Onboarding cevapları yüklenirken hata oluştu: \(error)")
+        }
+    }
+    
+    private func getOrderedQuestions() -> [String] {
+        // Soruları istenen sırayla göstermek için
+        let orderedQuestions = [
+            "onboarding.sleepExperience", 
+            "onboarding.ageRange", 
+            "onboarding.workSchedule", 
+            "onboarding.napEnvironment",
+            "onboarding.lifestyle", 
+            "onboarding.knowledgeLevel", 
+            "onboarding.healthStatus", 
+            "onboarding.motivationLevel",
+            "onboarding.sleepGoal", 
+            "onboarding.socialObligations", 
+            "onboarding.disruptionTolerance", 
+            "onboarding.chronotype"
+        ]
+        
+        // Sadece kullanıcının cevapladığı soruları filtrele
+        return orderedQuestions.filter { supabaseAnswers.keys.contains($0) }
+    }
+    
+    private func getLocalizedQuestion(for question: String) -> String {
+        let key = question // örn: "onboarding.sleepExperience"
+        return NSLocalizedString(key, tableName: "Onboarding", comment: "")
+    }
+    
+    private func getLocalizedAnswer(for question: String, value: String) -> String {
+        // Cevabın localize edilmiş halini getir 
+        // Örneğin: onboarding.sleepExperience.low -> "Düşük"
+        let key = "\(question).\(value)"
+        return NSLocalizedString(key, tableName: "Onboarding", comment: "")
     }
 }
 
