@@ -1,11 +1,7 @@
-.windsurfrules
 Documents/
-prd.md
-widget_prd.md
-design_prd.md
-yapilacaklar_listesi.md
+Documents/prd.md
+Documents/yapilacaklar_listesi.md
+Documents/design_prd.md
+Documents/widget_prd.md
 GoogleService-Info.plist
-.env
-SupabaseConfig.swift
-.cursor/rules
-polysleep/Services/Supabase/SupabaseConfig.swift
+.cursor/rules/
