@@ -15,6 +15,7 @@ struct EnumConversionError: Error, LocalizedError {
 final class OnboardingViewModel: ObservableObject {
     // MARK: - Dependencies
     private let recommender: SleepScheduleRecommender
+    private var modelContext: ModelContext?
     
     // MARK: - Published Properties
     @Published var currentPage = 0
@@ -50,14 +51,21 @@ final class OnboardingViewModel: ObservableObject {
     @Published var chronotype: Chronotype?
     
     // MARK: - Initialization
-    init() {
-        self.recommender = SleepScheduleRecommender()
+    init(modelContext: ModelContext? = nil) {
+        self.recommender = SleepScheduleRecommender(repository: Repository.shared)
+        self.modelContext = modelContext
+        if modelContext == nil {
+            print("⚠️ OnboardingViewModel: ModelContext nil olarak başlatıldı. View'dan inject edildiğinden emin olun.")
+        } else {
+            print("✅ OnboardingViewModel: ModelContext başarıyla başlatıldı/inject edildi.")
+        }
     }
     
-    // Geriye dönük uyumluluk için eski başlatıcıyı da saklıyoruz
-    @available(*, deprecated, message: "SwiftData kullanımı kaldırıldı, boş başlatıcıyı kullanın")
-    init(modelContext: ModelContext) {
-        self.recommender = SleepScheduleRecommender()
+    func setModelContext(_ context: ModelContext) {
+        if self.modelContext == nil { // Sadece nil ise ata, birden fazla kez atanmasını engelle
+            self.modelContext = context
+            print("✅ OnboardingViewModel: setModelContext çağrıldı.")
+        }
     }
     
     // MARK: - Computed Properties
@@ -100,13 +108,60 @@ final class OnboardingViewModel: ObservableObject {
     
     // MARK: - Recommendation Process
     func startRecommendationProcess() async {
-        showLoadingView = true
-        recommendationProgress = 0.0
-        recommendationStatusMessage = "Bilgiler alınıyor..."
-        recommendationComplete = false
+        // Kullanıcı seçimlerinin tam olup olmadığını kontrol et
+        guard previousSleepExperience != nil,
+              ageRange != nil,
+              workSchedule != nil,
+              napEnvironment != nil,
+              lifestyle != nil,
+              knowledgeLevel != nil,
+              healthStatus != nil,
+              motivationLevel != nil,
+              sleepGoal != nil,
+              socialObligations != nil,
+              disruptionTolerance != nil,
+              chronotype != nil else {
+            await MainActor.run {
+                errorMessage = "Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın."
+                showError = true
+                showLoadingView = false
+            }
+            return
+        }
+        
+        await MainActor.run {
+            showLoadingView = true
+            recommendationProgress = 0.0
+            recommendationStatusMessage = "Bilgiler alınıyor..."
+            recommendationComplete = false
+        }
         
         // Bilgileri kaydet
         await saveUserPreferences()
+    }
+    
+    // MARK: - UserPreferences kaydı
+    func markOnboardingAsCompletedInSwiftData() async {
+        guard let modelContext = self.modelContext else {
+            print("❌ OnboardingViewModel: Onboarding tamamlandı olarak işaretlenemedi, ModelContext yok.")
+            return
+        }
+        let fetchDescriptor = FetchDescriptor<UserPreferences>()
+        do {
+            if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                userPreferences.hasCompletedOnboarding = true
+                try modelContext.save()
+                print("✅ OnboardingViewModel: UserPreferences'da onboarding tamamlandı olarak işaretlendi.")
+            } else {
+                // WelcomeView'da oluşturulmuş olmalı. Eğer yoksa burada oluşturmak bir yedek plan.
+                let newPreferences = UserPreferences(hasCompletedOnboarding: true)
+                modelContext.insert(newPreferences)
+                try modelContext.save()
+                print("✅ OnboardingViewModel: UserPreferences oluşturuldu ve onboarding tamamlandı olarak işaretlendi.")
+            }
+        } catch {
+            print("❌ OnboardingViewModel: UserPreferences güncellenirken hata: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - Saving
@@ -147,9 +202,7 @@ final class OnboardingViewModel: ObservableObject {
         print("- Disruption Tolerance: \(disruptionTolerance.rawValue)")
         print("- Chronotype: \(chronotype.rawValue)")
         
-        // Supabase'e kaydet
-        // Onboarding cevaplarını hazırla
-        let answers: [(String, String)] = [
+        let answersTuples: [(String, String)] = [
             ("onboarding.sleepExperience", sleepExperience.rawValue),
             ("onboarding.ageRange", ageRange.rawValue),
             ("onboarding.workSchedule", workSchedule.rawValue),
@@ -164,33 +217,71 @@ final class OnboardingViewModel: ObservableObject {
             ("onboarding.chronotype", chronotype.rawValue)
         ]
         
-        var savedAnswers: [OnboardingAnswer] = []
+        updateProgress(0.30, "Veriler yerel olarak kaydediliyor...")
         
-        for (question, answer) in answers {
-            let onboardingAnswer = OnboardingAnswer(
-                question: question,
-                answer: answer
-            )
-            savedAnswers.append(onboardingAnswer)
-        }
-        
-        updateProgress(0.30, "Veriler senkronize ediliyor...")
-        
-        // Supabase'e senkronize et
         do {
-            let success = try await SupabaseOnboardingService.shared.syncOnboardingAnswersToSupabase(answers: savedAnswers)
-            if success {
-                print("✅ Successfully synced onboarding answers to Supabase")
-                updateProgress(0.45, "Uyku programınız hesaplanıyor...")
-                // Recommend Schedule kısmında async/await kullanmak için
-                await getRecommendedSchedule()
-            } else {
-                print("⚠️ Some onboarding answers failed to sync with Supabase")
-                await showErrorMessage("Bazı tercihler kaydedilemedi. Lütfen internet bağlantınızı kontrol edin.")
+            guard let modelContext = self.modelContext else {
+                print("❌ ModelContext bulunamadı, onboarding yanıtları kaydedilemedi")
+                await showErrorMessage("Veriler kaydedilemedi: ModelContext bulunamadı")
+                return
             }
+            
+            var currentUserModel: User? = nil
+            if let localUserIdString = AuthManager.shared.currentUser?.id,
+               let localUserUUID = UUID(uuidString: localUserIdString) {
+                
+                let predicate = #Predicate<User> { user in user.id == localUserUUID }
+                let descriptor = FetchDescriptor<User>(predicate: predicate)
+                do {
+                    currentUserModel = try modelContext.fetch(descriptor).first
+                    if currentUserModel == nil {
+                        print("⚠️ OnboardingViewModel: ID'si \(localUserUUID) olan User @Model bulunamadı. OnboardingAnswer kullanıcısız kaydedilecek.")
+                        // Tamamen offline bir uygulamada, User @Model'i, yerel kullanıcı ilk oluşturulduğunda
+                        // veya burada AuthManager.shared.currentUser bilgilerine dayanarak oluşturabilirsiniz.
+                    }
+                } catch {
+                    print("❌ OnboardingViewModel: User @Model alınırken hata: \(error.localizedDescription)")
+                }
+            } else {
+                print("ℹ️ OnboardingViewModel: AuthManager'dan geçerli kullanıcı ID'si alınamadı.")
+            }
+            
+            try cleanupExistingAnswers(in: modelContext)
+            
+            for (questionKey, answerValue) in answersTuples {
+                let newAnswerData = OnboardingAnswerData(
+                    user: currentUserModel,
+                    question: questionKey,
+                    answer: answerValue,
+                    date: Date(),
+                    createdAt: Date(),
+                    updatedAt: Date()
+                )
+                modelContext.insert(newAnswerData)
+            }
+            
+            try modelContext.save()
+            print("✅ Onboarding yanıtları yerel olarak SwiftData'ya kaydedildi.")
+            
+            updateProgress(0.45, "Uyku programınız hesaplanıyor...")
+            await getRecommendedSchedule()
+            
         } catch {
-            print("❌ Error syncing onboarding answers to Supabase: \(error.localizedDescription)")
-            await showErrorMessage("Tercihler kaydedilemedi: \(error.localizedDescription)")
+            print("❌ Onboarding yanıtları SwiftData'ya kaydedilirken hata: \(error.localizedDescription)")
+            await showErrorMessage("Tercihler yerel olarak kaydedilemedi: \(error.localizedDescription)")
+        }
+    }
+    
+    // Mevcut yanıtları temizleme yardımcı fonksiyonu
+    private func cleanupExistingAnswers(in context: ModelContext) throws {
+        let descriptor = FetchDescriptor<OnboardingAnswerData>()
+        let existingAnswers = try context.fetch(descriptor)
+        
+        if !existingAnswers.isEmpty {
+            print("🧹 \(existingAnswers.count) mevcut yanıt temizleniyor...")
+            for answer in existingAnswers {
+                context.delete(answer)
+            }
         }
     }
     
@@ -244,48 +335,55 @@ final class OnboardingViewModel: ObservableObject {
                 
                 updateProgress(0.9, "Programınız kaydediliyor...")
                 
-                // Önerilen programı schedules tablosuna kaydet
-                let success = try await SupabaseScheduleService.shared.saveRecommendedSchedule(
-                    schedule: recommendation.schedule,
-                    adaptationPeriod: recommendation.adaptationPeriod
-                )
-                
-                if success {
-                    print("✅ Successfully saved recommended schedule to Supabase")
+                let recommendedUserScheduleModel = recommendation.schedule.toUserScheduleModel
+                do {
+                    // Repository.saveSchedule, ScheduleEntity'yi kaydeder ve aktif eder.
+                    _ = try await Repository.shared.saveSchedule(recommendedUserScheduleModel)
+                    print("✅ Önerilen program (ScheduleEntity) yerel olarak kaydedildi ve aktif edildi.")
                     
-                    // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
-                    try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 saniye
+                    // ScheduleManager'ın aktif programını güncellemesini sağla
+                    await ScheduleManager.shared.loadActiveSchedule()
                     
-                    updateProgress(1.0, "Hazır!")
-                    recommendationComplete = true
-                } else {
-                    print("⚠️ Failed to save recommended schedule to Supabase")
-                    
-                    // Hata olsa bile kullanıcıya yükleme tamamlandı gösterelim
-                    handleErrorButContinue("Veriler kaydedilemedi ancak yine de devam edebilirsiniz.")
+                    await MainActor.run {
+                        updateProgress(1.0, "Hazır!")
+                        recommendationComplete = true
+                    }
+                } catch {
+                    print("❌ Önerilen program kaydedilirken/aktifleştirilirken hata: \(error.localizedDescription)")
+                    await handleErrorButContinue("Önerilen program ayarlanırken bir sorun oluştu. Varsayılan program kullanılacak.")
                 }
             } else {
                 print("❌ Failed to get recommendation")
                 
-                // Önerilen program oluşturulamasa bile kullanıcıya yükleme tamamlandı gösterelim
-                handleErrorButContinue("Varsayılan program oluşturuldu.")
+                // Öneri bulunamazsa varsayılan bir programı kaydet
+                print("⚠️ Tavsiye bulunamadı. Varsayılan program ayarlanıyor.")
+                let defaultScheduleModel = UserScheduleModel.defaultSchedule
+                do {
+                    _ = try await Repository.shared.saveSchedule(defaultScheduleModel)
+                    print("✅ Varsayılan program yerel olarak kaydedildi ve aktif edildi.")
+                    await ScheduleManager.shared.loadActiveSchedule()
+                    await handleErrorButContinue("Size uygun bir program önerisi bulunamadı. Varsayılan program ayarlandı.")
+                } catch {
+                    print("❌ Varsayılan program kaydedilirken/aktifleştirilirken hata: \(error.localizedDescription)")
+                    await handleErrorButContinue("Varsayılan program ayarlanırken bir hata oluştu.")
+                }
             }
         } catch let error as EnumConversionError {
             print("❌ Enum conversion error: \(error.localizedDescription)")
-            handleErrorButContinue("Verileriniz işlenirken bir sorun oluştu, varsayılan program oluşturuldu.")
+            await handleErrorButContinue("Verileriniz işlenirken bir sorun oluştu, varsayılan program oluşturuldu.")
         } catch {
             print("❌ Error getting recommendation: \(error.localizedDescription)")
-            handleErrorButContinue("Beklenmeyen bir hata oluştu, varsayılan program oluşturuldu.")
+            await handleErrorButContinue("Beklenmeyen bir hata oluştu, varsayılan program oluşturuldu.")
         }
     }
     
     // Hata durumlarında yükleme ekranını tamamlamak için yardımcı fonksiyon
-    private func handleErrorButContinue(_ message: String) {
-        // Bir uyarı göster ama yine de yükleme animasyonunu tamamla
-        updateProgress(0.9, message)
-        
-        // 1 saniye sonra tamamlanmış olarak göster
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+    private func handleErrorButContinue(_ message: String) async {
+        await MainActor.run {
+            updateProgress(0.9, message)
+        }
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye
+        await MainActor.run {
             withAnimation {
                 self.recommendationProgress = 1.0
                 self.recommendationStatusMessage = "Hazır!"
@@ -295,10 +393,6 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     func startUsingApp() {
-        // Ana ekrana geçmeden önce Onboarding tamamlandı bildirimini gönder
-        NotificationCenter.default.post(name: NSNotification.Name("OnboardingCompleted"), object: nil)
-        
-        // Ana ekrana geçiş yap
         navigateToMainScreen = true
     }
     

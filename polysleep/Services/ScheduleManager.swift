@@ -9,65 +9,103 @@ class ScheduleManager: ObservableObject {
     @Published var activeSchedule: UserScheduleModel?
     
     private init() {
-    }
-    
-    @MainActor
-    func loadActiveSchedule() {
-        print("ScheduleManager: Aktif program yükleniyor...")
+        // Silinmiş olarak işaretlenmiş blokları temizle
         Task {
             do {
-                guard AuthManager.shared.isAuthenticated else {
-                    print("ScheduleManager: Kullanıcı doğrulanmadı, program yüklenemiyor.")
+                try await Repository.shared.cleanupDeletedBlocks()
+                
+                // Uygulama başlatıldığında yerel veritabanından aktif programı yükle
+                await loadActiveScheduleFromLocalDatabase()
+            } catch {
+                print("ScheduleManager: Silinmiş bloklar temizlenirken hata: \(error)")
+            }
+        }
+    }
+    
+    /// Yerel veritabanından aktif programı yükler
+    @MainActor
+    private func loadActiveScheduleFromLocalDatabase() {
+        Task {
+            do {
+                if let localSchedule = try await Repository.shared.getActiveSchedule() {
+                    print("ScheduleManager: Yerel veritabanından aktif program yüklendi: \(localSchedule.name)")
+                    DispatchQueue.main.async {
+                        self.activeSchedule = localSchedule
+                        self.updateNotificationsForActiveSchedule()
+                    }
+                } else {
+                    print("ScheduleManager: Yerel veritabanında aktif program bulunamadı.")
                     DispatchQueue.main.async {
                         self.activeSchedule = nil
                     }
-                    return
-                }
-                
-                print("ScheduleManager: Kullanıcı doğrulandı, Supabase'den program çekiliyor.")
-                let schedules = try await SupabaseService.shared.schedule.getUserSchedules()
-                if let activeDbSchedule = schedules.first(where: { $0.isActive }) {
-                    print("ScheduleManager: Aktif DB programı bulundu: \(activeDbSchedule.name)")
-                    let blocks = try await SupabaseService.shared.schedule.getSleepBlocksForSchedule(scheduleId: activeDbSchedule.id)
-                    let activeModelSchedule = activeDbSchedule.toUserScheduleModel(with: blocks)
-                    print("ScheduleManager: Program UserScheduleModel'e dönüştürüldü.")
-                    DispatchQueue.main.async {
-                        print("ScheduleManager: activeSchedule ayarlanıyor ve bildirimler güncelleniyor.")
-                        self.activeSchedule = activeModelSchedule
-                        self.updateNotificationsForActiveSchedule() // Program yüklendikten sonra bildirimleri planla
-                    }
-                } else {
-                    print("ScheduleManager: Aktif veritabanı programı bulunamadı.")
-                    DispatchQueue.main.async {
-                        self.activeSchedule = nil // Aktif program yoksa nil yap
-                    }
                 }
             } catch {
-                print("ScheduleManager: Aktif program yüklenemedi HATA: \(error)")
+                print("ScheduleManager: Yerel veritabanından aktif program yüklenirken hata: \(error)")
                 DispatchQueue.main.async {
-                    self.activeSchedule = nil // Hata durumunda nil yap
+                    self.activeSchedule = nil
                 }
             }
         }
     }
     
-    /// Uyku programı değiştiğinde bildirimleri günceller
-    func updateNotificationsForActiveSchedule() {
-        guard let schedule = activeSchedule else { 
-            print("Bildirimler güncellenemedi: Aktif program (activeSchedule) nil.")
-            OneSignalNotificationService.shared.clearAllScheduledNotifications()
-            return 
-        }
-        print("Aktif program (\(schedule.name)) için bildirimler güncelleniyor...")
-        OneSignalNotificationService.shared.scheduleAllNotificationsForActiveSchedule(schedule: schedule)
+    @MainActor
+    func loadActiveSchedule() {
+        print("ScheduleManager: Aktif program yükleniyor...")
+        loadActiveScheduleFromLocalDatabase()
     }
     
+    /// Uyku programı değiştiğinde bildirimleri günceller
+    @MainActor func updateNotificationsForActiveSchedule() {
+        guard let schedule = activeSchedule else { 
+            print("Bildirimler güncellenemedi: Aktif program (activeSchedule) nil. Tüm bildirimler iptal ediliyor.")
+            LocalNotificationService.shared.cancelAllNotifications()
+            return 
+        }
+        
+        // Kullanıcının tercih ettiği hatırlatma süresini al
+        let leadTime = Repository.shared.getReminderLeadTime()
+        
+        print("Aktif program (\(schedule.name)) için bildirimler \(leadTime) dakika öncesinden güncelleniyor...")
+        LocalNotificationService.shared.scheduleNotificationsForActiveSchedule(schedule: schedule, leadTimeMinutes: leadTime)
+    }
+    
+    @MainActor
     func activateSchedule(_ schedule: UserScheduleModel) {
-        // TODO: Supabase tarafında da bu programı aktif olarak işaretle
-        print("ScheduleManager: Program manuel olarak aktifleştiriliyor: \(schedule.name)")
+        print("ScheduleManager: Program aktifleştiriliyor: \(schedule.name)")
+        
+        Task {
+            do {
+                // Önce mevcut aktif programları deaktive et
+                try await Repository.shared.deactivateAllSchedules()
+                
+                // Sonra yeni programı aktif olarak işaretle
+                try await Repository.shared.setScheduleActive(id: schedule.id, isActive: true)
+                
+                // Aktif programı güncelle ve bildirimleri planla
+                DispatchQueue.main.async {
+                    self.activeSchedule = schedule
+                    self.updateNotificationsForActiveSchedule()
+                    print("ScheduleManager: Program başarıyla aktifleştirildi: \(schedule.name)")
+                }
+            } catch {
+                print("ScheduleManager: Program aktifleştirilemedi: \(error)")
+            }
+        }
+    }
+    
+    /// Aktif programı sıfırlar
+    @MainActor
+    func resetActiveSchedule() async throws {
+        print("ScheduleManager: Aktif program sıfırlanıyor...")
+        
+        // Tüm programları deaktive et
+        try await Repository.shared.deactivateAllSchedules()
+        
+        // Yerel programı temizle
         DispatchQueue.main.async {
-             self.activeSchedule = schedule
-             self.updateNotificationsForActiveSchedule()
+            self.activeSchedule = nil
+            self.updateNotificationsForActiveSchedule() // Bildirimleri güncelle
+            print("ScheduleManager: Aktif program başarıyla sıfırlandı")
         }
     }
 } 

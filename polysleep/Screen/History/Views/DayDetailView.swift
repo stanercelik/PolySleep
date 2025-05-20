@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct DayDetailView: View {
     @ObservedObject var viewModel: HistoryViewModel
@@ -15,16 +16,11 @@ struct DayDetailView: View {
     }
     
     var dayEntries: [SleepEntry] {
-        if let dayHistory = viewModel.historyItems.first(where: { item in
-            Calendar.current.isDate(item.date, inSameDayAs: viewModel.selectedDay ?? Date())
-        }) {
-            return dayHistory.sleepEntries
+        guard let day = viewModel.selectedDay,
+              let historyItemForDay = viewModel.getHistoryItem(for: day) else {
+            return []
         }
-        return []
-    }
-    
-    var sortedDayEntries: [SleepEntry] {
-        return dayEntries.sorted { $0.startTime < $1.startTime }
+        return historyItemForDay.sleepEntries?.sorted { $0.startTime < $1.startTime } ?? []
     }
     
     var hasSleepData: Bool {
@@ -62,7 +58,7 @@ struct DayDetailView: View {
                     if hasSleepData {
                         // Sleep Entries
                         VStack(spacing: 16) {
-                            ForEach(sortedDayEntries) { entry in
+                            ForEach(dayEntries) { entry in
                                 SleepEntryDetailCard(entry: entry, coreEmoji: coreEmoji, napEmoji: napEmoji) {
                                     viewModel.deleteSleepEntry(entry)
                                 }
@@ -119,27 +115,18 @@ struct SleepEntryDetailCard: View {
     @State private var showDeleteAlert = false
     
     var formattedStartTime: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: entry.startTime)
+        entry.startTime.formatted(date: .omitted, time: .shortened)
     }
     
     var formattedEndTime: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: entry.endTime)
+        entry.endTime.formatted(date: .omitted, time: .shortened)
     }
     
     var durationText: String {
-        let components = Calendar.current.dateComponents([.hour, .minute], from: entry.startTime, to: entry.endTime)
-        let hours = components.hour ?? 0
-        let minutes = components.minute ?? 0
-        
-        if hours > 0 {
-            return "\(hours) s \(minutes) dk"
-        } else {
-            return "\(minutes) dk"
-        }
+        let hours = entry.durationMinutes / 60
+        let minutes = entry.durationMinutes % 60
+        if hours > 0 { return "\(hours) s \(minutes) dk" }
+        else { return "\(minutes) dk" }
     }
     
     var ratingColor: Color {
@@ -214,8 +201,8 @@ struct SleepEntryDetailCard: View {
                 
                 Spacer()
                 
-                if !entry.emoji.isEmpty {
-                    Text(entry.emoji)
+                if ((entry.emoji?.isEmpty) == nil) {
+                    Text(entry.emoji ?? "")
                         .font(.system(size: 20))
                 }
             }
@@ -244,14 +231,8 @@ struct SummarySectionCard: View {
     let entries: [SleepEntry]
     
     var totalSleepDuration: (Int, Int) {
-        let totalMinutes = entries.reduce(0) { total, entry in
-            let components = Calendar.current.dateComponents([.minute], from: entry.startTime, to: entry.endTime)
-            return total + (components.minute ?? 0)
-        }
-        
-        let hours = totalMinutes / 60
-        let minutes = totalMinutes % 60
-        return (hours, minutes)
+        let totalMinutes = entries.reduce(0) { $0 + $1.durationMinutes }
+        return (totalMinutes / 60, totalMinutes % 60)
     }
     
     var averageRating: Double {
@@ -335,17 +316,9 @@ struct NoDataView: View {
 
 struct DayDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let startTime = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: Date())!
-        let endTime = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Date())!
-        let entry = SleepEntry(id: UUID(), type: .core, startTime: startTime, endTime: endTime, rating: 4)
-        
-        let napStart = Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!
-        let napEnd = Calendar.current.date(bySettingHour: 14, minute: 30, second: 0, of: Date())!
-        let napEntry = SleepEntry(id: UUID(), type: .powerNap, startTime: napStart, endTime: napEnd, rating: 3)
-        
-        let model = HistoryModel(date: Date(), sleepEntries: [entry, napEntry])
         let viewModel = HistoryViewModel()
+        viewModel.selectedDay = Date()
         
-        DayDetailView(viewModel: viewModel)
+        return DayDetailView(viewModel: viewModel)
     }
 }

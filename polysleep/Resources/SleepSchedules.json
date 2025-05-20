@@ -1,25 +1,6 @@
 {
   "sleepSchedules": [
     {
-      "id": "monophasic",
-      "name": "Monophasic Sleep",
-      "description": {
-        "en": "The traditional sleep pattern with one consolidated block of sleep at night, typically lasting 7-9 hours. This is the most common and natural sleep pattern for most people.",
-        "tr": "Geleneksel uyku düzeni, genellikle gece boyunca 7-9 saat süren tek parça uykudan oluşur. Bu, çoğu insan için en yaygın ve doğal uyku düzenidir."
-      },
-      "totalSleepHours": 8,
-      "isPremium": false,
-      "adaptationPhase": 30,
-      "schedule": [
-        {
-          "type": "core",
-          "startTime": "23:00",
-          "duration": 480,
-          "isCore": true
-        }
-      ]
-    },
-    {
       "id": "biphasic",
       "name": "Biphasic Sleep",
       "description": {
@@ -28,7 +9,7 @@
       },
       "totalSleepHours": 6.5,
       "isPremium": false,
-      "adaptationPhase": 45,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -52,8 +33,8 @@
         "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır."
       },
       "totalSleepHours": 7.5,
-      "isPremium": true,
-      "adaptationPhase": 45,
+      "isPremium": false,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -78,7 +59,7 @@
       },
       "totalSleepHours": 4.5,
       "isPremium": false,
-      "adaptationPhase": 60,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -115,7 +96,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
-      "adaptationPhase": 75,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -146,7 +127,7 @@
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
-      "adaptationPhase": 90,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -183,7 +164,7 @@
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
-      "adaptationPhase": 120,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -225,8 +206,8 @@
         "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir."
       },
       "totalSleepHours": 2,
-      "isPremium": false,
-      "adaptationPhase": 120,
+      "isPremium": true,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "nap",
@@ -263,7 +244,7 @@
       },
       "totalSleepHours": 2,
       "isPremium": true,
-      "adaptationPhase": 120,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "nap",
@@ -300,7 +281,7 @@
       },
       "totalSleepHours": 2,
       "isPremium": true,
-      "adaptationPhase": 180,
+      "adaptationPhase": 28,
       "schedule": [
         {
           "type": "nap",
@@ -349,7 +330,7 @@
       },
       "totalSleepHours": 4,
       "isPremium": false,
-      "adaptationPhase": 90,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -380,7 +361,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
-      "adaptationPhase": 90,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -407,11 +388,11 @@
       "name": "Segmented Sleep",
       "description": {
         "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest. Ideal for a relaxed start.",
-        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir"
+        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir."
       },
       "totalSleepHours": 6,
-      "isPremium": true,
-      "adaptationPhase": 60,
+      "isPremium": false,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -436,7 +417,7 @@
       },
       "totalSleepHours": 5,
       "isPremium": true,
-      "adaptationPhase": 60,
+      "adaptationPhase": 21,
       "schedule": [
         {
           "type": "core",
@@ -451,6 +432,662 @@
           "isCore": true
         }
       ]
+    },
+    {
+      "id": "dual-core",
+      "name": "Dual Core Sleep",
+      "description": {
+        "en": "A sleep pattern that splits the night into two nearly equal core sleep periods separated by a wakeful period. It mimics segmented sleep in a more structured form.",
+        "tr": "Geceyi iki neredeyse eşit ana uyku periyoduna bölen ve arada uyanıklık dönemi bırakan bir düzen. Bölünmüş uykuyu daha yapılandırılmış bir biçimde taklit eder."
+      },
+      "totalSleepHours": 6,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 180,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:30",
+          "duration": 180,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "biphasic-e1",
+      "name": "Biphasic E1 (Extended)",
+      "description": {
+        "en": "An extended biphasic schedule: one core sleep plus a long nap, totaling around 7 hours of rest.",
+        "tr": "Genişletilmiş bir biphasic düzen: bir ana uyku ve ardından uzun bir şekerlemeden oluşarak toplamda yaklaşık 7 saatlik uyku sağlar."
+      },
+      "totalSleepHours": 7,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 300,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "13:00",
+          "duration": 120,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "biphasic-siesta",
+      "name": "Biphasic (Siesta)",
+      "description": {
+        "en": "A biphasic pattern with a single core sleep at night and a midday siesta nap, common in many siesta cultures.",
+        "tr": "Gece tek bir ana uyku ve öğlen siesta uykusundan oluşan biphasic düzen. Pek çok kültürde gelenekseldir."
+      },
+      "totalSleepHours": 7,
+      "isPremium": false,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 360,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 60,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "biphasic-segmented",
+      "name": "Biphasic (Segmented)",
+      "description": {
+        "en": "A biphasic variation that segments the night into two sleep blocks, each around 3 hours, separated by wake time.",
+        "tr": "Geceyi yaklaşık 3'er saatlik iki uyku bloğuna bölen, arada uyanıklık kalınan biphasic bir varyasyon."
+      },
+      "totalSleepHours": 6,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 180,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 180,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "biphasic-x",
+      "name": "Biphasic X",
+      "description": {
+        "en": "Another flexible biphasic approach with one nighttime core and one extended nap during the day.",
+        "tr": "Geceleri tek bir ana uyku ve gün içinde genişletilmiş bir şekerlemeden oluşan esnek biphasic yaklaşımı."
+      },
+      "totalSleepHours": 7,
+      "isPremium": false,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:00",
+          "duration": 300,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "15:00",
+          "duration": 120,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-e2-extended",
+      "name": "Everyman E2 (Extended)",
+      "description": {
+        "en": "An extended variant of Everyman 2: ~5h core sleep plus two short naps (15-30 mins), aiming for ~5.5h total.",
+        "tr": "Everyman 2'nin genişletilmiş varyasyonu: Yaklaşık 5 saatlik ana uykuya ek olarak günde iki kısa (15-30 dk) şekerleme içerir."
+      },
+      "totalSleepHours": 5.5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:30",
+          "duration": 300,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "10:00",
+          "duration": 15,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "16:00",
+          "duration": 15,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-e3-extended",
+      "name": "Everyman E3 (Extended)",
+      "description": {
+        "en": "An extended variant of Everyman 3: ~4h core sleep plus three short naps (15-20 mins).",
+        "tr": "Everyman 3'ün genişletilmiş varyasyonu: Yaklaşık 4 saatlik ana uykuya ek olarak günde 3 kısa (15-20 dk) şekerleme."
+      },
+      "totalSleepHours": 5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "01:00",
+          "duration": 240,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "09:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "19:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-e4-extended",
+      "name": "Everyman E4 (Extended)",
+      "description": {
+        "en": "A more intense Everyman variant: ~3.5h core sleep plus four short naps. Extended version may total ~5h.",
+        "tr": "Daha yoğun bir Everyman varyasyonu: Yaklaşık 3,5 saatlik ana uyku ve dört kısa şekerleme. Genişletilmiş versiyonu yaklaşık 5 saatlik toplam uyku sunar."
+      },
+      "totalSleepHours": 5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 210,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "07:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "11:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "15:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "19:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-e5",
+      "name": "Everyman E5",
+      "description": {
+        "en": "A rare Everyman variant with a short core (~3h) plus five mini-naps throughout the day.",
+        "tr": "Nadir görülen Everyman varyasyonu: Yaklaşık 3 saatlik ana uyku ve gün içinde beş kısa şekerleme."
+      },
+      "totalSleepHours": 5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:00",
+          "duration": 180,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "04:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "08:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "12:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "16:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "20:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-sevarny",
+      "name": "Everyman Sevarny",
+      "description": {
+        "en": "An ultra-compact Everyman variant with a short nighttime core and multiple naps, typically totaling 3-4 hours.",
+        "tr": "Çok kısa gece ana uyku ve birden fazla şekerlemeden oluşan, genelde 3-4 saate düşen bir Everyman varyasyonu."
+      },
+      "totalSleepHours": 3.5,
+      "isPremium": true,
+      "adaptationPhase": 28,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "01:00",
+          "duration": 120,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "06:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "10:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "18:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "everyman-trimaxion",
+      "name": "Everyman Trimaxion",
+      "description": {
+        "en": "A mixed polyphasic approach combining aspects of triphasic and Everyman, often around 3-4h of total sleep.",
+        "tr": "Triphasic ve Everyman öğelerini harmanlayan karma bir polyphasic yaklaşım. Genelde 3-4 saat toplam uyku sağlar."
+      },
+      "totalSleepHours": 4,
+      "isPremium": true,
+      "adaptationPhase": 28,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:00",
+          "duration": 150,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "08:00",
+          "duration": 30,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "dual-core-dc1",
+      "name": "Dual Core DC1",
+      "description": {
+        "en": "A basic dual-core pattern with two ~3h cores at night, separated by a wake gap.",
+        "tr": "Gece iki adet yaklaşık 3 saatlik ana uykudan oluşan temel bir dual core düzeni. Uyku blokları arasında uyanıklık dönemi bulunur."
+      },
+      "totalSleepHours": 6,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 180,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 180,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "dual-core-dc1-extended",
+      "name": "Dual Core DC1 (Extended)",
+      "description": {
+        "en": "An extended DC1 with slightly longer cores (3.5h each).",
+        "tr": "DC1 düzeninin uzun sürümünde her bir ana uyku yaklaşık 3,5 saat olacak şekilde ayarlanır."
+      },
+      "totalSleepHours": 7,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "21:30",
+          "duration": 210,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:30",
+          "duration": 210,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "dual-core-dc2-extended",
+      "name": "Dual Core DC2 (Extended)",
+      "description": {
+        "en": "A dual-core variant with two core sleeps of ~4 hours each, totaling about 8 hours.",
+        "tr": "Yaklaşık 4'er saatlik iki ana uyku bloğundan oluşan ve toplamda 8 saat uyku sağlayan bir dual-core varyasyonu."
+      },
+      "totalSleepHours": 8,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "21:00",
+          "duration": 240,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 240,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "dual-core-dc3",
+      "name": "Dual Core DC3",
+      "description": {
+        "en": "A more flexible dual-core pattern with 2 short cores (2-3h each) and an optional nap.",
+        "tr": "İki kısa ana uyku (her biri 2-3 saat) ve opsiyonel bir şekerlemeye sahip daha esnek bir dual-core düzeni."
+      },
+      "totalSleepHours": 5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 120,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "02:00",
+          "duration": 120,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "13:00",
+          "duration": 60,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "dual-core-dab",
+      "name": "Dual Core DAB",
+      "description": {
+        "en": "A dual-core arrangement known as DAB: two main sleeps plus a bridging midday nap.",
+        "tr": "DAB olarak bilinen dual-core düzeni: iki ana uyku bloğu ve öğle saatlerinde köprü görevi gören bir şekerleme."
+      },
+      "totalSleepHours": 5.5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "23:00",
+          "duration": 150,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "12:00",
+          "duration": 30,
+          "isCore": false
+        },
+        {
+          "type": "core",
+          "startTime": "02:30",
+          "duration": 150,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "dual-core-bimaxion",
+      "name": "Dual Core Bimaxion",
+      "description": {
+        "en": "A less common dual-core approach referencing 'bimaxion': two shorter cores plus two short naps for a total near 4h.",
+        "tr": "'Bimaxion' olarak anılan, iki kısa ana uyku ve iki kısa şekerleme ile toplamda 4 saate yakın uyku sunan nadir dual-core yaklaşımı."
+      },
+      "totalSleepHours": 4,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "00:00",
+          "duration": 90,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "04:00",
+          "duration": 90,
+          "isCore": true
+        },
+        {
+          "type": "nap",
+          "startTime": "10:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "16:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "tri-core-tc1",
+      "name": "Tri Core TC1",
+      "description": {
+        "en": "A tri-core pattern with three sleeps of ~1.5h each, spaced around 8 hours apart.",
+        "tr": "Yaklaşık 1,5 saatlik üç uyku bloğuna sahip, bloklar arası yaklaşık 8 saat mesafe bulunan bir tri-core düzeni."
+      },
+      "totalSleepHours": 4.5,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "22:00",
+          "duration": 90,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "06:00",
+          "duration": 90,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "14:00",
+          "duration": 90,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "tri-core-tc2",
+      "name": "Tri Core TC2",
+      "description": {
+        "en": "Another tri-core variant with three ~2h blocks, often used for more total rest (~6h).",
+        "tr": "Üç adet 2 saatlik uyku bloğundan oluşan bir başka tri-core varyasyonu. Toplamda yaklaşık 6 saat dinlenme sağlar."
+      },
+      "totalSleepHours": 6,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": [
+        {
+          "type": "core",
+          "startTime": "21:00",
+          "duration": 120,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "04:00",
+          "duration": 120,
+          "isCore": true
+        },
+        {
+          "type": "core",
+          "startTime": "11:00",
+          "duration": 120,
+          "isCore": true
+        }
+      ]
+    },
+    {
+      "id": "nap-only-tesla",
+      "name": "Tesla",
+      "description": {
+        "en": "A 'nap only' pattern sometimes attributed to Nikola Tesla: ~2 hours of total sleep in short naps.",
+        "tr": "Nikola Tesla'ya atfedilen, kısa şekerlemelerle toplamda yaklaşık 2 saat uyku öngören 'yalnızca şekerleme' düzeni."
+      },
+      "totalSleepHours": 2,
+      "isPremium": true,
+      "adaptationPhase": 28,
+      "schedule": [
+        {
+          "type": "nap",
+          "startTime": "02:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "06:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "10:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "14:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "18:00",
+          "duration": 20,
+          "isCore": false
+        },
+        {
+          "type": "nap",
+          "startTime": "22:00",
+          "duration": 20,
+          "isCore": false
+        }
+      ]
+    },
+    {
+      "id": "nap-only-spamayl",
+      "name": "Spamayl",
+      "description": {
+        "en": "A 'sleep polyphasically as much as you like' pattern with no strict schedule, sleeping in short naps whenever tired.",
+        "tr": "Katı bir çizelge olmaksızın, yorgun hissettikçe kısa şekerlemelerle uyunan esnek düzen (Spamayl: Sleep Polyphasically As Much As You Like)."
+      },
+      "totalSleepHours": 0,
+      "isPremium": true,
+      "adaptationPhase": 21,
+      "schedule": []
     }
   ]
 }

@@ -15,6 +15,7 @@ struct SleepQualityRatingView: View {
     // ViewModel'e erişim için ObservedObject ekleyelim
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
+    @State private var emoji: String = "😐" // Varsayılan emoji
     
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
     private let emojiLabels = [
@@ -86,6 +87,9 @@ struct SleepQualityRatingView: View {
                         let generator = UIImpactFeedbackGenerator(style: .light)
                         generator.impactOccurred()
                         
+                        // Emoji güncelle
+                        emoji = currentEmoji
+                        
                         // Etiket animasyonu için
                         if currentEmojiLabel != previousEmojiLabel {
                             withAnimation(.easeInOut(duration: 0.2)) {
@@ -153,32 +157,27 @@ struct SleepQualityRatingView: View {
     }
     
     private func saveSleepQuality() {
-        // Seçilen puanı al (0-4 arası)
-        let rating = Int(sliderValue.rounded())
+        // Seçilen puanı al (0-4 arası) ve 1-5 ölçeğine dönüştür
+        let rating = Int(sliderValue.rounded()) + 1 // 1-5 arası puanlama
         print("Sleep quality saved: \(rating)")
         
-        // Uyku bloğu için uygun SleepType belirle
-        let sleepType: SleepType
+        // Benzersiz blockId oluştur veya belirli bir formatta tanımla
+        let blockId = UUID().uuidString
         
-        // Uyku süresi 90 dakikadan fazlaysa core sleep, değilse power nap olarak kabul et
-        let duration = endTime.timeIntervalSince(startTime)
-        sleepType = duration > 5400 ? .core : .powerNap
-        
-        // Yeni bir SleepEntry oluştur
-        let sleepEntry = SleepEntry(
-            id: UUID(),
-            type: sleepType,
-            startTime: startTime,
-            endTime: endTime,
-            rating: rating
-        )
-        
-        // History ViewModel'i oluştur ve ModelContext'i ayarla
-        let historyViewModel = HistoryViewModel()
-        historyViewModel.setModelContext(modelContext)
-        
-        // SleepEntry'yi History'ye ekle
-        historyViewModel.addSleepEntry(sleepEntry)
+        // Repository kullanarak uyku girdisini kaydet
+        Task {
+            do {
+                _ = try await Repository.shared.addSleepEntry(
+                    blockId: blockId,
+                    emoji: emoji,
+                    rating: rating,
+                    date: startTime // Uyku bloğunun başlangıç saati
+                )
+                print("✅ Uyku girdisi başarıyla kaydedildi")
+            } catch {
+                print("❌ Uyku girdisi kaydedilirken hata: \(error.localizedDescription)")
+            }
+        }
         
         // Bekleyen bildirimi kaldır
         notificationManager.removePendingRating(startTime: startTime, endTime: endTime)

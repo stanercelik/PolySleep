@@ -6,16 +6,16 @@ struct AddSleepEntrySheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedEmoji = "😊"
-    @State private var sliderValue: Double = 2 // 0-4 arası değer (5 emoji için)
+    @State private var sliderValue: Double = 3 // 1-5 rating için (0-4 slider) -> Başlangıçta "😊" (rating 4)
     @State private var selectedDate: Date
-    @State private var selectedBlock: SleepBlock?
+    @State private var selectedBlockFromSchedule: SleepBlock?
     @State private var showBlockError = false
     @State private var blockErrorMessage = ""
-    @State private var previousEmojiLabel: String = ""
+    @State private var previousEmojiDescription: String = ""
     @State private var labelOffset: CGFloat = 0
     @State private var animateSelection: Bool = false
     
-    // MainScreenViewModel'den uyku bloklarını almak için
+    // MainScreenViewModel'den aktif uyku programını almak için
     @StateObject private var mainViewModel = MainScreenViewModel()
     
     // İlk tarih değerini dışarıdan alacak şekilde init
@@ -33,14 +33,6 @@ struct AddSleepEntrySheet: View {
         "😩": "sleep.quality.veryBad"
     ]
     
-    private let emojiLabels = [
-        "😄": "great",
-        "😊": "good",
-        "😐": "okay",
-        "😪": "bad",
-        "😩": "awful"
-    ]
-    
     // Kullanıcının seçtiği emojiler
     private var coreEmoji: String {
         UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
@@ -50,54 +42,65 @@ struct AddSleepEntrySheet: View {
         UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "⚡"
     }
     
-    // Seçilen tarih için uyku bloklarını filtreleme
-    private var availableBlocks: [SleepBlock] {
-        return mainViewModel.model.schedule.schedule
+    // MainViewModel'in aktif programından uyku bloklarını alır
+    private var availableBlocksFromSchedule: [SleepBlock] {
+        mainViewModel.model.schedule.schedule
     }
     
-    // Seçilen tarih için uyku bloklarını kontrol etme
-    private var isDateValid: Bool {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let selectedDay = calendar.startOfDay(for: selectedDate)
-        
-        // Geçmiş tarihler ve bugün geçerli
-        return selectedDay <= today
+    // Seçilen tarih bugün veya geçmişte mi?
+    private var isDateValidForNewEntry: Bool {
+        Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day) != .orderedDescending
     }
     
-    // Seçilen tarih için uyku bloğunun zaten eklenip eklenmediğini kontrol etme
+    // Belirli bir SleepBlock (struct) için, seçilen tarihte zaten SleepEntry var mı?
     private func isBlockAlreadyAdded(_ block: SleepBlock) -> Bool {
+        guard let modelContext = viewModel.modelContext else { return false }
         let calendar = Calendar.current
-        let selectedDay = calendar.startOfDay(for: selectedDate)
+        let targetDayStart = calendar.startOfDay(for: selectedDate)
         
-        return viewModel.historyItems.contains { historyItem in
-            guard calendar.startOfDay(for: historyItem.date) == selectedDay else { return false }
-            
-            return historyItem.sleepEntries.contains { entry in
-                let entryStartHour = calendar.component(.hour, from: entry.startTime)
-                let entryStartMinute = calendar.component(.minute, from: entry.startTime)
-                let blockStartComponents = TimeFormatter.time(from: block.startTime)!
-                
-                return entryStartHour == blockStartComponents.hour && 
-                       entryStartMinute == blockStartComponents.minute
+        guard let blockStartComponents = TimeFormatter.time(from: block.startTime) else { return false }
+        
+        var dateComponentsForBlockStart = calendar.dateComponents([.year, .month, .day], from: targetDayStart)
+        dateComponentsForBlockStart.hour = blockStartComponents.hour
+        dateComponentsForBlockStart.minute = blockStartComponents.minute
+        guard let exactBlockStartTime = calendar.date(from: dateComponentsForBlockStart) else { return false }
+
+        // Calculate nextDayStart outside the predicate
+        guard let nextDayStart = calendar.date(byAdding: .day, value: 1, to: targetDayStart) else {
+            print("Error calculating nextDayStart in isBlockAlreadyAdded")
+            return false
+        }
+
+        // Fetch SleepEntry items for the target day first
+        let dayStartPredicate = #Predicate<SleepEntry> { entry in
+            entry.date >= targetDayStart && entry.date < nextDayStart // Use the pre-calculated nextDayStart
+        }
+        let descriptorForDay = FetchDescriptor(predicate: dayStartPredicate)
+
+        do {
+            let entriesForDay = try modelContext.fetch(descriptorForDay)
+            // Now filter these entries in memory for the exact start time match
+            for entry in entriesForDay {
+                if calendar.isDate(entry.startTime, equalTo: exactBlockStartTime, toGranularity: .minute) {
+                    return true // Found an existing entry for this block and date
+                }
             }
+            return false // No entry matched the exact start time for this block
+        } catch {
+            print("isBlockAlreadyAdded fetch descriptorForDay kontrolünde hata: \(error)")
+            return false
         }
     }
     
     // Slider değerine göre emoji seçimi
     private var currentEmoji: String {
-        let index = min(Int(sliderValue.rounded()), emojis.count - 1)
+        let index = 4 - min(Int(sliderValue.rounded()), emojis.count - 1)
         return emojis[index]
     }
     
     // Slider değerine göre emoji açıklaması
     private var currentEmojiDescription: String {
         return NSLocalizedString(emojiDescriptions[currentEmoji] ?? "", tableName: "AddSleepEntrySheet", comment: "")
-    }
-    
-    // Slider değerine göre emoji etiketi
-    private var currentEmojiLabel: String {
-        return emojiLabels[currentEmoji] ?? ""
     }
     
     // MARK: - View Components
@@ -121,7 +124,7 @@ struct AddSleepEntrySheet: View {
             .datePickerStyle(.compact)
             .tint(Color.appPrimary)
             .onChange(of: selectedDate) { _ in
-                selectedBlock = nil
+                selectedBlockFromSchedule = nil
                 // Hafif bir titreşim verelim
                 let generator = UIImpactFeedbackGenerator(style: .light)
                 generator.impactOccurred()
@@ -150,10 +153,10 @@ struct AddSleepEntrySheet: View {
                     .foregroundColor(Color.appText)
             }
             
-            if availableBlocks.isEmpty {
+            if availableBlocksFromSchedule.isEmpty {
                 EmptyBlocksView()
             } else {
-                BlocksListView()
+                BlocksListViewFromSchedule()
             }
         }
         .padding(.horizontal)
@@ -184,15 +187,15 @@ struct AddSleepEntrySheet: View {
         .frame(height: 200)
     }
     
-    private func BlocksListView() -> some View {
+    private func BlocksListViewFromSchedule() -> some View {
         ScrollView {
             VStack(spacing: 12) {
-                ForEach(availableBlocks, id: \.id) { block in
+                ForEach(availableBlocksFromSchedule, id: \.id) { block in
                     let alreadyAdded = isBlockAlreadyAdded(block)
                     
                     BlockSelectionButton(
                         block: block,
-                        isSelected: selectedBlock?.id == block.id,
+                        isSelected: selectedBlockFromSchedule?.id == block.id,
                         isAlreadyAdded: alreadyAdded,
                         onTap: {
                             if alreadyAdded {
@@ -200,19 +203,15 @@ struct AddSleepEntrySheet: View {
                                 showBlockError = true
                             } else {
                                 withAnimation(.spring(duration: 0.3)) {
-                                    // Seçimi değiştirdiğimizde animasyon tetikle
-                                    selectedBlock = block
+                                    selectedBlockFromSchedule = block
                                     animateSelection = true
                                 }
                                 
-                                // Animasyonu sıfırla
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                     animateSelection = false
                                 }
                                 
-                                // Haptic feedback
-                                let generator = UIImpactFeedbackGenerator(style: .medium)
-                                generator.impactOccurred()
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             }
                         }
                     )
@@ -232,7 +231,6 @@ struct AddSleepEntrySheet: View {
     private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, isAlreadyAdded: Bool, onTap: @escaping () -> Void) -> some View {
         Button(action: onTap) {
             HStack {
-                // Blok tipi ikonu (core veya nap)
                 Text(block.isCore ? coreEmoji : napEmoji)
                     .font(.system(size: 20))
                     .padding(8)
@@ -247,7 +245,7 @@ struct AddSleepEntrySheet: View {
                         .fontWeight(.medium)
                         .foregroundColor(isAlreadyAdded ? Color.appText.opacity(0.6) : Color.appText)
                     
-                    Text("\(TimeFormatter.formattedString(from: block.startTime)) - \(TimeFormatter.formattedString(from: block.endTime))")
+                    Text("\(block.startTime) - \(block.endTime)")
                         .font(.caption)
                         .foregroundColor(isAlreadyAdded ? Color.appSecondaryText.opacity(0.6) : Color.appSecondaryText)
                 }
@@ -298,6 +296,7 @@ struct AddSleepEntrySheet: View {
                     .font(.headline)
                     .foregroundColor(Color.appText)
             }
+            .padding(.horizontal)
             
             VStack(alignment: .center, spacing: 24) {
                 HStack(alignment: .center, spacing: 16) {
@@ -314,23 +313,19 @@ struct AddSleepEntrySheet: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         ZStack {
-                            Text(previousEmojiLabel)
+                            Text(previousEmojiDescription)
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(Color.appSecondaryText)
                                 .opacity(labelOffset != 0 ? 0.3 : 0)
                                 .offset(y: labelOffset)
                             
-                            Text(currentEmojiLabel)
+                            Text(currentEmojiDescription)
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(Color.appSecondaryText)
                                 .offset(y: labelOffset)
                         }
                         .frame(height: 20)
                         .clipped()
-                        
-                        Text(currentEmojiDescription)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color.appSecondaryText)
                         
                         HStack(spacing: 6) {
                             ForEach(0..<5) { index in
@@ -345,7 +340,7 @@ struct AddSleepEntrySheet: View {
                 }
                 .padding(.horizontal)
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 2) {
                     HStack {
                         Text("Kötü")
                             .font(.system(size: 12))
@@ -377,7 +372,7 @@ struct AddSleepEntrySheet: View {
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                     labelOffset = -20 // Yukarı konumla
-                                    previousEmojiLabel = currentEmojiLabel
+                                    previousEmojiDescription = currentEmojiDescription
                                     
                                     withAnimation(.easeInOut(duration: 0.2)) {
                                         labelOffset = 0 // Ortaya getir
@@ -429,12 +424,12 @@ struct AddSleepEntrySheet: View {
                         datePickerSection
                         blockSelectionSection
                         
-                        if selectedBlock != nil {
+                        if selectedBlockFromSchedule != nil {
                             qualitySection
                         }
                         
                         // Kaydet butonu
-                        if selectedBlock != nil {
+                        if selectedBlockFromSchedule != nil {
                             SaveButton(isEnabled: isValidEntry())
                                 .padding(.horizontal)
                                 .padding(.top, 8)
@@ -444,7 +439,7 @@ struct AddSleepEntrySheet: View {
                         Spacer()
                     }
                     .padding(.vertical)
-                    .animation(.spring(response: 0.3), value: selectedBlock != nil)
+                    .animation(.spring(response: 0.3), value: selectedBlockFromSchedule != nil)
                 }
             }
             .navigationTitle(NSLocalizedString("sleepEntry.add", tableName: "AddSleepEntrySheet", comment: ""))
@@ -518,51 +513,59 @@ struct AddSleepEntrySheet: View {
     }
     
     private func isValidEntry() -> Bool {
-        return selectedBlock != nil && isDateValid
+        return selectedBlockFromSchedule != nil && isDateValidForNewEntry
     }
     
     private func saveSleepEntry() {
-        guard let block = selectedBlock else { return }
+        guard let scheduledBlock = selectedBlockFromSchedule else { return }
         
-        // Seçilen tarih ve blok saatlerini birleştir
         let calendar = Calendar.current
-        let startComponents = TimeFormatter.time(from: block.startTime)!
-        let endComponents = TimeFormatter.time(from: block.endTime)!
         
-        var startDateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-        startDateComponents.hour = startComponents.hour
-        startDateComponents.minute = startComponents.minute
-        
-        var endDateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-        endDateComponents.hour = endComponents.hour
-        endDateComponents.minute = endComponents.minute
-        
-        // Eğer bitiş saati başlangıç saatinden küçükse, bir sonraki güne geçmiş demektir
-        if endComponents.hour < startComponents.hour || 
-           (endComponents.hour == startComponents.hour && endComponents.minute < startComponents.minute) {
-            endDateComponents = calendar.dateComponents([.year, .month, .day], from: calendar.date(byAdding: .day, value: 1, to: selectedDate)!)
-            endDateComponents.hour = endComponents.hour
-            endDateComponents.minute = endComponents.minute
+        // Başlangıç ve bitiş zamanlarını Date nesnelerine çevir
+        guard let scheduleStartTimeComponents = TimeFormatter.time(from: scheduledBlock.startTime),
+              let scheduleEndTimeComponents = TimeFormatter.time(from: scheduledBlock.endTime)
+        else {
+            print("Hata: Zaman formatı geçersiz.")
+            return
         }
         
-        let startTime = calendar.date(from: startDateComponents)!
-        let endTime = calendar.date(from: endDateComponents)!
+        var startComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+        startComponents.hour = scheduleStartTimeComponents.hour
+        startComponents.minute = scheduleStartTimeComponents.minute
         
-        // Benzersiz bir UUID oluştur
-        let uniqueId = UUID()
+        var endComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+        endComponents.hour = scheduleEndTimeComponents.hour
+        endComponents.minute = scheduleEndTimeComponents.minute
         
-        // Emoji'den rating değerini hesapla (1-5 arası)
-        let rating = Int(sliderValue.rounded()) + 1 // 0-4 aralığını 1-5 aralığına dönüştür
+        guard let finalStartTime = calendar.date(from: startComponents),
+              var finalEndTime = calendar.date(from: endComponents)
+        else {
+            print("Hata: Tarih bileşenlerinden Date oluşturulamadı.")
+            return
+        }
         
-        let entry = SleepEntry(
-            id: uniqueId,
-            type: block.isCore ? .core : .powerNap,
-            startTime: startTime,
-            endTime: endTime,
-            rating: rating
+        // Bitiş zamanı başlangıçtan önceyse, ertesi güne kaydır
+        if finalEndTime <= finalStartTime {
+            finalEndTime = calendar.date(byAdding: .day, value: 1, to: finalEndTime)!
+        }
+        
+        let durationMinutes = Int(finalEndTime.timeIntervalSince(finalStartTime) / 60)
+        let ratingValue = 5 - Int(sliderValue.rounded()) // Slider 0(iyi)-4(kötü) -> Rating 5(iyi)-1(kötü)
+        
+        // Yeni SleepEntry @Model nesnesi oluştur
+        let newEntry = SleepEntry(
+            date: calendar.startOfDay(for: selectedDate), // Bloğun ait olduğu gün
+            startTime: finalStartTime,
+            endTime: finalEndTime,
+            durationMinutes: durationMinutes,
+            isCore: scheduledBlock.isCore, // MainViewModel'deki SleepBlock'tan alınır
+            blockId: scheduledBlock.id.uuidString, // MainViewModel'deki SleepBlock'tan ID
+            emoji: currentEmoji, // Slider'dan gelen emoji
+            rating: ratingValue  // Slider'dan gelen rating
         )
         
-        viewModel.addSleepEntry(entry)
+        // ViewModel aracılığıyla kaydet
+        viewModel.addSleepEntry(newEntry)
     }
 }
 

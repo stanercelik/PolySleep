@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
@@ -129,18 +130,18 @@ struct OnboardingView: View {
                     )
                 }
                 .padding(.top, 16)
+                .onAppear {
+                    viewModel.setModelContext(modelContext)
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(isPresented: $viewModel.showLoadingView, onDismiss: {
                 // Loading view kapandığında ve navigateToMainScreen true ise ana ekrana geçiş yap
                 if viewModel.navigateToMainScreen {
-                    // OnboardingCompleted bildirimini gönder
-                    NotificationCenter.default.post(name: NSNotification.Name("OnboardingCompleted"), object: nil)
-                    
-                    // Hafif bir gecikme ile ana ekrana geçiş yap
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        viewModel.handleNavigationToMainScreen()
+                    Task {
+                        await viewModel.markOnboardingAsCompletedInSwiftData()
                     }
+                    viewModel.handleNavigationToMainScreen()
                 }
             }) {
                 LoadingRecommendationView(

@@ -14,13 +14,13 @@ let package = Package(
             targets: ["PolySleep"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/supabase-community/supabase-swift.git", from: "2.0.0")
+        // Supabase bağımlılığı kaldırıldı
     ],
     targets: [
         .target(
             name: "PolySleep",
             dependencies: [
-                .product(name: "Supabase", package: "supabase-swift")
+                // Supabase bağımlılığı kaldırıldı
             ]),
         .testTarget(
             name: "PolySleepTests",

@@ -145,6 +145,18 @@ extension SleepScheduleModel {
             return .extreme
         }
     }
+    
+    /// Converts SleepScheduleModel to UserScheduleModel
+    var toUserScheduleModel: UserScheduleModel {
+        return UserScheduleModel(
+            id: id,
+            name: name,
+            description: description,
+            totalSleepHours: totalSleepHours,
+            schedule: schedule,
+            isPremium: isPremium
+        )
+    }
 }
 
 /// Container for multiple sleep schedules

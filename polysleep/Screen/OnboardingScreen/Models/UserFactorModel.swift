@@ -2,9 +2,6 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-// MARK: - Dependencies
-@_exported import struct Supabase.User
-
 @Model
 final class UserFactor {
     // MARK: - Onboarding Error
@@ -128,10 +125,7 @@ final class UserFactor {
             throw OnboardingError.scheduleNotFound
         }
         
-        // Programı Supabase'e kaydet
-        _ = try await SupabaseScheduleService.shared.saveRecommendedSchedule(
-            schedule: schedule,
-            adaptationPeriod: 0
-        )
+        // Programı doğrudan ScheduleManager üzerinden kaydet
+        await ScheduleManager.shared.activateSchedule(schedule.toUserScheduleModel)
     }
 }

@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 # Kural Adı: Veritabanı Yapısı (Supabase)
 Açıklama: PolySleep uygulamasının Supabase veritabanı şeması ve Row Level Security (RLS) politikaları.
@@ -60,24 +60,6 @@ Açıklama: PolySleep uygulamasının Supabase veritabanı şeması ve Row Level
     *   `created_at` (TIMESTAMP WITH TIME ZONE)
     *   `updated_at` (TIMESTAMP WITH TIME ZONE)
     *   `sync_id` (TEXT)
-
-6.  **template_schedule:** Hazır uyku programı şablonları. (Kullanılmıyor) 
-    *   `id` (UUID, Primary Key)
-    *   `name` (TEXT)
-    *   `description` (JSONB)
-    *   `total_sleep_hours` (NUMERIC)
-    *   `created_at` (TIMESTAMP WITH TIME ZONE)
-    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
-    *   `isPremium` (BOOLEAN)
-
-7.  **template_sleep_blocks:** Şablon programlardaki uyku blokları. (Kullanılmıyor) 
-    *   `id` (UUID, Primary Key)
-    *   `schedule_template_id` (UUID, Foreign Key -> template_schedule.id)
-    *   `start_time` (TIME)
-    *   `duration_minutes` (INTEGER)
-    *   `is_core` (BOOLEAN)
-    *   `created_at` (TIMESTAMP WITH TIME ZONE)
-    *   `updated_at` (TIMESTAMP WITH TIME ZONE)
 
 ## Row Level Security (RLS):
 

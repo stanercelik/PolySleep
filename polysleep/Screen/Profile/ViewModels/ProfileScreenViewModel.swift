@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Combine
-import Supabase
 
 @MainActor
 class ProfileScreenViewModel: ObservableObject {
@@ -13,13 +12,37 @@ class ProfileScreenViewModel: ObservableObject {
     @Published var activeScheduleName: String = ""
     @Published var adaptationPhase: Int = 0
     @Published var totalSleepHours: Double = 0.0
+    @Published var activeSchedule: UserSchedule? = nil
+    @Published var adaptationDuration: Int = 21 // Varsayılan 21 gün
     
+    // Yeni eklenen hesaplanmış özellik
+    var adaptationPhaseDescription: String {
+        switch adaptationPhase {
+        case 0:
+            return NSLocalizedString("adaptation.phase.0", tableName: "Common", comment: "Adaptation Phase 0: Initial")
+        case 1:
+            return NSLocalizedString("adaptation.phase.1", tableName: "Common", comment: "Adaptation Phase 1: Adjustment")
+        case 2:
+            return NSLocalizedString("adaptation.phase.2", tableName: "Common", comment: "Adaptation Phase 2: Adaptation")
+        case 3:
+            return NSLocalizedString("adaptation.phase.3", tableName: "Common", comment: "Adaptation Phase 3: Advanced Adaptation")
+        case 4:
+            return NSLocalizedString("adaptation.phase.4", tableName: "Common", comment: "Adaptation Phase 4: Full Adaptation")
+        case 5...:
+            return NSLocalizedString("adaptation.phase.5", tableName: "Common", comment: "Adaptation Phase 5: Complete Adaptation")
+        default:
+            return NSLocalizedString("adaptation.phase.unknown", tableName: "Common", comment: "Adaptation Phase Unknown")
+        }
+    }
+
     private var modelContext: ModelContext?
     private var cancellables = Set<AnyCancellable>()
     
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
-        loadData()
+        if modelContext != nil {
+            loadData()
+        }
         loadEmojiPreferences()
     }
     
@@ -28,176 +51,275 @@ class ProfileScreenViewModel: ObservableObject {
         loadData()
     }
     
-    // Verileri yükle
     private func loadData() {
-        guard let context = modelContext else { return }
+        guard let context = modelContext else { 
+            print("ProfileScreenViewModel: ModelContext yüklenemedi, loadData iptal edildi.")
+            return
+        }
         
         do {
-            // Geçmiş kayıtları al
             let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
             let historyItems = try context.fetch(descriptor)
-            
-            // Streak hesapla
             calculateStreak(from: historyItems)
-            
-            // Aktif uyku programını ve adaptasyon aşamasını getir
-            Task {
-                await loadActiveSchedule()
-            }
-            
-            // Emoji tercihlerini yükle
-            loadEmojiPreferences()
         } catch {
-            print("Profil verilerini yüklerken hata: \(error)")
+            print("Profildeki streak verileri yüklenirken hata: \(error)")
+        }
+        
+        Task {
+            await loadActiveSchedule()
         }
     }
     
+    private func resetScheduleUI() {
+        self.activeScheduleName = ""
+        self.adaptationPhase = 0
+        self.totalSleepHours = 0
+        self.activeSchedule = nil
+        self.adaptationDuration = 21
+    }
+
     // Aktif uyku programını ve adaptasyon aşamasını yükle
     private func loadActiveSchedule() async {
-        // Client optional değil, doğrudan kullanabiliriz
-        let client = SupabaseService.shared.client
-        
+        guard let context = modelContext else {
+            print("ProfileScreenViewModel: ModelContext bulunamadı, aktif program yüklenemiyor.")
+            await MainActor.run { resetScheduleUI() }
+            return
+        }
+
+        guard let currentUserIdString = AuthManager.shared.currentUser?.id,
+              let currentUserId = UUID(uuidString: currentUserIdString) else {
+            print("ProfileScreenViewModel: Geçerli kullanıcı ID\'si bulunamadı.")
+            await MainActor.run { resetScheduleUI() }
+            return
+        }
+            
+        print("ProfileScreenViewModel: Aktif program yükleniyor, Kullanıcı ID: \\(currentUserId.uuidString)")
+
         do {
-            let response = try await client.database
-                .from("user_schedules")
-                .select()
-                .eq("is_active", value: true)
-                .order("created_at", ascending: false)
-                .limit(1)
-                .execute()
+            // SwiftData ile aktif programı çek
+            let userPredicate = #Predicate<User> { $0.id == currentUserId }
+            var userFetchDescriptor = FetchDescriptor(predicate: userPredicate)
+            userFetchDescriptor.fetchLimit = 1
             
-            // PostgrestResponse'dan doğru şekilde decode etme
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let schedules = try decoder.decode([ActiveSchedule].self, from: response.data)
-            
-            if let activeSchedule = schedules.first {
-                DispatchQueue.main.async {
-                    self.activeScheduleName = activeSchedule.name
-                    self.adaptationPhase = activeSchedule.adaptationPhase ?? 0
-                    self.totalSleepHours = Double(activeSchedule.totalSleepHours ?? 0)
+            guard let currentUser = try context.fetch(userFetchDescriptor).first else {
+                print("ProfileScreenViewModel: Mevcut kullanıcı SwiftData\'da bulunamadı.")
+                await MainActor.run { resetScheduleUI() }
+                return
+            }
+
+            // UserSchedule'ı User objesi üzerinden veya doğrudan userID ile filtreleyerek alabiliriz.
+            // User modelinde schedules ilişkisi olduğunu varsayalım:
+            // let activeScheduleEntity = currentUser.schedules?.first(where: { $0.isActive })
+
+            // Veya UserSchedule'da userID ve isActive olduğunu varsayarak:
+            let schedulePredicate = #Predicate<UserSchedule> {
+                $0.user?.id == currentUserId && $0.isActive == true
+            }
+            var scheduleFetchDescriptor = FetchDescriptor(predicate: schedulePredicate)
+            scheduleFetchDescriptor.fetchLimit = 1
+            let activeScheduleEntity = try context.fetch(scheduleFetchDescriptor).first
+
+            await MainActor.run {
+                if let scheduleData = activeScheduleEntity {
+                    print("ProfileScreenViewModel: Aktif program bulundu ve UI güncelleniyor: \\(scheduleData.name)")
+                    self.activeSchedule = scheduleData
+                    self.activeScheduleName = scheduleData.name
+                    
+                    let scheduleNameLowercased = scheduleData.name.lowercased()
+                    if scheduleNameLowercased.contains("uberman") || 
+                       scheduleNameLowercased.contains("dymaxion") ||
+                       (scheduleNameLowercased.contains("everyman") && scheduleNameLowercased.contains("1")) {
+                        self.adaptationDuration = 28
+                    } else {
+                        self.adaptationDuration = 21
+                    }
+                    
+                    let calculatedPhase = self.calculateAdaptationPhase(schedule: scheduleData)
+                    self.adaptationPhase = calculatedPhase
+                    
+                    if calculatedPhase != scheduleData.adaptationPhase {
+                        // Adaptasyon fazını doğrudan güncelle
+                        scheduleData.adaptationPhase = calculatedPhase
+                        scheduleData.updatedAt = Date()
+                        do {
+                            try context.save()
+                            print("Adaptasyon aşaması güncellendi (SwiftData).")
+                        } catch {
+                            print("Adaptasyon aşaması SwiftData\'da güncellenirken hata: \\(error)")
+                        }
+                    }
+                    self.totalSleepHours = scheduleData.totalSleepHours ?? 0.0
+                } else {
+                    print("ProfileScreenViewModel: Aktif program bulunamadı.")
+                    self.resetScheduleUI()
                 }
             }
         } catch {
-            print("Aktif uyku programını yüklerken hata: \(error)")
+            print("ProfileScreenViewModel: Aktif program SwiftData ile yüklenirken hata: \\(error)")
+            await MainActor.run { self.resetScheduleUI() }
         }
     }
     
-    // Streak hesaplama
-    private func calculateStreak(from historyItems: [HistoryModel]) {
-        guard !historyItems.isEmpty else {
+    private func calculateAdaptationPhase(schedule: UserSchedule) -> Int {
+        let currentDate = Date()
+        let updatedAt = schedule.updatedAt
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: updatedAt, to: currentDate)
+        let daysSinceUpdate = components.day ?? 0
+        
+        let totalDuration = self.adaptationDuration
+        let phase: Int
+        
+        if totalDuration == 28 {
+            if daysSinceUpdate < 1 { phase = 0 }
+            else if daysSinceUpdate < 8 { phase = 1 }
+            else if daysSinceUpdate < 15 { phase = 2 }
+            else if daysSinceUpdate < 21 { phase = 3 }
+            else if daysSinceUpdate < 28 { phase = 4 }
+            else { phase = 5 }
+        } else {
+            if daysSinceUpdate < 1 { phase = 0 }
+            else if daysSinceUpdate < 8 { phase = 1 }
+            else if daysSinceUpdate < 15 { phase = 2 }
+            else if daysSinceUpdate < 21 { phase = 3 }
+            else { phase = 4 }
+        }
+        return phase
+    }
+
+    private func calculateStreak(from history: [HistoryModel]) {
+        guard !history.isEmpty else {
             currentStreak = 0
             longestStreak = 0
             return
         }
-        
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        var tempStreak = 0
-        var maxStreak = 0
-        var previousDate = today
-        
-        // Tarih sırasına göre sırala (en yeni en başta)
-        let sortedItems = historyItems.sorted { $0.date > $1.date }
-        
-        // Bugünden geriye doğru kontrol et
-        for item in sortedItems {
-            let itemDate = calendar.startOfDay(for: item.date)
-            
-            // Sadece tamamlanmış günleri say
-            if item.completionStatus == .completed {
-                // İlk öğe veya bir önceki günse
-                if tempStreak == 0 || calendar.isDate(itemDate, inSameDayAs: previousDate) || 
-                   calendar.isDate(itemDate, equalTo: calendar.date(byAdding: .day, value: -1, to: previousDate)!, toGranularity: .day) {
-                    tempStreak += 1
-                    previousDate = itemDate
-                } else {
-                    // Streak kırıldı
-                    break
-                }
-            } else {
-                // Tamamlanmamış gün, streak kırıldı
-                break
+
+        var current = 0
+        var longest = 0
+        var lastDate: Date? = nil
+
+        for entry in history.sorted(by: { $0.date > $1.date }) {
+            guard let last = lastDate else {
+                current = 1
+                lastDate = entry.date
+                continue
+            }
+
+            if Calendar.current.isDate(entry.date, inSameDayAs: Calendar.current.date(byAdding: .day, value: -1, to: last)!) {
+                current += 1
+            } else if !Calendar.current.isDate(entry.date, inSameDayAs: last) {
+                current = 1
+            }
+            lastDate = entry.date
+            if current > longest {
+                longest = current
             }
         }
-        
-        // En uzun streak'i hesapla
-        var currentLongestStreak = 0
-        previousDate = Date.distantFuture
-        
-        for item in historyItems.sorted(by: { $0.date < $1.date }) {
-            if item.completionStatus == .completed {
-                let itemDate = calendar.startOfDay(for: item.date)
-                
-                if previousDate == Date.distantFuture || 
-                   calendar.isDate(itemDate, equalTo: calendar.date(byAdding: .day, value: 1, to: previousDate)!, toGranularity: .day) {
-                    currentLongestStreak += 1
-                } else if !calendar.isDate(itemDate, inSameDayAs: previousDate) {
-                    // Aynı gün değilse ve ardışık değilse, yeni streak başlat
-                    maxStreak = max(maxStreak, currentLongestStreak)
-                    currentLongestStreak = 1
-                }
-                
-                previousDate = itemDate
-            } else {
-                // Tamamlanmamış gün, mevcut streak'i sıfırla
-                maxStreak = max(maxStreak, currentLongestStreak)
-                currentLongestStreak = 0
-                previousDate = Date.distantFuture
-            }
+        self.currentStreak = current
+        let storedLongestStreak = UserDefaults.standard.integer(forKey: "longestStreak")
+        if longest > storedLongestStreak {
+            UserDefaults.standard.set(longest, forKey: "longestStreak")
+            self.longestStreak = longest
+        } else {
+            self.longestStreak = storedLongestStreak
         }
-        
-        maxStreak = max(maxStreak, currentLongestStreak)
-        
-        currentStreak = tempStreak
-        longestStreak = maxStreak
     }
     
-    // Emoji tercihlerini yükle
-    private func loadEmojiPreferences() {
-        // UserDefaults'tan emoji tercihlerini yükle
-        let defaults = UserDefaults.standard
-        selectedCoreEmoji = defaults.string(forKey: "selectedCoreEmoji") ?? "🌙"
-        selectedNapEmoji = defaults.string(forKey: "selectedNapEmoji") ?? "⚡"
-    }
+    // MARK: - Emoji Tercihleri
     
-    // Emoji tercihlerini kaydet
+    // Emoji kaydetme fonksiyonu - ProfileScreenView içinde kullanılıyor
     func saveEmojiPreference(coreEmoji: String? = nil, napEmoji: String? = nil) {
-        let defaults = UserDefaults.standard
-        
-        if let coreEmoji = coreEmoji {
-            selectedCoreEmoji = coreEmoji
-            defaults.set(coreEmoji, forKey: "selectedCoreEmoji")
-            
-            // Bildirim gönder (emoji değişti)
-            NotificationCenter.default.post(name: Notification.Name("CoreEmojiChanged"), object: coreEmoji)
+        if let core = coreEmoji {
+            self.selectedCoreEmoji = core
+        }
+        if let nap = napEmoji {
+            self.selectedNapEmoji = nap
         }
         
-        if let napEmoji = napEmoji {
+        // Tercihleri UserDefaults'a kaydet
+        saveEmojiPreferences()
+        
+        print("Emoji tercihleri kaydedildi. Core: \(selectedCoreEmoji), Nap: \(selectedNapEmoji)")
+    }
+    
+    // UserDefaults'a emoji tercihlerini kaydet
+    private func saveEmojiPreferences() {
+        UserDefaults.standard.set(selectedCoreEmoji, forKey: "selectedCoreEmoji")
+        UserDefaults.standard.set(selectedNapEmoji, forKey: "selectedNapEmoji")
+    }
+
+    private func loadEmojiPreferences() {
+        if let coreEmoji = UserDefaults.standard.string(forKey: "selectedCoreEmoji") {
+            selectedCoreEmoji = coreEmoji
+        }
+        if let napEmoji = UserDefaults.standard.string(forKey: "selectedNapEmoji") {
             selectedNapEmoji = napEmoji
-            defaults.set(napEmoji, forKey: "selectedNapEmoji")
+        }
+    }
+    
+    // MARK: - Adaptasyon Fazı Yönetimi
+    
+    // Adaptasyon fazını sıfırlama fonksiyonu - ProfileScreenView içinde kullanılıyor
+    func resetAdaptationPhase() async throws {
+        guard let context = modelContext, 
+              let currentScheduleId = activeSchedule?.id else { // scheduleId'yi aktif programdan al
+            throw ProfileError.noActiveSchedule
+        }
+        
+        do {
+            // UserSchedule'ı ID ile çek
+            let predicate = #Predicate<UserSchedule> { $0.id == currentScheduleId }
+            var fetchDescriptor = FetchDescriptor(predicate: predicate)
+            fetchDescriptor.fetchLimit = 1
             
-            // Bildirim gönder (emoji değişti)
-            NotificationCenter.default.post(name: Notification.Name("NapEmojiChanged"), object: napEmoji)
+            guard let scheduleToUpdate = try context.fetch(fetchDescriptor).first else {
+                print("ProfileScreenViewModel: Güncellenecek program SwiftData\'da bulunamadı.")
+                throw ProfileError.scheduleUpdateFailed
+            }
+
+            scheduleToUpdate.adaptationPhase = 0
+            scheduleToUpdate.updatedAt = Date()
+            
+            try context.save()
+            
+            // UI'ı güncelle
+            await MainActor.run {
+                self.adaptationPhase = 0
+                self.activeSchedule = scheduleToUpdate // Güncellenmiş schedule'ı ata
+            }
+            
+            print("Adaptasyon fazı başarıyla sıfırlandı (SwiftData).")
+            
+        } catch {
+            print("Adaptasyon fazı sıfırlanırken SwiftData hatası: \\(error.localizedDescription)")
+            throw ProfileError.saveFailed(error.localizedDescription)
         }
     }
 }
 
-// Aktif Program modeli
-struct ActiveSchedule: Codable {
-    let id: UUID
-    let userId: UUID?
-    let name: String
-    let totalSleepHours: Double?
-    let adaptationPhase: Int?
-    let isActive: Bool
+// MARK: - Hata Tipleri
+enum ProfileError: Error, LocalizedError {
+    case noActiveSchedule
+    case saveFailed(String)
+    case scheduleUpdateFailed
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case name
-        case totalSleepHours = "total_sleep_hours"
-        case adaptationPhase = "adaptation_phase"
-        case isActive = "is_active"
+    var errorDescription: String? {
+        switch self {
+        case .noActiveSchedule:
+            return "Sıfırlanacak aktif bir uyku programı bulunamadı."
+        case .saveFailed(let reason):
+            return "Kaydetme başarısız: \(reason)"
+        case .scheduleUpdateFailed:
+            return "Program güncellenemedi."
+        }
     }
 }
+
+// Eğer UserSchedule.scheduleDescription (eski JSONB) kullanılacaksa
+// ve bu bir LocalizedDescription struct'ına decode edilecekse,
+// bu struct'ın Codable olması gerekir.
+// struct LocalizedDescription: Codable {
+// var en: String
+// var tr: String
+// }

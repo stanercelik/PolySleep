@@ -12,7 +12,6 @@
 		20AB6D302D2AFB5500A45746 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 20AB6D2F2D2AFB5500A45746 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		20AB6D322D2AFB5500A45746 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 20AB6D312D2AFB5500A45746 /* FirebaseAppCheck */; };
 		20AB6D342D2AFB5500A45746 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 20AB6D332D2AFB5500A45746 /* FirebaseAppDistribution-Beta */; };
-		20DBB8462D73522A009C5CE3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 20DBB8452D73522A009C5CE3 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +76,6 @@
 			files = (
 				20AB6D322D2AFB5500A45746 /* FirebaseAppCheck in Frameworks */,
 				20AB6D2C2D2AFB5500A45746 /* FirebaseAnalytics in Frameworks */,
-				20DBB8462D73522A009C5CE3 /* Supabase in Frameworks */,
 				20AB6D342D2AFB5500A45746 /* FirebaseAppDistribution-Beta in Frameworks */,
 				20AB6D302D2AFB5500A45746 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				20AB6D2E2D2AFB5500A45746 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -151,7 +149,6 @@
 				20AB6D2F2D2AFB5500A45746 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				20AB6D312D2AFB5500A45746 /* FirebaseAppCheck */,
 				20AB6D332D2AFB5500A45746 /* FirebaseAppDistribution-Beta */,
-				20DBB8452D73522A009C5CE3 /* Supabase */,
 			);
 			productName = polysleep;
 			productReference = 2032D6B02D1E9E2300170F56 /* polysleep.app */;
@@ -242,7 +239,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				20AB6D2A2D2AFB5500A45746 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				20DBB8442D73522A009C5CE3 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2032D6B12D1E9E2300170F56 /* Products */;
@@ -635,14 +631,6 @@
 				minimumVersion = 11.6.0;
 			};
 		};
-		20DBB8442D73522A009C5CE3 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -670,11 +658,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20AB6D2A2D2AFB5500A45746 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseAppDistribution-Beta";
-		};
-		20DBB8452D73522A009C5CE3 /* Supabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20DBB8442D73522A009C5CE3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

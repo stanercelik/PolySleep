@@ -221,47 +221,32 @@ class AnalyticsViewModel: ObservableObject {
     
     private func loadRealData() {
         guard let modelContext = modelContext else { return }
-        
         isLoading = true
-        
         Task {
             do {
-                let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\.date, order: .forward)])
-                let historyModels = try await modelContext.fetch(descriptor)
-                
-                // Tarih aralığını belirle
+                let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\HistoryModel.date, order: .forward)])
+                let allHistoryModels = try await modelContext.fetch(descriptor)
+
                 let endDate = Date()
                 let startDate = calculateStartDate(from: endDate)
-                let previousStartDate = calculatePreviousPeriodStartDate(from: startDate, endDate: endDate)
                 
-                // Tarih aralığındaki verileri filtrele
-                let filteredHistoryModels = historyModels.filter { historyModel in
-                    return historyModel.date >= startDate && historyModel.date <= endDate
+                let filteredHistoryModels = allHistoryModels.filter { $0.date >= startDate && $0.date <= endDate }
+                let previousPeriodModels = allHistoryModels.filter {
+                    let prevStartDate = calculatePreviousPeriodStartDate(from: startDate, endDate: endDate)
+                    return $0.date >= prevStartDate && $0.date < startDate
                 }
                 
-                // Önceki dönem verileri
-                let previousPeriodModels = historyModels.filter { historyModel in
-                    return historyModel.date >= previousStartDate && historyModel.date < startDate
-                }
-                
-                // Yeterli veri var mı kontrol et
-                let uniqueDays = Set(filteredHistoryModels.map { Calendar.current.startOfDay(for: $0.date) })
-                
+                let uniqueDaysCount = Set(filteredHistoryModels.map { Calendar.current.startOfDay(for: $0.date) }).count
+
                 await MainActor.run {
-                    hasEnoughData = uniqueDays.count >= minimumRequiredDays
-                    
+                    hasEnoughData = uniqueDaysCount >= minimumRequiredDays
                     if hasEnoughData {
-                        // Yeterli veri varsa analiz et
                         analyzeData(historyModels: filteredHistoryModels, startDate: startDate, endDate: endDate)
-                        
-                        // Önceki dönemle karşılaştırma
                         compareToPreviousPeriod(currentModels: filteredHistoryModels, previousModels: previousPeriodModels)
                     } else if !filteredHistoryModels.isEmpty {
-                        // Az veri varsa bile göster
                         analyzeData(historyModels: filteredHistoryModels, startDate: startDate, endDate: endDate)
                         hasEnoughData = true
                     }
-                    
                     isLoading = false
                 }
             } catch {
@@ -293,133 +278,89 @@ class AnalyticsViewModel: ObservableObject {
     }
     
     private func analyzeData(historyModels: [HistoryModel], startDate: Date, endDate: Date) {
-        // Tüm uyku kayıtları
-        let allSleepEntries = historyModels.flatMap { $0.sleepEntries }
-        
-        // Veri olan günler
+        let allSleepEntries = historyModels.flatMap { $0.sleepEntries ?? [] }
+        var stats = SleepStatistics()
+        stats.totalSleepHours = allSleepEntries.reduce(0.0) { $0 + ($1.duration / 3600.0) }
+
         let calendar = Calendar.current
         let daysWithData = Set(historyModels.map { calendar.startOfDay(for: $0.date) }).sorted()
         let daysWithDataCount = daysWithData.count
-        
-        // SleepStatistics oluştur
-        var stats = SleepStatistics()
-        
-        // Toplam uyku saati
-        stats.totalSleepHours = allSleepEntries.reduce(0.0) { result, entry in
-            return result + (entry.duration / 3600.0)
-        }
-        
-        // Günlük ortalama uyku saati (sadece veri olan günler için)
         stats.averageDailyHours = daysWithDataCount > 0 ? stats.totalSleepHours / Double(daysWithDataCount) : 0
         
-        // Ortalama uyku skoru
-        let totalScore = allSleepEntries.reduce(0) { result, entry in
-            return result + entry.rating
-        }
-        stats.averageSleepScore = allSleepEntries.isEmpty ? 0 : Double(totalScore) / Double(allSleepEntries.count)
+        let totalScoreSum = allSleepEntries.reduce(0) { $0 + $1.rating }
+        stats.averageSleepScore = allSleepEntries.isEmpty ? 0 : Double(totalScoreSum) / Double(allSleepEntries.count)
         
-        // Kazanılan zaman (geleneksel uyku düzenine göre)
         let traditionalSleepHours = 8.0 * Double(daysWithDataCount)
         stats.timeGained = max(0, traditionalSleepHours - stats.totalSleepHours)
-        
-        // Verimlilik
-        stats.efficiencyPercentage = traditionalSleepHours > 0 ? 
-            ((traditionalSleepHours - stats.totalSleepHours) / traditionalSleepHours) * 100 : 0
+        stats.efficiencyPercentage = traditionalSleepHours > 0 ? ((traditionalSleepHours - stats.totalSleepHours) / traditionalSleepHours) * 100 : 0
             
-        // En iyi ve en kötü günleri hesapla
         var bestDay: (date: Date, hours: Double, score: Double)?
         var worstDay: (date: Date, hours: Double, score: Double)?
         
-        // Her gün için veri toplayarak en iyi/en kötü günleri belirle
-        for day in daysWithData {
-            let dayEnd = calendar.date(byAdding: .day, value: 1, to: day)!
-            
-            let dayEntries = historyModels
-                .filter { $0.date >= day && $0.date < dayEnd }
-                .flatMap { $0.sleepEntries }
-            
+        for dayDate in daysWithData {
+            let dayEntries = allSleepEntries.filter { calendar.isDate($0.date, inSameDayAs: dayDate) }
             if dayEntries.isEmpty { continue }
             
             let dayTotalHours = dayEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
-            let dayScore = dayEntries.reduce(0) { $0 + $1.rating } / dayEntries.count
+            let dayTotalScore = dayEntries.reduce(0) { $0 + $1.rating }
+            let dayAverageScore = Double(dayTotalScore) / Double(dayEntries.count)
             
-            // En iyi gün (en yüksek skorlu)
-            if bestDay == nil || Double(dayScore) > bestDay!.score {
-                bestDay = (day, dayTotalHours, Double(dayScore))
+            if bestDay == nil || dayAverageScore > bestDay!.score {
+                bestDay = (dayDate, dayTotalHours, dayAverageScore)
             }
-            
-            // En kötü gün (en düşük skorlu)
-            if worstDay == nil || Double(dayScore) < worstDay!.score {
-                worstDay = (day, dayTotalHours, Double(dayScore))
+            if worstDay == nil || dayAverageScore < worstDay!.score {
+                worstDay = (dayDate, dayTotalHours, dayAverageScore)
             }
         }
         
         stats.bestDay = bestDay?.date
         stats.bestDayScore = bestDay?.score ?? 0
         stats.worstDay = worstDay?.date
-        stats.worstDayScore = worstDay?.score ?? 0
-        
-        // Tutarlılık skorunu hesapla (uyku zamanlarının standart sapması kullanılarak)
+        stats.worstDayScore = worstDay?.score ?? 5.0 // Default to 5 for comparison
+
         if daysWithDataCount > 1 {
-            var sleepTimes: [TimeInterval] = []
-            
-            for day in daysWithData {
-                let dayEnd = calendar.date(byAdding: .day, value: 1, to: day)!
-                let dayEntries = historyModels.filter { $0.date >= day && $0.date < dayEnd }.flatMap { $0.sleepEntries }
-                
-                for entry in dayEntries {
-                    let components = calendar.dateComponents([.hour, .minute], from: entry.startTime)
-                    let totalMinutes = (components.hour ?? 0) * 60 + (components.minute ?? 0)
-                    sleepTimes.append(TimeInterval(totalMinutes * 60))
+            var sleepTimesInMinutes: [Double] = []
+            for entry in allSleepEntries { // Iterate over allSleepEntries directly
+                let components = calendar.dateComponents([.hour, .minute], from: entry.startTime)
+                if let hour = components.hour, let minute = components.minute {
+                    sleepTimesInMinutes.append(Double(hour * 60 + minute))
                 }
             }
             
-            // Standart sapma hesapla
-            if sleepTimes.count > 1 {
-                let mean = sleepTimes.reduce(0, +) / Double(sleepTimes.count)
-                let variance = sleepTimes.reduce(0) { $0 + pow($1 - mean, 2) } / Double(sleepTimes.count - 1)
+            if sleepTimesInMinutes.count > 1 {
+                let mean = sleepTimesInMinutes.reduce(0, +) / Double(sleepTimesInMinutes.count)
+                let variance = sleepTimesInMinutes.reduce(0) { $0 + pow($1 - mean, 2) } / Double(sleepTimesInMinutes.count - 1)
                 let standardDeviation = sqrt(variance)
-                
-                // Tutarlılık skoru (daha düşük standart sapma = daha yüksek tutarlılık)
-                stats.consistencyScore = max(0, 100 - min(100, standardDeviation / 3600))
-                
-                // Değişkenlik skoru
-                stats.variabilityScore = min(100, standardDeviation / 3600)
+                stats.consistencyScore = max(0, 100 - min(100, standardDeviation / 60)) // SD in minutes / 60 min
+                stats.variabilityScore = min(100, standardDeviation / 60)
             }
         }
-        
-        // Trend analizi (iyileşme veya kötüleşme)
+
         if daysWithDataCount > 2 {
-            // Zaman içinde skorları analiz et
-            let sortedDays = historyModels.sorted(by: { $0.date < $1.date })
-            let firstHalf = sortedDays.prefix(sortedDays.count / 2)
-            let secondHalf = sortedDays.suffix(sortedDays.count - sortedDays.count / 2)
+            let sortedHistoryByDate = historyModels.sorted(by: { $0.date < $1.date })
+            let firstHalfModels = sortedHistoryByDate.prefix(sortedHistoryByDate.count / 2)
+            let secondHalfModels = sortedHistoryByDate.suffix(sortedHistoryByDate.count - sortedHistoryByDate.count / 2)
             
-            let firstHalfScore = firstHalf.flatMap { $0.sleepEntries }.reduce(0) { $0 + $1.rating }
-            let secondHalfScore = secondHalf.flatMap { $0.sleepEntries }.reduce(0) { $0 + $1.rating }
+            let firstHalfEntries = firstHalfModels.flatMap { $0.sleepEntries ?? [] }
+            let secondHalfEntries = secondHalfModels.flatMap { $0.sleepEntries ?? [] }
+
+            let firstHalfScoreSum = firstHalfEntries.reduce(0) { $0 + $1.rating }
+            let secondHalfScoreSum = secondHalfEntries.reduce(0) { $0 + $1.rating }
             
-            let firstHalfEntryCount = firstHalf.flatMap { $0.sleepEntries }.count
-            let secondHalfEntryCount = secondHalf.flatMap { $0.sleepEntries }.count
+            let firstHalfAvg = !firstHalfEntries.isEmpty ? Double(firstHalfScoreSum) / Double(firstHalfEntries.count) : 0
+            let secondHalfAvg = !secondHalfEntries.isEmpty ? Double(secondHalfScoreSum) / Double(secondHalfEntries.count) : 0
             
-            let firstHalfAvg = firstHalfEntryCount > 0 ? Double(firstHalfScore) / Double(firstHalfEntryCount) : 0
-            let secondHalfAvg = secondHalfEntryCount > 0 ? Double(secondHalfScore) / Double(secondHalfEntryCount) : 0
-            
-            // Trend yönü ve iyileşme oranı
             stats.trendDirection = secondHalfAvg - firstHalfAvg
             stats.improvementRate = firstHalfAvg > 0 ? (secondHalfAvg - firstHalfAvg) / firstHalfAvg * 100 : 0
         }
         
-        // Sınıflandırma istatistiklerini güncelle
         var qualityStats = SleepQualityStats()
-        
-        for day in daysWithData {
-            let dayEnd = calendar.date(byAdding: .day, value: 1, to: day)!
-            let dayEntries = historyModels.filter { $0.date >= day && $0.date < dayEnd }.flatMap { $0.sleepEntries }
-            
+        for dayDate in daysWithData {
+            let dayEntries = allSleepEntries.filter { calendar.isDate($0.date, inSameDayAs: dayDate) }
             if dayEntries.isEmpty { continue }
-            
-            let dayScore = dayEntries.reduce(0) { $0 + $1.rating } / dayEntries.count
-            let category = SleepQualityCategory.fromRating(Double(dayScore))
+            let dayTotalScore = dayEntries.reduce(0) { $0 + $1.rating }
+            let dayAvgScore = Double(dayTotalScore) / Double(dayEntries.count)
+            let category = SleepQualityCategory.fromRating(dayAvgScore)
             
             switch category {
             case .excellent: qualityStats.excellentDays += 1
@@ -430,156 +371,115 @@ class AnalyticsViewModel: ObservableObject {
             }
         }
         
-        // ViewModel'deki değişkenleri güncelle
-        totalSleepHours = stats.totalSleepHours
-        averageDailyHours = stats.averageDailyHours
-        averageSleepScore = stats.averageSleepScore
-        timeGained = stats.timeGained
+        self.totalSleepHours = stats.totalSleepHours
+        self.averageDailyHours = stats.averageDailyHours
+        self.averageSleepScore = stats.averageSleepScore
+        self.timeGained = stats.timeGained
+        self.sleepStatistics = stats
+        self.sleepQualityStats = qualityStats
+        self.bestSleepDay = bestDay
+        self.worstSleepDay = worstDay
         
-        sleepStatistics = stats
-        sleepQualityStats = qualityStats
-        
-        bestSleepDay = bestDay
-        worstSleepDay = worstDay
-        
-        createTrendData(from: historyModels, startDate: startDate, endDate: endDate)
+        createTrendData(fromSleepEntries: allSleepEntries, startDate: startDate, endDate: endDate)
         createBreakdownData(from: allSleepEntries, timeRangeDays: selectedTimeRange.days)
     }
     
     private func compareToPreviousPeriod(currentModels: [HistoryModel], previousModels: [HistoryModel]) {
-        // Eğer önceki dönem verisi yoksa karşılaştırma yapma
-        if previousModels.isEmpty {
-            previousPeriodComparison = (0, 0)
-            return
-        }
+        let currentSleepEntries = currentModels.flatMap { $0.sleepEntries ?? [] }
+        let prevSleepEntries = previousModels.flatMap { $0.sleepEntries ?? [] }
         
-        // Önceki dönem uyku kayıtları
-        let prevSleepEntries = previousModels.flatMap { $0.sleepEntries }
+        let currentTotalHours = currentSleepEntries.reduce(0.0) { $0 + ($1.duration / 3600.0) }
+        let prevTotalHours = prevSleepEntries.reduce(0.0) { $0 + ($1.duration / 3600.0) }
         
-        // Önceki dönem toplam uyku saati
-        let prevTotalHours = prevSleepEntries.reduce(0.0) { result, entry in
-            return result + (entry.duration / 3600.0)
-        }
+        let currentTotalScoreSum = currentSleepEntries.reduce(0) { $0 + $1.rating }
+        let prevTotalScoreSum = prevSleepEntries.reduce(0) { $0 + $1.rating }
         
-        // Önceki dönem ortalama uyku skoru
-        let prevTotalScore = prevSleepEntries.reduce(0) { result, entry in
-            return result + entry.rating
-        }
-        let prevAvgScore = prevSleepEntries.isEmpty ? 0 : Double(prevTotalScore) / Double(prevSleepEntries.count)
+        let currentAvgScore = !currentSleepEntries.isEmpty ? Double(currentTotalScoreSum) / Double(currentSleepEntries.count) : 0
+        let prevAvgScore = !prevSleepEntries.isEmpty ? Double(prevTotalScoreSum) / Double(prevSleepEntries.count) : 0
         
-        // Mevcut dönem değerleriyle karşılaştırma
-        let hoursDiff = totalSleepHours - prevTotalHours
-        let scoreDiff = averageSleepScore - prevAvgScore
+        let hoursDiff = currentTotalHours - prevTotalHours
+        let scoreDiff = currentAvgScore - prevAvgScore
         
         previousPeriodComparison = (hoursDiff, scoreDiff)
     }
     
-    private func createTrendData(from historyModels: [HistoryModel], startDate: Date, endDate: Date) {
+    private func createTrendData(fromSleepEntries entries: [SleepEntry], startDate: Date, endDate: Date) {
         sleepTrendData = []
         let calendar = Calendar.current
-        
-        // Seçilen zaman aralığına göre gösterilecek veri sayısını belirle
         let maxDataPoints = selectedTimeRange.days
         
-        // Veri noktalarını oluştur
-        let dayCount = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? maxDataPoints
-        let dataPointCount = min(dayCount + 1, maxDataPoints)
-        
-        for dayOffset in 0..<dataPointCount {
-            if let date = calendar.date(byAdding: .day, value: dayOffset, to: startDate) {
-                let dayStart = calendar.startOfDay(for: date)
-                let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart)!
-                
-                let dayEntries = historyModels
-                    .filter { $0.date >= dayStart && $0.date < dayEnd }
-                    .flatMap { $0.sleepEntries }
-                
-                let coreEntries = dayEntries.filter { $0.type == .core }
-                let napEntries = dayEntries.filter { $0.type == .powerNap }
-                
-                let totalHours = dayEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
-                let coreHours = coreEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
-                let napHours = napEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
-                
-                let totalScore = dayEntries.reduce(0) { result, entry in
-                    return result + entry.rating
-                }
-                let score = dayEntries.isEmpty ? 0.0 : Double(totalScore) / Double(dayEntries.count)
-                
-                var sleepData = SleepTrendData(
-                    date: date,
-                    totalHours: totalHours,
-                    coreHours: coreHours,
-                    napHours: napHours,
-                    score: score
-                )
-                
-                // Napları dağıt
-                let sortedNaps = napEntries.sorted { $0.startTime < $1.startTime }
-                let napCount = sortedNaps.count
-                
-                var nap1Hours = 0.0
-                var nap2Hours = 0.0
-                
-                if napCount > 0 {
-                    if napCount == 1 {
-                        nap1Hours = sortedNaps[0].duration / 3600.0
-                    } else {
-                        let halfIndex = napCount / 2
-                        
-                        let firstHalfNaps = Array(sortedNaps.prefix(halfIndex))
-                        let secondHalfNaps = Array(sortedNaps.suffix(napCount - halfIndex))
-                        
-                        nap1Hours = firstHalfNaps.reduce(0.0) { $0 + $1.duration / 3600.0 }
-                        nap2Hours = secondHalfNaps.reduce(0.0) { $0 + $1.duration / 3600.0 }
-                    }
-                }
-                
-                sleepData.distributeNaps(nap1: nap1Hours, nap2: nap2Hours)
-                sleepTrendData.append(sleepData)
-            }
+        guard let actualStartDate = calendar.date(byAdding: .day, value: -(maxDataPoints - 1), to: calendar.startOfDay(for: endDate)) else { return }
+
+        for dayOffset in 0..<maxDataPoints {
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: actualStartDate) else { continue }
+            
+            // Filter entries for the specific day
+            let dayEntries = entries.filter { calendar.isDate($0.date, inSameDayAs: date) }
+            
+            let coreEntries = dayEntries.filter { $0.isCore }
+            let napEntries = dayEntries.filter { !$0.isCore }
+            
+            let totalHours = dayEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
+            let coreHours = coreEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
+            let napHours = napEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
+
+            let totalScoreSum = dayEntries.reduce(0) { $0 + $1.rating }
+            let score = dayEntries.isEmpty ? 0.0 : Double(totalScoreSum) / Double(dayEntries.count)
+            
+            var sleepData = SleepTrendData(
+                date: date,
+                totalHours: totalHours,
+                coreHours: coreHours,
+                napHours: napHours,
+                score: score
+            )
+
+            let sortedNaps = napEntries.sorted { $0.startTime < $1.startTime }
+            sleepData.nap1Hours = (sortedNaps.first?.duration ?? 0.0) / 3600.0
+            sleepData.nap2Hours = (sortedNaps.dropFirst().first?.duration ?? 0.0) / 3600.0
+            
+            sleepTrendData.append(sleepData)
         }
+        // Ensure the trend data is sorted by date if the generation order wasn't strictly chronological
+        sleepTrendData.sort(by: { $0.date < $1.date })
     }
     
     private func createBreakdownData(from entries: [SleepEntry], timeRangeDays: Int) {
         sleepBreakdownData = []
+        guard timeRangeDays > 0 else { return } // Avoid division by zero
         
-        let coreEntries = entries.filter { $0.type == .core }
-        let napEntries = entries.filter { $0.type == .powerNap }
+        let coreEntries = entries.filter { $0.isCore } // isCore direkt kullanılır
+        let napEntries = entries.filter { !$0.isCore }  // isCore direkt kullanılır
         
         let coreHours = coreEntries.reduce(0.0) { $0 + ($1.duration / 3600.0) }
         let napHours = napEntries.reduce(0.0) { $0 + ($1.duration / 3600.0) }
         
         let totalHours = coreHours + napHours
         
-        // Ana uyku verisi
         var coreData = SleepBreakdownData(
             type: NSLocalizedString("analytics.sleepBreakdown.core", tableName: "Analytics", comment: "Core sleep type"),
             hours: coreHours,
             percentage: totalHours > 0 ? (coreHours / totalHours) * 100 : 0,
-            color: Color("AccentColor")
+            color: Color("AccentColor") // Design system rengi
         )
         
-        // Şekerleme verisi
         var napData = SleepBreakdownData(
             type: NSLocalizedString("analytics.sleepBreakdown.nap", tableName: "Analytics", comment: "Nap sleep type"),
             hours: napHours,
             percentage: totalHours > 0 ? (napHours / totalHours) * 100 : 0,
-            color: Color("PrimaryColor")
+            color: Color("PrimaryColor") // Design system rengi
         )
         
-        // Günlük ortalama hesapla
-        coreData.averagePerDay = timeRangeDays > 0 ? coreHours / Double(timeRangeDays) : 0
-        napData.averagePerDay = timeRangeDays > 0 ? napHours / Double(timeRangeDays) : 0
+        coreData.averagePerDay = coreHours / Double(timeRangeDays)
+        napData.averagePerDay = napHours / Double(timeRangeDays)
         
-        // Veri olan gün sayısı
-        let uniqueCoreDays = Set(coreEntries.map { Calendar.current.startOfDay(for: $0.startTime) }).count
-        let uniqueNapDays = Set(napEntries.map { Calendar.current.startOfDay(for: $0.startTime) }).count
+        let uniqueCoreDays = Set(coreEntries.map { Calendar.current.startOfDay(for: $0.date) }).count // date kullanılır
+        let uniqueNapDays = Set(napEntries.map { Calendar.current.startOfDay(for: $0.date) }).count // date kullanılır
         
         coreData.daysWithThisType = uniqueCoreDays
         napData.daysWithThisType = uniqueNapDays
         
-        sleepBreakdownData = [coreData, napData]
+        sleepBreakdownData = [coreData, napData].filter { $0.hours > 0 } // Sadece saati olanları göster
     }
 }
 

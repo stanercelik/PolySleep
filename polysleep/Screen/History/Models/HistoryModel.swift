@@ -8,77 +8,6 @@ enum SortOption: String, CaseIterable {
     case lowestRated = "Lowest Rated"
 }
 
-enum SleepType: Int, Codable {
-    case core
-    case powerNap
-    
-    var title: String {
-        switch self {
-        case .core:
-            return NSLocalizedString("sleep.type.core", tableName: "History" ,comment: "")
-        case .powerNap:
-            return NSLocalizedString("sleep.type.nap", tableName: "History", comment: "")
-        }
-    }
-    
-    var icon: String {
-        switch self {
-        case .core:
-            return "bed.double.fill"
-        case .powerNap:
-            return "bolt.fill"
-        }
-    }
-}
-
-@Model
-final class SleepEntry: Identifiable {
-    var id: UUID
-    var type: SleepType
-    var startTime: Date
-    var endTime: Date
-    var rating: Int
-    var parentHistory: HistoryModel?
-    
-    var duration: TimeInterval {
-        endTime.timeIntervalSince(startTime)
-    }
-    
-    // Uyku tipinin ana uyku olup olmadığını kontrol eder
-    var isCore: Bool {
-        return type == .core
-    }
-    
-    // Emoji alanı
-    var emoji: String {
-        ""
-    }
-    
-    init(id: UUID, type: SleepType, startTime: Date, endTime: Date, rating: Int) {
-        self.id = id
-        self.type = type
-        self.startTime = startTime
-        self.endTime = endTime
-        self.rating = rating
-    }
-}
-
-struct HistoryItem: Identifiable {
-    let id: String
-    let date: Date
-    let sleepEntries: [SleepEntry]
-    
-    var totalSleepDuration: TimeInterval {
-        sleepEntries.reduce(0) { $0 + $1.duration }
-    }
-    
-    var averageRating: Double {
-        guard !sleepEntries.isEmpty else { return 0 }
-        let totalRating = sleepEntries.reduce(0) { $0 + $1.rating }
-        return Double(totalRating) / Double(sleepEntries.count)
-    }
-}
-
 enum CompletionStatus: Int, Codable {
     case completed
     case partial
@@ -98,36 +27,35 @@ enum CompletionStatus: Int, Codable {
 
 @Model
 final class HistoryModel {
-    var id: String
-    var date: Date
-    @Relationship(deleteRule: .cascade) var sleepEntries: [SleepEntry]
-    var completionStatus: CompletionStatus
-    
-    var totalSleepDuration: TimeInterval {
-        sleepEntries.reduce(0) { $0 + $1.duration }
-    }
-    
+    @Attribute(.unique) var id: UUID // Günlük grup için benzersiz ID
+    var date: Date // Bu geçmiş modelinin temsil ettiği tarih (günün başlangıcı)
+
+    // Bu güne ait uyku girişleri ile ilişki
+    @Relationship(deleteRule: .cascade, inverse: \SleepEntry.historyDay)
+    var sleepEntries: [SleepEntry]? = []
+
     var averageRating: Double {
-        guard !sleepEntries.isEmpty else { return 0 }
-        let totalRating = sleepEntries.reduce(0) { $0 + $1.rating }
-        return Double(totalRating) / Double(sleepEntries.count)
+        guard let entries = sleepEntries, !entries.isEmpty else { return 0 }
+        let totalRating = entries.reduce(0) { $0 + $1.rating }
+        return Double(totalRating) / Double(entries.count)
+    }
+
+    var totalSleepDuration: TimeInterval { // Saniye cinsinden
+        guard let entries = sleepEntries else { return 0 }
+        return entries.reduce(0.0) { $0 + $1.duration }
     }
     
-    init(date: Date, sleepEntries: [SleepEntry] = []) {
-        self.id = UUID().uuidString
-        self.date = date
+    // Bu gün için tamamlama durumu (örnek mantık)
+    var completionStatus: CompletionStatus {
+        guard let entries = sleepEntries, !entries.isEmpty else { return .missed }
+        // Basit bir mantık: Eğer herhangi bir uyku girişi varsa ve toplam süre 0'dan büyükse tamamlanmış say.
+        // Daha karmaşık bir mantık için aktif programla karşılaştırma gerekebilir.
+        return totalSleepDuration > 0 ? .completed : .missed 
+    }
+
+    init(id: UUID = UUID(), date: Date, sleepEntries: [SleepEntry]? = []) {
+        self.id = id
+        self.date = Calendar.current.startOfDay(for: date) // Her zaman günün başlangıcını sakla
         self.sleepEntries = sleepEntries
-        self.completionStatus = .missed
-        
-        // Tamamlanma durumunu hesapla
-        if !sleepEntries.isEmpty {
-            let totalSleep = sleepEntries.reduce(0) { $0 + $1.duration }
-            
-            if totalSleep >= 21600 { // 6 saat veya daha fazla
-                self.completionStatus = .completed
-            } else if totalSleep >= 10800 { // 3 saat veya daha fazla
-                self.completionStatus = .partial
-            }
-        }
     }
 }

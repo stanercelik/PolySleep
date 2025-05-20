@@ -48,15 +48,19 @@ public struct SleepScheduleRecommendation {
 // MARK: - SleepScheduleRecommender Servisi
 final class SleepScheduleRecommender {
     // Basit bir başlatıcı
-    init() {}
+    private let repository: Repository
     
-    /// Ana fonksiyon: Supabase'den kullanıcı faktörlerini alır, puanlama yapar ve uygun schedule önerir.
+    init(repository: Repository = Repository.shared) {
+        self.repository = repository
+    }
+    
+    /// Ana fonksiyon: Kullanıcı faktörlerini alır, puanlama yapar ve uygun schedule önerir.
     func recommendSchedule() async throws -> SleepScheduleRecommendation? {
         print("\n=== Starting Sleep Schedule Recommendation ===")
         
-        // Supabase'den kullanıcı faktörlerini yükle
-        guard let userAnswers = try await loadUserFactorsFromSupabase() else {
-            print("❌ Failed to load user factors from Supabase!")
+        // Yerel veritabanından kullanıcı faktörlerini yükle
+        guard let userAnswers = try await loadUserFactorsFromLocalDatabase() else {
+            print("❌ Failed to get recommendation")
             return nil
         }
         
@@ -187,7 +191,7 @@ final class SleepScheduleRecommender {
             return nil
         }
         
-        print("\n✅ Recommended Schedule: \(bestSchedule.name)")
+        print("\n=== Recommended Schedule: \(bestSchedule.name)")
         print("- Total Score: \(String(format: "%.3f", bestScore))")
         print("- Difficulty:  \(bestSchedule.difficulty.rawValue)")
         
@@ -207,65 +211,36 @@ final class SleepScheduleRecommender {
     }
     
     // MARK: - UserFactors Yükleme
-    /// Supabase'den kullanıcı cevaplarını alır
-    private func loadUserFactorsFromSupabase() async throws -> [String: String]? {
+    /// SwiftData'dan kullanıcı cevaplarını alır
+    private func loadUserFactorsFromLocalDatabase() async throws -> [String: String]? {
+        // Repository'den onboarding cevaplarını al
         do {
-            // Ana metot ile deneyelim
-            let answers = try await SupabaseOnboardingService.shared.getAllOnboardingAnswersRaw()
+            // Repository'den cevapları al (artık Repository kendi ModelContext'ini yönetebiliyor)
+            let onboardingAnswers = try await repository.getOnboardingAnswers()
             
             // Sonuçların boş olup olmadığını kontrol et
-            if answers.isEmpty {
-                print("❌ Onboarding cevapları boş döndü, alternatif metodu deniyorum...")
-                // Boş kayıtlar varsa, her soru için ayrı ayrı almayı deneyelim
-                return try await loadUserFactorsFromSupabaseAlternative()
+            print("🗂️ \(onboardingAnswers.count) onboarding cevabı getirildi")
+            if onboardingAnswers.isEmpty {
+                print("❌ Onboarding cevapları boş döndü")
+                return nil
             }
             
-            print("✅ Onboarding cevapları başarıyla alındı: \(answers)")
-            return answers
+            // OnboardingAnswerData'dan [String: String] sözlüğüne dönüştür
+            var result: [String: String] = [:]
+            for answer in onboardingAnswers {
+                result[answer.question] = answer.answer
+            }
+            
+            print("✅ Onboarding cevapları başarıyla alındı: \(result)")
+            return result
         } catch {
-            print("❌ Error loading user factors from Supabase: \(error.localizedDescription)")
-            print("🔄 Alternatif metodu deniyorum...")
-            
-            // Hata durumunda alternatif metodu deneyelim
-            return try await loadUserFactorsFromSupabaseAlternative()
-        }
-    }
-    
-    /// Alternatif metot: Her soruyu ayrı ayrı alır
-    private func loadUserFactorsFromSupabaseAlternative() async throws -> [String: String]? {
-        print("🔍 Alternatif metot ile onboarding cevaplarını almaya çalışıyorum...")
-        
-        var result: [String: String] = [:]
-        let questions = [
-            "onboarding.sleepExperience", "onboarding.ageRange", "onboarding.workSchedule", "onboarding.napEnvironment",
-            "onboarding.lifestyle", "onboarding.knowledgeLevel", "onboarding.healthStatus", "onboarding.motivationLevel",
-            "onboarding.sleepGoal", "onboarding.socialObligations", "onboarding.disruptionTolerance", "onboarding.chronotype"
-        ]
-        
-        for question in questions {
-            do {
-                if let answer = try await SupabaseOnboardingService.shared.getOnboardingAnswer(for: question) {
-                    // "onboarding." önekini kaldır ve sadece anahtar kısmını al
-                    let key = question.replacingOccurrences(of: "onboarding.", with: "")
-                    result[key] = answer
-                    print("✅ \(key): \(answer)")
-                }
-            } catch {
-                print("❌ \(question) için cevap alınamadı: \(error.localizedDescription)")
-            }
-        }
-        
-        if result.isEmpty {
-            print("❌ Hiçbir onboarding cevabı alınamadı.")
+            print("❌ Error loading user factors from local database: \(error.localizedDescription)")
             return nil
         }
-        
-        print("🔍 Alternatif metot ile \(result.count) onboarding cevabı alındı.")
-        return result
     }
     
     /// UserFactor modelini SwiftData'dan yükle - Artık kullanılmıyor
-    @available(*, deprecated, message: "Bu metot artık kullanılmıyor, loadUserFactorsFromSupabase kullanın")
+    @available(*, deprecated, message: "Bu metot artık kullanılmıyor, loadUserFactorsFromLocalDatabase kullanın")
     private func loadUserFactors() -> UserFactor? {
         print("❌ Bu metot artık kullanılmıyor!")
         return nil

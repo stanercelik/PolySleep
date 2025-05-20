@@ -93,9 +93,27 @@ struct MainScreenView: View {
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
+                            let startTime = TimeFormatter.time(from: lastBlock.startTime)!
+                            let endTime = TimeFormatter.time(from: lastBlock.endTime)!
+                            
+                            let now = Date()
+                            let startDate = Calendar.current.date(
+                                bySettingHour: startTime.hour,
+                                minute: startTime.minute,
+                                second: 0,
+                                of: now
+                            ) ?? now
+                            
+                            let endDate = Calendar.current.date(
+                                bySettingHour: endTime.hour,
+                                minute: endTime.minute,
+                                second: 0,
+                                of: now
+                            ) ?? now
+                            
                             SleepQualityRatingView(
-                                startTime: lastBlock.start,
-                                endTime: lastBlock.end,
+                                startTime: startDate,
+                                endTime: endDate,
                                 isPresented: $viewModel.showSleepQualityRating,
                                 viewModel: viewModel
                             )
@@ -141,7 +159,8 @@ struct MainScreenView: View {
                         
                         Button(action: {
                             Task {
-                                await viewModel.loadScheduleFromSupabase()
+                                // Offline-first: Supabase yerine Repository'den yüklüyoruz
+                                await viewModel.loadScheduleFromRepository()
                             }
                         }) {
                             Text(LocalizedStringKey("mainscreen.error.retry"))

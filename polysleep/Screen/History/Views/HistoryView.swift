@@ -16,9 +16,6 @@ struct HistoryView: View {
                     // Filtreleme Segmenti
                     segmentedFilterView
                     
-                    // Senkronizasyon göstergesi (gerektiğinde görünür)
-                    syncIndicator
-                    
                     // Ana içerik
                     if viewModel.historyItems.isEmpty {
                         emptyStateView
@@ -32,14 +29,8 @@ struct HistoryView: View {
             }
             .navigationTitle("Uyku Geçmişi")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    syncButton
-                }
-            }
             .sheet(isPresented: $viewModel.isDayDetailPresented) {
-                if let selectedDay = viewModel.selectedDay,
-                   let historyItem = viewModel.getHistoryItem(for: selectedDay) {
+                if viewModel.selectedDay != nil {
                     DayDetailView(viewModel: viewModel)
                 }
             }
@@ -76,89 +67,6 @@ struct HistoryView: View {
             Divider()
                 .opacity(0.4)
         }
-    }
-    
-    // Sync indicator
-    private var syncIndicator: some View {
-        Group {
-            switch viewModel.syncStatus {
-            case .synced where viewModel.isSyncing:
-                syncStatusBanner(
-                    icon: "arrow.triangle.2.circlepath",
-                    color: Color.appPrimary,
-                    text: "Senkronize ediliyor..."
-                )
-                
-            case .pendingSync:
-                syncStatusBanner(
-                    icon: "clock.arrow.circlepath",
-                    color: Color.orange,
-                    text: "Bekleyen değişiklikler"
-                )
-                
-            case .offline:
-                syncStatusBanner(
-                    icon: "wifi.slash",
-                    color: Color.gray,
-                    text: "Çevrimdışı mod"
-                )
-                
-            case .error(let message):
-                syncStatusBanner(
-                    icon: "exclamationmark.triangle",
-                    color: Color.red,
-                    text: message
-                )
-                
-            default:
-                EmptyView()
-            }
-        }
-    }
-    
-    private func syncStatusBanner(icon: String, color: Color, text: String) -> some View {
-        HStack(spacing: 8) {
-            if icon == "arrow.triangle.2.circlepath" {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(0.7)
-                    .frame(width: 16, height: 16)
-            } else {
-                Image(systemName: icon)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(color)
-            }
-            
-            Text(text)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundColor(Color.appSecondaryText)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 6)
-        .background(Color("CardBackground").opacity(0.9))
-        .transition(.move(edge: .top).combined(with: .opacity))
-    }
-    
-    // Sync button
-    private var syncButton: some View {
-        Button(action: {
-            Task {
-                await viewModel.syncDataFromSupabase()
-            }
-        }) {
-            Image(systemName: "arrow.triangle.2.circlepath")
-                .font(.system(size: 16, weight: .medium))
-                .foregroundColor(.white)
-                .frame(width: 36, height: 36)
-                .background(
-                    Circle()
-                        .fill(Color.appPrimary)
-                )
-                .contentShape(Circle())
-        }
-        .buttonStyle(ScaleButtonStyle())
-        .disabled(viewModel.isSyncing)
-        .opacity(viewModel.isSyncing ? 0.5 : 1.0)
     }
     
     // Floating action button
@@ -239,9 +147,8 @@ struct HistoryView: View {
     private var historyListView: some View {
         ScrollView {
             LazyVStack(spacing: 8, pinnedViews: []) {
-                // Günleri aylara göre gruplama
-                ForEach(groupedByMonth(), id: \.0) { monthGroup in
-                    monthSection(month: monthGroup.0, items: monthGroup.1)
+                ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
+                    monthSection(month: monthGroup.month, items: monthGroup.days)
                 }
             }
             .padding(.top, 8)
@@ -250,24 +157,23 @@ struct HistoryView: View {
     }
     
     // Ayları grupla
-    private func groupedByMonth() -> [(String, [HistoryModel])] {
-        let groupedItems = Dictionary(grouping: viewModel.historyItems) { item -> String in
+    private func groupedByMonth(items: [HistoryModel]) -> [(month: String, days: [HistoryModel])] {
+        let grouped = Dictionary(grouping: items) { item -> String in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM yyyy"
             return formatter.string(from: item.date)
         }
         
-        return groupedItems.sorted { item1, item2 in
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMMM yyyy"
-            
-            guard let date1 = formatter.date(from: item1.key),
-                  let date2 = formatter.date(from: item2.key) else {
-                return false
+        return grouped.map { (month: $0.key, days: $0.value) }
+            .sorted { item1, item2 in
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMMM yyyy"
+                guard let date1 = formatter.date(from: item1.month),
+                      let date2 = formatter.date(from: item2.month) else {
+                    return false
+                }
+                return date1 > date2
             }
-            
-            return date1 > date2
-        }
     }
     
     // Ay bölümü
@@ -286,7 +192,7 @@ struct HistoryView: View {
             
             // Günler
             VStack(spacing: 8) {
-                ForEach(items.sorted(by: { $0.date > $1.date })) { item in
+                ForEach(items) { item in
                     dayCard(item: item)
                 }
             }
@@ -294,15 +200,14 @@ struct HistoryView: View {
             .padding(.bottom, 16)
         }
         .background(Color.clear)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
         .padding(.vertical, 4)
     }
     
     // Gün kartı
     private func dayCard(item: HistoryModel) -> some View {
         Button(action: {
-            viewModel.selectedDay = item.date
-            viewModel.isDayDetailPresented = true
+            viewModel.selectDateForDetail(item.date)
         }) {
             VStack(spacing: 0) {
                 // Gün başlığı
@@ -335,7 +240,7 @@ struct HistoryView: View {
                     Spacer()
                     
                     // Uyku kalitesi
-                    if item.sleepEntries.isEmpty {
+                    if item.sleepEntries?.isEmpty ?? true {
                         Text("Kayıt yok")
                             .font(.system(size: 12))
                             .foregroundColor(Color.appSecondaryText)
@@ -360,7 +265,8 @@ struct HistoryView: View {
                 
                 // Uyku blokları
                 VStack(spacing: 0) {
-                    if item.sleepEntries.isEmpty {
+                    let entriesToDisplay = item.sleepEntries?.sorted { $0.startTime < $1.startTime }.prefix(2) ?? []
+                    if entriesToDisplay.isEmpty {
                         Text("Kayıt yok")
                             .font(.system(size: 14))
                             .foregroundColor(Color.appSecondaryText)
@@ -368,19 +274,19 @@ struct HistoryView: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
                     } else {
-                        ForEach(item.sleepEntries.sorted { $0.startTime < $1.startTime }.prefix(2), id: \.id) { entry in
+                        ForEach(Array(entriesToDisplay)) { entry in
                             miniSleepEntryRow(entry: entry)
                             
-                            if entry.id != item.sleepEntries.sorted { $0.startTime < $1.startTime }.prefix(2).last?.id {
+                            if entry.id != entriesToDisplay.last?.id {
                                 Divider()
                                     .padding(.leading, 52)
                                     .opacity(0.3)
                             }
                         }
                         
-                        if item.sleepEntries.count > 2 {
+                        if (item.sleepEntries?.count ?? 0) > 2 {
                             HStack {
-                                Text("+ \(item.sleepEntries.count - 2) blok daha")
+                                Text("+ \((item.sleepEntries?.count ?? 0) - 2) blok daha")
                                     .font(.system(size: 12))
                                     .foregroundColor(Color.appPrimary)
                                 
@@ -414,7 +320,7 @@ struct HistoryView: View {
                             .font(.system(size: 12))
                             .foregroundColor(Color.appPrimary)
                         
-                        Text("\(item.sleepEntries.count) blok")
+                        Text("\((item.sleepEntries?.count ?? 0)) blok")
                             .font(.system(size: 12))
                             .foregroundColor(Color.appText)
                     }
@@ -674,6 +580,29 @@ struct RoundedCorner: Shape {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView()
+        // SwiftData Preview için container
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: HistoryModel.self, SleepEntry.self, User.self, configurations: config)
+        
+        // Örnek veri ekle
+        let MOCK_CONTEXT = container.mainContext
+        let today = Calendar.current.startOfDay(for: Date())
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        
+        let historyToday = HistoryModel(date: today)
+        MOCK_CONTEXT.insert(historyToday)
+        
+        let entry1Start = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: today)!
+        let entry1End = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Calendar.current.date(byAdding: .day, value: 1, to: today)!)!
+        let entry1 = SleepEntry(date: today, startTime: entry1Start, endTime: entry1End, durationMinutes: 480, isCore: true, rating: 4, historyDay: historyToday)
+        MOCK_CONTEXT.insert(entry1)
+        historyToday.sleepEntries?.append(entry1)
+        
+        let historyYesterday = HistoryModel(date: yesterday)
+        MOCK_CONTEXT.insert(historyYesterday)
+        // ... (daha fazla örnek veri eklenebilir) ...
+
+        return HistoryView()
+            .modelContainer(container)
     }
 }

@@ -123,10 +123,11 @@ struct NotificationSettingsView: View {
     /// Aktif uyku programı için bildirimleri planlar
     private func scheduleNotificationsForActiveSchedule() {
         // Aktif uyku programını al
-        if let activeSchedule = ScheduleManager.shared.activeSchedule {
-            // OneSignal bildirimlerini planla
-            OneSignalNotificationService.shared.scheduleAllNotificationsForActiveSchedule(schedule: activeSchedule)
-        }
+        // if let activeSchedule = ScheduleManager.shared.activeSchedule { // Bu satıra artık gerek yok
+            // Bildirim ayarları değiştiğinde ScheduleManager üzerinden bildirimleri güncelle
+            // ScheduleManager, Repository'den doğru leadTime'ı alacaktır.
+            ScheduleManager.shared.updateNotificationsForActiveSchedule()
+        // }
     }
 }
 

@@ -42,7 +42,7 @@ class MainScreenViewModel: ObservableObject {
     @Published var isEditingTitle: Bool = false
     @Published var showSleepQualityRating = false
     @Published var hasDeferredSleepQualityRating = false
-    @Published var lastSleepBlock: (start: Date, end: Date)?
+    @Published var lastSleepBlock: SleepBlock?
     @Published private var sleepQualityRatingCompleted = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
@@ -50,11 +50,6 @@ class MainScreenViewModel: ObservableObject {
     private var modelContext: ModelContext?
     private var timer: Timer?
     private var timerCancellable: AnyCancellable?
-    
-    // Supabase servisi referansı
-    private var scheduleService: SupabaseScheduleService {
-        return SupabaseService.shared.schedule
-    }
     
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
@@ -67,17 +62,6 @@ class MainScreenViewModel: ObservableObject {
         
         // Auth durumunu dinle
         setupAuthStateListener()
-        
-        // Supabase'den veri yükle
-        Task {
-            // Önce auth durumunun hazır olmasını bekle
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye bekle
-            
-            // Eğer varsayılan program kullanılıyorsa, Supabase'den veri yüklemeyi dene
-            if model.schedule.id == "default" {
-                await loadScheduleFromSupabase()
-            }
-        }
     }
     
     var totalSleepTimeFormatted: String {
@@ -249,10 +233,10 @@ class MainScreenViewModel: ObservableObject {
     /// ModelContext'i ayarlar
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
-        
-        // Supabase'den verileri yükle
+        print("🗂️ MainScreenViewModel: ModelContext ayarlandı.")
+        // ModelContext ayarlandıktan sonra yerel veriyi yükle
         Task {
-            await loadScheduleFromSupabase()
+            await loadScheduleFromRepository()
         }
     }
     
@@ -435,69 +419,26 @@ class MainScreenViewModel: ObservableObject {
         showAddBlockSheet = false
         resetNewBlockValues()
         
-        // Supabase'e kaydet (arka planda)
+        // Arka planda kaydet
         Task {
             await saveSchedule()
         }
     }
     
     func removeSleepBlock(at offsets: IndexSet) {
-        // Silinecek blokları kaydet
-        let blocksToRemove = offsets.map { model.schedule.schedule[$0] }
-        
         // Yerel model güncelleniyor
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.remove(atOffsets: offsets)
         model.schedule = updatedSchedule
         
+        // --- Bildirimleri Güncelle ---
+        print("removeSleepBlock: Bildirimler güncelleniyor...")
+        ScheduleManager.shared.activateSchedule(updatedSchedule)
+        // --- Bitti ---
+        
+        // Değişiklikleri kaydet
         Task {
-            isLoading = true
-            // Aktif program ID'sini al
-            if let activeSchedule = try? await scheduleService.getActiveSchedule(),
-               let scheduleId = UUID(uuidString: model.schedule.id) {
-                // Sync olup olmadığını kontrol et
-                if scheduleId == activeSchedule.id {
-                    do {
-                        // Blokları birer birer sil
-                        print("PolySleep Debug: \(blocksToRemove.count) adet blok siliniyor")
-                        var allSuccess = true
-                        
-                        for block in blocksToRemove {
-                            let success = try await scheduleService.deleteSleepBlock(blockId: block.id)
-                            if !success {
-                                allSuccess = false
-                                print("PolySleep Debug: Blok silinemedi. ID: \(block.id)")
-                            }
-                        }
-                        
-                        if allSuccess {
-                            print("PolySleep Debug: Tüm bloklar başarıyla silindi")
-                            // Yerel veritabanına kaydet
-                            saveScheduleToLocalDatabase(model.schedule)
-                        } else {
-                            print("PolySleep Debug: Bazı bloklar silinemedi, yerel değişiklikler kayıt altına alınıyor")
-                            // Tüm programı kaydet (yeni bir schedule oluşturarak)
-                            await saveSchedule()
-                        }
-                    } catch {
-                        print("PolySleep Debug: Blok silme hatası: \(error.localizedDescription)")
-                        // Hata durumunda tüm programı kaydet
-                        await saveSchedule()
-                    }
-                } else {
-                    // Schedule ID'leri uyuşmuyorsa, tüm programı yeni olarak kaydet
-                    print("PolySleep Debug: Schedule ID'leri uyuşmuyor, tüm program yeniden kaydediliyor")
-                    await saveSchedule()
-                }
-            } else {
-                // Aktif schedule bulunamazsa, tüm programı kaydet
-                print("PolySleep Debug: Aktif schedule bulunamadı, tüm program kaydediliyor")
-                await saveSchedule()
-            }
-            
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
+            await saveSchedule()
         }
     }
     
@@ -581,7 +522,7 @@ class MainScreenViewModel: ObservableObject {
             
             editingBlockId = nil // Düzenleme modunu kapat
             
-            // Supabase'e kaydet (arka planda)
+            // Değişiklikleri kaydet
             Task {
                 await saveSchedule()
             }
@@ -599,40 +540,36 @@ class MainScreenViewModel: ObservableObject {
         ScheduleManager.shared.activateSchedule(updatedSchedule)
         // --- Bitti ---
         
-        // Supabase'den sil (arka planda)
-        // saveSchedule fonksiyonu silme işlemini de içerecek şekilde güncellenmeli veya ayrı bir silme fonksiyonu çağrılmalı
+        // Değişiklikleri kaydet
         Task {
             await saveSchedule()
         }
     }
     
     private func saveSchedule() async {
+        guard selectedSchedule != nil else { return }
+        
         isLoading = true
         errorMessage = nil
         
         do {
-            // Programı Supabase'e kaydet
-            let success = try await scheduleService.saveRecommendedSchedule(
-                schedule: model.schedule.toSleepScheduleModel,
-                adaptationPeriod: model.currentDay
-            )
-            
-            if !success {
-                print("PolySleep Debug: Program Supabase'e kaydedilemedi, yerel veritabanına kaydediliyor")
-                
-                // Yerel veritabanına kaydet
-                saveScheduleToLocalDatabase(model.schedule)
-            }
+            // Veritabanına kaydet
+            _ = try await Repository.shared.saveSchedule(model.schedule)
+                        
+            // Bildirimleri güncelle
+            ScheduleManager.shared.activateSchedule(model.schedule)
             
             DispatchQueue.main.async {
                 self.isLoading = false
             }
+            
+            print("✅ Program başarıyla kaydedildi")
         } catch {
-            print("PolySleep Debug: Supabase'e program kaydedilemedi: \(error)")
             DispatchQueue.main.async {
-                self.errorMessage = NSLocalizedString("supabase.error.sync", comment: "")
+                self.errorMessage = "Program kaydedilirken hata oluştu: \(error.localizedDescription)"
                 self.isLoading = false
             }
+            
         }
     }
     
@@ -662,31 +599,37 @@ class MainScreenViewModel: ObservableObject {
             ) ?? now
             return endDate <= now && now.timeIntervalSince(endDate) <= 1800 // 30 dakika
         }) {
-            let startTime = TimeFormatter.time(from: lastBlock.startTime)!
-            let endTime = TimeFormatter.time(from: lastBlock.endTime)!
-            
-            let startDate = Calendar.current.date(
-                bySettingHour: startTime.hour,
-                minute: startTime.minute,
-                second: 0,
-                of: now
-            ) ?? now
-            
-            let endDate = Calendar.current.date(
-                bySettingHour: endTime.hour,
-                minute: endTime.minute,
-                second: 0,
-                of: now
-            ) ?? now
-            
-            lastSleepBlock = (start: startDate, end: endDate)
+            lastSleepBlock = lastBlock
             showSleepQualityRating = true
         }
     }
     
     private func saveSleepQuality(rating: Int, startTime: Date, endTime: Date) {
-        // TODO: Implement actual save functionality
-        print("Sleep quality saved from notification: \(rating)")
+        // Repository kullanarak uyku girdisini kaydet
+        Task {
+            do {
+                // lastSleepBlock?.id UUID tipinde, bunu String'e dönüştürüyoruz
+                let blockIdString: String
+                if let sleepBlock = lastSleepBlock {
+                    blockIdString = sleepBlock.id.uuidString // UUID'yi String'e dönüştür
+                } else {
+                    blockIdString = UUID().uuidString // Yeni bir UUID oluştur ve String'e dönüştür
+                }
+                
+                let emoji = rating >= 4 ? "😄" : (rating >= 3 ? "😊" : (rating >= 2 ? "😐" : (rating >= 1 ? "😪" : "😩")))
+                
+                _ = try await Repository.shared.addSleepEntry(
+                    blockId: blockIdString, // String olarak gönderiyoruz
+                    emoji: emoji,
+                    rating: rating,
+                    date: startTime
+                )
+                print("✅ Uyku girdisi bildirimden başarıyla kaydedildi, rating: \(rating)")
+            } catch {
+                print("❌ Uyku girdisi bildirimden kaydedilirken hata: \(error.localizedDescription)")
+            }
+        }
+        
         SleepQualityNotificationManager.shared.removePendingRating(startTime: startTime, endTime: endTime)
     }
     
@@ -696,83 +639,47 @@ class MainScreenViewModel: ObservableObject {
         sleepQualityRatingCompleted = true
     }
     
-    /// Supabase'den aktif uyku programını ve bloklarını yükler
-    @MainActor
-    func loadScheduleFromSupabase() async {
+    // MARK: - Repository & Offline-First Yaklaşımı
+    
+    /// Repository'den aktif uyku programını yükler
+    func loadScheduleFromRepository() async {
         isLoading = true
         errorMessage = nil
         
-        // Kullanıcının oturum açıp açmadığını kontrol et
-        if !authManager.isAuthenticated {
-            print("PolySleep Debug: Kullanıcı oturumu kapalı, varsayılan program kullanılıyor")
-            loadDefaultSchedule()
-            isLoading = false
-            return
-        }
-        
         do {
-            print("PolySleep Debug: Supabase'den aktif program yükleniyor...")
-            
-            // Aktif programı getir
-            let activeSchedule = try await scheduleService.getActiveSchedule()
-            
-            if let schedule = activeSchedule {
-                print("PolySleep Debug: Aktif program bulundu, bloklar yükleniyor...")
+            if let activeSchedule = try await Repository.shared.getActiveSchedule() {
+                // activeSchedule zaten UserScheduleModel tipinde olduğu için dönüştürmeye gerek yok
+                let scheduleModel = activeSchedule
                 
-                // Program bloklarını getir
-                let blocks = try await scheduleService.getSleepBlocksForSchedule(scheduleId: schedule.id)
-                
-                if !blocks.isEmpty {
-                    print("PolySleep Debug: \(blocks.count) adet program bloğu yüklendi")
+                DispatchQueue.main.async {
+                    self.selectedSchedule = scheduleModel
+                    self.model = MainScreenModel(schedule: scheduleModel)
+                    self.isLoading = false
                     
-                    // UserScheduleModel'e dönüştür
-                    let userScheduleModel = schedule.toUserScheduleModel(with: blocks)
-                    
-                    // Model'i güncelle
-                    self.model.schedule = userScheduleModel
-                    
-                    // Yerel veritabanına kaydet
-                    saveScheduleToLocalDatabase(userScheduleModel)
-                    isLoading = false
-                    return
-                } else {
-                    print("PolySleep Debug: Program blokları bulunamadı, varsayılan program kullanılacak")
+                    // Bildirimleri güncelle
+                    // ScheduleManager zaten Repository'den gelen değişikliği gözlemleyebilir
+                    // veya burada manuel tetikleme yapılabilir. Şimdilik yorum satırı:
+                    // ScheduleManager.shared.activateSchedule(scheduleModel)
                 }
+                
+                print("✅ Repository'den aktif program yüklendi: \(activeSchedule.name)")
             } else {
-                print("PolySleep Debug: Aktif program bulunamadı, yerel veritabanı kontrol ediliyor")
-                
-                // Yerel veritabanından programı yüklemeyi dene
-                loadScheduleFromLocalDatabase()
-                
-                // Yerel veritabanında program yoksa ve model varsayılan programı kullanıyorsa
-                if model.schedule.id == "default" {
-                    print("PolySleep Debug: Yerel veritabanında program bulunamadı, varsayılan program Supabase'e kaydedilecek")
-                    
-                    // Varsayılan programı Supabase'e kaydet
-                    let success = try await scheduleService.saveRecommendedSchedule(
-                        schedule: UserScheduleModel.defaultSchedule.toSleepScheduleModel,
-                        adaptationPeriod: model.currentDay
-                    )
-                    
-                    if success {
-                        print("PolySleep Debug: Varsayılan program Supabase'e kaydedildi")
-                    } else {
-                        print("PolySleep Debug: Varsayılan program Supabase'e kaydedilemedi")
-                    }
+                // Aktif program yoksa, varsayılanı yükle veya boş durumu göster.
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.errorMessage = String(localized: "error.no_active_schedule_found") // Yerelleştirilmiş anahtar
+                    // Gerekirse burada varsayılan bir program yüklenebilir veya boş ekran gösterilebilir.
+                    // self.loadDefaultSchedule() // Örnek
                 }
+                 print("ℹ️ Repository'de aktif program bulunamadı.")
             }
-            
-            isLoading = false
         } catch {
-            print("PolySleep Debug: Supabase'den program yüklenirken hata oluştu: \(error)")
-            
-            // Hata durumunda yerel veritabanından yüklemeyi dene
-            loadScheduleFromLocalDatabase()
-            
             DispatchQueue.main.async {
-                self.errorMessage = NSLocalizedString("supabase.error.sync", comment: "")
+                self.errorMessage = String(localized: "error.schedule_load_failed") + ": \(error.localizedDescription)" // Yerelleştirilmiş anahtar
                 self.isLoading = false
             }
+            
+            print("❌ Repository'den program yüklenirken hata: \(error)")
         }
     }
     
@@ -843,57 +750,30 @@ class MainScreenViewModel: ObservableObject {
         }
     }
     
-    /// Uyku programını Supabase'e kaydeder
-    func saveScheduleToSupabase() async {
-        do {
-            // Programı Supabase'e kaydet
-            _ = try await scheduleService.saveRecommendedSchedule(
-                schedule: model.schedule.toSleepScheduleModel,
-                adaptationPeriod: model.currentDay
-            )
-            
-            // Başarılı kayıt sonrası yerel veritabanına da kaydet
-            saveScheduleToLocalDatabase(model.schedule)
-        } catch {
-            print("PolySleep Debug: Supabase'e kayıt hatası: \(error)")
-            errorMessage = "supabase.error.sync"
-        }
-    }
-    
+    /// Kullanıcı giriş durumunu takip eder ve çevrimiçi olduğunda veriyi yükler
     private func setupAuthStateListener() {
+        
+        // Kullanıcının oturum durumunu dinle
         authManager.$isAuthenticated
+            .receive(on: RunLoop.main)
             .sink { [weak self] isAuthenticated in
                 if isAuthenticated {
-                    print("PolySleep Debug: Kullanıcı oturumu açıldı, veriler yükleniyor...")
-                    // Kullanıcı giriş yaptığında veriyi yükle
+                    // Kullanıcı giriş yaptığında, yerel veritabanından programı yükle
                     Task {
-                        await self?.loadScheduleFromSupabase()
+                        await self?.loadScheduleFromRepository()
                     }
                 } else {
-                    print("PolySleep Debug: Kullanıcı oturumu kapalı, varsayılan program kullanılıyor")
+                    // Kullanıcı çıkış yaptığında, varsayılan programı göster
+                    self?.loadDefaultSchedule()
                 }
             }
             .store(in: &cancellables)
+        
     }
     
-    func resetNewBlockValues() {
+    private func resetNewBlockValues() {
         newBlockStartTime = Date()
         newBlockEndTime = Date().addingTimeInterval(3600)
         newBlockIsCore = false
-        showBlockError = false
-        blockErrorMessage = ""
-    }
-    
-    func prepareEditBlock(_ block: SleepBlock) {
-        editingBlockId = block.id
-        editingBlockIsCore = block.isCore
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        editingBlockStartTime = formatter.date(from: block.startTime) ?? Date()
-        editingBlockEndTime = formatter.date(from: block.endTime) ?? Date().addingTimeInterval(TimeInterval(block.duration * 60))
-        editingBlockIsCore = block.isCore
-        showBlockError = false
-        blockErrorMessage = ""
     }
 }

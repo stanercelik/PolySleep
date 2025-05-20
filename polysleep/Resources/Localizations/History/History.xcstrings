@@ -131,6 +131,7 @@
       }
     },
     "sleep.type.core" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {
@@ -141,6 +142,7 @@
       }
     },
     "sleep.type.nap" : {
+      "extractionState" : "stale",
       "localizations" : {
         "tr" : {
           "stringUnit" : {

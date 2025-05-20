@@ -2,35 +2,27 @@ import SwiftUI
 import SwiftData
 
 struct PersonalInfoView: View {
-    @Query private var onboardingAnswers: [OnboardingAnswer]
+    @Query private var onboardingAnswers: [OnboardingAnswerData]
     @Query private var scheduleStore: [SleepScheduleStore]
     @Environment(\.modelContext) private var modelContext
-    @State private var supabaseAnswers: [String: String] = [:]
-    @State private var isLoading = true
-    @State private var errorMessage: String?
     
+    var answersForDisplay: [String: String] {
+        var dict: [String: String] = [:]
+        for answerData in onboardingAnswers {
+            dict[answerData.question] = answerData.answer
+        }
+        return dict
+    }
+
     var body: some View {
         List {
-            if isLoading {
-                Section {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding()
-                }
-            } else if let error = errorMessage {
-                Section {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .padding()
-                }
-            } else if supabaseAnswers.isEmpty {
+            if answersForDisplay.isEmpty {
                 Section {
                     Text("personalInfo.noData", tableName: "Profile")
                         .foregroundColor(.secondary)
                         .padding()
                 }
             } else {
-                // Önerilen Program
                 if let schedule = scheduleStore.first {
                     Section(header: Text("personalInfo.recommendedSchedule", tableName: "Profile")) {
                         VStack(alignment: .leading, spacing: 8) {
@@ -45,10 +37,9 @@ struct PersonalInfoView: View {
                     }
                 }
                 
-                // Kişisel Bilgiler - Onboarding Cevapları
                 Section(header: Text("personalInfo.answers", tableName: "Profile")) {
                     ForEach(getOrderedQuestions(), id: \.self) { question in
-                        if let answer = supabaseAnswers[question] {
+                        if let answer = answersForDisplay[question] {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(getLocalizedQuestion(for: question))
                                     .font(.headline)
@@ -67,9 +58,6 @@ struct PersonalInfoView: View {
         .background(Color.appBackground.ignoresSafeArea())
         .navigationTitle("settings.about.personalInfo")
         .navigationBarTitleDisplayMode(.inline)
-        .task {
-            await loadOnboardingAnswers()
-        }
     }
     
     private var dateFormatter: DateFormatter {
@@ -79,22 +67,7 @@ struct PersonalInfoView: View {
         return formatter
     }
     
-    private func loadOnboardingAnswers() async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            supabaseAnswers = try await SupabaseOnboardingService.shared.getAllOnboardingAnswersRaw()
-            isLoading = false
-        } catch {
-            isLoading = false
-            errorMessage = "Onboarding cevaplarınız yüklenemedi. Lütfen internet bağlantınızı kontrol edin."
-            print("Onboarding cevapları yüklenirken hata oluştu: \(error)")
-        }
-    }
-    
     private func getOrderedQuestions() -> [String] {
-        // Soruları istenen sırayla göstermek için
         let orderedQuestions = [
             "onboarding.sleepExperience", 
             "onboarding.ageRange", 
@@ -110,18 +83,15 @@ struct PersonalInfoView: View {
             "onboarding.chronotype"
         ]
         
-        // Sadece kullanıcının cevapladığı soruları filtrele
-        return orderedQuestions.filter { supabaseAnswers.keys.contains($0) }
+        return orderedQuestions.filter { answersForDisplay.keys.contains($0) }
     }
     
     private func getLocalizedQuestion(for question: String) -> String {
-        let key = question // örn: "onboarding.sleepExperience"
+        let key = question
         return NSLocalizedString(key, tableName: "Onboarding", comment: "")
     }
     
     private func getLocalizedAnswer(for question: String, value: String) -> String {
-        // Cevabın localize edilmiş halini getir 
-        // Örneğin: onboarding.sleepExperience.low -> "Düşük"
         let key = "\(question).\(value)"
         return NSLocalizedString(key, tableName: "Onboarding", comment: "")
     }

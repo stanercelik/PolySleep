@@ -1,143 +1,103 @@
 import Foundation
-import Supabase
 import Combine
 import SwiftUI
 
-/// Kullanıcı kimlik doğrulama işlemlerini yöneten sınıf
+// AuthError tanımı basitleştirildi
+enum AuthError: Error {
+    case noCurrentUser
+    case unknownError(Error? = nil)
+    // Apple Sign In ile ilgili hatalar kaldırıldı
+}
+
+/// Kullanıcı kimlik doğrulama işlemlerini yöneten sınıf - Tamamen Offline versiyon
 class AuthManager: ObservableObject {
     // Singleton instance
     static let shared = AuthManager()
     
-    // Supabase servisi
-    private let supabaseService = SupabaseService.shared
-    
     // Yayınlanan özellikler
-    @Published var isAuthenticated = false
-    @Published var currentUser: User?
+    @Published var isAuthenticated = true // Offline modda her zaman kimlik doğrulanmış kabul edilir
+    @Published var currentUser: LocalUser?
     @Published var isLoading = false
-    @Published var authError: String?
-    
-    // Abonelikler
-    private var cancellables = Set<AnyCancellable>()
+    @Published var authError: String? // Artık çok fazla kullanılmayabilir
     
     // Private initializer for singleton pattern
     private init() {
-        // Auth durumunu dinle
-        setupAuthStateListener()
+        // Yerel kullanıcı oluştur veya getir
+        currentUser = createOrGetLocalUser()
+        print("AuthManager: Yerel kullanıcı ile başlatıldı: ID \(currentUser?.id ?? "N/A")")
         
-        // Mevcut kullanıcıyı kontrol et
+        // Program yöneticisini asenkron olarak başlat
         Task {
-            await checkCurrentUser()
+            await ScheduleManager.shared.loadActiveSchedule()
         }
     }
     
-    /// Auth durumu değişikliklerini dinler
-    private func setupAuthStateListener() {
-        Task {
-            for await authState in supabaseService.client.auth.authStateChanges {
-                await MainActor.run {
-                    let previousAuthState = self.isAuthenticated
-                    switch authState.event {
-                    case .initialSession, .signedIn:
-                        self.currentUser = authState.session?.user
-                        self.isAuthenticated = true
-                        // Eğer önceki durum false ise ve şimdi true olduysa (giriş yapıldı)
-                        if !previousAuthState && self.isAuthenticated {
-                            print("AuthManager: Kullanıcı doğrulandı (authStateChanges). ScheduleManager yükleniyor.")
-                            ScheduleManager.shared.loadActiveSchedule()
-                        }
-                    case .signedOut, .userDeleted:
-                        self.currentUser = nil
-                        self.isAuthenticated = false
-                        // Kullanıcı çıkış yaptıysa, schedule manager'ı temizle/güncelle
-                        if previousAuthState && !self.isAuthenticated {
-                             print("AuthManager: Kullanıcı çıkış yaptı. ScheduleManager güncelleniyor.")
-                            ScheduleManager.shared.activeSchedule = nil
-                            ScheduleManager.shared.updateNotificationsForActiveSchedule() // Temiz bildirimler
-                        }
-                    default:
-                        break
-                    }
-                }
-            }
-        }
-    }
-    
-    /// Mevcut kullanıcıyı kontrol eder
-    @MainActor
-    private func checkCurrentUser() async {
-        do {
-            self.currentUser = try await supabaseService.getCurrentUser()
-            let previousAuthState = self.isAuthenticated
-            self.isAuthenticated = self.currentUser != nil
-            // Eğer uygulama başlarken kullanıcı zaten varsa
-            if !previousAuthState && self.isAuthenticated {
-                 print("AuthManager: Mevcut kullanıcı kontrol edildi, doğrulandı. ScheduleManager yükleniyor.")
-                 ScheduleManager.shared.loadActiveSchedule()
-            }
-        } catch {
-            print("PolySleep Debug: Kullanıcı bilgisi alınamadı: \(error.localizedDescription)")
-            self.currentUser = nil
-            self.isAuthenticated = false
-        }
-    }
-    
-    /// Apple ID ile giriş yapar
-    @MainActor
-    func signInWithApple() async {
-        print("PolySleep Debug: AuthManager.signInWithApple başladı")
-        isLoading = true
-        authError = nil
+    /// Yerel kullanıcı oluşturur veya varsa getirir
+    private func createOrGetLocalUser() -> LocalUser {
+        let userIdKey = "localUserId"
+        let displayNameKey = "localUserDisplayName" // DisplayName'i de saklayalım
         
-        defer {
-            isLoading = false
+        var userId = UserDefaults.standard.string(forKey: userIdKey)
+        if userId == nil {
+            userId = UUID().uuidString
+            UserDefaults.standard.set(userId, forKey: userIdKey)
+            // Yeni kullanıcı için varsayılan isim
+            UserDefaults.standard.removeObject(forKey: displayNameKey)
+            print("AuthManager: Yeni yerel kullanıcı ID'si oluşturuldu: \(userId!)")
         }
         
-        do {
-            print("PolySleep Debug: supabaseService.signInWithApple çağrılıyor")
-            if let user = try await SupabaseAuthService.shared.signInWithApple() {
-                print("PolySleep Debug: Apple ID ile giriş başarılı: \(user.email ?? "email yok")")
-            } else {
-                print("PolySleep Debug: Apple ID ile giriş başarısız: kullanıcı bilgileri alınamadı")
-                authError = "Kullanıcı bilgileri alınamadı"
-            }
-        } catch {
-            print("PolySleep Debug: Apple ID ile giriş hatası: \(error.localizedDescription)")
-            authError = error.localizedDescription
-        }
+        let displayName = UserDefaults.standard.string(forKey: displayNameKey) ?? NSLocalizedString("localUser.defaultName", tableName: "Auth", comment: "Default local user name")
+        
+        return LocalUser(id: userId!, displayName: displayName)
     }
     
-    /// Çıkış yapar
+    /// Profile isim güncelleme
+    @MainActor
+    func updateDisplayName(_ name: String) {
+        guard var user = currentUser else {
+            // Bu durumda yeni bir kullanıcı oluşturabilir veya hata verebiliriz.
+            // Şimdilik sadece mevcut kullanıcıyı güncelliyoruz.
+            print("AuthManager: Display name güncellenemedi, mevcut kullanıcı yok.")
+            return
+        }
+        user.displayName = name
+        self.currentUser = user
+        UserDefaults.standard.set(name, forKey: "localUserDisplayName")
+        print("AuthManager: Display name güncellendi: \(name)")
+    }
+    
+    /// Kullanıcı çıkış işlemi (Offline modda: kullanıcı bilgilerini sıfırlar)
     @MainActor
     func signOut() async {
         isLoading = true
         authError = nil
         
-        do {
-            try await SupabaseAuthService.shared.signOut()
-        } catch {
-            authError = error.localizedDescription
-        }
+        // Çıkış işlemi için kısa gecikme (isteğe bağlı)
+        try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 saniye
+        
+        // UserDefaults'tan displayName'i kaldırıp yeni bir kullanıcı oluşturuyoruz
+        // Böylece "AppFirstLaunch" ve "onboardingCompleted" etkilenmez ama kullanıcı adı "sıfırlanır".
+        UserDefaults.standard.removeObject(forKey: "localUserDisplayName")
+        // UserId'yi sıfırlamıyoruz, aynı cihazda aynı "anonim" kullanıcı devam eder.
+        
+        self.currentUser = createOrGetLocalUser() // Kullanıcıyı yeniden yükle (varsayılan isimle gelir)
         
         isLoading = false
+        isAuthenticated = true // Offline modda her zaman true
+        print("AuthManager: Kullanıcı 'çıkış yaptı' (bilgiler sıfırlandı). Yeni/Varsayılan kullanıcı: \(currentUser?.displayName ?? "N/A")")
     }
     
-    /// Anonim giriş yapar
-    @MainActor
-    func signInAnonymously() async throws {
-        _ = UserDefaults.standard
-        
-        do {
-            let user = try await SupabaseAuthService.shared.signInAnonymously()
-
-        } catch {
-            throw error
-        }
-    }
-    
-    // Bu fonksiyona artık gerek yok, authStateChanges dinleyici yeterli
-    // @MainActor
-    // private func refreshAuthState() async {
-    //     self.isAuthenticated = self.currentUser != nil
-    // }
+    // Apple ile giriş ve ilgili tüm yardımcı metodlar kaldırıldı
 }
+
+/// Offline-first mod için basit kullanıcı modeli
+struct LocalUser {
+    let id: String
+    var displayName: String = ""
+    var email: String = "" // Artık pek kullanılmayacak
+    var photoURL: String = "" // Artık pek kullanılmayacak
+    var isPremium: Bool = false // Yerel olarak yönetilebilir veya her zaman false
+    var authProvider: String = "local"
+}
+
+
