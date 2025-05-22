@@ -96,28 +96,8 @@ class ProfileScreenViewModel: ObservableObject {
         print("ProfileScreenViewModel: Aktif program yükleniyor, Kullanıcı ID: \\(currentUserId.uuidString)")
 
         do {
-            // SwiftData ile aktif programı çek
-            let userPredicate = #Predicate<User> { $0.id == currentUserId }
-            var userFetchDescriptor = FetchDescriptor(predicate: userPredicate)
-            userFetchDescriptor.fetchLimit = 1
-            
-            guard let currentUser = try context.fetch(userFetchDescriptor).first else {
-                print("ProfileScreenViewModel: Mevcut kullanıcı SwiftData\'da bulunamadı.")
-                await MainActor.run { resetScheduleUI() }
-                return
-            }
-
-            // UserSchedule'ı User objesi üzerinden veya doğrudan userID ile filtreleyerek alabiliriz.
-            // User modelinde schedules ilişkisi olduğunu varsayalım:
-            // let activeScheduleEntity = currentUser.schedules?.first(where: { $0.isActive })
-
-            // Veya UserSchedule'da userID ve isActive olduğunu varsayarak:
-            let schedulePredicate = #Predicate<UserSchedule> {
-                $0.user?.id == currentUserId && $0.isActive == true
-            }
-            var scheduleFetchDescriptor = FetchDescriptor(predicate: schedulePredicate)
-            scheduleFetchDescriptor.fetchLimit = 1
-            let activeScheduleEntity = try context.fetch(scheduleFetchDescriptor).first
+            // Repository üzerinden aktif programı çek
+            let activeScheduleEntity = try Repository.shared.getActiveUserSchedule(userId: currentUserId, context: context)
 
             await MainActor.run {
                 if let scheduleData = activeScheduleEntity {
@@ -137,15 +117,36 @@ class ProfileScreenViewModel: ObservableObject {
                     let calculatedPhase = self.calculateAdaptationPhase(schedule: scheduleData)
                     self.adaptationPhase = calculatedPhase
                     
+                    // Eğer hesaplanan faz, veritabanındaki fazdan farklıysa ve bu bir tutarsızlık değil de
+                    // 'günlük kontrol' sonucu bir ilerleme ise güncelle.
+                    // Bu mantık, fazın yalnızca gün geçtikçe artmasını sağlar.
+                    // Eğer faz manuel olarak sıfırlanmışsa (updatedAt güncellenir), calculateAdaptationPhase doğru sonucu verir.
                     if calculatedPhase != scheduleData.adaptationPhase {
-                        // Adaptasyon fazını doğrudan güncelle
-                        scheduleData.adaptationPhase = calculatedPhase
-                        scheduleData.updatedAt = Date()
-                        do {
-                            try context.save()
-                            print("Adaptasyon aşaması güncellendi (SwiftData).")
-                        } catch {
-                            print("Adaptasyon aşaması SwiftData\'da güncellenirken hata: \\(error)")
+                        // Sadece Repository üzerinden merkezi bir güncelleme fonksiyonu varsa onu kullanmak daha iyi olabilir.
+                        // Şimdilik ViewModel'in context'i üzerinden güncelliyoruz.
+                        // Bu güncelleme, fazın doğal ilerlemesini yansıtmalı.
+                        // scheduleData.updatedAt'in bu noktada değişmemesi gerekebilir, çünkü adaptasyonun başlangıç zamanını temsil ediyor.
+                        // Ancak, eğer fazı 'düzeltiyorsak', updatedAt'i de şimdiye ayarlamak mantıklı olabilir.
+                        // Bu, ürün kararına bağlıdır. Şimdilik updatedAt'i güncelleyelim.
+                        
+                        // scheduleData'nın context'e bağlı bir nesne olduğundan emin olun.
+                        // ProfileScreenViewModel.modelContext'i kullanıyoruz.
+                        
+                        // Repository'e bir `updateUserScheduleAdaptationPhase` metodu zaten var, onu kullanalım!
+                        // Bu daha temiz bir yaklaşım olacaktır.
+                        Task {
+                            do {
+                                try Repository.shared.updateUserScheduleAdaptationPhase(
+                                    scheduleId: scheduleData.id, // UserSchedule ID'si
+                                    newPhase: calculatedPhase,
+                                    context: context // ProfileScreenViewModel'in modelContext'i
+                                )
+                                print("Adaptasyon aşaması Repository üzerinden güncellendi.")
+                                // UI'ı yeniden yüklemeye gerek yok çünkü zaten self.adaptationPhase ayarlandı.
+                                // scheduleData.adaptationPhase ViewModel'de güncellenmeyebilir, ancak self.adaptationPhase günceldir.
+                            } catch {
+                                print("Adaptasyon aşaması Repository üzerinden güncellenirken hata: \(error)")
+                            }
                         }
                     }
                     self.totalSleepHours = scheduleData.totalSleepHours ?? 0.0
@@ -155,7 +156,7 @@ class ProfileScreenViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("ProfileScreenViewModel: Aktif program SwiftData ile yüklenirken hata: \\(error)")
+            print("ProfileScreenViewModel: Aktif program Repository veya SwiftData ile yüklenirken hata: \\(error)")
             await MainActor.run { self.resetScheduleUI() }
         }
     }

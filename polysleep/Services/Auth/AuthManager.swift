@@ -26,8 +26,16 @@ class AuthManager: ObservableObject {
         currentUser = createOrGetLocalUser()
         print("AuthManager: Yerel kullanıcı ile başlatıldı: ID \(currentUser?.id ?? "N/A")")
         
-        // Program yöneticisini asenkron olarak başlat
+        // SwiftData'da da kullanıcıyı oluştur
         Task {
+            do {
+                let _ = try await Repository.shared.createOrGetUser()
+                print("AuthManager: SwiftData'da kullanıcı oluşturuldu/doğrulandı")
+            } catch {
+                print("AuthManager: SwiftData'da kullanıcı oluşturulurken hata: \(error)")
+            }
+            
+            // Program yöneticisini başlat
             await ScheduleManager.shared.loadActiveSchedule()
         }
     }

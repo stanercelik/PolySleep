@@ -232,11 +232,11 @@ class Repository: ObservableObject {
             throw RepositoryError.modelContextNotSet
         }
         
-        // Kullanıcı kimliğini yerel kullanıcı modeline göre al ve UUID'ye dönüştür
-        let userIdString = authManager.currentUser?.id ?? "unknown"
-        let userId = UUID(uuidString: userIdString) ?? UUID() // Geçerli değilse yeni UUID oluştur
+        // Kullanıcıyı oluştur veya getir
+        let user = try await createOrGetUser()
+        let userId = user.id
         
-        logger.debug("🗂️ Program kaydediliyor: \(scheduleModel.name), ID: \(scheduleModel.id)")
+        logger.debug("🗂️ Program kaydediliyor: \(scheduleModel.name), ID: \(scheduleModel.id), UserId: \(userId)")
         
         // Açıklamaları JSON'a dönüştür
         let descriptionData = try JSONSerialization.data(withJSONObject: [
@@ -251,60 +251,77 @@ class Repository: ObservableObject {
         
         logger.debug("🗂️ Program verileri hazırlandı, UUID: \(uuid.uuidString), syncId: \(syncId)")
         
-        // Mevcut aktif programı pasifleştir
+        // Mevcut aktif programları (hem ScheduleEntity hem de UserSchedule) pasifleştir
         do {
             if let activeScheduleEntity = try await getActiveScheduleEntity() {
-                logger.debug("🗂️ Mevcut aktif program pasifleştiriliyor: \(activeScheduleEntity.name)")
-                activeScheduleEntity.isActive = false
-                activeScheduleEntity.updatedAt = Date()
+                // Sadece kaydedilen programdan farklıysa pasifleştir
+                if activeScheduleEntity.id != uuid {
+                    logger.debug("🗂️ Mevcut aktif ScheduleEntity pasifleştiriliyor: \(activeScheduleEntity.name)")
+                    activeScheduleEntity.isActive = false
+                    activeScheduleEntity.updatedAt = Date()
+
+                    // İlgili UserSchedule'ı da pasifleştir
+                    let activeScheduleId = activeScheduleEntity.id // Değişkeni closure dışında tanımla
+                    let oldUserScheduleDescriptor = FetchDescriptor<UserSchedule>(
+                        predicate: #Predicate<UserSchedule> { $0.id == activeScheduleId && $0.isActive == true }
+                    )
+                    if let oldUserSchedule = try context.fetch(oldUserScheduleDescriptor).first {
+                        oldUserSchedule.isActive = false
+                        oldUserSchedule.updatedAt = Date()
+                        logger.debug("🗂️ Mevcut aktif UserSchedule pasifleştirildi: \(oldUserSchedule.name)")
+                    }
+                }
             }
         } catch {
-            logger.warning("⚠️ Aktif program kontrol edilirken hata: \(error.localizedDescription)")
+            logger.warning("⚠️ Aktif program kontrol edilirken/pasifleştirilirken hata: \(error.localizedDescription)")
             // İşleme devam et, kritik bir hata değil
         }
         
         // Yeni programı oluştur veya mevcut programı güncelle
         let existingSchedule = findScheduleById(id: uuid.uuidString)
         
-        let schedule: ScheduleEntity
+        let scheduleEntity: ScheduleEntity // Değişken adını scheduleEntity olarak değiştirdim
         
-        if let existingSchedule = existingSchedule {
+        if let existingScheduleEntity = existingSchedule { // Değişken adını existingScheduleEntity olarak değiştirdim
             // Güncelleme
-            logger.debug("🗂️ Mevcut program güncelleniyor: \(existingSchedule.name)")
-            existingSchedule.name = scheduleModel.name
-            existingSchedule.descriptionJson = descriptionJson
-            existingSchedule.totalSleepHours = scheduleModel.totalSleepHours
-            existingSchedule.isActive = true
-            existingSchedule.updatedAt = Date()
+            logger.debug("🗂️ Mevcut ScheduleEntity güncelleniyor: \(existingScheduleEntity.name)")
+            existingScheduleEntity.name = scheduleModel.name
+            existingScheduleEntity.descriptionJson = descriptionJson
+            existingScheduleEntity.totalSleepHours = scheduleModel.totalSleepHours
+            existingScheduleEntity.isActive = true // Yeni kaydedilen/güncellenen her zaman aktif olur
+            existingScheduleEntity.updatedAt = Date()
             
-            schedule = existingSchedule
+            scheduleEntity = existingScheduleEntity
         } else {
             // Yeni oluştur
-            logger.debug("🗂️ Yeni program oluşturuluyor: \(scheduleModel.name)")
-            schedule = ScheduleEntity(
+            logger.debug("🗂️ Yeni ScheduleEntity oluşturuluyor: \(scheduleModel.name)")
+            scheduleEntity = ScheduleEntity(
                 id: uuid,
                 userId: userId, // UUID tipinde userId kullanılıyor
                 name: scheduleModel.name,
                 descriptionJson: descriptionJson,
                 totalSleepHours: scheduleModel.totalSleepHours,
-                isActive: true,
+                isActive: true, // Yeni kaydedilen her zaman aktif olur
                 syncId: syncId
             )
             
-            context.insert(schedule)
+            context.insert(scheduleEntity)
         }
         
-        // Eski blokları temizleyelim
-        if let existingSchedule = existingSchedule {
-            logger.debug("🗂️ \(existingSchedule.sleepBlocks.count) eski blok temizleniyor")
-            let blocksToDelete = existingSchedule.sleepBlocks // Referansı al
+        // Eski blokları temizleyelim (sadece mevcut program güncelleniyorsa)
+        if existingSchedule != nil {
+            logger.debug("🗂️ \(scheduleEntity.sleepBlocks.count) eski blok temizleniyor")
+            let blocksToDelete = scheduleEntity.sleepBlocks // Referansı al
             for block in blocksToDelete {
                 context.delete(block) // Blokları context'ten fiziksel olarak sil
             }
+            // SleepBlockEntity'ler ScheduleEntity'ye bağlı olduğu için,
+            // ScheduleEntity güncellendiğinde ve save yapıldığında bu silme işlemi geçerli olur.
         }
         
         // Yeni blokları ekleyelim
-        logger.debug("🗂️ \(scheduleModel.schedule.count) yeni blok ekleniyor")
+        logger.debug("🗂️ \(scheduleModel.schedule.count) yeni blok ScheduleEntity'e ekleniyor")
+        var newSleepBlockEntities: [SleepBlockEntity] = []
         for block in scheduleModel.schedule {
             let blockEntity = SleepBlockEntity(
                 startTime: block.startTime,
@@ -313,20 +330,139 @@ class Repository: ObservableObject {
                 isCore: block.isCore,
                 syncId: UUID().uuidString
             )
-            
-            blockEntity.schedule = schedule
-            context.insert(blockEntity)
+            // blockEntity.schedule = scheduleEntity // Bu satır yerine aşağıda toplu atama yapılıyor
+            newSleepBlockEntities.append(blockEntity)
+            // context.insert(blockEntity) // Toplu insert yerine ScheduleEntity üzerinden ilişki kuracağız
         }
-        
+        scheduleEntity.sleepBlocks = newSleepBlockEntities // İlişkiyi bu şekilde kurmak daha doğru
+        // SwiftData, scheduleEntity kaydedildiğinde ilişkili newSleepBlockEntities'i de ekleyecektir.
+
+        // UserSchedule entity'sini de oluştur/güncelle
+        // Bu metod zaten yeni UserSchedule'ı aktif yapacak veya eskisini güncelleyip aktif yapacak.
+        try await createOrUpdateUserSchedule(scheduleModel, user: user, scheduleEntity: scheduleEntity)
+
         do {
-            try context.save()
-            logger.debug("✅ Program başarıyla kaydedildi")
+            try context.save() // Tüm değişiklikleri (ScheduleEntity, UserSchedule, SleepBlockEntity'ler) kaydet
+            logger.debug("✅ Program ve ilişkili UserSchedule başarıyla kaydedildi/güncellendi")
         } catch {
-            logger.error("❌ Program kaydedilirken hata: \(error.localizedDescription)")
+            logger.error("❌ Program ve ilişkili UserSchedule kaydedilirken hata: \(error.localizedDescription)")
             throw RepositoryError.saveFailed
         }
         
-        return schedule
+        return scheduleEntity
+    }
+    
+    /// UserSchedule entity'sini oluşturur veya günceller
+    private func createOrUpdateUserSchedule(_ scheduleModel: UserScheduleModel, user: User, scheduleEntity: ScheduleEntity) async throws {
+        guard let context = _modelContext else {
+            throw RepositoryError.modelContextNotSet
+        }
+        
+        // UUID dönüşümü
+        guard let scheduleUUID = UUID(uuidString: scheduleModel.id) else {
+            throw RepositoryError.invalidData
+        }
+        
+        // Önce diğer tüm aktif UserSchedule'ları pasifleştir
+        let otherActiveUserSchedulesDescriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id != scheduleUUID && $0.isActive == true }
+        )
+        
+        do {
+            let otherActiveUserSchedules = try context.fetch(otherActiveUserSchedulesDescriptor)
+            for userSchedule in otherActiveUserSchedules {
+                userSchedule.isActive = false
+                userSchedule.updatedAt = Date()
+                logger.debug("🗂️ Önceki aktif UserSchedule pasifleştirildi: \(userSchedule.name)")
+            }
+        } catch {
+            logger.error("❌ Diğer aktif UserSchedule'lar pasifleştirilirken hata: \(error.localizedDescription)")
+            // Devam et, ancak hatayı logla
+        }
+        
+        // Mevcut UserSchedule'ı ara
+        let predicate = #Predicate<UserSchedule> { $0.id == scheduleUUID }
+        let descriptor = FetchDescriptor(predicate: predicate)
+        
+        do {
+            if let existingUserSchedule = try context.fetch(descriptor).first {
+                // Güncelle
+                existingUserSchedule.user = user
+                existingUserSchedule.name = scheduleModel.name
+                existingUserSchedule.scheduleDescription = try encodeScheduleDescription(scheduleModel.description)
+                existingUserSchedule.totalSleepHours = scheduleModel.totalSleepHours
+                existingUserSchedule.isActive = true
+                existingUserSchedule.updatedAt = Date()
+                
+                logger.debug("🗂️ UserSchedule güncellendi: \(existingUserSchedule.name)")
+            } else {
+                // Yeni oluştur
+                let newUserSchedule = UserSchedule(
+                    id: scheduleUUID,
+                    user: user,
+                    name: scheduleModel.name,
+                    scheduleDescription: try encodeScheduleDescription(scheduleModel.description),
+                    totalSleepHours: scheduleModel.totalSleepHours,
+                    adaptationPhase: 0,
+                    isActive: true
+                )
+                
+                context.insert(newUserSchedule)
+                logger.debug("🗂️ Yeni UserSchedule oluşturuldu: \(newUserSchedule.name)")
+                
+                // UserSleepBlock'ları oluştur
+                for block in scheduleModel.schedule {
+                    // String formatındaki saatleri Date'e dönüştür
+                    let startDate = convertTimeStringToDate(block.startTime)
+                    let endDate = convertTimeStringToDate(block.endTime)
+                    
+                    let userSleepBlock = UserSleepBlock(
+                        schedule: newUserSchedule,
+                        startTime: startDate,
+                        endTime: endDate,
+                        durationMinutes: block.duration,
+                        isCore: block.isCore,
+                        syncId: UUID().uuidString
+                    )
+                    context.insert(userSleepBlock)
+                }
+            }
+            
+            try context.save()
+            logger.debug("✅ UserSchedule başarıyla kaydedildi/güncellendi")
+        } catch {
+            logger.error("❌ UserSchedule kaydedilirken hata: \(error.localizedDescription)")
+            throw RepositoryError.saveFailed
+        }
+    }
+    
+    /// LocalizedDescription'ı JSON string'e çevirir
+    private func encodeScheduleDescription(_ description: LocalizedDescription) throws -> String {
+        let data = try JSONSerialization.data(withJSONObject: [
+            "en": description.en,
+            "tr": description.tr
+        ])
+        return String(data: data, encoding: .utf8) ?? "{}"
+    }
+    
+    /// "HH:mm" formatındaki string'i Date'e çevirir
+    private func convertTimeStringToDate(_ timeString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        // Bugünün tarihini al ve sadece saat/dakikayı ayarla
+        let today = Date()
+        let calendar = Calendar.current
+        
+        if let time = formatter.date(from: timeString) {
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+            return calendar.date(bySettingHour: timeComponents.hour ?? 0, 
+                               minute: timeComponents.minute ?? 0, 
+                               second: 0, 
+                               of: today) ?? today
+        }
+        
+        return today
     }
     
     /// Program ID'sine göre veri getirir
@@ -407,6 +543,85 @@ class Repository: ObservableObject {
         return entry
     }
     
+    // MARK: - Migration Methods
+    
+    /// Mevcut ScheduleEntity'ler için eksik UserSchedule'ları oluşturur
+    func migrateScheduleEntitiesToUserSchedules() async throws {
+        let context = try ensureModelContext()
+        
+        logger.debug("🔄 Migration: ScheduleEntity -> UserSchedule başlatılıyor...")
+        
+        // Tüm ScheduleEntity'leri getir
+        let scheduleDescriptor = FetchDescriptor<ScheduleEntity>(
+            predicate: #Predicate<ScheduleEntity> { $0.isDeleted == false }
+        )
+        
+        do {
+            let scheduleEntities = try context.fetch(scheduleDescriptor)
+            var migratedCount = 0
+            
+            for scheduleEntity in scheduleEntities {
+                // Bu ScheduleEntity için UserSchedule var mı kontrol et
+                let scheduleEntityId = scheduleEntity.id // Predicate dışında değişkene al
+                let userScheduleDescriptor = FetchDescriptor<UserSchedule>(
+                    predicate: #Predicate<UserSchedule> { $0.id == scheduleEntityId }
+                )
+                
+                let existingUserSchedules = try context.fetch(userScheduleDescriptor)
+                
+                if existingUserSchedules.isEmpty {
+                    // UserSchedule yok, oluştur
+                    logger.debug("🔄 Migration: UserSchedule oluşturuluyor: \(scheduleEntity.name)")
+                    
+                    // Kullanıcıyı al veya oluştur
+                    let user = try await createOrGetUser()
+                    
+                    // Açıklama JSON'ını direkt kullan
+                    let descriptionJson = scheduleEntity.descriptionJson
+                    
+                    // UserSchedule oluştur
+                    let userSchedule = UserSchedule(
+                        id: scheduleEntity.id, // Aynı ID'yi kullan
+                        user: user,
+                        name: scheduleEntity.name,
+                        scheduleDescription: scheduleEntity.descriptionJson,
+                        totalSleepHours: scheduleEntity.totalSleepHours,
+                        adaptationPhase: 0,
+                        isActive: scheduleEntity.isActive
+                    )
+                    
+                    context.insert(userSchedule)
+                    
+                    // UserSleepBlock'ları oluştur
+                    for sleepBlock in scheduleEntity.sleepBlocks {
+                        let userSleepBlock = UserSleepBlock(
+                            schedule: userSchedule,
+                            startTime: convertTimeStringToDate(sleepBlock.startTime),
+                            endTime: convertTimeStringToDate(sleepBlock.endTime),
+                            durationMinutes: sleepBlock.durationMinutes,
+                            isCore: sleepBlock.isCore,
+                            syncId: sleepBlock.syncId ?? UUID().uuidString
+                        )
+                        context.insert(userSleepBlock)
+                    }
+                    
+                    migratedCount += 1
+                }
+            }
+            
+            if migratedCount > 0 {
+                try context.save()
+                logger.debug("✅ Migration tamamlandı: \(migratedCount) UserSchedule oluşturuldu")
+            } else {
+                logger.debug("ℹ️ Migration: Tüm ScheduleEntity'ler zaten UserSchedule'a sahip")
+            }
+            
+        } catch {
+            logger.error("❌ Migration hatası: \(error.localizedDescription)")
+            throw RepositoryError.saveFailed
+        }
+    }
+    
     // MARK: - Cleanup Methods
     
     /// Silinmiş olarak işaretlenmiş blokları fiziksel olarak siler
@@ -445,17 +660,35 @@ class Repository: ObservableObject {
             throw RepositoryError.modelContextNotSet
         }
         
-        let descriptor = FetchDescriptor<ScheduleEntity>(
+        // ScheduleEntity'leri deaktive et
+        let scheduleDescriptor = FetchDescriptor<ScheduleEntity>(
             predicate: #Predicate<ScheduleEntity> { $0.isActive == true && $0.isDeleted == false }
         )
         
+        // UserSchedule'ları da deaktive et
+        let userScheduleDescriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.isActive == true }
+        )
+        
         do {
-            let activeSchedules = try context.fetch(descriptor)
-            logger.debug("🗂️ \(activeSchedules.count) aktif program deaktive ediliyor")
+            let activeSchedules = try context.fetch(scheduleDescriptor)
+            let activeUserSchedules = try context.fetch(userScheduleDescriptor)
+            
+            if activeSchedules.isEmpty && activeUserSchedules.isEmpty {
+                logger.debug("ℹ️ Deaktive edilecek aktif program bulunamadı.")
+                return
+            }
+            
+            logger.debug("🗂️ \(activeSchedules.count) ScheduleEntity ve \(activeUserSchedules.count) UserSchedule deaktive ediliyor")
             
             for schedule in activeSchedules {
                 schedule.isActive = false
                 schedule.updatedAt = Date()
+            }
+            
+            for userSchedule in activeUserSchedules {
+                userSchedule.isActive = false
+                userSchedule.updatedAt = Date()
             }
             
             try context.save()
@@ -473,30 +706,82 @@ class Repository: ObservableObject {
             throw RepositoryError.modelContextNotSet
         }
         
-        // UUID dönüşümünü yap
         guard let uuid = UUID(uuidString: id) else {
             logger.error("❌ Geçersiz UUID formatı: \(id)")
             throw RepositoryError.invalidData
         }
         
-        // Predicate ile direkt UUID kullanarak ara
-        let descriptor = FetchDescriptor<ScheduleEntity>(
+        // 1. Eğer bir programı aktif yapıyorsak, önce diğer tüm aktif programları pasifleştir.
+        if isActive {
+            logger.debug("🗂️ Program (ID: \(uuid.uuidString)) aktif ediliyor, diğerleri pasifleştirilecek.")
+            // Diğer ScheduleEntity'leri pasifleştir
+            let activeScheduleEntitiesDescriptor = FetchDescriptor<ScheduleEntity>(
+                predicate: #Predicate<ScheduleEntity> { $0.id != uuid && $0.isActive == true && $0.isDeleted == false }
+            )
+            // Diğer UserSchedule'ları pasifleştir
+            let activeUserSchedulesDescriptor = FetchDescriptor<UserSchedule>(
+                predicate: #Predicate<UserSchedule> { $0.id != uuid && $0.isActive == true }
+            )
+
+            do {
+                let otherActiveSchedules = try context.fetch(activeScheduleEntitiesDescriptor)
+                for schedule in otherActiveSchedules {
+                    schedule.isActive = false
+                    schedule.updatedAt = Date()
+                    logger.debug("🗂️ Önceki aktif ScheduleEntity pasifleştirildi: \(schedule.name)")
+                }
+
+                let otherActiveUserSchedules = try context.fetch(activeUserSchedulesDescriptor)
+                for userSchedule in otherActiveUserSchedules {
+                    userSchedule.isActive = false
+                    userSchedule.updatedAt = Date()
+                    logger.debug("🗂️ Önceki aktif UserSchedule pasifleştirildi: \(userSchedule.name)")
+                }
+            } catch {
+                logger.error("❌ Diğer aktif programlar pasifleştirilirken hata: \(error.localizedDescription)")
+                // Devam et, ancak hatayı logla
+            }
+        }
+
+        // 2. Hedef ScheduleEntity'i güncelle
+        let scheduleEntityDescriptor = FetchDescriptor<ScheduleEntity>(
             predicate: #Predicate<ScheduleEntity> { $0.id == uuid && $0.isDeleted == false }
         )
         
         do {
-            let schedules = try context.fetch(descriptor)
-            guard let schedule = schedules.first else {
-                logger.error("❌ Program bulunamadı, ID: \(id)")
+            guard let scheduleEntityToUpdate = try context.fetch(scheduleEntityDescriptor).first else {
+                logger.error("❌ ScheduleEntity bulunamadı, ID: \(id)")
                 throw RepositoryError.entityNotFound
             }
             
-            // Programı güncelle
-            schedule.isActive = isActive
-            schedule.updatedAt = Date()
+            scheduleEntityToUpdate.isActive = isActive
+            scheduleEntityToUpdate.updatedAt = Date()
+            logger.debug("✅ ScheduleEntity aktiflik durumu güncellendi: \(scheduleEntityToUpdate.name), isActive: \(isActive)")
+
+            // 3. İlgili UserSchedule'ı güncelle
+            let userScheduleDescriptor = FetchDescriptor<UserSchedule>(
+                predicate: #Predicate<UserSchedule> { $0.id == uuid } // Aynı ID ile eşleştir
+            )
+            if let userScheduleToUpdate = try context.fetch(userScheduleDescriptor).first {
+                userScheduleToUpdate.isActive = isActive
+                userScheduleToUpdate.updatedAt = Date()
+                
+                // Eğer aktif ediliyorsa ve adaptasyon fazını sıfırlamak gerekiyorsa:
+                if isActive {
+                    userScheduleToUpdate.adaptationPhase = 0 // Yeniden aktivasyonda adaptasyon fazını sıfırla
+                    logger.debug("🗂️ UserSchedule (ID: \(userScheduleToUpdate.id.uuidString)) aktif edildi, adaptasyon fazı sıfırlandı.")
+                }
+                logger.debug("✅ UserSchedule aktiflik durumu güncellendi: \(userScheduleToUpdate.name), isActive: \(isActive)")
+            } else if isActive {
+                // Bu durum bir tutarsızlığa işaret eder: ScheduleEntity var ama UserSchedule yok.
+                // İdeal olarak bu durum saveSchedule tarafından engellenmelidir.
+                logger.error("❌ TUTARSIZLIK: ScheduleEntity (ID: \(id)) için UserSchedule bulunamadı ancak aktif edilmeye çalışılıyor. Bu UserSchedule normalde saveSchedule sırasında oluşturulmalıydı.")
+                // Burada eksik UserSchedule'ı oluşturmak için bir mantık eklenebilir, ancak bu daha fazla bilgi gerektirir.
+                // Şimdilik bu, olası bir veri bütünlüğü sorununu vurgular.
+            }
             
             try context.save()
-            logger.debug("✅ Program aktiflik durumu güncellendi: \(schedule.name), isActive: \(isActive)")
+            
         } catch {
             logger.error("❌ Program aktiflik durumu güncellenirken hata: \(error.localizedDescription)")
             throw RepositoryError.updateFailed
@@ -520,6 +805,53 @@ class Repository: ObservableObject {
         } catch {
             logger.error("❌ Aktif program entity getirilirken hata: \(error.localizedDescription)")
             throw RepositoryError.fetchFailed
+        }
+    }
+
+    // MARK: - User Management Methods
+    
+    /// Kullanıcıyı SwiftData'da oluşturur veya mevcut kullanıcıyı getirir
+    func createOrGetUser() async throws -> User {
+        guard let context = _modelContext else {
+            logger.error("❌ ModelContext ayarlanmamış, createOrGetUser başarısız")
+            throw RepositoryError.modelContextNotSet
+        }
+        
+        guard let currentUserIdString = authManager.currentUser?.id,
+              let currentUserId = UUID(uuidString: currentUserIdString) else {
+            logger.error("❌ AuthManager'dan geçerli kullanıcı ID'si alınamadı")
+            throw RepositoryError.userNotAuthenticated
+        }
+        
+        // Önce kullanıcıyı ara
+        let userPredicate = #Predicate<User> { $0.id == currentUserId }
+        let userDescriptor = FetchDescriptor(predicate: userPredicate)
+        
+        do {
+            if let existingUser = try context.fetch(userDescriptor).first {
+                logger.debug("✅ Mevcut kullanıcı bulundu: \(existingUser.displayName ?? "Anonim")")
+                return existingUser
+            } else {
+                // Kullanıcı yoksa oluştur
+                let newUser = User(
+                    id: currentUserId,
+                    email: nil, // Yerel kullanıcı için email yok
+                    displayName: authManager.currentUser?.displayName,
+                    isAnonymous: true, // Yerel kullanıcı anonim olarak işaretlenir
+                    createdAt: Date(),
+                    updatedAt: Date(),
+                    isPremium: false
+                )
+                
+                context.insert(newUser)
+                try context.save()
+                
+                logger.debug("✅ Yeni kullanıcı oluşturuldu: \(newUser.displayName ?? "Anonim")")
+                return newUser
+            }
+        } catch {
+            logger.error("❌ Kullanıcı oluşturulurken/getirilirken hata: \(error.localizedDescription)")
+            throw RepositoryError.saveFailed
         }
     }
 }

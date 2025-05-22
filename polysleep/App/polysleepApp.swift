@@ -92,6 +92,16 @@ struct polysleepApp: App {
             Repository.shared.setModelContext(context)
             
             print("SwiftData başarıyla yapılandırıldı")
+            
+            // Migration işlemini başlat
+            Task {
+                do {
+                    try await Repository.shared.migrateScheduleEntitiesToUserSchedules()
+                    print("✅ Migration başarıyla tamamlandı")
+                } catch {
+                    print("❌ Migration hatası: \(error)")
+                }
+            }
         } catch {
             fatalError("Could not initialize ModelContainer: \(error)")
         }
