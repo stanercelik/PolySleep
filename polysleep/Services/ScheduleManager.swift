@@ -7,6 +7,8 @@ class ScheduleManager: ObservableObject {
     static let shared = ScheduleManager()
     
     @Published var activeSchedule: UserScheduleModel?
+    private var lastNotificationUpdateTime: Date?
+    private var lastLeadTime: Int?
     
     private init() {
         // Silinmiş olarak işaretlenmiş blokları temizle
@@ -54,19 +56,35 @@ class ScheduleManager: ObservableObject {
         loadActiveScheduleFromLocalDatabase()
     }
     
-    /// Uyku programı değiştiğinde bildirimleri günceller
+    /// Uyku programı değiştiğinde bildirimleri günceller - optimize edilmiş
     @MainActor func updateNotificationsForActiveSchedule() {
         guard let schedule = activeSchedule else { 
             print("Bildirimler güncellenemedi: Aktif program (activeSchedule) nil. Tüm bildirimler iptal ediliyor.")
             LocalNotificationService.shared.cancelAllNotifications()
+            lastNotificationUpdateTime = nil
+            lastLeadTime = nil
             return 
         }
         
         // Kullanıcının tercih ettiği hatırlatma süresini al
         let leadTime = Repository.shared.getReminderLeadTime()
+        let now = Date()
+        
+        // Eğer son güncelleme 30 saniye içindeyse ve leadTime aynıysa skip et
+        if let lastUpdate = lastNotificationUpdateTime,
+           let lastLead = lastLeadTime,
+           now.timeIntervalSince(lastUpdate) < 30.0,
+           leadTime == lastLead {
+            print("⏭️ Bildirim güncellemesi atlandı: Son güncelleme çok yakın zamanda yapıldı")
+            return
+        }
         
         print("Aktif program (\(schedule.name)) için bildirimler \(leadTime) dakika öncesinden güncelleniyor...")
         LocalNotificationService.shared.scheduleNotificationsForActiveSchedule(schedule: schedule, leadTimeMinutes: leadTime)
+        
+        // Güncelleme zamanını kaydet
+        lastNotificationUpdateTime = now
+        lastLeadTime = leadTime
     }
     
     @MainActor
@@ -104,6 +122,8 @@ class ScheduleManager: ObservableObject {
         // Yerel programı temizle
         DispatchQueue.main.async {
             self.activeSchedule = nil
+            self.lastNotificationUpdateTime = nil
+            self.lastLeadTime = nil
             self.updateNotificationsForActiveSchedule() // Bildirimleri güncelle
             print("ScheduleManager: Aktif program başarıyla sıfırlandı")
         }

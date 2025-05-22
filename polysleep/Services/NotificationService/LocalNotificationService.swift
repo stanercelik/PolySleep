@@ -32,6 +32,27 @@ class LocalNotificationService: ObservableObject {
 
     // MARK: - Notification Scheduling
 
+    /// Test bildirimi planlar (hemen veya belirli bir süre sonra)
+    func scheduleTestNotification(title: String, body: String, delay: TimeInterval) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = UNNotificationSound.default
+        content.badge = 1
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)
+        let identifier = "test_notification_\(UUID().uuidString)"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { error in
+            if let error = error {
+                print("PolySleep Debug: Test bildirimi planlanırken hata oluştu: \(error.localizedDescription)")
+            } else {
+                print("PolySleep Debug: Test bildirimi başarıyla planlandı: \(delay) saniye sonra")
+            }
+        }
+    }
+
     /// Belirli bir uyku bloğu için bildirim planlar.
     /// - Parameters:
     ///   - block: Bildirimi planlanacak uyku bloğu.
