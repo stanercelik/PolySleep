@@ -1,0 +1,4 @@
+module GoogleAppMeasurementWithoutAdIdSupportTarget {
+umbrella "/Users/tanercelik/Library/Developer/Xcode/DerivedData/polysleep-frpdrhalxuqdozdrvmfgwzcofldb/SourcePackages/checkouts/GoogleAppMeasurement/GoogleAppMeasurementWithoutAdIdSupportWrapper/include"
+export *
+}

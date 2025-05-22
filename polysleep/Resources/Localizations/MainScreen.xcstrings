@@ -53,6 +53,7 @@
       }
     },
     "general.ok" : {
+      "comment" : "OK button",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -132,6 +133,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yenile"
+          }
+        }
+      }
+    },
+    "mainScreen.coreBlockIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
           }
         }
       }
@@ -238,6 +256,23 @@
         }
       }
     },
+    "mainScreen.errorIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️"
+          }
+        }
+      }
+    },
     "mainScreen.eveningReminder" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -289,6 +324,23 @@
         }
       }
     },
+    "mainScreen.napBlockIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
+        }
+      }
+    },
     "mainScreen.nextSleepBlock" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -302,6 +354,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sonraki Uyku"
+          }
+        }
+      }
+    },
+    "mainScreen.nextSleepBlockIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
           }
         }
       }
@@ -336,6 +405,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İlerleme"
+          }
+        }
+      }
+    },
+    "mainScreen.progressIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄"
           }
         }
       }
@@ -561,6 +647,23 @@
         }
       }
     },
+    "mainScreen.sleepBlocksIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛌 "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛌 "
+          }
+        }
+      }
+    },
     "mainScreen.sleepTimeRemaining" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -608,6 +711,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mevcut Seri"
+          }
+        }
+      }
+    },
+    "mainScreen.tipIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 "
           }
         }
       }
@@ -713,6 +833,23 @@
         }
       }
     },
+    "sleepBlock.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana uyku"
+          }
+        }
+      }
+    },
     "sleepBlock.delete.confirm" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -764,6 +901,23 @@
         }
       }
     },
+    "sleepBlock.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Block %1$@: %2$@ from %3$@ to %4$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok %1$@: %3$@ ile %4$@ arasında %2$@"
+          }
+        }
+      }
+    },
     "sleepBlock.duration" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -782,6 +936,7 @@
       }
     },
     "sleepBlock.edit" : {
+      "comment" : "Edit sleep block navigation title",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -894,6 +1049,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ana Uyku Bloğu"
+          }
+        }
+      }
+    },
+    "sleepBlock.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
           }
         }
       }
@@ -1131,57 +1303,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geçmiş sayfasından uykunu puanlayabilirsin!"
-          }
-        }
-      }
-    },
-    "sleepBlock.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core sleep"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana uyku"
-          }
-        }
-      }
-    },
-    "sleepBlock.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
-          }
-        }
-      }
-    },
-    "sleepBlock.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Block %1$@: %2$@ from %3$@ to %4$@"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blok %1$@: %3$@ ile %4$@ arasında %2$@"
           }
         }
       }

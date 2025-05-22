@@ -18,30 +18,34 @@ struct ProfileScreenView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 
-                ScrollView {
-                    VStack(spacing: 16) {
-                        // Premium Butonu
-                        PremiumButton()
-                        
-                        // Profil Bilgileri
-                        ProfileHeaderSection(
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 24) {
+                        // Profile Header Card
+                        ProfileHeaderCard(
                             showLoginSheet: $showLoginSheet, 
                             showLogoutSheet: $showLogoutSheet,
                             navigateToSettings: $navigateToSettings, 
                             authManager: authManager
                         )
                         
-                        // Streak Bölümü
-                        StreakSection(viewModel: viewModel)
+                        // Stats Grid
+                        StatsGridSection(viewModel: viewModel)
                         
-                        // Adaptasyon Aşaması Bölümü
-                        AdaptationPhaseSection(viewModel: viewModel)
+                        // Adaptation Phase Card
+                        AdaptationPhaseCard(viewModel: viewModel)
                         
-                        // Emoji Özelleştirme
-                        EmojiCustomizationSection(viewModel: viewModel, showEmojiPicker: $showEmojiPicker, isPickingCoreEmoji: $isPickingCoreEmoji)
+                        // Customization Card
+                        CustomizationCard(
+                            viewModel: viewModel, 
+                            showEmojiPicker: $showEmojiPicker, 
+                            isPickingCoreEmoji: $isPickingCoreEmoji
+                        )
+                        
+                        // Premium Upgrade Card
+                        PremiumUpgradeCard()
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 }
                 
                 // Başarılı giriş mesajı
@@ -68,7 +72,7 @@ struct ProfileScreenView: View {
                     }
                 }
             }
-            .navigationTitle("Profil")
+            .navigationTitle(NSLocalizedString("profile.title", tableName: "Profile", comment: "Profile screen title"))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showEmojiPicker) {
                 EmojiPickerView(
@@ -103,129 +107,214 @@ struct ProfileScreenView: View {
     }
 }
 
-// MARK: - Premium Butonu
-struct PremiumButton: View {
+// MARK: - Premium Upgrade Card
+struct PremiumUpgradeCard: View {
     var body: some View {
-        return Button(action: {
+        Button(action: {
             // Premium işlevselliği
         }) {
-            HStack {
-                Text("profile.premium.button", tableName: "Profile")
-                    .font(.headline)
-                    .foregroundColor(.white)
+            VStack(spacing: 16) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "crown.fill")
+                                .font(.title2)
+                                .foregroundColor(.yellow)
+                            
+                            Text(NSLocalizedString("profile.premium.title", tableName: "Profile", comment: "Premium section title"))
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
+                        
+                        Text(NSLocalizedString("profile.premium.description", tableName: "Profile", comment: "Premium features description"))
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.9))
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text(NSLocalizedString("profile.premium.upgrade", tableName: "Profile", comment: "Upgrade button title"))
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(Color.white.opacity(0.25))
+                            )
+                        
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                }
                 
-                Spacer()
-                
-                Text("profile.premium.go", tableName: "Profile")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(
-                        Capsule()
-                            .fill(Color.white.opacity(0.3))
-                    )
+                // Premium Features
+                HStack(spacing: 20) {
+                    PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: NSLocalizedString("profile.premium.features.statistics", tableName: "Profile", comment: "Statistics feature"))
+                    PremiumFeature(icon: "bell.badge", title: NSLocalizedString("profile.premium.features.notifications", tableName: "Profile", comment: "Notifications feature"))
+                    PremiumFeature(icon: "paintbrush", title: NSLocalizedString("profile.premium.features.themes", tableName: "Profile", comment: "Themes feature"))
+                }
             }
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.appSecondary)
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.appSecondary, Color.appAccent]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
             )
+            .cornerRadius(20)
+            .shadow(color: Color.appSecondary.opacity(0.3), radius: 10, x: 0, y: 5)
         }
-        .padding(.top, 16)
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
-// MARK: - Profil Başlık Bölümü
-struct ProfileHeaderSection: View {
+struct PremiumFeature: View {
+    let icon: String
+    let title: String
+    
+    var body: some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundColor(.white)
+            
+            Text(title)
+                .font(.caption2)
+                .foregroundColor(.white.opacity(0.9))
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Profile Header Card
+struct ProfileHeaderCard: View {
     @Binding var showLoginSheet: Bool
     @Binding var showLogoutSheet: Bool
     @Binding var navigateToSettings: Bool
     @ObservedObject var authManager: AuthManager
     
-    // Kullanıcının displayName değeri olup olmadığını kontrol et
     private func hasDisplayName() -> Bool {
         guard let user = authManager.currentUser else { return false }
         return !user.displayName.isEmpty
     }
     
+    private func getUserInitials() -> String {
+        guard let user = authManager.currentUser, !user.displayName.isEmpty else {
+            return "U"
+        }
+        let names = user.displayName.split(separator: " ")
+        if names.count >= 2 {
+            return String(names[0].prefix(1)) + String(names[1].prefix(1))
+        } else {
+            return String(user.displayName.prefix(1))
+        }
+    }
+    
     var body: some View {
-        return HStack(alignment: .top, spacing: 10) {
-            // Profil resmi - Artık sadece offline kullanıcı var
-            Button(action: {
-                // Profil bilgilerini düzenlemek için login sheet'i göster
-                showLoginSheet = true
-            }) {
-                // Yerel kullanıcı profil resmi
-                if let user = authManager.currentUser, !user.displayName.isEmpty {
-                    // Kullanıcının adının baş harfini avatar olarak kullan
-                    Text(String(user.displayName.prefix(1).uppercased()))
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 60, height: 60)
-                        .background(
-                            Circle()
-                                .fill(Color.appPrimary)
-                        )
-                } else {
-                    // Anonim profil resmi
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.appSecondaryText)
-                        .background(
-                            Circle()
-                                .fill(Color.appCardBackground)
-                                .frame(width: 60, height: 60)
-                        )
-                }
-            }
-            
-            VStack(alignment: .leading, spacing: 6) {
-                // Başlık
-                if let user = authManager.currentUser {
-                    if !user.displayName.isEmpty {
-                        Text(user.displayName)
-                            .font(.headline)
-                            .fontWeight(.bold)
+        VStack(spacing: 20) {
+            // Profile Avatar & Info
+            HStack(alignment: .center, spacing: 16) {
+                // Avatar
+                Button(action: {
+                    showLoginSheet = true
+                }) {
+                    if let user = authManager.currentUser, !user.displayName.isEmpty {
+                        Text(getUserInitials().uppercased())
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
+                            .frame(width: 80, height: 80)
+                            .background(
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.white.opacity(0.2), lineWidth: 2)
+                            )
                     } else {
-                        Text(NSLocalizedString("localUser.defaultName", tableName: "Auth", comment: "Default local user name"))
-                            .font(.headline)
+                        Image(systemName: "person.crop.circle.fill")
+                            .font(.system(size: 80))
+                            .foregroundColor(.appSecondaryText.opacity(0.6))
+                    }
+                }
+                .scaleEffect(1.0)
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: hasDisplayName())
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    // Name
+                    if let user = authManager.currentUser {
+                        Text(user.displayName.isEmpty ? NSLocalizedString("profile.user.defaultName", tableName: "Profile", comment: "Default user name") : user.displayName)
+                            .font(.title2)
                             .fontWeight(.bold)
+                            .foregroundColor(.appText)
+                        
+                        Text(NSLocalizedString("profile.user.localAccount", tableName: "Profile", comment: "Local account label"))
+                            .font(.subheadline)
+                            .foregroundColor(.appSecondaryText)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(Color.appSecondary.opacity(0.15))
+                            )
                     }
                     
-                    // Kullanıcı durumu
-                    Text("profile.user.local", tableName: "Profile")
-                        .font(.subheadline)
-                        .foregroundColor(.appSecondaryText)
-                } else {
-                    // Bu durum gerçekleşmemeli, çünkü offline modda her zaman bir kullanıcı var
-                    Text("profile.login.title", tableName: "Profile")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                    
-                    Text("profile.login.status.unsigned", tableName: "Profile")
-                        .font(.subheadline)
-                        .foregroundColor(.appSecondaryText)
+                    // Edit Profile Button
+                    Button(action: {
+                        showLoginSheet = true
+                    }) {
+                        HStack(spacing: 6) {
+                            Image(systemName: "pencil")
+                                .font(.caption)
+                            Text(NSLocalizedString("profile.user.editProfile", tableName: "Profile", comment: "Edit profile button"))
+                                .font(.caption)
+                                .fontWeight(.medium)
+                        }
+                        .foregroundColor(.appPrimary)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.appPrimary.opacity(0.1))
+                        )
+                    }
+                }
+                
+                Spacer()
+                
+                // Settings Button
+                Button(action: {
+                    navigateToSettings = true
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title2)
+                        .foregroundColor(.appSecondaryText.opacity(0.8))
+                        .padding(12)
+                        .background(
+                            Circle()
+                                .fill(Color.appSecondaryText.opacity(0.1))
+                        )
                 }
             }
-            
-            Spacer()
-            
-            // Ayarlar butonu
-            Button(action: {
-                navigateToSettings = true
-            }) {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 22))
-                    .foregroundColor(.appSecondaryText)
-            }
         }
-        .padding()
+        .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 20)
                 .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
         )
     }
 }
@@ -361,73 +450,151 @@ struct LoginSheetView: View {
     }
 }
 
-// MARK: - Streak Bölümü
-struct StreakSection: View {
+// MARK: - Stats Grid Section
+struct StatsGridSection: View {
     @ObservedObject var viewModel: ProfileScreenViewModel
     
     var body: some View {
-        return VStack(alignment: .leading, spacing: 12) {
-            Text("profile.streak.title", tableName: "Profile")
-                .font(.headline)
-                .foregroundColor(.appText)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "chart.bar.fill")
+                    .font(.title2)
+                    .foregroundColor(.appPrimary)
+                
+                Text(NSLocalizedString("profile.stats.title", tableName: "Profile", comment: "Statistics section title"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+            }
             
-            HStack(spacing: 20) {
-                // Mevcut Streak
-                VStack(spacing: 8) {
-                    Text(String(viewModel.currentStreak))
-                        .font(.system(size: 42, weight: .bold, design: .rounded))
-                        .foregroundColor(.appPrimary)
-                    
-                    Text("profile.streak.current", tableName: "Profile")
-                        .font(.caption)
-                        .foregroundColor(.appSecondaryText)
-                    
-                    Text(viewModel.currentStreak == 1 ? "profile.streak.day" : "profile.streak.days", tableName: "Profile")
-                        .font(.caption2)
-                        .foregroundColor(.appSecondaryText)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.appCardBackground)
-                        .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+            LazyVGrid(columns: [
+                GridItem(.flexible(), spacing: 12),
+                GridItem(.flexible(), spacing: 12)
+            ], spacing: 12) {
+                // Current Streak
+                StatCard(
+                    icon: "flame.fill",
+                    title: NSLocalizedString("profile.stats.currentStreak", tableName: "Profile", comment: "Current streak"),
+                    value: "\(viewModel.currentStreak)",
+                    subtitle: NSLocalizedString("profile.stats.days", tableName: "Profile", comment: "Days unit"),
+                    color: .orange,
+                    gradientColors: [.orange, .red]
                 )
                 
-                // En Uzun Streak
-                VStack(spacing: 8) {
-                    Text(String(viewModel.longestStreak))
-                        .font(.system(size: 42, weight: .bold, design: .rounded))
-                        .foregroundColor(.appSecondary)
-                    
-                    Text("profile.streak.longest", tableName: "Profile")
-                        .font(.caption)
-                        .foregroundColor(.appSecondaryText)
-                    
-                    Text(viewModel.longestStreak == 1 ? "profile.streak.day" : "profile.streak.days", tableName: "Profile")
-                        .font(.caption2)
-                        .foregroundColor(.appSecondaryText)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.appCardBackground)
-                        .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                // Longest Streak
+                StatCard(
+                    icon: "trophy.fill",
+                    title: NSLocalizedString("profile.stats.longestStreak", tableName: "Profile", comment: "Longest streak"),
+                    value: "\(viewModel.longestStreak)",
+                    subtitle: NSLocalizedString("profile.stats.days", tableName: "Profile", comment: "Days unit"),
+                    color: .appSecondary,
+                    gradientColors: [.appSecondary, .appAccent]
+                )
+                
+                // Total Sessions
+                StatCard(
+                    icon: "moon.zzz.fill",
+                    title: NSLocalizedString("profile.stats.totalSleep", tableName: "Profile", comment: "Total sleep"),
+                    value: "\(calculateTotalSessions())",
+                    subtitle: NSLocalizedString("profile.stats.sessions", tableName: "Profile", comment: "Sessions unit"),
+                    color: .purple,
+                    gradientColors: [.purple, .blue]
+                )
+                
+                // Success Rate
+                StatCard(
+                    icon: "checkmark.seal.fill",
+                    title: NSLocalizedString("profile.stats.successRate", tableName: "Profile", comment: "Success rate"),
+                    value: "\(calculateSuccessRate())%",
+                    subtitle: NSLocalizedString("profile.stats.completion", tableName: "Profile", comment: "Completion unit"),
+                    color: .green,
+                    gradientColors: [.green, .mint]
                 )
             }
         }
         .padding()
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 20)
                 .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
+    
+    private func calculateTotalSessions() -> Int {
+        // Bu gerçek implementasyonla değiştirilecek
+        return viewModel.currentStreak + viewModel.longestStreak
+    }
+    
+    private func calculateSuccessRate() -> Int {
+        // Bu gerçek implementasyonla değiştirilecek
+        let total = calculateTotalSessions()
+        if total == 0 { return 0 }
+        return min(95, 70 + (total * 2))
+    }
+}
+
+struct StatCard: View {
+    let icon: String
+    let title: String
+    let value: String
+    let subtitle: String
+    let color: Color
+    let gradientColors: [Color]
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .frame(width: 36, height: 36)
+                    .background(
+                        Circle()
+                            .fill(color)
+                    )
+                
+                Spacer()
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(value)
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .foregroundColor(.appText)
+                
+                Text(title)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appText)
+                
+                Text(subtitle)
+                    .font(.caption2)
+                    .foregroundColor(.appSecondaryText)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.appCardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            LinearGradient(
+                                gradient: Gradient(colors: gradientColors.map { $0.opacity(0.3) }),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
         )
     }
 }
 
-// MARK: - Adaptasyon Aşaması Bölümü
-struct AdaptationPhaseSection : View {
+// MARK: - Adaptation Phase Card
+struct AdaptationPhaseCard: View {
     @ObservedObject var viewModel: ProfileScreenViewModel
     @Environment(\.colorScheme) private var colorScheme
     @State private var showingResetAlert = false
@@ -435,13 +602,34 @@ struct AdaptationPhaseSection : View {
     @State private var resetError: String? = nil
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Adaptasyon Aşaması")
-                .font(.headline)
-                .foregroundColor(.appText)
+        VStack(alignment: .leading, spacing: 20) {
+            // Header
+            HStack {
+                Image(systemName: "brain.head.profile.fill")
+                    .font(.title2)
+                    .foregroundColor(.appAccent)
+                
+                Text(NSLocalizedString("profile.adaptation.title", tableName: "Profile", comment: "Adaptation process title"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+                
+                if viewModel.activeSchedule != nil {
+                    Button(action: {
+                        showingResetAlert = true
+                    }) {
+                        Image(systemName: "arrow.clockwise.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(.appSecondaryText.opacity(0.7))
+                    }
+                    .disabled(isResetting)
+                }
+            }
             
             if let schedule = viewModel.activeSchedule {
-                AdaptationProgressView(
+                AdaptationProgressCard(
                     duration: viewModel.adaptationDuration,
                     currentPhase: viewModel.adaptationPhase,
                     phaseDescription: viewModel.adaptationPhaseDescription,
@@ -449,24 +637,29 @@ struct AdaptationPhaseSection : View {
                     isResetting: isResetting
                 )
             } else {
-                // Eğer aktif program yoksa, boş bir görünüm göster
-                EmptyAdaptationView()
+                EmptyAdaptationCard()
             }
         }
-        .alert("Adaptasyonu Sıfırla", isPresented: $showingResetAlert) {
-            Button("İptal", role: .cancel) { }
-            Button("Sıfırla", role: .destructive) {
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+        .alert(NSLocalizedString("profile.adaptation.reset.title", tableName: "Profile", comment: "Reset adaptation alert title"), isPresented: $showingResetAlert) {
+            Button(NSLocalizedString("general.cancel", tableName: "Profile", comment: "Cancel button"), role: .cancel) { }
+            Button(NSLocalizedString("profile.adaptation.reset.confirm", tableName: "Profile", comment: "Reset confirmation button"), role: .destructive) {
                 resetAdaptationPhase()
             }
         } message: {
-            Text("Adaptasyon süreci 1. günden tekrar başlatılacak. Bu işlemi gerçekleştirmek istediğinize emin misiniz?")
+            Text(NSLocalizedString("profile.adaptation.reset.message", tableName: "Profile", comment: "Reset adaptation message"))
         }
-        .alert("Hata", isPresented: .init(get: { resetError != nil }, set: { if !$0 { resetError = nil } })) {
-            Button("Tamam", role: .cancel) {
+        .alert(NSLocalizedString("general.error", tableName: "Profile", comment: "Error alert title"), isPresented: .init(get: { resetError != nil }, set: { if !$0 { resetError = nil } })) {
+            Button(NSLocalizedString("general.ok", tableName: "Profile", comment: "OK button"), role: .cancel) {
                 resetError = nil
             }
         } message: {
-            Text(resetError ?? "Bilinmeyen bir hata oluştu")
+            Text(resetError ?? NSLocalizedString("general.unknownError", tableName: "Profile", comment: "Unknown error message"))
         }
     }
     
@@ -490,21 +683,33 @@ struct AdaptationPhaseSection : View {
     }
 }
 
-// MARK: - Boş Adaptasyon Görünümü
-struct EmptyAdaptationView: View {
+// MARK: - Empty Adaptation Card
+struct EmptyAdaptationCard: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Aktif program bulunamadı")
-                .font(.subheadline)
-                .foregroundColor(.appSecondaryText)
+        VStack(spacing: 16) {
+            Image(systemName: "moon.zzz")
+                .font(.system(size: 48))
+                .foregroundColor(.appSecondaryText.opacity(0.5))
+            
+            VStack(spacing: 8) {
+                Text(NSLocalizedString("profile.adaptation.empty.title", tableName: "Profile", comment: "No active program title"))
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appText)
+                
+                Text(NSLocalizedString("profile.adaptation.empty.description", tableName: "Profile", comment: "Select a program description"))
+                    .font(.caption)
+                    .foregroundColor(.appSecondaryText)
+                    .multilineTextAlignment(.center)
+            }
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 32)
     }
 }
 
-// MARK: - Adaptasyon İlerleme Görünümü
-struct AdaptationProgressView: View {
+// MARK: - Adaptation Progress Card
+struct AdaptationProgressCard: View {
     let duration: Int // Toplam gün sayısı
     let currentPhase: Int
     let phaseDescription: String
@@ -593,7 +798,7 @@ struct AdaptationProgressView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(phaseColor)
                 
-                Text("Adaptasyon İpucu")
+                Text(NSLocalizedString("profile.adaptation.tip.title", tableName: "Profile", comment: "Adaptation tip title"))
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -1062,78 +1267,138 @@ extension Array {
     }
 }
 
-// MARK: - Emoji Özelleştirme Bölümü
-struct EmojiCustomizationSection: View {
+// MARK: - Customization Card
+struct CustomizationCard: View {
     @ObservedObject var viewModel: ProfileScreenViewModel
     @Binding var showEmojiPicker: Bool
     @Binding var isPickingCoreEmoji: Bool
     
     var body: some View {
-        return VStack(alignment: .leading, spacing: 12) {
-            Text("Emoji Özelleştirme")
-                .font(.headline)
-                .foregroundColor(.appText)
+        VStack(alignment: .leading, spacing: 20) {
+            // Header
+            HStack {
+                Image(systemName: "face.smiling.fill")
+                    .font(.title2)
+                    .foregroundColor(.yellow)
+                
+                Text(NSLocalizedString("profile.customization.title", tableName: "Profile", comment: "Customization section title"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+            }
             
             VStack(spacing: 16) {
-                // Ana Uyku Emojisi
-                HStack {
-                    Text("Ana Uyku Bloğu Emojisi")
-                        .font(.subheadline)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        isPickingCoreEmoji = true
-                        showEmojiPicker = true
-                    }) {
-                        Text(viewModel.selectedCoreEmoji)
-                            .font(.system(size: 24))
-                            .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.appPrimary.opacity(0.1))
-                            )
-                    }
+                // Core Sleep Emoji
+                CustomizationRow(
+                    icon: "moon.fill",
+                    title: NSLocalizedString("profile.customization.coreBlock.title", tableName: "Profile", comment: "Core sleep block customization title"),
+                    subtitle: NSLocalizedString("profile.customization.coreBlock.subtitle", tableName: "Profile", comment: "Core sleep block customization subtitle"),
+                    currentEmoji: viewModel.selectedCoreEmoji,
+                    color: .blue
+                ) {
+                    isPickingCoreEmoji = true
+                    showEmojiPicker = true
                 }
                 
                 Divider()
+                    .background(Color.appSecondaryText.opacity(0.2))
                 
-                // Şekerleme Emojisi
-                HStack {
-                    Text("Şekerleme Bloğu Emojisi")
-                        .font(.subheadline)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        isPickingCoreEmoji = false
-                        showEmojiPicker = true
-                    }) {
-                        Text(viewModel.selectedNapEmoji)
-                            .font(.system(size: 24))
-                            .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.appPrimary.opacity(0.1))
-                            )
-                    }
+                // Nap Emoji
+                CustomizationRow(
+                    icon: "powersleep",
+                    title: NSLocalizedString("profile.customization.napBlock.title", tableName: "Profile", comment: "Nap block customization title"),
+                    subtitle: NSLocalizedString("profile.customization.napBlock.subtitle", tableName: "Profile", comment: "Nap block customization subtitle"),
+                    currentEmoji: viewModel.selectedNapEmoji,
+                    color: .green
+                ) {
+                    isPickingCoreEmoji = false
+                    showEmojiPicker = true
                 }
                 
-                // Bilgi notu
-                Text("Seçtiğin emojiler takvim, uyku takibi ve grafikler gibi uygulamanın tüm bölümlerinde kullanılacaktır.")
+                // Info note
+                InfoCard(
+                    text: NSLocalizedString("profile.customization.infoText", tableName: "Profile", comment: "Customization info text")
+                )
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
+}
+
+struct CustomizationRow: View {
+    let icon: String
+    let title: String
+    let subtitle: String
+    let currentEmoji: String
+    let color: Color
+    let action: () -> Void
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundColor(color)
+                .frame(width: 28)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appText)
+                
+                Text(subtitle)
                     .font(.caption)
                     .foregroundColor(.appSecondaryText)
-                    .padding(.top, 6)
             }
-            .padding(10)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.appCardBackground)
-                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
-            )
+            
+            Spacer()
+            
+            Button(action: action) {
+                Text(currentEmoji)
+                    .font(.system(size: 28))
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(color.opacity(0.1))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(color.opacity(0.3), lineWidth: 1)
+                            )
+                    )
+            }
         }
+        .padding(.vertical, 4)
+    }
+}
+
+struct InfoCard: View {
+    let text: String
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "info.circle.fill")
+                .font(.title3)
+                .foregroundColor(.blue)
+            
+            Text(text)
+                .font(.caption)
+                .foregroundColor(.appSecondaryText)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.blue.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.blue.opacity(0.15), lineWidth: 1)
+                )
+        )
     }
 }
 
@@ -1147,7 +1412,7 @@ struct EmojiPickerView: View {
     
     var body: some View {
         return VStack(spacing: 20) {
-            Text("Emoji Seç")
+            Text(NSLocalizedString("profile.emojiPicker.title", tableName: "Profile", comment: "Emoji picker title"))
                 .font(.headline)
                 .padding(.top)
             
@@ -1172,7 +1437,7 @@ struct EmojiPickerView: View {
                 onSave()
                 dismiss()
             }) {
-                Text("Kaydet")
+                Text(NSLocalizedString("profile.emojiPicker.save", tableName: "Profile", comment: "Save emoji button"))
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
