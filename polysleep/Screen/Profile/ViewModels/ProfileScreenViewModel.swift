@@ -167,23 +167,23 @@ class ProfileScreenViewModel: ObservableObject {
         
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day], from: updatedAt, to: currentDate)
-        let daysSinceUpdate = components.day ?? 0
+        let daysSinceUpdate = (components.day ?? 0) + 1  // 1'den başlatmak için +1 ekliyoruz
         
         let totalDuration = self.adaptationDuration
         let phase: Int
         
         if totalDuration == 28 {
-            if daysSinceUpdate < 1 { phase = 0 }
-            else if daysSinceUpdate < 8 { phase = 1 }
-            else if daysSinceUpdate < 15 { phase = 2 }
-            else if daysSinceUpdate < 21 { phase = 3 }
-            else if daysSinceUpdate < 28 { phase = 4 }
+            if daysSinceUpdate <= 1 { phase = 0 }
+            else if daysSinceUpdate <= 7 { phase = 1 }
+            else if daysSinceUpdate <= 14 { phase = 2 }
+            else if daysSinceUpdate <= 20 { phase = 3 }
+            else if daysSinceUpdate <= 27 { phase = 4 }
             else { phase = 5 }
         } else {
-            if daysSinceUpdate < 1 { phase = 0 }
-            else if daysSinceUpdate < 8 { phase = 1 }
-            else if daysSinceUpdate < 15 { phase = 2 }
-            else if daysSinceUpdate < 21 { phase = 3 }
+            if daysSinceUpdate <= 1 { phase = 0 }
+            else if daysSinceUpdate <= 7 { phase = 1 }
+            else if daysSinceUpdate <= 14 { phase = 2 }
+            else if daysSinceUpdate <= 20 { phase = 3 }
             else { phase = 4 }
         }
         return phase
@@ -279,14 +279,14 @@ class ProfileScreenViewModel: ObservableObject {
                 throw ProfileError.scheduleUpdateFailed
             }
 
-            scheduleToUpdate.adaptationPhase = 0
-            scheduleToUpdate.updatedAt = Date()
+            scheduleToUpdate.adaptationPhase = 1  // 1. günden başlat
+            scheduleToUpdate.updatedAt = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()  // 1 gün öncesi
             
             try context.save()
             
             // UI'ı güncelle
             await MainActor.run {
-                self.adaptationPhase = 0
+                self.adaptationPhase = 1  // UI'da da 1. günden başlat
                 self.activeSchedule = scheduleToUpdate // Güncellenmiş schedule'ı ata
             }
             

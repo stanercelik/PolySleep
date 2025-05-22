@@ -634,7 +634,8 @@ struct AdaptationPhaseCard: View {
                     currentPhase: viewModel.adaptationPhase,
                     phaseDescription: viewModel.adaptationPhaseDescription,
                     showingResetAlert: $showingResetAlert,
-                    isResetting: isResetting
+                    isResetting: isResetting,
+                    viewModel: viewModel
                 )
             } else {
                 EmptyAdaptationCard()
@@ -710,195 +711,146 @@ struct EmptyAdaptationCard: View {
 
 // MARK: - Adaptation Progress Card
 struct AdaptationProgressCard: View {
-    let duration: Int // Toplam gün sayısı
+    let duration: Int
     let currentPhase: Int
     let phaseDescription: String
     @Binding var showingResetAlert: Bool
     let isResetting: Bool
     @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var viewModel: ProfileScreenViewModel
     
     var body: some View {
-        // Hesaplamalar
-        let completedDays = calculateCompletedDays()
+        let completedDays = calculateRealCompletedDays()
         let progress = Float(completedDays) / Float(duration)
-        let phaseColor = phaseColors[safe: currentPhase] ?? .appSecondary
+        let phaseColor = getPhaseColor(currentPhase)
         
-        VStack(alignment: .leading, spacing: 20) {
-            // Aşama Bilgisi
-            PhaseInfoView(
-                phaseColor: phaseColor,
-                description: phaseDescription,
-                statusText: getAdaptationStatusText(phase: currentPhase, completedDays: completedDays, duration: duration),
-                showingResetAlert: $showingResetAlert,
-                isResetting: isResetting
-            )
+        VStack(spacing: 20) {
+            // Header dengan progress info
+            HStack(spacing: 16) {
+                // Phase icon
+                ZStack {
+                    Circle()
+                        .fill(phaseColor)
+                        .frame(width: 50, height: 50)
+                    
+                    Image(systemName: "brain.head.profile.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .shadow(color: phaseColor.opacity(0.3), radius: 4, x: 0, y: 2)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(phaseDescription)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    Text("Gün \(completedDays) / \(duration)")
+                        .font(.subheadline)
+                        .foregroundColor(.appSecondaryText)
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("\(Int(progress * 100))%")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(phaseColor)
+                    
+                    Button(action: {
+                        showingResetAlert = true
+                    }) {
+                        Image(systemName: "arrow.clockwise.circle.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(.appSecondaryText.opacity(0.6))
+                    }
+                    .disabled(isResetting)
+                }
+            }
             
-            // İlerleme göstergesi
-            ProgressIndicatorView(
-                completedDays: completedDays,
-                totalDays: duration,
-                progress: progress,
-                currentPhase: currentPhase,
-                phaseColor: phaseColor
-            )
+            // Modern progress bar
+            VStack(spacing: 8) {
+                GeometryReader { geometry in
+                    ZStack(alignment: .leading) {
+                        // Background
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(Color.gray.opacity(0.15))
+                            .frame(height: 10)
+                        
+                        // Progress
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [phaseColor.opacity(0.7), phaseColor]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: max(6, geometry.size.width * CGFloat(progress)), height: 10)
+                            .animation(.easeInOut(duration: 0.6), value: progress)
+                    }
+                }
+                .frame(height: 10)
+            }
             
-            // Adaptasyon ipuçları
-            adaptationTip(for: currentPhase)
-                .padding(.top, 8)
-            
-            // Adaptasyon zaman çizelgesi
-            adaptationTimelineView(for: currentPhase, totalDays: duration)
-                .padding(.top, 8)
+            // Status description
+            Text(getStatusDescription())
+                .font(.footnote)
+                .foregroundColor(.appSecondaryText)
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(phaseColor.opacity(0.08))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(phaseColor.opacity(0.15), lineWidth: 1)
+                        )
+                )
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
         .animation(.easeInOut(duration: 0.3), value: currentPhase)
     }
     
-    // Aşama renkleri
-    private var phaseColors: [Color] {
-        [.blue, .purple, .appSecondary, .orange, .green, .pink]
-    }
-    
-    // Tamamlanan gün sayısını hesapla
-    private func calculateCompletedDays() -> Int {
-        if duration == 28 {
-            // 28 günlük adaptasyon süresi için aşamalar
-            switch currentPhase {
-            case 0: return 0  // Başlangıç aşaması
-            case 1: return 6  // Uyum aşaması
-            case 2: return 12 // Adaptasyon aşaması
-            case 3: return 18 // İleri adaptasyon
-            case 4: return 24 // Tam adaptasyon
-            case 5...: return 28 // Tam adaptasyon+
-            default: return 0
-            }
-        } else {
-            // 21 günlük adaptasyon süresi için aşamalar
-            switch currentPhase {
-            case 0: return 0  // Başlangıç aşaması
-            case 1: return 6  // Uyum aşaması
-            case 2: return 12 // Adaptasyon aşaması
-            case 3: return 18 // İleri adaptasyon
-            case 4...: return 21 // Tam adaptasyon
-            default: return 0
-            }
+    private func calculateRealCompletedDays() -> Int {
+        if let schedule = viewModel.activeSchedule {
+            let calendar = Calendar.current
+            let startDate = schedule.updatedAt
+            let currentDate = Date()
+            let components = calendar.dateComponents([.day], from: startDate, to: currentDate)
+            let daysPassed = (components.day ?? 0) + 1 // 1. günden başla
+            return min(daysPassed, duration)
         }
+        return 1
     }
     
-    // Adaptasyon ipuçları View'ı
-    private func adaptationTip(for phase: Int) -> some View {
-        let (title, description) = adaptationPhaseInfo(phase)
-        
-        let phaseColor = phaseColors[safe: phase] ?? .appSecondary
-        
-        return VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Image(systemName: "lightbulb.fill")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(phaseColor)
-                
-                Text(NSLocalizedString("profile.adaptation.tip.title", tableName: "Profile", comment: "Adaptation tip title"))
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-            }
-            
-            if !title.isEmpty {
-                Text(title)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appText)
-            }
-            
-            Text(description)
-                .font(.footnote)
-                .foregroundColor(.appSecondaryText)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(phaseColor.opacity(0.08))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(phaseColor.opacity(0.15), lineWidth: 1)
-                )
-        )
+    private func getPhaseColor(_ phase: Int) -> Color {
+        let colors: [Color] = [.blue, .purple, .appSecondary, .orange, .green, .pink]
+        return colors[safe: phase] ?? .appSecondary
     }
     
-    // Adaptasyon zaman çizelgesi View'ı
-    private func adaptationTimelineView(for phase: Int, totalDays: Int) -> some View {
-        let phaseColors = self.phaseColors
+    private func getStatusDescription() -> String {
+        let completedDays = calculateRealCompletedDays()
         
-        return VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.appText)
-                
-                Text("Adaptasyon Süreci")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-            }
-            
-            VStack(alignment: .leading, spacing: 10) {
-                // Fazla kod yükünü azaltmak için zaman çizelgesini daha basit gösterelim
-                TimelineItemsView(phase: phase, totalDays: totalDays, phaseColors: phaseColors)
-            }
-        }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 3)
-        )
-    }
-    
-    // Adaptasyon aşaması bilgisi
-    private func adaptationPhaseInfo(_ phase: Int) -> (String, String) {
-        switch phase {
+        switch currentPhase {
         case 0:
-            return ("Başlangıç Aşaması", "Uyku programına yeni başladın. Program günlük rutinin haline gelene kadar sabırla devam et. Güvenliğin için uyanık kalmakta zorlanıyorsan kısa molalar ver.")
+            return "Adaptasyon sürecine başladın! İlk gündesin ve vücudun yeni düzene alışmaya başlıyor."
         case 1:
-            return ("Uyum Aşaması", "Vücudun yeni uyku düzenine alışmaya başladı. Uyku kaliteni artırmak için düzenli uyuma saatlerine dikkat etmelisin. Bu kritik dönemde programa sadık kalmak çok önemli.")
+            return "Uyum aşamasındasın (\(completedDays). gün). Bu kritik dönemde programa sadık kalmak çok önemli."
         case 2:
-            return ("Adaptasyon Aşaması", "İyi ilerliyorsun! Bu aşamada uyku kalitenin artmaya başladığını göreceksin. REM ve derin uyku verimliliğin artıyor. Programına sadık kalmaya devam et.")
+            return "Adaptasyon aşamasındasın (\(completedDays). gün). Uyku kalitenin artmaya başlaması bekleniyor."
         case 3:
-            return ("İleri Adaptasyon", "Harika! Vücudun yeni uyku düzenine oldukça iyi adapte oldu. Artık daha verimli uyuyorsun ve enerjik hissediyorsun. Uyku paterni neredeyse tamamlanmak üzere.")
-        case 4:
-            return ("Tam Adaptasyon", "Tebrikler! Polifazik uyku düzenine tamamen adapte oldun. Bu düzeni korumak için programına sadık kalmaya devam et. Artık maksimum uyku verimliliğine sahipsin.")
-        case 5:
-            return ("Tam Adaptasyon+", "Mükemmel! Zor bir uyku programına tamamen uyum sağladın. Vücudun artık yeni düzende tamamen verimli çalışıyor. Bu düzeni sürdürdükçe faydalarını en üst düzeyde göreceksin.")
-        default:
-            return ("Adaptasyon Henüz Başlamadı", "Adaptasyon sürecine başlamak için programa uygun şekilde uyumaya başla.")
-        }
-    }
-    
-    // Adaptasyon durumu metni
-    private func getAdaptationStatusText(phase: Int, completedDays: Int, duration: Int) -> String {
-        switch phase {
-        case 0:
-            return "Başlangıç günüdür. Yeni uyku programına alışma sürecin şimdi başlıyor."
-        case 1:
-            return "Uyum aşamasındasın (1-7 gün). Bu kritik dönemde programa sadık kalmak çok önemli."
-        case 2:
-            return "Adaptasyon aşamasındasın (8-14 gün). Uyku kalitenin artmaya başlaması bekleniyor."
-        case 3:
-            return "İleri adaptasyon aşamasındasın (15-20 gün). Vücudun yeni düzene neredeyse alıştı."
+            return "İleri adaptasyon aşamasındasın (\(completedDays). gün). Vücudun yeni düzene neredeyse alıştı."
         case 4:
             if duration == 28 {
-                return "Tam adaptasyon aşamasındasın (21-27 gün). Programda istikrarlı kalman önemli."
+                return "Tam adaptasyon aşamasındasın (\(completedDays). gün). Programda istikrarlı kalman önemli."
             } else {
-                return "Tam adaptasyon! (21+ gün) Polifazik uyku düzenine tamamen adapte oldun."
+                return "Tam adaptasyon! (\(completedDays). gün) Polifazik uyku düzenine tamamen adapte oldun."
             }
         case 5...:
-            return "Tam adaptasyon+! (28+ gün) En zor uyku programlarına bile tamamen adapte oldun."
+            return "Tam adaptasyon+! (\(completedDays). gün) En zor uyku programlarına bile tamamen adapte oldun."
         default:
-            return "Adaptasyon aşaması henüz başlamadı."
+            return "Adaptasyon süreci devam ediyor..."
         }
     }
 }
@@ -1012,27 +964,30 @@ struct ProgressBarView: View {
     let totalDays: Int
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            // Arka plan
-            RoundedRectangle(cornerRadius: 6)
-                .fill(Color.gray.opacity(0.15))
-                .frame(height: 12)
-            
-            // İlerleme
-            RoundedRectangle(cornerRadius: 6)
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [phaseColor.opacity(0.7), phaseColor]),
-                        startPoint: .leading,
-                        endPoint: .trailing
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                // Arka plan
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color.gray.opacity(0.15))
+                    .frame(height: 12)
+                
+                // İlerleme
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [phaseColor.opacity(0.7), phaseColor]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
-                )
-                .frame(width: max(0, min(UIScreen.main.bounds.width * 0.7, CGFloat(progress) * UIScreen.main.bounds.width * 0.7)), height: 12)
-                .shadow(color: phaseColor.opacity(0.4), radius: 2, x: 0, y: 1)
-            
-            // İlerleme göstergesi noktaları
-            ProgressDots(currentPhase: currentPhase, totalDays: totalDays)
+                    .frame(width: max(8, geometry.size.width * CGFloat(progress)), height: 12)
+                    .shadow(color: phaseColor.opacity(0.4), radius: 2, x: 0, y: 1)
+                
+                // İlerleme göstergesi noktaları
+                ProgressDots(currentPhase: currentPhase, totalDays: totalDays)
+            }
         }
+        .frame(height: 12)
     }
 }
 
@@ -1101,7 +1056,7 @@ struct TimelineItemsView: View {
             timelineItem(
                 icon: "1.circle.fill", 
                 title: "Başlangıç Aşaması", 
-                duration: "0 gün", 
+                duration: "1. Gün", 
                 status: phase >= 0 ? (phase > 0 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
                 isCompleted: phase > 0,
                 isActive: phase == 0,
@@ -1191,51 +1146,53 @@ struct TimelineItemsView: View {
         isLast: Bool = false,
         color: Color = .appSecondary
     ) -> some View {
-        HStack(alignment: .top, spacing: 12) {
+        HStack(alignment: .top, spacing: 16) {
             // Icon ve dikey çizgi
             VStack(spacing: 0) {
-                Image(systemName: icon)
-                    .font(.system(size: 22))
-                    .foregroundColor(isCompleted ? .green : (isActive ? color : .gray.opacity(0.5)))
-                    .frame(width: 30, height: 30)
-                    .background(
-                        Circle()
-                            .fill(isCompleted ? .green.opacity(0.1) : (isActive ? color.opacity(0.1) : .clear))
-                            .frame(width: 36, height: 36)
-                            .opacity(isCompleted || isActive ? 1 : 0)
-                    )
+                ZStack {
+                    Circle()
+                        .fill(isCompleted ? Color.green : (isActive ? color : Color.gray.opacity(0.2)))
+                        .frame(width: 32, height: 32)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .shadow(color: isCompleted ? Color.green.opacity(0.3) : (isActive ? color.opacity(0.3) : Color.clear), radius: 4, x: 0, y: 2)
                 
                 if !isLast {
                     Rectangle()
-                        .fill(isCompleted ? Color.green : Color.gray.opacity(0.3))
-                        .frame(width: 2, height: 30)
+                        .fill(isCompleted ? Color.green.opacity(0.6) : Color.gray.opacity(0.2))
+                        .frame(width: 2, height: 24)
+                        .padding(.top, 4)
                 }
             }
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(title)
                     .font(.subheadline)
                     .foregroundColor(isActive ? color : .appText)
-                    .fontWeight(isActive ? .bold : .medium)
+                    .fontWeight(.semibold)
                 
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
                     HStack(spacing: 4) {
-                        Image(systemName: "clock")
-                            .font(.system(size: 10))
-                            .foregroundColor(.appSecondaryText)
+                        Image(systemName: "clock.fill")
+                            .font(.system(size: 12))
+                            .foregroundColor(.appSecondaryText.opacity(0.7))
                         
                         Text(duration)
                             .font(.caption)
                             .foregroundColor(.appSecondaryText)
+                            .fontWeight(.medium)
                     }
                     
                     Spacer()
                     
                     Text(status)
                         .font(.caption)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
                         .background(
                             Capsule()
                                 .fill(statusColor(status: status))
@@ -1245,6 +1202,7 @@ struct TimelineItemsView: View {
             }
             .padding(.trailing, 8)
         }
+        .padding(.vertical, 4)
     }
     
     // Durum rengi

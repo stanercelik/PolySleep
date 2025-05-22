@@ -166,36 +166,26 @@ struct SettingsView: View {
         }
         .navigationTitle("Ayarlar")
         .navigationBarTitleDisplayMode(.inline)
-        .actionSheet(isPresented: $showThemePicker) {
-            ActionSheet(
-                title: Text("Tema Seçin"),
-                buttons: [
-                    .default(Text("Sistem Varsayılanı")) {
-                        userSelectedTheme = nil
-                    },
-                    .default(Text("Açık Tema")) {
-                        userSelectedTheme = false
-                    },
-                    .default(Text("Koyu Tema")) {
-                        userSelectedTheme = true
-                    },
-                    .cancel()
-                ]
-            )
+        .confirmationDialog("Tema Seçin", isPresented: $showThemePicker, titleVisibility: .visible) {
+            Button("Sistem Varsayılanı") {
+                userSelectedTheme = nil
+            }
+            Button("Açık Tema") {
+                userSelectedTheme = false
+            }
+            Button("Koyu Tema") {
+                userSelectedTheme = true
+            }
+            Button("İptal", role: .cancel) { }
         }
-        .actionSheet(isPresented: $showLanguagePicker) {
-            ActionSheet(
-                title: Text("Dil Seçin"),
-                buttons: [
-                    .default(Text("Türkçe")) {
-                        appLanguage = "tr"
-                    },
-                    .default(Text("English")) {
-                        appLanguage = "en"
-                    },
-                    .cancel()
-                ]
-            )
+        .confirmationDialog("Dil Seçin", isPresented: $showLanguagePicker, titleVisibility: .visible) {
+            Button("Türkçe") {
+                appLanguage = "tr"
+            }
+            Button("English") {
+                appLanguage = "en"
+            }
+            Button("İptal", role: .cancel) { }
         }
         .environment(\.locale, Locale(identifier: appLanguage))
     }
@@ -274,7 +264,9 @@ struct SettingsNavigationRow<Destination: View>: View {
                     .fontWeight(.medium)
                     .foregroundColor(.appSecondaryText.opacity(0.6))
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 4)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -319,7 +311,9 @@ struct SettingsActionRow: View {
                             .fill(Color.appSecondary.opacity(0.15))
                     )
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 4)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -356,7 +350,9 @@ struct SettingsExternalRow: View {
                     .font(.title3)
                     .foregroundColor(.appSecondaryText.opacity(0.6))
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 4)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
