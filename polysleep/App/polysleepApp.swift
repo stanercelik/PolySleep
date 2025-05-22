@@ -51,8 +51,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("appLanguage") private var appLanguage = "tr"
+    @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @StateObject private var authManager = AuthManager.shared
     @StateObject private var scheduleManager = ScheduleManager.shared
     
@@ -112,6 +112,7 @@ struct polysleepApp: App {
         // UserDefaults'ı temizle
         UserDefaults.standard.set(false, forKey: "AppFirstLaunch")
         UserDefaults.standard.set(false, forKey: "onboardingCompleted")
+        UserDefaults.standard.removeObject(forKey: "userSelectedTheme")
         
         // Kullanıcı ve program verilerini sıfırla
         Task {
@@ -132,7 +133,6 @@ struct polysleepApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.locale, Locale(identifier: appLanguage))
-                .preferredColorScheme(isDarkMode ? .dark : .light)
                 .environmentObject(authManager)
                 .environmentObject(scheduleManager)
                 .onAppear {
@@ -162,6 +162,8 @@ struct polysleepApp: App {
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.colorScheme) var systemColorScheme
+    @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @Query private var userPreferences: [UserPreferences]
     @Query private var sleepSchedules: [SleepScheduleStore]
     
@@ -183,5 +185,22 @@ struct ContentView: View {
                     }
             }
         }
+        .preferredColorScheme(getPreferredColorScheme())
+        .onAppear {
+            // İlk açılışta kullanıcı tema tercihi yoksa sistem temasını ayarla
+            if userSelectedTheme == nil {
+                print("İlk açılış: Sistem teması kullanılıyor - \(systemColorScheme == .dark ? "Koyu" : "Açık")")
+            }
+        }
+    }
+    
+    /// Kullanıcının tema tercihine göre color scheme döndürür
+    private func getPreferredColorScheme() -> ColorScheme? {
+        // Eğer kullanıcı tema seçimi yapmışsa, onu kullan
+        if let userChoice = userSelectedTheme {
+            return userChoice ? .dark : .light
+        }
+        // Aksi halde sistem temasını kullan (nil dönerek)
+        return nil
     }
 }

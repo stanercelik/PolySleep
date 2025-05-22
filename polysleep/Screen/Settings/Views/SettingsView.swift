@@ -2,12 +2,13 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @AppStorage("isDarkMode") private var isDarkMode = true
+    @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @AppStorage("appLanguage") private var appLanguage = "tr"
     @AppStorage("coreNotificationTime") private var coreNotificationTime: Double = 30 // Dakika
     @AppStorage("napNotificationTime") private var napNotificationTime: Double = 15 // Dakika
     @AppStorage("showRatingNotification") private var showRatingNotification = true
     @State private var showLanguagePicker = false
+    @State private var showThemePicker = false
     
     var body: some View {
         ZStack {
@@ -41,15 +42,36 @@ struct SettingsView: View {
                 
                 // MARK: - Genel Ayarlar Bölümü
                 Section(header: Text("settings.general.title", tableName: "Profile")) {
-                    // Koyu Mod Ayarı
+                    // Tema Ayarı
                     HStack {
                         Image(systemName: "moon.fill")
                             .foregroundColor(.appPrimary)
                             .frame(width: 24)
-                        Text("settings.general.darkMode", tableName: "Profile")
+                        Text("settings.general.theme", tableName: "Profile")
                         Spacer()
-                        Toggle("", isOn: $isDarkMode)
-                            .labelsHidden()
+                        Button(action: {
+                            showThemePicker = true
+                        }) {
+                            Text(getThemeDisplayText())
+                                .foregroundColor(.appSecondary)
+                        }
+                    }
+                    .actionSheet(isPresented: $showThemePicker) {
+                        ActionSheet(
+                            title: Text("settings.general.selectTheme", tableName: "Profile"),
+                            buttons: [
+                                .default(Text("settings.general.theme.system", tableName: "Profile")) {
+                                    userSelectedTheme = nil
+                                },
+                                .default(Text("settings.general.theme.light", tableName: "Profile")) {
+                                    userSelectedTheme = false
+                                },
+                                .default(Text("settings.general.theme.dark", tableName: "Profile")) {
+                                    userSelectedTheme = true
+                                },
+                                .cancel()
+                            ]
+                        )
                     }
                     
                     // Dil Ayarı
@@ -138,9 +160,18 @@ struct SettingsView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .scrollContentBackground(.hidden)
-        .navigationTitle("settings.title")
+        .navigationTitle(String(localized: "settings.title", table: "Profile", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.locale, Locale(identifier: appLanguage))
+    }
+    
+    /// Seçili temanın görüntülenen metnini döndürür
+    private func getThemeDisplayText() -> String {
+        if let userChoice = userSelectedTheme {
+            return userChoice ? NSLocalizedString("settings.general.theme.dark", tableName: "Profile", comment: "") : NSLocalizedString("settings.general.theme.light", tableName: "Profile", comment: "")
+        } else {
+            return NSLocalizedString("settings.general.theme.system", tableName: "Profile", comment: "")
+        }
     }
 }
 

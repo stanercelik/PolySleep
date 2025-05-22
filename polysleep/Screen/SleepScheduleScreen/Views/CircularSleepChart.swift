@@ -268,17 +268,17 @@ struct CircularSleepChart: View {
             let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
             let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
             let blockType = block.isCore ?
-                NSLocalizedString("sleepBlock.core", comment: "Core sleep block") :
-                NSLocalizedString("sleepBlock.nap", comment: "Nap block")
+                NSLocalizedString("sleepBlock.core", tableName: "MainScreen", comment: "Core sleep block") :
+                NSLocalizedString("sleepBlock.nap", tableName: "MainScreen", comment: "Nap block")
             let description = String(
-                format: NSLocalizedString("sleepBlock.description", comment: "Sleep block description format"),
+                format: NSLocalizedString("sleepBlock.description", tableName: "MainScreen", comment: "Sleep block description format"),
                 arguments: ["\(index + 1)", blockType, startTimeStr, endTimeStr]
             )
             descriptions.append(description)
         }
         let scheduleDescription = descriptions.joined(separator: ". ")
         return String(
-            format: NSLocalizedString("sleepSchedule.description", comment: "Sleep schedule description"),
+            format: NSLocalizedString("sleepSchedule.description", tableName: "MainScreen", comment: "Sleep schedule description"),
             arguments: [scheduleDescription]
         )
     }

@@ -966,6 +966,23 @@
         }
       }
     },
+    "sleepQuality.notification.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate Your Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uykunu Puanla"
+          }
+        }
+      }
+    },
     "sleepQuality.question" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1114,6 +1131,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geçmiş sayfasından uykunu puanlayabilirsin!"
+          }
+        }
+      }
+    },
+    "sleepBlock.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana uyku"
+          }
+        }
+      }
+    },
+    "sleepBlock.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
+    "sleepBlock.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Block %1$@: %2$@ from %3$@ to %4$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok %1$@: %3$@ ile %4$@ arasında %2$@"
+          }
+        }
+      }
+    },
+    "sleepSchedule.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep schedule: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku programı: %@"
           }
         }
       }

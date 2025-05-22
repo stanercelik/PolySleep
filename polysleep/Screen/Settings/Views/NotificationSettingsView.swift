@@ -17,7 +17,7 @@ struct NotificationSettingsView: View {
                         .foregroundColor(.secondary)
                     
                     if coreNotificationTime > 0 {
-                        Text("notifications.time.before \(formatTime(minutes: Int(coreNotificationTime)))", tableName: "Profile")
+                        Text("\(formatTime(minutes: Int(coreNotificationTime)))", tableName: "Profile")
                             .font(.headline)
                     } else {
                         Text("notifications.disabled", tableName: "Profile")
@@ -52,7 +52,7 @@ struct NotificationSettingsView: View {
                         .foregroundColor(.secondary)
                     
                     if napNotificationTime > 0 {
-                        Text("notifications.time.before \(formatTime(minutes: Int(napNotificationTime)))", tableName: "Profile")
+                        Text("\(formatTime(minutes: Int(napNotificationTime)))", tableName: "Profile")
                             .font(.headline)
                     } else {
                         Text("notifications.disabled", tableName: "Profile")
@@ -94,7 +94,7 @@ struct NotificationSettingsView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .background(Color.appBackground.ignoresSafeArea())
-        .navigationTitle("settings.notifications.settings")
+        .navigationTitle(Text("settings.notifications.settings", tableName: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: hasScheduleChanged) { _, newValue in
             if newValue {

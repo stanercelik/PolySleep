@@ -20,13 +20,13 @@ public enum DifficultyLevel: String, CaseIterable, Identifiable {
     var localizedDescription: String {
         switch self {
         case .beginner:
-            return NSLocalizedString("difficulty.beginner", comment: "Beginner difficulty")
+            return NSLocalizedString("difficulty.beginner", tableName: "Common", comment: "Beginner difficulty")
         case .intermediate:
-            return NSLocalizedString("difficulty.intermediate", comment: "Intermediate difficulty")
+            return NSLocalizedString("difficulty.intermediate", tableName: "Common", comment: "Intermediate difficulty")
         case .advanced:
-            return NSLocalizedString("difficulty.advanced", comment: "Advanced difficulty")
+            return NSLocalizedString("difficulty.advanced", tableName: "Common", comment: "Advanced difficulty")
         case .extreme:
-            return NSLocalizedString("difficulty.extreme", comment: "Extreme difficulty")
+            return NSLocalizedString("difficulty.extreme", tableName: "Common", comment: "Extreme difficulty")
         }
     }
     

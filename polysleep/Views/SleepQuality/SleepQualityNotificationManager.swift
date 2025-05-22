@@ -64,8 +64,8 @@ class SleepQualityNotificationManager: NSObject, ObservableObject, UNUserNotific
     
     private func showNotification(startTime: Date, endTime: Date) {
         let content = UNMutableNotificationContent()
-        content.title = NSLocalizedString("sleepQuality.notification.title", comment: "")
-        content.body = NSLocalizedString("sleepQuality.question", comment: "")
+        content.title = NSLocalizedString("sleepQuality.notification.title", tableName: "MainScreen", comment: "")
+        content.body = NSLocalizedString("sleepQuality.question", tableName: "MainScreen", comment: "")
         content.sound = .default
         content.categoryIdentifier = ratingCategories
         

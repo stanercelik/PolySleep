@@ -353,7 +353,8 @@ struct SleepBlocksSection: View {
                         )
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, viewModel.isEditing ? 16 : 16)
+                .padding(.trailing, viewModel.isEditing ? 50 : 0)
                 .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.isEditing)
             }
         }
@@ -399,128 +400,112 @@ struct SleepBlockCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .topLeading) {
-                // Ana kart içeriği
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text(block.isCore ? String("🛏️") : String("⚡️"))
-                            .font(.title2)
-                        Text("\(block.startTime) - \(block.endTime)")
-                            .font(.headline)
-                            .foregroundColor(.appText)
-                    }
-                    
-                    Text(
-                        block.isCore
-                        ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
-                        : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
-                    )
-                    .font(.subheadline)
-                    .foregroundColor(.appSecondaryText)
-                    
+        ZStack {
+            // Ana kart içeriği
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text(block.isCore ? String("🛏️") : String("⚡️"))
+                        .font(.title2)
+                    Text("\(block.startTime) - \(block.endTime)")
+                        .font(.headline)
+                        .foregroundColor(.appText)
                 }
-                .padding()
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.appCardBackground)
-                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                )
                 
-                // Düzenleme modu aktifken görünecek düzenleme ve silme butonları
-                if viewModel.isEditing {
-                    // Düzenleme butonu - Sol üstte
-                    Button(action: {
-                        hapticFeedback(style: .light)
-                        viewModel.prepareForEditing(block)
-                        showingEditSheet = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.appCardBackground)
-                                .frame(width: 34, height: 34)
-                                .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
-                            
-                            Circle()
-                                .fill(Color.appPrimary.opacity(0.2))
-                                .frame(width: 32, height: 32)
-                            
-                            Image(systemName: "pencil")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(Color.appPrimary)
-                        }
-                    }
-                    .scaleEffect(buttonScale)
-                    .onLongPressGesture(minimumDuration: 0.1, maximumDistance: 10) {
-                        // Uzun basıldığında
-                    } onPressingChanged: { pressing in
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            buttonScale = pressing ? 0.9 : 1.0
-                        }
-                    }
-                    .position(x: 16, y: 16)
-                    .zIndex(1)
-                    
-                    // Silme butonu - Sağ üstte
-                    Button(action: {
-                        hapticFeedback(style: .medium)
-                        showDeleteConfirmation = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.appCardBackground)
-                                .frame(width: 34, height: 34)
-                                .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
-                            
-                            Circle()
-                                .fill(Color.red.opacity(0.2))
-                                .frame(width: 32, height: 32)
-                            
-                            Image(systemName: "trash")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundColor(Color.red)
-                        }
-                    }
-                    .scaleEffect(buttonScale)
-                    .onLongPressGesture(minimumDuration: 0.1, maximumDistance: 10) {
-                        // Uzun basıldığında
-                    } onPressingChanged: { pressing in
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            buttonScale = pressing ? 0.9 : 1.0
-                        }
-                    }
-                    .position(x: geometry.size.width - 16, y: 16)
-                    .zIndex(1)
-                }
+                Text(
+                    block.isCore
+                    ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "")
+                    : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "")
+                )
+                .font(.subheadline)
+                .foregroundColor(.appSecondaryText)
+                
             }
+            .padding()
+            .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.appCardBackground)
+                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+            )
+            
+            // Düzenleme modu aktifken görünecek aksiyon butonları
+            if viewModel.isEditing {
+                HStack {
+                    Spacer()
+                    VStack(spacing: 8) {
+                        // Düzenleme butonu
+                        EditActionButton(
+                            systemImage: "pencil",
+                            backgroundColor: Color.appPrimary,
+                            isPressed: buttonScale != 1.0
+                        ) {
+                            hapticFeedback(style: .light)
+                            viewModel.prepareForEditing(block)
+                            showingEditSheet = true
+                        }
+                        .scaleEffect(buttonScale)
+                        .onLongPressGesture(minimumDuration: 0.05, maximumDistance: 10) {
+                            // Uzun basış aksiyonu
+                        } onPressingChanged: { pressing in
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                buttonScale = pressing ? 0.92 : 1.0
+                            }
+                        }
+                        
+                        // Silme butonu
+                        EditActionButton(
+                            systemImage: "trash",
+                            backgroundColor: Color.red,
+                            isPressed: buttonScale != 1.0
+                        ) {
+                            hapticFeedback(style: .medium)
+                            showDeleteConfirmation = true
+                        }
+                        .scaleEffect(buttonScale)
+                        .onLongPressGesture(minimumDuration: 0.05, maximumDistance: 10) {
+                            // Uzun basış aksiyonu
+                        } onPressingChanged: { pressing in
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                buttonScale = pressing ? 0.92 : 1.0
+                            }
+                        }
+                    }
+                    .offset(x: 10, y: 0)
+                    .zIndex(2)
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.3).combined(with: .opacity).combined(with: .offset(x: 10, y: -10)),
+                        removal: .scale(scale: 0.3).combined(with: .opacity).combined(with: .offset(x: 10, y: -10))
+                    ))
+                }
+                .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+            }
+        }
             .sheet(isPresented: $showingEditSheet) {
                 EditSleepBlockSheet(viewModel: viewModel)
             }
             .confirmationDialog(
-                NSLocalizedString("sleepBlock.delete.title", comment: "Uyku bloğunu sil"),
+                NSLocalizedString("sleepBlock.delete.title", tableName: "MainScreen", comment: "Uyku bloğunu sil"),
                 isPresented: $showDeleteConfirmation,
                 titleVisibility: .visible
             ) {
-                Button(NSLocalizedString("sleepBlock.delete.confirm", comment: "Sil"), role: .destructive) {
+                Button(NSLocalizedString("sleepBlock.delete.confirm", tableName: "MainScreen", comment: "Sil"), role: .destructive) {
                     withAnimation {
                         viewModel.deleteBlock(block)
                     }
                     hapticFeedback(style: .rigid)
                 }
-                Button(NSLocalizedString("general.cancel", comment: "İptal"), role: .cancel) {}
+                Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "İptal"), role: .cancel) {}
             } message: {
-                Text(NSLocalizedString("sleepBlock.delete.message", comment: "Bu uyku bloğunu silmek istediğinizden emin misiniz?"))
+                Text(NSLocalizedString("sleepBlock.delete.message", tableName: "MainScreen", comment: "Bu uyku bloğunu silmek istediğinizden emin misiniz?"))
             }
         }
-        .frame(width: UIScreen.main.bounds.width / 2, height: 90)
     }
     
     private func hapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
-}
+
 
 // MARK: - Edit Sleep Block Sheet
 struct EditSleepBlockSheet: View {
@@ -686,6 +671,62 @@ struct InfoCard: View {
                     y: 2
                 )
         )
+    }
+}
+
+// MARK: - Edit Action Button
+struct EditActionButton: View {
+    let systemImage: String
+    let backgroundColor: Color
+    let isPressed: Bool
+    let action: () -> Void
+    
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                // Dış gölge halesi
+                Circle()
+                    .fill(backgroundColor.opacity(0.15))
+                    .frame(width: 40, height: 40)
+                    .blur(radius: 4)
+                
+                // Ana buton
+                Circle()
+                    .fill(backgroundColor)
+                    .frame(width: 36, height: 36)
+                    .shadow(
+                        color: backgroundColor.opacity(0.4),
+                        radius: 6,
+                        x: 0,
+                        y: 3
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.white.opacity(0.3),
+                                        Color.clear
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
+                            )
+                    )
+                
+                // İkon
+                Image(systemName: systemImage)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.white)
+                    .scaleEffect(isPressed ? 0.85 : 1.0)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+        .accessibility(addTraits: .isButton)
+        .accessibility(hint: Text(systemImage == "pencil" ? "Düzenle" : "Sil"))
     }
 }
 

@@ -56,7 +56,7 @@ struct PersonalInfoView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .background(Color.appBackground.ignoresSafeArea())
-        .navigationTitle("settings.about.personalInfo")
+        .navigationTitle(Text("settings.about.personalInfo", tableName: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
     }
     
