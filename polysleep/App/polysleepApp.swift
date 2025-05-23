@@ -51,10 +51,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct polysleepApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @AppStorage("appLanguage") private var appLanguage = "tr"
     @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @StateObject private var authManager = AuthManager.shared
     @StateObject private var scheduleManager = ScheduleManager.shared
+    @StateObject private var languageManager = LanguageManager.shared
     
     // Sınıf düzeyinde @Query tanımlıyoruz, böylece yerel alan içinde kullanmamış oluruz
     @Query var preferences: [UserPreferences]
@@ -132,9 +132,11 @@ struct polysleepApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.locale, Locale(identifier: appLanguage))
+                .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
                 .environmentObject(authManager)
                 .environmentObject(scheduleManager)
+                .environmentObject(languageManager)
+                .withLanguageEnvironment()
                 .onAppear {
                     LocalNotificationService.shared.requestAuthorization { granted, error in
                         if granted {

@@ -13,10 +13,10 @@ enum TimeRange: String, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .Week: return "Hafta"
-        case .Month: return "Ay"
-        case .Quarter: return "Çeyrek"
-        case .Year: return "Yıl"
+        case .Week: return L("analytics.timeRange.week", table: "Analytics")
+        case .Month: return L("analytics.timeRange.month", table: "Analytics")
+        case .Quarter: return L("analytics.timeRange.quarter", table: "Analytics")
+        case .Year: return L("analytics.timeRange.year", table: "Analytics")
         }
     }
     
@@ -37,6 +37,16 @@ enum SleepQualityCategory: String, CaseIterable {
     case average = "Ortalama" 
     case poor = "Kötü"
     case bad = "Çok Kötü"
+    
+    var localizedName: String {
+        switch self {
+        case .excellent: return L("analytics.sleepQuality.excellent", table: "Analytics")
+        case .good: return L("analytics.sleepQuality.good", table: "Analytics")
+        case .average: return L("analytics.sleepQuality.average", table: "Analytics")
+        case .poor: return L("analytics.sleepQuality.poor", table: "Analytics")
+        case .bad: return L("analytics.sleepQuality.bad", table: "Analytics")
+        }
+    }
     
     var color: Color {
         switch self {
@@ -457,14 +467,14 @@ class AnalyticsViewModel: ObservableObject {
         let totalHours = coreHours + napHours
         
         var coreData = SleepBreakdownData(
-            type: NSLocalizedString("analytics.sleepBreakdown.core", tableName: "Analytics", comment: "Core sleep type"),
+            type: L("analytics.sleepBreakdown.core", table: "Analytics"),
             hours: coreHours,
             percentage: totalHours > 0 ? (coreHours / totalHours) * 100 : 0,
             color: Color("AccentColor") // Design system rengi
         )
         
         var napData = SleepBreakdownData(
-            type: NSLocalizedString("analytics.sleepBreakdown.nap", tableName: "Analytics", comment: "Nap sleep type"),
+            type: L("analytics.sleepBreakdown.nap", table: "Analytics"),
             hours: napHours,
             percentage: totalHours > 0 ? (napHours / totalHours) * 100 : 0,
             color: Color("PrimaryColor") // Design system rengi

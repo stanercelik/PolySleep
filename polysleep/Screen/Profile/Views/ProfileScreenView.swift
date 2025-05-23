@@ -4,6 +4,7 @@ import SwiftData
 struct ProfileScreenView: View {
     @StateObject var viewModel = ProfileScreenViewModel()
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var languageManager: LanguageManager
     @State private var showEmojiPicker = false
     @State private var isPickingCoreEmoji = true
     @State private var showLoginSheet = false
@@ -51,7 +52,7 @@ struct ProfileScreenView: View {
                 // Başarılı giriş mesajı
                 if showSuccessMessage {
                     VStack {
-                        Text("profile.login.success", tableName: "Profile")
+                        Text(L("profile.login.success", table: "Profile"))
                             .padding()
                             .background(Color.appPrimary)
                             .foregroundColor(.white)
@@ -72,7 +73,7 @@ struct ProfileScreenView: View {
                     }
                 }
             }
-            .navigationTitle(NSLocalizedString("profile.title", tableName: "Profile", comment: "Profile screen title"))
+            .navigationTitle(L("profile.title", table: "Profile"))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showEmojiPicker) {
                 EmojiPickerView(
@@ -121,13 +122,13 @@ struct PremiumUpgradeCard: View {
                                 .font(.title2)
                                 .foregroundColor(.yellow)
                             
-                            Text(NSLocalizedString("profile.premium.title", tableName: "Profile", comment: "Premium section title"))
+                            Text(L("profile.premium.title", table: "Profile"))
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                         }
                         
-                        Text(NSLocalizedString("profile.premium.description", tableName: "Profile", comment: "Premium features description"))
+                        Text(L("profile.premium.description", table: "Profile"))
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.9))
                     }
@@ -135,7 +136,7 @@ struct PremiumUpgradeCard: View {
                     Spacer()
                     
                     VStack {
-                        Text(NSLocalizedString("profile.premium.upgrade", tableName: "Profile", comment: "Upgrade button title"))
+                        Text(L("profile.premium.upgrade", table: "Profile"))
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -154,9 +155,9 @@ struct PremiumUpgradeCard: View {
                 
                 // Premium Features
                 HStack(spacing: 20) {
-                    PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: NSLocalizedString("profile.premium.features.statistics", tableName: "Profile", comment: "Statistics feature"))
-                    PremiumFeature(icon: "bell.badge", title: NSLocalizedString("profile.premium.features.notifications", tableName: "Profile", comment: "Notifications feature"))
-                    PremiumFeature(icon: "paintbrush", title: NSLocalizedString("profile.premium.features.themes", tableName: "Profile", comment: "Themes feature"))
+                    PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: L("profile.premium.features.statistics", table: "Profile"))
+                    PremiumFeature(icon: "bell.badge", title: L("profile.premium.features.notifications", table: "Profile"))
+                    PremiumFeature(icon: "paintbrush", title: L("profile.premium.features.themes", table: "Profile"))
                 }
             }
             .padding()
@@ -256,12 +257,12 @@ struct ProfileHeaderCard: View {
                 VStack(alignment: .leading, spacing: 8) {
                     // Name
                     if let user = authManager.currentUser {
-                        Text(user.displayName.isEmpty ? NSLocalizedString("profile.user.defaultName", tableName: "Profile", comment: "Default user name") : user.displayName)
+                        Text(user.displayName.isEmpty ? L("profile.user.defaultName", table: "Profile") : user.displayName)
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.appText)
                         
-                        Text(NSLocalizedString("profile.user.localAccount", tableName: "Profile", comment: "Local account label"))
+                        Text(L("profile.user.localAccount", table: "Profile"))
                             .font(.subheadline)
                             .foregroundColor(.appSecondaryText)
                             .padding(.horizontal, 12)
@@ -279,7 +280,7 @@ struct ProfileHeaderCard: View {
                         HStack(spacing: 6) {
                             Image(systemName: "pencil")
                                 .font(.caption)
-                            Text(NSLocalizedString("profile.user.editProfile", tableName: "Profile", comment: "Edit profile button"))
+                            Text(L("profile.user.editProfile", table: "Profile"))
                                 .font(.caption)
                                 .fontWeight(.medium)
                         }
@@ -327,7 +328,7 @@ struct LogoutSheetView: View {
     var body: some View {
         return VStack(spacing: 24) {
             // Başlık
-            Text("profile.logout.title", tableName: "Profile")
+            Text(L("profile.logout.title", table: "Profile"))
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(.appText)
@@ -347,7 +348,7 @@ struct LogoutSheetView: View {
                     dismiss()
                 }
             }) {
-                Text("profile.login.signout", tableName: "Profile")
+                Text(L("profile.login.signout", table: "Profile"))
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -375,14 +376,14 @@ struct LoginSheetView: View {
     var body: some View {
         return VStack(spacing: 24) {
             // Başlık
-            Text("profile.edit.title", tableName: "Profile")
+            Text(L("profile.edit.title", table: "Profile"))
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(.appText)
                 .padding(.top, 24)
             
             // Açıklama
-            Text("profile.edit.description", tableName: "Profile")
+            Text(L("profile.edit.description", table: "Profile"))
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.appSecondaryText)
@@ -392,7 +393,7 @@ struct LoginSheetView: View {
             VStack(spacing: 16) {
                 // İsim girişi
                 TextField(
-                    NSLocalizedString("profile.edit.name.placeholder", tableName: "Profile", comment: "Placeholder for display name"),
+                    L("profile.edit.name.placeholder", table: "Profile"),
                     text: $displayName
                 )
                 .padding()
@@ -411,7 +412,7 @@ struct LoginSheetView: View {
                         onSuccessfulLogin()
                     }
                 }) {
-                    Text("profile.edit.save", tableName: "Profile")
+                    Text(L("profile.edit.save", table: "Profile"))
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -461,7 +462,7 @@ struct StatsGridSection: View {
                     .font(.title2)
                     .foregroundColor(.appPrimary)
                 
-                Text(NSLocalizedString("profile.stats.title", tableName: "Profile", comment: "Statistics section title"))
+                Text(L("profile.stats.title", table: "Profile"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -476,9 +477,9 @@ struct StatsGridSection: View {
                 // Current Streak
                 StatCard(
                     icon: "flame.fill",
-                    title: NSLocalizedString("profile.stats.currentStreak", tableName: "Profile", comment: "Current streak"),
+                    title: L("profile.stats.currentStreak", table: "Profile"),
                     value: "\(viewModel.currentStreak)",
-                    subtitle: NSLocalizedString("profile.stats.days", tableName: "Profile", comment: "Days unit"),
+                    subtitle: L("profile.stats.days", table: "Profile"),
                     color: .orange,
                     gradientColors: [.orange, .red]
                 )
@@ -486,9 +487,9 @@ struct StatsGridSection: View {
                 // Longest Streak
                 StatCard(
                     icon: "trophy.fill",
-                    title: NSLocalizedString("profile.stats.longestStreak", tableName: "Profile", comment: "Longest streak"),
+                    title: L("profile.stats.longestStreak", table: "Profile"),
                     value: "\(viewModel.longestStreak)",
-                    subtitle: NSLocalizedString("profile.stats.days", tableName: "Profile", comment: "Days unit"),
+                    subtitle: L("profile.stats.days", table: "Profile"),
                     color: .appSecondary,
                     gradientColors: [.appSecondary, .appAccent]
                 )
@@ -496,9 +497,9 @@ struct StatsGridSection: View {
                 // Total Sessions
                 StatCard(
                     icon: "moon.zzz.fill",
-                    title: NSLocalizedString("profile.stats.totalSleep", tableName: "Profile", comment: "Total sleep"),
+                    title: L("profile.stats.totalSleep", table: "Profile"),
                     value: "\(calculateTotalSessions())",
-                    subtitle: NSLocalizedString("profile.stats.sessions", tableName: "Profile", comment: "Sessions unit"),
+                    subtitle: L("profile.stats.sessions", table: "Profile"),
                     color: .purple,
                     gradientColors: [.purple, .blue]
                 )
@@ -506,9 +507,9 @@ struct StatsGridSection: View {
                 // Success Rate
                 StatCard(
                     icon: "checkmark.seal.fill",
-                    title: NSLocalizedString("profile.stats.successRate", tableName: "Profile", comment: "Success rate"),
+                    title: L("profile.stats.successRate", table: "Profile"),
                     value: "\(calculateSuccessRate())%",
-                    subtitle: NSLocalizedString("profile.stats.completion", tableName: "Profile", comment: "Completion unit"),
+                    subtitle: L("profile.stats.completion", table: "Profile"),
                     color: .green,
                     gradientColors: [.green, .mint]
                 )
@@ -609,7 +610,7 @@ struct AdaptationPhaseCard: View {
                     .font(.title2)
                     .foregroundColor(.appAccent)
                 
-                Text(NSLocalizedString("profile.adaptation.title", tableName: "Profile", comment: "Adaptation process title"))
+                Text(L("profile.adaptation.title", table: "Profile"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -647,20 +648,20 @@ struct AdaptationPhaseCard: View {
                 .fill(Color.appCardBackground)
                 .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
         )
-        .alert(NSLocalizedString("profile.adaptation.reset.title", tableName: "Profile", comment: "Reset adaptation alert title"), isPresented: $showingResetAlert) {
-            Button(NSLocalizedString("general.cancel", tableName: "Profile", comment: "Cancel button"), role: .cancel) { }
-            Button(NSLocalizedString("profile.adaptation.reset.confirm", tableName: "Profile", comment: "Reset confirmation button"), role: .destructive) {
+        .alert(L("profile.adaptation.reset.title", table: "Profile"), isPresented: $showingResetAlert) {
+            Button(L("general.cancel", table: "Profile"), role: .cancel) { }
+            Button(L("profile.adaptation.reset.confirm", table: "Profile"), role: .destructive) {
                 resetAdaptationPhase()
             }
         } message: {
-            Text(NSLocalizedString("profile.adaptation.reset.message", tableName: "Profile", comment: "Reset adaptation message"))
+            Text(L("profile.adaptation.reset.message", table: "Profile"))
         }
-        .alert(NSLocalizedString("general.error", tableName: "Profile", comment: "Error alert title"), isPresented: .init(get: { resetError != nil }, set: { if !$0 { resetError = nil } })) {
-            Button(NSLocalizedString("general.ok", tableName: "Profile", comment: "OK button"), role: .cancel) {
+        .alert(L("general.error", table: "Profile"), isPresented: .init(get: { resetError != nil }, set: { if !$0 { resetError = nil } })) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {
                 resetError = nil
             }
         } message: {
-            Text(resetError ?? NSLocalizedString("general.unknownError", tableName: "Profile", comment: "Unknown error message"))
+            Text(resetError ?? L("general.unknownError", table: "Profile"))
         }
     }
     
@@ -693,12 +694,12 @@ struct EmptyAdaptationCard: View {
                 .foregroundColor(.appSecondaryText.opacity(0.5))
             
             VStack(spacing: 8) {
-                Text(NSLocalizedString("profile.adaptation.empty.title", tableName: "Profile", comment: "No active program title"))
+                Text(L("profile.adaptation.empty.title", table: "Profile"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.appText)
                 
-                Text(NSLocalizedString("profile.adaptation.empty.description", tableName: "Profile", comment: "Select a program description"))
+                Text(L("profile.adaptation.empty.description", table: "Profile"))
                     .font(.caption)
                     .foregroundColor(.appSecondaryText)
                     .multilineTextAlignment(.center)
@@ -745,7 +746,7 @@ struct AdaptationProgressCard: View {
                         .fontWeight(.bold)
                         .foregroundColor(.appText)
                     
-                    Text("Gün \(completedDays) / \(duration)")
+                    Text(String(format: L("profile.adaptation.dayProgress", table: "Profile"), completedDays, duration))
                         .font(.subheadline)
                         .foregroundColor(.appSecondaryText)
                 }
@@ -834,23 +835,23 @@ struct AdaptationProgressCard: View {
         
         switch currentPhase {
         case 0:
-            return "Adaptasyon sürecine başladın! İlk gündesin ve vücudun yeni düzene alışmaya başlıyor."
+            return L("profile.adaptation.phase0.description", table: "Profile")
         case 1:
-            return "Uyum aşamasındasın (\(completedDays). gün). Bu kritik dönemde programa sadık kalmak çok önemli."
+            return String(format: L("profile.adaptation.phase1.description", table: "Profile"), completedDays)
         case 2:
-            return "Adaptasyon aşamasındasın (\(completedDays). gün). Uyku kalitenin artmaya başlaması bekleniyor."
+            return String(format: L("profile.adaptation.phase2.description", table: "Profile"), completedDays)
         case 3:
-            return "İleri adaptasyon aşamasındasın (\(completedDays). gün). Vücudun yeni düzene neredeyse alıştı."
+            return String(format: L("profile.adaptation.phase3.description", table: "Profile"), completedDays)
         case 4:
             if duration == 28 {
-                return "Tam adaptasyon aşamasındasın (\(completedDays). gün). Programda istikrarlı kalman önemli."
+                return String(format: L("profile.adaptation.phase4.28day.description", table: "Profile"), completedDays)
             } else {
-                return "Tam adaptasyon! (\(completedDays). gün) Polifazik uyku düzenine tamamen adapte oldun."
+                return String(format: L("profile.adaptation.phase4.21day.description", table: "Profile"), completedDays)
             }
         case 5...:
-            return "Tam adaptasyon+! (\(completedDays). gün) En zor uyku programlarına bile tamamen adapte oldun."
+            return String(format: L("profile.adaptation.phase5.description", table: "Profile"), completedDays)
         default:
-            return "Adaptasyon süreci devam ediyor..."
+            return L("profile.adaptation.default.description", table: "Profile")
         }
     }
 }
@@ -915,14 +916,14 @@ struct ProgressIndicatorView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Adaptasyon İlerlemesi")
+                Text(L("profile.adaptation.progressTitle", table: "Profile"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.appText)
                 
                 Spacer()
                 
-                Text(String(format: "%d / %d gün", completedDays, totalDays))
+                Text(String(format: L("profile.adaptation.dayCount", table: "Profile"), completedDays, totalDays))
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(.appSecondaryText)
@@ -940,7 +941,7 @@ struct ProgressIndicatorView: View {
             ProgressBarView(progress: progress, phaseColor: phaseColor, currentPhase: currentPhase, totalDays: totalDays)
             
             // İlerleme yüzdesi
-            Text(String(format: "%%%d Tamamlandı", Int(progress * 100)))
+            Text(String(format: L("profile.adaptation.percentCompleted", table: "Profile"), Int(progress * 100)))
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(phaseColor)
@@ -1055,9 +1056,9 @@ struct TimelineItemsView: View {
             // Başlangıç aşaması
             timelineItem(
                 icon: "1.circle.fill", 
-                title: "Başlangıç Aşaması", 
-                duration: "1. Gün", 
-                status: phase >= 0 ? (phase > 0 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
+                title: L("profile.adaptation.timeline.phase1.title", table: "Profile"), 
+                duration: L("profile.adaptation.timeline.phase1.duration", table: "Profile"), 
+                status: phase >= 0 ? (phase > 0 ? L("profile.adaptation.timeline.completed", table: "Profile") : L("profile.adaptation.timeline.inProgress", table: "Profile")) : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                 isCompleted: phase > 0,
                 isActive: phase == 0,
                 color: phaseColors[safe: 0] ?? .blue
@@ -1066,9 +1067,9 @@ struct TimelineItemsView: View {
             // Uyum aşaması
             timelineItem(
                 icon: "2.circle.fill", 
-                title: "Uyum Aşaması", 
-                duration: "1-7 gün", 
-                status: phase >= 1 ? (phase > 1 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
+                title: L("profile.adaptation.timeline.phase2.title", table: "Profile"), 
+                duration: L("profile.adaptation.timeline.phase2.duration", table: "Profile"), 
+                status: phase >= 1 ? (phase > 1 ? L("profile.adaptation.timeline.completed", table: "Profile") : L("profile.adaptation.timeline.inProgress", table: "Profile")) : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                 isCompleted: phase > 1, 
                 isActive: phase == 1,
                 color: phaseColors[safe: 1] ?? .purple
@@ -1077,9 +1078,9 @@ struct TimelineItemsView: View {
             // Adaptasyon aşaması
             timelineItem(
                 icon: "3.circle.fill", 
-                title: "Adaptasyon Aşaması", 
-                duration: "8-14 gün", 
-                status: phase >= 2 ? (phase > 2 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
+                title: L("profile.adaptation.timeline.phase3.title", table: "Profile"), 
+                duration: L("profile.adaptation.timeline.phase3.duration", table: "Profile"), 
+                status: phase >= 2 ? (phase > 2 ? L("profile.adaptation.timeline.completed", table: "Profile") : L("profile.adaptation.timeline.inProgress", table: "Profile")) : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                 isCompleted: phase > 2, 
                 isActive: phase == 2,
                 color: phaseColors[safe: 2] ?? .appSecondary
@@ -1088,9 +1089,9 @@ struct TimelineItemsView: View {
             // İleri adaptasyon
             timelineItem(
                 icon: "4.circle.fill", 
-                title: "İleri Adaptasyon", 
-                duration: "15-20 gün", 
-                status: phase >= 3 ? (phase > 3 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
+                title: L("profile.adaptation.timeline.phase4.title", table: "Profile"), 
+                duration: L("profile.adaptation.timeline.phase4.duration", table: "Profile"), 
+                status: phase >= 3 ? (phase > 3 ? L("profile.adaptation.timeline.completed", table: "Profile") : L("profile.adaptation.timeline.inProgress", table: "Profile")) : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                 isCompleted: phase > 3, 
                 isActive: phase == 3,
                 color: phaseColors[safe: 3] ?? .orange
@@ -1100,9 +1101,9 @@ struct TimelineItemsView: View {
                 // 28 günlük program için tam adaptasyon
                 timelineItem(
                     icon: "5.circle.fill", 
-                    title: "Tam Adaptasyon", 
-                    duration: "21-27 gün", 
-                    status: phase >= 4 ? (phase > 4 ? "Tamamlandı" : "Devam Ediyor") : "Bekliyor", 
+                    title: L("profile.adaptation.timeline.phase5.title", table: "Profile"), 
+                    duration: L("profile.adaptation.timeline.phase5.duration", table: "Profile"), 
+                    status: phase >= 4 ? (phase > 4 ? L("profile.adaptation.timeline.completed", table: "Profile") : L("profile.adaptation.timeline.inProgress", table: "Profile")) : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                     isCompleted: phase > 4, 
                     isActive: phase == 4,
                     color: phaseColors[safe: 4] ?? .green
@@ -1111,9 +1112,9 @@ struct TimelineItemsView: View {
                 // 28 günlük program için tam adaptasyon+
                 timelineItem(
                     icon: "checkmark.circle.fill", 
-                    title: "Tam Adaptasyon+", 
-                    duration: "28+ gün", 
-                    status: phase >= 5 ? "Devam Ediyor" : "Bekliyor", 
+                    title: L("profile.adaptation.timeline.phase6.title", table: "Profile"), 
+                    duration: L("profile.adaptation.timeline.phase6.duration", table: "Profile"), 
+                    status: phase >= 5 ? L("profile.adaptation.timeline.inProgress", table: "Profile") : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                     isCompleted: false, 
                     isActive: phase >= 5,
                     isLast: true,
@@ -1123,9 +1124,9 @@ struct TimelineItemsView: View {
                 // 21 günlük program için tam adaptasyon
                 timelineItem(
                     icon: "checkmark.circle.fill", 
-                    title: "Tam Adaptasyon", 
-                    duration: "21+ gün", 
-                    status: phase >= 4 ? "Devam Ediyor" : "Bekliyor", 
+                    title: L("profile.adaptation.timeline.phase5.title", table: "Profile"), 
+                    duration: L("profile.adaptation.timeline.phase5.21day.duration", table: "Profile"), 
+                    status: phase >= 4 ? L("profile.adaptation.timeline.inProgress", table: "Profile") : L("profile.adaptation.timeline.waiting", table: "Profile"), 
                     isCompleted: false, 
                     isActive: phase >= 4,
                     isLast: true,
@@ -1208,9 +1209,9 @@ struct TimelineItemsView: View {
     // Durum rengi
     private func statusColor(status: String) -> Color {
         switch status {
-        case "Tamamlandı":
+        case L("profile.adaptation.timeline.completed", table: "Profile"):
             return .green
-        case "Devam Ediyor":
+        case L("profile.adaptation.timeline.inProgress", table: "Profile"):
             return .appSecondary
         default:
             return .gray.opacity(0.5)
@@ -1239,7 +1240,7 @@ struct CustomizationCard: View {
                     .font(.title2)
                     .foregroundColor(.yellow)
                 
-                Text(NSLocalizedString("profile.customization.title", tableName: "Profile", comment: "Customization section title"))
+                Text(L("profile.customization.title", table: "Profile"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -1249,8 +1250,8 @@ struct CustomizationCard: View {
                 // Core Sleep Emoji
                 CustomizationRow(
                     icon: "moon.fill",
-                    title: NSLocalizedString("profile.customization.coreBlock.title", tableName: "Profile", comment: "Core sleep block customization title"),
-                    subtitle: NSLocalizedString("profile.customization.coreBlock.subtitle", tableName: "Profile", comment: "Core sleep block customization subtitle"),
+                    title: L("profile.customization.coreBlock.title", table: "Profile"),
+                    subtitle: L("profile.customization.coreBlock.subtitle", table: "Profile"),
                     currentEmoji: viewModel.selectedCoreEmoji,
                     color: .blue
                 ) {
@@ -1264,8 +1265,8 @@ struct CustomizationCard: View {
                 // Nap Emoji
                 CustomizationRow(
                     icon: "powersleep",
-                    title: NSLocalizedString("profile.customization.napBlock.title", tableName: "Profile", comment: "Nap block customization title"),
-                    subtitle: NSLocalizedString("profile.customization.napBlock.subtitle", tableName: "Profile", comment: "Nap block customization subtitle"),
+                    title: L("profile.customization.napBlock.title", table: "Profile"),
+                    subtitle: L("profile.customization.napBlock.subtitle", table: "Profile"),
                     currentEmoji: viewModel.selectedNapEmoji,
                     color: .green
                 ) {
@@ -1275,7 +1276,7 @@ struct CustomizationCard: View {
                 
                 // Info note
                 InfoCard(
-                    text: NSLocalizedString("profile.customization.infoText", tableName: "Profile", comment: "Customization info text")
+                    text: L("profile.customization.infoText", table: "Profile")
                 )
             }
         }
@@ -1370,7 +1371,7 @@ struct EmojiPickerView: View {
     
     var body: some View {
         return VStack(spacing: 20) {
-            Text(NSLocalizedString("profile.emojiPicker.title", tableName: "Profile", comment: "Emoji picker title"))
+            Text(L("profile.emojiPicker.title", table: "Profile"))
                 .font(.headline)
                 .padding(.top)
             
@@ -1395,7 +1396,7 @@ struct EmojiPickerView: View {
                 onSave()
                 dismiss()
             }) {
-                Text(NSLocalizedString("profile.emojiPicker.save", tableName: "Profile", comment: "Save emoji button"))
+                Text(L("profile.emojiPicker.save", table: "Profile"))
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -1414,5 +1415,6 @@ struct EmojiPickerView: View {
 struct ProfileScreenView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileScreenView()
+            .environmentObject(LanguageManager.shared)
     }
 }

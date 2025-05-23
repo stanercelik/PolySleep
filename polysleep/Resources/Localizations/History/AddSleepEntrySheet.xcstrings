@@ -21,6 +21,7 @@
     },
     "general.cancel" : {
       "comment" : "General Cancel button text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -38,6 +39,7 @@
     },
     "general.ok" : {
       "comment" : "Common OK button text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -55,6 +57,7 @@
     },
     "general.save" : {
       "comment" : "General Save button text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -216,6 +219,7 @@
     },
     "sleepEntry.add" : {
       "comment" : "Navigation title for adding a new sleep entry",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -233,6 +237,7 @@
     },
     "sleepEntry.date" : {
       "comment" : "Section title for selecting date",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -268,6 +273,7 @@
     },
     "sleepEntry.error.title" : {
       "comment" : "Alert title for sleep entry errors",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -303,6 +309,7 @@
     },
     "sleepEntry.noBlocks" : {
       "comment" : "Message shown when there are no available sleep blocks",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -320,6 +327,7 @@
     },
     "sleepEntry.quality" : {
       "comment" : "Section header for choosing sleep quality or feeling",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -355,6 +363,7 @@
     },
     "sleepEntry.selectBlock" : {
       "comment" : "Section title for selecting a sleep block",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -372,6 +381,7 @@
     },
     "sleepEntry.selectDate" : {
       "comment" : "Label for selecting date in a date picker",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -383,6 +393,132 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarih Seç"
+          }
+        }
+      }
+    },
+    "sleepEntry.quality.bad" : {
+      "comment" : "Label for bad sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "sleepEntry.quality.excellent" : {
+      "comment" : "Label for excellent sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel"
+          }
+        }
+      }
+    },
+    "sleep.quality.veryGood" : {
+      "comment" : "Very good sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok İyi"
+          }
+        }
+      }
+    },
+    "sleep.quality.good" : {
+      "comment" : "Good sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
+        }
+      }
+    },
+    "sleep.quality.okay" : {
+      "comment" : "Okay sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okay"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İdare Eder"
+          }
+        }
+      }
+    },
+    "sleep.quality.bad" : {
+      "comment" : "Bad sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "sleep.quality.veryBad" : {
+      "comment" : "Very bad sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Bad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok Kötü"
           }
         }
       }

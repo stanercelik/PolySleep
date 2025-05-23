@@ -3,6 +3,7 @@
   "strings" : {
     "analytics.averageScore" : {
       "comment" : "Average sleep score metric title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -18,8 +19,298 @@
         }
       }
     },
+    "analytics.bestWorstDays.bestDay" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En İyi Gün"
+          }
+        }
+      }
+    },
+    "analytics.bestWorstDays.noData" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veri yok"
+          }
+        }
+      }
+    },
+    "analytics.bestWorstDays.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best and Worst Days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En İyi ve En Kötü Günler"
+          }
+        }
+      }
+    },
+    "analytics.bestWorstDays.worstDay" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Worst Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Kötü Gün"
+          }
+        }
+      }
+    },
+    "analytics.chart.dayLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün"
+          }
+        }
+      }
+    },
+    "analytics.chart.hoursUnit" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d h"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d s"
+          }
+        }
+      }
+    },
+    "analytics.chart.percentageLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percentage"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüzde"
+          }
+        }
+      }
+    },
+    "analytics.chart.percentageShort" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%%.0f"
+          }
+        }
+      }
+    },
+    "analytics.chart.scoreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor"
+          }
+        }
+      }
+    },
+    "analytics.chart.sleepScoreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Skoru"
+          }
+        }
+      }
+    },
+    "analytics.comparison.hours" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f h"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f s"
+          }
+        }
+      }
+    },
+    "analytics.comparison.score" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f pts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f puan"
+          }
+        }
+      }
+    },
+    "analytics.consistency.description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consistency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutarlılık"
+          }
+        }
+      }
+    },
+    "analytics.consistency.greatRoutine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have a great sleep routine!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harika bir uyku rutininiz var!"
+          }
+        }
+      }
+    },
+    "analytics.consistency.improveRoutine" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work on more regular sleep hours"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha düzenli uyku saatleri için çalışın"
+          }
+        }
+      }
+    },
+    "analytics.consistency.scoreUnit" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puan"
+          }
+        }
+      }
+    },
+    "analytics.consistency.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Schedule Consistency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Düzeni Tutarlılığı"
+          }
+        }
+      }
+    },
     "analytics.dailyAverage" : {
       "comment" : "Daily average sleep time metric title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,6 +328,7 @@
     },
     "analytics.insufficientData.button" : {
       "comment" : "Insufficient data button title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +346,7 @@
     },
     "analytics.insufficientData.message" : {
       "comment" : "Insufficient data message",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -71,6 +364,7 @@
     },
     "analytics.insufficientData.title" : {
       "comment" : "Insufficient data title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -88,6 +382,7 @@
     },
     "analytics.loading" : {
       "comment" : "Loading indicator text",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -103,8 +398,77 @@
         }
       }
     },
+    "analytics.previousPeriodComparison.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compared to previous period:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceki döneme göre:"
+          }
+        }
+      }
+    },
+    "analytics.qualityDistribution.daysCount" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%d days)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%d gün)"
+          }
+        }
+      }
+    },
+    "analytics.qualityDistribution.percentage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%%.0f"
+          }
+        }
+      }
+    },
+    "analytics.qualityDistribution.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Quality Distribution"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kalitesi Dağılımı"
+          }
+        }
+      }
+    },
     "analytics.sleepBreakdown.core" : {
       "comment" : "Core sleep type",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -120,26 +484,111 @@
         }
       }
     },
-    "analytics.sleepBreakdown.daily" : {
-      "comment" : "Daily sleep breakdown text",
+    "analytics.sleepBreakdown.dailyLabel" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Daily"
+            "value" : "Daily:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Günlük"
+            "value" : "Günlük:"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.dailyValue" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f h"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f s"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.daysCountLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün sayısı:"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.hoursPerDay" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hours/day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "saat/gün"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.infoBox.message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your core sleep and nap balance can help optimize your polyphasic sleep schedule. The ideal distribution is 70-80% core sleep, 20-30% naps."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana uyku ve şekerleme dengeniz polyphasic uyku düzeninizi optimize etmenize yardımcı olabilir. İdeal dağılım %70-80 ana uyku, %20-30 şekerleme şeklindedir."
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.infoBox.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilgi"
           }
         }
       }
     },
     "analytics.sleepBreakdown.nap" : {
       "comment" : "Nap sleep type",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -155,26 +604,43 @@
         }
       }
     },
-    "analytics.sleepBreakdown.perDay" : {
-      "comment" : "Sleep breakdown per day text",
+    "analytics.sleepBreakdown.percentageLabel" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "per day"
+            "value" : "Percentage:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "günlük"
+            "value" : "Yüzde:"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.percentageValue" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%%.0f"
           }
         }
       }
     },
     "analytics.sleepBreakdown.title" : {
       "comment" : "Sleep breakdown section title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -190,26 +656,348 @@
         }
       }
     },
-    "analytics.sleepBreakdown.total" : {
-      "comment" : "Total sleep breakdown text",
+    "analytics.sleepBreakdown.totalLabel" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Total"
+            "value" : "Total:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toplam"
+            "value" : "Toplam:"
+          }
+        }
+      }
+    },
+    "analytics.sleepBreakdown.totalValue" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f h"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f s"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.core" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.nap1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap 1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme 1"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.nap2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap 2"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme 2"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.score" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Skoru"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.subtitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last 7 days breakdown"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son 7 günün dağılımı"
+          }
+        }
+      }
+    },
+    "analytics.sleepComponentsTrend.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Components Trend"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Bileşenleri Trendi"
+          }
+        }
+      }
+    },
+    "analytics.sleepGoal.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Goal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Hedefi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.average" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ortalama"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.bad" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Poor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok Kötü"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.excellent" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.good" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.poor" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "analytics.sleepQuality.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Quality:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kalitesi:"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrend.deteriorating" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deteriorating"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötüleşiyor"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrend.improvementRate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%.0f%%)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%%%.0f)"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrend.improving" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improving"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyileşiyor"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrend.stable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stable"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stabil"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrend.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trend:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trend:"
           }
         }
       }
     },
     "analytics.summary.title" : {
-      "comment" : "Summary section title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -225,26 +1013,143 @@
         }
       }
     },
-    "analytics.timeGained.comparison" : {
-      "comment" : "Time gained comparison text",
+    "analytics.timeGained.actionsTitle" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "compared to traditional sleep"
+            "value" : "What can you do with this time?"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "geleneksel uyku düzenine kıyasla"
+            "value" : "Bu zamanla neler yapabilirsiniz?"
           }
         }
       }
     },
-    "analytics.timeGained.hours" : {
-      "comment" : "Time gained hours text",
+    "analytics.timeGained.activity.movies" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Watch %d movies"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d film izlemek"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.activity.projects" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete %d projects"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d proje tamamlamak"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.activity.reading" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read %d pages"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d sayfa kitap okumak"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.activity.walking" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk %d km"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d km yürümek"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extra time gained compared to traditional sleep schedule (8 hours per day)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geleneksel uyku düzenine (günde 8 saat) kıyasla kazandığınız extra zaman"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.efficiency" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efficiency:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verimlilik:"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.efficiencyValue" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%%.0f"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.hoursUnit" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -261,26 +1166,76 @@
         }
       }
     },
-    "analytics.timeGained.message" : {
-      "comment" : "Time gained message",
+    "analytics.timeGained.note1" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You've saved"
+            "value" : "1 page per minute"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasarruf ettiniz"
+            "value" : "dakikada 1 sayfa"
           }
         }
       }
     },
-    "analytics.timeGained.title" : {
-      "comment" : "Time gained section title",
+    "analytics.timeGained.note2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 km/h pace"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "saatte 5 km hızla"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.note3" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 hours per movie"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "film başına 2 saat"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.note4" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 days per project"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "proje başına 2 gün"
+          }
+        }
+      }
+    },
+    "analytics.timeGained.subtitle" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -296,44 +1251,25 @@
         }
       }
     },
-    "analytics.timeRange.3_months" : {
-      "comment" : "Time range option for three months",
+    "analytics.timeGained.title" : {
+      "comment" : "Time gained section title",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 Months"
+            "value" : "Time Gained"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 Ay"
-          }
-        }
-      }
-    },
-    "analytics.timeRange.custom" : {
-      "comment" : "Custom time range option",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özel"
+            "value" : "Kazanılan Zaman"
           }
         }
       }
     },
     "analytics.timeRange.month" : {
-      "comment" : "Time range option for a month",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -351,24 +1287,23 @@
       }
     },
     "analytics.timeRange.quarter" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 Months"
+            "value" : "Quarter"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 Ay"
+            "value" : "Çeyrek"
           }
         }
       }
     },
     "analytics.timeRange.week" : {
-      "comment" : "Time range option for a week",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -385,25 +1320,264 @@
         }
       }
     },
-    "analytics.title" : {
-      "comment" : "Analytics title",
+    "analytics.timeRange.year" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Analytics"
+            "value" : "Year"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Analitik"
+            "value" : "Yıl"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.coreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.dailyHoursLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.daysLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days: %d"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün: %d"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.nap1Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap1: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek1: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.nap2Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap2: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek2: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.napLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.percentageLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percentage: %.0f%%"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüzde: %%%.0f"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.scoreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score: %.1f/5"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor: %.1f/5"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.totalHoursLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.totalLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.coreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.nap1Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap1: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek1: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.nap2Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap2: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek2: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.totalLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam: %.1fs"
           }
         }
       }
     },
     "analytics.totalSleep" : {
       "comment" : "Total sleep time metric title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -419,80 +1593,59 @@
         }
       }
     },
-    "analytics.trend.coreSleep" : {
-      "comment" : "Core sleep text",
+    "analytics.totalSleepTrend.goal" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Core Sleep"
+            "value" : "Goal"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ana Uyku"
+            "value" : "Hedef"
           }
         }
       }
     },
-    "analytics.trend.nap1" : {
-      "comment" : "Nap 1 text",
+    "analytics.totalSleepTrend.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nap 1"
+            "value" : "Daily sleep duration over time"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Şekerleme 1"
+            "value" : "Zaman içinde günlük uyku süresi"
           }
         }
       }
     },
-    "analytics.trend.nap2" : {
-      "comment" : "Nap 2 text",
+    "analytics.totalSleepTrend.title" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nap 2"
+            "value" : "Total Sleep Duration"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Şekerleme 2"
-          }
-        }
-      }
-    },
-    "analytics.trend.score" : {
-      "comment" : "Sleep score text",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Score"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puan"
+            "value" : "Toplam Uyku Süresi"
           }
         }
       }
     },
     "analytics.trend.title" : {
-      "comment" : "Trend section title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -503,25 +1656,109 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uyku Eğilimleri"
+            "value" : "Uyku Trendleri"
           }
         }
       }
     },
-    "analytics.trend.total" : {
-      "comment" : "Total sleep time text",
+    "analytics.value.hours" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Total"
+            "value" : "%.1f hours"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toplam"
+            "value" : "%.1f saat"
+          }
+        }
+      }
+    },
+    "analytics.value.scoreOf5" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f/5"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f/5"
+          }
+        }
+      }
+    },
+    "analytics.variability.high" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksek"
+          }
+        }
+      }
+    },
+    "analytics.variability.moderate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderate"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orta"
+          }
+        }
+      }
+    },
+    "analytics.variability.stable" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stable"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stabil"
+          }
+        }
+      }
+    },
+    "analytics.variability.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variability"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişkenlik"
           }
         }
       }

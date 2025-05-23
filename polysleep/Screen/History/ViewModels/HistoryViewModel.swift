@@ -4,10 +4,10 @@ import SwiftData
 import Combine
 
 enum TimeFilter: String, CaseIterable {
-    case today = "Today"
-    case thisWeek = "This Week"
-    case thisMonth = "This Month"
-    case allTime = "All Time"
+    case today = "history.filter.today"
+    case thisWeek = "history.filter.thisWeek"
+    case thisMonth = "history.filter.thisMonth"
+    case allTime = "history.filter.allTime"
 }
 
 enum SyncStatus {

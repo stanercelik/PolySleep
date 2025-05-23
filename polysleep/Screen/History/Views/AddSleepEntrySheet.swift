@@ -5,6 +5,7 @@ struct AddSleepEntrySheet: View {
     @ObservedObject var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var languageManager: LanguageManager
     @State private var selectedEmoji = "😊"
     @State private var sliderValue: Double = 3 // 1-5 rating için (0-4 slider) -> Başlangıçta "😊" (rating 4)
     @State private var selectedDate: Date
@@ -100,7 +101,7 @@ struct AddSleepEntrySheet: View {
     
     // Slider değerine göre emoji açıklaması
     private var currentEmojiDescription: String {
-        return NSLocalizedString(emojiDescriptions[currentEmoji] ?? "", tableName: "AddSleepEntrySheet", comment: "")
+        return L(emojiDescriptions[currentEmoji] ?? "", table: "AddSleepEntrySheet")
     }
     
     // MARK: - View Components
@@ -111,13 +112,13 @@ struct AddSleepEntrySheet: View {
                     .foregroundColor(Color.appPrimary)
                     .font(.system(size: 18, weight: .medium))
                 
-                Text("sleepEntry.date", tableName: "AddSleepEntrySheet")
+                Text(L("sleepEntry.date", table: "AddSleepEntrySheet"))
                     .font(.headline)
                     .foregroundColor(Color.appText)
             }
             
             DatePicker(
-                NSLocalizedString("sleepEntry.selectDate", tableName: "AddSleepEntrySheet", comment: ""),
+                L("sleepEntry.selectDate", table: "AddSleepEntrySheet"),
                 selection: $selectedDate,
                 displayedComponents: [.date]
             )
@@ -148,7 +149,7 @@ struct AddSleepEntrySheet: View {
                     .foregroundColor(Color.appPrimary)
                     .font(.system(size: 18, weight: .medium))
                 
-                Text("sleepEntry.selectBlock", tableName: "AddSleepEntrySheet")
+                Text(L("sleepEntry.selectBlock", table: "AddSleepEntrySheet"))
                     .font(.headline)
                     .foregroundColor(Color.appText)
             }
@@ -170,7 +171,7 @@ struct AddSleepEntrySheet: View {
                     .font(.system(size: 50))
                     .foregroundColor(Color.appSecondaryText.opacity(0.5))
                 
-                Text("sleepEntry.noBlocks", tableName: "AddSleepEntrySheet", comment: "")
+                Text(L("sleepEntry.noBlocks", table: "AddSleepEntrySheet"))
                     .font(.headline)
                     .foregroundColor(Color.appSecondaryText)
                     .multilineTextAlignment(.center)
@@ -240,7 +241,7 @@ struct AddSleepEntrySheet: View {
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(block.isCore ? "Ana Uyku" : "Şekerleme")
+                    Text(block.isCore ? L("sleep.type.core", table: "DayDetail") : L("sleep.type.nap", table: "DayDetail"))
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(isAlreadyAdded ? Color.appText.opacity(0.6) : Color.appText)
@@ -292,7 +293,7 @@ struct AddSleepEntrySheet: View {
                     .foregroundColor(Color.appPrimary)
                     .font(.system(size: 18, weight: .medium))
                 
-                Text("sleepEntry.quality", tableName: "AddSleepEntrySheet")
+                Text(L("sleepEntry.quality", table: "AddSleepEntrySheet"))
                     .font(.headline)
                     .foregroundColor(Color.appText)
             }
@@ -342,13 +343,13 @@ struct AddSleepEntrySheet: View {
                 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack {
-                        Text("Kötü")
+                        Text(L("sleepEntry.quality.bad", table: "AddSleepEntrySheet"))
                             .font(.system(size: 12))
                             .foregroundColor(Color.appSecondaryText)
                         
                         Spacer()
                         
-                        Text("Mükemmel")
+                        Text(L("sleepEntry.quality.excellent", table: "AddSleepEntrySheet"))
                             .font(.system(size: 12))
                             .foregroundColor(Color.appSecondaryText)
                     }
@@ -442,18 +443,18 @@ struct AddSleepEntrySheet: View {
                     .animation(.spring(response: 0.3), value: selectedBlockFromSchedule != nil)
                 }
             }
-            .navigationTitle(NSLocalizedString("sleepEntry.add", tableName: "AddSleepEntrySheet", comment: ""))
+            .navigationTitle(L("sleepEntry.add", table: "AddSleepEntrySheet"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("general.cancel", tableName: "AddSleepEntrySheet", comment: "")) {
+                    Button(L("general.cancel", table: "AddSleepEntrySheet")) {
                         dismiss()
                     }
                     .foregroundColor(Color.appPrimary)
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(NSLocalizedString("general.save", tableName: "AddSleepEntrySheet", comment: "")) {
+                    Button(L("general.save", table: "AddSleepEntrySheet")) {
                         saveSleepEntry()
                         // Haptic feedback
                         let generator = UINotificationFeedbackGenerator()
@@ -468,9 +469,9 @@ struct AddSleepEntrySheet: View {
             }
             .alert(isPresented: $showBlockError) {
                 Alert(
-                    title: Text("sleepEntry.error.title", tableName: "AddSleepEntrySheet"),
-                    message: Text(LocalizedStringKey(blockErrorMessage), tableName: "AddSleepEntrySheet"),
-                    dismissButton: .default(Text("general.ok", tableName: "AddSleepEntrySheet"))
+                    title: Text(L("sleepEntry.error.title", table: "AddSleepEntrySheet")),
+                    message: Text(L(blockErrorMessage, table: "AddSleepEntrySheet")),
+                    dismissButton: .default(Text(L("general.ok", table: "AddSleepEntrySheet")))
                 )
             }
         }
@@ -491,7 +492,7 @@ struct AddSleepEntrySheet: View {
                 Spacer()
                 Image(systemName: "checkmark.circle.fill")
                     .font(.headline)
-                Text(NSLocalizedString("general.save", tableName: "AddSleepEntrySheet", comment: ""))
+                Text(L("general.save", table: "AddSleepEntrySheet"))
                     .font(.headline)
                 Spacer()
             }

@@ -78,6 +78,7 @@ extension View {
 struct MainScreenView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
         NavigationStack {

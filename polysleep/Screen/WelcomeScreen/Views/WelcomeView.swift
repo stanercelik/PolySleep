@@ -9,6 +9,7 @@ struct WelcomeView: View {
     @StateObject private var viewModel = WelcomeViewModel()
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var languageManager: LanguageManager
     
     @State private var buttonCenter: CGPoint = .zero
     @State private var circleDiameter: CGFloat = 0

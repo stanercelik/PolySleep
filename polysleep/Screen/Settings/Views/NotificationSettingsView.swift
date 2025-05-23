@@ -3,12 +3,13 @@ import SwiftData
 
 struct NotificationSettingsView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var languageManager: LanguageManager
     @Query private var userPreferences: [UserPreferences]
     @State private var reminderTime: Double = 15
     @State private var hasScheduleChanged = false
     @State private var showTestAlert = false
     @State private var testNotificationScheduled = false
-    @State private var notificationPermissionStatus = "Bilinmiyor"
+    @State private var notificationPermissionStatus = L("notifications.permission.unknown", table: "Profile")
     
     var currentPreferences: UserPreferences? {
         userPreferences.first
@@ -28,12 +29,12 @@ struct NotificationSettingsView: View {
                             .foregroundColor(.appAccent)
                             .padding(.top, 8)
                         
-                        Text("Bildirim Yönetimi")
+                        Text(L("notifications.management.title", table: "Profile"))
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.appText)
                         
-                        Text("Uyku programınız için kişiselleştirilmiş hatırlatmalar")
+                        Text(L("notifications.management.subtitle", table: "Profile"))
                             .font(.subheadline)
                             .foregroundColor(.appSecondaryText)
                             .multilineTextAlignment(.center)
@@ -54,12 +55,12 @@ struct NotificationSettingsView: View {
                                 .foregroundColor(.appPrimary)
                             
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Hatırlatma Zamanı")
+                                Text(L("notifications.reminderTime.title", table: "Profile"))
                                     .font(.headline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.appText)
                                 
-                                Text("Uyku zamanından ne kadar önce bildirim almak istiyorsun?")
+                                Text(L("notifications.reminderTime.subtitle", table: "Profile"))
                                     .font(.caption)
                                     .foregroundColor(.appSecondaryText)
                             }
@@ -74,7 +75,7 @@ struct NotificationSettingsView: View {
                                         .font(.system(size: 28, weight: .bold, design: .rounded))
                                         .foregroundColor(.appAccent)
                                 } else {
-                                    Text("Kapalı")
+                                    Text(L("notifications.off", table: "Profile"))
                                         .font(.system(size: 28, weight: .bold, design: .rounded))
                                         .foregroundColor(.appSecondaryText)
                                 }
@@ -102,11 +103,11 @@ struct NotificationSettingsView: View {
                             }
                             
                             HStack {
-                                Text("Kapalı")
+                                Text(L("notifications.off", table: "Profile"))
                                     .font(.caption2)
                                     .foregroundColor(.appSecondaryText)
                                 Spacer()
-                                Text("2 Saat")
+                                Text(L("notifications.twoHours", table: "Profile"))
                                     .font(.caption2)
                                     .foregroundColor(.appSecondaryText)
                             }
@@ -126,7 +127,7 @@ struct NotificationSettingsView: View {
                                 .font(.title2)
                                 .foregroundColor(.appSecondary)
                             
-                            Text("Test Bildirimleri")
+                            Text(L("notifications.test.title", table: "Profile"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.appText)
@@ -135,8 +136,8 @@ struct NotificationSettingsView: View {
                         VStack(spacing: 12) {
                             NotificationTestButton(
                                 icon: "bell.badge.fill",
-                                title: "Hemen Test Et",
-                                subtitle: "Anlık bildirim gönder",
+                                title: L("notifications.test.immediate.title", table: "Profile"),
+                                subtitle: L("notifications.test.immediate.subtitle", table: "Profile"),
                                 color: .appAccent
                             ) {
                                 testNotificationImmediately()
@@ -144,8 +145,8 @@ struct NotificationSettingsView: View {
                             
                             NotificationTestButton(
                                 icon: "timer",
-                                title: "5 Saniye Sonra",
-                                subtitle: "Zamanlayıcı ile test et",
+                                title: L("notifications.test.delayed.title", table: "Profile"),
+                                subtitle: L("notifications.test.delayed.subtitle", table: "Profile"),
                                 color: .appSecondary
                             ) {
                                 test5SecondNotification()
@@ -155,7 +156,7 @@ struct NotificationSettingsView: View {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
                                         .foregroundColor(.green)
-                                    Text("Test bildirimi planlandı!")
+                                    Text(L("notifications.test.scheduled", table: "Profile"))
                                         .font(.caption)
                                         .foregroundColor(.green)
                                     Spacer()
@@ -179,7 +180,7 @@ struct NotificationSettingsView: View {
                                 .font(.title2)
                                 .foregroundColor(.appPrimary)
                             
-                            Text("Durum Bilgisi")
+                            Text(L("notifications.status.title", table: "Profile"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.appText)
@@ -188,9 +189,9 @@ struct NotificationSettingsView: View {
                         VStack(spacing: 12) {
                             StatusRow(
                                 icon: "bell.circle.fill",
-                                title: "Bildirim İzni",
+                                title: L("notifications.permission.title", table: "Profile"),
                                 value: notificationPermissionStatus,
-                                valueColor: notificationPermissionStatus == "Verildi" ? .green : .orange
+                                valueColor: notificationPermissionStatus == L("notifications.permission.granted", table: "Profile") ? .green : .orange
                             )
                             
                             Divider()
@@ -198,8 +199,8 @@ struct NotificationSettingsView: View {
                             
                             StatusRow(
                                 icon: "moon.circle.fill",
-                                title: "Aktif Program",
-                                value: ScheduleManager.shared.activeSchedule?.name ?? "Yok",
+                                title: L("notifications.status.activeProgram", table: "Profile"),
+                                value: ScheduleManager.shared.activeSchedule?.name ?? L("notifications.status.noProgram", table: "Profile"),
                                 valueColor: ScheduleManager.shared.activeSchedule != nil ? .green : .orange
                             )
                             
@@ -208,8 +209,8 @@ struct NotificationSettingsView: View {
                             
                             StatusRow(
                                 icon: "timer.circle.fill",
-                                title: "Hatırlatma Süresi",
-                                value: "\(Int(reminderTime)) dk",
+                                title: L("notifications.status.reminderTime", table: "Profile"),
+                                value: "\(Int(reminderTime)) " + L("notifications.minutes", table: "Profile"),
                                 valueColor: .appPrimary
                             )
                         }
@@ -224,7 +225,7 @@ struct NotificationSettingsView: View {
                 .padding()
             }
         }
-        .navigationTitle("Bildirim Ayarları")
+        .navigationTitle(L("notifications.settings.title", table: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadCurrentSettings()
@@ -236,10 +237,10 @@ struct NotificationSettingsView: View {
                 hasScheduleChanged = false
             }
         }
-        .alert("Test Bildirimi", isPresented: $showTestAlert) {
-            Button("Tamam") { }
+        .alert(L("notifications.test.alert.title", table: "Profile"), isPresented: $showTestAlert) {
+            Button(L("general.ok", table: "Profile")) { }
         } message: {
-            Text("Test bildirimi gönderildi! Bildirimler kapalıysa ayarlardan açmayı unutma.")
+            Text(L("notifications.test.alert.message", table: "Profile"))
         }
     }
     
@@ -281,8 +282,8 @@ struct NotificationSettingsView: View {
     }
     
     private func testNotificationImmediately() {
-        let testTitle = "🧪 PolySleep Test"
-        let testBody = "Bu bir test bildirimi! Bildirimler düzgün çalışıyor ✅"
+        let testTitle = L("notifications.test.immediate.content.title", table: "Profile")
+        let testBody = L("notifications.test.immediate.content.body", table: "Profile")
         
         LocalNotificationService.shared.scheduleTestNotification(
             title: testTitle,
@@ -294,8 +295,8 @@ struct NotificationSettingsView: View {
     }
     
     private func test5SecondNotification() {
-        let testTitle = "⏰ 5 Saniye Test"
-        let testBody = "Bu bildirim 5 saniye önce planlandı!"
+        let testTitle = L("notifications.test.delayed.content.title", table: "Profile")
+        let testBody = L("notifications.test.delayed.content.body", table: "Profile")
         
         LocalNotificationService.shared.scheduleTestNotification(
             title: testTitle,
@@ -313,15 +314,15 @@ struct NotificationSettingsView: View {
     
     private func formatTime(minutes: Int) -> String {
         if minutes < 60 {
-            return "\(minutes) \(minutes == 1 ? "dakika" : "dakika")"
+            return "\(minutes) " + (minutes == 1 ? L("notifications.minute", table: "Profile") : L("notifications.minutes", table: "Profile"))
         } else {
             let hours = minutes / 60
             let remainingMinutes = minutes % 60
             
             if remainingMinutes == 0 {
-                return "\(hours) \(hours == 1 ? "saat" : "saat")"
+                return "\(hours) " + (hours == 1 ? L("notifications.hour", table: "Profile") : L("notifications.hours", table: "Profile"))
             } else {
-                return "\(hours) \(hours == 1 ? "saat" : "saat") \(remainingMinutes) \(remainingMinutes == 1 ? "dakika" : "dakika")"
+                return "\(hours) " + (hours == 1 ? L("notifications.hour", table: "Profile") : L("notifications.hours", table: "Profile")) + " \(remainingMinutes) " + (remainingMinutes == 1 ? L("notifications.minute", table: "Profile") : L("notifications.minutes", table: "Profile"))
             }
         }
     }
@@ -336,17 +337,17 @@ struct NotificationSettingsView: View {
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
                 case .authorized:
-                    notificationPermissionStatus = "Verildi"
+                    notificationPermissionStatus = L("notifications.permission.granted", table: "Profile")
                 case .denied:
-                    notificationPermissionStatus = "Reddedildi"
+                    notificationPermissionStatus = L("notifications.permission.denied", table: "Profile")
                 case .notDetermined:
-                    notificationPermissionStatus = "Belirlenmedi"
+                    notificationPermissionStatus = L("notifications.permission.notDetermined", table: "Profile")
                 case .provisional:
-                    notificationPermissionStatus = "Geçici"
+                    notificationPermissionStatus = L("notifications.permission.provisional", table: "Profile")
                 case .ephemeral:
-                    notificationPermissionStatus = "Geçici"
+                    notificationPermissionStatus = L("notifications.permission.ephemeral", table: "Profile")
                 @unknown default:
-                    notificationPermissionStatus = "Bilinmiyor"
+                    notificationPermissionStatus = L("notifications.permission.unknown", table: "Profile")
                 }
             }
         }

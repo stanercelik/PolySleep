@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LoadingRecommendationView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var languageManager: LanguageManager
     @Binding var progress: Double
     @Binding var statusMessage: String
     @Binding var isComplete: Bool

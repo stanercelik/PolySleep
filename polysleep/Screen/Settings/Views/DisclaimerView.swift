@@ -1,39 +1,41 @@
 import SwiftUI
 
 struct DisclaimerView: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("disclaimer.title", tableName: "Profile")
+                Text(L("disclaimer.title", table: "Profile"))
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.bottom, 8)
                 
-                Text("disclaimer.content", tableName: "Profile")
+                Text(L("disclaimer.content", table: "Profile"))
                     .font(.body)
                 
-                Text("disclaimer.medical", tableName: "Profile")
+                Text(L("disclaimer.medical", table: "Profile"))
                     .font(.headline)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
                 
-                Text("disclaimer.medical.content", tableName: "Profile")
+                Text(L("disclaimer.medical.content", table: "Profile"))
                     .font(.body)
                 
-                Text("disclaimer.liability", tableName: "Profile")
+                Text(L("disclaimer.liability", table: "Profile"))
                     .font(.headline)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
                 
-                Text("disclaimer.liability.content", tableName: "Profile")
+                Text(L("disclaimer.liability.content", table: "Profile"))
                     .font(.body)
                 
-                Text("disclaimer.contact", tableName: "Profile")
+                Text(L("disclaimer.contact", table: "Profile"))
                     .font(.headline)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
                 
-                Text("disclaimer.contact.content", tableName: "Profile")
+                Text(L("disclaimer.contact.content", table: "Profile"))
                     .font(.body)
                 
                 Spacer()
@@ -41,7 +43,7 @@ struct DisclaimerView: View {
             .padding()
         }
         .background(Color.appBackground.ignoresSafeArea())
-        .navigationTitle("settings.other.disclaimer")
+        .navigationTitle(L("settings.other.disclaimer", table: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

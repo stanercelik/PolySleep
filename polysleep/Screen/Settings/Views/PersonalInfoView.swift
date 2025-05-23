@@ -5,6 +5,7 @@ struct PersonalInfoView: View {
     @Query private var onboardingAnswers: [OnboardingAnswerData]
     @Query private var scheduleStore: [SleepScheduleStore]
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var languageManager: LanguageManager
     
     var answersForDisplay: [String: String] {
         var dict: [String: String] = [:]
@@ -28,12 +29,12 @@ struct PersonalInfoView: View {
                             .foregroundColor(.appPrimary)
                             .padding(.top, 8)
                         
-                        Text("Kişisel Bilgilerim")
+                        Text(L("personalInfo.title", table: "Profile"))
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.appText)
                         
-                        Text("Profil bilgileriniz ve tercihleriniz")
+                        Text(L("personalInfo.subtitle", table: "Profile"))
                             .font(.subheadline)
                             .foregroundColor(.appSecondaryText)
                             .multilineTextAlignment(.center)
@@ -52,11 +53,11 @@ struct PersonalInfoView: View {
                                 .font(.system(size: 50))
                                 .foregroundColor(.appSecondaryText.opacity(0.6))
                             
-                            Text("Henüz kişisel bilgi bulunamadı")
+                            Text(L("personalInfo.empty.title", table: "Profile"))
                                 .font(.headline)
                                 .foregroundColor(.appText)
                             
-                            Text("Onboarding sürecini tamamlayarak kişisel bilgilerinizi ekleyebilirsiniz")
+                            Text(L("personalInfo.empty.message", table: "Profile"))
                                 .font(.subheadline)
                                 .foregroundColor(.appSecondaryText)
                                 .multilineTextAlignment(.center)
@@ -72,7 +73,7 @@ struct PersonalInfoView: View {
                         // Recommended Schedule Section
                         if let schedule = scheduleStore.first {
                             PersonalInfoSection(
-                                title: "Önerilen Uyku Programı",
+                                title: L("personalInfo.schedule.title", table: "Profile"),
                                 icon: "bed.double.fill",
                                 iconColor: .appAccent
                             ) {
@@ -85,7 +86,7 @@ struct PersonalInfoView: View {
                                         
                                         Spacer()
                                         
-                                        Text("\(String(format: "%.1f", schedule.totalSleepHours)) saat")
+                                        Text("\(String(format: "%.1f", schedule.totalSleepHours)) " + L("personalInfo.schedule.hours", table: "Profile"))
                                             .font(.subheadline)
                                             .fontWeight(.medium)
                                             .foregroundColor(.appSecondary)
@@ -97,7 +98,7 @@ struct PersonalInfoView: View {
                                             )
                                     }
                                     
-                                    Text("Toplam günlük uyku süresi")
+                                    Text(L("personalInfo.schedule.subtitle", table: "Profile"))
                                         .font(.caption)
                                         .foregroundColor(.appSecondaryText)
                                 }
@@ -106,7 +107,7 @@ struct PersonalInfoView: View {
                         
                         // Personal Answers Section
                         PersonalInfoSection(
-                            title: "Onboarding Cevaplarım",
+                            title: L("personalInfo.answers.title", table: "Profile"),
                             icon: "questionmark.bubble.fill",
                             iconColor: .appPrimary
                         ) {
@@ -128,7 +129,7 @@ struct PersonalInfoView: View {
                 .padding()
             }
         }
-        .navigationTitle("Kişisel Bilgiler")
+        .navigationTitle(L("personalInfo.title", table: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
     }
     

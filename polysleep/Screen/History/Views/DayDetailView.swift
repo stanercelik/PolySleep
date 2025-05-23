@@ -4,6 +4,7 @@ import SwiftData
 struct DayDetailView: View {
     @ObservedObject var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var languageManager: LanguageManager
     @State private var isAddingSleepEntry = false
     
     // Kullanıcının seçtiği emojiler
@@ -90,7 +91,7 @@ struct DayDetailView: View {
                     Button(action: {
                         isAddingSleepEntry = true
                     }) {
-                        Text("Ekle")
+                        Text(L("general.add", table: "DayDetail"))
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(Color("PrimaryColor"))
                     }
@@ -157,7 +158,7 @@ struct SleepEntryDetailCard: View {
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(entry.isCore ? "Ana Uyku" : "Şekerleme")
+                    Text(entry.isCore ? L("sleep.type.core", table: "DayDetail") : L("sleep.type.nap", table: "DayDetail"))
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(Color("TextColor"))
                     
@@ -215,12 +216,12 @@ struct SleepEntryDetailCard: View {
         )
         .alert(isPresented: $showDeleteAlert) {
             Alert(
-                title: Text("Uyku kaydını sil"),
-                message: Text("Bu kayıt silinecek. Onaylıyor musunuz?"),
-                primaryButton: .destructive(Text("Sil")) {
+                title: Text(L("dayDetail.delete.title", table: "DayDetail")),
+                message: Text(L("dayDetail.delete.message", table: "DayDetail")),
+                primaryButton: .destructive(Text(L("general.delete", table: "DayDetail"))) {
                     onDelete()
                 },
-                secondaryButton: .cancel(Text("İptal"))
+                secondaryButton: .cancel(Text(L("general.cancel", table: "DayDetail")))
             )
         }
     }
@@ -242,7 +243,7 @@ struct SummarySectionCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Günün Özeti")
+            Text(L("dayDetail.summary.title", table: "DayDetail"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
@@ -253,7 +254,7 @@ struct SummarySectionCard: View {
                         Image(systemName: "clock.fill")
                             .foregroundColor(Color("PrimaryColor"))
                         
-                        Text("Toplam Uyku")
+                        Text(L("dayDetail.summary.totalSleep", table: "DayDetail"))
                             .font(.system(size: 14))
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
@@ -270,7 +271,7 @@ struct SummarySectionCard: View {
                         Image(systemName: "star.fill")
                             .foregroundColor(Color("SecondaryColor"))
                         
-                        Text("Ortalama Kalite")
+                        Text(L("dayDetail.summary.averageQuality", table: "DayDetail"))
                             .font(.system(size: 14))
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
@@ -299,11 +300,11 @@ struct NoDataView: View {
                 .font(.system(size: 60))
                 .foregroundColor(Color("SecondaryTextColor").opacity(0.7))
             
-            Text("Bu güne ait uyku kaydı yok")
+            Text(L("dayDetail.noData.title", table: "DayDetail"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
-            Text("Sağ üstteki 'Ekle' butonuna tıklayarak yeni uyku kaydı ekleyebilirsiniz")
+            Text(L("dayDetail.noData.message", table: "DayDetail"))
                 .font(.system(size: 16))
                 .foregroundColor(Color("SecondaryTextColor"))
                 .multilineTextAlignment(.center)

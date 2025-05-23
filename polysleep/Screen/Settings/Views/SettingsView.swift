@@ -3,10 +3,10 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
-    @AppStorage("appLanguage") private var appLanguage = "tr"
     @AppStorage("coreNotificationTime") private var coreNotificationTime: Double = 30 // Dakika
     @AppStorage("napNotificationTime") private var napNotificationTime: Double = 15 // Dakika
     @AppStorage("showRatingNotification") private var showRatingNotification = true
+    @EnvironmentObject private var languageManager: LanguageManager
     @State private var showLanguagePicker = false
     @State private var showThemePicker = false
     
@@ -24,12 +24,12 @@ struct SettingsView: View {
                             .foregroundColor(.appPrimary)
                             .padding(.top, 8)
                         
-                        Text("Ayarlar")
+                        Text(L("settings.title", table: "Profile"))
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.appText)
                         
-                        Text("Uygulama deneyiminizi kişiselleştirin")
+                        Text(L("settings.subtitle", table: "Profile"))
                             .font(.subheadline)
                             .foregroundColor(.appSecondaryText)
                             .multilineTextAlignment(.center)
@@ -43,15 +43,15 @@ struct SettingsView: View {
                     
                     // Profile & Account Section
                     SettingsSection(
-                        title: "Hesap & Profil",
+                        title: L("settings.about.title", table: "Profile"),
                         icon: "person.2.fill",
                         iconColor: .appAccent
                     ) {
                         VStack(spacing: 12) {
                             SettingsNavigationRow(
                                 icon: "person.circle.fill",
-                                title: "Kişisel Bilgiler",
-                                subtitle: "Profil bilgilerinizi düzenleyin",
+                                title: L("settings.about.personalInfo", table: "Profile"),
+                                subtitle: L("settings.about.personalInfo.subtitle", table: "Profile"),
                                 destination: PersonalInfoView()
                             )
                         }
@@ -59,15 +59,15 @@ struct SettingsView: View {
                     
                     // Notifications Section
                     SettingsSection(
-                        title: "Bildirimler",
+                        title: L("settings.notifications.title", table: "Profile"),
                         icon: "bell.fill",
                         iconColor: .appSecondary
                     ) {
                         VStack(spacing: 12) {
                             SettingsNavigationRow(
                                 icon: "bell.badge.fill",
-                                title: "Bildirim Ayarları",
-                                subtitle: "Hatırlatma zamanlarını özelleştirin",
+                                title: L("settings.notifications.settings", table: "Profile"),
+                                subtitle: L("settings.notifications.subtitle", table: "Profile"),
                                 destination: NotificationSettingsView()
                             )
                         }
@@ -75,16 +75,16 @@ struct SettingsView: View {
                     
                     // General Settings Section
                     SettingsSection(
-                        title: "Genel Ayarlar",
-                        icon: "slider.horizontal.3",
-                        iconColor: .appPrimary
+                        title: L("settings.general.title", table: "Profile"),
+                        icon: "gearshape.fill",
+                        iconColor: .gray
                     ) {
                         VStack(spacing: 12) {
                             // Theme Setting
                             SettingsActionRow(
                                 icon: "moon.circle.fill",
-                                title: "Tema",
-                                subtitle: "Görünümü değiştir",
+                                title: L("settings.general.theme", table: "Profile"),
+                                subtitle: L("settings.general.selectTheme", table: "Profile"),
                                 value: getThemeDisplayText(),
                                 action: { showThemePicker = true }
                             )
@@ -95,9 +95,9 @@ struct SettingsView: View {
                             // Language Setting
                             SettingsActionRow(
                                 icon: "globe.americas.fill",
-                                title: "Dil",
-                                subtitle: "Uygulama dilini seçin",
-                                value: appLanguage == "tr" ? "Türkçe" : "English",
+                                title: L("settings.general.language", table: "Profile"),
+                                subtitle: L("settings.general.selectLanguage", table: "Profile"),
+                                value: getLanguageDisplayText(),
                                 action: { showLanguagePicker = true }
                             )
                         }
@@ -105,44 +105,42 @@ struct SettingsView: View {
                     
                     // Support & More Section
                     SettingsSection(
-                        title: "Destek & Daha Fazlası",
+                        title: L("settings.other.title", table: "Profile"),
                         icon: "heart.fill",
                         iconColor: .red
                     ) {
                         VStack(spacing: 12) {
-                            SettingsExternalRow(
-                                icon: "star.circle.fill",
-                                title: "Uygulamayı Değerlendir",
-                                subtitle: "App Store'da değerlendirin",
-                                action: {
-                                    if let url = URL(string: "https://apps.apple.com/app/id0000000000") {
-                                        UIApplication.shared.open(url)
-                                    }
-                                }
+                            SettingsNavigationRow(
+                                icon: "bell.fill",
+                                title: L("settings.notifications.settings", table: "Profile"),
+                                destination: NotificationSettingsView()
                             )
                             
                             Divider()
                                 .background(Color.appSecondaryText.opacity(0.2))
                             
                             SettingsNavigationRow(
-                                icon: "exclamationmark.shield.fill",
-                                title: "Sorumluluk Reddi",
-                                subtitle: "Yasal bilgiler",
+                                icon: "info.circle.fill",
+                                title: L("settings.other.disclaimer", table: "Profile"),
                                 destination: DisclaimerView()
                             )
                             
                             Divider()
                                 .background(Color.appSecondaryText.opacity(0.2))
                             
-                            SettingsExternalRow(
-                                icon: "envelope.circle.fill",
-                                title: "Geri Bildirim",
-                                subtitle: "Öneri ve şikayetleriniz için",
-                                action: {
-                                    if let url = URL(string: "mailto:feedback@polysleep.app") {
-                                        UIApplication.shared.open(url)
-                                    }
-                                }
+                            SettingsExternalLinkRow(
+                                icon: "envelope.fill",
+                                title: L("settings.other.feedback", table: "Profile"),
+                                url: "mailto:support@polysleep.app"
+                            )
+                            
+                            Divider()
+                                .background(Color.appSecondaryText.opacity(0.2))
+                            
+                            SettingsExternalLinkRow(
+                                icon: "star.fill",
+                                title: L("settings.other.rateApp", table: "Profile"),
+                                url: "https://apps.apple.com/app/polysleep/id123456789"
                             )
                         }
                     }
@@ -164,39 +162,44 @@ struct SettingsView: View {
                 .padding()
             }
         }
-        .navigationTitle("Ayarlar")
+        .navigationTitle(L("settings.title", table: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
-        .confirmationDialog("Tema Seçin", isPresented: $showThemePicker, titleVisibility: .visible) {
-            Button("Sistem Varsayılanı") {
+        .confirmationDialog(L("settings.general.selectTheme", table: "Profile"), isPresented: $showThemePicker, titleVisibility: .visible) {
+            Button(L("settings.general.theme.system", table: "Profile")) {
                 userSelectedTheme = nil
             }
-            Button("Açık Tema") {
+            Button(L("settings.general.theme.light", table: "Profile")) {
                 userSelectedTheme = false
             }
-            Button("Koyu Tema") {
+            Button(L("settings.general.theme.dark", table: "Profile")) {
                 userSelectedTheme = true
             }
-            Button("İptal", role: .cancel) { }
+            Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
         }
-        .confirmationDialog("Dil Seçin", isPresented: $showLanguagePicker, titleVisibility: .visible) {
-            Button("Türkçe") {
-                appLanguage = "tr"
+        .confirmationDialog(L("settings.general.selectLanguage", table: "Profile"), isPresented: $showLanguagePicker, titleVisibility: .visible) {
+            Button(L("settings.language.turkish", table: "Profile")) {
+                languageManager.changeLanguage(to: "tr")
             }
-            Button("English") {
-                appLanguage = "en"
+            Button(L("settings.language.english", table: "Profile")) {
+                languageManager.changeLanguage(to: "en")
             }
-            Button("İptal", role: .cancel) { }
+            Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
         }
-        .environment(\.locale, Locale(identifier: appLanguage))
+        .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
     }
     
     /// Seçili temanın görüntülenen metnini döndürür
     private func getThemeDisplayText() -> String {
         if let userChoice = userSelectedTheme {
-            return userChoice ? "Koyu Tema" : "Açık Tema"
+            return userChoice ? L("settings.general.theme.dark", table: "Profile") : L("settings.general.theme.light", table: "Profile")
         } else {
-            return "Sistem Varsayılanı"
+            return L("settings.general.theme.system", table: "Profile")
         }
+    }
+    
+    /// Seçili dilin görüntülenen metnini döndürür
+    private func getLanguageDisplayText() -> String {
+        return languageManager.currentLanguage == "tr" ? L("settings.language.turkish", table: "Profile") : L("settings.language.english", table: "Profile")
     }
 }
 
@@ -235,8 +238,15 @@ struct SettingsSection<Content: View>: View {
 struct SettingsNavigationRow<Destination: View>: View {
     let icon: String
     let title: String
-    let subtitle: String
+    let subtitle: String?
     let destination: Destination
+    
+    init(icon: String, title: String, subtitle: String? = nil, destination: Destination) {
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.destination = destination
+    }
     
     var body: some View {
         NavigationLink(destination: destination) {
@@ -252,9 +262,11 @@ struct SettingsNavigationRow<Destination: View>: View {
                         .fontWeight(.medium)
                         .foregroundColor(.appText)
                     
-                    Text(subtitle)
-                        .font(.caption)
-                        .foregroundColor(.appSecondaryText)
+                    if let subtitle = subtitle {
+                        Text(subtitle)
+                            .font(.caption)
+                            .foregroundColor(.appSecondaryText)
+                    }
                 }
                 
                 Spacer()
@@ -319,14 +331,17 @@ struct SettingsActionRow: View {
     }
 }
 
-struct SettingsExternalRow: View {
+struct SettingsExternalLinkRow: View {
     let icon: String
     let title: String
-    let subtitle: String
-    let action: () -> Void
+    let url: String
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            if let url = URL(string: url) {
+                UIApplication.shared.open(url)
+            }
+        }) {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.title3)
@@ -339,7 +354,7 @@ struct SettingsExternalRow: View {
                         .fontWeight(.medium)
                         .foregroundColor(.appText)
                     
-                    Text(subtitle)
+                    Text(url)
                         .font(.caption)
                         .foregroundColor(.appSecondaryText)
                 }
@@ -363,5 +378,6 @@ struct SettingsView_Previews: PreviewProvider {
         NavigationStack {
             SettingsView()
         }
+        .environmentObject(LanguageManager.shared)
     }
 }
