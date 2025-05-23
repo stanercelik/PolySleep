@@ -238,6 +238,7 @@ struct HeaderView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @State private var showCustomizedTooltip: Bool = false
     @State private var showScheduleDescription: Bool = false
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(spacing: 8) {
@@ -264,11 +265,15 @@ struct HeaderView: View {
                             .font(.caption)
                     }
                     .foregroundColor(.appText)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 8)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 10)
                     .background(
                         Capsule()
-                            .fill(Color.appPrimary.opacity(0.2))
+                            .fill(Color.appPrimary.opacity(0.15))
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.appPrimary.opacity(0.3), lineWidth: 1)
+                            )
                     )
                 }
             }
@@ -295,12 +300,28 @@ struct HeaderView: View {
                         .foregroundColor(.appText)
                         .lineSpacing(4)
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(12)
+                        .padding(16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.appCardBackground.opacity(0.7))
-                                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                                .fill(Color.appCardBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(
+                                            colorScheme == .light ? 
+                                            Color.gray.opacity(0.12) : 
+                                            Color.clear,
+                                            lineWidth: 1
+                                        )
+                                )
+                                .shadow(
+                                    color: colorScheme == .light ? 
+                                    Color.black.opacity(0.06) : 
+                                    Color.black.opacity(0.25),
+                                    radius: colorScheme == .light ? 6 : 10,
+                                    x: 0,
+                                    y: colorScheme == .light ? 3 : 5
+                                )
                         )
                 }
                 .transition(.asymmetric(
@@ -321,11 +342,12 @@ struct SleepBlocksSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
+            HStack(spacing: 8) {
                 Text(NSLocalizedString("mainScreen.sleepBlocksIcon", tableName: "MainScreen", comment: "Sleep blocks icon emoji"))
                     .font(.title3)
                 Text(NSLocalizedString("mainScreen.sleepBlocks", tableName: "MainScreen", comment: "Sleep blocks section title"))
                     .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundColor(.appText)
             }
             .padding(.horizontal)
@@ -364,26 +386,42 @@ struct SleepBlocksSection: View {
 // MARK: - Uadd Sleep Block Button
 struct AddBlockButton: View {
     @ObservedObject var viewModel: MainScreenViewModel
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         Button(action: {
             viewModel.showAddBlockSheet = true
         }) {
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 Image(systemName: "plus.circle.fill")
                     .font(.title2)
+                    .foregroundColor(.appAccent)
                 
                 Text(NSLocalizedString("mainScreen.addSleepBlock", tableName: "MainScreen", comment: "Add sleep block button title"))
                     .font(.callout)
+                    .fontWeight(.medium)
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.appAccent)
             }
-            .foregroundColor(.appAccent)
-            .padding()
+            .frame(width: UIScreen.main.bounds.width / 2, height: 90)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.appAccent, lineWidth: 2)
+                    .fill(Color.appAccent.opacity(0.08))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.appAccent.opacity(0.3), lineWidth: 2)
+                    )
+                    .shadow(
+                        color: colorScheme == .light ? 
+                        Color.appAccent.opacity(0.15) : 
+                        Color.appAccent.opacity(0.25),
+                        radius: colorScheme == .light ? 4 : 8,
+                        x: 0,
+                        y: colorScheme == .light ? 2 : 4
+                    )
             )
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -396,6 +434,7 @@ struct SleepBlockCard: View {
     @State private var showingEditSheet = false
     @State private var showDeleteConfirmation = false
     @State private var buttonScale = 1.0
+    @Environment(\.colorScheme) private var colorScheme
     
     @ObservedObject var viewModel: MainScreenViewModel
     
@@ -422,12 +461,28 @@ struct SleepBlockCard: View {
                 .foregroundColor(.appSecondaryText)
                 
             }
-            .padding()
+            .padding(16)
             .frame(width: UIScreen.main.bounds.width / 2, height: 90)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.appCardBackground)
-                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(
+                                colorScheme == .light ? 
+                                Color.gray.opacity(0.15) : 
+                                Color.clear,
+                                lineWidth: 1
+                            )
+                    )
+                    .shadow(
+                        color: colorScheme == .light ? 
+                        Color.black.opacity(0.08) : 
+                        Color.black.opacity(0.3),
+                        radius: colorScheme == .light ? 8 : 12,
+                        x: 0,
+                        y: colorScheme == .light ? 4 : 6
+                    )
             )
             
             // Düzenleme modu aktifken görünecek aksiyon butonları
@@ -508,7 +563,6 @@ struct SleepBlockCard: View {
         generator.impactOccurred()
     }
 
-
 // MARK: - Edit Sleep Block Sheet
 struct EditSleepBlockSheet: View {
     @ObservedObject var viewModel: MainScreenViewModel
@@ -572,15 +626,16 @@ struct InfoCardsSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 12) {
             HStack {
                 Text(NSLocalizedString("mainScreen.dailyStatus", tableName: "MainScreen", comment: "Daily status section title"))
                     .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundColor(.appText)
                 Spacer()
             }
             
-            HStack(spacing: 8) {
+            HStack(spacing: 12) {
                 MainInfoCard(
                     icon: NSLocalizedString("mainScreen.progressIcon", tableName: "MainScreen", comment: "Progress icon emoji"),
                     title: NSLocalizedString("mainScreen.progress", tableName: "MainScreen", comment: "Progress card title"),
@@ -603,34 +658,48 @@ struct InfoCardsSection: View {
 // MARK: - Tip Section
 struct TipSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
                 Text(NSLocalizedString("mainScreen.tipIcon", tableName: "MainScreen", comment: "Tip icon emoji"))
                     .font(.title3)
                 Text(NSLocalizedString("mainScreen.todaysTip", tableName: "MainScreen", comment: "Today's tip section title"))
                     .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundColor(.appText)
             }
             
-            HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(viewModel.dailyTip, tableName: "Tips")
                     .font(.subheadline)
                     .foregroundColor(.appSecondaryText)
+                    .lineSpacing(2)
                     .multilineTextAlignment(.leading)
-                
-                Spacer()
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.appCardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(
+                                colorScheme == .light ? 
+                                Color.gray.opacity(0.12) : 
+                                Color.clear,
+                                lineWidth: 1
+                            )
+                    )
                     .shadow(
-                        color: Color.black.opacity(0.05),
-                        radius: 4,
+                        color: colorScheme == .light ? 
+                        Color.black.opacity(0.06) : 
+                        Color.black.opacity(0.25),
+                        radius: colorScheme == .light ? 6 : 10,
                         x: 0,
-                        y: 2
+                        y: colorScheme == .light ? 3 : 5
                     )
             )
         }
@@ -645,9 +714,11 @@ struct MainInfoCard: View {
     let value: String
     let color: Color
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 4) {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 6) {
                 Text(icon)
                     .font(.title3)
                     .foregroundColor(color)
@@ -655,22 +726,35 @@ struct MainInfoCard: View {
                 Text(title)
                     .font(.subheadline)
                     .foregroundColor(.appSecondaryText)
+                    .fontWeight(.medium)
             }
             
             Text(value)
-                .font(.headline)
+                .font(.title3)
+                .fontWeight(.semibold)
                 .foregroundColor(.appText)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
+        .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.appCardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(
+                            colorScheme == .light ? 
+                            Color.gray.opacity(0.12) : 
+                            Color.clear,
+                            lineWidth: 1
+                        )
+                )
                 .shadow(
-                    color: Color.black.opacity(0.05),
-                    radius: 4,
+                    color: colorScheme == .light ? 
+                    Color.black.opacity(0.06) : 
+                    Color.black.opacity(0.25),
+                    radius: colorScheme == .light ? 6 : 10,
                     x: 0,
-                    y: 2
+                    y: colorScheme == .light ? 3 : 5
                 )
         )
     }
