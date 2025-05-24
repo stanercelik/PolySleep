@@ -12,43 +12,71 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color.appBackground
-                .ignoresSafeArea()
+            // Modern gradient background
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.appBackground,
+                    Color.appBackground.opacity(0.95)
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 20) {
-                    // Header Card
+                LazyVStack(spacing: 20) {
+                    // Hero Header Section
                     VStack(spacing: 16) {
-                        Image(systemName: "gearshape.2.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.appPrimary)
-                            .padding(.top, 8)
+                        // Icon with gradient background
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color.appPrimary.opacity(0.8),
+                                            Color.appAccent.opacity(0.6)
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 64, height: 64)
+                                .shadow(
+                                    color: Color.appPrimary.opacity(0.3),
+                                    radius: 12,
+                                    x: 0,
+                                    y: 6
+                                )
+                            
+                            Image(systemName: "gearshape.2.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        }
                         
-                        Text(L("settings.title", table: "Profile"))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.appText)
-                        
-                        Text(L("settings.subtitle", table: "Profile"))
-                            .font(.subheadline)
-                            .foregroundColor(.appSecondaryText)
-                            .multilineTextAlignment(.center)
+                        VStack(spacing: 8) {
+                            Text(L("settings.title", table: "Profile"))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.appText)
+                            
+                            Text(L("settings.subtitle", table: "Profile"))
+                                .font(.subheadline)
+                                .foregroundColor(.appSecondaryText)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                        }
                     }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-                    )
+                    .padding(.top, 8)
+                    .padding(.horizontal, 24)
                     
                     // Profile & Account Section
-                    SettingsSection(
+                    ModernSettingsSection(
                         title: L("settings.about.title", table: "Profile"),
                         icon: "person.2.fill",
                         iconColor: .appAccent
                     ) {
                         VStack(spacing: 12) {
-                            SettingsNavigationRow(
+                            ModernNavigationRow(
                                 icon: "person.circle.fill",
                                 title: L("settings.about.personalInfo", table: "Profile"),
                                 subtitle: L("settings.about.personalInfo.subtitle", table: "Profile"),
@@ -58,13 +86,13 @@ struct SettingsView: View {
                     }
                     
                     // Notifications Section
-                    SettingsSection(
+                    ModernSettingsSection(
                         title: L("settings.notifications.title", table: "Profile"),
                         icon: "bell.fill",
                         iconColor: .appSecondary
                     ) {
                         VStack(spacing: 12) {
-                            SettingsNavigationRow(
+                            ModernNavigationRow(
                                 icon: "bell.badge.fill",
                                 title: L("settings.notifications.settings", table: "Profile"),
                                 subtitle: L("settings.notifications.subtitle", table: "Profile"),
@@ -74,14 +102,14 @@ struct SettingsView: View {
                     }
                     
                     // General Settings Section
-                    SettingsSection(
+                    ModernSettingsSection(
                         title: L("settings.general.title", table: "Profile"),
                         icon: "gearshape.fill",
-                        iconColor: .gray
+                        iconColor: .blue
                     ) {
                         VStack(spacing: 12) {
                             // Theme Setting
-                            SettingsActionRow(
+                            ModernActionRow(
                                 icon: "moon.circle.fill",
                                 title: L("settings.general.theme", table: "Profile"),
                                 subtitle: L("settings.general.selectTheme", table: "Profile"),
@@ -89,11 +117,10 @@ struct SettingsView: View {
                                 action: { showThemePicker = true }
                             )
                             
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
+                            ModernDivider()
                             
                             // Language Setting
-                            SettingsActionRow(
+                            ModernActionRow(
                                 icon: "globe.americas.fill",
                                 title: L("settings.general.language", table: "Profile"),
                                 subtitle: L("settings.general.selectLanguage", table: "Profile"),
@@ -104,40 +131,30 @@ struct SettingsView: View {
                     }
                     
                     // Support & More Section
-                    SettingsSection(
+                    ModernSettingsSection(
                         title: L("settings.other.title", table: "Profile"),
                         icon: "heart.fill",
                         iconColor: .red
                     ) {
                         VStack(spacing: 12) {
-                            SettingsNavigationRow(
-                                icon: "bell.fill",
-                                title: L("settings.notifications.settings", table: "Profile"),
-                                destination: NotificationSettingsView()
-                            )
-                            
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
-                            
-                            SettingsNavigationRow(
+                            ModernNavigationRow(
                                 icon: "info.circle.fill",
                                 title: L("settings.other.disclaimer", table: "Profile"),
+                                subtitle: "Kullanım koşulları ve sorumluluk reddi",
                                 destination: DisclaimerView()
                             )
                             
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
+                            ModernDivider()
                             
-                            SettingsExternalLinkRow(
+                            ModernExternalLinkRow(
                                 icon: "envelope.fill",
                                 title: L("settings.other.feedback", table: "Profile"),
                                 url: "mailto:support@polysleep.app"
                             )
                             
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
+                            ModernDivider()
                             
-                            SettingsExternalLinkRow(
+                            ModernExternalLinkRow(
                                 icon: "star.fill",
                                 title: L("settings.other.rateApp", table: "Profile"),
                                 url: "https://apps.apple.com/app/polysleep/id123456789"
@@ -145,21 +162,39 @@ struct SettingsView: View {
                         }
                     }
                     
-                    // Version Info
-                    VStack(spacing: 8) {
-                        Text("PolySleep")
-                            .font(.caption)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appSecondaryText)
+                    // Enhanced Version Info
+                    VStack(spacing: 12) {
+                        HStack(spacing: 8) {
+                            Image("AppIcon")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(8)
+                                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                            
+                            VStack(spacing: 2) {
+                                Text("PolySleep")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.appText)
+                                
+                                Text("v1.0.0")
+                                    .font(.caption)
+                                    .foregroundColor(.appSecondaryText)
+                            }
+                        }
                         
-                        Text("v1.0.0")
+                        Text("© 2024 PolySleep. Tüm hakları saklıdır.")
                             .font(.caption2)
                             .foregroundColor(.appSecondaryText.opacity(0.7))
+                            .multilineTextAlignment(.center)
                     }
                     .padding(.top, 20)
                     .padding(.bottom, 40)
+                    
+                    Spacer(minLength: 24)
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
             }
         }
         .navigationTitle(L("settings.title", table: "Profile"))
@@ -203,43 +238,85 @@ struct SettingsView: View {
     }
 }
 
-// MARK: - Custom Components
+// MARK: - Modern Components
 
-struct SettingsSection<Content: View>: View {
+// Modern settings section with enhanced styling
+struct ModernSettingsSection<Content: View>: View {
     let title: String
     let icon: String
     let iconColor: Color
     @ViewBuilder let content: Content
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundColor(iconColor)
+        VStack(spacing: 20) {
+            // Section Header
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(iconColor.opacity(0.15))
+                        .frame(width: 40, height: 40)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(iconColor)
+                }
                 
-                Text(title)
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                    
+                    Text("Ayarlar ve tercihler")
+                        .font(.caption)
+                        .foregroundColor(.appSecondaryText)
+                }
+                
+                Spacer()
             }
             
             content
         }
-        .padding()
+        .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                .overlay(
+                    // Subtle border for light mode
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color.gray.opacity(colorScheme == .light ? 0.15 : 0),
+                                    Color.gray.opacity(colorScheme == .light ? 0.05 : 0)
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+                .shadow(
+                    color: colorScheme == .light ? 
+                    Color.black.opacity(0.08) : 
+                    Color.black.opacity(0.3),
+                    radius: colorScheme == .light ? 12 : 16,
+                    x: 0,
+                    y: colorScheme == .light ? 6 : 8
+                )
         )
     }
 }
 
-struct SettingsNavigationRow<Destination: View>: View {
+// Modern navigation row with enhanced styling
+struct ModernNavigationRow<Destination: View>: View {
     let icon: String
     let title: String
     let subtitle: String?
     let destination: Destination
+    @Environment(\.colorScheme) private var colorScheme
+    @State private var isPressed = false
     
     init(icon: String, title: String, subtitle: String? = nil, destination: Destination) {
         self.icon = icon
@@ -250,13 +327,19 @@ struct SettingsNavigationRow<Destination: View>: View {
     
     var body: some View {
         NavigationLink(destination: destination) {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundColor(.appPrimary)
-                    .frame(width: 28)
+            HStack(spacing: 16) {
+                // Icon with background
+                ZStack {
+                    Circle()
+                        .fill(Color.appPrimary.opacity(0.1))
+                        .frame(width: 36, height: 36)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.appPrimary)
+                }
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.subheadline)
                         .fontWeight(.medium)
@@ -266,40 +349,48 @@ struct SettingsNavigationRow<Destination: View>: View {
                         Text(subtitle)
                             .font(.caption)
                             .foregroundColor(.appSecondaryText)
+                            .lineLimit(2)
                     }
                 }
                 
                 Spacer()
                 
+                // Chevron icon
                 Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .fontWeight(.medium)
+                    .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.appSecondaryText.opacity(0.6))
             }
             .padding(.vertical, 8)
-            .padding(.horizontal, 4)
             .contentShape(Rectangle())
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(ModernNavigationButtonStyle())
     }
 }
 
-struct SettingsActionRow: View {
+// Modern action row for buttons with enhanced styling
+struct ModernActionRow: View {
     let icon: String
     let title: String
     let subtitle: String
     let value: String
     let action: () -> Void
+    @State private var isPressed = false
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundColor(.appPrimary)
-                    .frame(width: 28)
+            HStack(spacing: 16) {
+                // Icon with background
+                ZStack {
+                    Circle()
+                        .fill(Color.appPrimary.opacity(0.1))
+                        .frame(width: 36, height: 36)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.appPrimary)
+                }
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.subheadline)
                         .fontWeight(.medium)
@@ -308,30 +399,32 @@ struct SettingsActionRow: View {
                     Text(subtitle)
                         .font(.caption)
                         .foregroundColor(.appSecondaryText)
+                        .lineLimit(2)
                 }
                 
                 Spacer()
                 
+                // Value badge
                 Text(value)
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundColor(.appSecondary)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
                     .background(
-                        RoundedRectangle(cornerRadius: 6)
+                        Capsule()
                             .fill(Color.appSecondary.opacity(0.15))
                     )
             }
             .padding(.vertical, 8)
-            .padding(.horizontal, 4)
             .contentShape(Rectangle())
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(ModernActionButtonStyle())
     }
 }
 
-struct SettingsExternalLinkRow: View {
+// Modern external link row with enhanced styling
+struct ModernExternalLinkRow: View {
     let icon: String
     let title: String
     let url: String
@@ -342,34 +435,83 @@ struct SettingsExternalLinkRow: View {
                 UIApplication.shared.open(url)
             }
         }) {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundColor(.appPrimary)
-                    .frame(width: 28)
+            HStack(spacing: 16) {
+                // Icon with background
+                ZStack {
+                    Circle()
+                        .fill(Color.appPrimary.opacity(0.1))
+                        .frame(width: 36, height: 36)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.appPrimary)
+                }
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(.appText)
                     
-                    Text(url)
+                    Text(url.replacingOccurrences(of: "mailto:", with: "").replacingOccurrences(of: "https://", with: ""))
                         .font(.caption)
                         .foregroundColor(.appSecondaryText)
+                        .lineLimit(1)
                 }
                 
                 Spacer()
                 
+                // External link icon
                 Image(systemName: "arrow.up.right.circle.fill")
-                    .font(.title3)
-                    .foregroundColor(.appSecondaryText.opacity(0.6))
+                    .font(.system(size: 18))
+                    .foregroundColor(.appPrimary.opacity(0.6))
             }
             .padding(.vertical, 8)
-            .padding(.horizontal, 4)
             .contentShape(Rectangle())
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(ModernActionButtonStyle())
+    }
+}
+
+// Modern divider
+struct ModernDivider: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    var body: some View {
+        Rectangle()
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.clear,
+                        Color.appSecondaryText.opacity(colorScheme == .light ? 0.2 : 0.1),
+                        Color.clear
+                    ]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .frame(height: 1)
+            .padding(.horizontal, 16)
+    }
+}
+
+// MARK: - Button Styles
+
+struct ModernNavigationButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
+struct ModernActionButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 

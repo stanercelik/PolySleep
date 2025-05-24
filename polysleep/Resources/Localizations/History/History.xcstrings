@@ -285,6 +285,258 @@
         }
       }
     },
+    "history.stats.title" : {
+      "comment" : "Title for the statistics overview section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Statistics"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku İstatistikleri"
+          }
+        }
+      }
+    },
+    "history.stats.thisWeek" : {
+      "comment" : "Label for this week's statistics",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "history.stats.totalSessions" : {
+      "comment" : "Label for total sleep sessions statistic",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sessions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Seans"
+          }
+        }
+      }
+    },
+    "history.stats.avgDuration" : {
+      "comment" : "Label for average duration statistic",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avg Duration"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ort. Süre"
+          }
+        }
+      }
+    },
+    "history.stats.avgRating" : {
+      "comment" : "Label for average rating statistic",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avg Rating"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ort. Puan"
+          }
+        }
+      }
+    },
+    "history.stats.streak" : {
+      "comment" : "Label for current streak statistic",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Streak"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevcut Seri"
+          }
+        }
+      }
+    },
+    "history.filter.title" : {
+      "comment" : "Title for the filter section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçmişi Filtrele"
+          }
+        }
+      }
+    },
+    "history.timeline.title" : {
+      "comment" : "Title for the timeline section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Timeline"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Zaman Çizelgesi"
+          }
+        }
+      }
+    },
+    "history.timeline.count" : {
+      "comment" : "Label showing total number of entries",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d entries"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d kayıt"
+          }
+        }
+      }
+    },
+    "history.month.entries" : {
+      "comment" : "Label showing number of entries in a month",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d entries"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d kayıt"
+          }
+        }
+      }
+    },
+    "history.blocksCount" : {
+      "comment" : "Label for number of sleep blocks",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d blok"
+          }
+        }
+      }
+    },
+    "history.status.completed" : {
+      "comment" : "Status label for completed sleep goals",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamamlandı"
+          }
+        }
+      }
+    },
+    "history.status.partial" : {
+      "comment" : "Status label for partially completed sleep goals",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partial"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kısmi"
+          }
+        }
+      }
+    },
+    "history.status.missed" : {
+      "comment" : "Status label for missed sleep goals",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missed"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaçırıldı"
+          }
+        }
+      }
+    },
     "Key" : {
       "extractionState" : "manual"
     },

@@ -763,15 +763,6 @@ struct AdaptationProgressCard: View {
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(phaseColor)
-                    
-                    Button(action: {
-                        showingResetAlert = true
-                    }) {
-                        Image(systemName: "arrow.clockwise.circle.fill")
-                            .font(.system(size: 20))
-                            .foregroundColor(.appSecondaryText.opacity(0.6))
-                    }
-                    .disabled(isResetting)
                 }
             }
             
@@ -894,16 +885,6 @@ struct PhaseInfoView: View {
             }
             
             Spacer()
-            
-            // Adaptasyon sıfırlama butonu
-            Button(action: {
-                showingResetAlert = true
-            }) {
-                Image(systemName: "arrow.counterclockwise.circle.fill")
-                    .font(.system(size: 22))
-                    .foregroundColor(phaseColor)
-            }
-            .disabled(isResetting)
         }
         .padding(.horizontal, 4)
     }

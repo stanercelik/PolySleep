@@ -1,4 +1,0 @@
-module FirebaseAppDistributionTarget {
-umbrella "/Users/tanercelik/Library/Developer/Xcode/DerivedData/polysleep-frpdrhalxuqdozdrvmfgwzcofldb/SourcePackages/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseAppDistributionWrap/include"
-export *
-}

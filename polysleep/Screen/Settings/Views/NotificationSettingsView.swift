@@ -4,6 +4,7 @@ import SwiftData
 struct NotificationSettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    @Environment(\.colorScheme) private var colorScheme
     @Query private var userPreferences: [UserPreferences]
     @State private var reminderTime: Double = 15
     @State private var hasScheduleChanged = false
@@ -17,212 +18,271 @@ struct NotificationSettingsView: View {
     
     var body: some View {
         ZStack {
-            Color.appBackground
-                .ignoresSafeArea()
+            // Modern gradient background
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.appBackground,
+                    Color.appBackground.opacity(0.95)
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 20) {
-                    // Header Card
+                LazyVStack(spacing: 20) {
+                    // Hero Header Section
                     VStack(spacing: 16) {
-                        Image(systemName: "bell.badge.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.appAccent)
-                            .padding(.top, 8)
-                        
-                        Text(L("notifications.management.title", table: "Profile"))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.appText)
-                        
-                        Text(L("notifications.management.subtitle", table: "Profile"))
-                            .font(.subheadline)
-                            .foregroundColor(.appSecondaryText)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-                    )
-                    
-                    // Reminder Time Card
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Image(systemName: "clock.arrow.2.circlepath")
-                                .font(.title2)
-                                .foregroundColor(.appPrimary)
+                        // Icon with gradient background
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color.appAccent.opacity(0.8),
+                                            Color.appSecondary.opacity(0.6)
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 64, height: 64)
+                                .shadow(
+                                    color: Color.appAccent.opacity(0.3),
+                                    radius: 12,
+                                    x: 0,
+                                    y: 6
+                                )
                             
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(L("notifications.reminderTime.title", table: "Profile"))
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.appText)
-                                
-                                Text(L("notifications.reminderTime.subtitle", table: "Profile"))
-                                    .font(.caption)
-                                    .foregroundColor(.appSecondaryText)
-                            }
-                            
-                            Spacer()
+                            Image(systemName: "bell.badge.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
                         }
                         
-                        VStack(spacing: 12) {
-                            HStack {
-                                if reminderTime > 0 {
-                                    Text("\(formatTime(minutes: Int(reminderTime)))")
-                                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                                        .foregroundColor(.appAccent)
-                                } else {
-                                    Text(L("notifications.off", table: "Profile"))
-                                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        VStack(spacing: 8) {
+                            Text(L("notifications.management.title", table: "Profile"))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.appText)
+                            
+                            Text(L("notifications.management.subtitle", table: "Profile"))
+                                .font(.subheadline)
+                                .foregroundColor(.appSecondaryText)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                        }
+                    }
+                    .padding(.top, 8)
+                    .padding(.horizontal, 24)
+                    
+                    // Reminder Time Card
+                    ModernNotificationCard {
+                        VStack(spacing: 20) {
+                            // Card Header
+                            HStack(spacing: 12) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.appPrimary.opacity(0.15))
+                                        .frame(width: 40, height: 40)
+                                    
+                                    Image(systemName: "clock.arrow.2.circlepath")
+                                        .font(.system(size: 18, weight: .medium))
+                                        .foregroundColor(.appPrimary)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(L("notifications.reminderTime.title", table: "Profile"))
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.appText)
+                                    
+                                    Text(L("notifications.reminderTime.subtitle", table: "Profile"))
+                                        .font(.caption)
                                         .foregroundColor(.appSecondaryText)
                                 }
                                 
                                 Spacer()
-                                
-                                // Quick Actions
-                                HStack(spacing: 8) {
-                                    QuickTimeButton(time: 5, currentTime: $reminderTime)
-                                    QuickTimeButton(time: 15, currentTime: $reminderTime)
-                                    QuickTimeButton(time: 30, currentTime: $reminderTime)
+                            }
+                            
+                            // Time Display
+                            VStack(spacing: 16) {
+                                HStack {
+                                    if reminderTime > 0 {
+                                        Text("\(formatTime(minutes: Int(reminderTime)))")
+                                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                                            .foregroundColor(.appAccent)
+                                    } else {
+                                        Text(L("notifications.off", table: "Profile"))
+                                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                                            .foregroundColor(.appSecondaryText)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    // Quick Actions
+                                    HStack(spacing: 8) {
+                                        ModernQuickTimeButton(time: 5, currentTime: $reminderTime)
+                                        ModernQuickTimeButton(time: 15, currentTime: $reminderTime)
+                                        ModernQuickTimeButton(time: 30, currentTime: $reminderTime)
+                                    }
                                 }
-                            }
-                            
-                            CustomSlider(
-                                value: $reminderTime,
-                                range: 0...120,
-                                step: 1,
-                                trackColor: Color.appSecondaryText.opacity(0.2),
-                                thumbColor: Color.appAccent
-                            )
-                            .onChange(of: reminderTime) { oldValue, newValue in
-                                saveReminderTime(minutes: Int(newValue))
-                                hasScheduleChanged = true
-                            }
-                            
-                            HStack {
-                                Text(L("notifications.off", table: "Profile"))
-                                    .font(.caption2)
-                                    .foregroundColor(.appSecondaryText)
-                                Spacer()
-                                Text(L("notifications.twoHours", table: "Profile"))
-                                    .font(.caption2)
-                                    .foregroundColor(.appSecondaryText)
+                                
+                                ModernSlider(
+                                    value: $reminderTime,
+                                    range: 0...120,
+                                    step: 1,
+                                    trackColor: Color.appSecondaryText.opacity(0.2),
+                                    thumbColor: Color.appAccent
+                                )
+                                .onChange(of: reminderTime) { oldValue, newValue in
+                                    saveReminderTime(minutes: Int(newValue))
+                                    hasScheduleChanged = true
+                                }
+                                
+                                HStack {
+                                    Text(L("notifications.off", table: "Profile"))
+                                        .font(.caption2)
+                                        .foregroundColor(.appSecondaryText)
+                                    Spacer()
+                                    Text(L("notifications.twoHours", table: "Profile"))
+                                        .font(.caption2)
+                                        .foregroundColor(.appSecondaryText)
+                                }
                             }
                         }
                     }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                    )
                     
                     // Test Section Card
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Image(systemName: "testtube.2")
-                                .font(.title2)
-                                .foregroundColor(.appSecondary)
-                            
-                            Text(L("notifications.test.title", table: "Profile"))
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.appText)
-                        }
-                        
-                        VStack(spacing: 12) {
-                            NotificationTestButton(
-                                icon: "bell.badge.fill",
-                                title: L("notifications.test.immediate.title", table: "Profile"),
-                                subtitle: L("notifications.test.immediate.subtitle", table: "Profile"),
-                                color: .appAccent
-                            ) {
-                                testNotificationImmediately()
-                            }
-                            
-                            NotificationTestButton(
-                                icon: "timer",
-                                title: L("notifications.test.delayed.title", table: "Profile"),
-                                subtitle: L("notifications.test.delayed.subtitle", table: "Profile"),
-                                color: .appSecondary
-                            ) {
-                                test5SecondNotification()
-                            }
-                            
-                            if testNotificationScheduled {
-                                HStack {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                    Text(L("notifications.test.scheduled", table: "Profile"))
-                                        .font(.caption)
-                                        .foregroundColor(.green)
-                                    Spacer()
+                    ModernNotificationCard {
+                        VStack(spacing: 20) {
+                            // Card Header
+                            HStack(spacing: 12) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.appSecondary.opacity(0.15))
+                                        .frame(width: 40, height: 40)
+                                    
+                                    Image(systemName: "testtube.2")
+                                        .font(.system(size: 18, weight: .medium))
+                                        .foregroundColor(.appSecondary)
                                 }
-                                .padding(.horizontal, 8)
-                                .transition(.opacity.combined(with: .scale))
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(L("notifications.test.title", table: "Profile"))
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.appText)
+                                    
+                                    Text("Test bildirimleri gönder")
+                                        .font(.caption)
+                                        .foregroundColor(.appSecondaryText)
+                                }
+                                
+                                Spacer()
+                            }
+                            
+                            VStack(spacing: 12) {
+                                ModernNotificationTestButton(
+                                    icon: "bell.badge.fill",
+                                    title: L("notifications.test.immediate.title", table: "Profile"),
+                                    subtitle: L("notifications.test.immediate.subtitle", table: "Profile"),
+                                    color: .appAccent
+                                ) {
+                                    testNotificationImmediately()
+                                }
+                                
+                                ModernNotificationTestButton(
+                                    icon: "timer",
+                                    title: L("notifications.test.delayed.title", table: "Profile"),
+                                    subtitle: L("notifications.test.delayed.subtitle", table: "Profile"),
+                                    color: .appSecondary
+                                ) {
+                                    test5SecondNotification()
+                                }
+                                
+                                if testNotificationScheduled {
+                                    HStack(spacing: 8) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                        Text(L("notifications.test.scheduled", table: "Profile"))
+                                            .font(.caption)
+                                            .foregroundColor(.green)
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color.green.opacity(0.1))
+                                    )
+                                    .transition(.opacity.combined(with: .scale))
+                                }
                             }
                         }
                     }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                    )
                     
                     // Status Card
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            Image(systemName: "info.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.appPrimary)
+                    ModernNotificationCard {
+                        VStack(spacing: 20) {
+                            // Card Header
+                            HStack(spacing: 12) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.blue.opacity(0.15))
+                                        .frame(width: 40, height: 40)
+                                    
+                                    Image(systemName: "info.circle.fill")
+                                        .font(.system(size: 18, weight: .medium))
+                                        .foregroundColor(.blue)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(L("notifications.status.title", table: "Profile"))
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.appText)
+                                    
+                                    Text("Durum ve bilgiler")
+                                        .font(.caption)
+                                        .foregroundColor(.appSecondaryText)
+                                }
+                                
+                                Spacer()
+                            }
                             
-                            Text(L("notifications.status.title", table: "Profile"))
-                                .font(.headline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.appText)
-                        }
-                        
-                        VStack(spacing: 12) {
-                            StatusRow(
-                                icon: "bell.circle.fill",
-                                title: L("notifications.permission.title", table: "Profile"),
-                                value: notificationPermissionStatus,
-                                valueColor: notificationPermissionStatus == L("notifications.permission.granted", table: "Profile") ? .green : .orange
-                            )
-                            
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
-                            
-                            StatusRow(
-                                icon: "moon.circle.fill",
-                                title: L("notifications.status.activeProgram", table: "Profile"),
-                                value: ScheduleManager.shared.activeSchedule?.name ?? L("notifications.status.noProgram", table: "Profile"),
-                                valueColor: ScheduleManager.shared.activeSchedule != nil ? .green : .orange
-                            )
-                            
-                            Divider()
-                                .background(Color.appSecondaryText.opacity(0.2))
-                            
-                            StatusRow(
-                                icon: "timer.circle.fill",
-                                title: L("notifications.status.reminderTime", table: "Profile"),
-                                value: "\(Int(reminderTime)) " + L("notifications.minutes", table: "Profile"),
-                                valueColor: .appPrimary
-                            )
+                            VStack(spacing: 12) {
+                                ModernStatusRow(
+                                    icon: "bell.circle.fill",
+                                    title: L("notifications.permission.title", table: "Profile"),
+                                    value: notificationPermissionStatus,
+                                    valueColor: notificationPermissionStatus == L("notifications.permission.granted", table: "Profile") ? .green : .orange
+                                )
+                                
+                                ModernStatusDivider()
+                                
+                                ModernStatusRow(
+                                    icon: "moon.circle.fill",
+                                    title: L("notifications.status.activeProgram", table: "Profile"),
+                                    value: ScheduleManager.shared.activeSchedule?.name ?? L("notifications.status.noProgram", table: "Profile"),
+                                    valueColor: ScheduleManager.shared.activeSchedule != nil ? .green : .orange
+                                )
+                                
+                                ModernStatusDivider()
+                                
+                                ModernStatusRow(
+                                    icon: "timer.circle.fill",
+                                    title: L("notifications.status.reminderTime", table: "Profile"),
+                                    value: "\(Int(reminderTime)) " + L("notifications.minutes", table: "Profile"),
+                                    valueColor: .appPrimary
+                                )
+                            }
                         }
                     }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                    )
+                    
+                    Spacer(minLength: 24)
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
             }
         }
         .navigationTitle(L("notifications.settings.title", table: "Profile"))
@@ -354,9 +414,48 @@ struct NotificationSettingsView: View {
     }
 }
 
-// MARK: - Custom Components
+// MARK: - Modern Components
 
-struct QuickTimeButton: View {
+// Modern notification card component with enhanced styling
+struct ModernNotificationCard<Content: View>: View {
+    @ViewBuilder let content: Content
+    @Environment(\.colorScheme) private var colorScheme
+    
+    var body: some View {
+        content
+            .padding(20)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.appCardBackground)
+                    .overlay(
+                        // Subtle border for light mode
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.gray.opacity(colorScheme == .light ? 0.15 : 0),
+                                        Color.gray.opacity(colorScheme == .light ? 0.05 : 0)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
+                            )
+                    )
+                    .shadow(
+                        color: colorScheme == .light ? 
+                        Color.black.opacity(0.08) : 
+                        Color.black.opacity(0.3),
+                        radius: colorScheme == .light ? 12 : 16,
+                        x: 0,
+                        y: colorScheme == .light ? 6 : 8
+                    )
+            )
+    }
+}
+
+// Modern quick time button with enhanced styling
+struct ModernQuickTimeButton: View {
     let time: Int
     @Binding var currentTime: Double
     
@@ -369,19 +468,24 @@ struct QuickTimeButton: View {
             Text("\(time)dk")
                 .font(.caption)
                 .fontWeight(.medium)
-                .foregroundColor(currentTime == Double(time) ? .white : .appSecondaryText)
+                .foregroundColor(currentTime == Double(time) ? .white : .appAccent)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(currentTime == Double(time) ? Color.appAccent : Color.appSecondaryText.opacity(0.1))
+                    Capsule()
+                        .fill(currentTime == Double(time) ? Color.appAccent : Color.appAccent.opacity(0.1))
+                        .overlay(
+                            Capsule()
+                                .stroke(currentTime == Double(time) ? Color.clear : Color.appAccent.opacity(0.3), lineWidth: 1)
+                        )
                 )
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(ModernQuickButtonStyle())
     }
 }
 
-struct CustomSlider: View {
+// Modern slider with enhanced styling
+struct ModernSlider: View {
     @Binding var value: Double
     let range: ClosedRange<Double>
     let step: Double
@@ -389,18 +493,28 @@ struct CustomSlider: View {
     let thumbColor: Color
     
     var body: some View {
-        Slider(value: $value, in: range, step: step)
-            .accentColor(thumbColor)
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .frame(height: 4)
-                    .foregroundColor(trackColor)
-                    .allowsHitTesting(false)
-            )
+        VStack(spacing: 8) {
+            Slider(value: $value, in: range, step: step)
+                .accentColor(thumbColor)
+                .background(
+                    // Custom track
+                    RoundedRectangle(cornerRadius: 8)
+                        .frame(height: 6)
+                        .foregroundColor(trackColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .frame(height: 6)
+                                .foregroundColor(thumbColor)
+                                .scaleEffect(x: CGFloat((value - range.lowerBound) / (range.upperBound - range.lowerBound)), y: 1, anchor: .leading)
+                        )
+                        .allowsHitTesting(false)
+                )
+        }
     }
 }
 
-struct NotificationTestButton: View {
+// Modern test button with enhanced styling
+struct ModernNotificationTestButton: View {
     let icon: String
     let title: String
     let subtitle: String
@@ -409,13 +523,18 @@ struct NotificationTestButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundColor(color)
-                    .frame(width: 30)
+            HStack(spacing: 16) {
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.15))
+                        .frame(width: 40, height: 40)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(color)
+                }
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.subheadline)
                         .fontWeight(.medium)
@@ -424,42 +543,56 @@ struct NotificationTestButton: View {
                     Text(subtitle)
                         .font(.caption)
                         .foregroundColor(.appSecondaryText)
+                        .lineLimit(2)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "arrow.right.circle.fill")
-                    .font(.title3)
+                    .font(.system(size: 20))
                     .foregroundColor(color.opacity(0.7))
             }
-            .padding()
+            .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(color.opacity(0.1))
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                color.opacity(0.05),
+                                color.opacity(0.02)
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(color.opacity(0.2), lineWidth: 1)
                     )
             )
         }
-        .buttonStyle(PlainButtonStyle())
-        .scaleEffect(1.0)
-        .animation(.easeInOut(duration: 0.1), value: false)
+        .buttonStyle(ModernTestButtonStyle())
     }
 }
 
-struct StatusRow: View {
+// Modern status row with enhanced styling
+struct ModernStatusRow: View {
     let icon: String
     let title: String
     let value: String
     let valueColor: Color
     
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .font(.title3)
-                .foregroundColor(.appPrimary)
-                .frame(width: 24)
+        HStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(Color.appPrimary.opacity(0.1))
+                    .frame(width: 32, height: 32)
+                
+                Image(systemName: icon)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.appPrimary)
+            }
             
             Text(title)
                 .font(.subheadline)
@@ -471,7 +604,55 @@ struct StatusRow: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundColor(valueColor)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill(valueColor.opacity(0.1))
+                )
         }
+    }
+}
+
+// Modern status divider
+struct ModernStatusDivider: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    var body: some View {
+        Rectangle()
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.clear,
+                        Color.appSecondaryText.opacity(colorScheme == .light ? 0.15 : 0.08),
+                        Color.clear
+                    ]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .frame(height: 1)
+            .padding(.horizontal, 8)
+    }
+}
+
+// MARK: - Button Styles
+
+struct ModernQuickButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+    }
+}
+
+struct ModernTestButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 

@@ -103,7 +103,22 @@ class HistoryViewModel: ObservableObject {
     func deleteSleepEntry(_ entry: SleepEntry) {
         guard let modelContext = modelContext else { return }
         
+        // Entry'nin ait olduğu HistoryModel'i kaydet (silmeden önce)
+        let historyDay = entry.historyDay
+        
+        // SleepEntry'yi sil
         modelContext.delete(entry)
+        
+        // HistoryModel'in boş kalıp kalmadığını kontrol et
+        if let historyDay = historyDay {
+            // HistoryModel'in sleepEntries array'ini kontrol et
+            // SwiftData relationship'i otomatik güncelleyecek
+            if let sleepEntries = historyDay.sleepEntries, sleepEntries.isEmpty {
+                modelContext.delete(historyDay)
+                print("Boş kalan HistoryModel silindi: \(historyDay.date)")
+            }
+        }
+        
         saveChanges()
     }
     
@@ -136,8 +151,13 @@ class HistoryViewModel: ObservableObject {
         let descriptor = FetchDescriptor<HistoryModel>(predicate: predicate, sortBy: [SortDescriptor(\HistoryModel.date, order: .reverse)])
         
         do {
-            self.historyItems = try modelContext.fetch(descriptor)
-            print("\(self.historyItems.count) adet HistoryModel yüklendi (Filtre: \(selectedFilter.rawValue)).")
+            let allHistoryItems = try modelContext.fetch(descriptor)
+            // Sadece en az bir SleepEntry'si olan günleri filtrele
+            self.historyItems = allHistoryItems.filter { historyModel in
+                guard let sleepEntries = historyModel.sleepEntries else { return false }
+                return !sleepEntries.isEmpty
+            }
+            print("\(self.historyItems.count) adet HistoryModel yüklendi (Filtre: \(selectedFilter.rawValue)), toplam \(allHistoryItems.count) kayıttan filtrelendi.")
             syncStatus = .synced
         } catch {
             print("HistoryModel verileri yüklenirken hata oluştu: \(error)")

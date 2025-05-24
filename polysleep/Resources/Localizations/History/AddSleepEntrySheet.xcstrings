@@ -253,6 +253,24 @@
         }
       }
     },
+    "sleepEntry.dateInfo" : {
+      "comment" : "Info message about date selection",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can only add entries for today or past dates"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece bugün veya geçmiş tarihler için kayıt ekleyebilirsin"
+          }
+        }
+      }
+    },
     "sleepEntry.error.alreadyAdded" : {
       "comment" : "Error message shown if a block is already added",
       "extractionState" : "stale",
@@ -267,6 +285,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu blok seçili tarih için zaten eklenmiş."
+          }
+        }
+      }
+    },
+    "sleepEntry.error.notFinished" : {
+      "comment" : "Error message shown if a sleep block has not finished yet",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This sleep block has not finished yet. You can only add entries for completed sleep blocks."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu uyku bloğu henüz bitmedi. Sadece tamamlanmış uyku blokları için kayıt ekleyebilirsin."
+          }
+        }
+      }
+    },
+    "sleepEntry.error.futureDate" : {
+      "comment" : "Error message shown when trying to select a future date",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You cannot add sleep entries for future dates. Please select today or a past date."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelecekteki tarihler için uyku kaydı ekleyemezsin. Lütfen bugün veya geçmiş bir tarih seç."
           }
         }
       }

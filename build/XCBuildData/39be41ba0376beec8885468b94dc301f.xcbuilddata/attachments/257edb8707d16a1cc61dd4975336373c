@@ -1,4 +1,0 @@
-module GoogleUtilities_AppDelegateSwizzler {
-umbrella "/Users/tanercelik/Library/Developer/Xcode/DerivedData/polysleep-frpdrhalxuqdozdrvmfgwzcofldb/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Public"
-export *
-}

@@ -15,6 +15,8 @@ struct AddSleepEntrySheet: View {
     @State private var previousEmojiDescription: String = ""
     @State private var labelOffset: CGFloat = 0
     @State private var animateSelection: Bool = false
+    @State private var showDateWarning = false
+    @State private var dateWarningMessage = ""
     
     // MainScreenViewModel'den aktif uyku programını almak için
     @StateObject private var mainViewModel = MainScreenViewModel()
@@ -27,11 +29,11 @@ struct AddSleepEntrySheet: View {
     
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
     private let emojiDescriptions = [
-        "😄": "sleep.quality.veryGood",
-        "😊": "sleep.quality.good",
-        "😐": "sleep.quality.okay",
+        "😩": "sleep.quality.veryBad",
         "😪": "sleep.quality.bad",
-        "😩": "sleep.quality.veryBad"
+        "😐": "sleep.quality.okay",
+        "😊": "sleep.quality.good",
+        "😄": "sleep.quality.veryGood"
     ]
     
     // Kullanıcının seçtiği emojiler
@@ -53,18 +55,39 @@ struct AddSleepEntrySheet: View {
         Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day) != .orderedDescending
     }
     
-    // Belirli bir SleepBlock (struct) için, seçilen tarihte zaten SleepEntry var mı?
+    // Belirli bir SleepBlock (struct) için, seçilen tarihte zaten SleepEntry var mı veya henüz bitmemiş mi?
     private func isBlockAlreadyAdded(_ block: SleepBlock) -> Bool {
         guard let modelContext = viewModel.modelContext else { return false }
         let calendar = Calendar.current
         let targetDayStart = calendar.startOfDay(for: selectedDate)
         
-        guard let blockStartComponents = TimeFormatter.time(from: block.startTime) else { return false }
+        guard let blockStartComponents = TimeFormatter.time(from: block.startTime),
+              let blockEndComponents = TimeFormatter.time(from: block.endTime) else { return false }
         
         var dateComponentsForBlockStart = calendar.dateComponents([.year, .month, .day], from: targetDayStart)
         dateComponentsForBlockStart.hour = blockStartComponents.hour
         dateComponentsForBlockStart.minute = blockStartComponents.minute
         guard let exactBlockStartTime = calendar.date(from: dateComponentsForBlockStart) else { return false }
+        
+        var dateComponentsForBlockEnd = calendar.dateComponents([.year, .month, .day], from: targetDayStart)
+        dateComponentsForBlockEnd.hour = blockEndComponents.hour
+        dateComponentsForBlockEnd.minute = blockEndComponents.minute
+        var exactBlockEndTime = calendar.date(from: dateComponentsForBlockEnd)
+        
+        // Eğer bitiş zamanı başlangıçtan önce ise, ertesi güne kaydır
+        if let endTime = exactBlockEndTime, endTime <= exactBlockStartTime {
+            exactBlockEndTime = calendar.date(byAdding: .day, value: 1, to: endTime)
+        }
+        
+        guard let finalBlockEndTime = exactBlockEndTime else { return false }
+        
+        // Bugün seçilmişse ve blok henüz bitmemişse engelle
+        if calendar.isDateInToday(selectedDate) {
+            let now = Date()
+            if finalBlockEndTime > now {
+                return true // Henüz bitmemiş blok olarak işaretle
+            }
+        }
 
         // Calculate nextDayStart outside the predicate
         guard let nextDayStart = calendar.date(byAdding: .day, value: 1, to: targetDayStart) else {
@@ -95,7 +118,7 @@ struct AddSleepEntrySheet: View {
     
     // Slider değerine göre emoji seçimi
     private var currentEmoji: String {
-        let index = 4 - min(Int(sliderValue.rounded()), emojis.count - 1)
+        let index = min(Int(sliderValue.rounded()), emojis.count - 1)
         return emojis[index]
     }
     
@@ -106,52 +129,78 @@ struct AddSleepEntrySheet: View {
     
     // MARK: - View Components
     private var datePickerSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Image(systemName: "calendar")
+                Image(systemName: "calendar.circle.fill")
                     .foregroundColor(Color.appPrimary)
-                    .font(.system(size: 18, weight: .medium))
+                    .font(.title2)
                 
                 Text(L("sleepEntry.date", table: "AddSleepEntrySheet"))
                     .font(.headline)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.appText)
+                
+                Spacer()
             }
             
             DatePicker(
                 L("sleepEntry.selectDate", table: "AddSleepEntrySheet"),
                 selection: $selectedDate,
+                in: ...Date(), // Sadece bugüne kadar olan tarihler seçilebilir
                 displayedComponents: [.date]
             )
             .datePickerStyle(.compact)
             .tint(Color.appPrimary)
-            .onChange(of: selectedDate) { _ in
+            .onChange(of: selectedDate) { newDate in
                 selectedBlockFromSchedule = nil
-                // Hafif bir titreşim verelim
-                let generator = UIImpactFeedbackGenerator(style: .light)
-                generator.impactOccurred()
-            }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color("CardBackground"))
-                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
-            )
-            .padding(.bottom, 8)
-        }
-        .padding(.horizontal)
-        .padding(.top, 8)
+                
+                // Gelecek tarih kontrolü
+                if Calendar.current.compare(newDate, to: Date(), toGranularity: .day) == .orderedDescending {
+                    dateWarningMessage = "sleepEntry.error.futureDate"
+                    showDateWarning = true
+                    // Tarihi bugüne geri al
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        selectedDate = Date()
+                    }
+                } else {
+                                         let generator = UIImpactFeedbackGenerator(style: .light)
+                     generator.impactOccurred()
+                 }
+             }
+             
+             // Bilgi notu
+             HStack(spacing: 8) {
+                 Image(systemName: "info.circle.fill")
+                     .font(.caption)
+                     .foregroundColor(.blue.opacity(0.7))
+                 
+                 Text(L("sleepEntry.dateInfo", table: "AddSleepEntrySheet"))
+                     .font(.caption)
+                     .foregroundColor(.appSecondaryText)
+             }
+             .padding(.top, 4)
+         }
+         .padding(20)
+         .background(
+             RoundedRectangle(cornerRadius: 20)
+                 .fill(Color.appCardBackground)
+                 .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+         )
     }
     
     private var blockSelectionSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Image(systemName: "clock")
-                    .foregroundColor(Color.appPrimary)
-                    .font(.system(size: 18, weight: .medium))
+                Image(systemName: "clock.circle.fill")
+                    .foregroundColor(Color.appSecondary)
+                    .font(.title2)
                 
                 Text(L("sleepEntry.selectBlock", table: "AddSleepEntrySheet"))
                     .font(.headline)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.appText)
+                
+                Spacer()
             }
             
             if availableBlocksFromSchedule.isEmpty {
@@ -160,37 +209,50 @@ struct AddSleepEntrySheet: View {
                 BlocksListViewFromSchedule()
             }
         }
-        .padding(.horizontal)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
     
     private func EmptyBlocksView() -> some View {
-        VStack(spacing: 16) {
-            Spacer()
-            VStack(spacing: 16) {
-                Image(systemName: "moon.zzz.fill")
-                    .font(.system(size: 50))
-                    .foregroundColor(Color.appSecondaryText.opacity(0.5))
+        VStack(spacing: 24) {
+            ZStack {
+                Circle()
+                    .fill(Color.appSecondaryText.opacity(0.1))
+                    .frame(width: 80, height: 80)
                 
+                Image(systemName: "moon.zzz")
+                    .font(.system(size: 32, weight: .light))
+                    .foregroundColor(Color.appSecondaryText.opacity(0.6))
+            }
+            
+            VStack(spacing: 8) {
                 Text(L("sleepEntry.noBlocks", table: "AddSleepEntrySheet"))
                     .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.appText)
+                    .multilineTextAlignment(.center)
+                
+                Text("Create a sleep schedule first to add entries")
+                    .font(.body)
                     .foregroundColor(Color.appSecondaryText)
                     .multilineTextAlignment(.center)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 40)
-            Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 40)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color("CardBackground"))
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+                .fill(Color.appSecondaryText.opacity(0.05))
         )
-        .frame(height: 200)
     }
     
     private func BlocksListViewFromSchedule() -> some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 8) {
                 ForEach(availableBlocksFromSchedule, id: \.id) { block in
                     let alreadyAdded = isBlockAlreadyAdded(block)
                     
@@ -200,10 +262,45 @@ struct AddSleepEntrySheet: View {
                         isAlreadyAdded: alreadyAdded,
                         onTap: {
                             if alreadyAdded {
-                                blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                // Bugün seçilmişse ve blok henüz bitmemişse farklı mesaj göster
+                                if Calendar.current.isDateInToday(selectedDate) {
+                                    let calendar = Calendar.current
+                                    if let blockEndComponents = TimeFormatter.time(from: block.endTime) {
+                                        var dateComponentsForBlockEnd = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+                                        dateComponentsForBlockEnd.hour = blockEndComponents.hour
+                                        dateComponentsForBlockEnd.minute = blockEndComponents.minute
+                                        
+                                        if let exactBlockEndTime = calendar.date(from: dateComponentsForBlockEnd) {
+                                            var finalBlockEndTime = exactBlockEndTime
+                                            
+                                            // Eğer bitiş zamanı başlangıçtan önce ise, ertesi güne kaydır
+                                            if let blockStartComponents = TimeFormatter.time(from: block.startTime) {
+                                                var startComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+                                                startComponents.hour = blockStartComponents.hour
+                                                startComponents.minute = blockStartComponents.minute
+                                                
+                                                if let startTime = calendar.date(from: startComponents), exactBlockEndTime <= startTime {
+                                                    finalBlockEndTime = calendar.date(byAdding: .day, value: 1, to: exactBlockEndTime) ?? exactBlockEndTime
+                                                }
+                                            }
+                                            
+                                            if finalBlockEndTime > Date() {
+                                                blockErrorMessage = "sleepEntry.error.notFinished"
+                                            } else {
+                                                blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                            }
+                                        } else {
+                                            blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                        }
+                                    } else {
+                                        blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                    }
+                                } else {
+                                    blockErrorMessage = "sleepEntry.error.alreadyAdded"
+                                }
                                 showBlockError = true
                             } else {
-                                withAnimation(.spring(duration: 0.3)) {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                     selectedBlockFromSchedule = block
                                     animateSelection = true
                                 }
@@ -218,32 +315,31 @@ struct AddSleepEntrySheet: View {
                     )
                 }
             }
-            .padding(.vertical, 16)
-            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
         }
-        .frame(height: 250)
+        .frame(height: 200)
         .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color("CardBackground"))
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.appSecondaryText.opacity(0.05))
         )
     }
     
     private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, isAlreadyAdded: Bool, onTap: @escaping () -> Void) -> some View {
         Button(action: onTap) {
-            HStack {
-                Text(block.isCore ? coreEmoji : napEmoji)
-                    .font(.system(size: 20))
-                    .padding(8)
+            HStack(spacing: 12) {
+                Image(systemName: block.isCore ? "bed.double.fill" : "powersleep")
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .frame(width: 36, height: 36)
                     .background(
                         Circle()
-                            .fill(block.isCore ? Color.appPrimary.opacity(0.2) : Color.appSecondary.opacity(0.2))
+                            .fill(block.isCore ? Color.appPrimary : Color.appSecondary)
                     )
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text(block.isCore ? L("sleep.type.core", table: "DayDetail") : L("sleep.type.nap", table: "DayDetail"))
                         .font(.subheadline)
-                        .fontWeight(.medium)
+                        .fontWeight(.semibold)
                         .foregroundColor(isAlreadyAdded ? Color.appText.opacity(0.6) : Color.appText)
                     
                     Text("\(block.startTime) - \(block.endTime)")
@@ -255,12 +351,12 @@ struct AddSleepEntrySheet: View {
                 
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(Color.appSecondary)
+                        .font(.title2)
+                        .foregroundColor(Color.appPrimary)
                         .scaleEffect(animateSelection ? 1.2 : 1.0)
                 } else if isAlreadyAdded {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 24))
+                        .font(.title2)
                         .foregroundColor(Color.gray.opacity(0.6))
                 }
             }
@@ -269,35 +365,43 @@ struct AddSleepEntrySheet: View {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(
-                        isSelected ? Color.appSecondary.opacity(0.1) : 
-                        isAlreadyAdded ? Color.gray.opacity(0.1) : Color.clear
+                        isSelected ? Color.appPrimary.opacity(0.1) : 
+                        isAlreadyAdded ? Color.gray.opacity(0.05) : Color.appCardBackground
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(
-                                isSelected ? Color.appSecondary : 
-                                isAlreadyAdded ? Color.gray.opacity(0.5) : Color.gray.opacity(0.3), 
+                                isSelected ? Color.appPrimary : 
+                                isAlreadyAdded ? Color.gray.opacity(0.3) : Color.appSecondaryText.opacity(0.1), 
                                 lineWidth: 1
                             )
                     )
+                    .shadow(
+                        color: isSelected ? Color.appPrimary.opacity(0.1) : Color.clear,
+                        radius: isSelected ? 4 : 0,
+                        x: 0,
+                        y: isSelected ? 2 : 0
+                    )
             )
-            .opacity(isAlreadyAdded ? 0.8 : 1.0)
+            .opacity(isAlreadyAdded ? 0.7 : 1.0)
         }
         .disabled(isAlreadyAdded)
     }
     
     private var qualitySection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Image(systemName: "star.fill")
-                    .foregroundColor(Color.appPrimary)
-                    .font(.system(size: 18, weight: .medium))
+                Image(systemName: "star.circle.fill")
+                    .foregroundColor(Color.appAccent)
+                    .font(.title2)
                 
                 Text(L("sleepEntry.quality", table: "AddSleepEntrySheet"))
                     .font(.headline)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color.appText)
+                
+                Spacer()
             }
-            .padding(.horizontal)
             
             VStack(alignment: .center, spacing: 24) {
                 HStack(alignment: .center, spacing: 16) {
@@ -385,30 +489,28 @@ struct AddSleepEntrySheet: View {
                 }
                 .padding(.horizontal)
             }
-            .padding(.vertical, 20)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color("CardBackground"))
-                    .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 2)
-            )
-            .padding(.horizontal)
         }
-        .padding(.top, 8)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
     
     private func getSliderColor() -> Color {
         let index = Int(sliderValue.rounded())
         switch index {
         case 0:
-            return Color.red
+            return Color.red        // 😩 - Very bad
         case 1:
-            return Color.orange
+            return Color.orange     // 😪 - Bad
         case 2:
-            return Color.yellow
+            return Color.yellow     // 😐 - Okay
         case 3:
-            return Color.blue
+            return Color.appPrimary // 😊 - Good
         case 4:
-            return Color.green
+            return Color.green      // 😄 - Very good
         default:
             return Color.yellow
         }
@@ -421,7 +523,7 @@ struct AddSleepEntrySheet: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 20) {
                         datePickerSection
                         blockSelectionSection
                         
@@ -432,15 +534,15 @@ struct AddSleepEntrySheet: View {
                         // Kaydet butonu
                         if selectedBlockFromSchedule != nil {
                             SaveButton(isEnabled: isValidEntry())
-                                .padding(.horizontal)
-                                .padding(.top, 8)
+                                .padding(.horizontal, 16)
                                 .padding(.bottom, 24)
                         }
                         
-                        Spacer()
+                        Spacer(minLength: 20)
                     }
-                    .padding(.vertical)
-                    .animation(.spring(response: 0.3), value: selectedBlockFromSchedule != nil)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 20)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: selectedBlockFromSchedule != nil)
                 }
             }
             .navigationTitle(L("sleepEntry.add", table: "AddSleepEntrySheet"))
@@ -474,6 +576,13 @@ struct AddSleepEntrySheet: View {
                     dismissButton: .default(Text(L("general.ok", table: "AddSleepEntrySheet")))
                 )
             }
+            .alert(isPresented: $showDateWarning) {
+                Alert(
+                    title: Text(L("sleepEntry.error.title", table: "AddSleepEntrySheet")),
+                    message: Text(L(dateWarningMessage, table: "AddSleepEntrySheet")),
+                    dismissButton: .default(Text(L("general.ok", table: "AddSleepEntrySheet")))
+                )
+            }
         }
     }
     
@@ -482,35 +591,34 @@ struct AddSleepEntrySheet: View {
         Button(action: {
             if isEnabled {
                 saveSleepEntry()
-                // Haptic feedback
                 let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.success)
                 dismiss()
             }
         }) {
-            HStack {
-                Spacer()
+            HStack(spacing: 8) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.headline)
                 Text(L("general.save", table: "AddSleepEntrySheet"))
                     .font(.headline)
-                Spacer()
+                    .fontWeight(.semibold)
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 14)
-                    .fill(isEnabled ? 
-                         LinearGradient(gradient: Gradient(colors: [Color.appPrimary, Color.appPrimary.opacity(0.8)]), 
-                                      startPoint: .topLeading, 
-                                      endPoint: .bottomTrailing) :
-                         LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.3)]), 
-                                      startPoint: .topLeading, 
-                                      endPoint: .bottomTrailing))
-                    .shadow(color: isEnabled ? Color.appPrimary.opacity(0.3) : Color.clear, radius: 8, x: 0, y: 4)
-            )
             .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(isEnabled ? Color.appPrimary : Color.gray.opacity(0.3))
+                    .shadow(
+                        color: isEnabled ? Color.appPrimary.opacity(0.3) : Color.clear, 
+                        radius: isEnabled ? 8 : 0, 
+                        x: 0, 
+                        y: isEnabled ? 4 : 0
+                    )
+            )
         }
         .disabled(!isEnabled)
+        .opacity(isEnabled ? 1.0 : 0.6)
     }
     
     private func isValidEntry() -> Bool {
@@ -551,7 +659,7 @@ struct AddSleepEntrySheet: View {
         }
         
         let durationMinutes = Int(finalEndTime.timeIntervalSince(finalStartTime) / 60)
-        let ratingValue = 5 - Int(sliderValue.rounded()) // Slider 0(iyi)-4(kötü) -> Rating 5(iyi)-1(kötü)
+        let ratingValue = Int(sliderValue.rounded()) + 1 // Slider 0(kötü)-4(iyi) -> Rating 1(kötü)-5(iyi)
         
         // Yeni SleepEntry @Model nesnesi oluştur
         let newEntry = SleepEntry(

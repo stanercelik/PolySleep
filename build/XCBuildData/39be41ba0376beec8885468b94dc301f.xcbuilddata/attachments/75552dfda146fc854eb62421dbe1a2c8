@@ -1,4 +1,0 @@
-module GoogleUtilities_NSData {
-umbrella "/Users/tanercelik/Library/Developer/Xcode/DerivedData/polysleep-frpdrhalxuqdozdrvmfgwzcofldb/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/NSData+zlib/Public"
-export *
-}

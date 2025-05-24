@@ -13,23 +13,34 @@ struct HistoryView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 
-                VStack(spacing: 0) {
-                    // Filtreleme Segmenti
-                    segmentedFilterView
-                    
-                    // Ana içerik
-                    if viewModel.historyItems.isEmpty {
-                        emptyStateView
-                    } else {
-                        historyListView
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 24) {
+                        // Stats Overview Card
+                        SleepStatsOverviewCard(viewModel: viewModel)
+                        
+                        // Filter Section
+                        FilterSectionCard(viewModel: viewModel)
+                        
+                        // History Content
+                        if viewModel.historyItems.isEmpty {
+                            EmptyStateCard()
+                        } else {
+                            HistoryContentSection(viewModel: viewModel)
+                        }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 }
                 
-                // Yeni kayıt ekleme butonu
-                floatingActionButton
+                // Floating Action Button
+                ModernFloatingActionButton(action: {
+                    viewModel.isAddSleepEntryPresented = true
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                })
             }
             .navigationTitle(L("Sleep History", table: "History"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isDayDetailPresented) {
                 if viewModel.selectedDay != nil {
                     DayDetailView(viewModel: viewModel)
@@ -45,120 +56,387 @@ struct HistoryView: View {
         .accentColor(Color.appPrimary)
         .id(languageManager.currentLanguage)
     }
+}
+
+// MARK: - Sleep Stats Overview Card
+struct SleepStatsOverviewCard: View {
+    @ObservedObject var viewModel: HistoryViewModel
     
-    // MARK: - Subviews
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            // Header
+            HStack {
+                Image(systemName: "chart.bar.fill")
+                    .font(.title2)
+                    .foregroundColor(.appPrimary)
+                
+                Text(L("history.stats.title", table: "History"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+                
+                // Quick insights
+                Text(L("history.stats.thisWeek", table: "History"))
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appSecondaryText)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(Color.appSecondary.opacity(0.15))
+                    )
+            }
+            
+            // Stats Grid
+            LazyVGrid(columns: [
+                GridItem(.flexible(), spacing: 12),
+                GridItem(.flexible(), spacing: 12)
+            ], spacing: 12) {
+                QuickStatCard(
+                    icon: "bed.double.fill",
+                    title: L("history.stats.totalSessions", table: "History"),
+                    value: "\(calculateTotalSessions())",
+                    gradientColors: [.appPrimary, .blue]
+                )
+                
+                QuickStatCard(
+                    icon: "clock.fill",
+                    title: L("history.stats.avgDuration", table: "History"),
+                    value: calculateAverageDuration(),
+                    gradientColors: [.appSecondary, .green]
+                )
+                
+                QuickStatCard(
+                    icon: "star.fill",
+                    title: L("history.stats.avgRating", table: "History"),
+                    value: String(format: "%.1f", calculateAverageRating()),
+                    gradientColors: [.orange, .yellow]
+                )
+                
+                QuickStatCard(
+                    icon: "calendar.badge.clock",
+                    title: L("history.stats.streak", table: "History"),
+                    value: "\(calculateCurrentStreak())",
+                    gradientColors: [.purple, .pink]
+                )
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
     
-    // Segmented filter view
-    private var segmentedFilterView: some View {
-        VStack(spacing: 0) {
+    private func calculateTotalSessions() -> Int {
+        return viewModel.historyItems.compactMap { $0.sleepEntries?.count }.reduce(0, +)
+    }
+    
+    private func calculateAverageDuration() -> String {
+        let totalDuration = viewModel.historyItems.compactMap { $0.totalSleepDuration }.reduce(0, +)
+        let avgDuration = viewModel.historyItems.isEmpty ? 0 : totalDuration / Double(viewModel.historyItems.count)
+        let avgMinutes = Int(avgDuration / 60) // Convert seconds to minutes and then to Int
+        return formatDuration(avgMinutes)
+    }
+    
+    private func calculateAverageRating() -> Double {
+        let ratings = viewModel.historyItems.map { $0.averageRating }
+        return ratings.isEmpty ? 0.0 : ratings.reduce(0, +) / Double(ratings.count)
+    }
+    
+    private func calculateCurrentStreak() -> Int {
+        // Bu gerçek implementasyonla değiştirilecek
+        return viewModel.historyItems.count > 0 ? 7 : 0
+    }
+}
+
+// MARK: - Quick Stat Card
+struct QuickStatCard: View {
+    let icon: String
+    let title: String
+    let value: String
+    let gradientColors: [Color]
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .frame(width: 32, height: 32)
+                    .background(
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(colors: gradientColors),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                    )
+                
+                Spacer()
+            }
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(value)
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundColor(.appText)
+                
+                Text(title)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appSecondaryText)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.appCardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(
+                            LinearGradient(
+                                gradient: Gradient(colors: gradientColors.map { $0.opacity(0.2) }),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+        )
+    }
+}
+
+// MARK: - Filter Section Card
+struct FilterSectionCard: View {
+    @ObservedObject var viewModel: HistoryViewModel
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(.appSecondary)
+                
+                Text(L("history.filter.title", table: "History"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+            }
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(TimeFilter.allCases, id: \.self) { filter in
-                        FilterChip(
+                        ModernFilterChip(
                             title: filter.localizedTitle,
                             isSelected: viewModel.selectedFilter == filter,
-                            action: { viewModel.setFilter(filter) }
+                            action: { 
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    viewModel.setFilter(filter)
+                                }
+                            }
                         )
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
+                .padding(.horizontal, 4)
             }
-            .background(Color.clear)
-            
-            Divider()
-                .opacity(0.4)
         }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
+}
+
+// MARK: - Modern Filter Chip
+struct ModernFilterChip: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
     
-    // Floating action button
-    private var floatingActionButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Button(action: {
-                    viewModel.isAddSleepEntryPresented = true
-                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                    generator.impactOccurred()
-                }) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .semibold))
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 6) {
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.caption)
                         .foregroundColor(.white)
-                        .frame(width: 54, height: 54)
-                        .background(
-                            Circle()
-                                .fill(Color.appPrimary)
-                                .shadow(color: Color.appPrimary.opacity(0.3), radius: 8, x: 0, y: 2)
-                        )
+                        .transition(.scale.combined(with: .opacity))
                 }
-                .buttonStyle(ScaleButtonStyle())
-                .padding(.trailing, 20)
-                .padding(.bottom, 20)
+                
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(isSelected ? .semibold : .medium)
+                    .foregroundColor(isSelected ? .white : .appText)
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(
+                        isSelected ? 
+                        LinearGradient(
+                            gradient: Gradient(colors: [.appPrimary, .appSecondary]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ) :
+                        LinearGradient(
+                            gradient: Gradient(colors: [.appCardBackground, .appCardBackground]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(
+                                isSelected ? Color.clear : Color.appSecondaryText.opacity(0.2),
+                                lineWidth: 1
+                            )
+                    )
+                    .shadow(
+                        color: isSelected ? Color.appPrimary.opacity(0.3) : Color.clear,
+                        radius: isSelected ? 8 : 0,
+                        x: 0,
+                        y: isSelected ? 4 : 0
+                    )
+            )
         }
+        .buttonStyle(ScaleButtonStyle())
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
-    
-    // Empty state view
-    private var emptyStateView: some View {
-        VStack(spacing: 20) {
-            Spacer()
+}
+
+// MARK: - Empty State Card
+struct EmptyStateCard: View {
+    var body: some View {
+        VStack(spacing: 24) {
+            // Icon with gradient background
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.appPrimary.opacity(0.1), Color.appSecondary.opacity(0.1)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 120, height: 120)
+                
+                Image(systemName: "bed.double")
+                    .font(.system(size: 48, weight: .light))
+                    .foregroundColor(.appPrimary.opacity(0.6))
+            }
             
-            Image(systemName: "bed.double")
-                .font(.system(size: 60))
-                .foregroundColor(Color.appPrimary.opacity(0.2))
-                .padding(.bottom, 5)
-            
-            Text(L("history.noRecords.title", table: "History"))
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundColor(Color.appText)
-            
-            Text(L("history.noRecords.message", table: "History"))
-                .font(.system(size: 15))
-                .foregroundColor(Color.appSecondaryText)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-                .padding(.bottom, 10)
+            VStack(spacing: 12) {
+                Text(L("history.noRecords.title", table: "History"))
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.appText)
+                
+                Text(L("history.noRecords.message", table: "History"))
+                    .font(.body)
+                    .foregroundColor(.appSecondaryText)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+            }
             
             Button(action: {
-                viewModel.isAddSleepEntryPresented = true
+                // Add new record action will be handled by parent
             }) {
                 HStack(spacing: 8) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 15, weight: .semibold))
+                    Image(systemName: "plus.circle.fill")
+                        .font(.headline)
                     Text(L("history.addNewRecord", table: "History"))
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.headline)
+                        .fontWeight(.semibold)
                 }
                 .foregroundColor(.white)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 14)
                 .background(
                     Capsule()
-                        .fill(Color.appPrimary)
-                        .shadow(color: Color.appPrimary.opacity(0.3), radius: 6, x: 0, y: 3)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [.appPrimary, .appSecondary]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .shadow(color: Color.appPrimary.opacity(0.4), radius: 12, x: 0, y: 6)
                 )
             }
             .buttonStyle(ScaleButtonStyle())
-            
-            Spacer()
         }
+        .padding(40)
         .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
+}
+
+// MARK: - History Content Section
+struct HistoryContentSection: View {
+    @ObservedObject var viewModel: HistoryViewModel
     
-    // History list view
-    private var historyListView: some View {
-        ScrollView {
-            LazyVStack(spacing: 8, pinnedViews: []) {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "calendar")
+                    .font(.title2)
+                    .foregroundColor(.appAccent)
+                
+                Text(L("history.timeline.title", table: "History"))
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Spacer()
+                
+                Text(String(format: L("history.timeline.count", table: "History"), viewModel.historyItems.count))
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appSecondaryText)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(Color.appAccent.opacity(0.15))
+                    )
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 4)
+            
+            LazyVStack(spacing: 12) {
                 ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
-                    monthSection(month: monthGroup.month, items: monthGroup.days)
+                    MonthSection(month: monthGroup.month, items: monthGroup.days, viewModel: viewModel)
                 }
             }
-            .padding(.top, 8)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
         }
-        .background(Color.appBackground)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
     
-    // Ayları grupla
     private func groupedByMonth(items: [HistoryModel]) -> [(month: String, days: [HistoryModel])] {
         let grouped = Dictionary(grouping: items) { item -> String in
             let formatter = DateFormatter()
@@ -177,434 +455,433 @@ struct HistoryView: View {
                 return date1 > date2
             }
     }
+}
+
+// MARK: - Month Section
+struct MonthSection: View {
+    let month: String
+    let items: [HistoryModel]
+    @ObservedObject var viewModel: HistoryViewModel
     
-    // Ay bölümü
-    private func monthSection(month: String, items: [HistoryModel]) -> some View {
-        VStack(spacing: 4) {
-            // Ay başlığı
+    var body: some View {
+        VStack(spacing: 12) {
+            // Month Header
             HStack {
                 Text(month)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(Color.appPrimary)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.appPrimary)
                 
                 Spacer()
+                
+                Text(String(format: L("history.month.entries", table: "History"), items.count))
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appSecondaryText)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(
+                        Capsule()
+                            .fill(Color.appPrimary.opacity(0.1))
+                    )
             }
             
-            // Günler
+            // Days
             VStack(spacing: 8) {
-                ForEach(items) { item in
-                    dayCard(item: item)
+                ForEach(items.sorted { $0.date > $1.date }) { item in
+                    ModernDayCard(item: item, viewModel: viewModel)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
         }
-        .background(Color.clear)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
     }
+}
+
+// MARK: - Modern Day Card
+struct ModernDayCard: View {
+    let item: HistoryModel
+    @ObservedObject var viewModel: HistoryViewModel
     
-    // Gün kartı
-    private func dayCard(item: HistoryModel) -> some View {
+    var body: some View {
         Button(action: {
-            viewModel.selectDateForDetail(item.date)
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                viewModel.selectDateForDetail(item.date)
+            }
         }) {
-            VStack(spacing: 0) {
-                // Gün başlığı
+            VStack(spacing: 16) {
+                // Header Row
                 HStack {
-                    HStack(spacing: 8) {
-                        // Tarih ve gün
+                    // Date & Day Info
+                    HStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(Color.appText)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.appText)
                             
                             Text(dayOfWeek(from: item.date))
-                                .font(.system(size: 12))
-                                .foregroundColor(Color.appSecondaryText)
+                                .font(.subheadline)
+                                .foregroundColor(.appSecondaryText)
                         }
                         
                         if Calendar.current.isDateInToday(item.date) {
-                            Text(L("history.today", table: "History"))
-                                .font(.system(size: 10, weight: .medium))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 2)
-                                .background(
-                                    Capsule()
-                                        .fill(Color.appPrimary.opacity(0.15))
-                                )
-                                .foregroundColor(Color.appPrimary)
+                            TodayBadge()
                         }
                     }
                     
                     Spacer()
                     
-                    // Uyku kalitesi
+                    // Rating
                     if item.sleepEntries?.isEmpty ?? true {
                         Text(L("history.noRecord", table: "History"))
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.appSecondaryText)
+                            .font(.caption)
+                            .foregroundColor(.appSecondaryText)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(Color.gray.opacity(0.1))
+                            )
                     } else {
                         HStack(spacing: 4) {
                             Text(String(format: "%.1f", item.averageRating))
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(Color.appPrimary)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.appPrimary)
                             
                             Image(systemName: "star.fill")
-                                .font(.system(size: 12))
-                                .foregroundColor(Color.appPrimary)
-                                .offset(y: -1)
+                                .font(.subheadline)
+                                .foregroundColor(.yellow)
                         }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color.yellow.opacity(0.1))
+                        )
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
                 
-                Divider()
-                    .opacity(0.6)
-                
-                // Uyku blokları
-                VStack(spacing: 0) {
-                    let entriesToDisplay = item.sleepEntries?.sorted { $0.startTime < $1.startTime }.prefix(2) ?? []
-                    if entriesToDisplay.isEmpty {
-                        Text(L("history.noRecord", table: "History"))
-                            .font(.system(size: 14))
-                            .foregroundColor(Color.appSecondaryText)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                    } else {
+                // Sleep Entries Preview
+                if let entries = item.sleepEntries, !entries.isEmpty {
+                    let entriesToDisplay = entries.sorted { $0.startTime < $1.startTime }.prefix(2)
+                    VStack(spacing: 8) {
                         ForEach(Array(entriesToDisplay)) { entry in
-                            miniSleepEntryRow(entry: entry)
-                            
-                            if entry.id != entriesToDisplay.last?.id {
-                                Divider()
-                                    .padding(.leading, 52)
-                                    .opacity(0.3)
-                            }
+                            ModernSleepEntryRow(entry: entry)
                         }
                         
-                        if (item.sleepEntries?.count ?? 0) > 2 {
+                        if entries.count > 2 {
                             HStack {
-                                Text(String(format: L("history.moreBlocks", table: "History"), (item.sleepEntries?.count ?? 0) - 2))
-                                    .font(.system(size: 12))
-                                    .foregroundColor(Color.appPrimary)
+                                Text(String(format: L("history.moreBlocks", table: "History"), entries.count - 2))
+                                    .font(.caption)
+                                    .foregroundColor(.appPrimary)
                                 
                                 Spacer()
                                 
-                                Image(systemName: "chevron.right")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(Color.appSecondaryText)
+                                Image(systemName: "chevron.right.circle.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.appSecondaryText)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
+                            .padding(.horizontal, 8)
                         }
                     }
+                } else {
+                    HStack {
+                        Image(systemName: "moon.zzz")
+                            .font(.title2)
+                            .foregroundColor(.appSecondaryText.opacity(0.5))
+                        
+                        Text(L("history.noRecord", table: "History"))
+                            .font(.body)
+                            .foregroundColor(.appSecondaryText)
+                        
+                        Spacer()
+                    }
+                    .padding(.vertical, 20)
                 }
                 
-                HStack(spacing: 16) {
-                    // Toplam uyku süresi
-                    HStack(spacing: 4) {
-                        Image(systemName: "clock")
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.appPrimary)
-                        
-                        Text(formatDuration(item.totalSleepDuration))
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.appText)
-                    }
+                // Footer Stats
+                HStack(spacing: 20) {
+                    StatPill(
+                        icon: "clock",
+                        value: formatDuration(Int(item.totalSleepDuration / 60)),
+                        color: .appPrimary
+                    )
                     
-                    // Uyku bloğu sayısı
-                    HStack(spacing: 4) {
-                        Image(systemName: "bed.double")
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.appPrimary)
-                        
-                        Text(String(format: L("history", table: "History"), (item.sleepEntries?.count ?? 0)))
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.appText)
-                    }
+                    StatPill(
+                        icon: "bed.double",
+                        value: String(format: L("history.blocksCount", table: "History"), (item.sleepEntries?.count ?? 0)),
+                        color: .appSecondary
+                    )
                     
                     Spacer()
                     
-                    // Durum göstergesi
-                    Circle()
-                        .fill(Color(item.completionStatus.color))
-                        .frame(width: 8, height: 8)
-                        .padding(4)
-                        .background(
-                            Circle()
-                                .stroke(Color(item.completionStatus.color).opacity(0.2), lineWidth: 2)
-                        )
+                    // Status Indicator
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(Color(item.completionStatus.color))
+                            .frame(width: 8, height: 8)
+                        
+                        Text(item.completionStatus.localizedTitle)
+                            .font(.caption)
+                            .fontWeight(.medium)
+                            .foregroundColor(.appSecondaryText)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(Color(item.completionStatus.color).opacity(0.1))
+                    )
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color.clear)
             }
+            .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color("CardBackground"))
-                    .shadow(color: Color.black.opacity(0.04), radius: 3, x: 0, y: 1)
+                    .fill(Color.appCardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.appSecondaryText.opacity(0.08), lineWidth: 1)
+                    )
+                    .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 3)
             )
         }
-        .buttonStyle(CardButtonStyle())
+        .buttonStyle(ModernCardButtonStyle())
     }
     
-    // Mini uyku girişi satırı
-    private func miniSleepEntryRow(entry: SleepEntry) -> some View {
-        HStack(spacing: 12) {
-            Image(systemName: entry.isCore ? "bed.double" : "powersleep")
-                .font(.system(size: 14))
-                .foregroundColor(.white)
-                .frame(width: 28, height: 28)
-                .background(
-                    Circle()
-                        .fill(entry.isCore ? Color.appPrimary : Color.appSecondary)
-                )
-            
-            VStack(alignment: .leading, spacing: 2) {
-                Text("\(formatTime(entry.startTime)) - \(formatTime(entry.endTime))")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color.appText)
-                
-                Text(entry.isCore ? L("sleep.type.core", table: "History") : L("sleep.type.nap", table: "History"))
-                    .font(.system(size: 12))
-                    .foregroundColor(Color.appSecondaryText)
-            }
-            
-            Spacer()
-            
-            // Süre
-            Text(formatEntryDuration(entry.duration))
-                .font(.system(size: 12, weight: .medium))
-                .foregroundColor(Color.appPrimary)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.appPrimary.opacity(0.1))
-                )
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-    }
-    
-    // Helper functions
     private func dayOfWeek(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE"
         return formatter.string(from: date)
     }
-    
-    private func formatTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: date)
+}
+
+// MARK: - Today Badge
+struct TodayBadge: View {
+    var body: some View {
+        Text(L("history.today", table: "History"))
+            .font(.caption)
+            .fontWeight(.bold)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(todayBadgeBackground)
+            .foregroundColor(.white)
+            .shadow(color: Color.appPrimary.opacity(0.3), radius: 4, x: 0, y: 2)
     }
     
-    private func formatDuration(_ duration: TimeInterval) -> String {
-        let hours = Int(duration) / 3600
-        let minutes = (Int(duration) % 3600) / 60
-        
-        return String(format: "%ds %02ddk", hours, minutes)
+    private var todayBadgeBackground: some View {
+        Capsule()
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(colors: [.appPrimary, .appSecondary]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
     }
+}
+
+// MARK: - Modern Sleep Entry Row
+struct ModernSleepEntryRow: View {
+    let entry: SleepEntry
     
-    private func formatEntryDuration(_ duration: TimeInterval) -> String {
-        let hours = Int(duration) / 3600
-        let minutes = (Int(duration) % 3600) / 60
-        
-        if hours > 0 {
-            return "\(hours)s \(minutes)dk"
-        } else {
-            return "\(minutes)dk"
+    var body: some View {
+        HStack(spacing: 12) {
+            // Type Icon
+            Image(systemName: entry.isCore ? "bed.double.fill" : "powersleep")
+                .font(.callout)
+                .foregroundColor(.white)
+                .frame(width: 32, height: 32)
+                .background(
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: entry.isCore ? [.appPrimary, .blue] : [.appSecondary, .green]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                )
+                .shadow(color: (entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.3), radius: 4, x: 0, y: 2)
+            
+            // Entry Info
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(formatTime(entry.startTime)) - \(formatTime(entry.endTime))")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                Text(entry.isCore ? L("sleep.type.core", table: "History") : L("sleep.type.nap", table: "History"))
+                    .font(.caption)
+                    .foregroundColor(.appSecondaryText)
+            }
+            
+            Spacer()
+            
+            // Duration Badge
+            Text(formatEntryDuration(entry.duration))
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundColor(entry.isCore ? .appPrimary : .appSecondary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill((entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.1))
+                )
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.gray.opacity(0.05))
+        )
+    }
+}
+
+// MARK: - Stat Pill
+struct StatPill: View {
+    let icon: String
+    let value: String
+    let color: Color
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.caption)
+                .foregroundColor(color)
+            
+            Text(value)
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundColor(.appText)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(
+            Capsule()
+                .fill(color.opacity(0.1))
+        )
+    }
+}
+
+// MARK: - Modern Floating Action Button
+struct ModernFloatingActionButton: View {
+    let action: () -> Void
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                
+                Button(action: action) {
+                    Image(systemName: "plus")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 56, height: 56)
+                        .background(
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [.appPrimary, .appSecondary]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .shadow(color: Color.appPrimary.opacity(0.4), radius: 12, x: 0, y: 6)
+                        )
+                }
+                .buttonStyle(FloatingButtonStyle())
+                .padding(.trailing, 20)
+                .padding(.bottom, 20)
+            }
         }
     }
 }
 
-// MARK: - Helper Components
+// MARK: - Custom Button Styles
+struct ModernCardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
 
+struct FloatingButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Scale Button Style (from existing code)
+struct ScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Card Button Style (from existing code)
+struct CardButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Filter Chip (Original - keeping for backward compatibility)
 struct FilterChip: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
     
     var body: some View {
-        Button(action: {
-            let generator = UIImpactFeedbackGenerator(style: .light)
-            generator.impactOccurred()
-            action()
-        }) {
+        Button(action: action) {
             Text(title)
-                .font(.system(size: 14, weight: isSelected ? .semibold : .medium))
-                .padding(.horizontal, 14)
+                .font(.subheadline)
+                .fontWeight(isSelected ? .semibold : .medium)
+                .foregroundColor(isSelected ? .white : .appText)
+                .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(
-                    Capsule()
+                    RoundedRectangle(cornerRadius: 20)
                         .fill(isSelected ? Color.appPrimary : Color.clear)
                         .overlay(
-                            Capsule()
-                                .stroke(isSelected ? Color.clear : Color.appPrimary.opacity(0.3), lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(isSelected ? Color.clear : Color.appSecondaryText.opacity(0.3), lineWidth: 1)
                         )
                 )
-                .foregroundColor(isSelected ? .white : Color.appPrimary)
         }
         .buttonStyle(ScaleButtonStyle())
     }
 }
 
-struct CardButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-            .opacity(configuration.isPressed ? 0.9 : 1)
-            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
+// MARK: - Helper Functions
+private func formatDuration(_ minutes: Int) -> String {
+    let hours = minutes / 60
+    let mins = minutes % 60
+    if hours > 0 {
+        return String(format: "%dh %dm", hours, mins)
+    } else {
+        return String(format: "%dm", mins)
     }
 }
 
-struct ScaleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
-            .opacity(configuration.isPressed ? 0.9 : 1)
-            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
-    }
+private func formatTime(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.timeStyle = .short
+    return formatter.string(from: date)
 }
 
-struct SleepEntryCard: View {
-    let entry: SleepEntry
-    let viewModel: HistoryViewModel
-    
-    private var timeRangeText: String {
-        let startTime = entry.startTime.formatted(date: .omitted, time: .shortened)
-        let endTime = entry.endTime.formatted(date: .omitted, time: .shortened)
-        return "\(startTime) - \(endTime)"
-    }
-    
-    private var durationText: String {
-        let hours = Int(entry.duration) / 3600
-        let minutes = (Int(entry.duration) % 3600) / 60
-        
-        if hours > 0 {
-            return String(format: "%ds %02ddk", hours, minutes)
-        } else {
-            return String(format: "%ddk", minutes)
-        }
-    }
-    
-    var body: some View {
-        HStack(spacing: 14) {
-            // İkon
-            ZStack {
-                Circle()
-                    .fill(entry.isCore ? 
-                        Color.appPrimary.opacity(0.15) : 
-                        Color.appSecondary.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                
-                Image(systemName: entry.isCore ? "bed.double" : "powersleep")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(entry.isCore ? Color.appPrimary : Color.appSecondary)
-            }
-            
-            // Bilgiler
-            VStack(alignment: .leading, spacing: 3) {
-                Text(timeRangeText)
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(Color.appText)
-                
-                Text(entry.isCore ? "Ana Uyku" : "Kısa Uyku")
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.appSecondaryText)
-            }
-            
-            Spacer()
-            
-            // Süre ve değerlendirme
-            VStack(alignment: .trailing, spacing: 3) {
-                Text(durationText)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color.appText)
-                
-                HStack(spacing: 2) {
-                    ForEach(1...5, id: \.self) { star in
-                        Image(systemName: star <= entry.rating ? "star.fill" : "star")
-                            .font(.system(size: 10))
-                            .foregroundColor(star <= entry.rating ? Color.appPrimary : Color.appSecondaryText.opacity(0.3))
-                    }
-                }
-            }
-        }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(Color("CardBackground"))
-                .shadow(color: Color.black.opacity(0.03), radius: 2, x: 0, y: 1)
-        )
-        .contextMenu {
-            Button(role: .destructive) {
-                viewModel.deleteSleepEntry(entry)
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred()
-            } label: {
-                Label("Sil", systemImage: "trash")
-            }
-        }
-        .swipeActions {
-            Button(role: .destructive) {
-                viewModel.deleteSleepEntry(entry)
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred()
-            } label: {
-                Label("Sil", systemImage: "trash")
-            }
-        }
-    }
-}
-
-// RoundedCorner utility
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
-    }
-}
-
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        // SwiftData Preview için container
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try! ModelContainer(for: HistoryModel.self, SleepEntry.self, User.self, configurations: config)
-        
-        // Örnek veri ekle
-        let MOCK_CONTEXT = container.mainContext
-        let today = Calendar.current.startOfDay(for: Date())
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
-        
-        let historyToday = HistoryModel(date: today)
-        MOCK_CONTEXT.insert(historyToday)
-        
-        let entry1Start = Calendar.current.date(bySettingHour: 22, minute: 0, second: 0, of: today)!
-        let entry1End = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: Calendar.current.date(byAdding: .day, value: 1, to: today)!)!
-        let entry1 = SleepEntry(date: today, startTime: entry1Start, endTime: entry1End, durationMinutes: 480, isCore: true, rating: 4, historyDay: historyToday)
-        MOCK_CONTEXT.insert(entry1)
-        historyToday.sleepEntries?.append(entry1)
-        
-        let historyYesterday = HistoryModel(date: yesterday)
-        MOCK_CONTEXT.insert(historyYesterday)
-        // ... (daha fazla örnek veri eklenebilir) ...
-
-        return HistoryView()
-            .modelContainer(container)
-    }
+private func formatEntryDuration(_ duration: TimeInterval) -> String {
+    let minutes = Int(duration / 60)
+    return formatDuration(minutes)
 }

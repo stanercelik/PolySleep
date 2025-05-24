@@ -387,6 +387,7 @@ struct SleepBlocksSection: View {
                     }
                 }
                 .padding(.horizontal, viewModel.isEditing ? 16 : 16)
+                .padding(.top, viewModel.isEditing ? 20 : 0)
                 .padding(.trailing, viewModel.isEditing ? 50 : 0)
                 .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.isEditing)
             }
@@ -498,10 +499,30 @@ struct SleepBlockCard: View {
             
             // Düzenleme modu aktifken görünecek aksiyon butonları
             if viewModel.isEditing {
-                HStack {
-                    Spacer()
-                    VStack(spacing: 8) {
-                        // Düzenleme butonu
+                // Silme butonu - Sol üst köşe
+                VStack {
+                    HStack {
+                        EditActionButton(
+                            systemImage: "trash",
+                            backgroundColor: Color.red,
+                            isPressed: buttonScale != 1.0
+                        ) {
+                            hapticFeedback(style: .medium)
+                            showDeleteConfirmation = true
+                        }
+                        .scaleEffect(buttonScale)
+                        .onLongPressGesture(minimumDuration: 0.05, maximumDistance: 10) {
+                            // Uzun basış aksiyonu
+                        } onPressingChanged: { pressing in
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                buttonScale = pressing ? 0.92 : 1.0
+                            }
+                        }
+                        .offset(x: -18, y: -12)
+                        
+                        Spacer()
+                        
+                        // Düzenleme butonu - Sağ üst köşe
                         EditActionButton(
                             systemImage: "pencil",
                             backgroundColor: Color.appPrimary,
@@ -519,33 +540,17 @@ struct SleepBlockCard: View {
                                 buttonScale = pressing ? 0.92 : 1.0
                             }
                         }
-                        
-                        // Silme butonu
-                        EditActionButton(
-                            systemImage: "trash",
-                            backgroundColor: Color.red,
-                            isPressed: buttonScale != 1.0
-                        ) {
-                            hapticFeedback(style: .medium)
-                            showDeleteConfirmation = true
-                        }
-                        .scaleEffect(buttonScale)
-                        .onLongPressGesture(minimumDuration: 0.05, maximumDistance: 10) {
-                            // Uzun basış aksiyonu
-                        } onPressingChanged: { pressing in
-                            withAnimation(.easeInOut(duration: 0.15)) {
-                                buttonScale = pressing ? 0.92 : 1.0
-                            }
-                        }
+                        .offset(x: 18, y: -12)
                     }
-                    .offset(x: 10, y: 0)
-                    .zIndex(2)
-                    .transition(.asymmetric(
-                        insertion: .scale(scale: 0.3).combined(with: .opacity).combined(with: .offset(x: 10, y: -10)),
-                        removal: .scale(scale: 0.3).combined(with: .opacity).combined(with: .offset(x: 10, y: -10))
-                    ))
+                    Spacer()
                 }
                 .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+                .zIndex(2)
+                .transition(.asymmetric(
+                    insertion: .scale(scale: 0.3).combined(with: .opacity),
+                    removal: .scale(scale: 0.3).combined(with: .opacity)
+                ))
+                .padding(.horizontal, 16)
             }
         }
             .sheet(isPresented: $showingEditSheet) {

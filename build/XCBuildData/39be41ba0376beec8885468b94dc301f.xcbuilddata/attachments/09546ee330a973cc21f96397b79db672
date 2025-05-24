@@ -1,4 +1,0 @@
-module GoogleAppMeasurementOnDeviceConversionTarget {
-umbrella "/Users/tanercelik/Library/Developer/Xcode/DerivedData/polysleep-frpdrhalxuqdozdrvmfgwzcofldb/SourcePackages/checkouts/GoogleAppMeasurement/GoogleAppMeasurementOnDeviceConversionWrapper/include"
-export *
-}

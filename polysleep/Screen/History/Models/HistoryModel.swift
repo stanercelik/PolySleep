@@ -23,6 +23,17 @@ enum CompletionStatus: Int, Codable {
             return "ErrorColor"
         }
     }
+    
+    var localizedTitle: String {
+        switch self {
+        case .completed:
+            return NSLocalizedString("history.status.completed", tableName: "History", comment: "")
+        case .partial:
+            return NSLocalizedString("history.status.partial", tableName: "History", comment: "")
+        case .missed:
+            return NSLocalizedString("history.status.missed", tableName: "History", comment: "")
+        }
+    }
 }
 
 @Model

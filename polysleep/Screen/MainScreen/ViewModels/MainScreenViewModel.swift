@@ -549,6 +549,11 @@ class MainScreenViewModel: ObservableObject {
         updatedSchedule.schedule.removeAll { $0.id == block.id }
         self.model.schedule = updatedSchedule
         
+        // Silinen bloğa ait SleepEntry'leri de sil
+        Task {
+            await deleteSleepEntriesForBlock(blockId: block.id.uuidString)
+        }
+        
         // --- Bildirimleri Güncelle ---
         print("deleteBlock: Bildirimler güncelleniyor...")
         ScheduleManager.shared.activateSchedule(updatedSchedule)
@@ -557,6 +562,35 @@ class MainScreenViewModel: ObservableObject {
         // Değişiklikleri kaydet
         Task {
             await saveSchedule()
+        }
+    }
+    
+    // MARK: - Sleep Entry Management
+    /// Belirli bir bloğa ait olan SleepEntry'leri siler
+    private func deleteSleepEntriesForBlock(blockId: String) async {
+        guard let modelContext = modelContext else { return }
+        
+        await MainActor.run {
+            do {
+                // Bu bloğa ait olan tüm SleepEntry'leri bul
+                let predicate = #Predicate<SleepEntry> { entry in
+                    entry.blockId == blockId
+                }
+                let descriptor = FetchDescriptor(predicate: predicate)
+                let entriesToDelete = try modelContext.fetch(descriptor)
+                
+                // Bulunan entry'leri sil
+                for entry in entriesToDelete {
+                    modelContext.delete(entry)
+                }
+                
+                // Değişiklikleri kaydet
+                try modelContext.save()
+                
+                print("✅ Silinen bloğa ait \(entriesToDelete.count) SleepEntry başarıyla silindi")
+            } catch {
+                print("❌ SleepEntry'ler silinirken hata: \(error)")
+            }
         }
     }
     
