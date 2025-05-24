@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ProfileScreenView: View {
-    @StateObject var viewModel = ProfileScreenViewModel()
+    @StateObject var viewModel: ProfileScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var showEmojiPicker = false
@@ -12,6 +12,10 @@ struct ProfileScreenView: View {
     @State private var navigateToSettings = false
     @StateObject private var authManager = AuthManager.shared
     @State private var showSuccessMessage = false
+    
+    init() {
+        self._viewModel = StateObject(wrappedValue: ProfileScreenViewModel(languageManager: LanguageManager.shared))
+    }
     
     var body: some View {
         return NavigationStack {
@@ -105,6 +109,7 @@ struct ProfileScreenView: View {
                 viewModel.setModelContext(modelContext)
             }
         }
+        .id(languageManager.currentLanguage)
     }
 }
 

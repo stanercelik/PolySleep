@@ -28,7 +28,7 @@ struct HistoryView: View {
                 // Yeni kayıt ekleme butonu
                 floatingActionButton
             }
-            .navigationTitle(L("history.title", table: "MainScreen"))
+            .navigationTitle(L("Sleep History", table: "History"))
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $viewModel.isDayDetailPresented) {
                 if viewModel.selectedDay != nil {
@@ -43,6 +43,7 @@ struct HistoryView: View {
             }
         }
         .accentColor(Color.appPrimary)
+        .id(languageManager.currentLanguage)
     }
     
     // MARK: - Subviews
@@ -54,7 +55,7 @@ struct HistoryView: View {
                 HStack(spacing: 12) {
                     ForEach(TimeFilter.allCases, id: \.self) { filter in
                         FilterChip(
-                            title: LocalizedStringKey(filter.rawValue),
+                            title: filter.localizedTitle,
                             isSelected: viewModel.selectedFilter == filter,
                             action: { viewModel.setFilter(filter) }
                         )
@@ -108,11 +109,11 @@ struct HistoryView: View {
                 .foregroundColor(Color.appPrimary.opacity(0.2))
                 .padding(.bottom, 5)
             
-            Text(L("history.noRecords.title", table: "MainScreen"))
+            Text(L("history.noRecords.title", table: "History"))
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundColor(Color.appText)
             
-            Text(L("history.noRecords.message", table: "MainScreen"))
+            Text(L("history.noRecords.message", table: "History"))
                 .font(.system(size: 15))
                 .foregroundColor(Color.appSecondaryText)
                 .multilineTextAlignment(.center)
@@ -125,7 +126,7 @@ struct HistoryView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "plus")
                         .font(.system(size: 15, weight: .semibold))
-                    Text(L("history.addNewRecord", table: "MainScreen"))
+                    Text(L("history.addNewRecord", table: "History"))
                         .font(.system(size: 15, weight: .semibold))
                 }
                 .foregroundColor(.white)
@@ -226,7 +227,7 @@ struct HistoryView: View {
                         }
                         
                         if Calendar.current.isDateInToday(item.date) {
-                            Text(L("history.today", table: "MainScreen"))
+                            Text(L("history.today", table: "History"))
                                 .font(.system(size: 10, weight: .medium))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 2)
@@ -242,7 +243,7 @@ struct HistoryView: View {
                     
                     // Uyku kalitesi
                     if item.sleepEntries?.isEmpty ?? true {
-                        Text(L("history.noRecord", table: "MainScreen"))
+                        Text(L("history.noRecord", table: "History"))
                             .font(.system(size: 12))
                             .foregroundColor(Color.appSecondaryText)
                     } else {
@@ -268,7 +269,7 @@ struct HistoryView: View {
                 VStack(spacing: 0) {
                     let entriesToDisplay = item.sleepEntries?.sorted { $0.startTime < $1.startTime }.prefix(2) ?? []
                     if entriesToDisplay.isEmpty {
-                        Text(L("history.noRecord", table: "MainScreen"))
+                        Text(L("history.noRecord", table: "History"))
                             .font(.system(size: 14))
                             .foregroundColor(Color.appSecondaryText)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -287,7 +288,7 @@ struct HistoryView: View {
                         
                         if (item.sleepEntries?.count ?? 0) > 2 {
                             HStack {
-                                Text(String(format: L("history.moreBlocks", table: "MainScreen"), (item.sleepEntries?.count ?? 0) - 2))
+                                Text(String(format: L("history.moreBlocks", table: "History"), (item.sleepEntries?.count ?? 0) - 2))
                                     .font(.system(size: 12))
                                     .foregroundColor(Color.appPrimary)
                                 
@@ -321,7 +322,7 @@ struct HistoryView: View {
                             .font(.system(size: 12))
                             .foregroundColor(Color.appPrimary)
                         
-                        Text(String(format: L("sleep.blocks", table: "MainScreen"), (item.sleepEntries?.count ?? 0)))
+                        Text(String(format: L("history", table: "History"), (item.sleepEntries?.count ?? 0)))
                             .font(.system(size: 12))
                             .foregroundColor(Color.appText)
                     }
@@ -368,7 +369,7 @@ struct HistoryView: View {
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(Color.appText)
                 
-                Text(entry.isCore ? L("sleep.type.core", table: "MainScreen") : L("sleep.type.nap", table: "MainScreen"))
+                Text(entry.isCore ? L("sleep.type.core", table: "History") : L("sleep.type.nap", table: "History"))
                     .font(.system(size: 12))
                     .foregroundColor(Color.appSecondaryText)
             }
@@ -425,7 +426,7 @@ struct HistoryView: View {
 // MARK: - Helper Components
 
 struct FilterChip: View {
-    let title: LocalizedStringKey
+    let title: String
     let isSelected: Bool
     let action: () -> Void
     

@@ -91,6 +91,200 @@
         }
       }
     },
+    "history" : {
+      "comment" : "Label for sleep blocks count",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d sleep blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d uyku bloğu"
+          }
+        }
+      }
+    },
+    "history.addNewRecord" : {
+      "comment" : "Button text to add a new sleep record",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add First Record"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk Kaydı Ekle"
+          }
+        }
+      }
+    },
+    "history.filter.allTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Zamanlar"
+          }
+        }
+      }
+    },
+    "history.filter.thisMonth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Month"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Ay"
+          }
+        }
+      }
+    },
+    "history.filter.thisWeek" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "history.filter.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün"
+          }
+        }
+      }
+    },
+    "history.moreBlocks" : {
+      "comment" : "Text indicating there are more sleep blocks",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %d more blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %d blok daha"
+          }
+        }
+      }
+    },
+    "history.noRecord" : {
+      "comment" : "Text shown when no records exist for a day",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No records for this day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu gün için kayıt yok"
+          }
+        }
+      }
+    },
+    "history.noRecords.message" : {
+      "comment" : "Message for empty state when no records exist",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start tracking your sleep by adding your first entry below."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aşağıdan ilk kaydınızı ekleyerek uyku takibinize başlayın."
+          }
+        }
+      }
+    },
+    "history.noRecords.title" : {
+      "comment" : "Title for empty state when no records exist",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Sleep Records"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kaydı Yok"
+          }
+        }
+      }
+    },
+    "history.today" : {
+      "comment" : "Label shown for today's entries",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün"
+          }
+        }
+      }
+    },
     "Key" : {
       "extractionState" : "manual"
     },
@@ -133,9 +327,15 @@
     "sleep.type.core" : {
       "extractionState" : "stale",
       "localizations" : {
-        "tr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Ana Uyku"
           }
         }
@@ -144,9 +344,15 @@
     "sleep.type.nap" : {
       "extractionState" : "stale",
       "localizations" : {
-        "tr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Şekerleme"
           }
         }
@@ -256,132 +462,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku Tipi"
-          }
-        }
-      }
-    },
-    "history.noRecords.title" : {
-      "comment" : "Title for empty state when no records exist",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Sleep Records"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kaydı Yok"
-          }
-        }
-      }
-    },
-    "history.noRecords.message" : {
-      "comment" : "Message for empty state when no records exist",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start tracking your sleep by adding your first entry below."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aşağıdan ilk kaydınızı ekleyerek uyku takibinize başlayın."
-          }
-        }
-      }
-    },
-    "history.addNewRecord" : {
-      "comment" : "Button text to add a new sleep record",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add First Record"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İlk Kaydı Ekle"
-          }
-        }
-      }
-    },
-    "history.today" : {
-      "comment" : "Label shown for today's entries",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün"
-          }
-        }
-      }
-    },
-    "history.noRecord" : {
-      "comment" : "Text shown when no records exist for a day",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No records for this day"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu gün için kayıt yok"
-          }
-        }
-      }
-    },
-    "history.moreBlocks" : {
-      "comment" : "Text indicating there are more sleep blocks",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ %d more blocks"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ %d blok daha"
-          }
-        }
-      }
-    },
-    "sleep.blocks" : {
-      "comment" : "Label for sleep blocks count",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d sleep blocks"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d uyku bloğu"
           }
         }
       }

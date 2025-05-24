@@ -4,6 +4,7 @@ struct AddSleepBlockSheet: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
         NavigationView {
@@ -13,23 +14,23 @@ struct AddSleepBlockSheet: View {
                 
                 Form {
                     Section {
-                        DatePicker(NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: ""),
+                        DatePicker(L("sleepBlock.startTime", table: "MainScreen"),
                                   selection: $viewModel.newBlockStartTime,
                                   displayedComponents: .hourAndMinute)
                         
-                        DatePicker(NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: ""),
+                        DatePicker(L("sleepBlock.endTime", table: "MainScreen"),
                                   selection: $viewModel.newBlockEndTime,
                                   displayedComponents: .hourAndMinute)
                     }
                     
                     Section {
-                        Text("sleepBlock.autoType", tableName: "MainScreen")
+                        Text(L("sleepBlock.autoType", table: "MainScreen"))
                             .font(.footnote)
                             .foregroundColor(.appSecondaryText)
                     }
                     
                     if !viewModel.model.schedule.schedule.isEmpty {
-                        Section(header: Text("sleepBlock.existing.title", tableName: "MainScreen")) {
+                        Section(header: Text(L("sleepBlock.existing.title", table: "MainScreen"))) {
                             ForEach(viewModel.model.schedule.schedule.sorted { block1, block2 in
                                 let time1 = TimeFormatter.time(from: block1.startTime)!
                                 let time2 = TimeFormatter.time(from: block2.startTime)!
@@ -43,7 +44,7 @@ struct AddSleepBlockSheet: View {
                                     Text("\(block.startTime) - \(block.endTime)")
                                         .foregroundColor(.primary)
                                     Spacer()
-                                    Text(NSLocalizedString(block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap", tableName: "MainScreen", comment: ""))
+                                    Text(L(block.isCore ? "sleepBlock.type.core" : "sleepBlock.type.nap", table: "MainScreen"))
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }
@@ -54,17 +55,17 @@ struct AddSleepBlockSheet: View {
                 }
                 .scrollContentBackground(.hidden)
             }
-            .navigationTitle(NSLocalizedString("sleepBlock.add", tableName: "MainScreen", comment: ""))
+            .navigationTitle(L("sleepBlock.add", table: "MainScreen"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "")) {
+                    Button(L("general.cancel", table: "MainScreen")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(NSLocalizedString("general.save", tableName: "MainScreen", comment: "" )) {
+                    Button(L("general.save", table: "MainScreen")) {
                         if viewModel.validateNewBlock() {
                             viewModel.addNewBlock()
                             dismiss()
@@ -72,9 +73,9 @@ struct AddSleepBlockSheet: View {
                     }
                 }
             }
-            .alert(NSLocalizedString("sleepBlock.error.title", tableName: "MainScreen", comment: ""),
+            .alert(L("sleepBlock.error.title", table: "MainScreen"),
                    isPresented: $viewModel.showBlockError) {
-                Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: ""), role: .cancel) {}
+                Button(L("general.ok", table: "MainScreen"), role: .cancel) {}
             } message: {
                 Text(viewModel.blockErrorMessage)
             }
@@ -84,5 +85,6 @@ struct AddSleepBlockSheet: View {
                 }
             }
         }
+        .id(languageManager.currentLanguage)
     }
 }

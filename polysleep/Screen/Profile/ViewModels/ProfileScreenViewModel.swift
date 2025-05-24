@@ -7,38 +7,43 @@ import Combine
 class ProfileScreenViewModel: ObservableObject {
     @Published var currentStreak: Int = 0
     @Published var longestStreak: Int = 0
-    @Published var selectedCoreEmoji: String = "🌙"
-    @Published var selectedNapEmoji: String = "⚡"
-    @Published var activeScheduleName: String = ""
+    @Published var totalSleepSessions: Int = 0
+    @Published var successRate: Double = 0.0
     @Published var adaptationPhase: Int = 0
+    @Published var activeScheduleName: String = ""
     @Published var totalSleepHours: Double = 0.0
+    @Published var selectedCoreEmoji: String = "🌙"
+    @Published var selectedNapEmoji: String = "💤"
     @Published var activeSchedule: UserSchedule? = nil
     @Published var adaptationDuration: Int = 21 // Varsayılan 21 gün
     
+    private let languageManager: LanguageManager
+
     // Yeni eklenen hesaplanmış özellik
     var adaptationPhaseDescription: String {
         switch adaptationPhase {
         case 0:
-            return NSLocalizedString("adaptation.phase.0", tableName: "Common", comment: "Adaptation Phase 0: Initial")
+            return L("profile.adaptation.phase.beginning", table: "Profile")
         case 1:
-            return NSLocalizedString("adaptation.phase.1", tableName: "Common", comment: "Adaptation Phase 1: Adjustment")
+            return L("profile.adaptation.phase.adjustment", table: "Profile")
         case 2:
-            return NSLocalizedString("adaptation.phase.2", tableName: "Common", comment: "Adaptation Phase 2: Adaptation")
+            return L("profile.adaptation.phase.adaptation", table: "Profile")
         case 3:
-            return NSLocalizedString("adaptation.phase.3", tableName: "Common", comment: "Adaptation Phase 3: Advanced Adaptation")
+            return L("profile.adaptation.phase.advanced", table: "Profile")
         case 4:
-            return NSLocalizedString("adaptation.phase.4", tableName: "Common", comment: "Adaptation Phase 4: Full Adaptation")
+            return L("profile.adaptation.phase.full", table: "Profile")
         case 5...:
-            return NSLocalizedString("adaptation.phase.5", tableName: "Common", comment: "Adaptation Phase 5: Complete Adaptation")
+            return L("profile.adaptation.phase.complete", table: "Profile")
         default:
-            return NSLocalizedString("adaptation.phase.unknown", tableName: "Common", comment: "Adaptation Phase Unknown")
+            return L("profile.adaptation.phase.unknown", table: "Profile")
         }
     }
 
     private var modelContext: ModelContext?
     private var cancellables = Set<AnyCancellable>()
     
-    init(modelContext: ModelContext? = nil) {
+    init(modelContext: ModelContext? = nil, languageManager: LanguageManager = LanguageManager.shared) {
+        self.languageManager = languageManager
         self.modelContext = modelContext
         if modelContext != nil {
             loadData()

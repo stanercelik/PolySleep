@@ -120,6 +120,40 @@
         }
       }
     },
+    "error.no_active_schedule_found" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active schedule found"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif program bulunamadı"
+          }
+        }
+      }
+    },
+    "error.schedule_load_failed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program yüklenemedi"
+          }
+        }
+      }
+    },
     "general.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -173,6 +207,7 @@
     },
     "general.ok" : {
       "comment" : "OK button",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -218,6 +253,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeni Kayıt Ekle"
+          }
+        }
+      }
+    },
+    "history.filter.allTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Zamanlar"
+          }
+        }
+      }
+    },
+    "history.filter.thisMonth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Month"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Ay"
+          }
+        }
+      }
+    },
+    "history.filter.thisWeek" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "history.filter.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün"
           }
         }
       }
@@ -286,6 +389,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kayıt Bulunamadı"
+          }
+        }
+      }
+    },
+    "history.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep History"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Geçmişi"
           }
         }
       }
@@ -575,6 +695,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sonraki Uyku"
+          }
+        }
+      }
+    },
+    "mainScreen.nextSleepBlock.none" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
           }
         }
       }
@@ -885,6 +1022,23 @@
         }
       }
     },
+    "mainScreen.sleepTimeIcon" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        }
+      }
+    },
     "mainScreen.sleepTimeRemaining" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1004,6 +1158,23 @@
         }
       }
     },
+    "mainScreen.wakeTimeIcon" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        }
+      }
+    },
     "schedule.customized" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1017,6 +1188,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Düzenlenmiş"
+          }
+        }
+      }
+    },
+    "schedule.default.description.en" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
+          }
+        }
+      }
+    },
+    "schedule.default.description.tr" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+          }
+        }
+      }
+    },
+    "schedule.default.name" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triphasic Sleep Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trifazik Uyku Programı"
           }
         }
       }
@@ -1073,6 +1295,7 @@
       }
     },
     "sleepBlock.add" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1209,6 +1432,7 @@
     },
     "sleepBlock.edit" : {
       "comment" : "Edit sleep block navigation title",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1293,6 +1517,7 @@
       }
     },
     "sleepBlock.existing.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1592,91 +1817,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku programı: %@"
-          }
-        }
-      }
-    },
-    "history.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep History"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Geçmişi"
-          }
-        }
-      }
-    },
-    "history.filter.today" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün"
-          }
-        }
-      }
-    },
-    "history.filter.thisWeek" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This Week"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu Hafta"
-          }
-        }
-      }
-    },
-    "history.filter.thisMonth" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This Month"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu Ay"
-          }
-        }
-      }
-    },
-    "history.filter.allTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All Time"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tüm Zamanlar"
           }
         }
       }

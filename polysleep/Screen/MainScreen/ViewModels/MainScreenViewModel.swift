@@ -50,18 +50,23 @@ class MainScreenViewModel: ObservableObject {
     private var modelContext: ModelContext?
     private var timer: Timer?
     private var timerCancellable: AnyCancellable?
+    private var languageManager: LanguageManager
     
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
     
-    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule)) {
+    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), languageManager: LanguageManager = LanguageManager.shared) {
         self.model = model
+        self.languageManager = languageManager
         
         // Timer'ı başlat
         startTimer()
         
         // Auth durumunu dinle
         setupAuthStateListener()
+        
+        // Dil değişikliklerini dinle
+        setupLanguageChangeListener()
     }
     
     var totalSleepTimeFormatted: String {
@@ -72,8 +77,8 @@ class MainScreenViewModel: ObservableObject {
     }
     
     var scheduleDescription: String {
-        let locale = Locale.current.language.languageCode?.identifier ?? "en"
-        if locale == "tr" {
+        let currentLang = languageManager.currentLanguage
+        if currentLang == "tr" {
             return model.schedule.description.tr
         } else {
             return model.schedule.description.en
@@ -82,17 +87,26 @@ class MainScreenViewModel: ObservableObject {
     
     var nextSleepBlockFormatted: String {
         guard let _ = model.schedule.nextBlock else {
-            return "-"
+            return L("mainScreen.nextSleepBlock.none", table: "MainScreen")
         }
         
         let remainingTime = model.schedule.remainingTimeToNextBlock
         let hours = remainingTime / 60
         let minutes = remainingTime % 60
         
-        if hours > 0 {
-            return "\(hours)s \(minutes)dk"
+        let locale = Locale.current.language.languageCode?.identifier ?? "en"
+        if locale == "tr" {
+            if hours > 0 {
+                return "\(hours)s \(minutes)dk"
+            } else {
+                return "\(minutes)dk"
+            }
         } else {
-            return "\(minutes)dk"
+            if hours > 0 {
+                return "\(hours)h \(minutes)m"
+            } else {
+                return "\(minutes)m"
+            }
         }
     }
     
@@ -174,11 +188,11 @@ class MainScreenViewModel: ObservableObject {
         let hour = calendar.component(.hour, from: Date())
         
         if hour < 12 {
-            return NSLocalizedString("mainScreen.morningReminder", tableName: "MainScreen", comment: "")
+            return L("mainScreen.morningReminder", table: "MainScreen")
         } else if hour < 18 {
-            return NSLocalizedString("mainScreen.afternoonReminder", tableName: "MainScreen", comment: "")
+            return L("mainScreen.afternoonReminder", table: "MainScreen")
         } else {
-            return NSLocalizedString("mainScreen.eveningReminder", tableName: "MainScreen", comment: "")
+            return L("mainScreen.eveningReminder", table: "MainScreen")
         }
     }
     
@@ -188,40 +202,40 @@ class MainScreenViewModel: ObservableObject {
     
     var sleepStatusMessage: String {
         if isInSleepTime {
-            return NSLocalizedString("mainScreen.goodNightMessage", tableName: "MainScreen", comment: "")
+            return L("mainScreen.goodNightMessage", table: "MainScreen")
         } else if model.schedule.nextBlock != nil {
             let remainingTime = model.schedule.remainingTimeToNextBlock
             let hours = remainingTime / 60
             let minutes = remainingTime % 60
             
             if hours > 0 {
-                return String(format: NSLocalizedString("mainScreen.sleepTimeRemaining", tableName: "MainScreen", comment: ""), "\(hours)", "\(minutes)")
+                return String(format: L("mainScreen.sleepTimeRemaining", table: "MainScreen"), "\(hours)", "\(minutes)")
             } else {
-                return String(format: NSLocalizedString("mainScreen.sleepTimeRemainingMinutes", tableName: "MainScreen", comment: ""), "\(minutes)")
+                return String(format: L("mainScreen.sleepTimeRemainingMinutes", table: "MainScreen"), "\(minutes)")
             }
         } else {
-            return NSLocalizedString("mainScreen.noSleepPlan", tableName: "MainScreen", comment: "")
+            return L("mainScreen.noSleepPlan", table: "MainScreen")
         }
     }
     
     func shareScheduleInfo() -> String {
-        var shareText = NSLocalizedString("mainScreen.shareTitle", tableName: "MainScreen", comment: "") + "\n\n"
+        var shareText = L("mainScreen.shareTitle", table: "MainScreen") + "\n\n"
         
-        shareText += String(format: NSLocalizedString("mainScreen.shareSchedule", tableName: "MainScreen", comment: ""), model.schedule.name) + "\n"
-        shareText += String(format: NSLocalizedString("mainScreen.shareTotalSleep", tableName: "MainScreen", comment: ""), totalSleepTimeFormatted) + "\n"
-        shareText += String(format: NSLocalizedString("mainScreen.shareProgress", tableName: "MainScreen", comment: ""), "\(Int(dailyProgress * 100))") + "\n\n"
+        shareText += String(format: L("mainScreen.shareSchedule", table: "MainScreen"), model.schedule.name) + "\n"
+        shareText += String(format: L("mainScreen.shareTotalSleep", table: "MainScreen"), totalSleepTimeFormatted) + "\n"
+        shareText += String(format: L("mainScreen.shareProgress", table: "MainScreen"), "\(Int(dailyProgress * 100))") + "\n\n"
         
-        shareText += NSLocalizedString("mainScreen.shareSleepBlocks", tableName: "MainScreen", comment: "")
+        shareText += L("mainScreen.shareSleepBlocks", table: "MainScreen")
         
         for block in model.schedule.schedule {
             let blockType = block.isCore
-                ? NSLocalizedString("mainScreen.shareCoreSleep", tableName: "MainScreen", comment: "")
-                : NSLocalizedString("mainScreen.shareNap", tableName: "MainScreen", comment: "")
+                ? L("mainScreen.shareCoreSleep", table: "MainScreen")
+                : L("mainScreen.shareNap", table: "MainScreen")
             
             shareText += "\n• \(block.startTime)-\(block.endTime) (\(blockType))"
         }
         
-        shareText += "\n\n" + NSLocalizedString("mainScreen.shareHashtags", tableName: "MainScreen", comment: "")
+        shareText += "\n\n" + L("mainScreen.shareHashtags", table: "MainScreen")
         
         return shareText
     }
@@ -365,7 +379,7 @@ class MainScreenViewModel: ObservableObject {
     func validateNewBlock() -> Bool {
         // Başlangıç zamanı bitiş zamanından önce olmalı
         if newBlockStartTime >= newBlockEndTime {
-            blockErrorMessage = "sleepBlock.error.invalidTime"
+            blockErrorMessage = L("sleepBlock.error.invalidTime", table: "MainScreen")
             showBlockError = true
             return false
         }
@@ -379,7 +393,7 @@ class MainScreenViewModel: ObservableObject {
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
             if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = "sleepBlock.error.overlap"
+                blockErrorMessage = L("sleepBlock.error.overlap", table: "MainScreen")
                 showBlockError = true
                 return false
             }
@@ -461,7 +475,7 @@ class MainScreenViewModel: ObservableObject {
     func validateEditingBlock() -> Bool {
         // Başlangıç zamanı bitiş zamanından önce olmalı
         if editingBlockStartTime >= editingBlockEndTime {
-            blockErrorMessage = "sleepBlock.error.invalidTime"
+            blockErrorMessage = L("sleepBlock.error.invalidTime", table: "MainScreen")
             showBlockError = true
             return false
         }
@@ -480,7 +494,7 @@ class MainScreenViewModel: ObservableObject {
             let blockEnd = convertTimeStringToMinutes(block.endTime)
             
             if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = "sleepBlock.error.overlap"
+                blockErrorMessage = L("sleepBlock.error.overlap", table: "MainScreen")
                 showBlockError = true
                 return false
             }
@@ -667,7 +681,7 @@ class MainScreenViewModel: ObservableObject {
                 // Aktif program yoksa, varsayılanı yükle veya boş durumu göster.
                 DispatchQueue.main.async {
                     self.isLoading = false
-                    self.errorMessage = String(localized: "error.no_active_schedule_found") // Yerelleştirilmiş anahtar
+                    self.errorMessage = L("error.no_active_schedule_found", table: "MainScreen")
                     // Gerekirse burada varsayılan bir program yüklenebilir veya boş ekran gösterilebilir.
                     // self.loadDefaultSchedule() // Örnek
                 }
@@ -675,7 +689,7 @@ class MainScreenViewModel: ObservableObject {
             }
         } catch {
             DispatchQueue.main.async {
-                self.errorMessage = String(localized: "error.schedule_load_failed") + ": \(error.localizedDescription)" // Yerelleştirilmiş anahtar
+                self.errorMessage = L("error.schedule_load_failed", table: "MainScreen") + ": \(error.localizedDescription)"
                 self.isLoading = false
             }
             
@@ -769,6 +783,17 @@ class MainScreenViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+    }
+    
+    /// Dil değişikliklerini dinler ve UI'yi günceller
+    private func setupLanguageChangeListener() {
+        languageManager.$currentLanguage
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                // Schedule description güncellenmesi için objectWillChange tetiklenir
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
     }
     
     private func resetNewBlockValues() {

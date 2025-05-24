@@ -80,6 +80,15 @@ struct MainScreenView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     
+    init(viewModel: MainScreenViewModel? = nil) {
+        if let viewModel = viewModel {
+            self.viewModel = viewModel
+        } else {
+            // LanguageManager.shared'i kullanarak yeni bir viewModel oluştur
+            self.viewModel = MainScreenViewModel(languageManager: LanguageManager.shared)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -150,7 +159,7 @@ struct MainScreenView: View {
                 // Hata durumları için overlay
                 if let errorMessage = viewModel.errorMessage {
                     VStack(spacing: 16) {
-                        Text(NSLocalizedString("mainScreen.errorIcon", tableName: "MainScreen", comment: "Error icon emoji"))
+                        Text(L("mainScreen.errorIcon", table: "MainScreen"))
                             .font(.largeTitle)
                         
                         Text(LocalizedStringKey(errorMessage))
@@ -164,7 +173,7 @@ struct MainScreenView: View {
                                 await viewModel.loadScheduleFromRepository()
                             }
                         }) {
-                            Text(LocalizedStringKey("mainscreen.error.retry"))
+                            Text(L("mainscreen.error.retry", table: "MainScreen"))
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 20)
@@ -216,7 +225,7 @@ struct MainScreenView: View {
             /*.toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: 4) {
-                        Text(viewModel.isInSleepTime ? "💤" : "⏰")
+                        Text(viewModel.isInSleepTime ? L("mainScreen.sleepTimeIcon", table: "MainScreen") : L("mainScreen.wakeTimeIcon", table: "MainScreen"))
                             .font(.headline)
                         Text(viewModel.sleepStatusMessage)
                             .font(.headline)
@@ -231,6 +240,7 @@ struct MainScreenView: View {
         .sheet(isPresented: $viewModel.showAddBlockSheet) {
             AddSleepBlockSheet(viewModel: viewModel)
         }
+        .id(languageManager.currentLanguage)
     }
 }
 
@@ -258,7 +268,7 @@ struct HeaderView: View {
                     }
                 }) {
                     HStack(spacing: 4) {
-                        Text(NSLocalizedString("mainScreen.scheduleDescription.title", tableName: "MainScreen", comment: "Schedule description title"))
+                        Text(L("mainScreen.scheduleDescription.title", table: "MainScreen"))
                             .font(.caption)
                             .fontWeight(.medium)
                         
@@ -281,7 +291,7 @@ struct HeaderView: View {
             
             // Toplam uyku süresi
             HStack {
-                Text(String(format: NSLocalizedString("mainScreen.totalSleepLabel", tableName: "MainScreen", comment: "Total sleep time label"), viewModel.totalSleepTimeFormatted))
+                Text(String(format: L("mainScreen.totalSleepLabel", table: "MainScreen"), viewModel.totalSleepTimeFormatted))
                     .font(.caption)
                     .foregroundColor(.appSecondaryText)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -344,9 +354,9 @@ struct SleepBlocksSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                Text(NSLocalizedString("mainScreen.sleepBlocksIcon", tableName: "MainScreen", comment: "Sleep blocks icon emoji"))
+                Text(L("mainScreen.sleepBlocksIcon", table: "MainScreen"))
                     .font(.title3)
-                Text(NSLocalizedString("mainScreen.sleepBlocks", tableName: "MainScreen", comment: "Sleep blocks section title"))
+                Text(L("mainScreen.sleepBlocks", table: "MainScreen"))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -398,7 +408,7 @@ struct AddBlockButton: View {
                     .font(.title2)
                     .foregroundColor(.appAccent)
                 
-                Text(NSLocalizedString("mainScreen.addSleepBlock", tableName: "MainScreen", comment: "Add sleep block button title"))
+                Text(L("mainScreen.addSleepBlock", table: "MainScreen"))
                     .font(.callout)
                     .fontWeight(.medium)
                     .multilineTextAlignment(.center)
@@ -445,8 +455,8 @@ struct SleepBlockCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text(block.isCore ? 
-                         NSLocalizedString("mainScreen.coreBlockIcon", tableName: "MainScreen", comment: "Core sleep block icon emoji") : 
-                         NSLocalizedString("mainScreen.napBlockIcon", tableName: "MainScreen", comment: "Nap sleep block icon emoji"))
+                         L("mainScreen.coreBlockIcon", table: "MainScreen") : 
+                         L("mainScreen.napBlockIcon", table: "MainScreen"))
                         .font(.title2)
                     Text("\(block.startTime) - \(block.endTime)")
                         .font(.headline)
@@ -455,8 +465,8 @@ struct SleepBlockCard: View {
                 
                 Text(
                     block.isCore
-                    ? NSLocalizedString("mainScreen.sleepBlockCore", tableName: "MainScreen", comment: "Core sleep block label")
-                    : NSLocalizedString("mainScreen.sleepBlockNap", tableName: "MainScreen", comment: "Nap sleep block label")
+                    ? L("mainScreen.sleepBlockCore", table: "MainScreen")
+                    : L("mainScreen.sleepBlockNap", table: "MainScreen")
                 )
                 .font(.subheadline)
                 .foregroundColor(.appSecondaryText)
@@ -542,19 +552,19 @@ struct SleepBlockCard: View {
                 EditSleepBlockSheet(viewModel: viewModel)
             }
             .confirmationDialog(
-                NSLocalizedString("sleepBlock.delete.title", tableName: "MainScreen", comment: "Delete sleep block confirmation title"),
+                L("sleepBlock.delete.title", table: "MainScreen"),
                 isPresented: $showDeleteConfirmation,
                 titleVisibility: .visible
             ) {
-                Button(NSLocalizedString("sleepBlock.delete.confirm", tableName: "MainScreen", comment: "Delete confirmation button"), role: .destructive) {
+                Button(L("sleepBlock.delete.confirm", table: "MainScreen"), role: .destructive) {
                     withAnimation {
                         viewModel.deleteBlock(block)
                     }
                     hapticFeedback(style: .rigid)
                 }
-                Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "Cancel button"), role: .cancel) {}
+                Button(L("general.cancel", table: "MainScreen"), role: .cancel) {}
             } message: {
-                Text(NSLocalizedString("sleepBlock.delete.message", tableName: "MainScreen", comment: "Delete confirmation message"))
+                Text(L("sleepBlock.delete.message", table: "MainScreen"))
             }
         }
     }
@@ -574,35 +584,35 @@ struct EditSleepBlockSheet: View {
             Form {
                 Section {
                     DatePicker(
-                        NSLocalizedString("sleepBlock.startTime", tableName: "MainScreen", comment: "Start time picker label"),
+                        L("sleepBlock.startTime", table: "MainScreen"),
                         selection: $viewModel.editingBlockStartTime,
                         displayedComponents: .hourAndMinute
                     )
                     
                     DatePicker(
-                        NSLocalizedString("sleepBlock.endTime", tableName: "MainScreen", comment: "End time picker label"),
+                        L("sleepBlock.endTime", table: "MainScreen"),
                         selection: $viewModel.editingBlockEndTime,
                         displayedComponents: .hourAndMinute
                     )
                 }
                 
                 Section {
-                    Text(NSLocalizedString("sleepBlock.autoType", tableName: "MainScreen", comment: "Auto type explanation text"))
+                    Text(L("sleepBlock.autoType", table: "MainScreen"))
                         .font(.footnote)
                         .foregroundColor(.appSecondaryText)
                 }
             }
-            .navigationTitle(NSLocalizedString("sleepBlock.edit", tableName: "MainScreen", comment: "Edit sleep block navigation title"))
+            .navigationTitle(L("sleepBlock.edit", table: "MainScreen"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("general.cancel", tableName: "MainScreen", comment: "Cancel button")) {
+                    Button(L("general.cancel", table: "MainScreen")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(NSLocalizedString("general.save", tableName: "MainScreen", comment: "Save button")) {
+                    Button(L("general.save", table: "MainScreen")) {
                         if viewModel.validateEditingBlock() {
                             viewModel.updateBlock()
                             dismiss()
@@ -611,10 +621,10 @@ struct EditSleepBlockSheet: View {
                 }
             }
             .alert(
-                NSLocalizedString("sleepBlock.error.title", tableName: "MainScreen", comment: "Sleep block error title"),
+                L("sleepBlock.error.title", table: "MainScreen"),
                 isPresented: $viewModel.showBlockError
             ) {
-                Button(NSLocalizedString("general.ok", tableName: "MainScreen", comment: "OK button"), role: .cancel) {}
+                Button(L("general.ok", table: "MainScreen"), role: .cancel) {}
             } message: {
                 Text(viewModel.blockErrorMessage)
             }
@@ -629,7 +639,7 @@ struct InfoCardsSection: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                Text(NSLocalizedString("mainScreen.dailyStatus", tableName: "MainScreen", comment: "Daily status section title"))
+                Text(L("mainScreen.dailyStatus", table: "MainScreen"))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -638,15 +648,15 @@ struct InfoCardsSection: View {
             
             HStack(spacing: 12) {
                 MainInfoCard(
-                    icon: NSLocalizedString("mainScreen.progressIcon", tableName: "MainScreen", comment: "Progress icon emoji"),
-                    title: NSLocalizedString("mainScreen.progress", tableName: "MainScreen", comment: "Progress card title"),
+                    icon: L("mainScreen.progressIcon", table: "MainScreen"),
+                    title: L("mainScreen.progress", table: "MainScreen"),
                     value: "\(Int(viewModel.dailyProgress * 100))%",
                     color: .appAccent
                 )
                 
                 MainInfoCard(
-                    icon: NSLocalizedString("mainScreen.nextSleepBlockIcon", tableName: "MainScreen", comment: "Next sleep block icon emoji"),
-                    title: NSLocalizedString("mainScreen.nextSleepBlock", tableName: "MainScreen", comment: "Next sleep block card title"),
+                    icon: L("mainScreen.nextSleepBlockIcon", table: "MainScreen"),
+                    title: L("mainScreen.nextSleepBlock", table: "MainScreen"),
                     value: viewModel.nextSleepBlockFormatted,
                     color: .appSecondary
                 )
@@ -664,9 +674,9 @@ struct TipSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                Text(NSLocalizedString("mainScreen.tipIcon", tableName: "MainScreen", comment: "Tip icon emoji"))
+                Text(L("mainScreen.tipIcon", table: "MainScreen"))
                     .font(.title3)
-                Text(NSLocalizedString("mainScreen.todaysTip", tableName: "MainScreen", comment: "Today's tip section title"))
+                Text(L("mainScreen.todaysTip", table: "MainScreen"))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundColor(.appText)
@@ -814,15 +824,16 @@ struct EditActionButton: View {
         .buttonStyle(PlainButtonStyle())
         .accessibility(addTraits: .isButton)
         .accessibility(hint: Text(systemImage == "pencil" ? 
-            NSLocalizedString("general.edit", tableName: "MainScreen", comment: "Edit accessibility hint") : 
-            NSLocalizedString("general.delete", tableName: "MainScreen", comment: "Delete accessibility hint")))
+            L("general.edit", table: "MainScreen") : 
+            L("general.delete", table: "MainScreen")))
     }
 }
 
 #Preview {
     let config = ModelConfiguration()
     let container = try! ModelContainer(for: SleepScheduleStore.self, configurations: config)
-    MainScreenView(viewModel: MainScreenViewModel())
+    MainScreenView(viewModel: MainScreenViewModel(languageManager: LanguageManager.shared))
         .modelContainer(container)
+        .environmentObject(LanguageManager.shared)
 }
 

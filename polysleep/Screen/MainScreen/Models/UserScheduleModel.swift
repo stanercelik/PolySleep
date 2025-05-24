@@ -63,15 +63,20 @@ struct UserScheduleModel {
             )
         ]
         
+        let currentLang = LanguageManager.shared.currentLanguage
+        let nameKey = currentLang == "tr" ? "schedule.default.name" : "schedule.default.name"
+        let descEnKey = currentLang == "tr" ? "schedule.default.description.en" : "schedule.default.description.en"
+        let descTrKey = currentLang == "tr" ? "schedule.default.description.tr" : "schedule.default.description.tr"
+        
         return UserScheduleModel(
             id: "default",
-            name: "Trifazik Uyku Programı",
+            name: L(nameKey, table: "MainScreen"),
             description: LocalizedDescription(
-                en: "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance.",
-                tr: "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+                en: L(descEnKey, table: "MainScreen"),
+                tr: L(descTrKey, table: "MainScreen")
             ),
             totalSleepHours: 8.0,
-            schedule: [],
+            schedule: schedule,
             isPremium: false
         )
     }

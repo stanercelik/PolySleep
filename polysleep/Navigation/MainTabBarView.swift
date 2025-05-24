@@ -3,9 +3,13 @@ import SwiftData
 
 struct MainTabBarView: View {
     @State private var selectedTab = 0
-    @StateObject private var mainScreenViewModel = MainScreenViewModel()
+    @StateObject private var mainScreenViewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    
+    init() {
+        self._mainScreenViewModel = StateObject(wrappedValue: MainScreenViewModel(languageManager: LanguageManager.shared))
+    }
     
     var body: some View {
         ZStack {

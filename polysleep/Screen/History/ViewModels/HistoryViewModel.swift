@@ -8,6 +8,10 @@ enum TimeFilter: String, CaseIterable {
     case thisWeek = "history.filter.thisWeek"
     case thisMonth = "history.filter.thisMonth"
     case allTime = "history.filter.allTime"
+    
+    var localizedTitle: String {
+        return L(self.rawValue, table: "History")
+    }
 }
 
 enum SyncStatus {
