@@ -417,7 +417,7 @@ struct AnalyticsBestWorstDays: View {
                                 .font(.system(size: 14))
                                 .foregroundColor(Color("PrimaryColor"))
                             
-                            Text(String(format: "%.1f saat", bestDay.hours))
+                            Text(String(format: L("analytics.bestWorstDays.hours", table: "Analytics"), bestDay.hours))
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(Color("TextColor"))
                         }
@@ -464,7 +464,7 @@ struct AnalyticsBestWorstDays: View {
                                 .font(.system(size: 14))
                                 .foregroundColor(Color("PrimaryColor"))
                             
-                            Text(String(format: "%.1f saat", worstDay.hours))
+                            Text(String(format: L("analytics.bestWorstDays.hours", table: "Analytics"), worstDay.hours))
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(Color("TextColor"))
                         }

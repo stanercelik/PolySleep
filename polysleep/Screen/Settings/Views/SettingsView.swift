@@ -73,7 +73,8 @@ struct SettingsView: View {
                     ModernSettingsSection(
                         title: L("settings.about.title", table: "Profile"),
                         icon: "person.2.fill",
-                        iconColor: .appAccent
+                        iconColor: .appAccent,
+                        isMinimal: true
                     ) {
                         VStack(spacing: 12) {
                             ModernNavigationRow(
@@ -89,7 +90,8 @@ struct SettingsView: View {
                     ModernSettingsSection(
                         title: L("settings.notifications.title", table: "Profile"),
                         icon: "bell.fill",
-                        iconColor: .appSecondary
+                        iconColor: .appSecondary,
+                        isMinimal: true
                     ) {
                         VStack(spacing: 12) {
                             ModernNavigationRow(
@@ -105,7 +107,8 @@ struct SettingsView: View {
                     ModernSettingsSection(
                         title: L("settings.general.title", table: "Profile"),
                         icon: "gearshape.fill",
-                        iconColor: .blue
+                        iconColor: .blue,
+                        isMinimal: true
                     ) {
                         VStack(spacing: 12) {
                             // Theme Setting
@@ -134,13 +137,14 @@ struct SettingsView: View {
                     ModernSettingsSection(
                         title: L("settings.other.title", table: "Profile"),
                         icon: "heart.fill",
-                        iconColor: .red
+                        iconColor: .red,
+                        isMinimal: true
                     ) {
                         VStack(spacing: 12) {
                             ModernNavigationRow(
                                 icon: "info.circle.fill",
                                 title: L("settings.other.disclaimer", table: "Profile"),
-                                subtitle: "Kullanım koşulları ve sorumluluk reddi",
+                                subtitle: L("settings.other.disclaimer.subtitle", table: "Profile"),
                                 destination: DisclaimerView()
                             )
                             
@@ -183,7 +187,7 @@ struct SettingsView: View {
                             }
                         }
                         
-                        Text("© 2024 PolySleep. Tüm hakları saklıdır.")
+                        Text(L("settings.copyright", table: "Profile"))
                             .font(.caption2)
                             .foregroundColor(.appSecondaryText.opacity(0.7))
                             .multilineTextAlignment(.center)
@@ -245,46 +249,64 @@ struct ModernSettingsSection<Content: View>: View {
     let title: String
     let icon: String
     let iconColor: Color
+    let isMinimal: Bool
     @ViewBuilder let content: Content
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(spacing: 20) {
-            // Section Header
-            HStack(spacing: 12) {
-                ZStack {
-                    Circle()
-                        .fill(iconColor.opacity(0.15))
-                        .frame(width: 40, height: 40)
+            // Section Header - conditional based on isMinimal
+            if !isMinimal {
+                HStack(spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(iconColor.opacity(0.15))
+                            .frame(width: 40, height: 40)
+                        
+                        Image(systemName: icon)
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(iconColor)
+                    }
                     
-                    Image(systemName: icon)
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(iconColor)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(title)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.appText)
+                        
+                        Text(L("settings.section.subtitle", table: "Profile"))
+                            .font(.caption)
+                            .foregroundColor(.appSecondaryText)
+                    }
+                    
+                    Spacer()
                 }
-                
-                VStack(alignment: .leading, spacing: 4) {
+            } else {
+                // Minimal header - just title with small icon
+                HStack(spacing: 8) {
+                    Image(systemName: icon)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(iconColor)
+                    
                     Text(title)
-                        .font(.headline)
+                        .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.appText)
                     
-                    Text("Ayarlar ve tercihler")
-                        .font(.caption)
-                        .foregroundColor(.appSecondaryText)
+                    Spacer()
                 }
-                
-                Spacer()
+                .padding(.bottom, 8)
             }
             
             content
         }
-        .padding(20)
+        .padding(isMinimal ? 16 : 20)
         .background(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: isMinimal ? 12 : 16)
                 .fill(Color.appCardBackground)
                 .overlay(
                     // Subtle border for light mode
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: isMinimal ? 12 : 16)
                         .stroke(
                             LinearGradient(
                                 gradient: Gradient(colors: [
@@ -299,11 +321,11 @@ struct ModernSettingsSection<Content: View>: View {
                 )
                 .shadow(
                     color: colorScheme == .light ? 
-                    Color.black.opacity(0.08) : 
-                    Color.black.opacity(0.3),
-                    radius: colorScheme == .light ? 12 : 16,
+                    Color.black.opacity(isMinimal ? 0.04 : 0.08) : 
+                    Color.black.opacity(isMinimal ? 0.2 : 0.3),
+                    radius: colorScheme == .light ? (isMinimal ? 8 : 12) : (isMinimal ? 12 : 16),
                     x: 0,
-                    y: colorScheme == .light ? 6 : 8
+                    y: colorScheme == .light ? (isMinimal ? 3 : 6) : (isMinimal ? 4 : 8)
                 )
         )
     }

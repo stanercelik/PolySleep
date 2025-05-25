@@ -53,7 +53,7 @@ struct DisclaimerView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.appText)
                             
-                            Text("Önemli bilgiler ve kullanım koşulları")
+                            Text(L("disclaimer.subtitle", table: "Profile"))
                                 .font(.subheadline)
                                 .foregroundColor(.appSecondaryText)
                                 .multilineTextAlignment(.center)
@@ -79,7 +79,7 @@ struct DisclaimerView: View {
                                             .foregroundColor(.appPrimary)
                                     }
                                     
-                                    Text("Genel Uyarı")
+                                    Text(L("disclaimer.general.warning", table: "Profile"))
                                         .font(.headline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.appText)
@@ -195,10 +195,9 @@ struct DisclaimerView: View {
                                         .font(.caption)
                                         .foregroundColor(.white)
                                     
-                                    Text("İletişime Geç")
+                                    Text(L("disclaimer.contact.button", table: "Profile"))
                                         .font(.subheadline)
                                         .fontWeight(.medium)
-                                        .foregroundColor(.white)
                                 }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)

@@ -73,7 +73,14 @@ class MainScreenViewModel: ObservableObject {
         let totalMinutes = model.schedule.schedule.reduce(0) { $0 + $1.duration }
         let hours = totalMinutes / 60
         let minutes = totalMinutes % 60
-        return String(format: "%dh %02dm", hours, minutes)
+        
+        if hours > 0 && minutes > 0 {
+            return String(format: L("mainScreen.timeFormat.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
+        } else if hours > 0 {
+            return String(format: L("mainScreen.timeFormat.hoursOnly", table: "MainScreen"), "\(hours)")
+        } else {
+            return String(format: L("mainScreen.timeFormat.minutesOnly", table: "MainScreen"), "\(minutes)")
+        }
     }
     
     var scheduleDescription: String {
@@ -94,19 +101,12 @@ class MainScreenViewModel: ObservableObject {
         let hours = remainingTime / 60
         let minutes = remainingTime % 60
         
-        let locale = Locale.current.language.languageCode?.identifier ?? "en"
-        if locale == "tr" {
-            if hours > 0 {
-                return "\(hours)s \(minutes)dk"
-            } else {
-                return "\(minutes)dk"
-            }
+        if hours > 0 && minutes > 0 {
+            return String(format: L("mainScreen.timeFormat.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
+        } else if hours > 0 {
+            return String(format: L("mainScreen.timeFormat.hoursOnly", table: "MainScreen"), "\(hours)")
         } else {
-            if hours > 0 {
-                return "\(hours)h \(minutes)m"
-            } else {
-                return "\(minutes)m"
-            }
+            return String(format: L("mainScreen.timeFormat.minutesOnly", table: "MainScreen"), "\(minutes)")
         }
     }
     
@@ -208,10 +208,12 @@ class MainScreenViewModel: ObservableObject {
             let hours = remainingTime / 60
             let minutes = remainingTime % 60
             
-            if hours > 0 {
-                return String(format: L("mainScreen.sleepTimeRemaining", table: "MainScreen"), "\(hours)", "\(minutes)")
+            if hours > 0 && minutes > 0 {
+                return String(format: L("mainScreen.sleepTimeRemaining.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
+            } else if hours > 0 {
+                return String(format: L("mainScreen.sleepTimeRemaining.hoursOnly", table: "MainScreen"), "\(hours)")
             } else {
-                return String(format: L("mainScreen.sleepTimeRemainingMinutes", table: "MainScreen"), "\(minutes)")
+                return String(format: L("mainScreen.sleepTimeRemaining.minutesOnly", table: "MainScreen"), "\(minutes)")
             }
         } else {
             return L("mainScreen.noSleepPlan", table: "MainScreen")

@@ -95,13 +95,15 @@ struct MainScreenView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 
-                ScrollView {
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 24) {
-                        HeaderView(viewModel: viewModel)
+                        // Header Card
+                        HeaderCard(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
+                        // Sleep Quality Rating Card
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
                             let startTime = TimeFormatter.time(from: lastBlock.startTime)!
                             let endTime = TimeFormatter.time(from: lastBlock.endTime)!
@@ -121,118 +123,85 @@ struct MainScreenView: View {
                                 of: now
                             ) ?? now
                             
-                            SleepQualityRatingView(
+                            SleepQualityRatingCard(
                                 startTime: startDate,
                                 endTime: endDate,
                                 isPresented: $viewModel.showSleepQualityRating,
                                 viewModel: viewModel
                             )
                             .transition(.move(edge: .top).combined(with: .opacity))
-                            .padding(.horizontal)
                         }
                         
-                        CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
-                            .frame(height: UIScreen.main.bounds.height * 0.35)
-                            .padding(.horizontal)
+                        // Sleep Chart Card
+                        SleepChartCard(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
-                        SleepBlocksSection(viewModel: viewModel)
+                        // Sleep Blocks Card
+                        SleepBlocksCard(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
+                        // Info Cards Section
                         InfoCardsSection(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                         
-                        TipSection(viewModel: viewModel)
-                            .padding(.bottom, 16)
+                        // Daily Tip Card
+                        DailyTipCard(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                             .opacity(viewModel.isLoading ? 0.7 : 1.0)
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 }
                 
                 // Hata durumları için overlay
                 if let errorMessage = viewModel.errorMessage {
-                    VStack(spacing: 16) {
-                        Text(L("mainScreen.errorIcon", table: "MainScreen"))
-                            .font(.largeTitle)
-                        
-                        Text(LocalizedStringKey(errorMessage))
-                            .font(.headline)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.appText)
-                        
-                        Button(action: {
-                            Task {
-                                // Offline-first: Supabase yerine Repository'den yüklüyoruz
-                                await viewModel.loadScheduleFromRepository()
-                            }
-                        }) {
-                            Text(L("mainscreen.error.retry", table: "MainScreen"))
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(Color.appPrimary)
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding(24)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.appCardBackground)
-                            .shadow(color: Color.black.opacity(0.1), radius: 10)
-                    )
-                    .padding(.horizontal, 40)
+                    ErrorOverlayCard(errorMessage: errorMessage, viewModel: viewModel)
                 }
             }
-            .navigationBarItems(
-                leading: Button(action: {
-                    let activityVC = UIActivityViewController(
-                        activityItems: [viewModel.shareScheduleInfo()],
-                        applicationActivities: nil
-                    )
-                    
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let window = windowScene.windows.first,
-                       let rootVC = window.rootViewController {
-                        rootVC.present(activityVC, animated: true)
+            .navigationTitle(L("mainScreen.title", table: "MainScreen"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        let activityVC = UIActivityViewController(
+                            activityItems: [viewModel.shareScheduleInfo()],
+                            applicationActivities: nil
+                        )
+                        
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let window = windowScene.windows.first,
+                           let rootVC = window.rootViewController {
+                            rootVC.present(activityVC, animated: true)
+                        }
+                    }) {
+                        Image(systemName: "square.and.arrow.up")
+                            .symbolRenderingMode(.hierarchical)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.appPrimary)
                     }
-                }) {
-                    Image(systemName: "square.and.arrow.up")
-                        .symbolRenderingMode(.hierarchical)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.appPrimary)
-                },
-                trailing: HStack(spacing: 16) {
-                    
-                    Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
-                        .symbolRenderingMode(.hierarchical)
-                        .fontWeight(viewModel.isEditing ? .bold : .black)
-                        .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
-                        .font(.title3)
-                        /*.contentTransition(.symbolEffect(.replace.magic(fallback: .downUp.wholeSymbol), options: .nonRepeating))*/
-                        .onTapGesture {
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                             viewModel.isEditing.toggle()
                         }
-                }
-            )
-            /*.toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack(spacing: 4) {
-                        Text(viewModel.isInSleepTime ? L("mainScreen.sleepTimeIcon", table: "MainScreen") : L("mainScreen.wakeTimeIcon", table: "MainScreen"))
-                            .font(.headline)
-                        Text(viewModel.sleepStatusMessage)
-                            .font(.headline)
-                            .foregroundColor(.appText)
+                    }) {
+                        Image(systemName: viewModel.isEditing ? "checkmark.circle.fill" : "pencil.circle.fill")
+                            .symbolRenderingMode(.hierarchical)
+                            .fontWeight(viewModel.isEditing ? .bold : .black)
+                            .foregroundColor(viewModel.isEditing ? .appSecondary : .appPrimary)
+                            .font(.title3)
                     }
                 }
-            }*/
+            }
             .onAppear {
                 viewModel.setModelContext(modelContext)
             }
@@ -244,124 +213,174 @@ struct MainScreenView: View {
     }
 }
 
-// MARK: - Header
-struct HeaderView: View {
+// MARK: - Header Card
+struct HeaderCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
-    @State private var showCustomizedTooltip: Bool = false
     @State private var showScheduleDescription: Bool = false
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(spacing: 8) {
-            // Program adı ve bilgi düğmesi
-            HStack(spacing: 8) {
-                Text(viewModel.model.schedule.name)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.appText)
-                
-                Spacer()
-                
-                Button(action: {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        showScheduleDescription.toggle()
-                    }
-                }) {
-                    HStack(spacing: 4) {
-                        Text(L("mainScreen.scheduleDescription.title", table: "MainScreen"))
-                            .font(.caption)
-                            .fontWeight(.medium)
+        VStack(spacing: 16) {
+            // Ana başlık ve durum
+            HStack(alignment: .center, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(viewModel.model.schedule.name)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    HStack(spacing: 8) {
+                        Text(viewModel.isInSleepTime ? L("mainScreen.sleepTimeIcon", table: "MainScreen") : L("mainScreen.wakeTimeIcon", table: "MainScreen"))
+                            .font(.subheadline)
                         
-                        Image(systemName: showScheduleDescription ? "chevron.up" : "chevron.down")
-                            .font(.caption)
+                        Text(viewModel.sleepStatusMessage)
+                            .font(.subheadline)
+                            .foregroundColor(.appSecondaryText)
                     }
-                    .foregroundColor(.appText)
+                    .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .padding(.horizontal, 10)
                     .background(
                         Capsule()
-                            .fill(Color.appPrimary.opacity(0.15))
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color.appPrimary.opacity(0.3), lineWidth: 1)
-                            )
+                            .fill(viewModel.isInSleepTime ? Color.appSecondary.opacity(0.15) : Color.appAccent.opacity(0.15))
                     )
                 }
-            }
-            
-            // Toplam uyku süresi
-            HStack {
-                Text(String(format: L("mainScreen.totalSleepLabel", table: "MainScreen"), viewModel.totalSleepTimeFormatted))
-                    .font(.caption)
-                    .foregroundColor(.appSecondaryText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
+                
+                // Toplam uyku süresi
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text(L("mainScreen.totalSleepLabel", table: "MainScreen"))
+                        .font(.caption)
+                        .foregroundColor(.appSecondaryText)
+                    
+                    Text(viewModel.totalSleepTimeFormatted)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appPrimary)
+                }
             }
             
-            // Program açıklaması (açılır/kapanır panel)
-            if showScheduleDescription {
-                VStack(alignment: .leading, spacing: 0) {
-                    Divider()
-                        .background(Color.appAccent.opacity(0.2))
-                        .padding(.vertical, 8)
-                    
-                    Text(viewModel.scheduleDescription)
-                        .font(.footnote)
-                        .foregroundColor(.appText)
-                        .lineSpacing(4)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.appCardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(
-                                            colorScheme == .light ? 
-                                            Color.gray.opacity(0.12) : 
-                                            Color.clear,
-                                            lineWidth: 1
-                                        )
-                                )
-                                .shadow(
-                                    color: colorScheme == .light ? 
-                                    Color.black.opacity(0.06) : 
-                                    Color.black.opacity(0.25),
-                                    radius: colorScheme == .light ? 6 : 10,
-                                    x: 0,
-                                    y: colorScheme == .light ? 3 : 5
-                                )
-                        )
+            // Program açıklaması toggle
+            Button(action: {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    showScheduleDescription.toggle()
                 }
-                .transition(.asymmetric(
-                    insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
-                    removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
-                ))
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "info.circle")
+                        .font(.caption)
+                    
+                    Text(L("mainScreen.scheduleDescription.title", table: "MainScreen"))
+                        .font(.caption)
+                        .fontWeight(.medium)
+                    
+                    Spacer()
+                    
+                    Image(systemName: showScheduleDescription ? "chevron.up" : "chevron.down")
+                        .font(.caption2)
+                }
+                .foregroundColor(.appPrimary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.appPrimary.opacity(0.1))
+                )
+            }
+            
+            // Program açıklaması
+            if showScheduleDescription {
+                Text(viewModel.scheduleDescription)
+                    .font(.footnote)
+                    .foregroundColor(.appText)
+                    .lineSpacing(4)
+                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.appBackground)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.appPrimary.opacity(0.2), lineWidth: 1)
+                            )
+                    )
+                    .transition(.asymmetric(
+                        insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
+                        removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
+                    ))
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-        .background(Color.appBackground)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
 }
 
-// MARK: - Sleep Block Section
-struct SleepBlocksSection: View {
+// MARK: - Sleep Chart Card
+struct SleepChartCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                Text(L("mainScreen.sleepBlocksIcon", table: "MainScreen"))
-                    .font(.title3)
-                Text(L("mainScreen.sleepBlocks", table: "MainScreen"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
+        VStack(spacing: 16) {
+            HStack {
+                HStack(spacing: 8) {
+                    Text("📊")
+                        .font(.title3)
+                    Text(L("mainScreen.sleepChart.title", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                }
+                
+                Spacer()
             }
-            .padding(.horizontal)
+            
+            CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
+                .frame(height: UIScreen.main.bounds.height * 0.3)
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
+}
+
+// MARK: - Sleep Blocks Card
+struct SleepBlocksCard: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            HStack {
+                HStack(spacing: 8) {
+                    Text(L("mainScreen.sleepBlocksIcon", table: "MainScreen"))
+                        .font(.title3)
+                    Text(L("mainScreen.sleepBlocks", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                }
+                
+                Spacer()
+                
+                if viewModel.isEditing {
+                    Text(L("mainScreen.editing.mode", table: "MainScreen"))
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appSecondary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color.appSecondary.opacity(0.15))
+                        )
+                }
+            }
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
@@ -386,16 +405,147 @@ struct SleepBlocksSection: View {
                         )
                     }
                 }
-                .padding(.horizontal, viewModel.isEditing ? 16 : 16)
+                .padding(.horizontal, 4)
                 .padding(.top, viewModel.isEditing ? 20 : 0)
-                .padding(.trailing, viewModel.isEditing ? 50 : 0)
                 .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.isEditing)
             }
         }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
 }
 
-// MARK: - Uadd Sleep Block Button
+// MARK: - Sleep Quality Rating Card
+struct SleepQualityRatingCard: View {
+    let startTime: Date
+    let endTime: Date
+    @Binding var isPresented: Bool
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L("mainScreen.sleepQuality.title", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    Text(L("mainScreen.sleepQuality.subtitle", table: "MainScreen"))
+                        .font(.subheadline)
+                        .foregroundColor(.appSecondaryText)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    withAnimation {
+                        isPresented = false
+                    }
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.appSecondaryText.opacity(0.6))
+                }
+            }
+            
+            SleepQualityRatingView(
+                startTime: startTime,
+                endTime: endTime,
+                isPresented: $isPresented,
+                viewModel: viewModel
+            )
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
+}
+
+// MARK: - Daily Tip Card
+struct DailyTipCard: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            HStack {
+                HStack(spacing: 8) {
+                    Text("💡")
+                        .font(.title3)
+                    Text(L("mainScreen.dailyTip.title", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                }
+                
+                Spacer()
+            }
+            
+            TipSection(viewModel: viewModel)
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
+    }
+}
+
+// MARK: - Error Overlay Card
+struct ErrorOverlayCard: View {
+    let errorMessage: String
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Text(L("mainScreen.errorIcon", table: "MainScreen"))
+                .font(.largeTitle)
+            
+            Text(LocalizedStringKey(errorMessage))
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.appText)
+            
+            Button(action: {
+                Task {
+                    await viewModel.loadScheduleFromRepository()
+                }
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.subheadline)
+                    Text(L("mainscreen.error.retry", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.medium)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.appPrimary)
+                )
+            }
+        }
+        .padding(24)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+        .padding(.horizontal, 40)
+    }
+}
+
+// MARK: - Add Sleep Block Button
 struct AddBlockButton: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.colorScheme) private var colorScheme
@@ -404,32 +554,25 @@ struct AddBlockButton: View {
         Button(action: {
             viewModel.showAddBlockSheet = true
         }) {
-            VStack(spacing: 10) {
+            VStack(spacing: 12) {
                 Image(systemName: "plus.circle.fill")
-                    .font(.title2)
+                    .font(.title)
                     .foregroundColor(.appAccent)
                 
                 Text(L("mainScreen.addSleepBlock", table: "MainScreen"))
-                    .font(.callout)
+                    .font(.subheadline)
                     .fontWeight(.medium)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.appAccent)
             }
-            .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+            .frame(width: UIScreen.main.bounds.width / 2.2, height: 100)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color.appAccent.opacity(0.08))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 16)
                             .stroke(Color.appAccent.opacity(0.3), lineWidth: 2)
-                    )
-                    .shadow(
-                        color: colorScheme == .light ? 
-                        Color.appAccent.opacity(0.15) : 
-                        Color.appAccent.opacity(0.25),
-                        radius: colorScheme == .light ? 4 : 8,
-                        x: 0,
-                        y: colorScheme == .light ? 2 : 4
+                            .strokeBorder(style: StrokeStyle(lineWidth: 2, dash: [8, 4]))
                     )
             )
         }
@@ -437,7 +580,7 @@ struct AddBlockButton: View {
     }
 }
 
-// MARK: - sleep Block Card
+// MARK: - Sleep Block Card
 struct SleepBlockCard: View {
     let block: SleepBlock
     let nextBlock: SleepBlock?
@@ -453,48 +596,52 @@ struct SleepBlockCard: View {
     var body: some View {
         ZStack {
             // Ana kart içeriği
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 8) {
                     Text(block.isCore ? 
                          L("mainScreen.coreBlockIcon", table: "MainScreen") : 
                          L("mainScreen.napBlockIcon", table: "MainScreen"))
                         .font(.title2)
-                    Text("\(block.startTime) - \(block.endTime)")
-                        .font(.headline)
-                        .foregroundColor(.appText)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("\(block.startTime) - \(block.endTime)")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.appText)
+                        
+                        Text(
+                            block.isCore
+                            ? L("mainScreen.sleepBlockCore", table: "MainScreen")
+                            : L("mainScreen.sleepBlockNap", table: "MainScreen")
+                        )
+                        .font(.caption)
+                        .foregroundColor(.appSecondaryText)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(block.isCore ? Color.appPrimary.opacity(0.15) : Color.appAccent.opacity(0.15))
+                        )
+                    }
+                    
+                    Spacer()
                 }
-                
-                Text(
-                    block.isCore
-                    ? L("mainScreen.sleepBlockCore", table: "MainScreen")
-                    : L("mainScreen.sleepBlockNap", table: "MainScreen")
-                )
-                .font(.subheadline)
-                .foregroundColor(.appSecondaryText)
-                
             }
             .padding(16)
-            .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+            .frame(width: UIScreen.main.bounds.width / 2.2, height: 100)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color.appCardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 16)
                             .stroke(
-                                colorScheme == .light ? 
-                                Color.gray.opacity(0.15) : 
-                                Color.clear,
+                                block.isCore ? 
+                                Color.appPrimary.opacity(0.2) : 
+                                Color.appAccent.opacity(0.2), 
                                 lineWidth: 1
                             )
                     )
-                    .shadow(
-                        color: colorScheme == .light ? 
-                        Color.black.opacity(0.08) : 
-                        Color.black.opacity(0.3),
-                        radius: colorScheme == .light ? 8 : 12,
-                        x: 0,
-                        y: colorScheme == .light ? 4 : 6
-                    )
+                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
             )
             
             // Düzenleme modu aktifken görünecek aksiyon butonları
@@ -518,7 +665,7 @@ struct SleepBlockCard: View {
                                 buttonScale = pressing ? 0.92 : 1.0
                             }
                         }
-                        .offset(x: -18, y: -12)
+                        .offset(x: -12, y: -8)
                         
                         Spacer()
                         
@@ -540,11 +687,11 @@ struct SleepBlockCard: View {
                                 buttonScale = pressing ? 0.92 : 1.0
                             }
                         }
-                        .offset(x: 18, y: -12)
+                        .offset(x: 12, y: -8)
                     }
                     Spacer()
                 }
-                .frame(width: UIScreen.main.bounds.width / 2, height: 90)
+                .frame(width: UIScreen.main.bounds.width / 2.2, height: 100)
                 .zIndex(2)
                 .transition(.asymmetric(
                     insertion: .scale(scale: 0.3).combined(with: .opacity),
@@ -553,24 +700,23 @@ struct SleepBlockCard: View {
                 .padding(.horizontal, 16)
             }
         }
-            .sheet(isPresented: $showingEditSheet) {
-                EditSleepBlockSheet(viewModel: viewModel)
-            }
-            .confirmationDialog(
-                L("sleepBlock.delete.title", table: "MainScreen"),
-                isPresented: $showDeleteConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button(L("sleepBlock.delete.confirm", table: "MainScreen"), role: .destructive) {
-                    withAnimation {
-                        viewModel.deleteBlock(block)
-                    }
-                    hapticFeedback(style: .rigid)
+        .sheet(isPresented: $showingEditSheet) {
+            EditSleepBlockSheet(viewModel: viewModel)
+        }
+        .confirmationDialog(
+            L("sleepBlock.delete.title", table: "MainScreen"),
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(L("sleepBlock.delete.confirm", table: "MainScreen"), role: .destructive) {
+                withAnimation {
+                    viewModel.deleteBlock(block)
                 }
-                Button(L("general.cancel", table: "MainScreen"), role: .cancel) {}
-            } message: {
-                Text(L("sleepBlock.delete.message", table: "MainScreen"))
+                hapticFeedback(style: .rigid)
             }
+            Button(L("general.cancel", table: "MainScreen"), role: .cancel) {}
+        } message: {
+            Text(L("sleepBlock.delete.message", table: "MainScreen"))
         }
     }
     
@@ -578,6 +724,7 @@ struct SleepBlockCard: View {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.impactOccurred()
     }
+}
 
 // MARK: - Edit Sleep Block Sheet
 struct EditSleepBlockSheet: View {
@@ -642,16 +789,21 @@ struct InfoCardsSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             HStack {
-                Text(L("mainScreen.dailyStatus", table: "MainScreen"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
+                HStack(spacing: 8) {
+                    Text("📈")
+                        .font(.title3)
+                    Text(L("mainScreen.dailyStatus", table: "MainScreen"))
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                }
+                
                 Spacer()
             }
             
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 MainInfoCard(
                     icon: L("mainScreen.progressIcon", table: "MainScreen"),
                     title: L("mainScreen.progress", table: "MainScreen"),
@@ -667,7 +819,12 @@ struct InfoCardsSection: View {
                 )
             }
         }
-        .padding(.horizontal)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
 }
 
@@ -677,49 +834,24 @@ struct TipSection: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                Text(L("mainScreen.tipIcon", table: "MainScreen"))
-                    .font(.title3)
-                Text(L("mainScreen.todaysTip", table: "MainScreen"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(viewModel.dailyTip, tableName: "Tips")
-                    .font(.subheadline)
-                    .foregroundColor(.appSecondaryText)
-                    .lineSpacing(2)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.appCardBackground)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(
-                                colorScheme == .light ? 
-                                Color.gray.opacity(0.12) : 
-                                Color.clear,
-                                lineWidth: 1
-                            )
-                    )
-                    .shadow(
-                        color: colorScheme == .light ? 
-                        Color.black.opacity(0.06) : 
-                        Color.black.opacity(0.25),
-                        radius: colorScheme == .light ? 6 : 10,
-                        x: 0,
-                        y: colorScheme == .light ? 3 : 5
-                    )
-            )
+        VStack(alignment: .leading, spacing: 8) {
+            Text(viewModel.dailyTip, tableName: "Tips")
+                .font(.subheadline)
+                .foregroundColor(.appSecondaryText)
+                .lineSpacing(4)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.appBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.appPrimary.opacity(0.15), lineWidth: 1)
+                )
+        )
     }
 }
 
@@ -733,10 +865,10 @@ struct MainInfoCard: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
                 Text(icon)
-                    .font(.title3)
+                    .font(.title2)
                     .foregroundColor(color)
                 
                 Text(title)
@@ -746,31 +878,18 @@ struct MainInfoCard: View {
             }
             
             Text(value)
-                .font(.title3)
-                .fontWeight(.semibold)
+                .font(.title2)
+                .fontWeight(.bold)
                 .foregroundColor(.appText)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.appCardBackground)
+            RoundedRectangle(cornerRadius: 16)
+                .fill(color.opacity(0.08))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(
-                            colorScheme == .light ? 
-                            Color.gray.opacity(0.12) : 
-                            Color.clear,
-                            lineWidth: 1
-                        )
-                )
-                .shadow(
-                    color: colorScheme == .light ? 
-                    Color.black.opacity(0.06) : 
-                    Color.black.opacity(0.25),
-                    radius: colorScheme == .light ? 6 : 10,
-                    x: 0,
-                    y: colorScheme == .light ? 3 : 5
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(color.opacity(0.2), lineWidth: 1)
                 )
         )
     }

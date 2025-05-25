@@ -392,6 +392,7 @@ struct EmptyStateCard: View {
 // MARK: - History Content Section
 struct HistoryContentSection: View {
     @ObservedObject var viewModel: HistoryViewModel
+    @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -441,6 +442,7 @@ struct HistoryContentSection: View {
         let grouped = Dictionary(grouping: items) { item -> String in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM yyyy"
+            formatter.locale = Locale(identifier: languageManager.currentLanguage == "tr" ? "tr_TR" : "en_US")
             return formatter.string(from: item.date)
         }
         
@@ -448,6 +450,7 @@ struct HistoryContentSection: View {
             .sorted { item1, item2 in
                 let formatter = DateFormatter()
                 formatter.dateFormat = "MMMM yyyy"
+                formatter.locale = Locale(identifier: languageManager.currentLanguage == "tr" ? "tr_TR" : "en_US")
                 guard let date1 = formatter.date(from: item1.month),
                       let date2 = formatter.date(from: item2.month) else {
                     return false
@@ -500,6 +503,7 @@ struct MonthSection: View {
 struct ModernDayCard: View {
     let item: HistoryModel
     @ObservedObject var viewModel: HistoryViewModel
+    @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
         Button(action: {
@@ -651,6 +655,7 @@ struct ModernDayCard: View {
     private func dayOfWeek(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE"
+        formatter.locale = Locale(identifier: languageManager.currentLanguage == "tr" ? "tr_TR" : "en_US")
         return formatter.string(from: date)
     }
 }

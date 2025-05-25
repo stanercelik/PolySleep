@@ -173,7 +173,7 @@ struct NotificationSettingsView: View {
                                         .fontWeight(.semibold)
                                         .foregroundColor(.appText)
                                     
-                                    Text("Test bildirimleri gönder")
+                                    Text(L("notifications.test.subtitle", table: "Profile"))
                                         .font(.caption)
                                         .foregroundColor(.appSecondaryText)
                                 }
@@ -242,7 +242,7 @@ struct NotificationSettingsView: View {
                                         .fontWeight(.semibold)
                                         .foregroundColor(.appText)
                                     
-                                    Text("Durum ve bilgiler")
+                                    Text(L("notifications.status.subtitle", table: "Profile"))
                                         .font(.caption)
                                         .foregroundColor(.appSecondaryText)
                                 }

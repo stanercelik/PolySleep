@@ -1073,6 +1073,57 @@
         }
       }
     },
+    "mainScreen.sleepTimeRemaining.hoursMinutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h %@min until sleep time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku saatine %@s %@dk kaldı"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepTimeRemaining.hoursOnly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h until sleep time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku saatine %@s kaldı"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepTimeRemaining.minutesOnly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@min until sleep time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku saatine %@dk kaldı"
+          }
+        }
+      }
+    },
     "mainScreen.streak" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1147,13 +1198,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⏱️ Total Sleep: %@"
+            "value" : "Total Sleep"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⏱️ Toplam Uyku: %@"
+            "value" : "Toplam Uyku"
           }
         }
       }
@@ -1817,6 +1868,159 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku programı: %@"
+          }
+        }
+      }
+    },
+    "mainScreen.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Programı"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepChart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Chart"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Grafiği"
+          }
+        }
+      }
+    },
+    "mainScreen.editing.mode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editing"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenleme"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepQuality.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate Your Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uykunuzu Değerlendirin"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepQuality.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How was your sleep quality?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku kaliteniz nasıldı?"
+          }
+        }
+      }
+    },
+    "mainScreen.dailyTip.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Tip"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük İpucu"
+          }
+        }
+      }
+    },
+    "mainScreen.timeFormat.hoursMinutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h %@m"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@s %@dk"
+          }
+        }
+      }
+    },
+    "mainScreen.timeFormat.hoursOnly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@h"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@s"
+          }
+        }
+      }
+    },
+    "mainScreen.timeFormat.minutesOnly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@m"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@dk"
           }
         }
       }

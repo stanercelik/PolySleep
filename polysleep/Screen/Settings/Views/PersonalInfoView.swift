@@ -192,7 +192,7 @@ struct PersonalInfoView: View {
                                             .fontWeight(.semibold)
                                             .foregroundColor(.appText)
                                         
-                                        Text("\(getOrderedQuestions().count) " + (getOrderedQuestions().count == 1 ? "cevap" : "cevap"))
+                                        Text("\(getOrderedQuestions().count) " + L("personalInfo.answers.count", table: "Profile"))
                                             .font(.caption)
                                             .foregroundColor(.appSecondaryText)
                                     }

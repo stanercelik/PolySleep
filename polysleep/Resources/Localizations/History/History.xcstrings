@@ -127,6 +127,23 @@
         }
       }
     },
+    "history.blocksCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d blok"
+          }
+        }
+      }
+    },
     "history.filter.allTime" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -178,6 +195,23 @@
         }
       }
     },
+    "history.filter.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre"
+          }
+        }
+      }
+    },
     "history.filter.today" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -209,6 +243,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "+ %d blok daha"
+          }
+        }
+      }
+    },
+    "history.month.entries" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d entries"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d kayıt"
           }
         }
       }
@@ -267,80 +318,7 @@
         }
       }
     },
-    "history.today" : {
-      "comment" : "Label shown for today's entries",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün"
-          }
-        }
-      }
-    },
-    "history.stats.title" : {
-      "comment" : "Title for the statistics overview section",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Statistics"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku İstatistikleri"
-          }
-        }
-      }
-    },
-    "history.stats.thisWeek" : {
-      "comment" : "Label for this week's statistics",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This Week"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu Hafta"
-          }
-        }
-      }
-    },
-    "history.stats.totalSessions" : {
-      "comment" : "Label for total sleep sessions statistic",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sessions"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Seans"
-          }
-        }
-      }
-    },
     "history.stats.avgDuration" : {
-      "comment" : "Label for average duration statistic",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -358,7 +336,6 @@
       }
     },
     "history.stats.avgRating" : {
-      "comment" : "Label for average rating statistic",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -376,43 +353,91 @@
       }
     },
     "history.stats.streak" : {
-      "comment" : "Label for current streak statistic",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Current Streak"
+            "value" : "Streak"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mevcut Seri"
+            "value" : "Seri"
           }
         }
       }
     },
-    "history.filter.title" : {
-      "comment" : "Title for the filter section",
+    "history.stats.thisWeek" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter History"
+            "value" : "This Week"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geçmişi Filtrele"
+            "value" : "Bu Hafta"
+          }
+        }
+      }
+    },
+    "history.stats.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Statistics"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku İstatistikleri"
+          }
+        }
+      }
+    },
+    "history.stats.totalSessions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sessions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Seans"
+          }
+        }
+      }
+    },
+    "history.timeline.count" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d gün"
           }
         }
       }
     },
     "history.timeline.title" : {
-      "comment" : "Title for the timeline section",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -429,62 +454,41 @@
         }
       }
     },
-    "history.timeline.count" : {
-      "comment" : "Label showing total number of entries",
+    "history.today" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d entries"
+            "value" : "Today"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d kayıt"
+            "value" : "Bugün"
           }
         }
       }
     },
-    "history.month.entries" : {
-      "comment" : "Label showing number of entries in a month",
+    "history.completed" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d entries"
+            "value" : "Completed"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d kayıt"
-          }
-        }
-      }
-    },
-    "history.blocksCount" : {
-      "comment" : "Label for number of sleep blocks",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d blocks"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d blok"
+            "value" : "Tamamlandı"
           }
         }
       }
     },
     "history.status.completed" : {
-      "comment" : "Status label for completed sleep goals",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -502,7 +506,6 @@
       }
     },
     "history.status.partial" : {
-      "comment" : "Status label for partially completed sleep goals",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -520,7 +523,6 @@
       }
     },
     "history.status.missed" : {
-      "comment" : "Status label for missed sleep goals",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -537,30 +539,8 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual"
-    },
-    "Özel Tarih Aralığı" : {
-      "comment" : "Header text for custom date range filter",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom Date Range"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özel Tarih Aralığı"
-          }
-        }
-      }
-    },
     "Sleep History" : {
-      "comment" : "Navigation title for history view",
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -577,7 +557,7 @@
       }
     },
     "sleep.type.core" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -587,14 +567,14 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ana Uyku"
           }
         }
       }
     },
     "sleep.type.nap" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -604,7 +584,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Şekerleme"
           }
         }
