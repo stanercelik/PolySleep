@@ -1535,12 +1535,14 @@ class CircularCropViewController: UIViewController {
     private let sourceImage: UIImage
     private let onComplete: (UIImage?) -> Void
     
+    private var scrollView: UIScrollView!
     private var imageView: UIImageView!
     private var cropOverlayView: UIView!
     private var circularMask: CAShapeLayer!
+    private var borderLayer: CAShapeLayer!
     
-    private var currentScale: CGFloat = 1.0
-    private var currentOffset: CGPoint = .zero
+    private var cropSize: CGFloat = 0
+    private var cropCenter: CGPoint = .zero
     
     init(image: UIImage, onComplete: @escaping (UIImage?) -> Void) {
         self.sourceImage = image
@@ -1555,7 +1557,12 @@ class CircularCropViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupGestures()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupCropArea()
+        setupInitialZoom()
     }
     
     private func setupUI() {
@@ -1564,6 +1571,8 @@ class CircularCropViewController: UIViewController {
         // Navigation Bar
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
+        navBar.barStyle = .black
+        navBar.tintColor = .white
         view.addSubview(navBar)
         
         let navItem = UINavigationItem(title: L("profile.avatar.crop.title", table: "Profile"))
@@ -1584,18 +1593,6 @@ class CircularCropViewController: UIViewController {
         navItem.rightBarButtonItem = doneButton
         navBar.setItems([navItem], animated: false)
         
-        // Image View
-        imageView = UIImageView(image: sourceImage)
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        // Crop Overlay
-        cropOverlayView = UIView()
-        cropOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        cropOverlayView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(cropOverlayView)
-        
         // Instruction Label
         let instructionLabel = UILabel()
         instructionLabel.text = L("profile.avatar.crop.instruction", table: "Profile")
@@ -1605,6 +1602,30 @@ class CircularCropViewController: UIViewController {
         instructionLabel.numberOfLines = 0
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(instructionLabel)
+        
+        // Scroll View
+        scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 0.5
+        scrollView.maximumZoomScale = 3.0
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.bouncesZoom = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        // Image View
+        imageView = UIImageView(image: sourceImage)
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(imageView)
+        
+        // Crop Overlay
+        cropOverlayView = UIView()
+        cropOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        cropOverlayView.isUserInteractionEnabled = false
+        cropOverlayView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cropOverlayView)
         
         // Constraints
         NSLayoutConstraint.activate([
@@ -1616,33 +1637,42 @@ class CircularCropViewController: UIViewController {
             instructionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             instructionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            imageView.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 16),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 16),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            cropOverlayView.topAnchor.constraint(equalTo: imageView.topAnchor),
-            cropOverlayView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
-            cropOverlayView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
-            cropOverlayView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            
+            cropOverlayView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            cropOverlayView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            cropOverlayView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            cropOverlayView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setupCircularMask()
-    }
-    
-    private func setupCircularMask() {
-        let cropSize: CGFloat = min(cropOverlayView.bounds.width, cropOverlayView.bounds.height) * 0.8
-        let centerX = cropOverlayView.bounds.midX
-        let centerY = cropOverlayView.bounds.midY
+    private func setupCropArea() {
+        guard cropOverlayView.bounds.width > 0 && cropOverlayView.bounds.height > 0 else { return }
+        
+        // Crop alanının boyutunu hesapla
+        let availableSize = min(cropOverlayView.bounds.width, cropOverlayView.bounds.height)
+        cropSize = availableSize * 0.75 // %75'ini kullan
+        cropCenter = CGPoint(x: cropOverlayView.bounds.midX, y: cropOverlayView.bounds.midY)
+        
+        // Mevcut layer'ları temizle
+        circularMask?.removeFromSuperlayer()
+        borderLayer?.removeFromSuperlayer()
         
         // Circular mask oluştur
         circularMask = CAShapeLayer()
         let path = UIBezierPath(rect: cropOverlayView.bounds)
         let circlePath = UIBezierPath(
-            arcCenter: CGPoint(x: centerX, y: centerY),
+            arcCenter: cropCenter,
             radius: cropSize / 2,
             startAngle: 0,
             endAngle: .pi * 2,
@@ -1658,67 +1688,84 @@ class CircularCropViewController: UIViewController {
         cropOverlayView.layer.mask = circularMask
         
         // Çember çerçevesi ekle
-        let borderLayer = CAShapeLayer()
+        borderLayer = CAShapeLayer()
         borderLayer.path = circlePath.cgPath
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.strokeColor = UIColor.white.cgColor
-        borderLayer.lineWidth = 2.0
+        borderLayer.lineWidth = 3.0
+        borderLayer.shadowColor = UIColor.black.cgColor
+        borderLayer.shadowOffset = CGSize(width: 0, height: 1)
+        borderLayer.shadowOpacity = 0.3
+        borderLayer.shadowRadius = 2
         cropOverlayView.layer.addSublayer(borderLayer)
     }
     
-    private func setupGestures() {
-        // Pan gesture
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        imageView.addGestureRecognizer(panGesture)
-        imageView.isUserInteractionEnabled = true
+    private func setupInitialZoom() {
+        guard let image = imageView.image else { return }
         
-        // Pinch gesture
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
-        imageView.addGestureRecognizer(pinchGesture)
-    }
-    
-    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: imageView)
+        // Image'ın gerçek boyutlarını hesapla
+        let imageSize = image.size
+        let imageAspectRatio = imageSize.width / imageSize.height
+        let viewAspectRatio = scrollView.bounds.width / scrollView.bounds.height
         
-        switch gesture.state {
-        case .changed:
-            let newOffset = CGPoint(
-                x: currentOffset.x + translation.x,
-                y: currentOffset.y + translation.y
+        var imageDisplaySize: CGSize
+        
+        if imageAspectRatio > viewAspectRatio {
+            // Image daha geniş
+            imageDisplaySize = CGSize(
+                width: scrollView.bounds.width,
+                height: scrollView.bounds.width / imageAspectRatio
             )
-            updateImageTransform(offset: newOffset, scale: currentScale)
-            
-        case .ended:
-            currentOffset.x += translation.x
-            currentOffset.y += translation.y
-            
-        default:
-            break
+        } else {
+            // Image daha uzun veya kare
+            imageDisplaySize = CGSize(
+                width: scrollView.bounds.height * imageAspectRatio,
+                height: scrollView.bounds.height
+            )
         }
-    }
-    
-    @objc private func handlePinch(_ gesture: UIPinchGestureRecognizer) {
-        switch gesture.state {
-        case .changed:
-            let newScale = currentScale * gesture.scale
-            let clampedScale = max(0.5, min(3.0, newScale)) // Scale limitleri
-            updateImageTransform(offset: currentOffset, scale: clampedScale)
-            gesture.scale = 1.0
-            
-        case .ended:
-            currentScale = max(0.5, min(3.0, currentScale * gesture.scale))
-            
-        default:
-            break
-        }
-    }
-    
-    private func updateImageTransform(offset: CGPoint, scale: CGFloat) {
-        let transform = CGAffineTransform.identity
-            .translatedBy(x: offset.x, y: offset.y)
-            .scaledBy(x: scale, y: scale)
         
-        imageView.transform = transform
+        // Crop alanını dolduracak minimum zoom'u hesapla
+        let minZoomForCrop = max(
+            cropSize / imageDisplaySize.width,
+            cropSize / imageDisplaySize.height
+        )
+        
+        // Zoom scale'leri güncelle
+        scrollView.minimumZoomScale = minZoomForCrop * 0.8 // Biraz daha küçük olabilsin
+        scrollView.maximumZoomScale = minZoomForCrop * 4.0 // 4x zoom
+        
+        // Başlangıçta crop alanını dolduracak şekilde zoom yap
+        scrollView.setZoomScale(minZoomForCrop * 1.1, animated: false)
+        
+        // Image'ı merkeze getir
+        centerImageInScrollView()
+    }
+    
+    private func centerImageInScrollView() {
+        let scrollViewSize = scrollView.bounds.size
+        let imageViewSize = imageView.frame.size
+        
+        let horizontalInset = max(0, (scrollViewSize.width - imageViewSize.width) / 2)
+        let verticalInset = max(0, (scrollViewSize.height - imageViewSize.height) / 2)
+        
+        scrollView.contentInset = UIEdgeInsets(
+            top: verticalInset,
+            left: horizontalInset,
+            bottom: verticalInset,
+            right: horizontalInset
+        )
+        
+        // Crop alanının merkezine getir
+        let cropCenterInScrollView = cropCenter
+        let imageCenter = CGPoint(
+            x: imageViewSize.width / 2,
+            y: imageViewSize.height / 2
+        )
+        
+        let offsetX = imageCenter.x - cropCenterInScrollView.x
+        let offsetY = imageCenter.y - cropCenterInScrollView.y
+        
+        scrollView.setContentOffset(CGPoint(x: offsetX, y: offsetY), animated: false)
     }
     
     @objc private func cancelTapped() {
@@ -1731,49 +1778,91 @@ class CircularCropViewController: UIViewController {
     }
     
     private func createCroppedImage() -> UIImage? {
-        let cropSize: CGFloat = min(cropOverlayView.bounds.width, cropOverlayView.bounds.height) * 0.8
-        let centerX = cropOverlayView.bounds.midX
-        let centerY = cropOverlayView.bounds.midY
-        
-        // Image view'ın actual frame'ini al
         guard let image = imageView.image else { return nil }
         
-        let imageViewFrame = imageView.frame
-        let imageFrame = AVMakeRect(aspectRatio: image.size, insideRect: imageViewFrame)
+        // ScrollView'daki görünür alanı hesapla
+        let zoomScale = scrollView.zoomScale
+        let contentOffset = scrollView.contentOffset
+        let contentInset = scrollView.contentInset
         
-        // Transform'u hesapla
-        let scaleX = image.size.width / imageFrame.width
-        let scaleY = image.size.height / imageFrame.height
-        
-        // Crop alanının görsel koordinatlarını image koordinatlarına çevir
-        let cropCenterX = centerX - imageFrame.minX
-        let cropCenterY = centerY - imageFrame.minY
-        
-        // Transform'u tersine çevir
-        let adjustedCenterX = (cropCenterX - currentOffset.x) / currentScale
-        let adjustedCenterY = (cropCenterY - currentOffset.y) / currentScale
-        let adjustedSize = cropSize / currentScale
-        
-        // Final crop rectangle'ı hesapla
+        // Crop alanının ScrollView koordinatlarındaki konumu
         let cropRect = CGRect(
-            x: max(0, (adjustedCenterX - adjustedSize/2) * scaleX),
-            y: max(0, (adjustedCenterY - adjustedSize/2) * scaleY),
-            width: min(image.size.width, adjustedSize * scaleX),
-            height: min(image.size.height, adjustedSize * scaleY)
+            x: cropCenter.x - cropSize / 2,
+            y: cropCenter.y - cropSize / 2,
+            width: cropSize,
+            height: cropSize
         )
         
-        // Crop area sınırları kontrol et
-        guard cropRect.width > 0 && cropRect.height > 0,
-              cropRect.maxX <= image.size.width,
-              cropRect.maxY <= image.size.height else {
-            return makeCircularImage(from: image) // Fallback: whole image
+        // ScrollView koordinatlarını image koordinatlarına çevir
+        let imageViewBounds = imageView.bounds
+        let imageSize = image.size
+        
+        // Image'ın gerçek boyutlarını hesapla (aspect fit)
+        let imageAspectRatio = imageSize.width / imageSize.height
+        let imageViewAspectRatio = imageViewBounds.width / imageViewBounds.height
+        
+        var imageDisplaySize: CGSize
+        var imageDisplayOrigin: CGPoint
+        
+        if imageAspectRatio > imageViewAspectRatio {
+            // Image daha geniş - width'e göre scale
+            imageDisplaySize = CGSize(
+                width: imageViewBounds.width,
+                height: imageViewBounds.width / imageAspectRatio
+            )
+            imageDisplayOrigin = CGPoint(
+                x: 0,
+                y: (imageViewBounds.height - imageDisplaySize.height) / 2
+            )
+        } else {
+            // Image daha uzun - height'e göre scale
+            imageDisplaySize = CGSize(
+                width: imageViewBounds.height * imageAspectRatio,
+                height: imageViewBounds.height
+            )
+            imageDisplayOrigin = CGPoint(
+                x: (imageViewBounds.width - imageDisplaySize.width) / 2,
+                y: 0
+            )
         }
         
-        // Image'ı crop et
-        guard let cgImage = image.cgImage?.cropping(to: cropRect) else { return nil }
-        let croppedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
+        // Zoom ve offset'i hesaba kat
+        let scaledImageSize = CGSize(
+            width: imageDisplaySize.width * zoomScale,
+            height: imageDisplaySize.height * zoomScale
+        )
         
-        // Circular mask uygula
+        let scaledImageOrigin = CGPoint(
+            x: imageDisplayOrigin.x * zoomScale - contentOffset.x + contentInset.left,
+            y: imageDisplayOrigin.y * zoomScale - contentOffset.y + contentInset.top
+        )
+        
+        // Crop alanının image koordinatlarındaki karşılığı
+        let cropInImageCoords = CGRect(
+            x: (cropRect.minX - scaledImageOrigin.x) / zoomScale,
+            y: (cropRect.minY - scaledImageOrigin.y) / zoomScale,
+            width: cropSize / zoomScale,
+            height: cropSize / zoomScale
+        )
+        
+        // Image koordinatlarını pixel koordinatlarına çevir
+        let scaleX = imageSize.width / imageDisplaySize.width
+        let scaleY = imageSize.height / imageDisplaySize.height
+        
+        let finalCropRect = CGRect(
+            x: max(0, cropInImageCoords.minX * scaleX),
+            y: max(0, cropInImageCoords.minY * scaleY),
+            width: min(imageSize.width, cropInImageCoords.width * scaleX),
+            height: min(imageSize.height, cropInImageCoords.height * scaleY)
+        )
+        
+        // Crop işlemi
+        guard finalCropRect.width > 0 && finalCropRect.height > 0,
+              let cgImage = image.cgImage?.cropping(to: finalCropRect) else {
+            return makeCircularImage(from: image)
+        }
+        
+        let croppedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
         return makeCircularImage(from: croppedImage)
     }
     
@@ -1782,13 +1871,15 @@ class CircularCropViewController: UIViewController {
         let minSize = min(size.width, size.height)
         
         UIGraphicsBeginImageContextWithOptions(CGSize(width: minSize, height: minSize), false, image.scale)
+        defer { UIGraphicsEndImageContext() }
         
-        let context = UIGraphicsGetCurrentContext()
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
         let rect = CGRect(x: 0, y: 0, width: minSize, height: minSize)
         
         // Circular path oluştur
-        context?.addEllipse(in: rect)
-        context?.clip()
+        context.addEllipse(in: rect)
+        context.clip()
         
         // Image'ı center'a çiz
         let imageRect = CGRect(
@@ -1799,10 +1890,22 @@ class CircularCropViewController: UIViewController {
         )
         image.draw(in: imageRect)
         
-        let circularImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return circularImage
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension CircularCropViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        centerImageInScrollView()
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        centerImageInScrollView()
     }
 }
 
