@@ -44,6 +44,7 @@ class AuthManager: ObservableObject {
     private func createOrGetLocalUser() -> LocalUser {
         let userIdKey = "localUserId"
         let displayNameKey = "localUserDisplayName" // DisplayName'i de saklayalım
+        let profileImageKey = "localUserProfileImage" // Profil resmi için key
         
         var userId = UserDefaults.standard.string(forKey: userIdKey)
         if userId == nil {
@@ -51,12 +52,14 @@ class AuthManager: ObservableObject {
             UserDefaults.standard.set(userId, forKey: userIdKey)
             // Yeni kullanıcı için varsayılan isim
             UserDefaults.standard.removeObject(forKey: displayNameKey)
+            UserDefaults.standard.removeObject(forKey: profileImageKey)
             print("AuthManager: Yeni yerel kullanıcı ID'si oluşturuldu: \(userId!)")
         }
         
         let displayName = UserDefaults.standard.string(forKey: displayNameKey) ?? NSLocalizedString("localUser.defaultName", tableName: "Auth", comment: "Default local user name")
+        let profileImageData = UserDefaults.standard.data(forKey: profileImageKey)
         
-        return LocalUser(id: userId!, displayName: displayName)
+        return LocalUser(id: userId!, displayName: displayName, profileImageData: profileImageData)
     }
     
     /// Profile isim güncelleme
@@ -74,6 +77,24 @@ class AuthManager: ObservableObject {
         print("AuthManager: Display name güncellendi: \(name)")
     }
     
+    /// Profile resmi güncelleme
+    @MainActor
+    func updateProfileImage(_ imageData: Data?) {
+        guard var user = currentUser else {
+            print("AuthManager: Profil resmi güncellenemedi, mevcut kullanıcı yok.")
+            return
+        }
+        user.profileImageData = imageData
+        self.currentUser = user
+        
+        if let imageData = imageData {
+            UserDefaults.standard.set(imageData, forKey: "localUserProfileImage")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "localUserProfileImage")
+        }
+        print("AuthManager: Profil resmi güncellendi")
+    }
+    
     /// Kullanıcı çıkış işlemi (Offline modda: kullanıcı bilgilerini sıfırlar)
     @MainActor
     func signOut() async {
@@ -86,6 +107,7 @@ class AuthManager: ObservableObject {
         // UserDefaults'tan displayName'i kaldırıp yeni bir kullanıcı oluşturuyoruz
         // Böylece "AppFirstLaunch" ve "onboardingCompleted" etkilenmez ama kullanıcı adı "sıfırlanır".
         UserDefaults.standard.removeObject(forKey: "localUserDisplayName")
+        UserDefaults.standard.removeObject(forKey: "localUserProfileImage")
         // UserId'yi sıfırlamıyoruz, aynı cihazda aynı "anonim" kullanıcı devam eder.
         
         self.currentUser = createOrGetLocalUser() // Kullanıcıyı yeniden yükle (varsayılan isimle gelir)
@@ -104,6 +126,7 @@ struct LocalUser {
     var displayName: String = ""
     var email: String = "" // Artık pek kullanılmayacak
     var photoURL: String = "" // Artık pek kullanılmayacak
+    var profileImageData: Data? = nil // Profil resmi için base64 veya Data
     var isPremium: Bool = false // Yerel olarak yönetilebilir veya her zaman false
     var authProvider: String = "local"
 }

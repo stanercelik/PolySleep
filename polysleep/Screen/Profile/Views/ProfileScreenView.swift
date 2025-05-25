@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import AVFoundation
 
 struct ProfileScreenView: View {
     @StateObject var viewModel: ProfileScreenViewModel
@@ -205,6 +206,8 @@ struct ProfileHeaderCard: View {
     @Binding var showLogoutSheet: Bool
     @Binding var navigateToSettings: Bool
     @ObservedObject var authManager: AuthManager
+    @State private var showImagePicker = false
+    @State private var showActionSheet = false
     
     private func hasDisplayName() -> Bool {
         guard let user = authManager.currentUser else { return false }
@@ -229,31 +232,86 @@ struct ProfileHeaderCard: View {
             HStack(alignment: .center, spacing: 16) {
                 // Avatar
                 Button(action: {
-                    showLoginSheet = true
+                    showActionSheet = true
                 }) {
-                    if let user = authManager.currentUser, !user.displayName.isEmpty {
-                        Text(getUserInitials().uppercased())
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
-                            .frame(width: 80, height: 80)
-                            .background(
-                                Circle()
-                                    .fill(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
+                    ZStack {
+                        if let user = authManager.currentUser, let imageData = user.profileImageData, let uiImage = UIImage(data: imageData) {
+                            // Profil resmi var
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .stroke(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            ),
+                                            lineWidth: 3
                                         )
+                                )
+                        } else if let user = authManager.currentUser, !user.displayName.isEmpty {
+                            // İsimin baş harfi
+                            Text(getUserInitials().uppercased())
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                                .frame(width: 80, height: 80)
+                                .background(
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                )
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
+                                )
+                        } else {
+                            // Varsayılan görünüm
+                            Text("U")
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                                .frame(width: 80, height: 80)
+                                .background(
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                )
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
+                                )
+                        }
+                        
+                        // Kamera ikonu overlay
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image(systemName: "camera.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(6)
+                                    .background(
+                                        Circle()
+                                            .fill(Color.appPrimary)
+                                            .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 1)
                                     )
-                            )
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.white.opacity(0.2), lineWidth: 2)
-                            )
-                    } else {
-                        Image(systemName: "person.crop.circle.fill")
-                            .font(.system(size: 80))
-                            .foregroundColor(.appSecondaryText.opacity(0.6))
+                                    .offset(x: -4, y: -4)
+                            }
+                        }
                     }
                 }
                 .scaleEffect(1.0)
@@ -322,6 +380,31 @@ struct ProfileHeaderCard: View {
                 .fill(Color.appCardBackground)
                 .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
         )
+        .confirmationDialog(L("profile.avatar.options.title", table: "Profile"), isPresented: $showActionSheet) {
+            Button(L("profile.avatar.options.selectPhoto", table: "Profile")) {
+                showImagePicker = true
+            }
+            
+            if authManager.currentUser?.profileImageData != nil {
+                Button(L("profile.avatar.options.removePhoto", table: "Profile"), role: .destructive) {
+                    authManager.updateProfileImage(nil)
+                }
+            }
+            
+            Button(L("profile.avatar.options.editProfile", table: "Profile")) {
+                showLoginSheet = true
+            }
+            
+            Button(L("profile.avatar.options.cancel", table: "Profile"), role: .cancel) { }
+        }
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker { image in
+                if let image = image,
+                   let imageData = image.jpegData(compressionQuality: 0.8) {
+                    authManager.updateProfileImage(imageData)
+                }
+            }
+        }
     }
 }
 
@@ -1395,6 +1478,331 @@ struct EmojiPickerView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
+    }
+}
+
+// MARK: - ImagePicker
+struct ImagePicker: UIViewControllerRepresentable {
+    let onImageSelected: (UIImage?) -> Void
+    @Environment(\.dismiss) private var dismiss
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = false // Custom crop kullanacağız
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: ImagePicker
+        
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            guard let image = info[.originalImage] as? UIImage else {
+                parent.onImageSelected(nil)
+                parent.dismiss()
+                return
+            }
+            
+            // Custom crop view göster
+            let cropViewController = CircularCropViewController(image: image) { croppedImage in
+                self.parent.onImageSelected(croppedImage)
+                self.parent.dismiss()
+            }
+            
+            picker.present(cropViewController, animated: true)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.onImageSelected(nil)
+            parent.dismiss()
+        }
+    }
+}
+
+// MARK: - Circular Crop View Controller
+class CircularCropViewController: UIViewController {
+    private let sourceImage: UIImage
+    private let onComplete: (UIImage?) -> Void
+    
+    private var imageView: UIImageView!
+    private var cropOverlayView: UIView!
+    private var circularMask: CAShapeLayer!
+    
+    private var currentScale: CGFloat = 1.0
+    private var currentOffset: CGPoint = .zero
+    
+    init(image: UIImage, onComplete: @escaping (UIImage?) -> Void) {
+        self.sourceImage = image
+        self.onComplete = onComplete
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupGestures()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .black
+        
+        // Navigation Bar
+        let navBar = UINavigationBar()
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(navBar)
+        
+        let navItem = UINavigationItem(title: L("profile.avatar.crop.title", table: "Profile"))
+        let cancelButton = UIBarButtonItem(
+            title: L("profile.avatar.options.cancel", table: "Profile"),
+            style: .plain,
+            target: self,
+            action: #selector(cancelTapped)
+        )
+        let doneButton = UIBarButtonItem(
+            title: L("profile.avatar.crop.done", table: "Profile"),
+            style: .done,
+            target: self,
+            action: #selector(doneTapped)
+        )
+        
+        navItem.leftBarButtonItem = cancelButton
+        navItem.rightBarButtonItem = doneButton
+        navBar.setItems([navItem], animated: false)
+        
+        // Image View
+        imageView = UIImageView(image: sourceImage)
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        
+        // Crop Overlay
+        cropOverlayView = UIView()
+        cropOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        cropOverlayView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cropOverlayView)
+        
+        // Instruction Label
+        let instructionLabel = UILabel()
+        instructionLabel.text = L("profile.avatar.crop.instruction", table: "Profile")
+        instructionLabel.textColor = .white
+        instructionLabel.textAlignment = .center
+        instructionLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        instructionLabel.numberOfLines = 0
+        instructionLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(instructionLabel)
+        
+        // Constraints
+        NSLayoutConstraint.activate([
+            navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            instructionLabel.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 16),
+            instructionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            instructionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            imageView.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 16),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            cropOverlayView.topAnchor.constraint(equalTo: imageView.topAnchor),
+            cropOverlayView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            cropOverlayView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            cropOverlayView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+        ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupCircularMask()
+    }
+    
+    private func setupCircularMask() {
+        let cropSize: CGFloat = min(cropOverlayView.bounds.width, cropOverlayView.bounds.height) * 0.8
+        let centerX = cropOverlayView.bounds.midX
+        let centerY = cropOverlayView.bounds.midY
+        
+        // Circular mask oluştur
+        circularMask = CAShapeLayer()
+        let path = UIBezierPath(rect: cropOverlayView.bounds)
+        let circlePath = UIBezierPath(
+            arcCenter: CGPoint(x: centerX, y: centerY),
+            radius: cropSize / 2,
+            startAngle: 0,
+            endAngle: .pi * 2,
+            clockwise: false
+        )
+        path.append(circlePath)
+        path.usesEvenOddFillRule = true
+        
+        circularMask.path = path.cgPath
+        circularMask.fillRule = .evenOdd
+        circularMask.fillColor = UIColor.black.cgColor
+        
+        cropOverlayView.layer.mask = circularMask
+        
+        // Çember çerçevesi ekle
+        let borderLayer = CAShapeLayer()
+        borderLayer.path = circlePath.cgPath
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.strokeColor = UIColor.white.cgColor
+        borderLayer.lineWidth = 2.0
+        cropOverlayView.layer.addSublayer(borderLayer)
+    }
+    
+    private func setupGestures() {
+        // Pan gesture
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        imageView.addGestureRecognizer(panGesture)
+        imageView.isUserInteractionEnabled = true
+        
+        // Pinch gesture
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        imageView.addGestureRecognizer(pinchGesture)
+    }
+    
+    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: imageView)
+        
+        switch gesture.state {
+        case .changed:
+            let newOffset = CGPoint(
+                x: currentOffset.x + translation.x,
+                y: currentOffset.y + translation.y
+            )
+            updateImageTransform(offset: newOffset, scale: currentScale)
+            
+        case .ended:
+            currentOffset.x += translation.x
+            currentOffset.y += translation.y
+            
+        default:
+            break
+        }
+    }
+    
+    @objc private func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        switch gesture.state {
+        case .changed:
+            let newScale = currentScale * gesture.scale
+            let clampedScale = max(0.5, min(3.0, newScale)) // Scale limitleri
+            updateImageTransform(offset: currentOffset, scale: clampedScale)
+            gesture.scale = 1.0
+            
+        case .ended:
+            currentScale = max(0.5, min(3.0, currentScale * gesture.scale))
+            
+        default:
+            break
+        }
+    }
+    
+    private func updateImageTransform(offset: CGPoint, scale: CGFloat) {
+        let transform = CGAffineTransform.identity
+            .translatedBy(x: offset.x, y: offset.y)
+            .scaledBy(x: scale, y: scale)
+        
+        imageView.transform = transform
+    }
+    
+    @objc private func cancelTapped() {
+        onComplete(nil)
+    }
+    
+    @objc private func doneTapped() {
+        let croppedImage = createCroppedImage()
+        onComplete(croppedImage)
+    }
+    
+    private func createCroppedImage() -> UIImage? {
+        let cropSize: CGFloat = min(cropOverlayView.bounds.width, cropOverlayView.bounds.height) * 0.8
+        let centerX = cropOverlayView.bounds.midX
+        let centerY = cropOverlayView.bounds.midY
+        
+        // Image view'ın actual frame'ini al
+        guard let image = imageView.image else { return nil }
+        
+        let imageViewFrame = imageView.frame
+        let imageFrame = AVMakeRect(aspectRatio: image.size, insideRect: imageViewFrame)
+        
+        // Transform'u hesapla
+        let scaleX = image.size.width / imageFrame.width
+        let scaleY = image.size.height / imageFrame.height
+        
+        // Crop alanının görsel koordinatlarını image koordinatlarına çevir
+        let cropCenterX = centerX - imageFrame.minX
+        let cropCenterY = centerY - imageFrame.minY
+        
+        // Transform'u tersine çevir
+        let adjustedCenterX = (cropCenterX - currentOffset.x) / currentScale
+        let adjustedCenterY = (cropCenterY - currentOffset.y) / currentScale
+        let adjustedSize = cropSize / currentScale
+        
+        // Final crop rectangle'ı hesapla
+        let cropRect = CGRect(
+            x: max(0, (adjustedCenterX - adjustedSize/2) * scaleX),
+            y: max(0, (adjustedCenterY - adjustedSize/2) * scaleY),
+            width: min(image.size.width, adjustedSize * scaleX),
+            height: min(image.size.height, adjustedSize * scaleY)
+        )
+        
+        // Crop area sınırları kontrol et
+        guard cropRect.width > 0 && cropRect.height > 0,
+              cropRect.maxX <= image.size.width,
+              cropRect.maxY <= image.size.height else {
+            return makeCircularImage(from: image) // Fallback: whole image
+        }
+        
+        // Image'ı crop et
+        guard let cgImage = image.cgImage?.cropping(to: cropRect) else { return nil }
+        let croppedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
+        
+        // Circular mask uygula
+        return makeCircularImage(from: croppedImage)
+    }
+    
+    private func makeCircularImage(from image: UIImage) -> UIImage? {
+        let size = image.size
+        let minSize = min(size.width, size.height)
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: minSize, height: minSize), false, image.scale)
+        
+        let context = UIGraphicsGetCurrentContext()
+        let rect = CGRect(x: 0, y: 0, width: minSize, height: minSize)
+        
+        // Circular path oluştur
+        context?.addEllipse(in: rect)
+        context?.clip()
+        
+        // Image'ı center'a çiz
+        let imageRect = CGRect(
+            x: (minSize - size.width) / 2,
+            y: (minSize - size.height) / 2,
+            width: size.width,
+            height: size.height
+        )
+        image.draw(in: imageRect)
+        
+        let circularImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return circularImage
     }
 }
 
