@@ -276,7 +276,7 @@
       }
     },
     "onboarding.chronotype" : {
-      "comment" : "Section title for user’s chronotype",
+      "comment" : "Section title for user's chronotype",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -450,7 +450,7 @@
       }
     },
     "onboarding.healthStatus" : {
-      "comment" : "Section title for user’s health status",
+      "comment" : "Section title for user's health status",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -519,7 +519,7 @@
       }
     },
     "onboarding.healthStatusDescription" : {
-      "comment" : "Description about user’s medications or chronic conditions",
+      "comment" : "Description about user's medications or chronic conditions",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -606,7 +606,7 @@
       }
     },
     "onboarding.knowledgeLevelDescription" : {
-      "comment" : "Description about user’s familiarity with polyphasic sleep",
+      "comment" : "Description about user's familiarity with polyphasic sleep",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -647,13 +647,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🧘‍♂️ Calm"
+            "value" : "🧘‍♂️ Calm - Mostly sedentary, low physical activity"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🧘‍♂️ Sakin"
+            "value" : "🧘‍♂️ Sakin - Çoğunlukla oturarak, az fiziksel aktivite"
           }
         }
       }
@@ -664,13 +664,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚶‍♂️ Moderately Active"
+            "value" : "🚶‍♂️ Moderately Active - Regular walking, light exercise"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🚶‍♂️ Orta Düzey Aktif"
+            "value" : "🚶‍♂️ Orta Düzey Aktif - Düzenli yürüyüş, hafif egzersiz"
           }
         }
       }
@@ -681,19 +681,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏃‍♂️ Very Active"
+            "value" : "🏃‍♂️ Very Active - Intense workouts, sports, physical job"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏃‍♂️ Çok Aktif"
+            "value" : "🏃‍♂️ Çok Aktif - Yoğun antrenman, spor, fiziksel iş"
           }
         }
       }
     },
     "onboarding.lifestyleDescription" : {
-      "comment" : "Description about user’s daily activity level",
+      "comment" : "Description about user's daily activity level",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -711,7 +711,7 @@
       }
     },
     "onboarding.motivationLevel" : {
-      "comment" : "Section title for user’s motivation level",
+      "comment" : "Section title for user's motivation level",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -734,13 +734,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔥 High"
+            "value" : "🔥 High - I'm very determined and ready for challenges"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔥 Yüksek"
+            "value" : "🔥 Yüksek - Çok kararlıyım ve zorluklara hazırım"
           }
         }
       }
@@ -751,13 +751,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💫 Low"
+            "value" : "💫 Low - I prefer gradual, easy changes"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💫 Düşük"
+            "value" : "💫 Düşük - Kademeli, kolay değişiklikleri tercih ederim"
           }
         }
       }
@@ -768,13 +768,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✨ Moderate"
+            "value" : "✨ Moderate - I'm willing to try with some effort"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✨ Orta"
+            "value" : "✨ Orta - Biraz çaba göstererek denemeye hazırım"
           }
         }
       }
@@ -821,13 +821,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🛏️ Ideal"
+            "value" : "🛏️ Ideal - Quiet, dark room with comfortable bed"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🛏️ İdeal"
+            "value" : "🛏️ İdeal - Sessiz, karanlık oda ve rahat yatak"
           }
         }
       }
@@ -838,13 +838,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🪑 Limited"
+            "value" : "🪑 Limited - Only chair or desk available for napping"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🪑 Kısıtlı"
+            "value" : "🪑 Kısıtlı - Sadece sandalye veya masa başında uyuyabilirim"
           }
         }
       }
@@ -855,13 +855,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🛋️ Suitable"
+            "value" : "🛋️ Suitable - Couch or recliner with some privacy"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🛋️ Uygun"
+            "value" : "🛋️ Uygun - Koltuk veya uzanabileceğim yer var"
           }
         }
       }
@@ -872,13 +872,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ Unsuitable"
+            "value" : "❌ Unsuitable - Noisy, bright environment with no privacy"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "❌ Uygunsuz"
+            "value" : "❌ Uygunsuz - Gürültülü, aydınlık ve mahremiyetsiz ortam"
           }
         }
       }
@@ -1094,7 +1094,7 @@
       }
     },
     "onboarding.sleepGoal" : {
-      "comment" : "Section title for user’s main sleep goal",
+      "comment" : "Section title for user's main sleep goal",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -1180,7 +1180,7 @@
       }
     },
     "onboarding.sleepGoalDescription" : {
-      "comment" : "Description about user’s primary goal for adopting polyphasic sleep",
+      "comment" : "Description about user's primary goal for adopting polyphasic sleep",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -1221,13 +1221,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🧍 Minimal"
+            "value" : "🧍 Minimal - I have very few fixed social commitments"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🧍 Minimal"
+            "value" : "🧍 Minimal - Çok az sabit sosyal taahhüdüm var"
           }
         }
       }
@@ -1238,13 +1238,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "👤 Moderate"
+            "value" : "👤 Moderate - I have some regular social activities and family time"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "👤 Orta Düzey"
+            "value" : "👤 Orta Düzey - Düzenli sosyal aktivitelerim ve aile zamanım var"
           }
         }
       }
@@ -1255,31 +1255,31 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "👥 Significant"
+            "value" : "👥 Significant - I have many fixed social commitments and responsibilities"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "👥 Önemli"
+            "value" : "👥 Önemli - Çok sayıda sabit sosyal taahhüt ve sorumluluğum var"
           }
         }
       }
     },
     "onboarding.socialObligationsDescription" : {
-      "comment" : "Description about user’s flexibility for social commitments",
+      "comment" : "Description about user's flexibility for social commitments",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "How flexible are your social commitments and daily responsibilities?"
+            "value" : "How flexible are your social commitments and daily responsibilities? Consider family time, social events, meetings, and other activities that require specific timing."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sosyal taahhütleriniz ve günlük sorumluluklarınız ne kadar esnek?"
+            "value" : "Sosyal taahhütleriniz ve günlük sorumluluklarınız ne kadar esnek? Aile zamanı, sosyal etkinlikler, toplantılar ve belirli saatlerde yapılması gereken diğer aktiviteleri düşünün."
           }
         }
       }
@@ -1301,7 +1301,7 @@
       }
     },
     "onboarding.workSchedule" : {
-      "comment" : "Section title for user’s work schedule",
+      "comment" : "Section title for user's work schedule",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
@@ -1324,13 +1324,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎯 Flexible"
+            "value" : "🎯 Flexible - I can adjust my work hours as needed"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎯 Esnek"
+            "value" : "🎯 Esnek - Çalışma saatlerimi ihtiyaca göre ayarlayabilirim"
           }
         }
       }
@@ -1341,13 +1341,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎲 Irregular"
+            "value" : "🎲 Irregular - My schedule changes frequently and unpredictably"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎲 Düzensiz"
+            "value" : "🎲 Düzensiz - Programım sık sık ve öngörülemez şekilde değişiyor"
           }
         }
       }
@@ -1358,13 +1358,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📅 Regular"
+            "value" : "📅 Regular - I have fixed working hours every day"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📅 Düzenli"
+            "value" : "📅 Düzenli - Her gün sabit çalışma saatlerim var"
           }
         }
       }
@@ -1375,19 +1375,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔄 Shift"
+            "value" : "🔄 Shift - I work in rotating shifts (day/night/evening)"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🔄 Vardiyalı"
+            "value" : "🔄 Vardiyalı - Dönüşümlü vardiyalarda çalışıyorum (gündüz/gece/akşam)"
           }
         }
       }
     },
     "onboarding.workScheduleQuestion" : {
-      "comment" : "Description about user’s current work or daily schedule",
+      "comment" : "Description about user's current work or daily schedule",
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
