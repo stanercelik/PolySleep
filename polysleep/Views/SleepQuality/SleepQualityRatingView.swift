@@ -36,59 +36,49 @@ struct SleepQualityRatingView: View {
     }
     
     var body: some View {
-        VStack(spacing: 15) {
-            // Header - History ile uyumlu
+        VStack(spacing: 20) {
+            // Minimal Header
             HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Uykunuzu Değerlendirin")
-                        .font(.title2)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L("mainScreen.sleepQuality.title", table: "MainScreen"))
+                        .font(.headline)
                         .fontWeight(.bold)
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(.appText)
                     
-                    Text("Uyku kaliteniz nasıldı?")
+                    Text(L("mainScreen.sleepQuality.subtitle", table: "MainScreen"))
                         .font(.subheadline)
-                        .foregroundColor(Color("SecondaryTextColor"))
+                        .foregroundColor(.appSecondaryText)
                 }
                 
                 Spacer()
                 
                 Button(action: {
                     isPresented = false
-                    // X butonuna basıldığında rating vermiş gibi işaretleme
-                    // Sadece modal'ı kapat
                 }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(Color("SecondaryTextColor").opacity(0.6))
+                    Image(systemName: "xmark")
+                        .font(.title3)
+                        .foregroundColor(Color("SecondaryTextColor"))
                 }
             }
             
-            // Rating Section - History ile uyumlu design
-            VStack(spacing: 12) {
-                // Emoji ve açıklama
-                VStack(spacing: 6) {
-                    Text(currentEmoji)
-                        .font(.system(size: 50))
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
-                    
-                    Text(currentEmojiLabel)
-                        .font(.headline)
-                        .fontWeight(.medium)
-                        .foregroundColor(Color("SecondaryTextColor"))
-                        .animation(.easeInOut(duration: 0.2), value: currentEmojiLabel)
-                }
+            // Rating Section - Kompakt design
+            VStack(spacing: 16) {
+                // Emoji
+                Text(currentEmoji)
+                    .font(.system(size: 60))
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
                 
-                // Yıldız Puanlama - History ile uyumlu
-                HStack(spacing: 4) {
+                // Yıldız Puanlama
+                HStack(spacing: 6) {
                     ForEach(0..<5) { index in
                         Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
                             .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
-                            .font(.title2)
+                            .font(.title3)
                     }
                 }
                 
                 // Slider
-                VStack(spacing: 8) {
+                VStack(spacing: 6) {
                     Slider(value: $sliderValue, in: 0...4, step: 1)
                         .tint(getSliderColor())
                         .onChange(of: sliderValue) { newValue in
@@ -100,21 +90,20 @@ struct SleepQualityRatingView: View {
                     // Slider Labels
                     HStack {
                         Text("Kötü")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundColor(Color("SecondaryTextColor"))
                         
                         Spacer()
                         
                         Text("Mükemmel")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
                 }
             }
-            .padding(.vertical, 8)
             
-            // Action Buttons - History ile uyumlu
-            HStack(spacing: 16) {
+            // Action Buttons - Kompakt
+            HStack(spacing: 12) {
                 Button(action: {
                     viewModel.deferSleepQualityRating()
                     isPresented = false
@@ -127,8 +116,9 @@ struct SleepQualityRatingView: View {
                     }
                 }) {
                     Text("Daha Sonra")
+                        .font(.subheadline)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color("CardBackground"))
@@ -149,18 +139,19 @@ struct SleepQualityRatingView: View {
                     }
                 }) {
                     Text("Kaydet")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color("AccentColor"))
                         )
                         .foregroundColor(.white)
-                        .fontWeight(.semibold)
                 }
             }
         }
-        .padding(16)
+        .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color("CardBackground"))
