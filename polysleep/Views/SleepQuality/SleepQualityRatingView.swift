@@ -5,14 +5,12 @@ struct SleepQualityRatingView: View {
     let startTime: Date
     let endTime: Date
     @Binding var isPresented: Bool
-    @State private var selectedRating: Int = 2 // Default to middle (Good)
     @State private var sliderValue: Double = 2 // 0-4 arası değer (5 emoji için)
     @State private var isDeferredRating = false
     @State private var showSnackbar = false
     @State private var previousEmojiLabel: String = ""
     @State private var labelOffset: CGFloat = 0
     @StateObject private var notificationManager = SleepQualityNotificationManager.shared
-    // ViewModel'e erişim için ObservedObject ekleyelim
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @State private var emoji: String = "😐" // Varsayılan emoji
@@ -20,7 +18,7 @@ struct SleepQualityRatingView: View {
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
     private let emojiLabels = [
         "😩": "awful",
-        "😪": "bad",
+        "😪": "bad", 
         "😐": "okay",
         "😊": "good",
         "😄": "great"
@@ -38,87 +36,89 @@ struct SleepQualityRatingView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            Text(LocalizedStringKey("sleepQuality.question \(startTime.formatted(date: .omitted, time: .shortened)) \(endTime.formatted(date: .omitted, time: .shortened))"), tableName: "MainScreen")
-                .font(.headline)
-                .fontWeight(.medium)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            // Kompakt Emoji ve Yıldız Puanlama
-            VStack(alignment: .center, spacing: 16) {
-                HStack(spacing: 12) {
-                    Text(currentEmoji)
-                        .font(.system(size: 52))
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+        VStack(spacing: 15) {
+            // Header - History ile uyumlu
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Uykunuzu Değerlendirin")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("TextColor"))
                     
-                    VStack(alignment: .leading, spacing: 4) {
-                        ZStack {
-                            Text(previousEmojiLabel)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Color("SecondaryTextColor"))
-                                .opacity(labelOffset != 0 ? 0.3 : 0)
-                                .offset(y: labelOffset)
-                            
-                            Text(currentEmojiLabel)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(Color("SecondaryTextColor"))
-                                .offset(y: labelOffset)
-                        }
-                        .frame(height: 20)
-                        .clipped()
-                        
-                        HStack(spacing: 4) {
-                            ForEach(0..<5) { index in
-                                Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
-                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
-                                    .font(.system(size: 12))
-                            }
-                        }
-                    }
-                    
-                    Spacer()
+                    Text("Uyku kaliteniz nasıldı?")
+                        .font(.subheadline)
+                        .foregroundColor(Color("SecondaryTextColor"))
                 }
                 
-                Slider(value: $sliderValue, in: 0...4, step: 1)
-                    .tint(getSliderColor())
-                    .onChange(of: sliderValue) { newValue in
-                        // Haptic feedback
-                        let generator = UIImpactFeedbackGenerator(style: .light)
-                        generator.impactOccurred()
-                        
-                        // Emoji güncelle
-                        emoji = currentEmoji
-                        
-                        // Etiket animasyonu için
-                        if currentEmojiLabel != previousEmojiLabel {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                labelOffset = 20 // Aşağı doğru kaydır
-                            }
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                labelOffset = -20 // Yukarı konumla
-                                previousEmojiLabel = currentEmojiLabel
-                                
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    labelOffset = 0 // Ortaya getir
-                                }
-                            }
-                        }
-                    }
+                Spacer()
+                
+                Button(action: {
+                    isPresented = false
+                    // X butonuna basıldığında rating vermiş gibi işaretleme
+                    // Sadece modal'ı kapat
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(Color("SecondaryTextColor").opacity(0.6))
+                }
             }
-            .padding(.horizontal)
             
-            // Action Buttons
+            // Rating Section - History ile uyumlu design
+            VStack(spacing: 12) {
+                // Emoji ve açıklama
+                VStack(spacing: 6) {
+                    Text(currentEmoji)
+                        .font(.system(size: 50))
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+                    
+                    Text(currentEmojiLabel)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(Color("SecondaryTextColor"))
+                        .animation(.easeInOut(duration: 0.2), value: currentEmojiLabel)
+                }
+                
+                // Yıldız Puanlama - History ile uyumlu
+                HStack(spacing: 4) {
+                    ForEach(0..<5) { index in
+                        Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
+                            .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
+                            .font(.title2)
+                    }
+                }
+                
+                // Slider
+                VStack(spacing: 8) {
+                    Slider(value: $sliderValue, in: 0...4, step: 1)
+                        .tint(getSliderColor())
+                        .onChange(of: sliderValue) { newValue in
+                            let generator = UIImpactFeedbackGenerator(style: .light)
+                            generator.impactOccurred()
+                            emoji = currentEmoji
+                        }
+                    
+                    // Slider Labels
+                    HStack {
+                        Text("Kötü")
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
+                        
+                        Spacer()
+                        
+                        Text("Mükemmel")
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                }
+            }
+            .padding(.vertical, 8)
+            
+            // Action Buttons - History ile uyumlu
             HStack(spacing: 16) {
                 Button(action: {
-                    // Önce isPresented'ı false yaparak görünümü kapat
+                    viewModel.deferSleepQualityRating()
                     isPresented = false
                     
-                    // Uyku kalitesi değerlendirmesinin tamamlandığını işaretle
-                    viewModel.markSleepQualityRatingAsCompleted()
-                    
-                    // Sonra snackbar göster ve bildirim ekle
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         withAnimation(.spring(response: 0.3)) {
                             showSnackbar = true
@@ -126,57 +126,116 @@ struct SleepQualityRatingView: View {
                         }
                     }
                 }) {
-                    Text(LocalizedStringKey("sleepQuality.later"), tableName: "MainScreen")
+                    Text("Daha Sonra")
                         .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color("CardBackground"))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color("SecondaryTextColor").opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                        .foregroundColor(Color("TextColor"))
                 }
-                .buttonStyle(.bordered)
                 
                 Button(action: {
-                    // Önce isPresented'ı false yaparak görünümü kapat
+                    viewModel.markSleepQualityRatingAsCompleted()
                     isPresented = false
                     
-                    // Uyku kalitesi değerlendirmesinin tamamlandığını işaretle
-                    viewModel.markSleepQualityRatingAsCompleted()
-                    
-                    // Sonra uyku kalitesini kaydet
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         saveSleepQuality()
                     }
                 }) {
-                    Text(LocalizedStringKey("sleepQuality.save"), tableName: "MainScreen")
+                    Text("Kaydet")
                         .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color("AccentColor"))
+                        )
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
                 }
-                .buttonStyle(.borderedProminent)
             }
-            .padding(.horizontal)
         }
-        .padding()
-        .background(Color("CardBackground"))
-        .cornerRadius(12)
-        .shadow(radius: 4)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color("CardBackground"))
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
     }
     
     private func saveSleepQuality() {
-        // Seçilen puanı al (0-4 arası) ve 1-5 ölçeğine dönüştür
+        guard let lastBlock = viewModel.lastSleepBlock else {
+            print("❌ Son uyku bloğu bulunamadı")
+            return
+        }
+        
         let rating = Int(sliderValue.rounded()) + 1 // 1-5 arası puanlama
-        print("Sleep quality saved: \(rating)")
+        print("💾 Uyku kalitesi kaydediliyor: \(rating)")
         
-        // Benzersiz blockId oluştur veya belirli bir formatta tanımla
-        let blockId = UUID().uuidString
+        // SleepEntry oluştur - History ile uyumlu
+        let calendar = Calendar.current
+        let entryDate = calendar.startOfDay(for: startTime)
         
-        // Repository kullanarak uyku girdisini kaydet
-        Task {
-            do {
-                _ = try await Repository.shared.addSleepEntry(
-                    blockId: blockId,
-                    emoji: emoji,
-                    rating: rating,
-                    date: startTime // Uyku bloğunun başlangıç saati
-                )
-                print("✅ Uyku girdisi başarıyla kaydedildi")
-            } catch {
-                print("❌ Uyku girdisi kaydedilirken hata: \(error.localizedDescription)")
+        // Süreyi hesapla
+        let durationMinutes = Int(endTime.timeIntervalSince(startTime) / 60)
+        
+        let newEntry = SleepEntry(
+            date: entryDate,
+            startTime: startTime,
+            endTime: endTime,
+            durationMinutes: durationMinutes,
+            isCore: lastBlock.isCore,
+            blockId: lastBlock.id.uuidString,
+            emoji: currentEmoji,
+            rating: rating
+        )
+        
+        // ModelContext kullanarak kaydet
+        let context = modelContext
+        
+        do {
+            // HistoryModel'i bul veya oluştur
+            let predicate = #Predicate<HistoryModel> { $0.date == entryDate }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            
+            var historyModel = try context.fetch(descriptor).first
+            
+            if historyModel == nil {
+                historyModel = HistoryModel(date: entryDate)
+                context.insert(historyModel!)
+                print("✅ Yeni HistoryModel oluşturuldu: \(entryDate)")
             }
+            
+            // SleepEntry'yi ekle
+            newEntry.historyDay = historyModel
+            historyModel?.sleepEntries?.append(newEntry)
+            context.insert(newEntry)
+            
+            try context.save()
+            print("✅ Uyku girdisi başarıyla kaydedildi - Rating: \(rating), Emoji: \(currentEmoji)")
+            
+            // Repository'ye de kaydet (senkronizasyon için)
+            Task {
+                do {
+                    _ = try await Repository.shared.addSleepEntry(
+                        blockId: lastBlock.id.uuidString,
+                        emoji: currentEmoji,
+                        rating: rating,
+                        date: startTime
+                    )
+                    print("✅ Repository'ye de kaydedildi")
+                } catch {
+                    print("❌ Repository'ye kaydederken hata: \(error.localizedDescription)")
+                }
+            }
+            
+        } catch {
+            print("❌ SleepEntry kaydedilirken hata: \(error.localizedDescription)")
         }
         
         // Bekleyen bildirimi kaldır

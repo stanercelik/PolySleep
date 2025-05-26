@@ -1,17 +1,24 @@
 import Foundation
 import UserNotifications
+import SwiftData
 
 class LocalNotificationService: ObservableObject {
     static let shared = LocalNotificationService()
     private let notificationCenter = UNUserNotificationCenter.current()
+    
+    // Alarm servisi referansı
+    private let alarmService = AlarmNotificationService.shared
 
-    private init() {}
+    private init() {
+        // Bildirim kategorilerini kaydet
+        registerNotificationCategories()
+    }
 
     // MARK: - Permission Handling
 
     /// Kullanıcıdan bildirim izni ister.
     func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge, .criticalAlert]) { granted, error in
             if granted {
                 print("PolySleep Debug: Bildirim izni verildi.")
             } else if let error = error {
@@ -170,5 +177,135 @@ class LocalNotificationService: ObservableObject {
     func removeAllDeliveredNotifications() {
         notificationCenter.removeAllDeliveredNotifications()
         print("PolySleep Debug: Teslim edilmiş tüm bildirimler kaldırıldı.")
+    }
+    
+    // MARK: - Alarm Integration
+    
+    /// Uyku programı için hem hatırlatıcı hem de alarm bildirimlerini planlar
+    func scheduleNotificationsWithAlarms(
+        schedule: UserScheduleModel,
+        leadTimeMinutes: Int,
+        alarmSettings: AlarmSettings?,
+        modelContext: ModelContext
+    ) async {
+        print("PolySleep Debug: \(schedule.name) için bildirimler ve alarmlar planlanıyor...")
+        
+        // Mevcut bildirimleri temizle
+        cancelAllNotifications()
+        
+        // Alarm servisi ile alarmları temizle
+        if let scheduleEntity = convertToScheduleEntity(schedule) {
+            await alarmService.cancelAllAlarmsForSchedule(scheduleId: scheduleEntity.id)
+        }
+        
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+
+        for block in schedule.schedule {
+            guard let startTimeDate = dateFormatter.date(from: block.startTime) else {
+                print("PolySleep Debug: Geçersiz başlangıç saati formatı: \(block.startTime) blok ID: \(block.id)")
+                continue
+            }
+            
+            // 1. Uyku başlangıcı için hatırlatıcı bildirim
+            guard let notificationTime = calendar.date(byAdding: .minute, value: -leadTimeMinutes, to: startTimeDate) else {
+                print("PolySleep Debug: Bildirim zamanı hesaplanamadı, blok ID: \(block.id)")
+                continue
+            }
+            
+            let fireDateComponents = calendar.dateComponents([.hour, .minute], from: notificationTime)
+            let notificationIdentifier = "sleepblock_\(block.id.uuidString)"
+            
+            let endTimeStr = calculateEndTime(startTime: block.startTime, durationMinutes: block.duration)
+            
+            let title = "😴 Uyku Zamanı!"
+            let body = "Sıradaki uykun (\(block.isCore ? "Ana" : "Kestirme")) birazdan başlıyor: \(block.startTime) - \(endTimeStr)"
+            
+            scheduleNotification(
+                title: title,
+                body: body,
+                identifier: notificationIdentifier,
+                dateComponents: fireDateComponents,
+                repeats: true
+            )
+            
+            // 2. Uyku bitişi için alarm (eğer ayarlar varsa)
+            if let alarmSettings = alarmSettings, alarmSettings.isEnabled {
+                guard let endTimeDate = calendar.date(byAdding: .minute, value: block.duration, to: startTimeDate) else {
+                    continue
+                }
+                
+                // Önümüzdeki 7 gün için alarmları planla
+                for dayOffset in 0..<7 {
+                    guard let targetDate = calendar.date(byAdding: .day, value: dayOffset, to: Date()) else { continue }
+                    
+                    let endComponents = calendar.dateComponents([.hour, .minute], from: endTimeDate)
+                    guard let finalEndTime = calendar.date(bySettingHour: endComponents.hour ?? 0,
+                                                          minute: endComponents.minute ?? 0,
+                                                          second: 0,
+                                                          of: targetDate) else { continue }
+                    
+                    // Geçmiş zamanlar için alarm planlamayı atla
+                    if finalEndTime <= Date() { continue }
+                    
+                    await alarmService.scheduleAlarmForSleepBlockEnd(
+                        blockId: block.id,
+                        scheduleId: UUID(), // Geçici - gerçek schedule ID'si kullanılacak
+                        userId: UUID(), // Geçici - gerçek user ID'si kullanılacak
+                        endTime: finalEndTime,
+                        alarmSettings: alarmSettings,
+                        modelContext: modelContext
+                    )
+                }
+            }
+        }
+    }
+    
+    /// UserScheduleModel'i ScheduleEntity'ye dönüştürür (geçici helper)
+    private func convertToScheduleEntity(_ schedule: UserScheduleModel) -> ScheduleEntity? {
+        // Bu fonksiyon gerçek implementasyonda daha detaylı olacak
+        let entity = ScheduleEntity(
+            userId: UUID(), // Gerçek user ID
+            name: schedule.name,
+            totalSleepHours: schedule.totalSleepHours
+        )
+        return entity
+    }
+    
+    // MARK: - Notification Categories
+    
+    /// Bildirim kategorilerini kaydet
+    private func registerNotificationCategories() {
+        // Uyku hatırlatıcısı kategorisi
+        let sleepReminderCategory = UNNotificationCategory(
+            identifier: "SLEEP_REMINDER",
+            actions: [],
+            intentIdentifiers: [],
+            options: []
+        )
+        
+        // Alarm kategorisi - AlarmNotificationService ile senkronize
+        let snoozeAction = UNNotificationAction(
+            identifier: "SNOOZE_ACTION",
+            title: "⏰ Ertele (5dk)",
+            options: [.foreground]
+        )
+        
+        let stopAction = UNNotificationAction(
+            identifier: "STOP_ACTION",
+            title: "⏹️ Kapat",
+            options: [.destructive, .authenticationRequired]
+        )
+        
+        let alarmCategory = UNNotificationCategory(
+            identifier: "SLEEP_ALARM",
+            actions: [snoozeAction, stopAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction, .allowInCarPlay]
+        )
+        
+        notificationCenter.setNotificationCategories([sleepReminderCategory, alarmCategory])
+        print("PolySleep Debug: Tüm bildirim kategorileri kaydedildi")
     }
 } 

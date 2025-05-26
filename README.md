@@ -17,6 +17,14 @@ PolySleep is an iOS application designed to manage polyphasic sleep schedules an
   - Adaptation phase tracking
   - Notification system integration
 
+- **Smart Alarm System**
+  - Wake-up alarms at the end of sleep blocks
+  - Critical notifications bypass Focus/Silent mode
+  - Customizable alarm sounds and settings
+  - Snooze functionality with configurable duration
+  - Fallback alerts when notification permission is denied
+  - Just-in-time scheduling (max 64 pending notifications)
+
 - **Real-Time Synchronization**
   - Local data storage with SwiftData
   - Cloud synchronization with Supabase

@@ -9,17 +9,25 @@ import SwiftUI
 import SwiftData
 import Combine
 import Network
+import UserNotifications
 
 // Offline-first model ve servislerimizi import ediyoruz
 // Eğer bunlar farklı modüllerde olsaydı, modül adlarını belirtmemiz gerekirdi
 // Ancak aynı modül içinde olduğu için direkt dosya adlarını belirtebiliriz
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   func application(_ application: UIApplication,
   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     // Initialize notification manager
     let notificationManager = SleepQualityNotificationManager.shared
     notificationManager.requestAuthorization()
+    
+    // Alarm notification service'i başlat
+    let alarmService = AlarmNotificationService.shared
+    alarmService.registerNotificationCategories()
+    
+    // Bildirim delegate'ini ayarla
+    UNUserNotificationCenter.current().delegate = self
     
     // Uygulama ilk kez açıldığında onboarding durumunu ve aktif programı sıfırla
     if !UserDefaults.standard.bool(forKey: "AppFirstLaunch") {
@@ -33,6 +41,123 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     return true
+  }
+  
+  // MARK: - UNUserNotificationCenterDelegate
+  
+  /// Uygulama ön plandayken bildirim geldiğinde çağrılır
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+      // Alarm bildirimleri için ses ve banner göster
+      if notification.request.content.userInfo["type"] as? String == "sleep_alarm" {
+          completionHandler([.banner, .sound, .badge])
+      } else {
+          completionHandler([.banner, .sound])
+      }
+  }
+  
+  /// Kullanıcı bildirime tıkladığında veya eylem seçtiğinde çağrılır
+  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+      let userInfo = response.notification.request.content.userInfo
+      
+      // Alarm eylemleri
+      if userInfo["type"] as? String == "sleep_alarm" {
+          switch response.actionIdentifier {
+          case "SNOOZE_ACTION":
+              handleSnoozeAction(userInfo: userInfo)
+          case "STOP_ACTION":
+              handleStopAction(userInfo: userInfo)
+          case UNNotificationDefaultActionIdentifier:
+              // Bildirime tıklandı
+              handleAlarmTapped(userInfo: userInfo)
+          default:
+              break
+          }
+      }
+      
+      completionHandler()
+  }
+  
+  private func handleSnoozeAction(userInfo: [AnyHashable: Any]) {
+      guard let blockIdString = userInfo["blockId"] as? String,
+            let blockId = UUID(uuidString: blockIdString) else { return }
+      
+      print("PolySleep Debug: Alarm ertelendi - Block ID: \(blockId)")
+      
+      // Erteleme işlemini gerçekleştir
+      Task {
+          // 5 dakika sonra yeni alarm planla
+          let snoozeTime = Date().addingTimeInterval(5 * 60) // 5 dakika
+          
+          let content = UNMutableNotificationContent()
+          content.title = "⏰ Ertelenmiş Uyku Alarmı"
+          content.body = "5 dakika doldu! Uyanma zamanı!"
+          content.categoryIdentifier = "SLEEP_ALARM"
+          content.sound = UNNotificationSound.defaultCritical
+          content.interruptionLevel = .critical
+          content.userInfo = userInfo // Aynı bilgileri koru
+          
+          let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5 * 60, repeats: false)
+          let request = UNNotificationRequest(
+              identifier: "snooze_\(blockId.uuidString)_\(Date().timeIntervalSince1970)",
+              content: content,
+              trigger: trigger
+          )
+          
+          do {
+              try await UNUserNotificationCenter.current().add(request)
+              print("PolySleep Debug: Erteleme alarmı planlandı")
+          } catch {
+              print("PolySleep Debug: Erteleme alarmı planlanamadı: \(error)")
+          }
+      }
+  }
+  
+  private func handleStopAction(userInfo: [AnyHashable: Any]) {
+      guard let blockIdString = userInfo["blockId"] as? String,
+            let blockId = UUID(uuidString: blockIdString) else { return }
+      
+      print("PolySleep Debug: Alarm kapatıldı - Block ID: \(blockId)")
+      
+      // Alarm durdurma işlemini gerçekleştir
+      Task {
+          // Bu blok için tüm bekleyen alarmları iptal et
+          await AlarmNotificationService.shared.cancelAlarmForBlock(blockId: blockId)
+          
+          // Erteleme alarmları da iptal et
+          let pendingRequests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+          let snoozeIdentifiers = pendingRequests.compactMap { request in
+              if request.identifier.contains("snooze_\(blockId.uuidString)") {
+                  return request.identifier
+              }
+              return nil
+          }
+          
+          if !snoozeIdentifiers.isEmpty {
+              UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: snoozeIdentifiers)
+              print("PolySleep Debug: Erteleme alarmları da iptal edildi")
+          }
+          
+          // Başarı bildirimi göster (opsiyonel)
+          await MainActor.run {
+              // UI'da başarı mesajı gösterilebilir
+              NotificationCenter.default.post(
+                  name: NSNotification.Name("AlarmStopped"),
+                  object: nil,
+                  userInfo: ["blockId": blockId.uuidString]
+              )
+          }
+      }
+  }
+  
+  private func handleAlarmTapped(userInfo: [AnyHashable: Any]) {
+      print("PolySleep Debug: Alarm bildirimine tıklandı")
+      
+      // Uygulamayı ana ekrana yönlendir
+      NotificationCenter.default.post(
+          name: NSNotification.Name("NavigateToMainScreen"),
+          object: nil,
+          userInfo: userInfo
+      )
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -83,6 +208,10 @@ struct polysleepApp: App {
                 SleepBlockEntity.self,
                 SleepEntryEntity.self,
                 PendingChange.self,
+                
+                // Alarm modelleri
+                AlarmSettings.self,
+                AlarmNotification.self,
                 
                 configurations: config
             )

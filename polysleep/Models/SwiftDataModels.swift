@@ -264,4 +264,81 @@ final class PendingChange {
         self.lastAttemptAt = lastAttemptAt
         self.errorInfo = errorInfo
     }
+}
+
+// MARK: - AlarmSettings Model
+@Model
+final class AlarmSettings {
+    @Attribute(.unique) var id: UUID
+    var userId: UUID
+    var isEnabled: Bool
+    var soundName: String
+    var volume: Double // 0.0 - 1.0
+    var vibrationEnabled: Bool
+    var snoozeEnabled: Bool
+    var snoozeDurationMinutes: Int
+    var maxSnoozeCount: Int
+    var createdAt: Date
+    var updatedAt: Date
+    
+    init(id: UUID = UUID(),
+         userId: UUID,
+         isEnabled: Bool = true,
+         soundName: String = "alarm.caf",
+         volume: Double = 0.8,
+         vibrationEnabled: Bool = true,
+         snoozeEnabled: Bool = true,
+         snoozeDurationMinutes: Int = 5,
+         maxSnoozeCount: Int = 3,
+         createdAt: Date = Date(),
+         updatedAt: Date = Date()) {
+        self.id = id
+        self.userId = userId
+        self.isEnabled = isEnabled
+        self.soundName = soundName
+        self.volume = volume
+        self.vibrationEnabled = vibrationEnabled
+        self.snoozeEnabled = snoozeEnabled
+        self.snoozeDurationMinutes = snoozeDurationMinutes
+        self.maxSnoozeCount = maxSnoozeCount
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
+}
+
+// MARK: - AlarmNotification Model
+@Model
+final class AlarmNotification {
+    @Attribute(.unique) var id: UUID
+    var userId: UUID
+    var scheduleId: UUID
+    var blockId: UUID
+    var notificationIdentifier: String
+    var scheduledTime: Date
+    var isActive: Bool
+    var createdAt: Date
+    var firedAt: Date?
+    var snoozedCount: Int
+    
+    init(id: UUID = UUID(),
+         userId: UUID,
+         scheduleId: UUID,
+         blockId: UUID,
+         notificationIdentifier: String,
+         scheduledTime: Date,
+         isActive: Bool = true,
+         createdAt: Date = Date(),
+         firedAt: Date? = nil,
+         snoozedCount: Int = 0) {
+        self.id = id
+        self.userId = userId
+        self.scheduleId = scheduleId
+        self.blockId = blockId
+        self.notificationIdentifier = notificationIdentifier
+        self.scheduledTime = scheduledTime
+        self.isActive = isActive
+        self.createdAt = createdAt
+        self.firedAt = firedAt
+        self.snoozedCount = snoozedCount
+    }
 } 

@@ -271,17 +271,6 @@ struct ModernDisclaimerCard<Content: View>: View {
     }
 }
 
-// MARK: - Button Styles
-
-struct ModernContactButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .opacity(configuration.isPressed ? 0.9 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
-    }
-}
-
 struct DisclaimerView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {

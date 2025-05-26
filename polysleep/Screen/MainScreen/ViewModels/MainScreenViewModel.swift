@@ -43,7 +43,8 @@ class MainScreenViewModel: ObservableObject {
     @Published var showSleepQualityRating = false
     @Published var hasDeferredSleepQualityRating = false
     @Published var lastSleepBlock: SleepBlock?
-    @Published private var sleepQualityRatingCompleted = false
+    @Published var lastCheckedCompletedBlock: String? // Son kontrol edilen bloğu tutmak için
+
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -54,6 +55,10 @@ class MainScreenViewModel: ObservableObject {
     
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
+    
+    // UserDefaults için anahtarlar
+    private let ratedSleepBlocksKey = "ratedSleepBlocks" // Puanlanmış bloklar (start-end time ile)
+    private let deferredSleepBlocksKey = "deferredSleepBlocks" // Ertelenmiş bloklar (start-end time ile)
     
     init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), languageManager: LanguageManager = LanguageManager.shared) {
         self.model = model
@@ -67,6 +72,9 @@ class MainScreenViewModel: ObservableObject {
         
         // Dil değişikliklerini dinle
         setupLanguageChangeListener()
+        
+        // Uyku kalitesi değerlendirme durumunu kontrol et
+        checkForPendingSleepQualityRatings()
     }
     
     var totalSleepTimeFormatted: String {
@@ -634,25 +642,14 @@ class MainScreenViewModel: ObservableObject {
     
     /// Uyku bloğu tamamlandığında uyku kalitesi değerlendirmesini göster
     private func checkAndShowSleepQualityRating() {
-        // Eğer uyku kalitesi değerlendirmesi zaten tamamlandıysa, tekrar gösterme
-        guard !showSleepQualityRating, !hasDeferredSleepQualityRating, !sleepQualityRatingCompleted else { return }
+        // Eğer uyku kalitesi değerlendirmesi zaten gösteriliyorsa, tekrar kontrol etme
+        guard !showSleepQualityRating else { return }
         
-        let now = Date()
-        // Son 30 dakika içinde biten bir uyku bloğu var mı kontrol et
-        if let lastBlock = model.schedule.schedule.first(where: { block in
-            let endTime = TimeFormatter.time(from: block.endTime)!
-            let endDate = Calendar.current.date(
-                bySettingHour: endTime.hour,
-                minute: endTime.minute,
-                second: 0,
-                of: now
-            ) ?? now
-            return endDate <= now && now.timeIntervalSince(endDate) <= 1800 // 30 dakika
-        }) {
-            lastSleepBlock = lastBlock
-            showSleepQualityRating = true
-        }
+        // Yeni biten blokları kontrol et
+        checkForNewCompletedBlocks()
     }
+    
+
     
     private func saveSleepQuality(rating: Int, startTime: Date, endTime: Date) {
         // Repository kullanarak uyku girdisini kaydet
@@ -683,10 +680,149 @@ class MainScreenViewModel: ObservableObject {
         SleepQualityNotificationManager.shared.removePendingRating(startTime: startTime, endTime: endTime)
     }
     
-    /// Uyku kalitesi değerlendirmesinin tamamlandığını işaretler
-    /// Bu metot, SleepQualityRatingView'dan çağrılır
+    /// Uyku kalitesi değerlendirmesinin tamamlandığını işaretler (puanlandığında)
+    /// Bu metot, SleepQualityRatingView'dan "Kaydet" butonuna basıldığında çağrılır
     func markSleepQualityRatingAsCompleted() {
-        sleepQualityRatingCompleted = true
+        guard let lastBlock = lastSleepBlock else { return }
+        
+        // Bu bloğu puanlanmış bloklar listesine ekle (start-end time ile)
+        addBlockToRatedList(startTime: lastBlock.startTime, endTime: lastBlock.endTime)
+        
+        // Eğer ertelenmiş listede varsa, oradan kaldır
+        removeBlockFromDeferredList(startTime: lastBlock.startTime, endTime: lastBlock.endTime)
+        
+        showSleepQualityRating = false
+        print("📝 Uyku bloğu \(lastBlock.startTime)-\(lastBlock.endTime) puanlandı ve tamamlandı olarak işaretlendi.")
+    }
+    
+    /// Uyku kalitesi değerlendirmesini erteler ("Daha Sonra" butonuna basıldığında)
+    func deferSleepQualityRating() {
+        guard let lastBlock = lastSleepBlock else { return }
+        
+        // Bu bloğu ertelenmiş bloklar listesine ekle
+        addBlockToDeferredList(startTime: lastBlock.startTime, endTime: lastBlock.endTime)
+        
+        showSleepQualityRating = false
+        print("⏸️ Uyku bloğu \(lastBlock.startTime)-\(lastBlock.endTime) değerlendirmesi ertelendi.")
+    }
+    
+    // MARK: - UserDefaults Helper Functions
+    
+    /// Block için unique key oluşturur (start-end time ile)
+    private func blockKey(startTime: String, endTime: String) -> String {
+        return "\(startTime)-\(endTime)"
+    }
+    
+    /// Bloğu puanlanmış bloklar listesine ekler
+    private func addBlockToRatedList(startTime: String, endTime: String) {
+        var ratedBlocks = UserDefaults.standard.stringArray(forKey: ratedSleepBlocksKey) ?? []
+        let blockKey = blockKey(startTime: startTime, endTime: endTime)
+        if !ratedBlocks.contains(blockKey) {
+            ratedBlocks.append(blockKey)
+            UserDefaults.standard.set(ratedBlocks, forKey: ratedSleepBlocksKey)
+            print("✅ Block rated olarak işaretlendi: \(blockKey)")
+        }
+    }
+    
+    /// Bloğu ertelenmiş bloklar listesine ekler
+    private func addBlockToDeferredList(startTime: String, endTime: String) {
+        var deferredBlocks = UserDefaults.standard.stringArray(forKey: deferredSleepBlocksKey) ?? []
+        let blockKey = blockKey(startTime: startTime, endTime: endTime)
+        if !deferredBlocks.contains(blockKey) {
+            deferredBlocks.append(blockKey)
+            UserDefaults.standard.set(deferredBlocks, forKey: deferredSleepBlocksKey)
+            print("⏸️ Block deferred olarak işaretlendi: \(blockKey)")
+        }
+    }
+    
+    /// Bloğu ertelenmiş bloklar listesinden kaldırır
+    private func removeBlockFromDeferredList(startTime: String, endTime: String) {
+        var deferredBlocks = UserDefaults.standard.stringArray(forKey: deferredSleepBlocksKey) ?? []
+        let blockKey = blockKey(startTime: startTime, endTime: endTime)
+        deferredBlocks.removeAll { $0 == blockKey }
+        UserDefaults.standard.set(deferredBlocks, forKey: deferredSleepBlocksKey)
+        print("🗑️ Block deferred listesinden kaldırıldı: \(blockKey)")
+    }
+    
+    /// Bloğun puanlanıp puanlanmadığını kontrol eder
+    private func isBlockRated(startTime: String, endTime: String) -> Bool {
+        let ratedBlocks = UserDefaults.standard.stringArray(forKey: ratedSleepBlocksKey) ?? []
+        let blockKey = blockKey(startTime: startTime, endTime: endTime)
+        return ratedBlocks.contains(blockKey)
+    }
+    
+    /// Bloğun ertelenip ertelenmediğini kontrol eder
+    private func isBlockDeferred(startTime: String, endTime: String) -> Bool {
+        let deferredBlocks = UserDefaults.standard.stringArray(forKey: deferredSleepBlocksKey) ?? []
+        let blockKey = blockKey(startTime: startTime, endTime: endTime)
+        return deferredBlocks.contains(blockKey)
+    }
+    
+    /// Uygulama başlangıcında bekleyen değerlendirmeleri kontrol eder
+    private func checkForPendingSleepQualityRatings() {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        // Son 24 saat içinde biten uyku bloklarını kontrol et
+        for block in model.schedule.schedule {
+            let endTime = TimeFormatter.time(from: block.endTime)!
+            let endDate = calendar.date(
+                bySettingHour: endTime.hour,
+                minute: endTime.minute,
+                second: 0,
+                of: now
+            ) ?? now
+            
+            // Eğer blok son 24 saat içinde bittiyse
+            if endDate <= now && now.timeIntervalSince(endDate) <= 86400 { // 24 saat
+                // Eğer bu blok puanlanmamışsa ve ertelenmişse, değerlendirme ekranını göster
+                if !isBlockRated(startTime: block.startTime, endTime: block.endTime) && 
+                   isBlockDeferred(startTime: block.startTime, endTime: block.endTime) {
+                    lastSleepBlock = block
+                    showSleepQualityRating = true
+                    print("🔄 Ertelenmiş uyku bloğu değerlendirmesi gösteriliyor: \(block.startTime)-\(block.endTime)")
+                    break // Bir tane göster, diğerleri sonra
+                }
+            }
+        }
+    }
+    
+    /// Timer'da çağrılan, yeni biten blokları kontrol eden fonksiyon
+    private func checkForNewCompletedBlocks() {
+        let now = Date()
+        let calendar = Calendar.current
+        
+        // Son 5 dakika içinde biten blokları kontrol et
+        for block in model.schedule.schedule {
+            let endTime = TimeFormatter.time(from: block.endTime)!
+            let endDate = calendar.date(
+                bySettingHour: endTime.hour,
+                minute: endTime.minute,
+                second: 0,
+                of: now
+            ) ?? now
+            
+            let blockKey = blockKey(startTime: block.startTime, endTime: block.endTime)
+            
+            // Eğer blok son 5 dakika içinde bittiyse
+            if endDate <= now && now.timeIntervalSince(endDate) <= 300 { // 5 dakika
+                // Eğer bu bloğu daha önce kontrol etmediyseysek
+                if lastCheckedCompletedBlock != blockKey {
+                    // Eğer bu blok hiç puanlanmamışsa ve ertelenmemişse, değerlendirme ekranını göster
+                    if !isBlockRated(startTime: block.startTime, endTime: block.endTime) && 
+                       !isBlockDeferred(startTime: block.startTime, endTime: block.endTime) {
+                        lastSleepBlock = block
+                        lastCheckedCompletedBlock = blockKey
+                        showSleepQualityRating = true
+                        print("🆕 Yeni biten uyku bloğu değerlendirmesi gösteriliyor: \(block.startTime)-\(block.endTime)")
+                        break // Bir tane göster, diğerleri sonra
+                    } else {
+                        // Block rated/deferred ise, checked olarak işaretle
+                        lastCheckedCompletedBlock = blockKey
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Repository & Offline-First Yaklaşımı

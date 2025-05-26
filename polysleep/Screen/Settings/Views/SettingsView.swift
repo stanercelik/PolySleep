@@ -100,6 +100,15 @@ struct SettingsView: View {
                                 subtitle: L("settings.notifications.subtitle", table: "Profile"),
                                 destination: NotificationSettingsView()
                             )
+                            
+                            ModernDivider()
+                            
+                            ModernNavigationRow(
+                                icon: "alarm.fill",
+                                title: "Alarm Ayarları",
+                                subtitle: "Uyku bloğu bitiminde çalacak alarm ayarları",
+                                destination: AlarmSettingsView()
+                            )
                         }
                     }
                     
@@ -514,26 +523,6 @@ struct ModernDivider: View {
             )
             .frame(height: 1)
             .padding(.horizontal, 16)
-    }
-}
-
-// MARK: - Button Styles
-
-struct ModernNavigationButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .opacity(configuration.isPressed ? 0.8 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
-    }
-}
-
-struct ModernActionButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .opacity(configuration.isPressed ? 0.8 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 

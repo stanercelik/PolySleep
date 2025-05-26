@@ -33,6 +33,6 @@
 		<string>remote-notification</string>
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>Uyku programınız hakkında hatırlatıcılar almak için bildirimleri etkinleştirin.</string>
+	<string>PolySleep uyku bloklarınız bittiğinde sizi uyandırmak için alarm bildirimleri gönderir. Bu özellik uyku programınızın düzgün çalışması için gereklidir.</string>
 </dict>
 </plist>
