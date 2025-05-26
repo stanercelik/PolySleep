@@ -141,16 +141,14 @@ struct CircularSleepChart: View {
         }
     }
     
+    @ViewBuilder
     private func sleepBlockArc(for block: SleepBlock, center: CGPoint) -> some View {
-        guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
-            return AnyView(EmptyView())
-        }
-        let startTime = timeComponents(from: startTimeInt)
-        let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-        let durationHours = Double(block.duration) / 60.0
-        let endAngle = startAngle + (durationHours * (360.0 / 24.0))
-        
-        return AnyView(
+        if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
+            let startTime = timeComponents(from: startTimeInt)
+            let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
+            let durationHours = Double(block.duration) / 60.0
+            let endAngle = startAngle + (durationHours * (360.0 / 24.0))
+            
             Path { path in
                 path.addArc(
                     center: center,
@@ -160,70 +158,109 @@ struct CircularSleepChart: View {
                     clockwise: false
                 )
             }
-                .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
+            .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
             .opacity(0.85)
-        )
+        }
     }
     
     private func innerTimeLabelsView(center: CGPoint, size: CGFloat) -> some View {
         ZStack {
             ForEach(schedule.schedule.indices, id: \.self) { index in
-                let block = schedule.schedule[index]
-                if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
-                    let startTime = timeComponents(from: startTimeInt)
-                    let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-                    
-                    // Başlangıç ve bitiş açıları
-                    let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-                    let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
-                    
-                    // Etiketleri konumlandır
-                    if block.duration <= 30 {
-                        // Kısa bloklar için etiketleri birleştir
-                        let midAngle = (startAngle + endAngle) / 2
-                        combinedTimeLabel(
-                            startTime: String(format: "%02d:%02d", startTime.hour, startTime.minute),
-                            endTime: String(format: "%02d:%02d", endTime.hour, endTime.minute),
-                            angle: midAngle,
-                            center: center
-                        )
-                    } else {
-                        // Uzun bloklar için ayrı etiketler
-                        Group {
-                            innerTimeLabel(
-                                time: String(format: "%02d:%02d", startTime.hour, startTime.minute),
-                                angle: startAngle,
-                                center: center
-                            )
-                            innerTimeLabel(
-                                time: String(format: "%02d:%02d", endTime.hour, endTime.minute),
-                                angle: endAngle,
-                                center: center
-                            )
-                        }
+                timeLabel(for: schedule.schedule[index], center: center)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func timeLabel(for block: SleepBlock, center: CGPoint) -> some View {
+        if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
+            let startTime = timeComponents(from: startTimeInt)
+            let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
+            
+            // Başlangıç ve bitiş açıları
+            let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
+            let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
+            
+            // Bloğun ortasında tek bir etiket göster
+            let midAngle = (startAngle + endAngle) / 2
+            
+            // Açıya göre etiket yönünü belirle
+            let normalizedAngle = normalizeAngle(midAngle)
+            
+            // Sağ/sol tarafta ise dikey (alt alta), üst/alt tarafta ise yatay (yan yana)
+            let isVertical = (normalizedAngle < 45 && normalizedAngle > 135) || (normalizedAngle < 225 && normalizedAngle > 315)
+            
+            // Akıllı etiket gösterimi
+            let isLongBlock = block.duration > 90
+            let radius = circleRadius - strokeWidth / 2 - (isLongBlock ? 8 : 15)
+            let xPosition = center.x + radius * cos(midAngle * .pi / 180)
+            let yPosition = center.y + radius * sin(midAngle * .pi / 180)
+            
+            let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
+            let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
+            
+            Group {
+                if isVertical {
+                    // Dikey layout - sağ/sol tarafta (alt alta)
+                    VStack(spacing: 1) {
+                        Text(startTimeStr)
+                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                        Text(endTimeStr)
+                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
                     }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, isLongBlock ? 6 : 4)
+                    .padding(.vertical, isLongBlock ? 3 : 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.black.opacity(0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
+                            )
+                    )
+                    .position(x: xPosition, y: yPosition)
+                } else {
+                    // Yatay layout - üst/alt tarafta (yan yana)
+                    HStack(spacing: 2) {
+                        Text(startTimeStr)
+                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                        Text("-")
+                            .font(.system(size: isLongBlock ? 8 : 7, weight: .medium))
+                        Text(endTimeStr)
+                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, isLongBlock ? 6 : 4)
+                    .padding(.vertical, isLongBlock ? 3 : 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.black.opacity(0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
+                            )
+                    )
+                    .position(x: xPosition, y: yPosition)
                 }
             }
         }
     }
     
-    private func combinedTimeLabel(startTime: String, endTime: String, angle: Double, center: CGPoint) -> some View {
-        let radius = circleRadius - strokeWidth / 2 - 15
-        let xPosition = center.x + radius * cos(angle * .pi / 180)
-        let yPosition = center.y + radius * sin(angle * .pi / 180)
-        
-        return VStack(spacing: 2) {
-            Text(startTime)
-                .font(.system(size: 9, weight: .medium))
-            Text(endTime)
-                .font(.system(size: 9, weight: .medium))
+    private func normalizeAngle(_ angle: Double) -> Double {
+        var normalizedAngle = angle
+        while normalizedAngle < 0 {
+            normalizedAngle += 360
         }
-        .foregroundColor(Color.appSecondaryText)
-        .padding(2)
-        .background(Color.black.opacity(0.3))
-        .cornerRadius(4)
-        .position(x: xPosition, y: yPosition)
+        while normalizedAngle >= 360 {
+            normalizedAngle -= 360
+        }
+        return normalizedAngle
     }
+    
+
+    
+
     
     private func innerTimeLabel(time: String, angle: Double, center: CGPoint) -> some View {
         // İç etiketler için, iç çemberin biraz içinde konumlandırıyoruz
