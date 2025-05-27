@@ -19,15 +19,15 @@ struct OnboardingView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 
-                VStack(spacing: 20) {
+                VStack(spacing: PSSpacing.lg) {
                     // ProgressView -> 11 Pages
-                    ProgressView(value: Double(viewModel.currentPage), total: Double(viewModel.totalPages))
+                    ProgressView(value: Double(viewModel.currentPage + 1), total: Double(viewModel.totalPages))
                         .tint(Color.appPrimary)
-                        .padding(.horizontal)
+                        .padding(.horizontal, PSSpacing.lg)
                         .accessibilityValue("\(viewModel.currentPage + 1) of \(viewModel.totalPages) pages")
                     
                     ScrollView {
-                        VStack(spacing: 24) {
+                        VStack(spacing: PSSpacing.xl) {
                             switch viewModel.currentPage {
                             case 0:
                                 OnboardingSelectionView(
@@ -117,7 +117,7 @@ struct OnboardingView: View {
                                 EmptyView()
                             }
                         }
-                        .padding()
+                        .padding(PSSpacing.lg)
                         .animation(.easeInOut, value: viewModel.currentPage)
                     }
                     
@@ -129,8 +129,10 @@ struct OnboardingView: View {
                         onNext: viewModel.moveNext,
                         onBack: viewModel.movePrevious
                     )
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.bottom, PSSpacing.md)
                 }
-                .padding(.top, 16)
+                .padding(.top, PSSpacing.lg)
                 .onAppear {
                     viewModel.setModelContext(modelContext)
                 }
@@ -161,10 +163,11 @@ struct OnboardingView: View {
                     label: { EmptyView() }
                 )
             )
-            .alert("Hata", isPresented: $viewModel.showError) {
-                Button("Tamam", role: .cancel) {}
+            .alert(L("general.error", table: "Common"), isPresented: $viewModel.showError) {
+                Button(L("general.ok", table: "Common"), role: .cancel) {}
             } message: {
                 Text(viewModel.errorMessage)
+                    .font(PSTypography.body)
             }
         }
     }

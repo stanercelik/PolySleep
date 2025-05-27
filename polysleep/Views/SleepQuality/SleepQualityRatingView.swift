@@ -47,7 +47,7 @@ struct SleepQualityRatingView: View {
                     
                     Text(L("mainScreen.sleepQuality.subtitle", table: "MainScreen"))
                         .font(.subheadline)
-                        .foregroundColor(.appSecondaryText)
+                        .foregroundColor(.appTextSecondary)
                 }
                 
                 Spacer()

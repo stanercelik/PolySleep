@@ -26,7 +26,7 @@ struct AddSleepBlockSheet: View {
                     Section {
                         Text(L("sleepBlock.autoType", table: "MainScreen"))
                             .font(.footnote)
-                            .foregroundColor(.appSecondaryText)
+                            .foregroundColor(.appTextSecondary)
                     }
                     
                     if !viewModel.model.schedule.schedule.isEmpty {

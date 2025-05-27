@@ -14,7 +14,7 @@ struct HistoryView: View {
                     .ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 24) {
+                    VStack(spacing: PSSpacing.xl) {
                         // Stats Overview Card
                         SleepStatsOverviewCard(viewModel: viewModel)
                         
@@ -28,8 +28,8 @@ struct HistoryView: View {
                             HistoryContentSection(viewModel: viewModel)
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.vertical, PSSpacing.sm)
                 }
                 
                 // Floating Action Button
@@ -63,73 +63,59 @@ struct SleepStatsOverviewCard: View {
     @ObservedObject var viewModel: HistoryViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            // Header
-            HStack {
-                Image(systemName: "chart.bar.fill")
-                    .font(.title2)
-                    .foregroundColor(.appPrimary)
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                // Header
+                HStack {
+                    Image(systemName: "chart.bar.fill")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.appPrimary)
+                    
+                    Text(L("history.stats.title", table: "History"))
+                        .font(PSTypography.headline)
+                        .foregroundColor(.appText)
+                    
+                    Spacer()
+                    
+                    // Quick insights
+                    PSStatusBadge(L("history.stats.thisWeek", table: "History"), color: .appSecondary)
+                }
                 
-                Text(L("history.stats.title", table: "History"))
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-                
-                Spacer()
-                
-                // Quick insights
-                Text(L("history.stats.thisWeek", table: "History"))
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appSecondaryText)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule()
-                            .fill(Color.appSecondary.opacity(0.15))
+                // Stats Grid
+                LazyVGrid(columns: [
+                    GridItem(.flexible(), spacing: PSSpacing.md),
+                    GridItem(.flexible(), spacing: PSSpacing.md)
+                ], spacing: PSSpacing.md) {
+                    QuickStatCard(
+                        icon: "bed.double.fill",
+                        title: L("history.stats.totalSessions", table: "History"),
+                        value: "\(calculateTotalSessions())",
+                        gradientColors: [.appPrimary, .blue]
                     )
-            }
-            
-            // Stats Grid
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 12),
-                GridItem(.flexible(), spacing: 12)
-            ], spacing: 12) {
-                QuickStatCard(
-                    icon: "bed.double.fill",
-                    title: L("history.stats.totalSessions", table: "History"),
-                    value: "\(calculateTotalSessions())",
-                    gradientColors: [.appPrimary, .blue]
-                )
-                
-                QuickStatCard(
-                    icon: "clock.fill",
-                    title: L("history.stats.avgDuration", table: "History"),
-                    value: calculateAverageDuration(),
-                    gradientColors: [.appSecondary, .green]
-                )
-                
-                QuickStatCard(
-                    icon: "star.fill",
-                    title: L("history.stats.avgRating", table: "History"),
-                    value: String(format: "%.1f", calculateAverageRating()),
-                    gradientColors: [.orange, .yellow]
-                )
-                
-                QuickStatCard(
-                    icon: "calendar.badge.clock",
-                    title: L("history.stats.streak", table: "History"),
-                    value: "\(calculateCurrentStreak())",
-                    gradientColors: [.purple, .pink]
-                )
+                    
+                    QuickStatCard(
+                        icon: "clock.fill",
+                        title: L("history.stats.avgDuration", table: "History"),
+                        value: calculateAverageDuration(),
+                        gradientColors: [.appSecondary, .green]
+                    )
+                    
+                    QuickStatCard(
+                        icon: "star.fill",
+                        title: L("history.stats.avgRating", table: "History"),
+                        value: String(format: "%.1f", calculateAverageRating()),
+                        gradientColors: [.orange, .yellow]
+                    )
+                    
+                    QuickStatCard(
+                        icon: "calendar.badge.clock",
+                        title: L("history.stats.streak", table: "History"),
+                        value: "\(calculateCurrentStreak())",
+                        gradientColors: [.purple, .pink]
+                    )
+                }
             }
         }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-        )
     }
     
     private func calculateTotalSessions() -> Int {
@@ -162,12 +148,12 @@ struct QuickStatCard: View {
     let gradientColors: [Color]
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: PSSpacing.sm) {
             HStack {
                 Image(systemName: icon)
-                    .font(.title3)
+                    .font(.system(size: PSIconSize.medium * 0.8))
                     .foregroundColor(.white)
-                    .frame(width: 32, height: 32)
+                    .frame(width: PSIconSize.medium + PSSpacing.sm, height: PSIconSize.medium + PSSpacing.sm)
                     .background(
                         Circle()
                             .fill(
@@ -182,26 +168,25 @@ struct QuickStatCard: View {
                 Spacer()
             }
             
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
                 Text(value)
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .font(PSTypography.headline)
                     .foregroundColor(.appText)
                 
                 Text(title)
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appSecondaryText)
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(12)
+        .padding(PSSpacing.md)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
                 .fill(Color.appCardBackground)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
                         .stroke(
                             LinearGradient(
                                 gradient: Gradient(colors: gradientColors.map { $0.opacity(0.2) }),
@@ -220,43 +205,38 @@ struct FilterSectionCard: View {
     @ObservedObject var viewModel: HistoryViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "line.3.horizontal.decrease.circle.fill")
-                    .font(.title2)
-                    .foregroundColor(.appSecondary)
-                
-                Text(L("history.filter.title", table: "History"))
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-                
-                Spacer()
-            }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(TimeFilter.allCases, id: \.self) { filter in
-                        ModernFilterChip(
-                            title: filter.localizedTitle,
-                            isSelected: viewModel.selectedFilter == filter,
-                            action: { 
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    viewModel.setFilter(filter)
-                                }
-                            }
-                        )
-                    }
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                HStack {
+                    Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.appSecondary)
+                    
+                    Text(L("history.filter.title", table: "History"))
+                        .font(PSTypography.headline)
+                        .foregroundColor(.appText)
+                    
+                    Spacer()
                 }
-                .padding(.horizontal, 4)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: PSSpacing.md) {
+                        ForEach(TimeFilter.allCases, id: \.self) { filter in
+                            ModernFilterChip(
+                                title: filter.localizedTitle,
+                                isSelected: viewModel.selectedFilter == filter,
+                                action: { 
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        viewModel.setFilter(filter)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    .padding(.horizontal, PSSpacing.xs)
+                }
             }
         }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-        )
     }
 }
 
@@ -268,23 +248,22 @@ struct ModernFilterChip: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 6) {
+            HStack(spacing: PSSpacing.xs) {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.caption)
-                        .foregroundColor(.white)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextOnPrimary)
                         .transition(.scale.combined(with: .opacity))
                 }
                 
                 Text(title)
-                    .font(.subheadline)
-                    .fontWeight(isSelected ? .semibold : .medium)
-                    .foregroundColor(isSelected ? .white : .appText)
+                    .font(PSTypography.button)
+                    .foregroundColor(isSelected ? .appTextOnPrimary : .appText)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.vertical, PSSpacing.sm + PSSpacing.xs)
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: PSCornerRadius.button)
                     .fill(
                         isSelected ? 
                         LinearGradient(
@@ -293,23 +272,23 @@ struct ModernFilterChip: View {
                             endPoint: .bottomTrailing
                         ) :
                         LinearGradient(
-                            gradient: Gradient(colors: [.appCardBackground, .appCardBackground]),
+                            gradient: Gradient(colors: [Color.appCardBackground, Color.appCardBackground]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: PSCornerRadius.button)
                             .stroke(
-                                isSelected ? Color.clear : Color.appSecondaryText.opacity(0.2),
+                                isSelected ? Color.clear : Color.appBorder.opacity(0.5),
                                 lineWidth: 1
                             )
                     )
                     .shadow(
                         color: isSelected ? Color.appPrimary.opacity(0.3) : Color.clear,
-                        radius: isSelected ? 8 : 0,
+                        radius: isSelected ? PSSpacing.sm : 0,
                         x: 0,
-                        y: isSelected ? 4 : 0
+                        y: isSelected ? PSSpacing.xs : 0
                     )
             )
         }
@@ -321,71 +300,20 @@ struct ModernFilterChip: View {
 // MARK: - Empty State Card
 struct EmptyStateCard: View {
     var body: some View {
-        VStack(spacing: 24) {
-            // Icon with gradient background
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.appPrimary.opacity(0.1), Color.appSecondary.opacity(0.1)]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 120, height: 120)
-                
-                Image(systemName: "bed.double")
-                    .font(.system(size: 48, weight: .light))
-                    .foregroundColor(.appPrimary.opacity(0.6))
-            }
-            
-            VStack(spacing: 12) {
-                Text(L("history.noRecords.title", table: "History"))
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.appText)
-                
-                Text(L("history.noRecords.message", table: "History"))
-                    .font(.body)
-                    .foregroundColor(.appSecondaryText)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
-            }
-            
-            Button(action: {
+        PSEmptyState(
+            icon: "bed.double", // İkon sistemimizde daha uygun bir ikonla değiştirilebilir
+            title: L("history.noRecords.title", table: "History"),
+            message: L("history.noRecords.message", table: "History"),
+            actionTitle: L("history.addNewRecord", table: "History"),
+            action: {
                 // Add new record action will be handled by parent
-            }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.headline)
-                    Text(L("history.addNewRecord", table: "History"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 24)
-                .padding(.vertical, 14)
-                .background(
-                    Capsule()
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: [.appPrimary, .appSecondary]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .shadow(color: Color.appPrimary.opacity(0.4), radius: 12, x: 0, y: 6)
-                )
+                // Bu eylem, viewModel.isAddSleepEntryPresented = true gibi bir şeyi tetikleyebilir
             }
-            .buttonStyle(ScaleButtonStyle())
-        }
-        .padding(40)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
         )
+        // PSEmptyState zaten kendi arkaplanını ve padding'ini yönetiyor.
+        // Gölge ve köşe yuvarlaklığı gibi ekstra özelleştirmeler gerekirse
+        // .background(...) .cornerRadius(...) .shadow(...) modifier'ları eklenebilir,
+        // ancak genellikle PSEmptyState'in varsayılan görünümü yeterli olmalıdır.
     }
 }
 
@@ -395,47 +323,36 @@ struct HistoryContentSection: View {
     @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "calendar")
-                    .font(.title2)
-                    .foregroundColor(.appAccent)
-                
-                Text(L("history.timeline.title", table: "History"))
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-                
-                Spacer()
-                
-                Text(String(format: L("history.timeline.count", table: "History"), viewModel.historyItems.count))
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appSecondaryText)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule()
-                            .fill(Color.appAccent.opacity(0.15))
+        PSCard(padding: 0) {
+            VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                HStack {
+                    Image(systemName: "calendar")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.appAccent)
+                    
+                    Text(L("history.timeline.title", table: "History"))
+                        .font(PSTypography.headline)
+                        .foregroundColor(.appText)
+                    
+                    Spacer()
+                    
+                    PSStatusBadge(
+                        String(format: L("history.timeline.count", table: "History"), viewModel.historyItems.count),
+                        color: .appAccent
                     )
-            }
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 4)
-            
-            LazyVStack(spacing: 12) {
-                ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
-                    MonthSection(month: monthGroup.month, items: monthGroup.days, viewModel: viewModel)
                 }
+                .padding(.horizontal, PSSpacing.lg)
+                .padding(.top, PSSpacing.lg)
+                
+                LazyVStack(spacing: PSSpacing.md) {
+                    ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
+                        MonthSection(month: monthGroup.month, items: monthGroup.days, viewModel: viewModel)
+                    }
+                }
+                .padding(.horizontal, PSSpacing.lg)
+                .padding(.bottom, PSSpacing.lg)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
         }
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-        )
     }
     
     private func groupedByMonth(items: [HistoryModel]) -> [(month: String, days: [HistoryModel])] {
@@ -467,30 +384,23 @@ struct MonthSection: View {
     @ObservedObject var viewModel: HistoryViewModel
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: PSSpacing.md) {
             // Month Header
             HStack {
                 Text(month)
-                    .font(.title3)
-                    .fontWeight(.bold)
+                    .font(PSTypography.title1)
                     .foregroundColor(.appPrimary)
                 
                 Spacer()
                 
-                Text(String(format: L("history.month.entries", table: "History"), items.count))
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appSecondaryText)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(
-                        Capsule()
-                            .fill(Color.appPrimary.opacity(0.1))
-                    )
+                PSStatusBadge(
+                    String(format: L("history.month.entries", table: "History"), items.count),
+                    color: .appPrimary
+                )
             }
             
             // Days
-            VStack(spacing: 8) {
+            VStack(spacing: PSSpacing.sm) {
                 ForEach(items.sorted { $0.date > $1.date }) { item in
                     ModernDayCard(item: item, viewModel: viewModel)
                 }
@@ -506,105 +416,59 @@ struct ModernDayCard: View {
     @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
-        Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                viewModel.selectDateForDetail(item.date)
-            }
-        }) {
-            VStack(spacing: 16) {
-                // Header Row
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.md) {
+                // Header: Date and Today Badge
                 HStack {
-                    // Date & Day Info
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(.appText)
-                            
-                            Text(dayOfWeek(from: item.date))
-                                .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
-                        }
-                        
-                        if Calendar.current.isDateInToday(item.date) {
-                            TodayBadge()
-                        }
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                        Text(item.date, style: .date)
+                            .font(PSTypography.headline)
+                            .foregroundColor(.appText)
+                        Text(dayOfWeek(from: item.date))
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
                     }
-                    
                     Spacer()
-                    
-                    // Rating
-                    if item.sleepEntries?.isEmpty ?? true {
-                        Text(L("history.noRecord", table: "History"))
-                            .font(.caption)
-                            .foregroundColor(.appSecondaryText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(
-                                Capsule()
-                                    .fill(Color.gray.opacity(0.1))
-                            )
-                    } else {
-                        HStack(spacing: 4) {
-                            Text(String(format: "%.1f", item.averageRating))
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(.appPrimary)
-                            
-                            Image(systemName: "star.fill")
-                                .font(.subheadline)
-                                .foregroundColor(.yellow)
-                        }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(Color.yellow.opacity(0.1))
-                        )
+                    if Calendar.current.isDateInToday(item.date) {
+                        PSStatusBadge(L("history.today", table: "History"), color: .appPrimary)
                     }
                 }
                 
-                // Sleep Entries Preview
-                if let entries = item.sleepEntries, !entries.isEmpty {
-                    let entriesToDisplay = entries.sorted { $0.startTime < $1.startTime }.prefix(2)
-                    VStack(spacing: 8) {
-                        ForEach(Array(entriesToDisplay)) { entry in
-                            ModernSleepEntryRow(entry: entry)
+                // Rating Stars
+                if let rating = item.sleepEntries?.first?.rating, rating > 0 {
+                    HStack(spacing: PSSpacing.xs) {
+                        ForEach(1...5, id: \.self) { starIndex in
+                            Image(systemName: starIndex <= rating ? "star.fill" : "star")
+                                .font(.system(size: PSIconSize.small))
+                                .foregroundColor(starIndex <= rating ? Color.appAccent : Color.appTextSecondary.opacity(0.5))
                         }
-                        
-                        if entries.count > 2 {
-                            HStack {
-                                Text(String(format: L("history.moreBlocks", table: "History"), entries.count - 2))
-                                    .font(.caption)
-                                    .foregroundColor(.appPrimary)
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.right.circle.fill")
-                                    .font(.caption)
-                                    .foregroundColor(.appSecondaryText)
-                            }
-                            .padding(.horizontal, 8)
+                    }
+                }
+                
+                // Sleep Entries or No Record Message
+                if let entries = item.sleepEntries, !entries.isEmpty {
+                    VStack(spacing: PSSpacing.sm) {
+                        ForEach(entries) { entry in
+                            ModernSleepEntryRow(entry: entry)
                         }
                     }
                 } else {
                     HStack {
                         Image(systemName: "moon.zzz")
-                            .font(.title2)
-                            .foregroundColor(.appSecondaryText.opacity(0.5))
+                            .font(.system(size: PSIconSize.medium))
+                            .foregroundColor(.appTextSecondary.opacity(0.5))
                         
                         Text(L("history.noRecord", table: "History"))
-                            .font(.body)
-                            .foregroundColor(.appSecondaryText)
+                            .font(PSTypography.body)
+                            .foregroundColor(.appTextSecondary)
                         
                         Spacer()
                     }
-                    .padding(.vertical, 20)
+                    .padding(.vertical, PSSpacing.lg)
                 }
                 
                 // Footer Stats
-                HStack(spacing: 20) {
+                HStack(spacing: PSSpacing.lg) {
                     StatPill(
                         icon: "clock",
                         value: formatDuration(Int(item.totalSleepDuration / 60)),
@@ -620,36 +484,21 @@ struct ModernDayCard: View {
                     Spacer()
                     
                     // Status Indicator
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(Color(item.completionStatus.color))
-                            .frame(width: 8, height: 8)
-                        
-                        Text(item.completionStatus.localizedTitle)
-                            .font(.caption)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appSecondaryText)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule()
-                            .fill(Color(item.completionStatus.color).opacity(0.1))
+                    PSStatusBadge(
+                        item.completionStatus.localizedTitle,
+                        icon: "circle.fill",
+                        color: Color(item.completionStatus.color)
                     )
                 }
             }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.appCardBackground)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.appSecondaryText.opacity(0.08), lineWidth: 1)
-                    )
-                    .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 3)
-            )
         }
-        .buttonStyle(ModernCardButtonStyle())
+        .onTapGesture {
+            DispatchQueue.main.async {
+                // viewModel.selectDay(item) // Geçici olarak yorum satırı yapıldı
+            }
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
     }
     
     private func dayOfWeek(from date: Date) -> String {
@@ -660,42 +509,17 @@ struct ModernDayCard: View {
     }
 }
 
-// MARK: - Today Badge
-struct TodayBadge: View {
-    var body: some View {
-        Text(L("history.today", table: "History"))
-            .font(.caption)
-            .fontWeight(.bold)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(todayBadgeBackground)
-            .foregroundColor(.white)
-            .shadow(color: Color.appPrimary.opacity(0.3), radius: 4, x: 0, y: 2)
-    }
-    
-    private var todayBadgeBackground: some View {
-        Capsule()
-            .fill(
-                LinearGradient(
-                    gradient: Gradient(colors: [.appPrimary, .appSecondary]),
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-    }
-}
-
 // MARK: - Modern Sleep Entry Row
 struct ModernSleepEntryRow: View {
     let entry: SleepEntry
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: PSSpacing.md) {
             // Type Icon
             Image(systemName: entry.isCore ? "bed.double.fill" : "powersleep")
-                .font(.callout)
+                .font(.system(size: PSIconSize.small))
                 .foregroundColor(.white)
-                .frame(width: 32, height: 32)
+                .frame(width: PSIconSize.medium, height: PSIconSize.medium)
                 .background(
                     Circle()
                         .fill(
@@ -706,39 +530,31 @@ struct ModernSleepEntryRow: View {
                             )
                         )
                 )
-                .shadow(color: (entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.3), radius: 4, x: 0, y: 2)
+                .shadow(color: (entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.3), radius: PSSpacing.xs, x: 0, y: PSSpacing.xs / 2)
             
             // Entry Info
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
                 Text("\(formatTime(entry.startTime)) - \(formatTime(entry.endTime))")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                    .font(PSTypography.body)
                     .foregroundColor(.appText)
                 
                 Text(entry.isCore ? L("sleep.type.core", table: "History") : L("sleep.type.nap", table: "History"))
-                    .font(.caption)
-                    .foregroundColor(.appSecondaryText)
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
             }
             
             Spacer()
             
             // Duration Badge
-            Text(formatEntryDuration(entry.duration))
-                .font(.caption)
-                .fontWeight(.bold)
-                .foregroundColor(entry.isCore ? .appPrimary : .appSecondary)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(
-                    Capsule()
-                        .fill((entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.1))
-                )
+            PSStatusBadge(
+                formatEntryDuration(entry.duration),
+                color: entry.isCore ? .appPrimary : .appSecondary
+            )
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 6)
+        .padding(PSSpacing.sm)
         .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.gray.opacity(0.05))
+            RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                .fill(Color.appBackground.opacity(0.5))
         )
     }
 }
@@ -750,18 +566,17 @@ struct StatPill: View {
     let color: Color
     
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: PSSpacing.xs) {
             Image(systemName: icon)
-                .font(.caption)
+                .font(PSTypography.caption)
                 .foregroundColor(color)
             
             Text(value)
-                .font(.caption)
-                .fontWeight(.medium)
+                .font(PSTypography.caption)
                 .foregroundColor(.appText)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
+        .padding(.horizontal, PSSpacing.sm)
+        .padding(.vertical, PSSpacing.xs)
         .background(
             Capsule()
                 .fill(color.opacity(0.1))
@@ -781,9 +596,9 @@ struct ModernFloatingActionButton: View {
                 
                 Button(action: action) {
                     Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 56, height: 56)
+                        .font(.system(size: PSIconSize.medium, weight: .bold))
+                        .foregroundColor(.appTextOnPrimary)
+                        .frame(width: PSIconSize.extraLarge + PSSpacing.sm, height: PSIconSize.extraLarge + PSSpacing.sm)
                         .background(
                             Circle()
                                 .fill(
@@ -793,12 +608,12 @@ struct ModernFloatingActionButton: View {
                                         endPoint: .bottomTrailing
                                     )
                                 )
-                                .shadow(color: Color.appPrimary.opacity(0.4), radius: 12, x: 0, y: 6)
+                                .shadow(color: Color.appPrimary.opacity(0.4), radius: PSSpacing.md, x: 0, y: PSSpacing.sm)
                         )
                 }
                 .buttonStyle(FloatingButtonStyle())
-                .padding(.trailing, 20)
-                .padding(.bottom, 20)
+                .padding(.trailing, PSSpacing.xl)
+                .padding(.bottom, PSSpacing.xl)
             }
         }
     }
@@ -823,7 +638,7 @@ struct FilterChip: View {
                         .fill(isSelected ? Color.appPrimary : Color.clear)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(isSelected ? Color.clear : Color.appSecondaryText.opacity(0.3), lineWidth: 1)
+                                .stroke(isSelected ? Color.clear : Color.appTextSecondary.opacity(0.3), lineWidth: 1)
                         )
                 )
         }

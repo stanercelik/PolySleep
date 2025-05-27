@@ -34,7 +34,7 @@ struct SleepScheduleDescriptionCard: View {
                 HStack(spacing: 8) {
                     Text(Locale.current.language.languageCode?.identifier == "tr" ? schedule.description.tr : schedule.description.en)
                         .font(.body)
-                        .foregroundColor(Color.appSecondaryText)
+                        .foregroundColor(Color.appTextSecondary)
                     Spacer()
                 }
                 ScheduleDetails(schedule: schedule)
@@ -110,7 +110,7 @@ struct ScheduleInfoRow: View {
             Spacer()
             Text(value)
                 .font(.subheadline)
-                .foregroundColor(Color.appSecondaryText)
+                .foregroundColor(Color.appTextSecondary)
         }
     }
 }

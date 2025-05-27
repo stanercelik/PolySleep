@@ -36,7 +36,7 @@ struct LoadingRecommendationView: View {
                     
                     // Pasif arka plan halkası
                     Circle()
-                        .stroke(Color.appSecondaryText.opacity(0.2), lineWidth: 15)
+                        .stroke(Color.appTextSecondary.opacity(0.2), lineWidth: 15)
                         .frame(width: 200, height: 200)
                     
                     // Aktif ilerleme halkası

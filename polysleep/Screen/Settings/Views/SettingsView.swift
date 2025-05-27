@@ -24,9 +24,9 @@ struct SettingsView: View {
             .ignoresSafeArea()
             
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 20) {
+                LazyVStack(spacing: PSSpacing.xl) {
                     // Hero Header Section
-                    VStack(spacing: 16) {
+                    VStack(spacing: PSSpacing.lg) {
                         // Icon with gradient background
                         ZStack {
                             Circle()
@@ -40,34 +40,33 @@ struct SettingsView: View {
                                         endPoint: .bottomTrailing
                                     )
                                 )
-                                .frame(width: 64, height: 64)
+                                .frame(width: PSIconSize.headerIcon, height: PSIconSize.headerIcon)
                                 .shadow(
                                     color: Color.appPrimary.opacity(0.3),
-                                    radius: 12,
+                                    radius: PSSpacing.md,
                                     x: 0,
-                                    y: 6
+                                    y: PSSpacing.sm
                                 )
                             
                             Image(systemName: "gearshape.2.fill")
-                                .font(.title)
-                                .foregroundColor(.white)
+                                .font(.system(size: PSIconSize.headerIcon / 1.8))
+                                .foregroundColor(.appTextOnPrimary)
                         }
                         
-                        VStack(spacing: 8) {
+                        VStack(spacing: PSSpacing.sm) {
                             Text(L("settings.title", table: "Profile"))
-                                .font(.title2)
-                                .fontWeight(.bold)
+                                .font(PSTypography.title1)
                                 .foregroundColor(.appText)
                             
                             Text(L("settings.subtitle", table: "Profile"))
-                                .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
+                                .font(PSTypography.body)
+                                .foregroundColor(.appTextSecondary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                         }
                     }
-                    .padding(.top, 8)
-                    .padding(.horizontal, 24)
+                    .padding(.top, PSSpacing.sm)
+                    .padding(.horizontal, PSSpacing.xl)
                     
                     // Profile & Account Section
                     ModernSettingsSection(
@@ -76,7 +75,7 @@ struct SettingsView: View {
                         iconColor: .appAccent,
                         isMinimal: true
                     ) {
-                        VStack(spacing: 12) {
+                        VStack(spacing: PSSpacing.md) {
                             ModernNavigationRow(
                                 icon: "person.circle.fill",
                                 title: L("settings.about.personalInfo", table: "Profile"),
@@ -93,7 +92,7 @@ struct SettingsView: View {
                         iconColor: .appSecondary,
                         isMinimal: true
                     ) {
-                        VStack(spacing: 12) {
+                        VStack(spacing: PSSpacing.md) {
                             ModernNavigationRow(
                                 icon: "bell.badge.fill",
                                 title: L("settings.notifications.settings", table: "Profile"),
@@ -119,7 +118,7 @@ struct SettingsView: View {
                         iconColor: .blue,
                         isMinimal: true
                     ) {
-                        VStack(spacing: 12) {
+                        VStack(spacing: PSSpacing.md) {
                             // Theme Setting
                             ModernActionRow(
                                 icon: "moon.circle.fill",
@@ -149,7 +148,7 @@ struct SettingsView: View {
                         iconColor: .red,
                         isMinimal: true
                     ) {
-                        VStack(spacing: 12) {
+                        VStack(spacing: PSSpacing.md) {
                             ModernNavigationRow(
                                 icon: "info.circle.fill",
                                 title: L("settings.other.disclaimer", table: "Profile"),
@@ -176,29 +175,30 @@ struct SettingsView: View {
                     }
                     
                     // Enhanced Version Info
-                    VStack(spacing: 12) {
-                        HStack(spacing: 8) {
+                    VStack(spacing: PSSpacing.md) {
+                        HStack(spacing: PSSpacing.sm) {
                             Image("AppIcon")
                                 .resizable()
-                                .frame(width: 32, height: 32)
-                                .cornerRadius(8)
-                                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                                .frame(width: PSIconSize.large, height: PSIconSize.large)
+                                .cornerRadius(PSCornerRadius.small)
+                                .shadow(color: .black.opacity(0.2), radius: PSSpacing.xs, x: 0, y: PSSpacing.xs / 2)
                             
-                            VStack(spacing: 2) {
+                            VStack(alignment: .leading, spacing: PSSpacing.xs) {
                                 Text("PolySleep")
+                                    .font(PSTypography.headline)
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.appText)
                                 
                                 Text("v1.0.0")
                                     .font(.caption)
-                                    .foregroundColor(.appSecondaryText)
+                                    .foregroundColor(.appTextSecondary)
                             }
                         }
                         
                         Text(L("settings.copyright", table: "Profile"))
                             .font(.caption2)
-                            .foregroundColor(.appSecondaryText.opacity(0.7))
+                            .foregroundColor(.appTextSecondary.opacity(0.7))
                             .multilineTextAlignment(.center)
                     }
                     .padding(.top, 20)
@@ -285,7 +285,7 @@ struct ModernSettingsSection<Content: View>: View {
                         
                         Text(L("settings.section.subtitle", table: "Profile"))
                             .font(.caption)
-                            .foregroundColor(.appSecondaryText)
+                            .foregroundColor(.appTextSecondary)
                     }
                     
                     Spacer()
@@ -379,7 +379,7 @@ struct ModernNavigationRow<Destination: View>: View {
                     if let subtitle = subtitle {
                         Text(subtitle)
                             .font(.caption)
-                            .foregroundColor(.appSecondaryText)
+                            .foregroundColor(.appTextSecondary)
                             .lineLimit(2)
                     }
                 }
@@ -389,7 +389,7 @@ struct ModernNavigationRow<Destination: View>: View {
                 // Chevron icon
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.appSecondaryText.opacity(0.6))
+                    .foregroundColor(.appTextSecondary.opacity(0.6))
             }
             .padding(.vertical, 8)
             .contentShape(Rectangle())
@@ -429,7 +429,7 @@ struct ModernActionRow: View {
                     
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(.appSecondaryText)
+                        .foregroundColor(.appTextSecondary)
                         .lineLimit(2)
                 }
                 
@@ -486,7 +486,7 @@ struct ModernExternalLinkRow: View {
                     
                     Text(url.replacingOccurrences(of: "mailto:", with: "").replacingOccurrences(of: "https://", with: ""))
                         .font(.caption)
-                        .foregroundColor(.appSecondaryText)
+                        .foregroundColor(.appTextSecondary)
                         .lineLimit(1)
                 }
                 
@@ -514,7 +514,7 @@ struct ModernDivider: View {
                 LinearGradient(
                     gradient: Gradient(colors: [
                         Color.clear,
-                        Color.appSecondaryText.opacity(colorScheme == .light ? 0.2 : 0.1),
+                        Color.appTextSecondary.opacity(colorScheme == .light ? 0.2 : 0.1),
                         Color.clear
                     ]),
                     startPoint: .leading,

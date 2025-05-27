@@ -67,7 +67,7 @@ struct PersonalInfoView: View {
                             
                             Text(L("personalInfo.subtitle", table: "Profile"))
                                 .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
+                                .foregroundColor(.appTextSecondary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                         }
@@ -81,12 +81,12 @@ struct PersonalInfoView: View {
                             VStack(spacing: 20) {
                                 ZStack {
                                     Circle()
-                                        .fill(Color.appSecondaryText.opacity(0.1))
+                                        .fill(Color.appTextSecondary.opacity(0.1))
                                         .frame(width: 56, height: 56)
                                     
                                     Image(systemName: "doc.text")
                                         .font(.title2)
-                                        .foregroundColor(.appSecondaryText.opacity(0.6))
+                                        .foregroundColor(.appTextSecondary.opacity(0.6))
                                 }
                                 
                                 VStack(spacing: 12) {
@@ -97,7 +97,7 @@ struct PersonalInfoView: View {
                                     
                                     Text(L("personalInfo.empty.message", table: "Profile"))
                                         .font(.subheadline)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                         .multilineTextAlignment(.center)
                                         .lineSpacing(2)
                                 }
@@ -128,7 +128,7 @@ struct PersonalInfoView: View {
                                             
                                             Text(L("personalInfo.schedule.subtitle", table: "Profile"))
                                                 .font(.caption)
-                                                .foregroundColor(.appSecondaryText)
+                                                .foregroundColor(.appTextSecondary)
                                         }
                                         
                                         Spacer()
@@ -144,7 +144,7 @@ struct PersonalInfoView: View {
                                             
                                             Text("\(String(format: "%.1f", schedule.totalSleepHours)) " + L("personalInfo.schedule.hours", table: "Profile"))
                                                 .font(.subheadline)
-                                                .foregroundColor(.appSecondaryText)
+                                                .foregroundColor(.appTextSecondary)
                                         }
                                         
                                         Spacer()
@@ -194,7 +194,7 @@ struct PersonalInfoView: View {
                                         
                                         Text("\(getOrderedQuestions().count) " + L("personalInfo.answers.count", table: "Profile"))
                                             .font(.caption)
-                                            .foregroundColor(.appSecondaryText)
+                                            .foregroundColor(.appTextSecondary)
                                     }
                                     
                                     Spacer()
@@ -323,7 +323,7 @@ struct PersonalInfoAnswerCard: View {
                 Text(question)
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
             }

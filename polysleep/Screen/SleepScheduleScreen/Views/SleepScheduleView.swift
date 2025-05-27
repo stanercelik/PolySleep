@@ -141,10 +141,10 @@ struct SleepScheduleView: View {
                          : "\(minutes)m"
                     )
                     .font(.body)
-                    .foregroundColor(Color.appSecondaryText)
+                    .foregroundColor(Color.appTextSecondary)
                     
                     Text("・")
-                        .foregroundColor(Color.appSecondaryText)
+                        .foregroundColor(Color.appTextSecondary)
                     
                     Text(block.isCore ? NSLocalizedString("sleepSchedule.core", tableName: "Onboarding", comment: "") : NSLocalizedString("sleepSchedule.nap", tableName: "Onboarding", comment: ""))
                         .font(.body)

@@ -176,7 +176,7 @@ struct AddSleepEntrySheet: View {
                  
                  Text(L("sleepEntry.dateInfo", table: "AddSleepEntrySheet"))
                      .font(.caption)
-                     .foregroundColor(.appSecondaryText)
+                     .foregroundColor(.appTextSecondary)
              }
              .padding(.top, 4)
          }
@@ -221,12 +221,12 @@ struct AddSleepEntrySheet: View {
         VStack(spacing: 24) {
             ZStack {
                 Circle()
-                    .fill(Color.appSecondaryText.opacity(0.1))
+                    .fill(Color.appTextSecondary.opacity(0.1))
                     .frame(width: 80, height: 80)
                 
                 Image(systemName: "moon.zzz")
                     .font(.system(size: 32, weight: .light))
-                    .foregroundColor(Color.appSecondaryText.opacity(0.6))
+                    .foregroundColor(Color.appTextSecondary.opacity(0.6))
             }
             
             VStack(spacing: 8) {
@@ -238,7 +238,7 @@ struct AddSleepEntrySheet: View {
                 
                 Text("Create a sleep schedule first to add entries")
                     .font(.body)
-                    .foregroundColor(Color.appSecondaryText)
+                    .foregroundColor(Color.appTextSecondary)
                     .multilineTextAlignment(.center)
             }
         }
@@ -246,7 +246,7 @@ struct AddSleepEntrySheet: View {
         .padding(.vertical, 40)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.appSecondaryText.opacity(0.05))
+                .fill(Color.appTextSecondary.opacity(0.05))
         )
     }
     
@@ -320,7 +320,7 @@ struct AddSleepEntrySheet: View {
         .frame(height: 200)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.appSecondaryText.opacity(0.05))
+                .fill(Color.appTextSecondary.opacity(0.05))
         )
     }
     
@@ -344,7 +344,7 @@ struct AddSleepEntrySheet: View {
                     
                     Text("\(block.startTime) - \(block.endTime)")
                         .font(.caption)
-                        .foregroundColor(isAlreadyAdded ? Color.appSecondaryText.opacity(0.6) : Color.appSecondaryText)
+                        .foregroundColor(isAlreadyAdded ? Color.appTextSecondary.opacity(0.6) : Color.appTextSecondary)
                 }
                 
                 Spacer()
@@ -372,7 +372,7 @@ struct AddSleepEntrySheet: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(
                                 isSelected ? Color.appPrimary : 
-                                isAlreadyAdded ? Color.gray.opacity(0.3) : Color.appSecondaryText.opacity(0.1), 
+                                isAlreadyAdded ? Color.gray.opacity(0.3) : Color.appTextSecondary.opacity(0.1), 
                                 lineWidth: 1
                             )
                     )
@@ -420,13 +420,13 @@ struct AddSleepEntrySheet: View {
                         ZStack {
                             Text(previousEmojiDescription)
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color.appSecondaryText)
+                                .foregroundColor(Color.appTextSecondary)
                                 .opacity(labelOffset != 0 ? 0.3 : 0)
                                 .offset(y: labelOffset)
                             
                             Text(currentEmojiDescription)
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(Color.appSecondaryText)
+                                .foregroundColor(Color.appTextSecondary)
                                 .offset(y: labelOffset)
                         }
                         .frame(height: 20)
@@ -435,7 +435,7 @@ struct AddSleepEntrySheet: View {
                         HStack(spacing: 6) {
                             ForEach(0..<5) { index in
                                 Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
-                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color.appSecondaryText.opacity(0.3))
+                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color.appTextSecondary.opacity(0.3))
                                     .font(.system(size: 14))
                             }
                         }
@@ -449,13 +449,13 @@ struct AddSleepEntrySheet: View {
                     HStack {
                         Text(L("sleepEntry.quality.bad", table: "AddSleepEntrySheet"))
                             .font(.system(size: 12))
-                            .foregroundColor(Color.appSecondaryText)
+                            .foregroundColor(Color.appTextSecondary)
                         
                         Spacer()
                         
                         Text(L("sleepEntry.quality.excellent", table: "AddSleepEntrySheet"))
                             .font(.system(size: 12))
-                            .foregroundColor(Color.appSecondaryText)
+                            .foregroundColor(Color.appTextSecondary)
                     }
                     .padding(.horizontal, 4)
                     

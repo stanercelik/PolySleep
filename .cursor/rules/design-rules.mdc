@@ -3,137 +3,64 @@ description:
 globs: 
 alwaysApply: true
 ---
-# PolySleep - Design System & UI/UX Guidelines
+PolySleep - Tasarım Sistemi ve UI/UX Prensipleri
+Vizyon: PolySleep, kullanıcıların polifazik uyku düzenlerini kolayca takip etmelerine, uyku kalitelerini analiz etmelerine ve uyku alışkanlıklarını iyileştirmelerine yardımcı olan, sezgisel, motive edici ve görsel olarak çekici bir mobil uygulamadır.
+Temel Tasarım Prensipleri:
+Kullanıcı Odaklılık: Tasarım, kullanıcının ihtiyaçlarını ve hedeflerini merkeze alır. Akışlar sezgisel, bilgiler anlaşılır olmalıdır.
+Netlik ve Anlaşılırlık: Bilgiler ve eylemler açıkça sunulmalıdır. Kullanıcı ne yapması gerektiğini ve nerede olduğunu her zaman bilmelidir.
+Tutarlılık: Uygulama genelinde renkler, tipografi, ikonlar ve bileşenler tutarlı olmalıdır. Bu, öğrenilebilirliği artırır ve güven verir.
+Minimalizm ve Modernlik: Gereksiz karmaşıklıktan kaçınılarak, odaklanmış ve estetik bir deneyim sunulur. Fonksiyonellik ön plandadır.
+Erişilebilirlik: Renk kontrastları, yazı tipi boyutları ve etkileşim elemanları, farklı yeteneklere sahip kullanıcılar için erişilebilir olmalıdır.
+Geri Bildirim: Kullanıcının her eylemi için anında ve anlaşılır geri bildirim sağlanmalıdır.
+Motivasyon: Veriler, kullanıcıyı motive edecek ve hedeflerine ulaşmasına yardımcı olacak şekilde sunulmalıdır.
 
-This document outlines the design system and UI/UX guidelines for the PolySleep app, following Apple's Human Interface Guidelines (HIG).
+2. Tipografi
+HIG (Apple Human Interface Guidelines) ile uyumlu olması için SF Pro font ailesi (veya Android için Roboto/Inter) tercih edilmelidir.
+Başlık 1 (H1 - Sayfa Başlığı): SF Pro Bold, 28-34pt
+Başlık 2 (H2 - Bölüm Başlığı): SF Pro Semibold, 22-24pt
+Başlık 3 (H3 - Kart Başlığı): SF Pro Semibold, 18-20pt
+Gövde Metni (Body): SF Pro Regular, 16-17pt
+Alt Metin / Açıklama (Caption/Subtitle): SF Pro Regular, 13-15pt
+Düğme Metni (Button): SF Pro Semibold, 15-17pt
+Satır Yüksekliği: Metin boyutunun 1.4 - 1.6 katı (okunabilirliği artırmak için).
+3. İkonografi
+Stil: Tutarlı, modern ve çizgi tabanlı (line icons) veya dolu (solid icons) - bir stil seçilip ona sadık kalınmalı. SF Symbols (iOS için) mükemmel bir kaynaktır.
+Boyut: Genellikle 24x24px veya 28x28px tıklama alanları için idealdir.
+Renk: Ana Metin Rengi veya Vurgu Rengi kullanılabilir. Aktif/Pasif durumlar için farklı renk tonları.
+4. Boşluk ve Hizalama (Spacing & Layout)
+Grid Sistemi: 8pt grid sistemi (tüm boşluklar, padding'ler, margin'ler 8'in katları olmalı: 4px, 8px, 16px, 24px, 32px vb.)
+Genel Padding: Sayfa kenarlarında 16px veya 24px.
+Bileşen İçi Padding: Kartlar, düğmeler vb. içlerinde 12px, 16px gibi tutarlı padding'ler.
+Elemanlar Arası Boşluk: Birbiriyle ilişkili elemanlar arasında 8px, farklı gruplar arasında 16px veya 24px.
+5. Bileşenler (Components)
+Kartlar (Cards):
+Köşe Yarıçapı (Corner Radius): 12px - 16px (modern görünüm için).
+Gölge (Shadow): Çok hafif, yayvan bir gölge (örneğin, 0px 4px 12px rgba(0,0,0,0.1) koyu temada daha da azaltılabilir veya sadece kenarlık kullanılabilir). Veya kenarlık: 1px solid #4A5568.
+İç Padding: 16px.
+Düğmeler (Buttons):
+Primary Button: Vurgu Rengi (#4299E1) dolgulu, beyaz metin. Köşe yarıçapı 8-12px. Yükseklik ~44-50px (tıklama kolaylığı için).
+Secondary Button: Kenarlıklı (Vurgu Rengi kenarlık, Vurgu Rengi metin) veya daha soluk bir dolgu rengi.
+Tertiary/Text Button: Sadece metin, Vurgu Rengi.
+Floating Action Button (FAB): Vurgu Rengi, belirgin gölge.
+Giriş Alanları (Input Fields):
+Arka plan: İkincil Arka Plan'dan biraz daha açık veya koyu.
+Kenarlık: Nötr Kenarlık Rengi veya odaklandığında Vurgu Rengi.
+Köşe Yarıçapı: 8-10px.
+İç Padding: 12-16px.
+Sekmeler (Tabs) / Segmented Controls:
+Aktif sekme belirgin olmalı (Vurgu Rengi ile alt çizgi veya dolgu).
+Metin: Düğme Metni stilinde.
+Listeler (Lists):
+Öğeler arası ayırıcılar (dividers) çok ince ve soluk olmalı veya hiç olmamalı, boşluklarla ayrım sağlanmalı.
+Her öğe için tıklama alanı yeterli olmalı (minimum 44px yükseklik).
+Grafikler (Charts):
+Renkler: Veri setlerini ayırt etmek için paletten seçilen uyumlu renkler. Ana vurgu rengi ana veri için.
+Etiketler: Okunabilir, kısa ve net. Alt Metin tipografisi.
+Etkileşim: Mümkünse dokunarak detay görme (tooltip).
+6. Etkileşim ve Animasyon
+Geçişler: Akıcı ve hızlı (genellikle 200-300ms).
+Dokunma Geri Bildirimi: Düğmelere ve tıklanabilir elemanlara dokunulduğunda hafif bir görsel geri bildirim (renk değişimi, ölçeklenme).
+Yükleme Durumları: İskelet yükleyiciler (skeleton loaders) veya minimal ilerleme göstergeleri.
 
-## 1. Design System
 
-### 1.1 Color Palette
-
-| Color Name | Light Mode | Dark Mode | Usage |
-|---|---|-----|-----|
-| **AccentColor** | `#FF9800` | `#FF9800` | Primary CTAs, active toggles |
-| **BackgroundColor** | `#F8F9FA` | `#121212` | Main background |
-| **CardBackground** | `#FFFFFF` | `#171717` | Cards, modal surfaces |
-| **PrimaryColor** | `#2196F3` | `#2196F3` | Headers, important interactions |
-| **SecondaryColor** | `#4CAF50` | `#4CAF50` | Success states, positive emphasis |
-| **TextColor** | `#2C2C2C` | `#FEFFFF` | Main text |
-| **SecondaryTextColor** | `#6C757D` | `#BDBDBD` | Helper text, subtitles |
-
-- All text contrasts must meet WCAG requirements (minimum 4.5:1)
-- Use `AccentColor` for main CTAs
-- Use `PrimaryColor` for headers and important labels
-
-### 1.2 Typography
-
-- **H1**: `SF Pro Rounded Bold`, 28pt
-- **H2**: `SF Pro Rounded Semibold`, 22pt
-- **Body**: `SF Pro Text Regular`, 16pt
-- **Caption**: `SF Pro Text Light`, 14pt
-
-Dynamic Type support is mandatory for accessibility.
-
-### 1.3 Layout & Spacing
-
-#### Corner Radius
-- **Buttons, Cards**: 12px
-- **Large Cards/Modals**: 20px
-- **Circular Components**: 100% (circular)
-
-#### Shadows
-- **Light**: `0px 2px 8px rgba(0,0,0,0.1)`
-- **Medium**: `0px 4px 12px rgba(0,0,0,0.15)`
-- **Heavy**: `0px 8px 24px rgba(0,0,0,0.2)`
-
-### 1.4 Animation & Interaction
-
-#### Timing
-- **Light Interactions**: 0.2s Ease-In-Out
-- **Modals**: 0.3s Spring Effect
-- **Screen Transitions**: Horizontal slide or smooth fade
-
-#### Micro-interactions
-- **Button Press**: Scale down to 0.95, opacity to 0.8
-- **Haptic Feedback**: 
-  - Success: Soft haptic
-  - Error: Rigid haptic
-- **Long Press Actions**: Additional action buttons
-
-## 2. Accessibility Guidelines
-
-### 2.1 Core Requirements
-- Support Dynamic Type
-- VoiceOver labels for all interactive elements
-- Color blindness support (use icons/patterns with colors)
-- Support system dark mode
-
-### 2.2 Touch Targets
-- Minimum touch target size: 44x44pt
-- Adequate spacing between interactive elements
-- Clear visual feedback on interaction
-
-## 3. Component Library
-
-### 3.1 Buttons
-- Primary: `AccentColor` background, white text
-- Secondary: Outlined with `SecondaryTextColor`
-- Text-only: `PrimaryColor` text
-- All buttons: 12px corner radius
-
-### 3.2 Cards
-- Background: `CardBackground`
-- Corner radius: 12px or 20px based on size
-- Medium shadow by default
-- Padding: 16px
-
-### 3.3 Text Fields
-- Clear placeholder text
-- Visual feedback on focus
-- Error states with red highlight
-- Helper text when needed
-
-### 3.4 Navigation
-- Tab bar with clear icons and labels
-- Active state using `AccentColor`
-- Consistent back button placement
-- Clear hierarchical navigation
-
-## 4. Assets Management
-
-### 4.1 Icons
-- Use SF Symbols where possible
-- Custom icons should match SF Symbols style
-- Consistent sizing across the app
-- Support for light/dark variants
-
-### 4.2 Images
-- Store in Assets.xcassets
-- Support @2x and @3x resolutions
-- Optimize for size without quality loss
-- Consider dark mode variants
-
-### 4.3 App Icon
-- Multiple sizes in Assets.xcassets
-- Clear and recognizable at small sizes
-- Follow Apple's app icon guidelines
-
-## 5. Implementation Notes
-
-### 5.1 SwiftUI Best Practices
-- Use SwiftUI's built-in spacing system
-- Implement custom ViewModifiers for repeated styles
-- Create reusable components
-- Use environment values for global styles
-
-### 5.2 Performance
-- Optimize image loading and caching
-- Minimize view updates
-- Use lazy loading for lists
-- Monitor animation performance
-
-### 5.3 Testing
-- Test on multiple device sizes
-- Verify dark mode appearance
-- Test with different Dynamic Type sizes
-- Verify VoiceOver functionality
+bunu 

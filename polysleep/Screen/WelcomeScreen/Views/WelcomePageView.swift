@@ -26,7 +26,7 @@ struct WelcomePageView: View {
             
             if showDescription {
                 Text(pageDescription)
-                    .foregroundColor(Color.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
                     .font(.headline)
                     .transition(.opacity)
             }

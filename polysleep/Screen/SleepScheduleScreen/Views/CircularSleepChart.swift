@@ -76,7 +76,7 @@ struct CircularSleepChart: View {
     
     private func backgroundCircle(center: CGPoint, size: CGFloat) -> some View {
         Circle()
-            .stroke(Color.appSecondaryText.opacity(0.12), lineWidth: strokeWidth)
+            .stroke(Color.appTextSecondary.opacity(0.12), lineWidth: strokeWidth)
             .frame(width: circleRadius * 2, height: circleRadius * 2)
             .position(center)
     }
@@ -109,7 +109,7 @@ struct CircularSleepChart: View {
             path.addLine(to: CGPoint(x: endX, y: endY))
         }
         .stroke(style: StrokeStyle(lineWidth: 1, dash: hour % 3 == 0 ? [] : [4, 4]))
-        .foregroundColor(Color.appSecondaryText.opacity(hour % 3 == 0 ? 0.3 : 0.2))
+        .foregroundColor(Color.appTextSecondary.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
     private func hourMarkersView(center: CGPoint, size: CGFloat) -> some View {
@@ -129,7 +129,7 @@ struct CircularSleepChart: View {
         
         return Text(String(format: "%02d:00", hour))
             .font(.system(size: 12, weight: .medium))
-            .foregroundColor(Color.appSecondaryText)
+            .foregroundColor(Color.appTextSecondary)
             .position(x: xPosition, y: yPosition)
     }
     
@@ -269,7 +269,7 @@ struct CircularSleepChart: View {
         let yPosition = center.y + radius * sin(angle * .pi / 180)
         return Text(time)
             .font(.system(size: 10, weight: .medium))
-            .foregroundColor(Color.appSecondaryText)
+            .foregroundColor(Color.appTextSecondary)
             .padding(2)
             .background(Color.black.opacity(0.3))
             .cornerRadius(4)

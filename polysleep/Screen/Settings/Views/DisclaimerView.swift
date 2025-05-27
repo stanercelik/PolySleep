@@ -55,7 +55,7 @@ struct DisclaimerView: View {
                             
                             Text(L("disclaimer.subtitle", table: "Profile"))
                                 .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
+                                .foregroundColor(.appTextSecondary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                         }

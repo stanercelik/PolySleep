@@ -67,7 +67,7 @@ struct NotificationSettingsView: View {
                             
                             Text(L("notifications.management.subtitle", table: "Profile"))
                                 .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
+                                .foregroundColor(.appTextSecondary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
                         }
@@ -98,7 +98,7 @@ struct NotificationSettingsView: View {
                                     
                                     Text(L("notifications.reminderTime.subtitle", table: "Profile"))
                                         .font(.caption)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                 }
                                 
                                 Spacer()
@@ -114,7 +114,7 @@ struct NotificationSettingsView: View {
                                     } else {
                                         Text(L("notifications.off", table: "Profile"))
                                             .font(.system(size: 28, weight: .bold, design: .rounded))
-                                            .foregroundColor(.appSecondaryText)
+                                            .foregroundColor(.appTextSecondary)
                                     }
                                     
                                     Spacer()
@@ -131,7 +131,7 @@ struct NotificationSettingsView: View {
                                     value: $reminderTime,
                                     range: 0...120,
                                     step: 1,
-                                    trackColor: Color.appSecondaryText.opacity(0.2),
+                                    trackColor: Color.appTextSecondary.opacity(0.2),
                                     thumbColor: Color.appAccent
                                 )
                                 .onChange(of: reminderTime) { oldValue, newValue in
@@ -142,11 +142,11 @@ struct NotificationSettingsView: View {
                                 HStack {
                                     Text(L("notifications.off", table: "Profile"))
                                         .font(.caption2)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                     Spacer()
                                     Text(L("notifications.twoHours", table: "Profile"))
                                         .font(.caption2)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                 }
                             }
                         }
@@ -175,7 +175,7 @@ struct NotificationSettingsView: View {
                                     
                                     Text(L("notifications.test.subtitle", table: "Profile"))
                                         .font(.caption)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                 }
                                 
                                 Spacer()
@@ -244,7 +244,7 @@ struct NotificationSettingsView: View {
                                     
                                     Text(L("notifications.status.subtitle", table: "Profile"))
                                         .font(.caption)
-                                        .foregroundColor(.appSecondaryText)
+                                        .foregroundColor(.appTextSecondary)
                                 }
                                 
                                 Spacer()
@@ -542,7 +542,7 @@ struct ModernNotificationTestButton: View {
                     
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(.appSecondaryText)
+                        .foregroundColor(.appTextSecondary)
                         .lineLimit(2)
                 }
                 
@@ -624,7 +624,7 @@ struct ModernStatusDivider: View {
                 LinearGradient(
                     gradient: Gradient(colors: [
                         Color.clear,
-                        Color.appSecondaryText.opacity(colorScheme == .light ? 0.15 : 0.08),
+                        Color.appTextSecondary.opacity(colorScheme == .light ? 0.15 : 0.08),
                         Color.clear
                     ]),
                     startPoint: .leading,

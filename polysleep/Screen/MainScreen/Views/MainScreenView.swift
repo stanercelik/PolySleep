@@ -95,7 +95,7 @@ struct MainScreenView: View {
                     .ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack(spacing: 12) {
+                    LazyVStack(spacing: PSSpacing.md) {
                         // Header Section
                         HeaderSection(viewModel: viewModel)
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
@@ -150,9 +150,9 @@ struct MainScreenView: View {
                             .redacted(reason: viewModel.isLoading ? .placeholder : [])
                             .redactedShimmer(if: viewModel.isLoading)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.top, PSSpacing.sm)
+                    .padding(.bottom, PSSpacing.xl)
                 }
                 
                 // Error Overlay
@@ -201,49 +201,38 @@ struct HeaderSection: View {
     @State private var showScheduleDescription = false
     
     var body: some View {
-        VStack(spacing: 16) {
-                            // Ana bilgi kartı
-            VStack(spacing: 12) {
-                // Program adı ve toplam uyku - VStack olarak yeniden düzenlendi
-                VStack(spacing: 12) {
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                // Ana bilgi kartı
+                VStack(spacing: PSSpacing.md) {
+                    // Program adı ve toplam uyku - VStack olarak yeniden düzenlendi
+                    VStack(spacing: PSSpacing.md) {
                     // Üst satır: Program adı + toplam uyku
                     HStack(alignment: .center) {
                         Text(viewModel.model.schedule.name)
-                            .font(.headline)
-                            .fontWeight(.semibold)
+                            .font(PSTypography.headline)
                             .foregroundColor(.appPrimary)
                         
                         Spacer()
                         
                         // Toplam uyku süresi
-                        VStack(alignment: .trailing, spacing: 2) {
+                        VStack(alignment: .trailing, spacing: PSSpacing.xs) {
                             Text(L("mainScreen.totalSleepLabel", table: "MainScreen"))
-                                .font(.caption2)
-                                .foregroundColor(.appSecondaryText)
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
                             
                             Text(viewModel.totalSleepTimeFormatted)
-                                .font(.title3)
-                                .fontWeight(.semibold)
+                                .font(PSTypography.headline)
                                 .foregroundColor(.appPrimary)
                         }
                     }
                     
                     // Alt satır: Durum badge
                     HStack {
-                        HStack(spacing: 6) {
-                            Image(systemName: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill")
-                                .font(.caption)
-                                .foregroundColor(viewModel.isInSleepTime ? .appSecondary : .appAccent)
-                            
-                            Text(viewModel.sleepStatusMessage)
-                                .font(.subheadline)
-                                .foregroundColor(.appSecondaryText)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(.quaternary)
+                        PSStatusBadge(
+                            viewModel.sleepStatusMessage,
+                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
+                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
                         )
                         
                         Spacer()
@@ -256,40 +245,37 @@ struct HeaderSection: View {
                         showScheduleDescription.toggle()
                     }
                 }) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: PSSpacing.sm) {
                         Image(systemName: "info.circle")
-                            .font(.caption)
+                            .font(PSTypography.caption)
                         
                         Text(L("mainScreen.scheduleDescription.title", table: "MainScreen"))
-                            .font(.caption)
-                            .fontWeight(.medium)
+                            .font(PSTypography.caption)
                         
                         Spacer()
                         
                         Image(systemName: showScheduleDescription ? "chevron.up" : "chevron.down")
-                            .font(.caption2)
-                            .fontWeight(.medium)
+                            .font(PSTypography.caption)
                     }
                     .foregroundColor(.appPrimary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(Color.appPrimary.opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
+                    .padding(.horizontal, PSSpacing.md)
+                    .padding(.vertical, PSSpacing.sm)
+                    .background(Color.appPrimary.opacity(0.1), in: RoundedRectangle(cornerRadius: PSCornerRadius.small))
                 }
                 
                 // Program açıklaması
                 if showScheduleDescription {
                     Text(viewModel.scheduleDescription)
-                        .font(.footnote)
-                        .foregroundColor(.appSecondaryText)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
                         .lineSpacing(3)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(12)
-                        .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
+                        .padding(PSSpacing.md)
+                        .background(.quaternary, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
                         .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
                 }
+                }
             }
-            .padding(16)
-            .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
         }
     }
 }
@@ -302,7 +288,7 @@ struct StatusCardsGrid: View {
         LazyVGrid(columns: [
             GridItem(.flexible()),
             GridItem(.flexible())
-        ], spacing: 12) {
+        ], spacing: PSSpacing.md) {
             StatusCard(
                 icon: "chart.line.uptrend.xyaxis",
                 title: L("mainScreen.progress", table: "MainScreen"),
@@ -328,29 +314,28 @@ struct StatusCard: View {
     let color: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundColor(color)
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                HStack {
+                    Image(systemName: icon)
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(color)
+                    
+                    Spacer()
+                }
                 
-                Spacer()
+                Text(title)
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .lineLimit(1)
+                
+                Text(value)
+                    .font(PSTypography.headline)
+                    .foregroundColor(.appText)
+                    .lineLimit(1)
             }
-            
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.appSecondaryText)
-                .lineLimit(1)
-            
-            Text(value)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(.appText)
-                .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
@@ -359,26 +344,17 @@ struct SleepChartSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Label {
-                    Text(L("mainScreen.sleepChart.title", table: "MainScreen"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.appText)
-                } icon: {
-                    Image(systemName: "chart.pie.fill")
-                        .foregroundColor(.appPrimary)
-                }
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                PSSectionHeader(
+                    L("mainScreen.sleepChart.title", table: "MainScreen"),
+                    icon: "chart.pie.fill"
+                )
                 
-                Spacer()
+                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
+                    .frame(height: 280)
             }
-            
-            CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
-                .frame(height: 280)
         }
-        .padding(16)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
@@ -387,64 +363,45 @@ struct SleepBlocksSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Label {
-                    Text(L("mainScreen.sleepBlocks", table: "MainScreen"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.appText)
-                } icon: {
-                    Image(systemName: "bed.double.fill")
-                        .foregroundColor(.appPrimary)
-                }
-                
-                Spacer()
-                
-                // Düzenleme modu aktifken edit butonu
-                if viewModel.isEditing {
-                    HStack(spacing: 8) {
-                        Text(L("mainScreen.editing.mode", table: "MainScreen"))
-                            .font(.caption2)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appSecondary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.appSecondary.opacity(0.15), in: Capsule())
-                        
-                        Button(action: {
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                HStack {
+                    PSSectionHeader(
+                        L("mainScreen.sleepBlocks", table: "MainScreen"),
+                        icon: "bed.double.fill"
+                    )
+                    
+                    Spacer()
+                    
+                    // Düzenleme modu aktifken edit butonu
+                    if viewModel.isEditing {
+                        HStack(spacing: PSSpacing.sm) {
+                            PSStatusBadge(
+                                L("mainScreen.editing.mode", table: "MainScreen"),
+                                color: .appSecondary
+                            )
+                            
+                            PSIconButton(
+                                icon: "checkmark",
+                                backgroundColor: Color.appSecondary.opacity(0.15),
+                                foregroundColor: .appSecondary
+                            ) {
+                                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                    viewModel.isEditing.toggle()
+                                }
+                            }
+                        }
+                    } else {
+                        PSIconButton(icon: "pencil") {
                             withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                                 viewModel.isEditing.toggle()
                             }
-                        }) {
-                            Image(systemName: "checkmark")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .foregroundColor(.appSecondary)
-                                .frame(width: 32, height: 32)
-                                .background(Color.appSecondary.opacity(0.15), in: Circle())
                         }
-                        .buttonStyle(.plain)
                     }
-                } else {
-                    Button(action: {
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                            viewModel.isEditing.toggle()
-                        }
-                    }) {
-                        Image(systemName: "pencil")
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appPrimary)
-                            .frame(width: 32, height: 32)
-                            .background(Color.appPrimary.opacity(0.15), in: Circle())
-                    }
-                    .buttonStyle(.plain)
                 }
-            }
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 12) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: PSSpacing.md) {
                     if viewModel.isEditing {
                         AddSleepBlockCard(viewModel: viewModel)
                             .transition(.asymmetric(
@@ -461,13 +418,12 @@ struct SleepBlocksSection: View {
                             viewModel: viewModel
                         )
                     }
+                    }
+                    .padding(.horizontal, PSSpacing.xs)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.8), value: viewModel.isEditing)
                 }
-                .padding(.horizontal, 4)
-                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: viewModel.isEditing)
             }
         }
-        .padding(16)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
@@ -476,31 +432,22 @@ struct DailyTipSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                Label {
-                    Text(L("mainScreen.dailyTip.title", table: "MainScreen"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.appText)
-                } icon: {
-                    Image(systemName: "lightbulb.fill")
-                        .foregroundColor(.yellow)
-                }
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                PSSectionHeader(
+                    L("mainScreen.dailyTip.title", table: "MainScreen"),
+                    icon: "lightbulb.fill"
+                )
                 
-                Spacer()
+                Text(viewModel.dailyTip, tableName: "Tips")
+                    .font(PSTypography.body)
+                    .foregroundColor(.appTextSecondary)
+                    .lineSpacing(4)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(PSSpacing.md)
+                    .background(.quaternary, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
             }
-            
-            Text(viewModel.dailyTip, tableName: "Tips")
-                .font(.subheadline)
-                .foregroundColor(.appSecondaryText)
-                .lineSpacing(4)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(12)
-                .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
         }
-        .padding(16)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
@@ -512,14 +459,14 @@ struct SleepQualityRatingCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        SleepQualityRatingView(
-            startTime: startTime,
-            endTime: endTime,
-            isPresented: $isPresented,
-            viewModel: viewModel
-        )
-        .padding(16)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 16))
+        PSCard {
+            SleepQualityRatingView(
+                startTime: startTime,
+                endTime: endTime,
+                isPresented: $isPresented,
+                viewModel: viewModel
+            )
+        }
     }
 }
 
@@ -529,34 +476,17 @@ struct ErrorOverlayCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.largeTitle)
-                .foregroundColor(.red)
-            
-            Text(LocalizedStringKey(errorMessage))
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.appText)
-            
-            Button(action: {
-                Task {
-                    await viewModel.loadScheduleFromRepository()
-                }
-            }) {
-                Label(L("mainscreen.error.retry", table: "MainScreen"), systemImage: "arrow.clockwise")
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 12)
-                    .background(Color.appPrimary, in: RoundedRectangle(cornerRadius: 12))
+        PSErrorState(
+            title: L("mainscreen.error.title", table: "MainScreen"),
+            message: errorMessage
+        ) {
+            Task {
+                await viewModel.loadScheduleFromRepository()
             }
         }
-        .padding(24)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 20))
+        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: PSCornerRadius.extraLarge))
         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
-        .padding(.horizontal, 40)
+        .padding(.horizontal, PSSpacing.xxxl)
     }
 }
 
@@ -568,16 +498,15 @@ struct AddSleepBlockCard: View {
         Button(action: {
             viewModel.showAddBlockSheet = true
         }) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                HStack(spacing: PSSpacing.sm) {
                     Image(systemName: "plus.circle.fill")
-                        .font(.title3)
+                        .font(.system(size: PSIconSize.medium))
                         .foregroundColor(.appAccent)
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
                         Text(L("mainScreen.addSleepBlock", table: "MainScreen"))
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                            .font(PSTypography.button)
                             .foregroundColor(.appAccent)
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
@@ -588,10 +517,10 @@ struct AddSleepBlockCard: View {
             }
             .frame(minWidth: 150, maxWidth: .infinity)
             .frame(height: 85)
-            .padding(14)
-            .background(Color.appAccent.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
+            .padding(PSSpacing.md)
+            .background(Color.appAccent.opacity(0.1), in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: PSCornerRadius.medium)
                     .stroke(Color.appAccent.opacity(0.3), style: StrokeStyle(lineWidth: 1, dash: [6, 3]))
             )
         }
@@ -610,33 +539,31 @@ struct SleepBlockCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: PSSpacing.sm) {
+            HStack(spacing: PSSpacing.sm) {
                 Image(systemName: block.isCore ? "moon.fill" : "powersleep")
-                    .font(.title3)
+                    .font(.system(size: PSIconSize.medium))
                     .foregroundColor(block.isCore ? .appPrimary : .appAccent)
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
                     // Saatleri yan yana daha düzgün göstermek için
-                    HStack(spacing: 6) {
+                    HStack(spacing: PSSpacing.xs) {
                         Text(TimeFormatter.formattedString(from: block.startTime))
-                            .font(.system(.subheadline, design: .monospaced))
-                            .fontWeight(.semibold)
+                            .font(.system(.subheadline, design: .monospaced).weight(.semibold))
                             .foregroundColor(.appText)
                         
                         Text("—")
-                            .font(.subheadline)
-                            .foregroundColor(.appSecondaryText)
+                            .font(PSTypography.body)
+                            .foregroundColor(.appTextSecondary)
                         
                         Text(TimeFormatter.formattedString(from: block.endTime))
-                            .font(.system(.subheadline, design: .monospaced))
-                            .fontWeight(.semibold)
+                            .font(.system(.subheadline, design: .monospaced).weight(.semibold))
                             .foregroundColor(.appText)
                     }
                     
                     Text(block.isCore ? L("mainScreen.sleepBlockCore", table: "MainScreen") : L("mainScreen.sleepBlockNap", table: "MainScreen"))
-                        .font(.caption2)
-                        .foregroundColor(.appSecondaryText)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
                         .lineLimit(1)
                 }
                 
@@ -644,7 +571,7 @@ struct SleepBlockCard: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            // Context menu butonu - sağ üst köşeye overlay ile yerleştirildi
+            // Context menu butonu - card'ın tam sağ üst köşesinde
             if viewModel.isEditing {
                 Menu {
                     Button(action: {
@@ -660,21 +587,30 @@ struct SleepBlockCard: View {
                         Label(L("general.delete", table: "MainScreen"), systemImage: "trash")
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle")
-                        .font(.callout)
-                        .foregroundColor(.appSecondaryText)
-                        .opacity(0.8)
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                        .frame(width: 28, height: 28)
+                        .background(
+                            Circle()
+                                .fill(Color.appBackground.opacity(0.9))
+                        )
+                        .overlay(
+                            Circle()
+                                .stroke(Color.appTextSecondary.opacity(0.2), lineWidth: 1)
+                        )
+                        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 }
-                .padding(4)
+                .offset(x: 0, y: 0)
                 .transition(.scale(scale: 0.8).combined(with: .opacity))
             }
         }
         .frame(minWidth: 150, maxWidth: .infinity)
         .frame(height: 85)
-        .padding(14)
-        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: 12))
+        .padding(PSSpacing.md)
+        .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
                 .stroke(block.isCore ? Color.appPrimary.opacity(0.2) : Color.appAccent.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingEditSheet) {
@@ -711,35 +647,42 @@ struct EditSleepBlockSheet: View {
                         selection: $viewModel.editingBlockStartTime,
                         displayedComponents: .hourAndMinute
                     )
+                    .font(PSTypography.body)
                     
                     DatePicker(
                         L("sleepBlock.endTime", table: "MainScreen"),
                         selection: $viewModel.editingBlockEndTime,
                         displayedComponents: .hourAndMinute
                     )
+                    .font(PSTypography.body)
                 }
                 
-                Section {
+                Section(header: Text(L("sleepBlock.typeTitle", table: "MainScreen")).font(PSTypography.caption)) {
                     Text(L("sleepBlock.autoType", table: "MainScreen"))
-                        .font(.footnote)
-                        .foregroundColor(.appSecondaryText)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
                 }
             }
             .navigationTitle(L("sleepBlock.edit", table: "MainScreen"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(L("general.cancel", table: "MainScreen")) {
-                        dismiss()
+                    Button(action: { dismiss() }) {
+                        Text(L("general.cancel", table: "MainScreen"))
+                            .font(PSTypography.button)
+                            .foregroundColor(.appPrimary)
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(L("general.save", table: "MainScreen")) {
+                    Button(action: {
                         if viewModel.validateEditingBlock() {
                             viewModel.updateBlock()
                             dismiss()
                         }
+                    }) {
+                        Text(L("general.save", table: "MainScreen"))
+                            .font(PSTypography.button)
                     }
                 }
             }
@@ -822,7 +765,7 @@ struct TipSection: View {
     var body: some View {
         Text(viewModel.dailyTip, tableName: "Tips")
             .font(.subheadline)
-            .foregroundColor(.appSecondaryText)
+            .foregroundColor(.appTextSecondary)
             .lineSpacing(4)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(12)

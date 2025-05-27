@@ -21,13 +21,13 @@ public struct AnalyticsView: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: PSSpacing.xl) {
                         // Başlık
                         Text(L("tabbar.analytics", table: "Common"))
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundColor(Color("TextColor"))
-                            .padding(.horizontal)
-                            .padding(.top, 10)
+                            .font(PSTypography.largeTitle)
+                            .foregroundColor(.appText)
+                            .padding(.horizontal, PSSpacing.lg)
+                            .padding(.top, PSSpacing.sm)
                         
                         // Zaman Aralığı Seçici
                         timeRangePicker
@@ -36,7 +36,7 @@ public struct AnalyticsView: View {
                             loadingView
                         } else if viewModel.hasEnoughData {
                             // Ana Analiz İçeriği
-                            VStack(spacing: 20) {
+                            VStack(spacing: PSSpacing.xl) {
                                 AnalyticsSummaryCard(viewModel: viewModel)
                                 AnalyticsTrendCharts(
                                     viewModel: viewModel,
@@ -58,7 +58,7 @@ public struct AnalyticsView: View {
                             insufficientDataView
                         }
                     }
-                    .padding(.bottom, 30)
+                    .padding(.bottom, PSSpacing.xxl)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -81,75 +81,42 @@ public struct AnalyticsView: View {
     
     private var timeRangePicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+            HStack(spacing: PSSpacing.md) {
                 ForEach(TimeRange.allCases) { range in
                     Button(action: {
                         viewModel.changeTimeRange(to: range)
                     }) {
                         Text(range.displayName)
-                            .font(.system(size: 14, weight: .medium))
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(viewModel.selectedTimeRange == range ? Color("PrimaryColor") : Color("CardBackground"))
-                            .foregroundColor(viewModel.selectedTimeRange == range ? .white : Color("TextColor"))
-                            .cornerRadius(20)
+                            .font(PSTypography.button)
+                            .padding(.horizontal, PSSpacing.lg)
+                            .padding(.vertical, PSSpacing.sm)
+                            .background(viewModel.selectedTimeRange == range ? Color.appPrimary : Color.appCardBackground)
+                            .foregroundColor(viewModel.selectedTimeRange == range ? .appTextOnPrimary : .appText)
+                            .cornerRadius(PSCornerRadius.extraLarge)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, PSSpacing.lg)
         }
     }
     
     private var loadingView: some View {
-        VStack {
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-                .scaleEffect(1.5)
-                .padding()
-            
-            Text(L("analytics.loading", table: "Analytics"))
-                .font(.system(size: 16))
-                .foregroundColor(Color("SecondaryTextColor"))
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 50)
+        PSLoadingState(message: L("analytics.loading", table: "Analytics"))
+            .padding(.vertical, PSSpacing.xxxl)
     }
     
     private var insufficientDataView: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 16) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(Color("AccentColor"))
-                
-                Text(L("analytics.insufficientData.title", table: "Analytics"))
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundColor(Color("TextColor"))
-                
-                Text(L("analytics.insufficientData.message", table: "Analytics"))
-                    .font(.system(size: 16))
-                    .foregroundColor(Color("TextColor"))
-                    .multilineTextAlignment(.center)
-                
-                Button(action: {
-                    // History sayfasına yönlendir
-                }) {
-                    Text(L("analytics.insufficientData.button", table: "Analytics"))
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 12)
-                        .background(Color("PrimaryColor"))
-                        .cornerRadius(10)
-                }
-                .padding(.top, 10)
+        PSEmptyState(
+            icon: "exclamationmark.triangle.fill",
+            title: L("analytics.insufficientData.title", table: "Analytics"),
+            message: L("analytics.insufficientData.message", table: "Analytics"),
+            actionTitle: L("analytics.insufficientData.button", table: "Analytics"),
+            action: {
+                // History sayfasına yönlendir (Navigasyon eklenecek)
             }
-            .padding()
-            .background(Color("CardBackground"))
-            .cornerRadius(12)
-            .padding(.horizontal)
-            .padding(.top, 30)
-        }
+        )
+        .padding(.horizontal, PSSpacing.lg)
+        .padding(.top, PSSpacing.xxl)
     }
     
     // MARK: - Actions

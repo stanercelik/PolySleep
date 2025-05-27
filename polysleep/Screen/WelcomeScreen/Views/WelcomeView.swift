@@ -75,39 +75,30 @@ struct WelcomeView: View {
         }
         .padding(.top, 72)
         .padding(.bottom, 64)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, PSSpacing.lg)
     }
     
     private var progressBar: some View {
         HStack(spacing: 3) {
             ForEach(0..<viewModel.totalPages, id: \.self) { index in
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 1)
-                            .fill(Color.appSecondaryText.opacity(0.25))
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(Color.appPrimary)
-                            .frame(width: geo.size.width * viewModel.progressValues[index])
-                    }
-                }
-                .frame(height: 3)
+                PSProgressBar(progress: viewModel.progressValues[index])
             }
         }
     }
     
     private var welcomeText: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: PSSpacing.md) {
             Image("OnboardingAppLogo")
                 .resizable()
                 .renderingMode(.template)
                 .foregroundColor(colorScheme == .dark ? .white : .black)
-                .frame(width: 32, height: 32)
+                .frame(width: PSIconSize.large, height: PSIconSize.large)
             
             Text("welcomeTitle", tableName: "Welcome")
-                .font(.headline)
-                .foregroundColor(Color.appSecondaryText)
+                .font(PSTypography.headline)
+                .foregroundColor(.appTextSecondary)
         }
-        .padding(.top, 8)
+        .padding(.top, PSSpacing.sm)
     }
     
     private var infoPages: some View {
@@ -136,23 +127,15 @@ struct WelcomeView: View {
         .onChange(of: viewModel.currentPageIndex) { _ in
             viewModel.fadeOutAnimations()
         }
-        .padding(.horizontal, 8)
-        .padding(.top, 36)
+        .padding(.horizontal, PSSpacing.sm)
+        .padding(.top, PSSpacing.xxl + PSSpacing.xs)
     }
     
     private var continueButton: some View {
-        Button(action: {
+        PSPrimaryButton(NSLocalizedString("continue", tableName: "Welcome", comment: "")) {
             viewModel.animateAndPresentOnboarding()
-        }) {
-            Text("continue", tableName: "Welcome")
-                .font(.title2)
-                .foregroundColor(Color.appText)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.appPrimary)
-                .cornerRadius(28)
         }
-        .padding(.bottom, 16)
+        .padding(.bottom, PSSpacing.lg)
         .opacity(viewModel.isContinueButtonVisible ? 1 : 0)
         .overlay(
             GeometryReader { proxy in

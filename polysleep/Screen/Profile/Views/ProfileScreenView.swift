@@ -25,7 +25,7 @@ struct ProfileScreenView: View {
                     .ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 24) {
+                    VStack(spacing: PSSpacing.xl) {
                         // Profile Header Card
                         ProfileHeaderCard(
                             showLoginSheet: $showLoginSheet, 
@@ -50,20 +50,21 @@ struct ProfileScreenView: View {
                         // Premium Upgrade Card
                         PremiumUpgradeCard()
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.vertical, PSSpacing.sm)
                 }
                 
                 // Başarılı giriş mesajı
                 if showSuccessMessage {
                     VStack {
                         Text(L("profile.login.success", table: "Profile"))
-                            .padding()
+                            .font(PSTypography.body)
+                            .padding(PSSpacing.md)
                             .background(Color.appPrimary)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                            .shadow(radius: 2)
-                            .padding(.top, 16)
+                            .foregroundColor(.appTextOnPrimary)
+                            .cornerRadius(PSCornerRadius.small)
+                            .shadow(radius: PSSpacing.xs / 2)
+                            .padding(.top, PSSpacing.lg)
                         
                         Spacer()
                     }
@@ -120,53 +121,51 @@ struct PremiumUpgradeCard: View {
         Button(action: {
             // Premium işlevselliği
         }) {
-            VStack(spacing: 16) {
+            VStack(spacing: PSSpacing.lg) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: PSSpacing.sm) {
                         HStack {
                             Image(systemName: "crown.fill")
-                                .font(.title2)
+                                .font(PSTypography.title1)
                                 .foregroundColor(.yellow)
                             
                             Text(L("profile.premium.title", table: "Profile"))
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
+                                .font(PSTypography.headline)
+                                .foregroundColor(.appTextOnPrimary)
                         }
                         
                         Text(L("profile.premium.description", table: "Profile"))
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.9))
+                            .font(PSTypography.body)
+                            .foregroundColor(.appTextOnPrimary.opacity(0.9))
                     }
                     
                     Spacer()
                     
                     VStack {
                         Text(L("profile.premium.upgrade", table: "Profile"))
-                            .font(.caption)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextOnPrimary)
+                            .padding(.horizontal, PSSpacing.lg)
+                            .padding(.vertical, PSSpacing.sm)
                             .background(
                                 Capsule()
-                                    .fill(Color.white.opacity(0.25))
+                                    .fill(Color.appTextOnPrimary.opacity(0.25))
                             )
                         
                         Image(systemName: "arrow.right.circle.fill")
-                            .font(.title3)
-                            .foregroundColor(.white.opacity(0.7))
+                            .font(PSTypography.title1)
+                            .foregroundColor(.appTextOnPrimary.opacity(0.7))
                     }
                 }
                 
                 // Premium Features
-                HStack(spacing: 20) {
+                HStack(spacing: PSSpacing.xl) {
                     PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: L("profile.premium.features.statistics", table: "Profile"))
                     PremiumFeature(icon: "bell.badge", title: L("profile.premium.features.notifications", table: "Profile"))
                     PremiumFeature(icon: "paintbrush", title: L("profile.premium.features.themes", table: "Profile"))
                 }
             }
-            .padding()
+            .padding(PSSpacing.lg)
             .background(
                 LinearGradient(
                     gradient: Gradient(colors: [Color.appSecondary, Color.appAccent]),
@@ -174,8 +173,8 @@ struct PremiumUpgradeCard: View {
                     endPoint: .bottomTrailing
                 )
             )
-            .cornerRadius(20)
-            .shadow(color: Color.appSecondary.opacity(0.3), radius: 10, x: 0, y: 5)
+            .cornerRadius(PSCornerRadius.extraLarge)
+            .shadow(color: Color.appSecondary.opacity(0.3), radius: PSSpacing.sm, x: 0, y: PSSpacing.xs)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -186,14 +185,14 @@ struct PremiumFeature: View {
     let title: String
     
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: PSSpacing.xs) {
             Image(systemName: icon)
-                .font(.title3)
-                .foregroundColor(.white)
+                .font(PSTypography.title1)
+                .foregroundColor(.appTextOnPrimary)
             
             Text(title)
-                .font(.caption2)
-                .foregroundColor(.white.opacity(0.9))
+                .font(PSTypography.caption)
+                .foregroundColor(.appTextOnPrimary.opacity(0.9))
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -226,160 +225,164 @@ struct ProfileHeaderCard: View {
         }
     }
     
-    var body: some View {
-        VStack(spacing: 20) {
-            // Profile Avatar & Info
-            HStack(alignment: .center, spacing: 16) {
-                // Avatar
-                Button(action: {
-                    showActionSheet = true
-                }) {
-                    ZStack {
-                        if let user = authManager.currentUser, let imageData = user.profileImageData, let uiImage = UIImage(data: imageData) {
-                            // Profil resmi var
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
-                                .overlay(
-                                    Circle()
-                                        .stroke(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            ),
-                                            lineWidth: 3
-                                        )
-                                )
-                        } else if let user = authManager.currentUser, !user.displayName.isEmpty {
-                            // İsimin baş harfi
-                            Text(getUserInitials().uppercased())
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                                .frame(width: 80, height: 80)
-                                .background(
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                )
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
-                                )
-                        } else {
-                            // Varsayılan görünüm
-                            Text("U")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                                .frame(width: 80, height: 80)
-                                .background(
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                )
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.2), lineWidth: 2)
-                                )
-                        }
-                        
-                        // Kamera ikonu overlay
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Image(systemName: "camera.fill")
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .padding(6)
-                                    .background(
-                                        Circle()
-                                            .fill(Color.appPrimary)
-                                            .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 1)
-                                    )
-                                    .offset(x: -4, y: -4)
-                            }
-                        }
-                    }
-                }
-                .scaleEffect(1.0)
-                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: hasDisplayName())
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    // Name
-                    if let user = authManager.currentUser {
-                        Text(user.displayName.isEmpty ? L("profile.user.defaultName", table: "Profile") : user.displayName)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.appText)
-                        
-                        Text(L("profile.user.localAccount", table: "Profile"))
-                            .font(.subheadline)
-                            .foregroundColor(.appSecondaryText)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 4)
-                            .background(
-                                Capsule()
-                                    .fill(Color.appSecondary.opacity(0.15))
+    // Avatar ve Kamera İkonu Bölümü
+    @ViewBuilder
+    private func avatarSection() -> some View {
+        ZStack(alignment: .bottomTrailing) {
+            Button(action: {
+                showActionSheet = true
+            }) {
+                Group {
+                    if let user = authManager.currentUser, let imageData = user.profileImageData, let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 88, height: 88)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.appPrimary.opacity(0.8), lineWidth: 3)
                             )
+                            .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 3)
+                    } else if let user = authManager.currentUser, !user.displayName.isEmpty {
+                        Text(getUserInitials().uppercased())
+                            .font(.system(size: 36, weight: .bold, design: .rounded))
+                            .foregroundColor(.appTextOnPrimary)
+                            .frame(width: 88, height: 88)
+                            .background(
+                                Circle()
+                                    .fill(LinearGradient(
+                                        gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ))
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.appTextOnPrimary.opacity(0.2), lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 3)
+                    } else {
+                        Text("U")
+                            .font(.system(size: 36, weight: .bold, design: .rounded))
+                            .foregroundColor(.appTextOnPrimary)
+                            .frame(width: 88, height: 88)
+                            .background(
+                                Circle()
+                                    .fill(LinearGradient(
+                                        gradient: Gradient(colors: [Color.appPrimary, Color.appAccent]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ))
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.appTextOnPrimary.opacity(0.2), lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 3)
                     }
-                    
-                    // Edit Profile Button
-                    Button(action: {
-                        showLoginSheet = true
-                    }) {
-                        HStack(spacing: 6) {
-                            Image(systemName: "pencil")
-                                .font(.caption)
-                            Text(L("profile.user.editProfile", table: "Profile"))
-                                .font(.caption)
-                                .fontWeight(.medium)
-                        }
-                        .foregroundColor(.appPrimary)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.appPrimary.opacity(0.1))
-                        )
-                    }
-                }
-                
-                Spacer()
-                
-                // Settings Button
-                Button(action: {
-                    navigateToSettings = true
-                }) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.title2)
-                        .foregroundColor(.appSecondaryText.opacity(0.8))
-                        .padding(12)
-                        .background(
-                            Circle()
-                                .fill(Color.appSecondaryText.opacity(0.1))
-                        )
                 }
             }
+            .buttonStyle(.plain)
+            
+            // Kamera ikonu overlay
+            Button(action: {
+                showActionSheet = true
+            }) {
+                Image(systemName: "camera.circle.fill")
+                    .font(.system(size: 24))
+                    .foregroundColor(Color.appAccent)
+                    .background(Circle().fill(Color.appBackground).scaleEffect(1.2))
+                    .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
+            }
+            .offset(x: 4, y: 4)
         }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appCardBackground)
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
-        )
+        .padding(.leading, PSSpacing.xs)
+    }
+
+    // Kullanıcı Bilgileri ve Düzenleme Butonu Bölümü
+    @ViewBuilder
+    private func userInfoSection() -> some View {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+            if let user = authManager.currentUser {
+                HStack(alignment: .firstTextBaseline, spacing: PSSpacing.sm) { // İsim ve Düzenle ikonu için
+                    let displayName = user.displayName.isEmpty ? L("profile.user.defaultName", table: "Profile") : user.displayName
+                    Text(displayName)
+                        .font(dynamicDisplayNameFont(forName: displayName))
+                        .foregroundColor(.appText)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7) // Daha fazla küçülmeye izin ver
+                    
+                    Button(action: { // Düzenleme Butonu
+                        showLoginSheet = true
+                    }) {
+                        Image(systemName: "pencil.circle.fill")
+                            .font(.title2) // Ayarlar ikonuyla benzer büyüklükte
+                            .foregroundColor(Color.appAccent)
+                    }
+                }
+                 
+                Text(L("profile.user.localAccount", table: "Profile"))
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .padding(.vertical, PSSpacing.xs)
+                    .padding(.horizontal, PSSpacing.sm)
+                    .background(Capsule().fill(Color.appSecondary.opacity(0.15)))
+            }
+        }
+    }
+
+    // Ayarlar Butonu Bölümü
+    @ViewBuilder
+    private func settingsButtonSection() -> some View {
+        Button(action: {
+            navigateToSettings = true
+        }) {
+            Image(systemName: "gearshape.fill")
+                .font(.title2)
+                .foregroundColor(.appTextSecondary)
+        }
+        .padding(PSSpacing.sm)
+        .background(Color.appTextSecondary.opacity(0.1))
+        .clipShape(Circle())
+    }
+    
+    // Kullanıcı adı için dinamik font boyutu hesaplayan fonksiyon
+    private func dynamicDisplayNameFont(forName name: String) -> Font {
+        let length = name.count
+        if length <= 12 {
+            return PSTypography.title1
+        } else if length <= 18 {
+            return .system(size: 26, weight: .bold)
+        } else if length <= 25 {
+            return .system(size: 20, weight: .bold)
+        } else {
+            return .system(size: 18, weight: .bold)
+        }
+    }
+    
+    var body: some View {
+        VStack(spacing: PSSpacing.lg) {
+            // Profile Avatar & Info
+            HStack(alignment: .center, spacing: PSSpacing.lg) { // Ana HStack için genel boşluk
+                avatarSection()
+                userInfoSection() // İsim, düzenle ikonu ve hesap tipini içerir
+                Spacer() // Butonları sağa iter
+                
+                // Sağ taraftaki butonlar için grup ve aralarındaki boşluk
+                //HStack(spacing: PSSpacing.md) { // Sadece Ayarlar butonu kaldı
+                //    editButtonSection() // userInfoSection içine taşındı
+                    settingsButtonSection()
+                //}
+            }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.vertical, PSSpacing.md)
+            
+        }
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.extraLarge)
+        .shadow(color: Color.black.opacity(0.08), radius: 10, x: 0, y: 5)
+        .padding(.horizontal)
         .confirmationDialog(L("profile.avatar.options.title", table: "Profile"), isPresented: $showActionSheet) {
             Button(L("profile.avatar.options.selectPhoto", table: "Profile")) {
                 showImagePicker = true
@@ -414,39 +417,28 @@ struct LogoutSheetView: View {
     @ObservedObject var authManager: AuthManager
     
     var body: some View {
-        return VStack(spacing: 24) {
+        return VStack(spacing: PSSpacing.xl) {
             // Başlık
             Text(L("profile.logout.title", table: "Profile"))
-                .font(.headline)
-                .fontWeight(.bold)
+                .font(PSTypography.headline)
                 .foregroundColor(.appText)
-                .padding(.top, 24)
+                .padding(.top, PSSpacing.xl)
             
             // Kullanıcı email bilgisi
             if let user = authManager.currentUser {
                 Text(user.email)
-                    .font(.subheadline)
-                    .foregroundColor(.appSecondaryText)
+                    .font(PSTypography.subheadline)
+                    .foregroundColor(.appTextSecondary)
             }
             
             // Çıkış butonu
-            Button(action: {
+            PSPrimaryButton(L("profile.login.signout", table: "Profile"), destructive: true, customBackgroundColor: Color.red.opacity(0.8)) {
                 Task {
                     await authManager.signOut()
                     dismiss()
                 }
-            }) {
-                Text(L("profile.login.signout", table: "Profile"))
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.red.opacity(0.8))
-                    )
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, PSSpacing.xl)
             
             Spacer()
         }
@@ -460,72 +452,68 @@ struct LoginSheetView: View {
     var onSuccessfulLogin: () -> Void
     
     @State private var displayName: String = ""
+    private let maxDisplayNameLength = 25
     
     var body: some View {
-        return VStack(spacing: 24) {
+        return VStack(spacing: PSSpacing.xl) {
             // Başlık
             Text(L("profile.edit.title", table: "Profile"))
-                .font(.headline)
-                .fontWeight(.bold)
+                .font(PSTypography.headline)
                 .foregroundColor(.appText)
-                .padding(.top, 24)
+                .padding(.top, PSSpacing.xl)
             
             // Açıklama
             Text(L("profile.edit.description", table: "Profile"))
-                .font(.subheadline)
+                .font(PSTypography.subheadline)
                 .multilineTextAlignment(.center)
-                .foregroundColor(.appSecondaryText)
-                .padding(.horizontal, 24)
+                .foregroundColor(.appTextSecondary)
+                .padding(.horizontal, PSSpacing.xl)
             
             // Kullanıcı adı düzenleme formu
-            VStack(spacing: 16) {
+            VStack(spacing: PSSpacing.lg) {
                 // İsim girişi
                 TextField(
                     L("profile.edit.name.placeholder", table: "Profile"),
                     text: $displayName
                 )
-                .padding()
+                .font(PSTypography.body)
+                .padding(PSSpacing.md)
                 .background(Color.appCardBackground)
-                .cornerRadius(8)
+                .cornerRadius(PSCornerRadius.medium)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.appSecondaryText.opacity(0.3), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .stroke(Color.appBorder, lineWidth: 1)
                 )
+                .onChange(of: displayName) { oldValue, newValue in
+                    if newValue.count > maxDisplayNameLength {
+                        displayName = String(newValue.prefix(maxDisplayNameLength))
+                    }
+                }
                 
                 // Kaydet butonu
-                Button(action: {
+                PSPrimaryButton(L("profile.edit.save", table: "Profile")) {
                     if !displayName.isEmpty {
                         authManager.updateDisplayName(displayName)
                         dismiss()
                         onSuccessfulLogin()
                     }
-                }) {
-                    Text(L("profile.edit.save", table: "Profile"))
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.appPrimary)
-                        )
                 }
                 .disabled(displayName.isEmpty || authManager.isLoading)
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, PSSpacing.xl)
             
             // Hata mesajı
             if let error = authManager.authError {
                 Text(error)
-                    .font(.caption)
+                    .font(PSTypography.caption)
                     .foregroundColor(.red)
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, PSSpacing.xl)
             }
             
             // Yükleniyor göstergesi
             if authManager.isLoading {
                 ProgressView()
-                    .padding(.top, 8)
+                    .padding(.top, PSSpacing.sm)
             }
             
             Spacer()
@@ -659,7 +647,7 @@ struct StatCard: View {
                 
                 Text(subtitle)
                     .font(.caption2)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -711,7 +699,7 @@ struct AdaptationPhaseCard: View {
                     }) {
                         Image(systemName: "arrow.clockwise.circle.fill")
                             .font(.title3)
-                            .foregroundColor(.appSecondaryText.opacity(0.7))
+                            .foregroundColor(.appTextSecondary.opacity(0.7))
                     }
                     .disabled(isResetting)
                 }
@@ -779,7 +767,7 @@ struct EmptyAdaptationCard: View {
         VStack(spacing: 16) {
             Image(systemName: "moon.zzz")
                 .font(.system(size: 48))
-                .foregroundColor(.appSecondaryText.opacity(0.5))
+                .foregroundColor(.appTextSecondary.opacity(0.5))
             
             VStack(spacing: 8) {
                 Text(L("profile.adaptation.empty.title", table: "Profile"))
@@ -789,7 +777,7 @@ struct EmptyAdaptationCard: View {
                 
                 Text(L("profile.adaptation.empty.description", table: "Profile"))
                     .font(.caption)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
                     .multilineTextAlignment(.center)
             }
         }
@@ -836,7 +824,7 @@ struct AdaptationProgressCard: View {
                     
                     Text(String(format: L("profile.adaptation.dayProgress", table: "Profile"), completedDays, duration))
                         .font(.subheadline)
-                        .foregroundColor(.appSecondaryText)
+                        .foregroundColor(.appTextSecondary)
                 }
                 
                 Spacer()
@@ -877,7 +865,7 @@ struct AdaptationProgressCard: View {
             // Status description
             Text(getStatusDescription())
                 .font(.footnote)
-                .foregroundColor(.appSecondaryText)
+                .foregroundColor(.appTextSecondary)
                 .padding(12)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
@@ -963,7 +951,7 @@ struct PhaseInfoView: View {
                 
                 Text(statusText)
                     .font(.footnote)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             
@@ -995,7 +983,7 @@ struct ProgressIndicatorView: View {
                 Text(String(format: L("profile.adaptation.dayCount", table: "Profile"), completedDays, totalDays))
                     .font(.caption)
                     .fontWeight(.semibold)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
                     .background(
@@ -1248,11 +1236,11 @@ struct TimelineItemsView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "clock.fill")
                             .font(.system(size: 12))
-                            .foregroundColor(.appSecondaryText.opacity(0.7))
+                            .foregroundColor(.appTextSecondary.opacity(0.7))
                         
                         Text(duration)
                             .font(.caption)
-                            .foregroundColor(.appSecondaryText)
+                            .foregroundColor(.appTextSecondary)
                             .fontWeight(.medium)
                     }
                     
@@ -1329,7 +1317,7 @@ struct CustomizationCard: View {
                 }
                 
                 Divider()
-                    .background(Color.appSecondaryText.opacity(0.2))
+                    .background(Color.appTextSecondary.opacity(0.2))
                 
                 // Nap Emoji
                 CustomizationRow(
@@ -1381,7 +1369,7 @@ struct CustomizationRow: View {
                 
                 Text(subtitle)
                     .font(.caption)
-                    .foregroundColor(.appSecondaryText)
+                    .foregroundColor(.appTextSecondary)
             }
             
             Spacer()
@@ -1415,7 +1403,7 @@ struct InfoCard: View {
             
             Text(text)
                 .font(.caption)
-                .foregroundColor(.appSecondaryText)
+                .foregroundColor(.appTextSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(16)
