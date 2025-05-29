@@ -44,6 +44,9 @@ class MainScreenViewModel: ObservableObject {
     @Published var hasDeferredSleepQualityRating = false
     @Published var lastSleepBlock: SleepBlock?
     @Published var lastCheckedCompletedBlock: String? // Son kontrol edilen bloğu tutmak için
+    @Published var showScheduleSelection = false // Schedule seçimi sheet'ini kontrol eder
+    @Published var availableSchedules: [SleepScheduleModel] = [] // Kullanıcının görebileceği schedule'lar
+    @Published var isPremium: Bool = false // Premium durumunu takip eder
 
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
@@ -64,6 +67,12 @@ class MainScreenViewModel: ObservableObject {
         self.model = model
         self.languageManager = languageManager
         
+        // Premium durumunu kontrol et
+        loadPremiumStatus()
+        
+        // Mevcut schedule'ları yükle
+        loadAvailableSchedules()
+        
         // Timer'ı başlat
         startTimer()
         
@@ -75,6 +84,9 @@ class MainScreenViewModel: ObservableObject {
         
         // Uyku kalitesi değerlendirme durumunu kontrol et
         checkForPendingSleepQualityRatings()
+        
+        // Premium durum değişikliklerini dinle
+        setupPremiumStatusListener()
     }
     
     var totalSleepTimeFormatted: String {
@@ -252,6 +264,7 @@ class MainScreenViewModel: ObservableObject {
     
     deinit {
         timerCancellable?.cancel()
+        NotificationCenter.default.removeObserver(self)
     }
     
     /// ModelContext'i ayarlar
@@ -972,5 +985,183 @@ class MainScreenViewModel: ObservableObject {
         newBlockStartTime = Date()
         newBlockEndTime = Date().addingTimeInterval(3600)
         newBlockIsCore = false
+    }
+    
+    // MARK: - Schedule Management
+    
+    /// Premium durumunu yükler (debug için UserDefaults'dan da kontrol edilebilir)
+    private func loadPremiumStatus() {
+        // Debug amaçlı UserDefaults'dan kontrol et
+        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
+            isPremium = UserDefaults.standard.bool(forKey: "debug_premium_status")
+        } else {
+            // Production'da AuthManager'dan kontrol et
+            isPremium = authManager.currentUser?.isPremium ?? false
+        }
+    }
+    
+    /// Kullanıcının görebileceği schedule'ları yükler
+    private func loadAvailableSchedules() {
+        availableSchedules = SleepScheduleService.shared.getAvailableSchedules(isPremium: isPremium)
+    }
+    
+    /// Premium durumunu değiştirir (debug amaçlı)
+    func togglePremiumStatus() {
+        isPremium.toggle()
+        UserDefaults.standard.set(isPremium, forKey: "debug_premium_status")
+        loadAvailableSchedules() // Schedule listesini yeniden yükle
+    }
+    
+    /// Schedule seçim sheet'ini gösterir
+    func showScheduleSelectionSheet() {
+        loadAvailableSchedules() // En güncel listeyi yükle
+        showScheduleSelection = true
+    }
+    
+    /// Yeni schedule seçildiğinde çağrılır
+    func selectSchedule(_ schedule: SleepScheduleModel) {
+        // Repository için UUID formatında ID oluştur (karşılaştırma için)
+        let scheduleUUID = generateDeterministicUUID(from: schedule.id)
+        let repositoryCompatibleId = scheduleUUID.uuidString
+        
+        // Schedule zaten seçili ise işlem yapma (UUID formatında karşılaştır)
+        guard model.schedule.id != repositoryCompatibleId else {
+            print("🔄 Aynı schedule zaten seçili: \(schedule.name) (UUID: \(repositoryCompatibleId))")
+            return
+        }
+        
+        // Loading state'i set et
+        isLoading = true
+        errorMessage = nil
+        
+        // LocalizedDescription'ı UserScheduleModel için uygun formata dönüştür
+        let description = LocalizedDescription(
+            en: schedule.description.en,
+            tr: schedule.description.tr
+        )
+        
+        // Schedule blocks'ları kontrollü şekilde kopyala ve validate et
+        let scheduleBlocks = schedule.schedule.map { block in
+            SleepBlock(
+                startTime: block.startTime,
+                duration: block.duration,
+                type: block.type,
+                isCore: block.isCore
+            )
+        }
+        
+        // Data validation
+        print("🔍 Schedule validation başlıyor...")
+        print("   - Original ID: \(schedule.id)")
+        print("   - UUID ID: \(repositoryCompatibleId)")
+        print("   - Name: \(schedule.name)")
+        print("   - Description EN: \(description.en)")
+        print("   - Description TR: \(description.tr)")
+        print("   - Total Hours: \(schedule.totalSleepHours)")
+        print("   - Block Count: \(scheduleBlocks.count)")
+        print("   - Is Premium: \(schedule.isPremium)")
+        
+        // Her block için validation
+        for (index, block) in scheduleBlocks.enumerated() {
+            print("   - Block \(index): \(block.startTime)-\(block.endTime), \(block.duration)min, \(block.type), core:\(block.isCore)")
+        }
+        
+        let userScheduleModel = UserScheduleModel(
+            id: repositoryCompatibleId, // UUID formatında ID kullan
+            name: schedule.name,
+            description: description,
+            totalSleepHours: schedule.totalSleepHours,
+            schedule: scheduleBlocks,
+            isPremium: schedule.isPremium
+        )
+        
+        // Model'i hemen güncelle (UI feedback için)
+        model.schedule = userScheduleModel
+        selectedSchedule = userScheduleModel
+        
+        print("🔄 Schedule dönüştürme tamamlandı: \(userScheduleModel.name), \(userScheduleModel.schedule.count) blok")
+        
+        // Asenkron kaydetme işlemi
+        Task {
+            do {
+                print("💾 Repository'ye kaydetme başlıyor...")
+                
+                // Veritabanına kaydet
+                let savedSchedule = try await Repository.shared.saveSchedule(userScheduleModel)
+                
+                print("✅ Repository kaydetme başarılı!")
+                
+                // Bildirimleri güncelle
+                ScheduleManager.shared.activateSchedule(userScheduleModel)
+                
+                await MainActor.run {
+                    isLoading = false
+                    print("✅ Yeni schedule başarıyla seçildi ve kaydedildi: \(schedule.name)")
+                    print("📊 Kaydedilen schedule: \(savedSchedule.name), \(userScheduleModel.schedule.count) blok")
+                }
+            } catch {
+                await MainActor.run {
+                    isLoading = false
+                    errorMessage = "Program kaydedilirken hata oluştu. Tekrar deneyin."
+                    print("❌ Schedule kaydetme hatası: \(error)")
+                    print("📋 Hatalı schedule detayları: ID=\(userScheduleModel.id), Name=\(userScheduleModel.name)")
+                    
+                    // Hata detayını logla
+                    if let repositoryError = error as? RepositoryError {
+                        print("🔍 Repository Error Details: \(repositoryError)")
+                    }
+                    
+                    // Error description'ı da logla
+                    print("🔍 Error Description: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    /// String ID'den deterministik UUID oluşturur
+    private func generateDeterministicUUID(from stringId: String) -> UUID {
+        // PolySleep namespace UUID'si (sabit bir UUID)
+        let namespace = UUID(uuidString: "6BA7B810-9DAD-11D1-80B4-00C04FD430C8") ?? UUID()
+        
+        // String'i Data'ya dönüştür
+        let data = stringId.data(using: .utf8) ?? Data()
+        
+        // MD5 hash ile deterministik UUID oluştur
+        var digest = [UInt8](repeating: 0, count: 16)
+        
+        // Basit hash algoritması (production'da CryptoKit kullanılabilir)
+        let namespaceBytes = withUnsafeBytes(of: namespace.uuid) { Array($0) }
+        let stringBytes = Array(data)
+        
+        for (index, byte) in (namespaceBytes + stringBytes).enumerated() {
+            digest[index % 16] ^= byte
+        }
+        
+        // UUID'nin version ve variant bitlerini ayarla (version 5 için)
+        digest[6] = (digest[6] & 0x0F) | 0x50  // Version 5
+        digest[8] = (digest[8] & 0x3F) | 0x80  // Variant 10
+        
+        // UUID oluştur
+        let uuid = NSUUID(uuidBytes: digest) as UUID
+        
+        print("🔄 Deterministik UUID oluşturuldu: \(stringId) -> \(uuid.uuidString)")
+        return uuid
+    }
+    
+    // MARK: - Premium Status Listener
+    
+    /// Premium durum değişikliklerini dinler ve gerekli işlemleri yapar
+    private func setupPremiumStatusListener() {
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("PremiumStatusChanged"),
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            if let isPremium = notification.userInfo?["isPremium"] as? Bool {
+                self?.isPremium = isPremium
+                self?.loadAvailableSchedules() // Schedule listesini yeniden yükle
+                print("🔄 Premium durumu güncellendi: \(isPremium)")
+            }
+        }
     }
 }

@@ -178,6 +178,17 @@ struct MainScreenView: View {
         .sheet(isPresented: $viewModel.showAddBlockSheet) {
             AddSleepBlockSheet(viewModel: viewModel)
         }
+        .sheet(isPresented: $viewModel.showScheduleSelection) {
+            ScheduleSelectionView(
+                availableSchedules: viewModel.availableSchedules,
+                selectedSchedule: Binding(
+                    get: { viewModel.model.schedule },
+                    set: { _ in }
+                ),
+                onScheduleSelected: viewModel.selectSchedule
+            )
+            .environmentObject(languageManager)
+        }
         .id(languageManager.currentLanguage)
     }
     
@@ -398,6 +409,43 @@ struct SleepBlocksSection: View {
                             }
                         }
                     }
+                }
+                
+                // Düzenleme modunda schedule değiştirme seçeneği
+                if viewModel.isEditing {
+                    VStack(spacing: PSSpacing.md) {
+                        HStack {
+                            Text(L("mainScreen.changeSchedule.title", table: "MainScreen"))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            
+                            Spacer()
+                        }
+                        
+                        Button(action: {
+                            viewModel.showScheduleSelectionSheet()
+                        }) {
+                            HStack(spacing: PSSpacing.sm) {
+                                Image(systemName: "list.bullet.circle.fill")
+                                    .font(.system(size: PSIconSize.small))
+                                    .foregroundColor(.appPrimary)
+                                
+                                Text(L("mainScreen.changeSchedule.button", table: "MainScreen"))
+                                    .font(PSTypography.caption)
+                                    .foregroundColor(.appPrimary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.appTextSecondary)
+                            }
+                            .padding(PSSpacing.md)
+                            .background(Color.appPrimary.opacity(0.1), in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
                 }
             
                 ScrollView(.horizontal, showsIndicators: false) {
