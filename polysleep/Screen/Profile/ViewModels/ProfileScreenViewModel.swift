@@ -23,17 +23,17 @@ class ProfileScreenViewModel: ObservableObject {
     var adaptationPhaseDescription: String {
         switch adaptationPhase {
         case 0:
-            return L("profile.adaptation.phase.beginning", table: "Profile")
+            return L("profile.adaptation.phase.day1", table: "Profile") // "1. Gün - Başlangıç"
         case 1:
-            return L("profile.adaptation.phase.adjustment", table: "Profile")
+            return L("profile.adaptation.phase.initial", table: "Profile") // "İlk Adaptasyon (2-7. günler)"
         case 2:
-            return L("profile.adaptation.phase.adaptation", table: "Profile")
+            return L("profile.adaptation.phase.middle", table: "Profile") // "Orta Adaptasyon (8-14. günler)"
         case 3:
-            return L("profile.adaptation.phase.advanced", table: "Profile")
+            return L("profile.adaptation.phase.advanced", table: "Profile") // "İlerlemiş Adaptasyon (15-21. günler)"
         case 4:
-            return L("profile.adaptation.phase.full", table: "Profile")
+            return L("profile.adaptation.phase.final", table: "Profile") // "Son Adaptasyon (22-28. günler)"
         case 5...:
-            return L("profile.adaptation.phase.complete", table: "Profile")
+            return L("profile.adaptation.phase.complete", table: "Profile") // "Adaptasyon Tamamlandı"
         default:
             return L("profile.adaptation.phase.unknown", table: "Profile")
         }
@@ -56,7 +56,7 @@ class ProfileScreenViewModel: ObservableObject {
         loadData()
     }
     
-    private func loadData() {
+    func loadData() {
         guard let context = modelContext else { 
             print("ProfileScreenViewModel: ModelContext yüklenemedi, loadData iptal edildi.")
             return
@@ -122,35 +122,26 @@ class ProfileScreenViewModel: ObservableObject {
                     let calculatedPhase = self.calculateAdaptationPhase(schedule: scheduleData)
                     self.adaptationPhase = calculatedPhase
                     
-                    // Eğer hesaplanan faz, veritabanındaki fazdan farklıysa ve bu bir tutarsızlık değil de
-                    // 'günlük kontrol' sonucu bir ilerleme ise güncelle.
-                    // Bu mantık, fazın yalnızca gün geçtikçe artmasını sağlar.
-                    // Eğer faz manuel olarak sıfırlanmışsa (updatedAt güncellenir), calculateAdaptationPhase doğru sonucu verir.
+                    // Eğer hesaplanan faz, veritabanındaki fazdan farklıysa güncelle
+                    // Bu, adaptasyonun doğal ilerlemesini sağlar
                     if calculatedPhase != scheduleData.adaptationPhase {
-                        // Sadece Repository üzerinden merkezi bir güncelleme fonksiyonu varsa onu kullanmak daha iyi olabilir.
-                        // Şimdilik ViewModel'in context'i üzerinden güncelliyoruz.
-                        // Bu güncelleme, fazın doğal ilerlemesini yansıtmalı.
-                        // scheduleData.updatedAt'in bu noktada değişmemesi gerekebilir, çünkü adaptasyonun başlangıç zamanını temsil ediyor.
-                        // Ancak, eğer fazı 'düzeltiyorsak', updatedAt'i de şimdiye ayarlamak mantıklı olabilir.
-                        // Bu, ürün kararına bağlıdır. Şimdilik updatedAt'i güncelleyelim.
+                        print("ProfileScreenViewModel: Adaptasyon fazı güncelleniyor. Eski: \(scheduleData.adaptationPhase), Yeni: \(calculatedPhase)")
                         
-                        // scheduleData'nın context'e bağlı bir nesne olduğundan emin olun.
-                        // ProfileScreenViewModel.modelContext'i kullanıyoruz.
-                        
-                        // Repository'e bir `updateUserScheduleAdaptationPhase` metodu zaten var, onu kullanalım!
-                        // Bu daha temiz bir yaklaşım olacaktır.
                         Task {
                             do {
+                                // Repository üzerinden güncelle
                                 try Repository.shared.updateUserScheduleAdaptationPhase(
-                                    scheduleId: scheduleData.id, // UserSchedule ID'si
+                                    scheduleId: scheduleData.id,
                                     newPhase: calculatedPhase,
-                                    context: context // ProfileScreenViewModel'in modelContext'i
+                                    context: context
                                 )
-                                print("Adaptasyon aşaması Repository üzerinden güncellendi.")
-                                // UI'ı yeniden yüklemeye gerek yok çünkü zaten self.adaptationPhase ayarlandı.
-                                // scheduleData.adaptationPhase ViewModel'de güncellenmeyebilir, ancak self.adaptationPhase günceldir.
+                                print("ProfileScreenViewModel: Adaptasyon aşaması Repository üzerinden güncellendi.")
+                                
+                                // Local schedule objesini de güncelle
+                                scheduleData.adaptationPhase = calculatedPhase
+                                
                             } catch {
-                                print("Adaptasyon aşaması Repository üzerinden güncellenirken hata: \(error)")
+                                print("ProfileScreenViewModel: Adaptasyon aşaması güncellenirken hata: \(error)")
                             }
                         }
                     }
@@ -168,29 +159,60 @@ class ProfileScreenViewModel: ObservableObject {
     
     private func calculateAdaptationPhase(schedule: UserSchedule) -> Int {
         let currentDate = Date()
-        let updatedAt = schedule.updatedAt
+        let startDate = schedule.updatedAt
         
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: updatedAt, to: currentDate)
-        let daysSinceUpdate = (components.day ?? 0) + 1  // 1'den başlatmak için +1 ekliyoruz
+        
+        // İki tarih arasındaki tam gün farkını hesapla
+        let startOfStartDate = calendar.startOfDay(for: startDate)
+        let startOfCurrentDate = calendar.startOfDay(for: currentDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
+        let daysPassed = components.day ?? 0
+        
+        // 1. gün = adaptasyon başladığı gün (daysPassed = 0)
+        // 2. gün = bir sonraki gün (daysPassed = 1)
+        // vs.
+        let currentDay = daysPassed + 1
+        
+        print("ProfileScreenViewModel: Adaptasyon hesaplama - Başlangıç: \(startDate), Şu an: \(currentDate), Geçen günler: \(daysPassed), Mevcut gün: \(currentDay)")
         
         let totalDuration = self.adaptationDuration
         let phase: Int
         
         if totalDuration == 28 {
-            if daysSinceUpdate <= 1 { phase = 0 }
-            else if daysSinceUpdate <= 7 { phase = 1 }
-            else if daysSinceUpdate <= 14 { phase = 2 }
-            else if daysSinceUpdate <= 20 { phase = 3 }
-            else if daysSinceUpdate <= 27 { phase = 4 }
-            else { phase = 5 }
+            // 28 günlük programlar için (Uberman, Dymaxion, Everyman 1)
+            switch currentDay {
+            case 1:
+                phase = 0  // İlk gün - Başlangıç
+            case 2...7:
+                phase = 1  // 2-7. günler - İlk Adaptasyon
+            case 8...14:
+                phase = 2  // 8-14. günler - Orta Adaptasyon
+            case 15...21:
+                phase = 3  // 15-21. günler - İlerlemiş Adaptasyon
+            case 22...28:
+                phase = 4  // 22-28. günler - İleri Adaptasyon
+            default:
+                phase = 5  // 28+ günler - Tamamlanmış
+            }
         } else {
-            if daysSinceUpdate <= 1 { phase = 0 }
-            else if daysSinceUpdate <= 7 { phase = 1 }
-            else if daysSinceUpdate <= 14 { phase = 2 }
-            else if daysSinceUpdate <= 20 { phase = 3 }
-            else { phase = 4 }
+            // 21 günlük programlar için (diğer programlar)
+            switch currentDay {
+            case 1:
+                phase = 0  // İlk gün - Başlangıç
+            case 2...7:
+                phase = 1  // 2-7. günler - İlk Adaptasyon
+            case 8...14:
+                phase = 2  // 8-14. günler - Orta Adaptasyon
+            case 15...21:
+                phase = 3  // 15-21. günler - İlerlemiş Adaptasyon
+            default:
+                phase = 4  // 21+ günler - Tamamlanmış
+            }
         }
+        
+        print("ProfileScreenViewModel: Hesaplanan faz: \(phase)")
         return phase
     }
 
@@ -280,25 +302,26 @@ class ProfileScreenViewModel: ObservableObject {
             fetchDescriptor.fetchLimit = 1
             
             guard let scheduleToUpdate = try context.fetch(fetchDescriptor).first else {
-                print("ProfileScreenViewModel: Güncellenecek program SwiftData\'da bulunamadı.")
+                print("ProfileScreenViewModel: Güncellenecek program SwiftData'da bulunamadı.")
                 throw ProfileError.scheduleUpdateFailed
             }
 
-            scheduleToUpdate.adaptationPhase = 1  // 1. günden başlat
-            scheduleToUpdate.updatedAt = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()  // 1 gün öncesi
+            // Adaptasyonu bugünden başlat (1. gün)
+            scheduleToUpdate.adaptationPhase = 0  // İlk faz (1. gün)
+            scheduleToUpdate.updatedAt = Date()   // Şu anki zaman - adaptasyon bugün başlıyor
             
             try context.save()
             
             // UI'ı güncelle
             await MainActor.run {
-                self.adaptationPhase = 1  // UI'da da 1. günden başlat
+                self.adaptationPhase = 0  // UI'da da ilk fazdan başlat
                 self.activeSchedule = scheduleToUpdate // Güncellenmiş schedule'ı ata
             }
             
-            print("Adaptasyon fazı başarıyla sıfırlandı (SwiftData).")
+            print("Adaptasyon fazı başarıyla sıfırlandı - Bugünden (1. gün) başlatıldı.")
             
         } catch {
-            print("Adaptasyon fazı sıfırlanırken SwiftData hatası: \\(error.localizedDescription)")
+            print("Adaptasyon fazı sıfırlanırken SwiftData hatası: \(error.localizedDescription)")
             throw ProfileError.saveFailed(error.localizedDescription)
         }
     }

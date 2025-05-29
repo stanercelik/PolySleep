@@ -13,6 +13,8 @@ struct ProfileScreenView: View {
     @State private var navigateToSettings = false
     @StateObject private var authManager = AuthManager.shared
     @State private var showSuccessMessage = false
+    @State private var adaptationTimer: Timer?
+    @State private var isPremiumUser = false
     
     init() {
         self._viewModel = StateObject(wrappedValue: ProfileScreenViewModel(languageManager: LanguageManager.shared))
@@ -47,8 +49,13 @@ struct ProfileScreenView: View {
                             isPickingCoreEmoji: $isPickingCoreEmoji
                         )
                         
-                        // Premium Upgrade Card
-                        PremiumUpgradeCard()
+                        // Premium Upgrade Card - Premium kullanıcılar için gizle
+                        if !isPremiumUser {
+                            PremiumUpgradeCard()
+                        }
+                        
+                        // Debug Section (Premium Toggle)
+                        DebugPremiumCard()
                     }
                     .padding(.horizontal, PSSpacing.lg)
                     .padding(.vertical, PSSpacing.sm)
@@ -109,9 +116,46 @@ struct ProfileScreenView: View {
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
+                startAdaptationTimer()
+                loadPremiumStatus()
+            }
+            .onDisappear {
+                stopAdaptationTimer()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
+                if let isPremium = notification.userInfo?["isPremium"] as? Bool {
+                    isPremiumUser = isPremium
+                }
             }
         }
         .id(languageManager.currentLanguage)
+    }
+    
+    // MARK: - Timer Functions
+    private func startAdaptationTimer() {
+        stopAdaptationTimer() // Mevcut timer'ı durdur
+        
+        // Her gece yarısında adaptasyon fazını kontrol et
+        adaptationTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+            // Her saat kontrol et, ama sadece gece yarısı geçtiyse güncelle
+            Task {
+                await viewModel.loadData()
+            }
+        }
+    }
+    
+    private func stopAdaptationTimer() {
+        adaptationTimer?.invalidate()
+        adaptationTimer = nil
+    }
+    
+    private func loadPremiumStatus() {
+        // Debug için UserDefaults kontrolü
+        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
+            isPremiumUser = UserDefaults.standard.bool(forKey: "debug_premium_status")
+        } else {
+            isPremiumUser = AuthManager.shared.currentUser?.isPremium ?? false
+        }
     }
 }
 
@@ -885,9 +929,20 @@ struct AdaptationProgressCard: View {
             let calendar = Calendar.current
             let startDate = schedule.updatedAt
             let currentDate = Date()
-            let components = calendar.dateComponents([.day], from: startDate, to: currentDate)
-            let daysPassed = (components.day ?? 0) + 1 // 1. günden başla
-            return min(daysPassed, duration)
+            
+            // İki tarih arasındaki tam gün farkını hesapla
+            let startOfStartDate = calendar.startOfDay(for: startDate)
+            let startOfCurrentDate = calendar.startOfDay(for: currentDate)
+            
+            let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
+            let daysPassed = components.day ?? 0
+            
+            // 1. gün = adaptasyon başladığı gün (daysPassed = 0)
+            // 2. gün = bir sonraki gün (daysPassed = 1)
+            // vs.
+            let currentDay = daysPassed + 1
+            
+            return min(currentDay, duration)
         }
         return 1
     }
@@ -899,19 +954,20 @@ struct AdaptationProgressCard: View {
     
     private func getStatusDescription() -> String {
         let completedDays = calculateRealCompletedDays()
+        let remainingDays = max(0, duration - completedDays)
         
         switch currentPhase {
         case 0:
-            return L("profile.adaptation.phase0.description", table: "Profile")
+            return String(format: L("profile.adaptation.phase0.description", table: "Profile"), completedDays, duration)
         case 1:
-            return String(format: L("profile.adaptation.phase1.description", table: "Profile"), completedDays)
+            return String(format: L("profile.adaptation.phase1.description", table: "Profile"), completedDays, remainingDays)
         case 2:
-            return String(format: L("profile.adaptation.phase2.description", table: "Profile"), completedDays)
+            return String(format: L("profile.adaptation.phase2.description", table: "Profile"), completedDays, remainingDays)
         case 3:
-            return String(format: L("profile.adaptation.phase3.description", table: "Profile"), completedDays)
+            return String(format: L("profile.adaptation.phase3.description", table: "Profile"), completedDays, remainingDays)
         case 4:
             if duration == 28 {
-                return String(format: L("profile.adaptation.phase4.28day.description", table: "Profile"), completedDays)
+                return String(format: L("profile.adaptation.phase4.28day.description", table: "Profile"), completedDays, remainingDays)
             } else {
                 return String(format: L("profile.adaptation.phase4.21day.description", table: "Profile"), completedDays)
             }
@@ -1901,5 +1957,71 @@ struct ProfileScreenView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileScreenView()
             .environmentObject(LanguageManager.shared)
+    }
+}
+
+// MARK: - Debug Premium Card
+struct DebugPremiumCard: View {
+    @State private var isPremium: Bool = UserDefaults.standard.bool(forKey: "debug_premium_status")
+    
+    var body: some View {
+        PSCard {
+            VStack(spacing: PSSpacing.md) {
+                HStack {
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                        HStack {
+                            Image(systemName: "wrench.and.screwdriver.fill")
+                                .font(.system(size: PSIconSize.small))
+                                .foregroundColor(.orange)
+                            
+                            Text("Debug Modu")
+                                .font(PSTypography.headline)
+                                .foregroundColor(.appText)
+                        }
+                        
+                        Text("Premium durumunu değiştirin")
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Premium Durumu")
+                        .font(PSTypography.body)
+                        .foregroundColor(.appText)
+                    
+                    Spacer()
+                    
+                    Toggle("", isOn: $isPremium)
+                        .tint(.appPrimary)
+                        .scaleEffect(0.8)
+                        .onChange(of: isPremium) { oldValue, newValue in
+                            UserDefaults.standard.set(newValue, forKey: "debug_premium_status")
+                            
+                            // MainScreenViewModel'lere değişikliği bildir
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name("PremiumStatusChanged"),
+                                object: nil,
+                                userInfo: ["isPremium": newValue]
+                            )
+                        }
+                }
+                
+                HStack {
+                    Image(systemName: isPremium ? "crown.fill" : "person.fill")
+                        .font(.caption)
+                        .foregroundColor(isPremium ? .yellow : .gray)
+                    
+                    Text(isPremium ? "Premium Kullanıcı" : "Free Kullanıcı")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Spacer()
+                }
+                .padding(.top, PSSpacing.xs)
+            }
+        }
     }
 }

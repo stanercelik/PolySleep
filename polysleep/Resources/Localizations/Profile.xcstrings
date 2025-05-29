@@ -653,13 +653,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome to your polyphasic sleep journey! Today marks the beginning of your adaptation. You might feel tired and groggy as your body starts adjusting to the new schedule. This is completely normal - your circadian rhythm is learning a new pattern."
+            "value" : "Welcome to your polyphasic sleep journey! Day %d of %d. Today marks the beginning of your adaptation. You might feel tired and groggy as your body starts adjusting to the new schedule. This is completely normal - your circadian rhythm is learning a new pattern."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Polifazik uyku yolculuğuna hoş geldin! Bugün adaptasyonunun başlangıcı. Vücudun yeni düzene alışmaya başladığı için yorgun ve sersemlik hissedebilirsin. Bu tamamen normal - sirkadiyen ritmin yeni bir desen öğreniyor."
+            "value" : "Polifazik uyku yolculuğuna hoş geldin! %d/%d. gün. Bugün adaptasyonunun başlangıcı. Vücudun yeni düzene alışmaya başladığı için yorgun ve sersemlik hissedebilirsin. Bu tamamen normal - sirkadiyen ritmin yeni bir desen öğreniyor."
           }
         }
       }
@@ -670,13 +670,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You're in the challenging adjustment phase (day %d). This is the hardest part! You may experience sleep deprivation, difficulty falling asleep, frequent wake-ups, and mood changes. Stay strong and stick to your schedule - your body is working hard to adapt."
+            "value" : "You're in the challenging adjustment phase (day %d, %d days remaining). This is the hardest part! You may experience sleep deprivation, difficulty falling asleep, frequent wake-ups, and mood changes. Stay strong and stick to your schedule - your body is working hard to adapt."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zorlu uyum aşamasındasın (%d. gün). Bu en zor kısım! Uyku yoksunluğu, uykuya dalmada zorluk, sık uyanmalar ve ruh hali değişiklikleri yaşayabilirsin. Güçlü kal ve programına sadık kal - vücudun adapte olmak için çok çalışıyor."
+            "value" : "Zorlu uyum aşamasındasın (%d. gün, %d gün kaldı). Bu en zor kısım! Uyku yoksunluğu, uykuya dalmada zorluk, sık uyanmalar ve ruh hali değişiklikleri yaşayabilirsin. Güçlü kal ve programına sadık kal - vücudun adapte olmak için çok çalışıyor."
           }
         }
       }
@@ -687,13 +687,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You're making progress in the adaptation phase (day %d)! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Some tiredness is still normal, but you're getting there. Keep maintaining consistent sleep times."
+            "value" : "You're making progress in the adaptation phase (day %d, %d days remaining)! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Some tiredness is still normal, but you're getting there. Keep maintaining consistent sleep times."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adaptasyon aşamasında ilerleme kaydediyorsun (%d. gün)! Uyku kaliten artmaya başlamalı ve şekerlemeler sırasında REM uykusuna geçişin kolaylaşabilir. Biraz yorgunluk hala normal, ama hedefe yaklaşıyorsun. Tutarlı uyku saatlerini korumaya devam et."
+            "value" : "Adaptasyon aşamasında ilerleme kaydediyorsun (%d. gün, %d gün kaldı)! Uyku kaliten artmaya başlamalı ve şekerlemeler sırasında REM uykusuna geçişin kolaylaşabilir. Biraz yorgunluk hala normal, ama hedefe yaklaşıyorsun. Tutarlı uyku saatlerini korumaya devam et."
           }
         }
       }
@@ -704,13 +704,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Excellent progress in the advanced adaptation phase (day %d)! Your sleep efficiency is improving significantly. You should feel more refreshed after sleep sessions and have better alertness during wake periods. Minor adjustments might still occur as your body fine-tunes the new rhythm."
+            "value" : "Excellent progress in the advanced adaptation phase (day %d, %d days remaining)! Your sleep efficiency is improving significantly. You should feel more refreshed after sleep sessions and have better alertness during wake periods. Minor adjustments might still occur as your body fine-tunes the new rhythm."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İleri adaptasyon aşamasında mükemmel ilerleme (%d. gün)! Uyku verimliliğin önemli ölçüde artıyor. Uyku seansları sonrası kendini daha dinlenmiş hissetmeli ve uyanık olduğun dönemlerde daha iyi uyanıklık yaşamalısın. Vücudun yeni ritmi ince ayarlarken küçük düzenlemeler hala olabilir."
+            "value" : "İleri adaptasyon aşamasında mükemmel ilerleme (%d. gün, %d gün kaldı)! Uyku verimliliğin önemli ölçüde artıyor. Uyku seansları sonrası kendini daha dinlenmiş hissetmeli ve uyanık olduğun dönemlerde daha iyi uyanıklık yaşamalısın. Vücudun yeni ritmi ince ayarlarken küçük düzenlemeler hala olabilir."
           }
         }
       }
@@ -721,13 +721,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You're in the full adaptation phase (day %d)! Your body has largely adapted to the polyphasic schedule. Sleep onset should be quick, and you should feel consistently alert and energetic. Maintain your routine to solidify these positive changes and avoid schedule disruptions."
+            "value" : "You're in the full adaptation phase (day %d, %d days remaining)! Your body has largely adapted to the polyphasic schedule. Sleep onset should be quick, and you should feel consistently alert and energetic. Maintain your routine to solidify these positive changes and avoid schedule disruptions."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tam adaptasyon aşamasındasın (%d. gün)! Vücudun büyük ölçüde polifazik düzene adapte oldu. Uykuya dalman hızlı olmalı ve sürekli uyanık ve enerjik hissetmelisin. Bu olumlu değişiklikleri pekiştirmek için rutinini koru ve program bozulmalarından kaçın."
+            "value" : "Tam adaptasyon aşamasındasın (%d. gün, %d gün kaldı)! Vücudun büyük ölçüde polifazik düzene adapte oldu. Uykuya dalman hızlı olmalı ve sürekli uyanık ve enerjik hissetmelisin. Bu olumlu değişiklikleri pekiştirmek için rutinini koru ve program bozulmalarından kaçın."
           }
         }
       }
@@ -2615,6 +2615,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Başlangıç"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.day1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day 1 - Beginning"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Gün - Başlangıç"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.initial" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initial Adaptation (Days 2-7)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk Adaptasyon (2-7. günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.middle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Middle Adaptation (Days 8-14)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orta Adaptasyon (8-14. günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.final" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final Adaptation (Days 22-28)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son Adaptasyon (22-28. günler)"
           }
         }
       }
