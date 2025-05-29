@@ -1,6 +1,40 @@
 import SwiftUI
 import Charts
 
+// MARK: - Total Sleep Chart (Free Users)
+struct AnalyticsTotalSleepChart: View {
+    let viewModel: AnalyticsViewModel
+    @Binding var selectedTrendDataPoint: SleepTrendData?
+    @Binding var tooltipPosition: CGPoint
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L("analytics.trend.title", table: "Analytics"))
+                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .foregroundColor(Color("TextColor"))
+            
+            VStack(alignment: .leading, spacing: 20) {
+                // Sadece Toplam Uyku Süresi Grafiği
+                ChartHeader(
+                    title: L("analytics.totalSleepTrend.title", table: "Analytics"),
+                    subtitle: L("analytics.totalSleepTrend.subtitle", table: "Analytics")
+                )
+                
+                SleepTrendChart(
+                    viewModel: viewModel,
+                    selectedTrendDataPoint: $selectedTrendDataPoint,
+                    tooltipPosition: $tooltipPosition
+                )
+                .allowsHitTesting(false) // Scroll sorununu çözer
+            }
+            .padding()
+            .background(Color("CardBackground"))
+            .cornerRadius(12)
+        }
+        .padding(.horizontal)
+    }
+}
+
 // MARK: - Trend Charts Section
 struct AnalyticsTrendCharts: View {
     let viewModel: AnalyticsViewModel
@@ -26,6 +60,7 @@ struct AnalyticsTrendCharts: View {
                     selectedTrendDataPoint: $selectedTrendDataPoint,
                     tooltipPosition: $tooltipPosition
                 )
+                .allowsHitTesting(false) // Scroll sorununu çözer
                 
                 // Uyku Bileşenleri Çubuk Grafiği
                 ChartHeader(
@@ -38,6 +73,7 @@ struct AnalyticsTrendCharts: View {
                     selectedBarDataPoint: $selectedBarDataPoint,
                     tooltipPosition: $tooltipPosition
                 )
+                .allowsHitTesting(false) // Scroll sorununu çözer
             }
             .padding()
             .background(Color("CardBackground"))

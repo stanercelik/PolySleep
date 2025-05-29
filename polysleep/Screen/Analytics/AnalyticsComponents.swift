@@ -615,4 +615,333 @@ struct ActivityRow: View {
                 .italic()
         }
     }
+}
+
+// MARK: - Premium Locked Analytics
+struct PremiumLockedAnalytics<PreviewContent: View>: View {
+    let title: String
+    let description: String
+    let preview: () -> PreviewContent
+    @State private var showPremiumAlert = false
+    
+    var body: some View {
+        Button(action: {
+            showPremiumAlert = true
+        }) {
+            ZStack {
+                // Bulanık preview
+                preview()
+                    .blur(radius: 3)
+                    .opacity(0.4)
+                    .disabled(true)
+                
+                // Premium overlay
+                VStack(spacing: PSSpacing.md) {
+                    Image(systemName: "crown.fill")
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(.yellow)
+                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 1)
+                    
+                    VStack(spacing: PSSpacing.sm) {
+                        Text(L("analytics.premium.required", table: "Analytics"))
+                            .font(PSTypography.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.appText)
+                            .multilineTextAlignment(.center)
+                        
+                        Text(description)
+                            .font(PSTypography.body)
+                            .foregroundColor(.appTextSecondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, PSSpacing.lg)
+                    }
+                    
+                    HStack(spacing: PSSpacing.sm) {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 14))
+                            .foregroundColor(.appPrimary)
+                        
+                        Text(L("analytics.premium.upgrade", table: "Analytics"))
+                            .font(PSTypography.button)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.appPrimary)
+                        
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 14))
+                            .foregroundColor(.appPrimary)
+                    }
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.vertical, PSSpacing.sm)
+                    .background(
+                        Capsule()
+                            .fill(Color.appPrimary.opacity(0.1))
+                    )
+                }
+                .padding(PSSpacing.lg)
+                .background(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                        .fill(Color.appBackground.opacity(0.95))
+                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                )
+            }
+        }
+        .buttonStyle(.plain)
+        .alert(L("analytics.premium.alert.title", table: "Analytics"), isPresented: $showPremiumAlert) {
+            Button(L("analytics.premium.alert.upgrade", table: "Analytics")) {
+                // Premium upgrade navigation
+            }
+            Button(L("analytics.premium.alert.cancel", table: "Analytics"), role: .cancel) {}
+        } message: {
+            Text(L("analytics.premium.alert.message", table: "Analytics"))
+        }
+    }
+}
+
+// MARK: - Preview Components for Premium Lock
+struct AnalyticsSleepComponentsPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Uyku Bileşenleri Trendi")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            // Fake bar chart
+            HStack(alignment: .bottom, spacing: 8) {
+                ForEach(0..<7) { index in
+                    VStack(spacing: 2) {
+                        // Core sleep
+                        Rectangle()
+                            .fill(Color("AccentColor"))
+                            .frame(width: 30, height: CGFloat.random(in: 40...80))
+                        
+                        // Nap 1
+                        Rectangle()
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: 30, height: CGFloat.random(in: 15...40))
+                        
+                        // Nap 2
+                        Rectangle()
+                            .fill(Color("SecondaryColor"))
+                            .frame(width: 30, height: CGFloat.random(in: 10...25))
+                    }
+                    .cornerRadius(4)
+                }
+            }
+            .frame(height: 150)
+            .frame(maxWidth: .infinity)
+        }
+        .padding()
+        .background(Color("CardBackground"))
+        .cornerRadius(12)
+    }
+}
+
+struct AnalyticsQualityDistributionPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Uyku Kalitesi Dağılımı")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            VStack(spacing: 8) {
+                ForEach(["Mükemmel", "İyi", "Ortalama", "Kötü"], id: \.self) { quality in
+                    HStack {
+                        Circle()
+                            .fill(Color.random)
+                            .frame(width: 12, height: 12)
+                        
+                        Text(quality)
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextColor"))
+                        
+                        Spacer()
+                        
+                        Rectangle()
+                            .fill(Color.random.opacity(0.7))
+                            .frame(width: CGFloat.random(in: 30...80), height: 8)
+                            .cornerRadius(4)
+                        
+                        Text("\(Int.random(in: 10...45))%")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextColor"))
+                            .frame(width: 35, alignment: .trailing)
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color("CardBackground"))
+        .cornerRadius(12)
+    }
+}
+
+struct AnalyticsSleepBreakdownPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Uyku Dağılımı")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            HStack {
+                // Fake pie chart
+                ZStack {
+                    Circle()
+                        .fill(Color("AccentColor"))
+                        .frame(width: 120, height: 120)
+                    
+                    Circle()
+                        .trim(from: 0, to: 0.3)
+                        .fill(Color("PrimaryColor"))
+                        .frame(width: 120, height: 120)
+                        .rotationEffect(.degrees(90))
+                    
+                    Circle()
+                        .trim(from: 0, to: 0.15)
+                        .fill(Color("SecondaryColor"))
+                        .frame(width: 120, height: 120)
+                        .rotationEffect(.degrees(198))
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Circle()
+                            .fill(Color("AccentColor"))
+                            .frame(width: 12, height: 12)
+                        Text("Ana Uyku: 75%")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextColor"))
+                    }
+                    
+                    HStack {
+                        Circle()
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: 12, height: 12)
+                        Text("Şekerleme 1: 20%")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextColor"))
+                    }
+                    
+                    HStack {
+                        Circle()
+                            .fill(Color("SecondaryColor"))
+                            .frame(width: 12, height: 12)
+                        Text("Şekerleme 2: 5%")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color("TextColor"))
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color("CardBackground"))
+        .cornerRadius(12)
+    }
+}
+
+struct AnalyticsConsistencyPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Uyku Tutarlılığı")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            HStack {
+                // Fake consistency circle
+                ZStack {
+                    Circle()
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 10)
+                        .frame(width: 100, height: 100)
+                    
+                    Circle()
+                        .trim(from: 0, to: 0.75)
+                        .stroke(Color("SecondaryColor"), style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                        .frame(width: 100, height: 100)
+                    
+                    VStack {
+                        Text("75")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(Color("TextColor"))
+                        Text("Puan")
+                            .font(.system(size: 12))
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Değişkenlik: 25 Puan")
+                        .font(.system(size: 14))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Text("Harika bir uyku rutininiz var!")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("SecondaryTextColor"))
+                }
+            }
+        }
+        .padding()
+        .background(Color("CardBackground"))
+        .cornerRadius(12)
+    }
+}
+
+struct AnalyticsTimeGainedPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Kazanılan Zaman")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundColor(Color("TextColor"))
+            
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(Color("SecondaryColor").opacity(0.1))
+                        .frame(width: 80, height: 80)
+                    
+                    VStack {
+                        Text("2.5")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(Color("SecondaryColor"))
+                        Text("saat")
+                            .font(.system(size: 12))
+                            .foregroundColor(Color("SecondaryColor"))
+                    }
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("📚 75 sayfa kitap okumak")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Text("🚶‍♂️ 12.5 km yürümek")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("TextColor"))
+                    
+                    Text("🎬 1 film izlemek")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("TextColor"))
+                }
+            }
+        }
+        .padding()
+        .background(Color("CardBackground"))
+        .cornerRadius(12)
+    }
+}
+
+// MARK: - Color Extension for Random Colors
+extension Color {
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
+    }
 } 

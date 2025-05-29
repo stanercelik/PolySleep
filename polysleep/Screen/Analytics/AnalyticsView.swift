@@ -11,6 +11,7 @@ public struct AnalyticsView: View {
     @State private var selectedBarDataPoint: SleepTrendData?
     @State private var selectedPieSlice: SleepBreakdownData?
     @State private var tooltipPosition: CGPoint = .zero
+    @State private var isPremiumUser = false
     
     public init() {}
     
@@ -37,22 +38,74 @@ public struct AnalyticsView: View {
                         } else if viewModel.hasEnoughData {
                             // Ana Analiz İçeriği
                             VStack(spacing: PSSpacing.xl) {
+                                // Free kullanıcılar için temel özellikler
                                 AnalyticsSummaryCard(viewModel: viewModel)
-                                AnalyticsTrendCharts(
-                                    viewModel: viewModel,
-                                    selectedTrendDataPoint: $selectedTrendDataPoint,
-                                    selectedBarDataPoint: $selectedBarDataPoint,
-                                    tooltipPosition: $tooltipPosition
-                                )
-                                AnalyticsQualityDistribution(viewModel: viewModel)
-                                AnalyticsSleepBreakdown(
-                                    viewModel: viewModel,
-                                    selectedPieSlice: $selectedPieSlice,
-                                    tooltipPosition: $tooltipPosition
-                                )
-                                AnalyticsConsistencySection(viewModel: viewModel)
+                                
+                                if isPremiumUser {
+                                    // Premium: Tam trend grafikleri
+                                    AnalyticsTrendCharts(
+                                        viewModel: viewModel,
+                                        selectedTrendDataPoint: $selectedTrendDataPoint,
+                                        selectedBarDataPoint: $selectedBarDataPoint,
+                                        tooltipPosition: $tooltipPosition
+                                    )
+                                } else {
+                                    // Free: Sadece toplam uyku süresi grafiği
+                                    AnalyticsTotalSleepChart(
+                                        viewModel: viewModel,
+                                        selectedTrendDataPoint: $selectedTrendDataPoint,
+                                        tooltipPosition: $tooltipPosition
+                                    )
+                                }
+                                
                                 AnalyticsBestWorstDays(viewModel: viewModel)
-                                AnalyticsTimeGained(viewModel: viewModel)
+                                
+                                // Premium özellikler - kilitli gösterim
+                                if isPremiumUser {
+                                    AnalyticsQualityDistribution(viewModel: viewModel)
+                                    AnalyticsSleepBreakdown(
+                                        viewModel: viewModel,
+                                        selectedPieSlice: $selectedPieSlice,
+                                        tooltipPosition: $tooltipPosition
+                                    )
+                                    AnalyticsConsistencySection(viewModel: viewModel)
+                                    AnalyticsTimeGained(viewModel: viewModel)
+                                } else {
+                                    PremiumLockedAnalytics(
+                                        title: L("analytics.sleepComponentsTrend.title", table: "Analytics"),
+                                        description: L("analytics.premium.breakdownDescription", table: "Analytics")
+                                    ) {
+                                        AnalyticsSleepComponentsPreview()
+                                    }
+                                    
+                                    PremiumLockedAnalytics(
+                                        title: L("analytics.qualityDistribution.title", table: "Analytics"),
+                                        description: L("analytics.premium.qualityDescription", table: "Analytics")
+                                    ) {
+                                        AnalyticsQualityDistributionPreview()
+                                    }
+                                    
+                                    PremiumLockedAnalytics(
+                                        title: L("analytics.sleepBreakdown.title", table: "Analytics"),
+                                        description: L("analytics.premium.breakdownDescription", table: "Analytics")
+                                    ) {
+                                        AnalyticsSleepBreakdownPreview()
+                                    }
+                                    
+                                    PremiumLockedAnalytics(
+                                        title: L("analytics.consistency.title", table: "Analytics"),
+                                        description: L("analytics.premium.consistencyDescription", table: "Analytics")
+                                    ) {
+                                        AnalyticsConsistencyPreview()
+                                    }
+                                    
+                                    PremiumLockedAnalytics(
+                                        title: L("analytics.timeGained.title", table: "Analytics"),
+                                        description: L("analytics.premium.timeGainedDescription", table: "Analytics")
+                                    ) {
+                                        AnalyticsTimeGainedPreview()
+                                    }
+                                }
                             }
                         } else {
                             insufficientDataView
@@ -73,6 +126,12 @@ public struct AnalyticsView: View {
         }
         .onAppear {
             viewModel.setModelContext(modelContext)
+            loadPremiumStatus()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
+            if let isPremium = notification.userInfo?["isPremium"] as? Bool {
+                isPremiumUser = isPremium
+            }
         }
         .id(languageManager.currentLanguage)
     }
@@ -124,6 +183,15 @@ public struct AnalyticsView: View {
     private func shareAnalytics() {
         // Paylaşım işlevi burada uygulanacak
         // iOS Share Sheet açılacak
+    }
+    
+    private func loadPremiumStatus() {
+        // Debug için UserDefaults kontrolü
+        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
+            isPremiumUser = UserDefaults.standard.bool(forKey: "debug_premium_status")
+        } else {
+            isPremiumUser = AuthManager.shared.currentUser?.isPremium ?? false
+        }
     }
 }
 
