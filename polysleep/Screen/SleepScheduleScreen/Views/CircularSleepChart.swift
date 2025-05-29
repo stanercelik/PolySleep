@@ -173,44 +173,19 @@ struct CircularSleepChart: View {
     
     @ViewBuilder
     private func timeLabel(for block: SleepBlock, center: CGPoint) -> some View {
-        if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
-            let startTime = timeComponents(from: startTimeInt)
-            let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-            
-            // Başlangıç ve bitiş açıları
-            let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-            let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
-            
-            // Bloğun ortasında tek bir etiket göster
-            let midAngle = (startAngle + endAngle) / 2
-            
-            // Açıya göre etiket yönünü belirle
-            let normalizedAngle = normalizeAngle(midAngle)
-            
-            // Sağ/sol tarafta ise dikey (alt alta), üst/alt tarafta ise yatay (yan yana)
-            let isVertical = (normalizedAngle < 45 && normalizedAngle > 135) || (normalizedAngle < 225 && normalizedAngle > 315)
-            
-            // Akıllı etiket gösterimi
-            let isLongBlock = block.duration > 90
-            let radius = circleRadius - strokeWidth / 2 - (isLongBlock ? 8 : 15)
-            let xPosition = center.x + radius * cos(midAngle * .pi / 180)
-            let yPosition = center.y + radius * sin(midAngle * .pi / 180)
-            
-            let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
-            let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
-            
+        if let labelData = generateLabelData(for: block, center: center) {
             Group {
-                if isVertical {
+                if labelData.isVertical {
                     // Dikey layout - sağ/sol tarafta (alt alta)
                     VStack(spacing: 1) {
-                        Text(startTimeStr)
-                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
-                        Text(endTimeStr)
-                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                        Text(labelData.startTimeStr)
+                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
+                        Text(labelData.endTimeStr)
+                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
                     }
                     .foregroundColor(.white)
-                    .padding(.horizontal, isLongBlock ? 6 : 4)
-                    .padding(.vertical, isLongBlock ? 3 : 2)
+                    .padding(.horizontal, labelData.isLongBlock ? 6 : 4)
+                    .padding(.vertical, labelData.isLongBlock ? 3 : 2)
                     .background(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color.black.opacity(0.8))
@@ -219,20 +194,20 @@ struct CircularSleepChart: View {
                                     .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
                             )
                     )
-                    .position(x: xPosition, y: yPosition)
+                    .position(x: labelData.xPosition, y: labelData.yPosition)
                 } else {
                     // Yatay layout - üst/alt tarafta (yan yana)
                     HStack(spacing: 2) {
-                        Text(startTimeStr)
-                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                        Text(labelData.startTimeStr)
+                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
                         Text("-")
-                            .font(.system(size: isLongBlock ? 8 : 7, weight: .medium))
-                        Text(endTimeStr)
-                            .font(.system(size: isLongBlock ? 9 : 8, weight: .semibold))
+                            .font(.system(size: labelData.isLongBlock ? 8 : 7, weight: .medium))
+                        Text(labelData.endTimeStr)
+                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
                     }
                     .foregroundColor(.white)
-                    .padding(.horizontal, isLongBlock ? 6 : 4)
-                    .padding(.vertical, isLongBlock ? 3 : 2)
+                    .padding(.horizontal, labelData.isLongBlock ? 6 : 4)
+                    .padding(.vertical, labelData.isLongBlock ? 3 : 2)
                     .background(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color.black.opacity(0.8))
@@ -241,10 +216,69 @@ struct CircularSleepChart: View {
                                     .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
                             )
                     )
-                    .position(x: xPosition, y: yPosition)
+                    .position(x: labelData.xPosition, y: labelData.yPosition)
                 }
             }
+        } else {
+            EmptyView()
         }
+    }
+    
+    private struct LabelData {
+        let startTimeStr: String
+        let endTimeStr: String
+        let isVertical: Bool
+        let isLongBlock: Bool
+        let xPosition: CGFloat
+        let yPosition: CGFloat
+    }
+    
+    private func generateLabelData(for block: SleepBlock, center: CGPoint) -> LabelData? {
+        guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
+            return nil
+        }
+        
+        let startTime = timeComponents(from: startTimeInt)
+        let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
+        
+        // Başlangıç ve bitiş açıları
+        let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
+        let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
+        
+        // Gece yarısını geçen uyku bloklarını doğru şekilde hesapla
+        var adjustedEndAngle = endAngle
+        if endAngle < startAngle {
+            adjustedEndAngle = endAngle + 360
+        }
+        
+        // Bloğun ortasında tek bir etiket göster
+        let midAngle = (startAngle + adjustedEndAngle) / 2
+        
+        // Açıyı normalize et
+        let normalizedAngle = normalizeAngle(midAngle)
+        
+        // Etiket yönünü belirle - doğru mantık:
+        // Sağ taraf (315°-45°) veya sol taraf (135°-225°) ise dikey layout
+        // Üst taraf (45°-135°) veya alt taraf (225°-315°) ise yatay layout
+        let isVertical = (normalizedAngle >= 315 || normalizedAngle <= 45) || (normalizedAngle >= 135 && normalizedAngle <= 225)
+        
+        // Akıllı etiket gösterimi
+        let isLongBlock = block.duration > 90
+        let radius = circleRadius - strokeWidth / 2 - (isLongBlock ? 8 : 15)
+        let xPosition = center.x + radius * cos(midAngle * .pi / 180)
+        let yPosition = center.y + radius * sin(midAngle * .pi / 180)
+        
+        let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
+        let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
+        
+        return LabelData(
+            startTimeStr: startTimeStr,
+            endTimeStr: endTimeStr,
+            isVertical: isVertical,
+            isLongBlock: isLongBlock,
+            xPosition: xPosition,
+            yPosition: yPosition
+        )
     }
     
     private func normalizeAngle(_ angle: Double) -> Double {
@@ -257,10 +291,6 @@ struct CircularSleepChart: View {
         }
         return normalizedAngle
     }
-    
-
-    
-
     
     private func innerTimeLabel(time: String, angle: Double, center: CGPoint) -> some View {
         // İç etiketler için, iç çemberin biraz içinde konumlandırıyoruz
