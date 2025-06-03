@@ -73,6 +73,17 @@ struct ScheduleSelectionView: View {
                                     .foregroundColor(.appTextSecondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, PSSpacing.md)
+                                
+                                // Zorluk derecesi açıklaması
+                                HStack(spacing: PSSpacing.sm) {
+                                    DifficultyLegendItem(emoji: "🟢", text: "Kolay")
+                                    DifficultyLegendItem(emoji: "🟡", text: "Orta")
+                                    DifficultyLegendItem(emoji: "🟠", text: "Zor")
+                                    DifficultyLegendItem(emoji: "🔴", text: "Uzman")
+                                }
+                                .padding(.horizontal, PSSpacing.md)
+                                .padding(.vertical, PSSpacing.xs)
+                                .background(Color.appCardBackground.opacity(0.5), in: RoundedRectangle(cornerRadius: PSCornerRadius.small))
                             }
                             .padding(.top, PSSpacing.xs)
                             
@@ -228,10 +239,9 @@ struct CompactScheduleCard: View {
             VStack(spacing: PSSpacing.sm) {
                 // Ana header - kompakt
                 HStack(spacing: PSSpacing.md) {
-                    // Schedule ikonu
-                    Image(systemName: getScheduleIcon())
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundColor(isSelected ? .appPrimary : .appAccent)
+                    // Zorluk derecesi emojisi
+                    Text(getDifficultyEmoji())
+                        .font(.system(size: 20))
                         .frame(width: 24, height: 24)
                     
                     // İsim ve bilgiler
@@ -363,21 +373,33 @@ struct CompactScheduleCard: View {
             )
     }
     
-    private func getScheduleIcon() -> String {
+    private func getDifficultyEmoji() -> String {
         let name = schedule.name.lowercased()
         
-        if name.contains("biphasic") || name.contains("çift") {
-            return "moon.stars.fill"
-        } else if name.contains("everyman") || name.contains("her") {
-            return "clock.fill"
-        } else if name.contains("uberman") || name.contains("uber") {
-            return "brain.head.profile.fill"
-        } else if name.contains("dymaxion") {
-            return "diamond.fill"
-        } else if name.contains("triphasic") || name.contains("üç") {
-            return "triangle.fill"
+        // Zorluk seviyeleri:
+        // 🟢 Kolay (Beginner) - Monophasic, Siesta, Segmented
+        // 🟡 Orta (Intermediate) - Biphasic, Triphasic, E1
+        // 🟠 Zor (Advanced) - Everyman 2-4, Dual Core
+        // 🔴 Çok Zor (Expert) - Uberman, Dymaxion
+        
+        if name.contains("monophasic") || name.contains("monofazik") || 
+           name.contains("siesta") || name.contains("öğle") ||
+           name.contains("segmented") || name.contains("bölünmüş") {
+            return "🟢" // Kolay - Yeni başlayanlar için
+        } else if name.contains("biphasic") || name.contains("çift") ||
+                  name.contains("triphasic") || name.contains("üç") ||
+                  (name.contains("everyman") && name.contains("1")) ||
+                  (name.contains("her") && name.contains("1")) {
+            return "🟡" // Orta - Biraz deneyim gerekli
+        } else if (name.contains("everyman") && (name.contains("2") || name.contains("3") || name.contains("4"))) ||
+                  (name.contains("her") && (name.contains("2") || name.contains("3") || name.contains("4"))) ||
+                  name.contains("dual") || name.contains("çift çekirdek") {
+            return "🟠" // Zor - İleri seviye
+        } else if name.contains("uberman") || name.contains("uber") ||
+                  name.contains("dymaxion") {
+            return "🔴" // Çok Zor - Uzman seviye
         } else {
-            return "bed.double.fill"
+            return "🟡" // Varsayılan - Orta seviye
         }
     }
 }
@@ -435,10 +457,9 @@ struct PremiumLockedScheduleCard: View {
                     VStack(spacing: PSSpacing.sm) {
                         // Ana header - kompakt
                         HStack(spacing: PSSpacing.md) {
-                            // Schedule ikonu
-                            Image(systemName: getScheduleIcon())
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundColor(.gray)
+                            // Zorluk derecesi emojisi
+                            Text(getDifficultyEmoji())
+                                .font(.system(size: 20))
                                 .frame(width: 24, height: 24)
                             
                             // İsim ve bilgiler
@@ -586,21 +607,33 @@ struct PremiumLockedScheduleCard: View {
             )
     }
     
-    private func getScheduleIcon() -> String {
+    private func getDifficultyEmoji() -> String {
         let name = schedule.name.lowercased()
         
-        if name.contains("biphasic") || name.contains("çift") {
-            return "moon.stars.fill"
-        } else if name.contains("everyman") || name.contains("her") {
-            return "clock.fill"
-        } else if name.contains("uberman") || name.contains("uber") {
-            return "brain.head.profile.fill"
-        } else if name.contains("dymaxion") {
-            return "diamond.fill"
-        } else if name.contains("triphasic") || name.contains("üç") {
-            return "triangle.fill"
+        // Zorluk seviyeleri:
+        // 🟢 Kolay (Beginner) - Monophasic, Siesta, Segmented
+        // 🟡 Orta (Intermediate) - Biphasic, Triphasic, E1
+        // 🟠 Zor (Advanced) - Everyman 2-4, Dual Core
+        // 🔴 Çok Zor (Expert) - Uberman, Dymaxion
+        
+        if name.contains("monophasic") || name.contains("monofazik") || 
+           name.contains("siesta") || name.contains("öğle") ||
+           name.contains("segmented") || name.contains("bölünmüş") {
+            return "🟢" // Kolay - Yeni başlayanlar için
+        } else if name.contains("biphasic") || name.contains("çift") ||
+                  name.contains("triphasic") || name.contains("üç") ||
+                  (name.contains("everyman") && name.contains("1")) ||
+                  (name.contains("her") && name.contains("1")) {
+            return "🟡" // Orta - Biraz deneyim gerekli
+        } else if (name.contains("everyman") && (name.contains("2") || name.contains("3") || name.contains("4"))) ||
+                  (name.contains("her") && (name.contains("2") || name.contains("3") || name.contains("4"))) ||
+                  name.contains("dual") || name.contains("çift çekirdek") {
+            return "🟠" // Zor - İleri seviye
+        } else if name.contains("uberman") || name.contains("uber") ||
+                  name.contains("dymaxion") {
+            return "🔴" // Çok Zor - Uzman seviye
         } else {
-            return "bed.double.fill"
+            return "🟡" // Varsayılan - Orta seviye
         }
     }
 }
@@ -621,6 +654,23 @@ struct ScheduleSectionHeader: View {
         .padding(.horizontal, PSSpacing.xs)
         .padding(.top, PSSpacing.md)
         .padding(.bottom, PSSpacing.xs)
+    }
+}
+
+/// Zorluk derecesi gösterge öğesi
+struct DifficultyLegendItem: View {
+    let emoji: String
+    let text: String
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(emoji)
+                .font(.system(size: 12))
+            
+            Text(text)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.appTextSecondary)
+        }
     }
 }
 

@@ -344,7 +344,7 @@ struct HistoryContentSection: View {
                 .padding(.horizontal, PSSpacing.lg)
                 .padding(.top, PSSpacing.lg)
                 
-                LazyVStack(spacing: PSSpacing.md) {
+                LazyVStack(spacing: PSSpacing.xl) {
                     ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
                         MonthSection(month: monthGroup.month, items: monthGroup.days, viewModel: viewModel)
                     }
@@ -384,7 +384,7 @@ struct MonthSection: View {
     @ObservedObject var viewModel: HistoryViewModel
     
     var body: some View {
-        VStack(spacing: PSSpacing.md) {
+        VStack(spacing: PSSpacing.lg) {
             // Month Header
             HStack {
                 Text(month)
@@ -399,8 +399,12 @@ struct MonthSection: View {
                 )
             }
             
+            // Month divider for better visual separation
+            Divider()
+                .background(Color.appPrimary.opacity(0.2))
+            
             // Days
-            VStack(spacing: PSSpacing.sm) {
+            VStack(spacing: PSSpacing.lg) {
                 ForEach(items.sorted { $0.date > $1.date }) { item in
                     ModernDayCard(item: item, viewModel: viewModel)
                 }
@@ -445,9 +449,15 @@ struct ModernDayCard: View {
                     }
                 }
                 
+                // Separator line for better content separation
+                if let entries = item.sleepEntries, !entries.isEmpty {
+                    Divider()
+                        .background(Color.appBorder.opacity(0.3))
+                }
+                
                 // Sleep Entries or No Record Message
                 if let entries = item.sleepEntries, !entries.isEmpty {
-                    VStack(spacing: PSSpacing.sm) {
+                    VStack(spacing: PSSpacing.md) { // PSSpacing.sm'den PSSpacing.md'ye artırdım
                         ForEach(entries) { entry in
                             ModernSleepEntryRow(entry: entry)
                         }
@@ -465,6 +475,12 @@ struct ModernDayCard: View {
                         Spacer()
                     }
                     .padding(.vertical, PSSpacing.lg)
+                }
+                
+                // Footer divider for better separation
+                if let entries = item.sleepEntries, !entries.isEmpty {
+                    Divider()
+                        .background(Color.appBorder.opacity(0.3))
                 }
                 
                 // Footer Stats
@@ -492,6 +508,7 @@ struct ModernDayCard: View {
                 }
             }
         }
+        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4) // Daha belirgin gölge
         .onTapGesture {
             DispatchQueue.main.async {
                 // viewModel.selectDay(item) // Geçici olarak yorum satırı yapıldı
@@ -551,11 +568,16 @@ struct ModernSleepEntryRow: View {
                 color: entry.isCore ? .appPrimary : .appSecondary
             )
         }
-        .padding(PSSpacing.sm)
+        .padding(PSSpacing.md)
         .background(
-            RoundedRectangle(cornerRadius: PSCornerRadius.small)
-                .fill(Color.appBackground.opacity(0.5))
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .fill(Color.appBackground.opacity(0.6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .stroke(Color.appBorder.opacity(0.2), lineWidth: 0.5)
+                )
         )
+        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
     }
 }
 

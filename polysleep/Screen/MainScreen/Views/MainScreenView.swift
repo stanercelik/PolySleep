@@ -220,9 +220,27 @@ struct HeaderSection: View {
                     VStack(spacing: PSSpacing.md) {
                     // Üst satır: Program adı + toplam uyku
                     HStack(alignment: .center) {
-                        Text(viewModel.model.schedule.name)
-                            .font(PSTypography.headline)
-                            .foregroundColor(.appPrimary)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(viewModel.model.schedule.name)
+                                .font(PSTypography.headline)
+                                .foregroundColor(.appPrimary)
+                            
+                            // Program değiştirme butonu
+                            Button(action: {
+                                viewModel.showScheduleSelectionSheet()
+                            }) {
+                                HStack(spacing: 4) {
+                                    Text(L("mainScreen.changeSchedule.button", table: "MainScreen"))
+                                        .font(.system(size: 12, weight: .medium))
+                                        .foregroundColor(.appTextSecondary)
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundColor(.appTextSecondary)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
                         
                         Spacer()
                         
@@ -410,43 +428,6 @@ struct SleepBlocksSection: View {
                         }
                     }
                 }
-                
-                // Düzenleme modunda schedule değiştirme seçeneği
-                if viewModel.isEditing {
-                    VStack(spacing: PSSpacing.md) {
-                        HStack {
-                            Text(L("mainScreen.changeSchedule.title", table: "MainScreen"))
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            
-                            Spacer()
-                        }
-                        
-                        Button(action: {
-                            viewModel.showScheduleSelectionSheet()
-                        }) {
-                            HStack(spacing: PSSpacing.sm) {
-                                Image(systemName: "list.bullet.circle.fill")
-                                    .font(.system(size: PSIconSize.small))
-                                    .foregroundColor(.appPrimary)
-                                
-                                Text(L("mainScreen.changeSchedule.button", table: "MainScreen"))
-                                    .font(PSTypography.caption)
-                                    .foregroundColor(.appPrimary)
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.right")
-                                    .font(.caption)
-                                    .foregroundColor(.appTextSecondary)
-                            }
-                            .padding(PSSpacing.md)
-                            .background(Color.appPrimary.opacity(0.1), in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
-                }
             
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: PSSpacing.md) {
@@ -591,7 +572,7 @@ struct SleepBlockCard: View {
             HStack(spacing: PSSpacing.sm) {
                 Image(systemName: block.isCore ? "moon.fill" : "powersleep")
                     .font(.system(size: PSIconSize.medium))
-                    .foregroundColor(block.isCore ? .appPrimary : .appAccent)
+                    .foregroundColor(block.isCore ? .appPrimary : .appSecondary)
                 
                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
                     // Saatleri yan yana daha düzgün göstermek için

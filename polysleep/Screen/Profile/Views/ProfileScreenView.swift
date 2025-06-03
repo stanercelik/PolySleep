@@ -28,6 +28,11 @@ struct ProfileScreenView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: PSSpacing.xl) {
+                        // Schedule Change Undo Banner
+                        if viewModel.hasUndoData() {
+                            UndoScheduleChangeCard(viewModel: viewModel)
+                        }
+                        
                         // Profile Header Card
                         ProfileHeaderCard(
                             showLoginSheet: $showLoginSheet, 
@@ -41,6 +46,11 @@ struct ProfileScreenView: View {
                         
                         // Adaptation Phase Card
                         AdaptationPhaseCard(viewModel: viewModel)
+                        
+                        // Adaptation Debug Section (Premium only)
+                        if isPremiumUser {
+                            AdaptationDebugCard(viewModel: viewModel)
+                        }
                         
                         // Customization Card
                         CustomizationCard(
@@ -118,6 +128,11 @@ struct ProfileScreenView: View {
                 viewModel.setModelContext(modelContext)
                 startAdaptationTimer()
                 loadPremiumStatus()
+                
+                // Undo banner için güncelleme timer'ı
+                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                    viewModel.objectWillChange.send()
+                }
             }
             .onDisappear {
                 stopAdaptationTimer()
@@ -2021,6 +2036,304 @@ struct DebugPremiumCard: View {
                     Spacer()
                 }
                 .padding(.top, PSSpacing.xs)
+            }
+        }
+    }
+}
+
+// MARK: - Schedule Change Undo Banner
+struct UndoScheduleChangeCard: View {
+    @ObservedObject var viewModel: ProfileScreenViewModel
+    @State private var isUndoing = false
+    @State private var undoError: String? = nil
+    
+    // Computed properties for alert binding
+    private var isShowingUndoError: Binding<Bool> {
+        Binding(
+            get: { undoError != nil },
+            set: { if !$0 { undoError = nil } }
+        )
+    }
+    
+    private var undoErrorMessage: String {
+        undoError ?? L("general.unknownError", table: "Profile")
+    }
+    
+    // Extracted background view to fix compiler error
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: PSCornerRadius.large)
+            .fill(Color.orange.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                    .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+            )
+    }
+
+    var body: some View {
+        PSCard {
+            VStack(spacing: PSSpacing.md) {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.orange)
+                    
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                        Text(L("profile.scheduleChange.undo.title", table: "Profile"))
+                            .font(PSTypography.headline)
+                            .foregroundColor(.appText)
+                        
+                        Text(L("profile.scheduleChange.undo.message", table: "Profile"))
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    
+                    Spacer()
+                }
+                
+                Button(action: {
+                    undoScheduleChange()
+                }) {
+                    HStack {
+                        if isUndoing {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .foregroundColor(.white)
+                        } else {
+                            Image(systemName: "arrow.uturn.backward")
+                                .font(.system(size: PSIconSize.small))
+                        }
+                        
+                        Text(L("profile.scheduleChange.undo.button", table: "Profile"))
+                            .font(PSTypography.body)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, PSSpacing.lg)
+                    .padding(.vertical, PSSpacing.sm)
+                    .background(
+                        RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                            .fill(Color.orange)
+                    )
+                }
+                .disabled(isUndoing)
+            }
+        }
+        .background(cardBackground)
+        .alert(
+            L("general.error", table: "Profile"),
+            isPresented: isShowingUndoError
+        ) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {
+                undoError = nil
+            }
+        } message: {
+            Text(undoErrorMessage)
+        }
+    }
+    
+    private func undoScheduleChange() {
+        isUndoing = true
+        
+        Task {
+            do {
+                try await viewModel.undoScheduleChange()
+                await MainActor.run {
+                    isUndoing = false
+                }
+            } catch {
+                await MainActor.run {
+                    undoError = error.localizedDescription
+                    isUndoing = false
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Adaptation Debug Card
+struct AdaptationDebugCard: View {
+    @ObservedObject var viewModel: ProfileScreenViewModel
+    @State private var isSettingDebugDay = false
+    @State private var debugError: String? = nil
+    
+    // Computed properties for alert binding
+    private var isShowingDebugError: Binding<Bool> {
+        Binding(
+            get: { debugError != nil },
+            set: { if !$0 { debugError = nil } }
+        )
+    }
+    
+    private var debugErrorMessage: String {
+        debugError ?? L("general.unknownError", table: "Profile")
+    }
+    
+    // Extracted background view to fix compiler error
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: PSCornerRadius.large)
+            .fill(Color.purple.opacity(0.05))
+            .overlay(
+                RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                    .stroke(Color.purple.opacity(0.2), lineWidth: 1)
+            )
+    }
+
+    var body: some View {
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                // Header
+                HStack {
+                    Image(systemName: "ladybug.fill")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.purple)
+                    
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                        Text(L("profile.adaptation.debug.title", table: "Profile"))
+                            .font(PSTypography.headline)
+                            .foregroundColor(.appText)
+                        
+                        Text(L("profile.adaptation.debug.description", table: "Profile"))
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    
+                    Spacer()
+                }
+                
+                if let schedule = viewModel.activeSchedule {
+                    VStack(spacing: PSSpacing.md) {
+                        // Current day info
+                        HStack {
+                            Text(L("profile.adaptation.debug.currentDay", table: "Profile"))
+                                .font(PSTypography.body)
+                                .foregroundColor(.appText)
+                            
+                            Spacer()
+                            
+                            Text("\(getCurrentDay(schedule: schedule)). gün")
+                                .font(PSTypography.body)
+                                .foregroundColor(.appPrimary)
+                                .padding(.horizontal, PSSpacing.md)
+                                .padding(.vertical, PSSpacing.xs)
+                                .background(
+                                    RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                        .fill(Color.appPrimary.opacity(0.1))
+                                )
+                        }
+                        
+                        // Debug slider
+                        VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                            HStack {
+                                Text(L("profile.adaptation.debug.setDay", table: "Profile"))
+                                    .font(PSTypography.body)
+                                    .foregroundColor(.appText)
+                                
+                                Spacer()
+                                
+                                Text("\(viewModel.debugAdaptationDay). gün")
+                                    .font(PSTypography.body)
+                                    .foregroundColor(.purple)
+                            }
+                            
+                            Slider(
+                                value: Binding(
+                                    get: { Double(viewModel.debugAdaptationDay) },
+                                    set: { viewModel.debugAdaptationDay = Int($0) }
+                                ),
+                                in: 1...Double(viewModel.maxDebugDays),
+                                step: 1
+                            )
+                            .tint(.purple)
+                            
+                            HStack {
+                                Text("1. gün")
+                                    .font(PSTypography.caption)
+                                    .foregroundColor(.appTextSecondary)
+                                
+                                Spacer()
+                                
+                                Text("\(viewModel.maxDebugDays). gün")
+                                    .font(PSTypography.caption)
+                                    .foregroundColor(.appTextSecondary)
+                            }
+                        }
+                        
+                        // Apply button
+                        Button(action: {
+                            setDebugDay()
+                        }) {
+                            HStack {
+                                if isSettingDebugDay {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                        .foregroundColor(.white)
+                                } else {
+                                    Image(systemName: "calendar.badge.plus")
+                                        .font(.system(size: PSIconSize.small))
+                                }
+                                
+                                Text(L("profile.adaptation.debug.apply", table: "Profile"))
+                                    .font(PSTypography.body)
+                            }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, PSSpacing.lg)
+                            .padding(.vertical, PSSpacing.sm)
+                            .background(
+                                RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                                    .fill(Color.purple)
+                            )
+                        }
+                        .disabled(isSettingDebugDay)
+                    }
+                } else {
+                    Text(L("profile.adaptation.debug.noSchedule", table: "Profile"))
+                        .font(PSTypography.body)
+                        .foregroundColor(.appTextSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.vertical, PSSpacing.md)
+                }
+            }
+        }
+        .background(cardBackground)
+        .alert(
+            L("general.error", table: "Profile"),
+            isPresented: isShowingDebugError
+        ) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {
+                debugError = nil
+            }
+        } message: {
+            Text(debugErrorMessage)
+        }
+    }
+    
+    private func getCurrentDay(schedule: UserSchedule) -> Int {
+        let calendar = Calendar.current
+        let startDate = schedule.updatedAt
+        let currentDate = Date()
+        
+        let startOfStartDate = calendar.startOfDay(for: startDate)
+        let startOfCurrentDate = calendar.startOfDay(for: currentDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
+        let daysPassed = components.day ?? 0
+        
+        return daysPassed + 1
+    }
+    
+    private func setDebugDay() {
+        isSettingDebugDay = true
+        
+        Task {
+            do {
+                try await viewModel.setAdaptationDebugDay(viewModel.debugAdaptationDay)
+                await MainActor.run {
+                    isSettingDebugDay = false
+                }
+            } catch {
+                await MainActor.run {
+                    debugError = error.localizedDescription
+                    isSettingDebugDay = false
+                }
             }
         }
     }

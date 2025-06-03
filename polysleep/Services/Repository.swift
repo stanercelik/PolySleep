@@ -766,10 +766,18 @@ class Repository: ObservableObject {
                 userScheduleToUpdate.isActive = isActive
                 userScheduleToUpdate.updatedAt = Date()
                 
-                // Eğer aktif ediliyorsa ve adaptasyon fazını sıfırlamak gerekiyorsa:
+                // Eğer aktif ediliyorsa adaptasyon fazını sıfırla ve undo bilgisini kaydet
                 if isActive {
+                    // Undo bilgisini kaydet
+                    try await saveScheduleChangeUndoData(scheduleId: uuid)
+                    
                     userScheduleToUpdate.adaptationPhase = 0 // Yeniden aktivasyonda adaptasyon fazını sıfırla
-                    logger.debug("🗂️ UserSchedule (ID: \(userScheduleToUpdate.id.uuidString)) aktif edildi, adaptasyon fazı sıfırlandı.")
+                    userScheduleToUpdate.updatedAt = Date() // Adaptasyon başlangıç tarihini güncelle
+                    
+                    // Streak'i sıfırla
+                    UserDefaults.standard.set(0, forKey: "currentStreak")
+                    
+                    logger.debug("🗂️ UserSchedule (ID: \(userScheduleToUpdate.id.uuidString)) aktif edildi, adaptasyon fazı ve streak sıfırlandı.")
                 }
                 logger.debug("✅ UserSchedule aktiflik durumu güncellendi: \(userScheduleToUpdate.name), isActive: \(isActive)")
             } else if isActive {
@@ -854,6 +862,207 @@ class Repository: ObservableObject {
             throw RepositoryError.saveFailed
         }
     }
+
+    // MARK: - Schedule Change Undo Methods
+    
+    /// Schedule değişimi undo verilerini kaydeder
+    private func saveScheduleChangeUndoData(scheduleId: UUID) async throws {
+        let undoData = ScheduleChangeUndoData(
+            scheduleId: scheduleId,
+            changeDate: Date(),
+            previousStreak: UserDefaults.standard.integer(forKey: "currentStreak"),
+            previousAdaptationPhase: getCurrentAdaptationPhase(scheduleId: scheduleId),
+            previousAdaptationDate: getCurrentAdaptationStartDate(scheduleId: scheduleId)
+        )
+        
+        // UserDefaults'a undo verisini kaydet
+        if let encoded = try? JSONEncoder().encode(undoData) {
+            UserDefaults.standard.set(encoded, forKey: "scheduleChangeUndoData")
+            logger.debug("📝 Schedule değişimi undo verisi kaydedildi")
+        }
+    }
+    
+    /// Mevcut adaptasyon fazını al
+    private func getCurrentAdaptationPhase(scheduleId: UUID) -> Int {
+        guard let context = _modelContext else { return 0 }
+        
+        let descriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id == scheduleId }
+        )
+        
+        do {
+            if let schedule = try context.fetch(descriptor).first {
+                return schedule.adaptationPhase ?? 0
+            }
+        } catch {
+            logger.error("❌ Adaptasyon fazı alınırken hata: \(error)")
+        }
+        
+        return 0
+    }
+    
+    /// Mevcut adaptasyon başlangıç tarihini al
+    private func getCurrentAdaptationStartDate(scheduleId: UUID) -> Date {
+        guard let context = _modelContext else { return Date() }
+        
+        let descriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id == scheduleId }
+        )
+        
+        do {
+            if let schedule = try context.fetch(descriptor).first {
+                return schedule.updatedAt
+            }
+        } catch {
+            logger.error("❌ Adaptasyon başlangıç tarihi alınırken hata: \(error)")
+        }
+        
+        return Date()
+    }
+    
+    /// Schedule değişimini geri al
+    func undoScheduleChange() async throws {
+        guard let data = UserDefaults.standard.data(forKey: "scheduleChangeUndoData"),
+              let undoData = try? JSONDecoder().decode(ScheduleChangeUndoData.self, from: data) else {
+            throw RepositoryError.noUndoDataAvailable
+        }
+        
+        guard let context = _modelContext else {
+            throw RepositoryError.modelContextNotSet
+        }
+        
+        // Schedule değişimi bugün yapıldıysa geri alabilir
+        let calendar = Calendar.current
+        guard calendar.isDate(undoData.changeDate, inSameDayAs: Date()) else {
+            throw RepositoryError.undoExpired
+        }
+        
+        // Schedule'ı bul ve eski durumuna çevir
+        let descriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id == undoData.scheduleId }
+        )
+        
+        do {
+            guard let schedule = try context.fetch(descriptor).first else {
+                throw RepositoryError.entityNotFound
+            }
+            
+            // Eski değerleri geri yükle
+            schedule.adaptationPhase = undoData.previousAdaptationPhase
+            schedule.updatedAt = undoData.previousAdaptationDate
+            
+            // Streak'i geri yükle
+            UserDefaults.standard.set(undoData.previousStreak, forKey: "currentStreak")
+            
+            try context.save()
+            
+            // Undo verisini temizle
+            UserDefaults.standard.removeObject(forKey: "scheduleChangeUndoData")
+            
+            logger.debug("✅ Schedule değişimi başarıyla geri alındı")
+            
+        } catch {
+            logger.error("❌ Schedule değişimi geri alınırken hata: \(error)")
+            throw RepositoryError.updateFailed
+        }
+    }
+    
+    /// Undo verisi mevcut mu kontrol et
+    func hasUndoData() -> Bool {
+        guard let data = UserDefaults.standard.data(forKey: "scheduleChangeUndoData"),
+              let undoData = try? JSONDecoder().decode(ScheduleChangeUndoData.self, from: data) else {
+            return false
+        }
+        
+        // Sadece bugünkü değişiklikler için undo mevcut
+        let calendar = Calendar.current
+        return calendar.isDate(undoData.changeDate, inSameDayAs: Date())
+    }
+    
+    /// Adaptasyon günü debug için manuel olarak ayarla
+    func setAdaptationDebugDay(scheduleId: UUID, dayNumber: Int) async throws {
+        guard let context = _modelContext else {
+            throw RepositoryError.modelContextNotSet
+        }
+        
+        let descriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id == scheduleId }
+        )
+        
+        do {
+            guard let schedule = try context.fetch(descriptor).first else {
+                throw RepositoryError.entityNotFound
+            }
+            
+            // Günü adaptasyon başlangıç tarihine göre hesapla
+            let calendar = Calendar.current
+            let targetDate = calendar.date(byAdding: .day, value: dayNumber - 1, to: Date()) ?? Date()
+            
+            schedule.updatedAt = targetDate
+            
+            // Fazı hesapla
+            let phase = calculateAdaptationPhaseForDay(dayNumber: dayNumber, schedule: schedule)
+            schedule.adaptationPhase = phase
+            
+            try context.save()
+            
+            logger.debug("🐛 Adaptasyon debug günü ayarlandı: Gün \(dayNumber), Faz \(phase)")
+            
+        } catch {
+            logger.error("❌ Adaptasyon debug günü ayarlanırken hata: \(error)")
+            throw RepositoryError.updateFailed
+        }
+    }
+    
+    /// Belirli bir gün numarası için adaptasyon fazını hesapla
+    private func calculateAdaptationPhaseForDay(dayNumber: Int, schedule: UserSchedule) -> Int {
+        let scheduleName = schedule.name.lowercased()
+        let adaptationDuration: Int
+        
+        if scheduleName.contains("uberman") || 
+           scheduleName.contains("dymaxion") ||
+           (scheduleName.contains("everyman") && scheduleName.contains("1")) {
+            adaptationDuration = 28
+        } else {
+            adaptationDuration = 21
+        }
+        
+        let phase: Int
+        
+        if adaptationDuration == 28 {
+            // 28 günlük programlar için
+            switch dayNumber {
+            case 1:
+                phase = 0  // İlk gün - Başlangıç
+            case 2...7:
+                phase = 1  // 2-7. günler - İlk Adaptasyon
+            case 8...14:
+                phase = 2  // 8-14. günler - Orta Adaptasyon
+            case 15...21:
+                phase = 3  // 15-21. günler - İlerlemiş Adaptasyon
+            case 22...28:
+                phase = 4  // 22-28. günler - İleri Adaptasyon
+            default:
+                phase = 5  // 28+ günler - Tamamlanmış
+            }
+        } else {
+            // 21 günlük programlar için
+            switch dayNumber {
+            case 1:
+                phase = 0  // İlk gün - Başlangıç
+            case 2...7:
+                phase = 1  // 2-7. günler - İlk Adaptasyon
+            case 8...14:
+                phase = 2  // 8-14. günler - Orta Adaptasyon
+            case 15...21:
+                phase = 3  // 15-21. günler - İlerlemiş Adaptasyon
+            default:
+                phase = 4  // 21+ günler - Tamamlanmış
+            }
+        }
+        
+        return phase
+    }
 }
 
 enum RepositoryError: Error {
@@ -865,4 +1074,6 @@ enum RepositoryError: Error {
     case fetchFailed
     case updateFailed
     case entityNotFound
+    case noUndoDataAvailable
+    case undoExpired
 } 

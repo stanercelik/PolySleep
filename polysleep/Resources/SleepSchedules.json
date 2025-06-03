@@ -95,7 +95,7 @@
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir."
       },
       "totalSleepHours": 5,
-      "isPremium": true,
+      "isPremium": false,
       "adaptationPhase": 21,
       "schedule": [
         {
@@ -280,7 +280,7 @@
         "tr": "Her 4 saatte bir 20 dakikalık altı (bazen daha fazla) kısa uykudan oluşan oldukça ekstrem bir uyku düzenidir."
       },
       "totalSleepHours": 2,
-      "isPremium": true,
+      "isPremium": false,
       "adaptationPhase": 28,
       "schedule": [
         {
@@ -388,7 +388,7 @@
       "name": "Segmented Sleep",
       "description": {
         "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest. Ideal for a relaxed start.",
-        "tr": "Yaygın olarak ‘birinci ve ikinci uyku’ şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir."
+        "tr": "Yaygın olarak 'birinci ve ikinci uyku' şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir."
       },
       "totalSleepHours": 6,
       "isPremium": false,
@@ -441,7 +441,7 @@
         "tr": "Geceyi iki neredeyse eşit ana uyku periyoduna bölen ve arada uyanıklık dönemi bırakan bir düzen. Bölünmüş uykuyu daha yapılandırılmış bir biçimde taklit eder."
       },
       "totalSleepHours": 6,
-      "isPremium": true,
+      "isPremium": false,
       "adaptationPhase": 21,
       "schedule": [
         {
@@ -541,7 +541,7 @@
         "tr": "Geceleri tek bir ana uyku ve gün içinde genişletilmiş bir şekerlemeden oluşan esnek biphasic yaklaşımı."
       },
       "totalSleepHours": 7,
-      "isPremium": false,
+      "isPremium": true,
       "adaptationPhase": 21,
       "schedule": [
         {

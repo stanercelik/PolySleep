@@ -59,22 +59,103 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
       let userInfo = response.notification.request.content.userInfo
       
-      // Alarm eylemleri
+      // Ana alarm eylemleri
       if userInfo["type"] as? String == "sleep_alarm" {
           switch response.actionIdentifier {
+          case "START_LONG_ALARM_ACTION":
+              handleStartLongAlarmAction(userInfo: userInfo)
           case "SNOOZE_ACTION":
               handleSnoozeAction(userInfo: userInfo)
           case "STOP_ACTION":
               handleStopAction(userInfo: userInfo)
           case UNNotificationDefaultActionIdentifier:
-              // Bildirime tıklandı
-              handleAlarmTapped(userInfo: userInfo)
+              // Bildirime tıklandı - uzun alarmı başlat
+              handleStartLongAlarmAction(userInfo: userInfo)
+          default:
+              break
+          }
+      }
+      // Uzun alarm eylemleri
+      else if userInfo["type"] as? String == "long_sleep_alarm" {
+          switch response.actionIdentifier {
+          case "STOP_LONG_ALARM_ACTION":
+              handleStopLongAlarmAction(userInfo: userInfo)
+          case UNNotificationDefaultActionIdentifier:
+              // Uzun alarm bildirimine tıklandı - ana ekrana git
+              handleLongAlarmTapped(userInfo: userInfo)
           default:
               break
           }
       }
       
       completionHandler()
+  }
+  
+  /// Uzun alarmı başlatır
+  private func handleStartLongAlarmAction(userInfo: [AnyHashable: Any]) {
+      guard let blockIdString = userInfo["blockId"] as? String,
+            let blockId = UUID(uuidString: blockIdString),
+            let scheduleIdString = userInfo["scheduleId"] as? String,
+            let scheduleId = UUID(uuidString: scheduleIdString),
+            let userIdString = userInfo["userId"] as? String,
+            let userId = UUID(uuidString: userIdString) else { return }
+      
+      print("PolySleep Debug: Uzun alarm başlatılıyor - Block ID: \(blockId)")
+      
+      Task {
+          // Varsayılan alarm ayarları - gerçek uygulamada kullanıcı ayarlarından alınacak
+          let alarmSettings = AlarmSettings(
+              userId: userId,
+              isEnabled: true,
+              soundName: "alarm.caf",
+              volume: 1.0,
+              vibrationEnabled: true
+          )
+          
+          await MainActor.run {
+              AlarmNotificationService.shared.startLongDurationAlarm(
+                  blockId: blockId,
+                  scheduleId: scheduleId,
+                  userId: userId,
+                  alarmSettings: alarmSettings
+              )
+          }
+      }
+  }
+  
+  /// Uzun alarmı durdurur
+  private func handleStopLongAlarmAction(userInfo: [AnyHashable: Any]) {
+      guard let blockIdString = userInfo["blockId"] as? String,
+            let blockId = UUID(uuidString: blockIdString) else { return }
+      
+      print("PolySleep Debug: Uzun alarm durduruldu - Block ID: \(blockId)")
+      
+      Task {
+          await MainActor.run {
+              AlarmNotificationService.shared.stopLongDurationAlarm()
+          }
+          
+          // UI'ya sinyal gönder
+          await MainActor.run {
+              NotificationCenter.default.post(
+                  name: NSNotification.Name("LongAlarmStopped"),
+                  object: nil,
+                  userInfo: ["blockId": blockId.uuidString]
+              )
+          }
+      }
+  }
+  
+  /// Uzun alarm bildirimine tıklandığında
+  private func handleLongAlarmTapped(userInfo: [AnyHashable: Any]) {
+      print("PolySleep Debug: Uzun alarm bildirimine tıklandı")
+      
+      // Uygulamayı ana ekrana yönlendir
+      NotificationCenter.default.post(
+          name: NSNotification.Name("NavigateToMainScreen"),
+          object: nil,
+          userInfo: userInfo
+      )
   }
   
   private func handleSnoozeAction(userInfo: [AnyHashable: Any]) {
@@ -147,17 +228,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
               )
           }
       }
-  }
-  
-  private func handleAlarmTapped(userInfo: [AnyHashable: Any]) {
-      print("PolySleep Debug: Alarm bildirimine tıklandı")
-      
-      // Uygulamayı ana ekrana yönlendir
-      NotificationCenter.default.post(
-          name: NSNotification.Name("NavigateToMainScreen"),
-          object: nil,
-          userInfo: userInfo
-      )
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

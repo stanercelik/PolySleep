@@ -13,9 +13,24 @@ class AlarmNotificationService: ObservableObject {
     @Published var isAuthorized = false
     @Published var authorizationStatus: UNAuthorizationStatus = .notDetermined
     @Published var pendingNotificationsCount = 0
+    @Published var isLongAlarmActive = false
+    
+    // Uzun süreli alarm için - Medium makalesinden esinlenerek optimize edildi
+    private var longAlarmTimer: Timer?
+    private var alarmStartTime: Date?
+    private let alarmDuration: TimeInterval = 30 // 30 saniye alarm süresi
+    private let notificationInterval: TimeInterval = 2 // Her 2 saniyede bir bildirim (daha etkili)
+    
+    // Mevcut alarm ses dosyaları (Medium makalesine uygun .caf formatında)
+    private let availableAlarmSounds: [String: String] = [
+        "default": "alarm.caf",
+        "classic": "alarm.caf",
+        "urgent": "alarm.caf"
+    ]
     
     private init() {
         checkAuthorizationStatus()
+        registerNotificationCategories()
     }
     
     // MARK: - Authorization Management
@@ -30,11 +45,12 @@ class AlarmNotificationService: ObservableObject {
         }
     }
     
-    /// Bildirim izni ister
+    /// Medium makalesine göre bildirim izni ister - critical alert olmadan
     func requestAuthorization() async -> Bool {
         do {
+            // Critical alert özellikle hariç bırakıldı (Medium makalesi önerisi)
             let granted = try await notificationCenter.requestAuthorization(
-                options: [.alert, .sound, .badge, .criticalAlert]
+                options: [.alert, .sound, .badge]
             )
             
             await MainActor.run {
@@ -43,7 +59,7 @@ class AlarmNotificationService: ObservableObject {
             }
             
             if granted {
-                print("PolySleep Debug: Alarm bildirimi izni verildi")
+                print("PolySleep Debug: Alarm bildirimi izni verildi (normal mod)")
             } else {
                 print("PolySleep Debug: Alarm bildirimi izni reddedildi")
             }
@@ -55,9 +71,203 @@ class AlarmNotificationService: ObservableObject {
         }
     }
     
-    // MARK: - Alarm Scheduling
+    // MARK: - Enhanced Alarm Sound System (Medium makalesine göre)
     
-    /// Uyku bloğu bitimi için alarm planlar
+    /// Medium makalesindeki önerilere göre alarm sesi ayarlar
+    private func createAlarmSound(soundName: String) -> UNNotificationSound {
+        // .caf formatındaki ses dosyalarını kontrol et
+        if let _ = Bundle.main.url(forResource: soundName.replacingOccurrences(of: ".caf", with: ""), withExtension: "caf") {
+            return UNNotificationSound(named: UNNotificationSoundName(rawValue: soundName))
+        } else {
+            print("PolySleep Debug: Özel ses bulunamadı (\(soundName)), varsayılan alarm sesi kullanılacak")
+            // Sistem varsayılanından daha güçlü bir ses
+            return UNNotificationSound.defaultCritical
+        }
+    }
+    
+    /// Alarm sesi geçerlilik kontrolü (≤ 30 saniye)
+    private func validateAlarmSoundDuration(soundName: String) -> Bool {
+        guard let soundURL = Bundle.main.url(forResource: soundName.replacingOccurrences(of: ".caf", with: ""), withExtension: "caf") else {
+            return false
+        }
+        
+        do {
+            let audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            let duration = audioPlayer.duration
+            
+            if duration > 30.0 {
+                print("PolySleep Debug: Uyarı - Ses dosyası 30 saniyeden uzun (\(duration)s), kesilme riski var")
+                return false
+            }
+            
+            print("PolySleep Debug: Ses dosyası geçerli - \(duration) saniye")
+            return true
+        } catch {
+            print("PolySleep Debug: Ses dosyası kontrol edilemedi: \(error)")
+            return false
+        }
+    }
+    
+    // MARK: - Long Duration Alarm System (Enhanced)
+    
+    /// Medium makalesine göre 30 saniye boyunca sürekli çalan güçlü alarm başlatır
+    func startLongDurationAlarm(
+        blockId: UUID,
+        scheduleId: UUID,
+        userId: UUID,
+        alarmSettings: AlarmSettings
+    ) {
+        guard isAuthorized && !isLongAlarmActive else {
+            print("PolySleep Debug: Uzun alarm başlatılamadı - izin yok veya zaten aktif")
+            showFallbackAlert(for: blockId)
+            return
+        }
+        
+        isLongAlarmActive = true
+        alarmStartTime = Date()
+        
+        print("PolySleep Debug: 30 saniye güçlü alarm başlatıldı (Medium yöntemi)")
+        
+        // Ses dosyası geçerliliğini kontrol et
+        if !validateAlarmSoundDuration(soundName: alarmSettings.soundName) {
+            print("PolySleep Debug: Ses dosyası sorunlu, varsayılan kullanılacak")
+        }
+        
+        // Audio manager ile sürekli ses çalmayı başlat
+        Task {
+            await AlarmAudioManager.shared.startAlarmAudio(
+                soundName: alarmSettings.soundName,
+                volume: Float(alarmSettings.volume)
+            )
+        }
+        
+        // İlk bildirimi hemen göster - daha agresif ayarlarla
+        scheduleInstantAlarmNotification(
+            blockId: blockId,
+            scheduleId: scheduleId,
+            userId: userId,
+            iteration: 0,
+            alarmSettings: alarmSettings
+        )
+        
+        // Her 2 saniyede bir yeni bildirim için timer başlat (Medium önerisi)
+        var iterationCount = 1
+        longAlarmTimer = Timer.scheduledTimer(withTimeInterval: notificationInterval, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            
+            // 30 saniye doldu mu kontrol et
+            if let startTime = self.alarmStartTime,
+               Date().timeIntervalSince(startTime) >= self.alarmDuration {
+                self.stopLongDurationAlarm()
+                return
+            }
+            
+            // Yeni bildirim gönder
+            self.scheduleInstantAlarmNotification(
+                blockId: blockId,
+                scheduleId: scheduleId,
+                userId: userId,
+                iteration: iterationCount,
+                alarmSettings: alarmSettings
+            )
+            
+            iterationCount += 1
+        }
+        
+        // Fallback: 35 saniye sonra kesinlikle durdur
+        DispatchQueue.main.asyncAfter(deadline: .now() + 35) { [weak self] in
+            self?.stopLongDurationAlarm()
+        }
+    }
+    
+    /// Medium makalesine göre anlık alarm bildirimi planlar (güçlendirilmiş)
+    private func scheduleInstantAlarmNotification(
+        blockId: UUID,
+        scheduleId: UUID,
+        userId: UUID,
+        iteration: Int,
+        alarmSettings: AlarmSettings
+    ) {
+        let identifier = "long_alarm_\(blockId.uuidString)_\(iteration)_\(Date().timeIntervalSince1970)"
+        
+        let content = UNMutableNotificationContent()
+        content.title = "⏰ UYANMA ALARMI!"
+        content.body = "Uyku bloğunuz sona erdi! Hemen uyanın! (\(iteration + 1)/15)"
+        content.categoryIdentifier = "LONG_SLEEP_ALARM"
+        content.userInfo = [
+            "blockId": blockId.uuidString,
+            "scheduleId": scheduleId.uuidString,
+            "userId": userId.uuidString,
+            "type": "long_sleep_alarm",
+            "iteration": iteration
+        ]
+        
+        // Medium makalesine göre ses ayarları - critical alert olmadan
+        content.sound = createAlarmSound(soundName: alarmSettings.soundName)
+        
+        // iOS 15+ için maksimum önem derecesi (critical alert olmadan)
+        if #available(iOS 15.0, *) {
+            content.interruptionLevel = .timeSensitive // Critical değil, time-sensitive
+            content.relevanceScore = 1.0
+        }
+        
+        // Badge sayısını artır (kullanıcının dikkatini çekmek için)
+        content.badge = NSNumber(value: iteration + 1)
+        
+        // 0.5 saniye sonra tetikle (daha hızlı)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { error in
+            if let error = error {
+                print("PolySleep Debug: Anlık alarm bildirimi eklenirken hata: \(error)")
+            } else {
+                print("PolySleep Debug: Güçlü alarm bildirimi eklendi - iterasyon \(iteration)")
+            }
+        }
+    }
+    
+    /// Uzun süreli alarmı durdurur
+    func stopLongDurationAlarm() {
+        guard isLongAlarmActive else { return }
+        
+        isLongAlarmActive = false
+        longAlarmTimer?.invalidate()
+        longAlarmTimer = nil
+        alarmStartTime = nil
+        
+        // Audio manager'da sesi durdur
+        Task {
+            await AlarmAudioManager.shared.stopAlarmAudio()
+        }
+        
+        print("PolySleep Debug: Uzun alarm durduruldu")
+        
+        // İlgili tüm bekleyen bildirimleri temizle
+        notificationCenter.getPendingNotificationRequests { requests in
+            let longAlarmIdentifiers = requests.compactMap { request in
+                if request.identifier.contains("long_alarm_") {
+                    return request.identifier
+                }
+                return nil
+            }
+            
+            if !longAlarmIdentifiers.isEmpty {
+                self.notificationCenter.removePendingNotificationRequests(withIdentifiers: longAlarmIdentifiers)
+                print("PolySleep Debug: \(longAlarmIdentifiers.count) uzun alarm bildirimi temizlendi")
+            }
+        }
+        
+        // UI'ya alarm durduruldu sinyali gönder
+        NotificationCenter.default.post(
+            name: NSNotification.Name("LongAlarmStopped"),
+            object: nil
+        )
+    }
+    
+    // MARK: - Alarm Scheduling (Enhanced for non-critical)
+    
+    /// Medium makalesine göre uyku bloğu bitimi için güçlü alarm planlar
     func scheduleAlarmForSleepBlockEnd(
         blockId: UUID,
         scheduleId: UUID,
@@ -76,10 +286,10 @@ class AlarmNotificationService: ObservableObject {
         
         let identifier = "alarm_\(blockId.uuidString)"
         
-        // Bildirim içeriği oluştur
+        // Medium makalesine göre güçlü alarm içeriği oluştur
         let content = UNMutableNotificationContent()
-        content.title = "⏰ Uyku Alarmı"
-        content.body = "Uyku bloğunuz sona erdi! Uyanma zamanı!"
+        content.title = "⏰ UYANMA ALARMI!"
+        content.body = "Uyku bloğunuz sona erdi! Dokunarak 30 saniye güçlü alarm başlatın!"
         content.categoryIdentifier = "SLEEP_ALARM"
         content.userInfo = [
             "blockId": blockId.uuidString,
@@ -88,16 +298,21 @@ class AlarmNotificationService: ObservableObject {
             "type": "sleep_alarm"
         ]
         
-        // Alarm sesi ayarla
-        if let soundURL = Bundle.main.url(forResource: alarmSettings.soundName.replacingOccurrences(of: ".caf", with: ""), withExtension: "caf") {
-            content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: alarmSettings.soundName))
+        // Ses dosyası geçerliliğini kontrol et ve ayarla
+        if validateAlarmSoundDuration(soundName: alarmSettings.soundName) {
+            content.sound = createAlarmSound(soundName: alarmSettings.soundName)
         } else {
             content.sound = UNNotificationSound.defaultCritical
         }
         
-        // Kritik alarm (Focus/Sessiz modu bypass)
-        content.interruptionLevel = .critical
-        content.relevanceScore = 1.0
+        // Critical alert olmadan maksimum etkililik
+        if #available(iOS 15.0, *) {
+            content.interruptionLevel = .timeSensitive
+            content.relevanceScore = 1.0
+        }
+        
+        // Badge ile dikkat çekme
+        content.badge = 1
         
         // Trigger oluştur
         let trigger = UNCalendarNotificationTrigger(
@@ -124,7 +339,7 @@ class AlarmNotificationService: ObservableObject {
             
             await updatePendingNotificationsCount()
             
-            print("PolySleep Debug: Alarm planlandı - \(identifier) - \(endTime)")
+            print("PolySleep Debug: Güçlü alarm planlandı - \(identifier) - \(endTime)")
             
         } catch {
             print("PolySleep Debug: Alarm planlanırken hata: \(error)")
@@ -286,6 +501,13 @@ class AlarmNotificationService: ObservableObject {
 extension AlarmNotificationService {
     /// Bildirim kategorilerini kaydet
     func registerNotificationCategories() {
+        // Uzun Alarm Başlat butonu - mavi renk
+        let startLongAlarmAction = UNNotificationAction(
+            identifier: "START_LONG_ALARM_ACTION",
+            title: "🔔 30sn Uzun Alarm",
+            options: [.foreground]
+        )
+        
         // Ertele butonu - yeşil renk
         let snoozeAction = UNNotificationAction(
             identifier: "SNOOZE_ACTION",
@@ -300,15 +522,29 @@ extension AlarmNotificationService {
             options: [.destructive, .authenticationRequired]
         )
         
-        // Alarm kategorisi - butonları sıralı şekilde göster
+        // Ana alarm kategorisi - uzun alarm başlatma butonlu
         let alarmCategory = UNNotificationCategory(
             identifier: "SLEEP_ALARM",
-            actions: [snoozeAction, stopAction],
+            actions: [startLongAlarmAction, snoozeAction, stopAction],
             intentIdentifiers: [],
             options: [.customDismissAction, .allowInCarPlay]
         )
         
-        notificationCenter.setNotificationCategories([alarmCategory])
-        print("PolySleep Debug: Alarm bildirim kategorileri kaydedildi")
+        // Uzun alarm kategorisi - sadece durdurma butonu
+        let stopLongAlarmAction = UNNotificationAction(
+            identifier: "STOP_LONG_ALARM_ACTION",
+            title: "⏹️ Alarmı Durdur",
+            options: [.destructive, .authenticationRequired]
+        )
+        
+        let longAlarmCategory = UNNotificationCategory(
+            identifier: "LONG_SLEEP_ALARM",
+            actions: [stopLongAlarmAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction, .allowInCarPlay]
+        )
+        
+        notificationCenter.setNotificationCategories([alarmCategory, longAlarmCategory])
+        print("PolySleep Debug: Tüm alarm bildirim kategorileri kaydedildi")
     }
 } 

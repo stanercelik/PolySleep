@@ -17,6 +17,11 @@ class ProfileScreenViewModel: ObservableObject {
     @Published var activeSchedule: UserSchedule? = nil
     @Published var adaptationDuration: Int = 21 // Varsayılan 21 gün
     
+    // Debug ve Undo özellikleri
+    @Published var showingUndoScheduleChange: Bool = false
+    @Published var showingAdaptationDebug: Bool = false
+    @Published var debugAdaptationDay: Int = 1
+    
     private let languageManager: LanguageManager
 
     // Yeni eklenen hesaplanmış özellik
@@ -69,6 +74,9 @@ class ProfileScreenViewModel: ObservableObject {
         } catch {
             print("Profildeki streak verileri yüklenirken hata: \(error)")
         }
+        
+        // Undo data durumunu kontrol et
+        objectWillChange.send()
         
         Task {
             await loadActiveSchedule()
@@ -218,8 +226,8 @@ class ProfileScreenViewModel: ObservableObject {
 
     private func calculateStreak(from history: [HistoryModel]) {
         guard !history.isEmpty else {
-            currentStreak = 0
-            longestStreak = 0
+            currentStreak = UserDefaults.standard.integer(forKey: "currentStreak")
+            longestStreak = UserDefaults.standard.integer(forKey: "longestStreak")
             return
         }
 
@@ -244,7 +252,11 @@ class ProfileScreenViewModel: ObservableObject {
                 longest = current
             }
         }
+        
+        // currentStreak'i UserDefaults'a kaydet
+        UserDefaults.standard.set(current, forKey: "currentStreak")
         self.currentStreak = current
+        
         let storedLongestStreak = UserDefaults.standard.integer(forKey: "longestStreak")
         if longest > storedLongestStreak {
             UserDefaults.standard.set(longest, forKey: "longestStreak")
@@ -324,6 +336,48 @@ class ProfileScreenViewModel: ObservableObject {
             print("Adaptasyon fazı sıfırlanırken SwiftData hatası: \(error.localizedDescription)")
             throw ProfileError.saveFailed(error.localizedDescription)
         }
+    }
+    
+    // MARK: - Undo ve Debug Metodları
+    
+    /// Schedule değişimini geri al
+    func undoScheduleChange() async throws {
+        do {
+            try await Repository.shared.undoScheduleChange()
+            await loadActiveSchedule()
+            // Streak'i yeniden yükle
+            if let context = modelContext {
+                let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\.date, order: .reverse)])
+                let historyItems = try context.fetch(descriptor)
+                calculateStreak(from: historyItems)
+            }
+        } catch {
+            throw error
+        }
+    }
+    
+    /// Undo verisi mevcut mu kontrol et
+    func hasUndoData() -> Bool {
+        return Repository.shared.hasUndoData()
+    }
+    
+    /// Adaptasyon debug günü ayarla
+    func setAdaptationDebugDay(_ dayNumber: Int) async throws {
+        guard let scheduleId = activeSchedule?.id else {
+            throw ProfileError.noActiveSchedule
+        }
+        
+        do {
+            try await Repository.shared.setAdaptationDebugDay(scheduleId: scheduleId, dayNumber: dayNumber)
+            await loadActiveSchedule()
+        } catch {
+            throw error
+        }
+    }
+    
+    /// Debug için maksimum gün sayısını hesapla
+    var maxDebugDays: Int {
+        return adaptationDuration + 7 // Adaptasyon süresi + 7 gün extra
     }
 }
 
