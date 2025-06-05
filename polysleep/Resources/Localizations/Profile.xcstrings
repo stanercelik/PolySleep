@@ -3077,6 +3077,74 @@
           }
         }
       }
+    },
+    "profile.adaptation.completed.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Adaptation Completed!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Adaptasyon Tamamlandı!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Congratulations! You've successfully completed your polyphasic sleep adaptation. Your body has adapted to your new sleep schedule. Well done!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tebrikler! Polifazik uyku adaptasyonunu başarıyla tamamladın. Vücudun yeni uyku düzenine adapte oldu. Harika iş!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.celebrate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to Celebrate! 🎆"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kutlamak İçin Dokun! 🎆"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed in %d days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d günde tamamlandı"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

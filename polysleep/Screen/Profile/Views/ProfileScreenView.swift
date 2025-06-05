@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import AVFoundation
+import Lottie
 
 struct ProfileScreenView: View {
     @StateObject var viewModel: ProfileScreenViewModel
@@ -15,135 +16,149 @@ struct ProfileScreenView: View {
     @State private var showSuccessMessage = false
     @State private var adaptationTimer: Timer?
     @State private var isPremiumUser = false
+    @State private var showingCelebration = false
     
     init() {
         self._viewModel = StateObject(wrappedValue: ProfileScreenViewModel(languageManager: LanguageManager.shared))
     }
     
     var body: some View {
-        return NavigationStack {
-            ZStack {
-                Color.appBackground
-                    .ignoresSafeArea()
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: PSSpacing.xl) {
-                        // Schedule Change Undo Banner
-                        if viewModel.hasUndoData() {
-                            UndoScheduleChangeCard(viewModel: viewModel)
+        return ZStack {
+            // Ana NavigationStack
+            NavigationStack {
+                ZStack {
+                    Color.appBackground
+                        .ignoresSafeArea()
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: PSSpacing.xl) {
+                            // Schedule Change Undo Banner
+                            if viewModel.hasUndoData() {
+                                UndoScheduleChangeCard(viewModel: viewModel)
+                            }
+                            
+                            // Profile Header Card
+                            ProfileHeaderCard(
+                                showLoginSheet: $showLoginSheet, 
+                                showLogoutSheet: $showLogoutSheet,
+                                navigateToSettings: $navigateToSettings, 
+                                authManager: authManager
+                            )
+                            
+                            // Stats Grid
+                            StatsGridSection(viewModel: viewModel)
+                            
+                            // Adaptation Completed Celebration Card or Adaptation Phase Card
+                            if viewModel.isAdaptationCompleted {
+                                AdaptationCompletedCard(viewModel: viewModel, showingCelebration: $showingCelebration)
+                            } else {
+                                // Adaptation Phase Card (only show if not completed)
+                                AdaptationPhaseCard(viewModel: viewModel)
+                            }
+                            
+                            // Adaptation Debug Section (Premium only)
+                            if isPremiumUser {
+                                AdaptationDebugCard(viewModel: viewModel)
+                            }
+                            
+                            // Customization Card
+                            CustomizationCard(
+                                viewModel: viewModel, 
+                                showEmojiPicker: $showEmojiPicker, 
+                                isPickingCoreEmoji: $isPickingCoreEmoji
+                            )
+                            
+                            // Premium Upgrade Card - Premium kullanıcılar için gizle
+                            if !isPremiumUser {
+                                PremiumUpgradeCard()
+                            }
+                            
+                            // Debug Section (Premium Toggle)
+                            DebugPremiumCard()
                         }
-                        
-                        // Profile Header Card
-                        ProfileHeaderCard(
-                            showLoginSheet: $showLoginSheet, 
-                            showLogoutSheet: $showLogoutSheet,
-                            navigateToSettings: $navigateToSettings, 
-                            authManager: authManager
-                        )
-                        
-                        // Stats Grid
-                        StatsGridSection(viewModel: viewModel)
-                        
-                        // Adaptation Phase Card
-                        AdaptationPhaseCard(viewModel: viewModel)
-                        
-                        // Adaptation Debug Section (Premium only)
-                        if isPremiumUser {
-                            AdaptationDebugCard(viewModel: viewModel)
-                        }
-                        
-                        // Customization Card
-                        CustomizationCard(
-                            viewModel: viewModel, 
-                            showEmojiPicker: $showEmojiPicker, 
-                            isPickingCoreEmoji: $isPickingCoreEmoji
-                        )
-                        
-                        // Premium Upgrade Card - Premium kullanıcılar için gizle
-                        if !isPremiumUser {
-                            PremiumUpgradeCard()
-                        }
-                        
-                        // Debug Section (Premium Toggle)
-                        DebugPremiumCard()
+                        .padding(.horizontal, PSSpacing.lg)
+                        .padding(.vertical, PSSpacing.sm)
                     }
-                    .padding(.horizontal, PSSpacing.lg)
-                    .padding(.vertical, PSSpacing.sm)
-                }
-                
-                // Başarılı giriş mesajı
-                if showSuccessMessage {
-                    VStack {
-                        Text(L("profile.login.success", table: "Profile"))
-                            .font(PSTypography.body)
-                            .padding(PSSpacing.md)
-                            .background(Color.appPrimary)
-                            .foregroundColor(.appTextOnPrimary)
-                            .cornerRadius(PSCornerRadius.small)
-                            .shadow(radius: PSSpacing.xs / 2)
-                            .padding(.top, PSSpacing.lg)
-                        
-                        Spacer()
-                    }
-                    .transition(.move(edge: .top))
-                    .animation(.easeInOut, value: showSuccessMessage)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            withAnimation {
-                                showSuccessMessage = false
+                    
+                    // Başarılı giriş mesajı
+                    if showSuccessMessage {
+                        VStack {
+                            Text(L("profile.login.success", table: "Profile"))
+                                .font(PSTypography.body)
+                                .padding(PSSpacing.md)
+                                .background(Color.appPrimary)
+                                .foregroundColor(.appTextOnPrimary)
+                                .cornerRadius(PSCornerRadius.small)
+                                .shadow(radius: PSSpacing.xs / 2)
+                                .padding(.top, PSSpacing.lg)
+                            
+                            Spacer()
+                        }
+                        .transition(.move(edge: .top))
+                        .animation(.easeInOut, value: showSuccessMessage)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation {
+                                    showSuccessMessage = false
+                                }
                             }
                         }
                     }
                 }
-            }
-            .navigationTitle(L("profile.title", table: "Profile"))
-            .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showEmojiPicker) {
-                EmojiPickerView(
-                    selectedEmoji: isPickingCoreEmoji ? $viewModel.selectedCoreEmoji : $viewModel.selectedNapEmoji,
-                    onSave: {
-                        if isPickingCoreEmoji {
-                            viewModel.saveEmojiPreference(coreEmoji: viewModel.selectedCoreEmoji)
-                        } else {
-                            viewModel.saveEmojiPreference(napEmoji: viewModel.selectedNapEmoji)
+                .navigationTitle(L("profile.title", table: "Profile"))
+                .navigationBarTitleDisplayMode(.inline)
+                .sheet(isPresented: $showEmojiPicker) {
+                    EmojiPickerView(
+                        selectedEmoji: isPickingCoreEmoji ? $viewModel.selectedCoreEmoji : $viewModel.selectedNapEmoji,
+                        onSave: {
+                            if isPickingCoreEmoji {
+                                viewModel.saveEmojiPreference(coreEmoji: viewModel.selectedCoreEmoji)
+                            } else {
+                                viewModel.saveEmojiPreference(napEmoji: viewModel.selectedNapEmoji)
+                            }
                         }
+                    )
+                    .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showLoginSheet) {
+                    LoginSheetView(authManager: authManager, onSuccessfulLogin: {
+                        showSuccessMessage = true
+                    })
+                    .presentationDetents([.height(350)])
+                }
+                .sheet(isPresented: $showLogoutSheet) {
+                    LogoutSheetView(authManager: authManager)
+                        .presentationDetents([.height(200)])
+                }
+                .navigationDestination(isPresented: $navigateToSettings) {
+                    SettingsView()
+                }
+                .onAppear {
+                    viewModel.setModelContext(modelContext)
+                    startAdaptationTimer()
+                    loadPremiumStatus()
+                    
+                    // Undo banner için güncelleme timer'ı
+                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                        viewModel.objectWillChange.send()
                     }
-                )
-                .presentationDetents([.medium])
-            }
-            .sheet(isPresented: $showLoginSheet) {
-                LoginSheetView(authManager: authManager, onSuccessfulLogin: {
-                    showSuccessMessage = true
-                })
-                .presentationDetents([.height(350)])
-            }
-            .sheet(isPresented: $showLogoutSheet) {
-                LogoutSheetView(authManager: authManager)
-                    .presentationDetents([.height(200)])
-            }
-            .navigationDestination(isPresented: $navigateToSettings) {
-                SettingsView()
-            }
-            .onAppear {
-                viewModel.setModelContext(modelContext)
-                startAdaptationTimer()
-                loadPremiumStatus()
-                
-                // Undo banner için güncelleme timer'ı
-                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-                    viewModel.objectWillChange.send()
+                }
+                .onDisappear {
+                    stopAdaptationTimer()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
+                    if let isPremium = notification.userInfo?["isPremium"] as? Bool {
+                        isPremiumUser = isPremium
+                    }
                 }
             }
-            .onDisappear {
-                stopAdaptationTimer()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
-                if let isPremium = notification.userInfo?["isPremium"] as? Bool {
-                    isPremiumUser = isPremium
-                }
+            .id(languageManager.currentLanguage)
+            
+            // Celebration Overlay - NavigationStack'in DIŞINDA tam ekranı kaplar
+            if showingCelebration {
+                CelebrationOverlay(isShowing: $showingCelebration)
             }
         }
-        .id(languageManager.currentLanguage)
     }
     
     // MARK: - Timer Functions
@@ -151,7 +166,7 @@ struct ProfileScreenView: View {
         stopAdaptationTimer() // Mevcut timer'ı durdur
         
         // Her gece yarısında adaptasyon fazını kontrol et
-        adaptationTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+        adaptationTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { (_: Timer) in
             // Her saat kontrol et, ama sadece gece yarısı geçtiyse güncelle
             Task {
                 await viewModel.loadData()
@@ -2336,5 +2351,124 @@ struct AdaptationDebugCard: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Adaptation Completed Celebration Card
+struct AdaptationCompletedCard: View {
+    @ObservedObject var viewModel: ProfileScreenViewModel
+    @Binding var showingCelebration: Bool
+    @Environment(\.colorScheme) private var colorScheme
+    
+    var body: some View {
+        VStack(spacing: PSSpacing.lg) {
+            // Trophy Icon and Title
+            HStack(spacing: PSSpacing.md) {
+                                                 // Trophy Lottie Animation
+                LottieView(animation: .named("trophy"))
+                    .playbackMode(.playing(.fromProgress(0, toProgress: 1, loopMode: .loop)))
+                    .animationSpeed(0.8)
+                    .frame(width: 60, height: 60)
+                
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("profile.adaptation.completed.title", table: "Profile"))
+                        .font(PSTypography.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    Text(String(format: L("profile.adaptation.completed.days", table: "Profile"), viewModel.completedAdaptationDays))
+                        .font(PSTypography.body)
+                        .foregroundColor(.appTextSecondary)
+                }
+                
+                Spacer()
+            }
+            
+            // Congratulations Message
+            Text(L("profile.adaptation.completed.message", table: "Profile"))
+                .font(PSTypography.body)
+                .foregroundColor(.appText)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+            
+            // Celebrate Button
+            Button(action: {
+                showingCelebration = true
+            }) {
+                HStack(spacing: PSSpacing.sm) {
+                    Image(systemName: "party.popper.fill")
+                        .font(.system(size: PSIconSize.small))
+                    
+                    Text(L("profile.adaptation.completed.celebrate", table: "Profile"))
+                        .font(PSTypography.body)
+                        .fontWeight(.semibold)
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, PSSpacing.lg)
+                .padding(.vertical, PSSpacing.md)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.orange, .pink]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .cornerRadius(PSCornerRadius.medium)
+                .shadow(color: .orange.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .scaleEffect(showingCelebration ? 1.1 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: showingCelebration)
+        }
+        .padding(PSSpacing.lg)
+        .background(
+            RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color.orange.opacity(0.05),
+                            Color.pink.opacity(0.05)
+                        ]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                        .stroke(
+                            LinearGradient(
+                                gradient: Gradient(colors: [.orange.opacity(0.3), .pink.opacity(0.3)]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+        )
+                 .shadow(color: .orange.opacity(0.1), radius: 10, x: 0, y: 5)
+    }
+}
+
+// MARK: - Celebration Overlay
+struct CelebrationOverlay: View {
+    @Binding var isShowing: Bool
+    
+    var body: some View {
+        // Tam ekran celebration animasyonu
+        LottieView(animation: .named("celebration"))
+            .playbackMode(.playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce)))
+            .animationSpeed(1.0)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea(.all) // TÜM safe area'ları ignore et
+            .background(Color.clear) // Arkaplan şeffaf
+            .allowsHitTesting(false) // Kullanıcı etkileşimini engelleme
+            .clipped() // Taşan kısımları kırp
+            .onAppear {
+                // Animasyon süresine göre otomatik kapat
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    withAnimation(.easeOut(duration: 0.5)) {
+                        isShowing = false
+                    }
+                }
+            }
     }
 }

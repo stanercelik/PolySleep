@@ -994,11 +994,18 @@ class Repository: ObservableObject {
                 throw RepositoryError.entityNotFound
             }
             
-            // Günü adaptasyon başlangıç tarihine göre hesapla
+            // Debug için istenen günü simüle etmek üzere başlangıç tarihini ayarla
+            // dayNumber = 1 ise bugün başlangıç olmalı
+            // dayNumber = 8 ise 7 gün önce başlamalı
             let calendar = Calendar.current
-            let targetDate = calendar.date(byAdding: .day, value: dayNumber - 1, to: Date()) ?? Date()
+            let currentDate = Date()
+            let daysToSubtract = dayNumber - 1 // 1. gün için 0, 8. gün için 7 gün çıkar
             
-            schedule.updatedAt = targetDate
+            guard let targetStartDate = calendar.date(byAdding: .day, value: -daysToSubtract, to: currentDate) else {
+                throw RepositoryError.updateFailed
+            }
+            
+            schedule.updatedAt = targetStartDate
             
             // Fazı hesapla
             let phase = calculateAdaptationPhaseForDay(dayNumber: dayNumber, schedule: schedule)
@@ -1006,7 +1013,7 @@ class Repository: ObservableObject {
             
             try context.save()
             
-            logger.debug("🐛 Adaptasyon debug günü ayarlandı: Gün \(dayNumber), Faz \(phase)")
+            logger.debug("🐛 Adaptasyon debug günü ayarlandı: Gün \(dayNumber), Faz \(phase), Başlangıç tarihi: \(targetStartDate)")
             
         } catch {
             logger.error("❌ Adaptasyon debug günü ayarlanırken hata: \(error)")

@@ -14,6 +14,8 @@ enum PSTypography {
     /// H2 - Bölüm Başlığı: SF Pro Semibold, 22-24pt  
     static var title1: Font { .title.weight(.semibold) }
     
+    static var title2: Font { .title2.weight(.semibold) }
+    
     static var title3: Font { .title3.weight(.semibold) }
     
     /// H3 - Kart Başlığı: SF Pro Semibold, 18-20pt
@@ -287,30 +289,41 @@ struct PSStatusBadge: View {
 struct PSSectionHeader: View {
     let title: String
     let icon: String
+    let subtitle: String?
     let action: (() -> Void)?
     let actionIcon: String?
     
     init(
         _ title: String,
         icon: String,
+        subtitle: String? = nil,
         action: (() -> Void)? = nil,
         actionIcon: String? = nil
     ) {
         self.title = title
         self.icon = icon
+        self.subtitle = subtitle
         self.action = action
         self.actionIcon = actionIcon
     }
     
     var body: some View {
         HStack {
-            Label {
-                Text(title)
-                    .font(PSTypography.headline)
-                    .foregroundColor(.appText)
-            } icon: {
-                Image(systemName: icon)
-                    .foregroundColor(.appPrimary)
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                Label {
+                    Text(title)
+                        .font(PSTypography.headline)
+                        .foregroundColor(.appText)
+                } icon: {
+                    Image(systemName: icon)
+                        .foregroundColor(.appPrimary)
+                }
+                
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                }
             }
             
             Spacer()
@@ -495,4 +508,145 @@ extension View {
         self.redacted(reason: isActive ? .placeholder : [])
             .redactedShimmer(if: isActive)
     }
-} 
+}
+
+// MARK: - Helper Extensions
+extension View {
+    @ViewBuilder
+    func redactedShimmer(if condition: Bool) -> some View {
+        if condition {
+            overlay(
+                ShimmerView()
+                    .mask(self)
+            )
+        } else {
+            self
+        }
+    }
+}
+
+// MARK: - Shimmer Effect
+struct ShimmerView: View {
+    @State private var phase: CGFloat = 0
+    
+    var body: some View {
+        GeometryReader { geometry in
+            let gradient = LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.clear,
+                    Color.white.opacity(0.4),
+                    Color.clear
+                ]),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            
+            Rectangle()
+                .fill(gradient)
+                .rotationEffect(.degrees(70))
+                .offset(x: phase * geometry.size.width * 2 - geometry.size.width)
+                .animation(
+                    Animation.linear(duration: 1.5)
+                        .repeatForever(autoreverses: false),
+                    value: phase
+                )
+        }
+        .onAppear {
+            phase = 1
+        }
+    }
+}
+
+// MARK: - Info Box
+struct PSInfoBox: View {
+    let title: String
+    let message: String
+    let subtitle: String?
+    let icon: String
+    let style: InfoBoxStyle
+    
+    enum InfoBoxStyle {
+        case info
+        case warning
+        case success
+        case tip
+        
+        var backgroundColor: Color {
+            switch self {
+            case .info: return Color.appPrimary.opacity(0.1)
+            case .warning: return Color.orange.opacity(0.1)
+            case .success: return Color.green.opacity(0.1)
+            case .tip: return Color.appAccent.opacity(0.1)
+            }
+        }
+        
+        var borderColor: Color {
+            switch self {
+            case .info: return Color.appPrimary.opacity(0.3)
+            case .warning: return Color.orange.opacity(0.3)
+            case .success: return Color.green.opacity(0.3)
+            case .tip: return Color.appAccent.opacity(0.3)
+            }
+        }
+        
+        var iconColor: Color {
+            switch self {
+            case .info: return Color.appPrimary
+            case .warning: return Color.orange
+            case .success: return Color.green
+            case .tip: return Color.appAccent
+            }
+        }
+    }
+    
+    init(
+        title: String,
+        message: String,
+        subtitle: String? = nil,
+        icon: String,
+        style: InfoBoxStyle = .info
+    ) {
+        self.title = title
+        self.message = message
+        self.subtitle = subtitle
+        self.icon = icon
+        self.style = style
+    }
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: PSSpacing.md) {
+            Image(systemName: icon)
+                .font(.system(size: PSIconSize.medium, weight: .medium))
+                .foregroundColor(style.iconColor)
+                .frame(width: PSIconSize.medium + PSSpacing.xs, height: PSIconSize.medium + PSSpacing.xs)
+            
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                Text(title)
+                    .font(PSTypography.body)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.appText)
+                
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                        .opacity(0.8)
+                }
+                
+                Text(message)
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            Spacer()
+        }
+        .padding(PSSpacing.md)
+        .background(style.backgroundColor)
+        .cornerRadius(PSCornerRadius.medium)
+        .overlay(
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .stroke(style.borderColor, lineWidth: 1)
+        )
+    }
+}

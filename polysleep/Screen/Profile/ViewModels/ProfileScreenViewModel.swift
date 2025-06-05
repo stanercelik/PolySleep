@@ -43,6 +43,41 @@ class ProfileScreenViewModel: ObservableObject {
             return L("profile.adaptation.phase.unknown", table: "Profile")
         }
     }
+    
+    // Adaptasyon tamamlandı mı kontrol et
+    var isAdaptationCompleted: Bool {
+        guard let schedule = activeSchedule else { return false }
+        
+        let calendar = Calendar.current
+        let startDate = schedule.updatedAt
+        let currentDate = Date()
+        
+        let startOfStartDate = calendar.startOfDay(for: startDate)
+        let startOfCurrentDate = calendar.startOfDay(for: currentDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
+        let daysPassed = components.day ?? 0
+        let currentDay = daysPassed + 1
+        
+        return currentDay >= adaptationDuration
+    }
+    
+    // Tamamlanan gün sayısı
+    var completedAdaptationDays: Int {
+        guard let schedule = activeSchedule else { return 0 }
+        
+        let calendar = Calendar.current
+        let startDate = schedule.updatedAt
+        let currentDate = Date()
+        
+        let startOfStartDate = calendar.startOfDay(for: startDate)
+        let startOfCurrentDate = calendar.startOfDay(for: currentDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
+        let daysPassed = components.day ?? 0
+        
+        return daysPassed + 1
+    }
 
     private var modelContext: ModelContext?
     private var cancellables = Set<AnyCancellable>()
