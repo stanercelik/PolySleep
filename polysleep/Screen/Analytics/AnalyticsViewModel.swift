@@ -95,22 +95,24 @@ struct SleepTrendData: Identifiable {
     /// Başlangıçta sadece ana değerleri belirle, sonra napları ayrıştır
     init(date: Date, totalHours: Double, coreHours: Double, napHours: Double, score: Double) {
         self.date = date
-        self.totalHours = totalHours
-        self.coreHours = coreHours 
-        self.napHours = napHours
-        self.score = score
+        // Veri validasyonu - NaN, Infinite ve negatif değerleri temizle
+        self.totalHours = max(0, totalHours.isNaN || totalHours.isInfinite ? 0 : totalHours)
+        self.coreHours = max(0, coreHours.isNaN || coreHours.isInfinite ? 0 : coreHours)
+        self.napHours = max(0, napHours.isNaN || napHours.isInfinite ? 0 : napHours)
+        self.score = max(0, min(5, score.isNaN || score.isInfinite ? 0 : score))
     }
     
     /// Napları belirli bir dağılımla ayır
     mutating func distributeNaps(nap1: Double, nap2: Double) {
-        self.nap1Hours = nap1
-        self.nap2Hours = nap2
+        self.nap1Hours = max(0, nap1.isNaN || nap1.isInfinite ? 0 : nap1)
+        self.nap2Hours = max(0, nap2.isNaN || nap2.isInfinite ? 0 : nap2)
     }
 }
 
 /// Uyku dağılım verileri
 struct SleepBreakdownData: Identifiable {
     let id = UUID()
+    let date: Date = Date()
     let type: String
     let hours: Double
     let percentage: Double
@@ -120,6 +122,14 @@ struct SleepBreakdownData: Identifiable {
     var averagePerDay: Double = 0.0
     var daysWithThisType: Int = 0
     var percentageChange: Double = 0.0  // Önceki döneme göre değişim
+    
+    init(type: String, hours: Double, percentage: Double, color: Color) {
+        self.type = type
+        // Veri validasyonu
+        self.hours = max(0, hours.isNaN || hours.isInfinite ? 0 : hours)
+        self.percentage = max(0, min(100, percentage.isNaN || percentage.isInfinite ? 0 : percentage))
+        self.color = color
+    }
 }
 
 /// Uyku kalitesi istatistikleri
@@ -204,6 +214,12 @@ class AnalyticsViewModel: ObservableObject {
     // Gelişmiş istatistikler
     @Published var sleepQualityStats: SleepQualityStats = SleepQualityStats()
     @Published var sleepStatistics: SleepStatistics = SleepStatistics()
+    
+    // Premium analiz verileri
+    @Published var consistencyTrendData: [ConsistencyTrendData] = []
+    @Published var sleepDebtData: [SleepDebtData] = []
+    @Published var qualityConsistencyData: [QualityConsistencyData] = []
+    @Published var qualityConsistencyCorrelation: CorrelationStats = CorrelationStats(slope: 0, intercept: 0, correlation: 0)
     
     // En iyi/en kötü günler
     @Published var bestSleepDay: (date: Date, hours: Double, score: Double)?
@@ -392,6 +408,11 @@ class AnalyticsViewModel: ObservableObject {
         
         createTrendData(fromSleepEntries: allSleepEntries, startDate: startDate, endDate: endDate)
         createBreakdownData(from: allSleepEntries, timeRangeDays: selectedTimeRange.days)
+        
+        // ❌ YANILTICI ANALİZLER KALDIRILDI - Gelecek sürümlerde daha doğru verilerle eklenecek
+        // createConsistencyTrendData() - Bilinmeyen hedef saatler
+        // createSleepDebtData() - Yanlış 8 saat hedefi
+        // createQualityConsistencyData() - Yetersiz veri noktaları
     }
     
     private func compareToPreviousPeriod(currentModels: [HistoryModel], previousModels: [HistoryModel]) {
@@ -445,8 +466,10 @@ class AnalyticsViewModel: ObservableObject {
             )
 
             let sortedNaps = napEntries.sorted { $0.startTime < $1.startTime }
-            sleepData.nap1Hours = (sortedNaps.first?.duration ?? 0.0) / 3600.0
-            sleepData.nap2Hours = (sortedNaps.dropFirst().first?.duration ?? 0.0) / 3600.0
+            let nap1Duration = (sortedNaps.first?.duration ?? 0.0) / 3600.0
+            let nap2Duration = (sortedNaps.dropFirst().first?.duration ?? 0.0) / 3600.0
+            
+            sleepData.distributeNaps(nap1: nap1Duration, nap2: nap2Duration)
             
             sleepTrendData.append(sleepData)
         }
@@ -491,6 +514,159 @@ class AnalyticsViewModel: ObservableObject {
         
         sleepBreakdownData = [coreData, napData].filter { $0.hours > 0 } // Sadece saati olanları göster
     }
+    
+    // MARK: - Premium Analytics Methods
+    
+    private func createConsistencyTrendData(fromSleepEntries entries: [SleepEntry], startDate: Date, endDate: Date) {
+        consistencyTrendData = []
+        let calendar = Calendar.current
+        let maxDataPoints = selectedTimeRange.days
+        
+        guard let actualStartDate = calendar.date(byAdding: .day, value: -(maxDataPoints - 1), to: calendar.startOfDay(for: endDate)) else { return }
+        
+        // Hedef uyku zamanı (23:00 gibi sabit bir zaman)
+        let targetHour = 23
+        let targetMinute = 0
+        
+        for dayOffset in 0..<maxDataPoints {
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: actualStartDate) else { continue }
+            
+            let dayEntries = entries.filter { calendar.isDate($0.date, inSameDayAs: date) }
+            let coreEntries = dayEntries.filter { $0.isCore }
+            
+            if let firstCoreEntry = coreEntries.first {
+                // Hedef zaman oluştur
+                guard let plannedTime = calendar.date(bySettingHour: targetHour, minute: targetMinute, second: 0, of: date) else { continue }
+                
+                let actualTime = firstCoreEntry.startTime
+                let deviationMinutes = abs(actualTime.timeIntervalSince(plannedTime)) / 60
+                
+                // Tutarlılık skoru hesapla (daha az sapma = daha yüksek skor)
+                let consistencyScore = max(0, 100 - min(100, deviationMinutes))
+                
+                let consistencyData = ConsistencyTrendData(
+                    date: date,
+                    consistencyScore: consistencyScore,
+                    deviation: deviationMinutes,
+                    plannedTime: plannedTime,
+                    actualTime: actualTime
+                )
+                
+                consistencyTrendData.append(consistencyData)
+            }
+        }
+        
+        consistencyTrendData.sort(by: { $0.date < $1.date })
+    }
+    
+    private func createSleepDebtData(fromSleepEntries entries: [SleepEntry], startDate: Date, endDate: Date) {
+        sleepDebtData = []
+        let calendar = Calendar.current
+        let maxDataPoints = selectedTimeRange.days
+        let targetSleepHours = 8.0 // Hedef uyku süresi
+        
+        guard let actualStartDate = calendar.date(byAdding: .day, value: -(maxDataPoints - 1), to: calendar.startOfDay(for: endDate)) else { return }
+        
+        var cumulativeDebt = 0.0
+        
+        for dayOffset in 0..<maxDataPoints {
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: actualStartDate) else { continue }
+            
+            let dayEntries = entries.filter { calendar.isDate($0.date, inSameDayAs: date) }
+            let actualSleep = dayEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
+            
+            let dailyDebt = targetSleepHours - actualSleep
+            cumulativeDebt += dailyDebt
+            
+            let debtData = SleepDebtData(
+                date: date,
+                targetSleep: targetSleepHours,
+                actualSleep: actualSleep,
+                dailyDebt: dailyDebt,
+                cumulativeDebt: cumulativeDebt
+            )
+            
+            sleepDebtData.append(debtData)
+        }
+        
+        sleepDebtData.sort(by: { $0.date < $1.date })
+    }
+    
+    private func createQualityConsistencyData(fromSleepEntries entries: [SleepEntry]) {
+        qualityConsistencyData = []
+        let calendar = Calendar.current
+        
+        // Günlük veriler topla
+        let groupedByDay = Dictionary(grouping: entries) { entry in
+            calendar.startOfDay(for: entry.date)
+        }
+        
+        // Hedef uyku zamanı (23:00)
+        let targetHour = 23
+        let targetMinute = 0
+        
+        for (date, dayEntries) in groupedByDay {
+            let coreEntries = dayEntries.filter { $0.isCore }
+            
+            if let firstCoreEntry = coreEntries.first {
+                // Kalite hesapla
+                let totalScore = dayEntries.reduce(0) { $0 + $1.rating }
+                let sleepQuality = Double(totalScore) / Double(dayEntries.count)
+                
+                // Tutarlılık sapması hesapla
+                guard let plannedTime = calendar.date(bySettingHour: targetHour, minute: targetMinute, second: 0, of: date) else { continue }
+                let consistencyDeviation = abs(firstCoreEntry.startTime.timeIntervalSince(plannedTime)) / 60
+                
+                // Toplam uyku süresi
+                let sleepHours = dayEntries.reduce(0.0) { $0 + $1.duration / 3600.0 }
+                
+                let qualityConsistencyData = QualityConsistencyData(
+                    date: date,
+                    sleepQuality: sleepQuality,
+                    consistencyDeviation: consistencyDeviation,
+                    sleepHours: sleepHours
+                )
+                
+                self.qualityConsistencyData.append(qualityConsistencyData)
+            }
+        }
+        
+        // Korelasyon hesapla
+        calculateQualityConsistencyCorrelation()
+        
+        qualityConsistencyData.sort(by: { $0.date < $1.date })
+    }
+    
+    private func calculateQualityConsistencyCorrelation() {
+        guard qualityConsistencyData.count > 1 else {
+            qualityConsistencyCorrelation = CorrelationStats(slope: 0, intercept: 0, correlation: 0)
+            return
+        }
+        
+        let n = Double(qualityConsistencyData.count)
+        let sumX = qualityConsistencyData.reduce(0) { $0 + $1.consistencyDeviation }
+        let sumY = qualityConsistencyData.reduce(0) { $0 + $1.sleepQuality }
+        let sumXY = qualityConsistencyData.reduce(0) { $0 + ($1.consistencyDeviation * $1.sleepQuality) }
+        let sumX2 = qualityConsistencyData.reduce(0) { $0 + ($1.consistencyDeviation * $1.consistencyDeviation) }
+        let sumY2 = qualityConsistencyData.reduce(0) { $0 + ($1.sleepQuality * $1.sleepQuality) }
+        
+        let meanX = sumX / n
+        let meanY = sumY / n
+        
+        let numerator = sumXY - (n * meanX * meanY)
+        let denominatorX = sumX2 - (n * meanX * meanX)
+        let denominatorY = sumY2 - (n * meanY * meanY)
+        
+        let correlation = denominatorX * denominatorY > 0 ? numerator / sqrt(denominatorX * denominatorY) : 0
+        let slope = denominatorX > 0 ? numerator / denominatorX : 0
+        let intercept = meanY - (slope * meanX)
+        
+        qualityConsistencyCorrelation = CorrelationStats(
+            slope: slope,
+            intercept: intercept,
+            correlation: correlation
+        )
+    }
 }
 
 // MARK: - Extensions
@@ -498,5 +674,127 @@ class AnalyticsViewModel: ObservableObject {
 extension LocalizedStringKey {
     func toString() -> String {
         return "\(self)"
+    }
+}
+
+// MARK: - Premium Analytics Data Models
+
+/// Tutarlılık seviyesi
+enum ConsistencyLevel: String, CaseIterable {
+    case excellent = "excellent"
+    case good = "good"
+    case fair = "fair"
+    case poor = "poor"
+    
+    var localizedTitle: String {
+        switch self {
+        case .excellent: return L("analytics.consistency.excellent", table: "Analytics")
+        case .good: return L("analytics.consistency.good", table: "Analytics")
+        case .fair: return L("analytics.consistency.fair", table: "Analytics")
+        case .poor: return L("analytics.consistency.poor", table: "Analytics")
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .excellent: return .green
+        case .good: return .blue
+        case .fair: return .orange
+        case .poor: return .red
+        }
+    }
+    
+    static func fromScore(_ score: Double) -> ConsistencyLevel {
+        switch score {
+        case 80...100: return .excellent
+        case 60..<80: return .good
+        case 40..<60: return .fair
+        default: return .poor
+        }
+    }
+}
+
+/// Tutarlılık trendi verileri
+struct ConsistencyTrendData: Identifiable {
+    let id = UUID()
+    let date: Date
+    let consistencyScore: Double // 0-100 arası
+    let deviation: Double // ± sapma dakika cinsinden
+    let plannedTime: Date
+    let actualTime: Date
+    
+    var consistencyLevel: ConsistencyLevel {
+        ConsistencyLevel.fromScore(consistencyScore)
+    }
+    
+    var deviationMinutes: Double {
+        abs(actualTime.timeIntervalSince(plannedTime)) / 60
+    }
+}
+
+/// Uyku borcu verileri
+struct SleepDebtData: Identifiable {
+    let id = UUID()
+    let date: Date
+    let targetSleep: Double // Hedef uyku süresi (saat)
+    let actualSleep: Double // Gerçek uyku süresi (saat)
+    let dailyDebt: Double // Günlük borç/fazla (saat)
+    let cumulativeDebt: Double // Kümülatif borç/fazla (saat)
+    
+    var isInDebt: Bool {
+        cumulativeDebt > 0
+    }
+    
+    var debtLevel: String {
+        switch abs(cumulativeDebt) {
+        case 0..<1: return L("analytics.sleepDebt.level.minimal", table: "Analytics")
+        case 1..<3: return L("analytics.sleepDebt.level.moderate", table: "Analytics")
+        case 3..<6: return L("analytics.sleepDebt.level.significant", table: "Analytics")
+        default: return L("analytics.sleepDebt.level.severe", table: "Analytics")
+        }
+    }
+}
+
+/// Kalite-Tutarlılık korelasyon verileri
+struct QualityConsistencyData: Identifiable {
+    let id = UUID()
+    let date: Date
+    let sleepQuality: Double // 1-5 arası uyku kalitesi
+    let consistencyDeviation: Double // Dakika cinsinden sapma
+    let sleepHours: Double // Uyku süresi
+    
+    var qualityCategory: SleepQualityCategory {
+        SleepQualityCategory.fromRating(sleepQuality)
+    }
+}
+
+/// Korelasyon istatistikleri
+struct CorrelationStats {
+    let slope: Double // Eğim
+    let intercept: Double // Y-kesişim noktası
+    let correlation: Double // Korelasyon katsayısı (-1 ile 1 arası)
+    
+    var correlationStrength: String {
+        let absCorrelation = abs(correlation)
+        switch absCorrelation {
+        case 0.8...1.0: return L("analytics.correlation.veryStrong", table: "Analytics")
+        case 0.6..<0.8: return L("analytics.correlation.strong", table: "Analytics")
+        case 0.4..<0.6: return L("analytics.correlation.moderate", table: "Analytics")
+        case 0.2..<0.4: return L("analytics.correlation.weak", table: "Analytics")
+        default: return L("analytics.correlation.veryWeak", table: "Analytics")
+        }
+    }
+}
+
+// MARK: - SleepQualityCategory Extension
+extension SleepQualityCategory {
+    var localizedTitle: String {
+        switch self {
+        case .excellent: return L("analytics.quality.excellent", table: "Analytics")
+        case .good: return L("analytics.quality.good", table: "Analytics")
+        case .average: return L("analytics.quality.average", table: "Analytics")
+        case .poor: return L("analytics.quality.poor", table: "Analytics")
+        case .bad: return L("analytics.quality.bad", table: "Analytics")
+        }
     }
 }

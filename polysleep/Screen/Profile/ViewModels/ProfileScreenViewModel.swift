@@ -44,26 +44,8 @@ class ProfileScreenViewModel: ObservableObject {
         }
     }
     
-    // Adaptasyon tamamlandı mı kontrol et
-    var isAdaptationCompleted: Bool {
-        guard let schedule = activeSchedule else { return false }
-        
-        let calendar = Calendar.current
-        let startDate = schedule.updatedAt
-        let currentDate = Date()
-        
-        let startOfStartDate = calendar.startOfDay(for: startDate)
-        let startOfCurrentDate = calendar.startOfDay(for: currentDate)
-        
-        let components = calendar.dateComponents([.day], from: startOfStartDate, to: startOfCurrentDate)
-        let daysPassed = components.day ?? 0
-        let currentDay = daysPassed + 1
-        
-        return currentDay >= adaptationDuration
-    }
-    
-    // Tamamlanan gün sayısı
-    var completedAdaptationDays: Int {
+    // Mevcut adaptasyon gün sayısını hesaplayan yardımcı metod
+    private func currentAdaptationDay() -> Int {
         guard let schedule = activeSchedule else { return 0 }
         
         let calendar = Calendar.current
@@ -77,6 +59,16 @@ class ProfileScreenViewModel: ObservableObject {
         let daysPassed = components.day ?? 0
         
         return daysPassed + 1
+    }
+    
+    // Adaptasyon tamamlandı mı kontrol et
+    var isAdaptationCompleted: Bool {
+        return currentAdaptationDay() >= adaptationDuration
+    }
+    
+    // Tamamlanan gün sayısı
+    var completedAdaptationDays: Int {
+        return currentAdaptationDay()
     }
 
     private var modelContext: ModelContext?

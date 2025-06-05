@@ -2453,19 +2453,17 @@ struct CelebrationOverlay: View {
     @Binding var isShowing: Bool
     
     var body: some View {
-        // Tam ekran celebration animasyonu
+        // Direkt animasyonu başlat, arkaplan şeffaf ve ekranı kaplasın
         LottieView(animation: .named("celebration"))
             .playbackMode(.playing(.fromProgress(0, toProgress: 1, loopMode: .playOnce)))
             .animationSpeed(1.0)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea(.all) // TÜM safe area'ları ignore et
-            .background(Color.clear) // Arkaplan şeffaf
+            .ignoresSafeArea()
             .allowsHitTesting(false) // Kullanıcı etkileşimini engelleme
-            .clipped() // Taşan kısımları kırp
             .onAppear {
-                // Animasyon süresine göre otomatik kapat
+                // Animasyon bitince otomatik kapat
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    withAnimation(.easeOut(duration: 0.5)) {
+                    withAnimation(.easeOut(duration: 0.3)) {
                         isShowing = false
                     }
                 }

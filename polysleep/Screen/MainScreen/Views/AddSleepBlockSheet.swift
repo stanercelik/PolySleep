@@ -6,6 +6,15 @@ struct AddSleepBlockSheet: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var languageManager: LanguageManager
     
+    // Kullanıcının seçtiği emojiler
+    private var coreEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    }
+    
+    private var napEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,8 +48,10 @@ struct AddSleepBlockSheet: View {
                                 return minutes1 < minutes2
                             }) { block in
                                 HStack {
-                                    Image(systemName: block.isCore ? "moon.fill" : "moon")
-                                        .foregroundColor(block.isCore ? .appAccent : .secondary)
+                                    // Kişiselleştirilmiş emoji kullan
+                                    Text(block.isCore ? coreEmoji : napEmoji)
+                                        .font(.system(size: 14))
+                                        .frame(width: 20, height: 20)
                                     Text("\(block.startTime) - \(block.endTime)")
                                         .foregroundColor(.primary)
                                     Spacer()

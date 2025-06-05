@@ -62,14 +62,21 @@ public struct AnalyticsView: View {
                                 
                                 // Premium özellikler - kilitli gösterim
                                 if isPremiumUser {
+                                    // ✅ DOĞRU VERİLERLE ÇALIŞAN GRAFİKLER
+                                    AnalyticsSleepQualityTrendSection(viewModel: viewModel)
                                     AnalyticsQualityDistribution(viewModel: viewModel)
                                     AnalyticsSleepBreakdown(
                                         viewModel: viewModel,
                                         selectedPieSlice: $selectedPieSlice,
                                         tooltipPosition: $tooltipPosition
                                     )
-                                    AnalyticsConsistencySection(viewModel: viewModel)
                                     AnalyticsTimeGained(viewModel: viewModel)
+                                    
+                                    // ❌ YANILTICI GRAFİKLER KALDIRILDI:
+                                    // - Uyku Isı Haritası (varsayımsal saatler)
+                                    // - Tutarlılık Trendi (bilinmeyen hedef saat)
+                                    // - Uyku Borcu (yanlış hedef: 8 saat)  
+                                    // - Kalite-Tutarlılık Korelasyonu (yetersiz veri)
                                 } else {
                                     PremiumLockedAnalytics(
                                         title: L("analytics.sleepComponentsTrend.title", table: "Analytics"),
@@ -93,18 +100,19 @@ public struct AnalyticsView: View {
                                     }
                                     
                                     PremiumLockedAnalytics(
-                                        title: L("analytics.consistency.title", table: "Analytics"),
-                                        description: L("analytics.premium.consistencyDescription", table: "Analytics")
-                                    ) {
-                                        AnalyticsConsistencyPreview()
-                                    }
-                                    
-                                    PremiumLockedAnalytics(
                                         title: L("analytics.timeGained.title", table: "Analytics"),
                                         description: L("analytics.premium.timeGainedDescription", table: "Analytics")
                                     ) {
                                         AnalyticsTimeGainedPreview()
                                     }
+                                    
+                                    // ⚠️ UYARI: Aşağıdaki özellikler mevcut verilerle doğru sonuç vermez
+                                    PSInfoBox(
+                                        title: "Gelişmiş Analizler Geliştiriliyor",
+                                        message: "Uyku ısı haritası, tutarlılık analizi ve uyku borcu hesaplamaları için daha detaylı veri toplama özellikleri geliştiriliyor. Bu özellikler gelecek güncellemelerde eklenecek.",
+                                        icon: "wrench.and.screwdriver.fill"
+                                    )
+                                    .padding(.horizontal, PSSpacing.lg)
                                 }
                             }
                         } else {
@@ -139,24 +147,32 @@ public struct AnalyticsView: View {
     // MARK: - UI Components
     
     private var timeRangePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: PSSpacing.md) {
-                ForEach(TimeRange.allCases) { range in
-                    Button(action: {
-                        viewModel.changeTimeRange(to: range)
-                    }) {
-                        Text(range.displayName)
-                            .font(PSTypography.button)
-                            .padding(.horizontal, PSSpacing.lg)
-                            .padding(.vertical, PSSpacing.sm)
-                            .background(viewModel.selectedTimeRange == range ? Color.appPrimary : Color.appCardBackground)
-                            .foregroundColor(viewModel.selectedTimeRange == range ? .appTextOnPrimary : .appText)
-                            .cornerRadius(PSCornerRadius.extraLarge)
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                PSSectionHeader(
+                    L("analytics.timeRange.title", table: "Analytics"),
+                    icon: "calendar.badge.clock"
+                )
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: PSSpacing.md) {
+                        ForEach(TimeRange.allCases) { range in
+                            ModernTimeRangeChip(
+                                title: range.displayName,
+                                isSelected: viewModel.selectedTimeRange == range,
+                                action: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        viewModel.changeTimeRange(to: range)
+                                    }
+                                }
+                            )
+                        }
                     }
+                    .padding(.horizontal, PSSpacing.xs)
                 }
             }
-            .padding(.horizontal, PSSpacing.lg)
         }
+        .padding(.horizontal, PSSpacing.lg)
     }
     
     private var loadingView: some View {
@@ -197,4 +213,61 @@ public struct AnalyticsView: View {
 
 #Preview {
     AnalyticsView()
+}
+
+// MARK: - Modern Time Range Chip
+struct ModernTimeRangeChip: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: PSSpacing.xs) {
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextOnPrimary)
+                        .transition(.scale.combined(with: .opacity))
+                }
+                
+                Text(title)
+                    .font(PSTypography.button)
+                    .foregroundColor(isSelected ? .appTextOnPrimary : .appText)
+            }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.vertical, PSSpacing.sm + PSSpacing.xs)
+            .background(
+                RoundedRectangle(cornerRadius: PSCornerRadius.button)
+                    .fill(
+                        isSelected ? 
+                        LinearGradient(
+                            gradient: Gradient(colors: [.appPrimary, .appSecondary]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ) :
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.appCardBackground, Color.appCardBackground]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: PSCornerRadius.button)
+                            .stroke(
+                                isSelected ? Color.clear : Color.appBorder.opacity(0.5),
+                                lineWidth: 1
+                            )
+                    )
+                    .shadow(
+                        color: isSelected ? Color.appPrimary.opacity(0.3) : Color.clear,
+                        radius: isSelected ? PSSpacing.sm : 0,
+                        x: 0,
+                        y: isSelected ? PSSpacing.xs : 0
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+    }
 }

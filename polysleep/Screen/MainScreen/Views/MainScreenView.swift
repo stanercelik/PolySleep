@@ -65,16 +65,6 @@ struct AnimatedMaskModifier: ViewModifier {
     }
 }
 
-extension View {
-    @ViewBuilder func redactedShimmer(if condition: Bool) -> some View {
-        if condition {
-            self.modifier(RedactedShimmerModifier())
-        } else {
-            self
-        }
-    }
-}
-
 struct MainScreenView: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
@@ -98,8 +88,6 @@ struct MainScreenView: View {
                     LazyVStack(spacing: PSSpacing.md) {
                         // Header Section
                         HeaderSection(viewModel: viewModel)
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                            .redactedShimmer(if: viewModel.isLoading)
                         
                         // Sleep Quality Rating Card
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
@@ -132,23 +120,15 @@ struct MainScreenView: View {
                         
                         // Status Cards Grid
                         StatusCardsGrid(viewModel: viewModel)
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                            .redactedShimmer(if: viewModel.isLoading)
                         
                         // Sleep Chart
                         SleepChartSection(viewModel: viewModel)
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                            .redactedShimmer(if: viewModel.isLoading)
                         
                         // Sleep Blocks
                         SleepBlocksSection(viewModel: viewModel)
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                            .redactedShimmer(if: viewModel.isLoading)
                         
                         // Daily Tip
                         DailyTipSection(viewModel: viewModel)
-                            .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                            .redactedShimmer(if: viewModel.isLoading)
                     }
                     .padding(.horizontal, PSSpacing.lg)
                     .padding(.top, PSSpacing.sm)
@@ -567,12 +547,26 @@ struct SleepBlockCard: View {
     @State private var showDeleteConfirmation = false
     @ObservedObject var viewModel: MainScreenViewModel
     
+    // Kullanıcının seçtiği emojiler
+    private var coreEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    }
+    
+    private var napEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: PSSpacing.sm) {
             HStack(spacing: PSSpacing.sm) {
-                Image(systemName: block.isCore ? "moon.fill" : "powersleep")
-                    .font(.system(size: PSIconSize.medium))
-                    .foregroundColor(block.isCore ? .appPrimary : .appSecondary)
+                // Kişiselleştirilmiş emoji kullan
+                Text(block.isCore ? coreEmoji : napEmoji)
+                    .font(.system(size: PSIconSize.medium - 4))
+                    .frame(width: PSIconSize.medium + 12, height: PSIconSize.medium + 12)
+                    .background(
+                        Circle()
+                            .fill(block.isCore ? Color.appPrimary.opacity(0.15) : Color.appSecondary.opacity(0.15))
+                    )
                 
                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
                     // Saatleri yan yana daha düzgün göstermek için

@@ -41,9 +41,9 @@ struct AddSleepEntrySheet: View {
         UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
     }
     
-    private var napEmoji: String {
-        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "⚡"
-    }
+private var napEmoji: String {
+    UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
+}
     
     // MainViewModel'in aktif programından uyku bloklarını alır
     private var availableBlocksFromSchedule: [SleepBlock] {
@@ -327,10 +327,10 @@ struct AddSleepEntrySheet: View {
     private func BlockSelectionButton(block: SleepBlock, isSelected: Bool, isAlreadyAdded: Bool, onTap: @escaping () -> Void) -> some View {
         Button(action: onTap) {
             HStack(spacing: 12) {
-                Image(systemName: block.isCore ? "bed.double.fill" : "powersleep")
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .frame(width: 36, height: 36)
+                // Kişiselleştirilmiş emoji kullan
+                Text(block.isCore ? coreEmoji : napEmoji)
+                    .font(.system(size: 18))
+                    .frame(width: 40, height: 40)
                     .background(
                         Circle()
                             .fill(block.isCore ? Color.appPrimary : Color.appSecondary)

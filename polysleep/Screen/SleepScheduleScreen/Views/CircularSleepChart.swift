@@ -47,7 +47,10 @@ struct CircularSleepChart: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let size = min(geometry.size.width, geometry.size.height)
+            // Geçersiz frame boyutlarını engelle
+            let safeWidth = max(100, geometry.size.width.isNaN || geometry.size.width.isInfinite ? 100 : geometry.size.width)
+            let safeHeight = max(100, geometry.size.height.isNaN || geometry.size.height.isInfinite ? 100 : geometry.size.height)
+            let size = min(safeWidth, safeHeight)
             let center = CGPoint(x: size / 2, y: size / 2)
             
             ZStack {
@@ -61,7 +64,7 @@ struct CircularSleepChart: View {
                     .opacity(textOpacity)
             }
             .frame(width: size, height: size)
-            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            .position(x: safeWidth / 2, y: safeHeight / 2)
             
         }
         .aspectRatio(1, contentMode: .fit)

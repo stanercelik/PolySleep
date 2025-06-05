@@ -25,7 +25,7 @@ struct HistoryView: View {
                         if viewModel.historyItems.isEmpty {
                             EmptyStateCard()
                         } else {
-                            HistoryContentSection(viewModel: viewModel)
+                            HistoryTimelineSection(viewModel: viewModel)
                         }
                     }
                     .padding(.horizontal, PSSpacing.lg)
@@ -34,24 +34,36 @@ struct HistoryView: View {
                 
                 // Floating Action Button
                 ModernFloatingActionButton(action: {
-                    viewModel.isAddSleepEntryPresented = true
-                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                    generator.impactOccurred()
+                    // Önce tüm sheet state'lerini sıfırla
+                    viewModel.isDayDetailPresented = false
+                    viewModel.selectedDay = nil
+                    
+                    // Sonra add sheet'i aç
+                    DispatchQueue.main.async {
+                        viewModel.isAddSleepEntryPresented = true
+                    }
                 })
             }
             .navigationTitle(L("Sleep History", table: "History"))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isDayDetailPresented) {
+                viewModel.selectedDay = nil
+            } content: {
                 if viewModel.selectedDay != nil {
                     DayDetailView(viewModel: viewModel)
                 }
             }
             .sheet(isPresented: $viewModel.isAddSleepEntryPresented) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    viewModel.reloadData()
+                }
+            } content: {
                 AddSleepEntrySheet(viewModel: viewModel)
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
             }
+
         }
         .accentColor(Color.appPrimary)
         .id(languageManager.currentLanguage)
@@ -66,20 +78,10 @@ struct SleepStatsOverviewCard: View {
         PSCard {
             VStack(alignment: .leading, spacing: PSSpacing.lg) {
                 // Header
-                HStack {
-                    Image(systemName: "chart.bar.fill")
-                        .font(.system(size: PSIconSize.medium))
-                        .foregroundColor(.appPrimary)
-                    
-                    Text(L("history.stats.title", table: "History"))
-                        .font(PSTypography.headline)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
-                    
-                    // Quick insights
-                    PSStatusBadge(L("history.stats.thisWeek", table: "History"), color: .appSecondary)
-                }
+                PSSectionHeader(
+                    L("history.stats.title", table: "History"),
+                    icon: "chart.bar.fill"
+                )
                 
                 // Stats Grid
                 LazyVGrid(columns: [
@@ -125,7 +127,7 @@ struct SleepStatsOverviewCard: View {
     private func calculateAverageDuration() -> String {
         let totalDuration = viewModel.historyItems.compactMap { $0.totalSleepDuration }.reduce(0, +)
         let avgDuration = viewModel.historyItems.isEmpty ? 0 : totalDuration / Double(viewModel.historyItems.count)
-        let avgMinutes = Int(avgDuration / 60) // Convert seconds to minutes and then to Int
+        let avgMinutes = Int(avgDuration / 60)
         return formatDuration(avgMinutes)
     }
     
@@ -135,7 +137,6 @@ struct SleepStatsOverviewCard: View {
     }
     
     private func calculateCurrentStreak() -> Int {
-        // Bu gerçek implementasyonla değiştirilecek
         return viewModel.historyItems.count > 0 ? 7 : 0
     }
 }
@@ -207,17 +208,10 @@ struct FilterSectionCard: View {
     var body: some View {
         PSCard {
             VStack(alignment: .leading, spacing: PSSpacing.lg) {
-                HStack {
-                    Image(systemName: "line.3.horizontal.decrease.circle.fill")
-                        .font(.system(size: PSIconSize.medium))
-                        .foregroundColor(.appSecondary)
-                    
-                    Text(L("history.filter.title", table: "History"))
-                        .font(PSTypography.headline)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
-                }
+                PSSectionHeader(
+                    L("history.filter.title", table: "History"),
+                    icon: "line.3.horizontal.decrease.circle.fill"
+                )
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: PSSpacing.md) {
@@ -301,40 +295,33 @@ struct ModernFilterChip: View {
 struct EmptyStateCard: View {
     var body: some View {
         PSEmptyState(
-            icon: "bed.double", // İkon sistemimizde daha uygun bir ikonla değiştirilebilir
+            icon: "bed.double",
             title: L("history.noRecords.title", table: "History"),
             message: L("history.noRecords.message", table: "History"),
             actionTitle: L("history.addNewRecord", table: "History"),
             action: {
                 // Add new record action will be handled by parent
-                // Bu eylem, viewModel.isAddSleepEntryPresented = true gibi bir şeyi tetikleyebilir
             }
         )
-        // PSEmptyState zaten kendi arkaplanını ve padding'ini yönetiyor.
-        // Gölge ve köşe yuvarlaklığı gibi ekstra özelleştirmeler gerekirse
-        // .background(...) .cornerRadius(...) .shadow(...) modifier'ları eklenebilir,
-        // ancak genellikle PSEmptyState'in varsayılan görünümü yeterli olmalıdır.
     }
 }
 
-// MARK: - History Content Section
-struct HistoryContentSection: View {
+// MARK: - History Timeline Section
+struct HistoryTimelineSection: View {
     @ObservedObject var viewModel: HistoryViewModel
     @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
         PSCard(padding: 0) {
-            VStack(alignment: .leading, spacing: PSSpacing.lg) {
-                HStack {
-                    Image(systemName: "calendar")
-                        .font(.system(size: PSIconSize.medium))
-                        .foregroundColor(.appAccent)
-                    
-                    Text(L("history.timeline.title", table: "History"))
-                        .font(PSTypography.headline)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
+            VStack(alignment: .leading, spacing: 0) {
+                // Header
+                VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                    PSSectionHeader(
+                        L("history.timeline.title", table: "History"),
+                        icon: "calendar",
+                        action: nil,
+                        actionIcon: nil
+                    )
                     
                     PSStatusBadge(
                         String(format: L("history.timeline.count", table: "History"), viewModel.historyItems.count),
@@ -344,12 +331,18 @@ struct HistoryContentSection: View {
                 .padding(.horizontal, PSSpacing.lg)
                 .padding(.top, PSSpacing.lg)
                 
-                LazyVStack(spacing: PSSpacing.xl) {
-                    ForEach(groupedByMonth(items: viewModel.historyItems), id: \.month) { monthGroup in
-                        MonthSection(month: monthGroup.month, items: monthGroup.days, viewModel: viewModel)
+                // Timeline Content
+                LazyVStack(spacing: 0) {
+                    let monthGroups = groupedByMonth(items: viewModel.historyItems)
+                    ForEach(monthGroups, id: \.month) { monthGroup in
+                        HistoryMonthSection(
+                            month: monthGroup.month,
+                            items: monthGroup.days,
+                            viewModel: viewModel,
+                            isLastMonth: monthGroup.month == monthGroups.last?.month
+                        )
                     }
                 }
-                .padding(.horizontal, PSSpacing.lg)
                 .padding(.bottom, PSSpacing.lg)
             }
         }
@@ -377,52 +370,84 @@ struct HistoryContentSection: View {
     }
 }
 
-// MARK: - Month Section
-struct MonthSection: View {
+// MARK: - History Month Section
+struct HistoryMonthSection: View {
     let month: String
     let items: [HistoryModel]
     @ObservedObject var viewModel: HistoryViewModel
+    let isLastMonth: Bool
     
     var body: some View {
-        VStack(spacing: PSSpacing.lg) {
-            // Month Header
-            HStack {
-                Text(month)
-                    .font(PSTypography.title1)
-                    .foregroundColor(.appPrimary)
+        VStack(spacing: 0) {
+            // Month Header with enhanced design
+            VStack(spacing: PSSpacing.md) {
+                HStack {
+                    HStack(spacing: PSSpacing.sm) {
+                        Image(systemName: "calendar.badge.clock")
+                            .font(.system(size: PSIconSize.medium))
+                            .foregroundColor(.appPrimary)
+                        
+                        Text(month)
+                            .font(PSTypography.title1)
+                            .foregroundColor(.appPrimary)
+                    }
+                    
+                    Spacer()
+                    
+                    PSStatusBadge(
+                        String(format: L("history.month.entries", table: "History"), items.count),
+                        icon: "calendar",
+                        color: .appPrimary
+                    )
+                }
                 
-                Spacer()
-                
-                PSStatusBadge(
-                    String(format: L("history.month.entries", table: "History"), items.count),
-                    color: .appPrimary
-                )
+                // Month separator with gradient
+                Rectangle()
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.appPrimary.opacity(0.6), .appPrimary.opacity(0.1)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .frame(height: 2)
             }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.vertical, PSSpacing.lg)
+            .background(Color.appPrimary.opacity(0.03))
             
-            // Month divider for better visual separation
-            Divider()
-                .background(Color.appPrimary.opacity(0.2))
-            
-            // Days
-            VStack(spacing: PSSpacing.lg) {
+            // Days in month
+            LazyVStack(spacing: PSSpacing.lg) {
                 ForEach(items.sorted { $0.date > $1.date }) { item in
                     ModernDayCard(item: item, viewModel: viewModel)
+                        .padding(.horizontal, PSSpacing.lg)
                 }
+            }
+            .padding(.vertical, PSSpacing.lg)
+            
+            // Month bottom separator (if not last month)
+            if !isLastMonth {
+                Rectangle()
+                    .fill(Color.appBorder.opacity(0.3))
+                    .frame(height: 1)
+                    .padding(.horizontal, PSSpacing.lg)
             }
         }
     }
 }
 
-// MARK: - Modern Day Card
+// MARK: - Modern Day Card with Edit/Delete capabilities
 struct ModernDayCard: View {
     let item: HistoryModel
     @ObservedObject var viewModel: HistoryViewModel
     @EnvironmentObject private var languageManager: LanguageManager
+    @State private var showingDeleteAlert = false
+    @State private var entryToDelete: SleepEntry?
     
     var body: some View {
         PSCard {
             VStack(alignment: .leading, spacing: PSSpacing.md) {
-                // Header: Date and Today Badge
+                // Header: Date and Actions
                 HStack {
                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
                         Text(item.date, style: .date)
@@ -432,34 +457,54 @@ struct ModernDayCard: View {
                             .font(PSTypography.caption)
                             .foregroundColor(.appTextSecondary)
                     }
+                    
                     Spacer()
-                    if Calendar.current.isDateInToday(item.date) {
-                        PSStatusBadge(L("history.today", table: "History"), color: .appPrimary)
-                    }
-                }
-                
-                // Rating Stars
-                if let rating = item.sleepEntries?.first?.rating, rating > 0 {
-                    HStack(spacing: PSSpacing.xs) {
-                        ForEach(1...5, id: \.self) { starIndex in
-                            Image(systemName: starIndex <= rating ? "star.fill" : "star")
-                                .font(.system(size: PSIconSize.small))
-                                .foregroundColor(starIndex <= rating ? Color.appAccent : Color.appTextSecondary.opacity(0.5))
+                    
+                    HStack(spacing: PSSpacing.sm) {
+                        if Calendar.current.isDateInToday(item.date) {
+                            PSStatusBadge(L("history.today", table: "History"), color: .appPrimary)
+                        }
+                        
+                        // Edit day button
+                        PSIconButton(
+                            icon: "square.and.pencil",
+                            size: PSIconSize.medium,
+                            backgroundColor: Color.appSecondary.opacity(0.15),
+                            foregroundColor: .appSecondary
+                        ) {
+                            viewModel.selectDateForDetail(item.date)
                         }
                     }
                 }
                 
-                // Separator line for better content separation
+                // Rating Stars
+                if let firstEntry = item.sleepEntries?.first, firstEntry.rating > 0 {
+                    HStack(spacing: PSSpacing.xs) {
+                        ForEach(1...5, id: \.self) { starIndex in
+                            Image(systemName: starIndex <= firstEntry.rating ? "star.fill" : "star")
+                                .font(.system(size: PSIconSize.small))
+                                .foregroundColor(starIndex <= firstEntry.rating ? Color.appAccent : Color.appTextSecondary.opacity(0.5))
+                        }
+                    }
+                }
+                
+                // Separator
                 if let entries = item.sleepEntries, !entries.isEmpty {
                     Divider()
                         .background(Color.appBorder.opacity(0.3))
                 }
                 
-                // Sleep Entries or No Record Message
+                // Sleep Entries with enhanced design
                 if let entries = item.sleepEntries, !entries.isEmpty {
-                    VStack(spacing: PSSpacing.md) { // PSSpacing.sm'den PSSpacing.md'ye artırdım
+                    VStack(spacing: PSSpacing.md) {
                         ForEach(entries) { entry in
-                            ModernSleepEntryRow(entry: entry)
+                            ModernSleepEntryRow(
+                                entry: entry,
+                                onDelete: {
+                                    entryToDelete = entry
+                                    showingDeleteAlert = true
+                                }
+                            )
                         }
                     }
                 } else {
@@ -477,42 +522,57 @@ struct ModernDayCard: View {
                     .padding(.vertical, PSSpacing.lg)
                 }
                 
-                // Footer divider for better separation
+                // Footer Stats with enhanced design
                 if let entries = item.sleepEntries, !entries.isEmpty {
                     Divider()
                         .background(Color.appBorder.opacity(0.3))
-                }
-                
-                // Footer Stats
-                HStack(spacing: PSSpacing.lg) {
-                    StatPill(
-                        icon: "clock",
-                        value: formatDuration(Int(item.totalSleepDuration / 60)),
-                        color: .appPrimary
-                    )
                     
-                    StatPill(
-                        icon: "bed.double",
-                        value: String(format: L("history.blocksCount", table: "History"), (item.sleepEntries?.count ?? 0)),
-                        color: .appSecondary
-                    )
-                    
-                    Spacer()
-                    
-                    // Status Indicator
-                    PSStatusBadge(
-                        item.completionStatus.localizedTitle,
-                        icon: "circle.fill",
-                        color: Color(item.completionStatus.color)
-                    )
+                    HStack(spacing: PSSpacing.lg) {
+                        StatPill(
+                            icon: "clock",
+                            value: formatDuration(Int(item.totalSleepDuration / 60)),
+                            color: .appPrimary
+                        )
+                        
+                        StatPill(
+                            icon: "bed.double",
+                            value: String(format: L("history.blocksCount", table: "History"), entries.count),
+                            color: .appSecondary
+                        )
+                        
+                        Spacer()
+                        
+                        PSStatusBadge(
+                            item.completionStatus.localizedTitle,
+                            icon: "circle.fill",
+                            color: item.completionStatus.color
+                        )
+                    }
                 }
             }
         }
-        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4) // Daha belirgin gölge
-        .onTapGesture {
-            DispatchQueue.main.async {
-                // viewModel.selectDay(item) // Geçici olarak yorum satırı yapıldı
+        .alert("Delete Sleep Entry", isPresented: $showingDeleteAlert) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) {
+                if let entry = entryToDelete {
+                    // Delete işlemini async olarak yap
+                    Task { @MainActor in
+                        viewModel.deleteSleepEntry(entry)
+                        
+                        // Local state'i temizle
+                        entryToDelete = nil
+                        
+                        // Haptic feedback
+                        let generator = UINotificationFeedbackGenerator()
+                        generator.notificationOccurred(.success)
+                    }
+                }
             }
+        } message: {
+            Text("Are you sure you want to delete this sleep entry? This action cannot be undone.")
+        }
+        .onTapGesture {
+            viewModel.selectDateForDetail(item.date)
             let generator = UIImpactFeedbackGenerator(style: .light)
             generator.impactOccurred()
         }
@@ -526,17 +586,26 @@ struct ModernDayCard: View {
     }
 }
 
-// MARK: - Modern Sleep Entry Row
+// MARK: - Modern Sleep Entry Row with Delete capability
 struct ModernSleepEntryRow: View {
     let entry: SleepEntry
+    let onDelete: () -> Void
+    
+    // Kullanıcının seçtiği emojiler
+    private var coreEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    }
+    
+    private var napEmoji: String {
+        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
+    }
     
     var body: some View {
         HStack(spacing: PSSpacing.md) {
-            // Type Icon
-            Image(systemName: entry.isCore ? "bed.double.fill" : "powersleep")
+            // Kişiselleştirilmiş emoji kullan
+            Text(entry.isCore ? coreEmoji : napEmoji)
                 .font(.system(size: PSIconSize.small))
-                .foregroundColor(.white)
-                .frame(width: PSIconSize.medium, height: PSIconSize.medium)
+                .frame(width: PSIconSize.medium + 8, height: PSIconSize.medium + 8)
                 .background(
                     Circle()
                         .fill(
@@ -567,6 +636,16 @@ struct ModernSleepEntryRow: View {
                 formatEntryDuration(entry.duration),
                 color: entry.isCore ? .appPrimary : .appSecondary
             )
+            
+            // Delete Button
+            PSIconButton(
+                icon: "trash",
+                size: PSIconSize.medium,
+                backgroundColor: Color.red.opacity(0.15),
+                foregroundColor: .red
+            ) {
+                onDelete()
+            }
         }
         .padding(PSSpacing.md)
         .background(
@@ -616,7 +695,14 @@ struct ModernFloatingActionButton: View {
             HStack {
                 Spacer()
                 
-                Button(action: action) {
+                Button(action: {
+                    // UI feedback önce gelsin
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                    
+                    // Action'ı çağır
+                    action()
+                }) {
                     Image(systemName: "plus")
                         .font(.system(size: PSIconSize.medium, weight: .bold))
                         .foregroundColor(.appTextOnPrimary)
@@ -638,33 +724,6 @@ struct ModernFloatingActionButton: View {
                 .padding(.bottom, PSSpacing.xl)
             }
         }
-    }
-}
-
-// MARK: - Filter Chip (Original - keeping for backward compatibility)
-struct FilterChip: View {
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(isSelected ? .semibold : .medium)
-                .foregroundColor(isSelected ? .white : .appText)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(isSelected ? Color.appPrimary : Color.clear)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(isSelected ? Color.clear : Color.appTextSecondary.opacity(0.3), lineWidth: 1)
-                        )
-                )
-        }
-        .buttonStyle(ScaleButtonStyle())
     }
 }
 

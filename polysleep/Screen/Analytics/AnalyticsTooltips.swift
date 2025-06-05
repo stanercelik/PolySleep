@@ -178,4 +178,131 @@ struct PieChartTooltip: View {
         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
         .frame(width: 160)
     }
+}
+
+// MARK: - Consistency Trend Tooltip
+struct ConsistencyTrendTooltip: View {
+    let data: ConsistencyTrendData
+    
+    init(for data: ConsistencyTrendData) {
+        self.data = data
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+            Text(data.date, style: .date)
+                .font(PSTypography.body)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
+            
+            Divider()
+            
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                Text("Tutarlılık: \(String(format: "%.0f", data.consistencyScore))%")
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appText)
+                
+                Text("Sapma: ±\(String(format: "%.0f", data.deviation))dk")
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+                
+                Text("Durum: \(data.consistencyLevel.localizedTitle)")
+                    .font(PSTypography.caption)
+                    .foregroundColor(data.consistencyLevel.color)
+            }
+        }
+        .padding(PSSpacing.sm)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.medium)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+    }
+}
+
+// MARK: - Sleep Debt Tooltip
+struct SleepDebtTooltip: View {
+    let data: SleepDebtData
+    
+    init(for data: SleepDebtData) {
+        self.data = data
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+            Text(data.date, style: .date)
+                .font(PSTypography.body)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
+            
+            Divider()
+            
+            VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                Text("Günlük: \(String(format: "%.1f", data.dailyDebt))h")
+                    .font(PSTypography.caption)
+                    .foregroundColor(data.dailyDebt >= 0 ? .red : .green)
+                
+                Text("Kümülatif: \(String(format: "%.1f", data.cumulativeDebt))h")
+                    .font(PSTypography.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(data.cumulativeDebt >= 0 ? .red : .green)
+                
+                Text("Hedef: \(String(format: "%.1f", data.targetSleep))h")
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+                
+                Text("Gerçek: \(String(format: "%.1f", data.actualSleep))h")
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appText)
+            }
+        }
+        .padding(PSSpacing.sm)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.medium)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+    }
+}
+
+// MARK: - Quality-Consistency Correlation Tooltip
+struct QualityConsistencyTooltip: View {
+    let data: QualityConsistencyData
+    
+    init(for data: QualityConsistencyData) {
+        self.data = data
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+            Text(data.date, style: .date)
+                .font(PSTypography.body)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
+            
+            Divider()
+            
+            HStack(spacing: PSSpacing.md) {
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text("Kalite: \(String(format: "%.1f", data.sleepQuality))")
+                        .font(PSTypography.caption)
+                        .foregroundColor(data.qualityCategory.color)
+                    
+                    Text("Sapma: \(String(format: "%.0f", data.consistencyDeviation))dk")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                }
+                
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text("Süre: \(String(format: "%.1f", data.sleepHours))h")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appText)
+                    
+                    Text("Kategori: \(data.qualityCategory.localizedTitle)")
+                        .font(PSTypography.caption)
+                        .foregroundColor(data.qualityCategory.color)
+                }
+            }
+        }
+        .padding(PSSpacing.sm)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.medium)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+    }
 } 

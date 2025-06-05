@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import SwiftUI
 
 enum SortOption: String, CaseIterable {
     case newestFirst = "Newest First"
@@ -13,14 +14,14 @@ enum CompletionStatus: Int, Codable {
     case partial
     case missed
     
-    var color: String {
+    var color: Color {
         switch self {
         case .completed:
-            return "SuccessColor"
+            return .appSuccess
         case .partial:
-            return "WarningColor"
+            return .appWarning
         case .missed:
-            return "ErrorColor"
+            return .appError
         }
     }
     
