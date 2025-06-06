@@ -6,6 +6,7 @@ struct MainTabBarView: View {
     @StateObject private var mainScreenViewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var alarmManager: AlarmManager
     
     init() {
         self._mainScreenViewModel = StateObject(wrappedValue: MainScreenViewModel(languageManager: LanguageManager.shared))

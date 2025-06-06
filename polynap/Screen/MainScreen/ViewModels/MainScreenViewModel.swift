@@ -804,6 +804,10 @@ class MainScreenViewModel: ObservableObject {
     private func checkForNewCompletedBlocks() {
         let now = Date()
         let calendar = Calendar.current
+        let currentComponents = calendar.dateComponents([.hour, .minute], from: now)
+        
+        // Debug: Hangi blokların kontrol edildiğini göster
+        print("PolyNap Debug: Sleep block tamamlanma kontrolü - Şu anki zaman: \(currentComponents.hour!):\(String(format: "%02d", currentComponents.minute!))")
         
         // Son 5 dakika içinde biten blokları kontrol et
         for block in model.schedule.schedule {
@@ -816,11 +820,24 @@ class MainScreenViewModel: ObservableObject {
             ) ?? now
             
             let blockKey = blockKey(startTime: block.startTime, endTime: block.endTime)
+            let timeDifference = now.timeIntervalSince(endDate)
             
-            // Eğer blok son 5 dakika içinde bittiyse
-            if endDate <= now && now.timeIntervalSince(endDate) <= 300 { // 5 dakika
+            // Debug: Her block için durumu göster
+            if timeDifference >= -60 && timeDifference <= 120 { // Yakın zamanlı blokları debug için göster
+                print("PolyNap Debug: Block \(block.startTime)-\(block.endTime) | Bitiş: \(endTime.hour):\(String(format: "%02d", endTime.minute)) | Fark: \(Int(timeDifference))s")
+            }
+            
+            // Eğer blok az önce bittiyse (son 1 dakika içinde)
+            if endDate <= now && now.timeIntervalSince(endDate) <= 60 { // 1 dakika
+                print("PolyNap Debug: ✅ Sleep block bitimi tespit edildi! Block: \(block.startTime)-\(block.endTime)")
+                
                 // Eğer bu bloğu daha önce kontrol etmediyseysek
                 if lastCheckedCompletedBlock != blockKey {
+                    
+                    // 🚨 KAPSAMLI ALARM SİSTEMİ: Uyku bloğu bitiminde tüm senaryolar için alarm
+                    AlarmService.shared.scheduleComprehensiveAlarmForSleepBlockEnd(date: now, modelContext: modelContext)
+                    print("🚨 KAPSAMLI ALARM AKTİF: Sleep block bitti, alarm sistemi tetiklendi: \(block.startTime)-\(block.endTime)")
+                    
                     // Eğer bu blok hiç puanlanmamışsa ve ertelenmemişse, değerlendirme ekranını göster
                     if !isBlockRated(startTime: block.startTime, endTime: block.endTime) && 
                        !isBlockDeferred(startTime: block.startTime, endTime: block.endTime) {
@@ -832,7 +849,10 @@ class MainScreenViewModel: ObservableObject {
                     } else {
                         // Block rated/deferred ise, checked olarak işaretle
                         lastCheckedCompletedBlock = blockKey
+                        print("PolyNap Debug: Block zaten değerlendirilmiş/ertelenmiş, sadece alarm tetiklendi")
                     }
+                } else {
+                    print("PolyNap Debug: Bu block zaten kontrol edildi: \(blockKey)")
                 }
             }
         }

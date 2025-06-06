@@ -8,5 +8,7 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<key>com.apple.developer.messages.critical-messaging</key>
+	<true/>
 </dict>
 </plist>

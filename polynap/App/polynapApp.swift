@@ -12,20 +12,32 @@ import Network
 import UserNotifications
 import RevenueCat
 
+// AppDelegate ve SwiftUI arasında iletişim için özel bir bildirim adı
+extension Notification.Name {
+    static let startAlarm = Notification.Name("startAlarmNotification")
+    static let stopAlarm = Notification.Name("stopAlarmNotification")
+}
+
 // Offline-first model ve servislerimizi import ediyoruz
 // Eğer bunlar farklı modüllerde olsaydı, modül adlarını belirtmemiz gerekirdi
 // Ancak aynı modül içinde olduğu için direkt dosya adlarını belirtebiliriz
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+  static var shared: AppDelegate!
+  var modelContainer: ModelContainer?
   func application(_ application: UIApplication,
   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    AppDelegate.shared = self
     // Initialize notification manager
     let notificationManager = SleepQualityNotificationManager.shared
     notificationManager.requestAuthorization()
     
-    // Alarm notification service'i başlat
-    let alarmService = AlarmNotificationService.shared
-    alarmService.registerNotificationCategories()
+    // Alarm servisini başlat ve yetkileri iste
+    AlarmService.shared.requestAuthorization()
+    
+    // Eski alarm servisi - bunu yeni sisteme entegre edebiliriz veya ayrı tutabiliriz. Şimdilik ayrı tutuyorum.
+    let alarmNotificationService = AlarmNotificationService.shared
+    alarmNotificationService.registerNotificationCategories()
     
     // Bildirim delegate'ini ayarla
     UNUserNotificationCenter.current().delegate = self
@@ -48,8 +60,22 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
   
   /// Uygulama ön plandayken bildirim geldiğinde çağrılır
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-      // Alarm bildirimleri için ses ve banner göster
-      if notification.request.content.userInfo["type"] as? String == "sleep_alarm" {
+      let content = notification.request.content
+      
+      print("PolyNap Debug: Uygulama önplandayken bildirim geldi - \(content.categoryIdentifier)")
+      
+      // Yeni ALARM_CATEGORY için - sleep block bitimi alarmları
+      if content.categoryIdentifier == "ALARM_CATEGORY" {
+          print("PolyNap Debug: ALARM_CATEGORY bildirimi - uygulama önplanda, sistem notification gösterilmeyecek")
+          // Alarm geldi! Sistem bildirimini gösterme, kendi UI'ımızı göstereceğiz.
+          completionHandler([])
+          // AlarmManager'ı tetikle
+          NotificationCenter.default.post(name: .startAlarm, object: nil)
+          return
+      }
+      
+      // Mevcut alarm mantığı
+      if content.userInfo["type"] as? String == "sleep_alarm" {
           completionHandler([.banner, .sound, .badge])
       } else {
           completionHandler([.banner, .sound])
@@ -58,9 +84,50 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
   
   /// Kullanıcı bildirime tıkladığında veya eylem seçtiğinde çağrılır
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-      let userInfo = response.notification.request.content.userInfo
+      let content = response.notification.request.content
+      let userInfo = content.userInfo
       
-      // Ana alarm eylemleri
+      print("PolyNap Debug: Bildirim action alındı - Category: \(content.categoryIdentifier), Action: \(response.actionIdentifier)")
+      
+      // Yeni ALARM_CATEGORY için - sleep block bitimi alarmları
+      if content.categoryIdentifier == "ALARM_CATEGORY" {
+          switch response.actionIdentifier {
+          case "SNOOZE_ACTION":
+              print("PolyNap Debug: ALARM_CATEGORY - Snooze action")
+              // Settings'ten erteleme süresini al
+              if let context = self.modelContainer?.mainContext {
+                  let request = FetchDescriptor<AlarmSettings>()
+                  do {
+                      let alarmSettingsList = try context.fetch(request)
+                      let snoozeDuration = alarmSettingsList.first?.snoozeDurationMinutes ?? 5
+                      let snoozeDate = Date().addingTimeInterval(TimeInterval(snoozeDuration * 60))
+                      AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false, modelContext: context)
+                      print("PolyNap Debug: Bildirimden alarm \(snoozeDuration) dakika ertelendi")
+                  } catch {
+                      print("PolyNap Debug: Bildirimden erteleme - Settings alınamadı: \(error)")
+                      let snoozeDate = Date().addingTimeInterval(5 * 60) // 5 dakika varsayılan
+                      AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false, modelContext: context)
+                  }
+              } else {
+                  let snoozeDate = Date().addingTimeInterval(5 * 60) // 5 dakika varsayılan
+                  AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false)
+              }
+          case "STOP_ACTION":
+              print("PolyNap Debug: ALARM_CATEGORY - Stop action")
+              // Alarmı tamamen durdur. Belki çalan bir ses varsa onu durdurmak için sinyal gönderilir.
+              NotificationCenter.default.post(name: .stopAlarm, object: nil)
+              print("PolyNap Debug: Alarm kullanıcı tarafından bildirim üzerinden kapatıldı.")
+          default:
+              print("PolyNap Debug: ALARM_CATEGORY - Default action (notification tapped)")
+              // Kullanıcı bildirimin kendisine tıkladı. Uygulama açılacak.
+              // Uygulama açılırken alarmı tetiklemeliyiz.
+              NotificationCenter.default.post(name: .startAlarm, object: nil)
+          }
+          completionHandler()
+          return
+      }
+      
+      // Mevcut alarm mantığı
       if userInfo["type"] as? String == "sleep_alarm" {
           switch response.actionIdentifier {
           case "START_LONG_ALARM_ACTION":
@@ -252,6 +319,7 @@ struct polynapApp: App {
     @StateObject private var scheduleManager = ScheduleManager.shared
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var revenueCatManager = RevenueCatManager.shared
+    @StateObject private var alarmManager = AlarmManager() // Yeni AlarmManager'ı ekliyoruz
     
     // Sınıf düzeyinde @Query tanımlıyoruz, böylece yerel alan içinde kullanmamış oluruz
     @Query var preferences: [UserPreferences]
@@ -341,8 +409,11 @@ struct polynapApp: App {
                 .environmentObject(scheduleManager)
                 .environmentObject(languageManager)
                 .environmentObject(revenueCatManager)
+                .environmentObject(alarmManager) // AlarmManager'ı environment'a ekliyoruz
                 .withLanguageEnvironment()
                 .onAppear {
+                    // AppDelegate'e modelContainer'ı geçir
+                    delegate.modelContainer = modelContainer
                     LocalNotificationService.shared.requestAuthorization { granted, error in
                         if granted {
                             print("AppDelegate: Bildirim izni uygulama başlangıcında alındı.")
@@ -373,6 +444,7 @@ struct ContentView: View {
     @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @Query private var userPreferences: [UserPreferences]
     @Query private var sleepSchedules: [SleepScheduleStore]
+    @EnvironmentObject var alarmManager: AlarmManager // AlarmManager'ı alıyoruz
     
     var body: some View {
         Group {
@@ -393,11 +465,17 @@ struct ContentView: View {
             }
         }
         .preferredColorScheme(getPreferredColorScheme())
+        .fullScreenCover(isPresented: $alarmManager.isAlarmFiring) {
+            AlarmFiringView()
+        }
         .onAppear {
             // İlk açılışta kullanıcı tema tercihi yoksa sistem temasını ayarla
             if userSelectedTheme == nil {
                 print("İlk açılış: Sistem teması kullanılıyor - \(systemColorScheme == .dark ? "Koyu" : "Açık")")
             }
+            
+            // AlarmManager'a ModelContext'i ayarla
+            alarmManager.setModelContext(modelContext)
         }
     }
     
