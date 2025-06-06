@@ -2,11 +2,14 @@ import SwiftUI
 import SwiftData
 import AVFoundation
 import Lottie
+import RevenueCat
+import RevenueCatUI
 
 struct ProfileScreenView: View {
     @StateObject var viewModel: ProfileScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
     @State private var showEmojiPicker = false
     @State private var isPickingCoreEmoji = true
     @State private var showLoginSheet = false
@@ -15,8 +18,8 @@ struct ProfileScreenView: View {
     @StateObject private var authManager = AuthManager.shared
     @State private var showSuccessMessage = false
     @State private var adaptationTimer: Timer?
-    @State private var isPremiumUser = false
     @State private var showingCelebration = false
+    @State private var isPaywallPresented = false
     
     init() {
         self._viewModel = StateObject(wrappedValue: ProfileScreenViewModel(languageManager: LanguageManager.shared))
@@ -57,7 +60,7 @@ struct ProfileScreenView: View {
                             }
                             
                             // Adaptation Debug Section (Premium only)
-                            if isPremiumUser {
+                            if revenueCatManager.userState == .premium {
                                 AdaptationDebugCard(viewModel: viewModel)
                             }
                             
@@ -67,10 +70,14 @@ struct ProfileScreenView: View {
                                 showEmojiPicker: $showEmojiPicker, 
                                 isPickingCoreEmoji: $isPickingCoreEmoji
                             )
+                            .requiresPremium()
                             
                             // Premium Upgrade Card - Premium kullanıcılar için gizle
-                            if !isPremiumUser {
+                            if revenueCatManager.userState != .premium {
                                 PremiumUpgradeCard()
+                                    .onTapGesture {
+                                        isPaywallPresented.toggle()
+                                    }
                             }
                             
                             // Debug Section (Premium Toggle)
@@ -130,13 +137,15 @@ struct ProfileScreenView: View {
                     LogoutSheetView(authManager: authManager)
                         .presentationDetents([.height(200)])
                 }
+                .sheet(isPresented: $isPaywallPresented) {
+                    PaywallView()
+                }
                 .navigationDestination(isPresented: $navigateToSettings) {
                     SettingsView()
                 }
                 .onAppear {
                     viewModel.setModelContext(modelContext)
                     startAdaptationTimer()
-                    loadPremiumStatus()
                     
                     // Undo banner için güncelleme timer'ı
                     Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
@@ -145,11 +154,6 @@ struct ProfileScreenView: View {
                 }
                 .onDisappear {
                     stopAdaptationTimer()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
-                    if let isPremium = notification.userInfo?["isPremium"] as? Bool {
-                        isPremiumUser = isPremium
-                    }
                 }
             }
             .id(languageManager.currentLanguage)
@@ -178,79 +182,66 @@ struct ProfileScreenView: View {
         adaptationTimer?.invalidate()
         adaptationTimer = nil
     }
-    
-    private func loadPremiumStatus() {
-        // Debug için UserDefaults kontrolü
-        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
-            isPremiumUser = UserDefaults.standard.bool(forKey: "debug_premium_status")
-        } else {
-            isPremiumUser = AuthManager.shared.currentUser?.isPremium ?? false
-        }
-    }
 }
 
 // MARK: - Premium Upgrade Card
 struct PremiumUpgradeCard: View {
     var body: some View {
-        Button(action: {
-            // Premium işlevselliği
-        }) {
-            VStack(spacing: PSSpacing.lg) {
-                HStack {
-                    VStack(alignment: .leading, spacing: PSSpacing.sm) {
-                        HStack {
-                            Image(systemName: "crown.fill")
-                                .font(PSTypography.title1)
-                                .foregroundColor(.yellow)
-                            
-                            Text(L("profile.premium.title", table: "Profile"))
-                                .font(PSTypography.headline)
-                                .foregroundColor(.appTextOnPrimary)
-                        }
-                        
-                        Text(L("profile.premium.description", table: "Profile"))
-                            .font(PSTypography.body)
-                            .foregroundColor(.appTextOnPrimary.opacity(0.9))
-                    }
-                    
-                    Spacer()
-                    
-                    VStack {
-                        Text(L("profile.premium.upgrade", table: "Profile"))
-                            .font(PSTypography.caption)
-                            .foregroundColor(.appTextOnPrimary)
-                            .padding(.horizontal, PSSpacing.lg)
-                            .padding(.vertical, PSSpacing.sm)
-                            .background(
-                                Capsule()
-                                    .fill(Color.appTextOnPrimary.opacity(0.25))
-                            )
-                        
-                        Image(systemName: "arrow.right.circle.fill")
+        VStack(spacing: PSSpacing.lg) {
+            HStack {
+                VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                    HStack {
+                        Image(systemName: "crown.fill")
                             .font(PSTypography.title1)
-                            .foregroundColor(.appTextOnPrimary.opacity(0.7))
+                            .foregroundColor(.yellow)
+                        
+                        Text(L("profile.premium.title", table: "Profile"))
+                            .font(PSTypography.headline)
+                            .foregroundColor(.appTextOnPrimary)
                     }
+                    
+                    Text(L("profile.premium.description", table: "Profile"))
+                        .font(PSTypography.body)
+                        .foregroundColor(.appTextOnPrimary.opacity(0.9))
                 }
                 
-                // Premium Features
-                HStack(spacing: PSSpacing.xl) {
-                    PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: L("profile.premium.features.statistics", table: "Profile"))
-                    PremiumFeature(icon: "bell.badge", title: L("profile.premium.features.notifications", table: "Profile"))
-                    PremiumFeature(icon: "paintbrush", title: L("profile.premium.features.themes", table: "Profile"))
+                Spacer()
+                
+                VStack {
+                    Text(L("profile.premium.upgrade", table: "Profile"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextOnPrimary)
+                        .padding(.horizontal, PSSpacing.lg)
+                        .padding(.vertical, PSSpacing.sm)
+                        .background(
+                            Capsule()
+                                .fill(Color.appTextOnPrimary.opacity(0.25))
+                        )
+                    
+                    Image(systemName: "arrow.right.circle.fill")
+                        .font(PSTypography.title1)
+                        .foregroundColor(.appTextOnPrimary.opacity(0.7))
                 }
             }
-            .padding(PSSpacing.lg)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.appSecondary, Color.appAccent]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
-            .cornerRadius(PSCornerRadius.extraLarge)
-            .shadow(color: Color.appSecondary.opacity(0.3), radius: PSSpacing.sm, x: 0, y: PSSpacing.xs)
+            
+            // Premium Features
+            HStack(spacing: PSSpacing.xl) {
+                PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: L("profile.premium.features.statistics", table: "Profile"))
+                PremiumFeature(icon: "bell.badge", title: L("profile.premium.features.notifications", table: "Profile"))
+                PremiumFeature(icon: "paintbrush", title: L("profile.premium.features.themes", table: "Profile"))
+            }
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding(PSSpacing.lg)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.appSecondary, Color.appAccent]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(PSCornerRadius.extraLarge)
+        .shadow(color: Color.appSecondary.opacity(0.3), radius: PSSpacing.sm, x: 0, y: PSSpacing.xs)
+        .contentShape(Rectangle()) // Tıklama alanını genişletmek için
     }
 }
 

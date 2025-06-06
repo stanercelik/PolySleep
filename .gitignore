@@ -1,7 +1,4 @@
-Documents/
-Documents/prd.md
-Documents/yapilacaklar_listesi.md
-Documents/design_prd.md
-Documents/widget_prd.md
+/Documents
+/Documents/
 GoogleService-Info.plist
-.cursor/rules/
+/.env

@@ -10,6 +10,7 @@ import SwiftData
 import Combine
 import Network
 import UserNotifications
+import RevenueCat
 
 // Offline-first model ve servislerimizi import ediyoruz
 // Eğer bunlar farklı modüllerde olsaydı, modül adlarını belirtmemiz gerekirdi
@@ -250,6 +251,7 @@ struct polynapApp: App {
     @StateObject private var authManager = AuthManager.shared
     @StateObject private var scheduleManager = ScheduleManager.shared
     @StateObject private var languageManager = LanguageManager.shared
+    @StateObject private var revenueCatManager = RevenueCatManager.shared
     
     // Sınıf düzeyinde @Query tanımlıyoruz, böylece yerel alan içinde kullanmamış oluruz
     @Query var preferences: [UserPreferences]
@@ -257,6 +259,9 @@ struct polynapApp: App {
     let modelContainer: ModelContainer
     
     init() {
+        // RevenueCat'i yapılandır
+        RevenueCatManager.configure()
+
         do {
             // SwiftData schema'sını yapılandırıyoruz
             let config = ModelConfiguration(isStoredInMemoryOnly: false)
@@ -335,6 +340,7 @@ struct polynapApp: App {
                 .environmentObject(authManager)
                 .environmentObject(scheduleManager)
                 .environmentObject(languageManager)
+                .environmentObject(revenueCatManager)
                 .withLanguageEnvironment()
                 .onAppear {
                     LocalNotificationService.shared.requestAuthorization { granted, error in

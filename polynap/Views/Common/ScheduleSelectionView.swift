@@ -101,14 +101,14 @@ struct ScheduleSelectionView: View {
                                 }
                                 
                                 if schedule.isPremium && !isPremium {
-                                    // Premium schedule for free users
+                                    // Premium schedule for free users - kilitli
                                     PremiumLockedScheduleCard(
                                         schedule: schedule,
                                         isSelected: isScheduleSelected(schedule)
                                     )
                                     .id(schedule.id)
                                 } else {
-                                    // Available schedule
+                                    // Available schedule (free schedules for all users, premium schedules for premium users)
                                     CompactScheduleCard(
                                         schedule: schedule,
                                         isSelected: isScheduleSelected(schedule),
@@ -171,6 +171,12 @@ struct ScheduleSelectionView: View {
             .onAppear {
                 loadPremiumStatus()
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
+                if let newPremiumStatus = notification.userInfo?["isPremium"] as? Bool {
+                    isPremium = newPremiumStatus
+                    print("🔄 ScheduleSelectionView: Premium durumu güncellendi: \(newPremiumStatus)")
+                }
+            }
         }
     }
     
@@ -178,8 +184,10 @@ struct ScheduleSelectionView: View {
         // Debug için UserDefaults kontrolü
         if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
             isPremium = UserDefaults.standard.bool(forKey: "debug_premium_status")
+            print("🔄 ScheduleSelectionView: Premium durumu UserDefaults'dan yüklendi: \(isPremium)")
         } else {
             isPremium = AuthManager.shared.currentUser?.isPremium ?? false
+            print("🔄 ScheduleSelectionView: Premium durumu AuthManager'dan yüklendi: \(isPremium)")
         }
     }
     
