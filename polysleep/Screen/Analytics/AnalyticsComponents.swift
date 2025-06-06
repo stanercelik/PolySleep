@@ -3,7 +3,7 @@ import Charts
 
 // MARK: - Summary Card
 struct AnalyticsSummaryCard: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -144,7 +144,7 @@ struct MetricCard: View {
 
 // MARK: - Quality Distribution
 struct AnalyticsQualityDistribution: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -273,7 +273,7 @@ struct QualityDistributionRow: View {
 
 // MARK: - Consistency Section
 struct AnalyticsConsistencySection: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -376,7 +376,7 @@ struct AnalyticsConsistencySection: View {
 
 // MARK: - Best Worst Days
 struct AnalyticsBestWorstDays: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -490,7 +490,7 @@ struct AnalyticsBestWorstDays: View {
 
 // MARK: - Time Gained Section
 struct AnalyticsTimeGained: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -700,39 +700,68 @@ struct PremiumLockedAnalytics<PreviewContent: View>: View {
 // MARK: - Preview Components for Premium Lock
 struct AnalyticsSleepComponentsPreview: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Uyku Bileşenleri Trendi")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(Color("TextColor"))
+        VStack(alignment: .leading, spacing: PSSpacing.md) {
+            Text(L("analytics.sleepComponentsTrend.title", table: "Analytics"))
+                .font(PSTypography.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
             
-            // Fake bar chart
-            HStack(alignment: .bottom, spacing: 8) {
-                ForEach(0..<7) { index in
-                    VStack(spacing: 2) {
-                        // Core sleep
-                        Rectangle()
-                            .fill(Color("AccentColor"))
-                            .frame(width: 30, height: CGFloat.random(in: 40...80))
-                        
-                        // Nap 1
-                        Rectangle()
-                            .fill(Color("PrimaryColor"))
-                            .frame(width: 30, height: CGFloat.random(in: 15...40))
-                        
-                        // Nap 2
-                        Rectangle()
-                            .fill(Color("SecondaryColor"))
-                            .frame(width: 30, height: CGFloat.random(in: 10...25))
+            Text(L("analytics.sleepComponentsTrend.subtitle", table: "Analytics"))
+                .font(PSTypography.body)
+                .foregroundColor(.appTextSecondary)
+            
+            // Daha modern ve responsive bar chart preview
+            GeometryReader { geometry in
+                HStack(alignment: .bottom, spacing: max(4, geometry.size.width / 50)) {
+                    ForEach(0..<7) { index in
+                        VStack(spacing: 1) {
+                            // Skor noktası
+                            Circle()
+                                .fill(Color.yellow)
+                                .frame(width: 8, height: 8)
+                                .offset(y: -4)
+                            
+                            // Şekerleme 2
+                            Rectangle()
+                                .fill(Color("SecondaryColor"))
+                                .frame(height: CGFloat.random(in: 8...20))
+                            
+                            // Şekerleme 1
+                            Rectangle()
+                                .fill(Color("PrimaryColor"))
+                                .frame(height: CGFloat.random(in: 12...35))
+                            
+                            // Ana uyku
+                            Rectangle()
+                                .fill(Color("AccentColor"))
+                                .frame(height: CGFloat.random(in: 40...80))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(3)
                     }
-                    .cornerRadius(4)
                 }
             }
-            .frame(height: 150)
-            .frame(maxWidth: .infinity)
+            .frame(height: 140)
+            
+            // Legend
+            HStack(spacing: PSSpacing.lg) {
+                LegendItem(color: Color("AccentColor"), label: L("analytics.sleepComponentsTrend.core", table: "Analytics"))
+                LegendItem(color: Color("PrimaryColor"), label: L("analytics.sleepComponentsTrend.nap", table: "Analytics"))
+                
+                HStack(spacing: PSSpacing.xs) {
+                    Circle()
+                        .stroke(Color.yellow, lineWidth: 2)
+                        .frame(width: 12, height: 12)
+                    Text(L("analytics.sleepComponentsTrend.score", table: "Analytics"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appText)
+                }
+            }
+            .padding(.top, PSSpacing.sm)
         }
-        .padding()
-        .background(Color("CardBackground"))
-        .cornerRadius(12)
+        .padding(PSSpacing.lg)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.large)
     }
 }
 

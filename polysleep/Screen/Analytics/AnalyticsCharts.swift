@@ -3,7 +3,7 @@ import Charts
 
 // MARK: - Total Sleep Chart (Free Users)
 struct AnalyticsTotalSleepChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedTrendDataPoint: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
     
@@ -25,7 +25,6 @@ struct AnalyticsTotalSleepChart: View {
                     selectedTrendDataPoint: $selectedTrendDataPoint,
                     tooltipPosition: $tooltipPosition
                 )
-                .allowsHitTesting(false) // Scroll sorununu çözer
             }
             .padding()
             .background(Color("CardBackground"))
@@ -37,7 +36,7 @@ struct AnalyticsTotalSleepChart: View {
 
 // MARK: - Trend Charts Section
 struct AnalyticsTrendCharts: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedTrendDataPoint: SleepTrendData?
     @Binding var selectedBarDataPoint: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
@@ -60,7 +59,6 @@ struct AnalyticsTrendCharts: View {
                     selectedTrendDataPoint: $selectedTrendDataPoint,
                     tooltipPosition: $tooltipPosition
                 )
-                .allowsHitTesting(false) // Scroll sorununu çözer
                 
                 // Uyku Bileşenleri Çubuk Grafiği
                 ChartHeader(
@@ -73,7 +71,6 @@ struct AnalyticsTrendCharts: View {
                     selectedBarDataPoint: $selectedBarDataPoint,
                     tooltipPosition: $tooltipPosition
                 )
-                .allowsHitTesting(false) // Scroll sorununu çözer
             }
             .padding()
             .background(Color("CardBackground"))
@@ -85,7 +82,7 @@ struct AnalyticsTrendCharts: View {
 
 // MARK: - Sleep Trend Chart
 struct SleepTrendChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedTrendDataPoint: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
     
@@ -115,13 +112,15 @@ struct SleepTrendChart: View {
                 .lineStyle(StrokeStyle(lineWidth: 3))
                 .interpolationMethod(.catmullRom)
                 
-                // Noktalar
-                PointMark(
-                    x: .value("Tarih", day.date, unit: .day),
-                    y: .value("Saat", day.totalHours)
-                )
-                .foregroundStyle(Color("PrimaryColor"))
-                .symbolSize(30)
+                // Noktalar (sadece veri olan günler için)
+                if day.totalHours > 0 {
+                    PointMark(
+                        x: .value("Tarih", day.date, unit: .day),
+                        y: .value("Saat", day.totalHours)
+                    )
+                    .foregroundStyle(Color("PrimaryColor"))
+                    .symbolSize(30)
+                }
             }
             
             // Hedef uyku süresi - referans çizgisi
@@ -144,10 +143,10 @@ struct SleepTrendChart: View {
             return 0...max(1, upperBound) // En az 1 saat domain garantisi
         }())
         .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: max(1, viewModel.sleepTrendData.count / 7))) { value in
+            AxisMarks(values: .stride(by: .day, count: getXAxisStride(for: viewModel.selectedTimeRange))) { value in
                 AxisValueLabel {
                     if let date = value.as(Date.self) {
-                        Text(date, format: .dateTime.day().month())
+                        Text(date, format: getDateFormat(for: viewModel.selectedTimeRange))
                             .font(.system(size: 11))
                     }
                 }
@@ -165,16 +164,16 @@ struct SleepTrendChart: View {
                 AxisGridLine()
             }
         }
-        .frame(height: max(220, 220)) // Frame boyutu güvencesi
+        .frame(height: 220) // Sabit boyut
+        .frame(maxWidth: .infinity) // Tam genişlik
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 Rectangle()
                     .fill(Color.clear)
                     .contentShape(Rectangle())
                     .gesture(
-                        // SpatialTapGesture kullanarak gerçek dokunma konumunu al
-                        SpatialTapGesture()
-                            .onEnded { value in
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
                                 let location = value.location
                                 let xPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
                                 
@@ -183,53 +182,15 @@ struct SleepTrendChart: View {
                                     return
                                 }
                                 
-                                let x = proxy.value(atX: xPosition, as: Date.self)
-                                
-                                if let x = x,
-                                   let matchingDay = viewModel.sleepTrendData.first(where: { 
-                                       Calendar.current.isDate($0.date, inSameDayAs: x)
-                                   }) {
-                                    withAnimation(.easeInOut(duration: 0.2)) {
-                                        selectedTrendDataPoint = matchingDay
-                                        tooltipPosition = location
-                                    }
+                                if let date = proxy.value(atX: xPosition, as: Date.self),
+                                   let matchingDay = viewModel.sleepTrendData.min(by: { abs($0.date.timeIntervalSince(date)) < abs($1.date.timeIntervalSince(date)) }) {
                                     
-                                    // 3 saniye sonra tooltip'i gizle
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            selectedTrendDataPoint = nil
-                                        }
-                                    }
-                                }
-                            }
-                    )
-                    // Chart'a dokunulabilirlik ekle ama scroll'a izin ver
-                    .simultaneousGesture(
-                        // Basılı tutma gesture'ı ekle
-                        LongPressGesture(minimumDuration: 0.1)
-                            .sequenced(before: DragGesture(minimumDistance: 0))
-                            .onChanged { value in
-                                switch value {
-                                case .second(true, let drag):
-                                    if let drag = drag {
-                                        let xPosition = drag.location.x - geometry[proxy.plotAreaFrame].origin.x
-                                        guard xPosition >= 0, xPosition < proxy.plotAreaSize.width else {
-                                            selectedTrendDataPoint = nil
-                                            return
-                                        }
-                                        
-                                        let x = proxy.value(atX: xPosition, as: Date.self)
-                                        
-                                        if let x = x,
-                                           let matchingDay = viewModel.sleepTrendData.first(where: { 
-                                               Calendar.current.isDate($0.date, inSameDayAs: x)
-                                           }) {
+                                    if selectedTrendDataPoint?.id != matchingDay.id {
+                                        withAnimation(.easeInOut(duration: 0.1)) {
                                             selectedTrendDataPoint = matchingDay
-                                            tooltipPosition = drag.location
+                                            tooltipPosition = location
                                         }
                                     }
-                                default:
-                                    break
                                 }
                             }
                             .onEnded { _ in
@@ -244,127 +205,151 @@ struct SleepTrendChart: View {
                 // Tooltip gösterimi
                 if let selectedDay = selectedTrendDataPoint {
                     let xPosition = proxy.position(forX: selectedDay.date) ?? 0
-                    let yPosition = proxy.position(forY: selectedDay.totalHours) ?? 0
                     
-                    DetailedTooltip(for: selectedDay, at: CGPoint(x: xPosition, y: yPosition))
-                        .offset(x: xPosition + 140 > geometry.size.width ? xPosition - 150 : xPosition + 10,
-                                y: yPosition - 60 < 0 ? yPosition + 10 : yPosition - 60)
-                        .transition(.opacity)
+                    TotalSleepTooltip(for: selectedDay)
+                        .offset(x: xPosition + 120 > geometry.size.width ? xPosition - 120 : xPosition + 10,
+                                y: tooltipPosition.y - 70)
+                        .transition(.opacity.animation(.easeInOut(duration: 0.1)))
                 }
             }
+        }
+    }
+    
+    // MARK: - Helper Functions for Chart Formatting
+    private func getXAxisStride(for timeRange: TimeRange) -> Int {
+        switch timeRange {
+        case .Week: return 1        // Her gün
+        case .Month: return 5       // 5 günde bir
+        case .Quarter: return 14    // 2 haftada bir
+        case .Year: return 60       // 2 ayda bir
+        }
+    }
+    
+    private func getDateFormat(for timeRange: TimeRange) -> Date.FormatStyle {
+        switch timeRange {
+        case .Week, .Month: 
+            return .dateTime.day().month(.abbreviated)
+        case .Quarter: 
+            return .dateTime.day().month(.abbreviated)
+        case .Year: 
+            return .dateTime.month(.abbreviated).year(.twoDigits)
         }
     }
 }
 
 // MARK: - Sleep Components Chart
 struct SleepComponentsChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedBarDataPoint: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
     
     var body: some View {
-        Chart {
-            ForEach(viewModel.sleepTrendData.suffix(7)) { day in
-                // Ana uyku bloğu
-                BarMark(
-                    x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
-                    y: .value("Core", day.coreHours),
-                    stacking: .standard
-                )
-                .foregroundStyle(Color("AccentColor"))
-                .cornerRadius(4)
+        GeometryReader { geometry in
+            Chart {
+                // Gösterilecek veri aralığını zaman dilimine göre ayarla
+                let displayData = getDisplayData()
                 
-                // Şekerleme 1
-                BarMark(
-                    x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
-                    y: .value("Nap 1", day.nap1Hours),
-                    stacking: .standard
-                )
-                .foregroundStyle(Color("PrimaryColor"))
-                .cornerRadius(4)
-                
-                // Şekerleme 2
-                BarMark(
-                    x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
-                    y: .value("Nap 2", day.nap2Hours),
-                    stacking: .standard
-                )
-                .foregroundStyle(Color("SecondaryColor"))
-                .cornerRadius(4)
-                
-                // Uyku skorunu nokta olarak ekle
-                PointMark(
-                    x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
-                    y: .value(L("analytics.chart.scoreLabel", table: "Analytics"), day.score / 5 * 8)
-                )
-                .foregroundStyle(.white)
-                .symbolSize(60)
-                
-                PointMark(
-                    x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
-                    y: .value(L("analytics.chart.scoreLabel", table: "Analytics"), day.score / 5 * 8)
-                )
-                .foregroundStyle(scoreColor(for: day.score))
-                .symbolSize(40)
-            }
-        }
-        .chartForegroundStyleScale([
-            L("analytics.sleepComponentsTrend.core", table: "Analytics"): Color("AccentColor"),
-            L("analytics.sleepComponentsTrend.nap1", table: "Analytics"): Color("PrimaryColor"),
-            L("analytics.sleepComponentsTrend.nap2", table: "Analytics"): Color("SecondaryColor"),
-            L("analytics.chart.sleepScoreLabel", table: "Analytics"): Color.yellow
-        ])
-        .chartLegend(position: .bottom, alignment: .center, spacing: 10) {
-            HStack(spacing: 16) {
-                LegendItem(color: Color("AccentColor"), label: L("analytics.sleepComponentsTrend.core", table: "Analytics"))
-                LegendItem(color: Color("PrimaryColor"), label: L("analytics.sleepComponentsTrend.nap1", table: "Analytics"))
-                LegendItem(color: Color("SecondaryColor"), label: L("analytics.sleepComponentsTrend.nap2", table: "Analytics"))
-                
-                Divider()
-                    .frame(height: 20)
-                
-                HStack(spacing: 6) {
-                    Circle()
-                        .stroke(Color.yellow, lineWidth: 2)
-                        .frame(width: 12, height: 12)
-                    Text(L("analytics.sleepComponentsTrend.score", table: "Analytics"))
-                        .font(.system(size: 12))
-                        .foregroundColor(Color("TextColor"))
-                }
-            }
-        }
-        .chartXAxis {
-            AxisMarks(values: .automatic) { value in
-                if let date = value.as(Date.self) {
-                    AxisValueLabel {
-                        Text(date, format: .dateTime.weekday())
-                            .font(.system(size: 11))
+                ForEach(displayData) { day in
+                    // Ana uyku bloğu
+                    BarMark(
+                        x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
+                        y: .value("Core", day.coreHours),
+                        width: .ratio(0.7),
+                        stacking: .standard
+                    )
+                    .foregroundStyle(Color("AccentColor"))
+                    .cornerRadius(4)
+                    
+                    // Şekerleme 1
+                    BarMark(
+                        x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
+                        y: .value("Nap 1", day.nap1Hours),
+                        stacking: .standard
+                    )
+                    .foregroundStyle(Color("PrimaryColor"))
+                    .cornerRadius(4)
+                    
+                    // Şekerleme 2
+                    BarMark(
+                        x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
+                        y: .value("Nap 2", day.nap2Hours),
+                        stacking: .standard
+                    )
+                    .foregroundStyle(Color("SecondaryColor"))
+                    .cornerRadius(4)
+                    
+                    // Uyku skorunu nokta olarak ekle (sadece veri olan günler için)
+                    if day.score > 0 {
+                        let yValue = day.totalHours + 0.5
+                        PointMark(
+                            x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
+                            y: .value(L("analytics.chart.scoreLabel", table: "Analytics"), yValue)
+                        )
+                        .foregroundStyle(.white)
+                        .symbolSize(60)
+                        
+                        PointMark(
+                            x: .value(L("analytics.chart.dayLabel", table: "Analytics"), day.date, unit: .day),
+                            y: .value(L("analytics.chart.scoreLabel", table: "Analytics"), yValue)
+                        )
+                        .foregroundStyle(scoreColor(for: day.score))
+                        .symbolSize(40)
                     }
                 }
-                AxisGridLine()
             }
-        }
-        .chartYAxis {
-            AxisMarks(values: .automatic) { value in
-                if let hour = value.as(Double.self) {
-                    AxisValueLabel {
-                        Text("\(Int(hour))")
-                            .font(.system(size: 11))
+            .frame(width: geometry.size.width, height: 220) // Sabit yükseklik, tam genişlik
+            .chartForegroundStyleScale([
+                L("analytics.sleepComponentsTrend.core", table: "Analytics"): Color("AccentColor"),
+                L("analytics.sleepComponentsTrend.nap1", table: "Analytics"): Color("PrimaryColor"),
+                L("analytics.sleepComponentsTrend.nap2", table: "Analytics"): Color("SecondaryColor"),
+                L("analytics.chart.sleepScoreLabel", table: "Analytics"): Color.yellow
+            ])
+            .chartLegend(position: .bottom, alignment: .center, spacing: 10) {
+                HStack(spacing: 16) {
+                    LegendItem(color: Color("AccentColor"), label: L("analytics.sleepComponentsTrend.core", table: "Analytics"))
+                    LegendItem(color: Color("PrimaryColor"), label: L("analytics.sleepComponentsTrend.nap", table: "Analytics"))
+                    
+                    Divider().frame(height: 20)
+                    
+                    HStack(spacing: 6) {
+                        Circle()
+                            .stroke(Color.yellow, lineWidth: 2)
+                            .frame(width: 12, height: 12)
+                        Text(L("analytics.sleepComponentsTrend.score", table: "Analytics"))
+                            .font(.system(size: 12))
+                            .foregroundColor(Color("TextColor"))
                     }
                 }
-                AxisGridLine()
             }
-        }
-        .frame(height: max(250, 250)) // Frame boyutu güvencesi
-        .chartOverlay { proxy in
-            GeometryReader { geometry in
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: getXAxisStrideForComponents(for: viewModel.selectedTimeRange))) { value in
+                    if let date = value.as(Date.self) {
+                        AxisValueLabel {
+                            Text(date, format: getDateFormatForComponents(for: viewModel.selectedTimeRange))
+                                .font(.system(size: 11))
+                        }
+                    }
+                    AxisGridLine()
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading) { value in
+                    if let hour = value.as(Double.self) {
+                        AxisValueLabel {
+                            Text("\(Int(hour))")
+                                .font(.system(size: 11))
+                        }
+                    }
+                    AxisGridLine()
+                }
+            }
+            .chartOverlay { proxy in
                 Rectangle()
                     .fill(Color.clear)
                     .contentShape(Rectangle())
                     .gesture(
-                        // SpatialTapGesture kullanarak gerçek dokunma konumunu al
-                        SpatialTapGesture()
-                            .onEnded { value in
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
                                 let location = value.location
                                 let xPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
                                 
@@ -373,53 +358,15 @@ struct SleepComponentsChart: View {
                                     return
                                 }
                                 
-                                let x = proxy.value(atX: xPosition, as: Date.self)
-                                
-                                if let x = x,
-                                   let matchingDay = viewModel.sleepTrendData.suffix(7).first(where: { 
-                                       Calendar.current.isDate($0.date, inSameDayAs: x)
-                                   }) {
-                                    withAnimation(.easeInOut(duration: 0.2)) {
-                                        selectedBarDataPoint = matchingDay
-                                        tooltipPosition = location
-                                    }
+                                if let date = proxy.value(atX: xPosition, as: Date.self),
+                                   let matchingDay = getDisplayData().min(by: { abs($0.date.timeIntervalSince(date)) < abs($1.date.timeIntervalSince(date)) }) {
                                     
-                                    // 3 saniye sonra tooltip'i gizle
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            selectedBarDataPoint = nil
-                                        }
-                                    }
-                                }
-                            }
-                    )
-                    // Chart'a dokunulabilirlik ekle ama scroll'a izin ver
-                    .simultaneousGesture(
-                        // Basılı tutma gesture'ı ekle
-                        LongPressGesture(minimumDuration: 0.1)
-                            .sequenced(before: DragGesture(minimumDistance: 0))
-                            .onChanged { value in
-                                switch value {
-                                case .second(true, let drag):
-                                    if let drag = drag {
-                                        let xPosition = drag.location.x - geometry[proxy.plotAreaFrame].origin.x
-                                        guard xPosition >= 0, xPosition < proxy.plotAreaSize.width else {
-                                            selectedBarDataPoint = nil
-                                            return
-                                        }
-                                        
-                                        let x = proxy.value(atX: xPosition, as: Date.self)
-                                        
-                                        if let x = x,
-                                           let matchingDay = viewModel.sleepTrendData.suffix(7).first(where: { 
-                                               Calendar.current.isDate($0.date, inSameDayAs: x)
-                                           }) {
+                                    if selectedBarDataPoint?.id != matchingDay.id {
+                                        withAnimation(.easeInOut(duration: 0.1)) {
                                             selectedBarDataPoint = matchingDay
-                                            tooltipPosition = drag.location
+                                            tooltipPosition = location
                                         }
                                     }
-                                default:
-                                    break
                                 }
                             }
                             .onEnded { _ in
@@ -436,23 +383,67 @@ struct SleepComponentsChart: View {
                     let xPosition = proxy.position(forX: selectedDay.date) ?? 0
                     
                     BarChartTooltip(for: selectedDay)
-                        .offset(x: xPosition + 180 > geometry.size.width ? xPosition - 180 : xPosition + 10,
+                        .offset(x: xPosition + 120 > geometry.size.width ? xPosition - 150 : xPosition + 10,
                                 y: 50)
-                        .transition(.opacity)
+                        .transition(.opacity.animation(.easeInOut(duration: 0.1)))
                 }
             }
         }
+        .frame(height: 280) // Legend için ekstra yükseklik
     }
     
     private func scoreColor(for score: Double) -> Color {
         let category = SleepQualityCategory.fromRating(score)
         return category.color
     }
+    
+    // Gösterilecek veri aralığını belirle
+    private func getDisplayData() -> [SleepTrendData] {
+        let allData = viewModel.sleepTrendData
+        
+        switch viewModel.selectedTimeRange {
+        case .Week:
+            // Son 7 gün
+            return Array(allData.suffix(7))
+        case .Month:
+            // Son 30 gün (tüm verileri göster ama daha sık stride kullan)
+            return allData
+        case .Quarter:
+            // Son 90 gün
+            return allData
+        case .Year:
+            // Tüm veriler
+            return allData
+        }
+    }
+    
+    // MARK: - Helper Functions for Components Chart
+    private func getXAxisStrideForComponents(for timeRange: TimeRange) -> Int {
+        switch timeRange {
+        case .Week: return 1        // Her gün
+        case .Month: return 4       // 4 günde bir
+        case .Quarter: return 14    // 2 haftada bir
+        case .Year: return 60       // 2 ayda bir
+        }
+    }
+    
+    private func getDateFormatForComponents(for timeRange: TimeRange) -> Date.FormatStyle {
+        switch timeRange {
+        case .Week: 
+            return .dateTime.weekday(.narrow)
+        case .Month: 
+            return .dateTime.day().month(.abbreviated)
+        case .Quarter: 
+            return .dateTime.day().month(.abbreviated)
+        case .Year: 
+            return .dateTime.month(.abbreviated)
+        }
+    }
 }
 
 // MARK: - Sleep Breakdown Section
 struct AnalyticsSleepBreakdown: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedPieSlice: SleepBreakdownData?
     @Binding var tooltipPosition: CGPoint
     
@@ -486,129 +477,37 @@ struct AnalyticsSleepBreakdown: View {
 
 // MARK: - Pie Chart
 struct PieChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedPieSlice: SleepBreakdownData?
     @Binding var tooltipPosition: CGPoint
     
     var body: some View {
         ZStack {
-            Chart {
-                ForEach(viewModel.sleepBreakdownData) { item in
-                    SectorMark(
-                        angle: .value(L("analytics.chart.percentageLabel", table: "Analytics"), item.percentage),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 1.5
-                    )
-                    .cornerRadius(5)
-                    .foregroundStyle(item.color)
-                    .annotation(position: .overlay) {
-                        if item.percentage >= 15 {
-                            Text(String(format: L("analytics.chart.percentageShort", table: "Analytics"), item.percentage))
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
+            Chart(viewModel.sleepBreakdownData) { item in
+                SectorMark(
+                    angle: .value(L("analytics.chart.percentageLabel", table: "Analytics"), item.percentage),
+                    innerRadius: .ratio(0.6),
+                    angularInset: 1.5
+                )
+                .cornerRadius(5)
+                .foregroundStyle(item.color)
+                .opacity(selectedPieSlice == nil || selectedPieSlice?.id == item.id ? 1.0 : 0.5)
             }
-            .frame(width: max(150, 150), height: max(150, 150)) // Frame boyutu güvencesi
+            .frame(width: 150, height: 150) // Sabit boyut
             .chartOverlay { proxy in
                 GeometryReader { geometry in
-                    Rectangle()
-                        .fill(Color.clear)
-                        .contentShape(Rectangle())
+                    Rectangle().fill(Color.clear).contentShape(Rectangle())
                         .gesture(
-                            // SpatialTapGesture kullanarak gerçek dokunma konumunu al
-                            SpatialTapGesture()
-                                .onEnded { value in
-                                    let location = value.location
-                                    
-                                    // Pie chart için açısal tespiti yap
-                                    let plotFrame = geometry[proxy.plotAreaFrame]
-                                    let center = CGPoint(
-                                        x: plotFrame.midX,
-                                        y: plotFrame.midY
-                                    )
-                                    
-                                    // Dokunma noktasından merkeze olan mesafe ve açıyı hesapla
-                                    let dx = location.x - center.x
-                                    let dy = location.y - center.y
-                                    let distance = sqrt(dx * dx + dy * dy)
-                                    
-                                    // Chart'ın yaklaşık yarıçapını hesapla (frame boyutunun yarısı)
-                                    let chartRadius = min(plotFrame.width, plotFrame.height) / 2
-                                    let innerRadius = chartRadius * 0.6 // innerRadius: .ratio(0.6)
-                                    
-                                    // Dokunma noktası pie chart alanında mı?
-                                    guard distance >= innerRadius && distance <= chartRadius else {
-                                        selectedPieSlice = nil
-                                        return
-                                    }
-                                    
-                                    // Açıyı hesapla (0 = sağ, pozitif = saat yönü)
-                                    let angle = atan2(dy, dx)
-                                    let normalizedAngle = angle < 0 ? angle + 2 * .pi : angle
-                                    let angleDegrees = normalizedAngle * 180 / .pi
-                                    
-                                    // Pie chart -90 dereceden başlar (üst), açıyı ayarla
-                                    let adjustedAngle = (angleDegrees + 90).truncatingRemainder(dividingBy: 360)
-                                    
-                                    // Hangi sector'a denk geldiğini bul
-                                    var currentAngle: Double = 0
-                                    var selectedItem: SleepBreakdownData? = nil
-                                    
-                                    for item in viewModel.sleepBreakdownData {
-                                        let sectorSize = (item.percentage / 100) * 360
-                                        if adjustedAngle >= currentAngle && adjustedAngle < currentAngle + sectorSize {
-                                            selectedItem = item
-                                            break
-                                        }
-                                        currentAngle += sectorSize
-                                    }
-                                    
-                                    if let selectedItem = selectedItem {
-                                        withAnimation(.easeInOut(duration: 0.2)) {
-                                            selectedPieSlice = selectedItem
-                                            tooltipPosition = location
-                                        }
-                                        
-                                        // 3 saniye sonra tooltip'i gizle
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                                            withAnimation(.easeInOut(duration: 0.2)) {
-                                                selectedPieSlice = nil
-                                            }
-                                        }
-                                    } else {
-                                        selectedPieSlice = nil
-                                    }
-                                }
-                        )
-                        // Chart'a dokunulabilirlik ekle ama scroll'a izin ver
-                        .simultaneousGesture(
-                            // Basılı tutma gesture'ı ekle
-                            LongPressGesture(minimumDuration: 0.1)
-                                .sequenced(before: DragGesture(minimumDistance: 0))
+                            DragGesture(minimumDistance: 0)
                                 .onChanged { value in
-                                    switch value {
-                                    case .second(true, let drag):
-                                        if let drag = drag {
-                                            let xPosition = drag.location.x - geometry[proxy.plotAreaFrame].origin.x
-                                            guard xPosition >= 0, xPosition < proxy.plotAreaSize.width else {
-                                                selectedPieSlice = nil
-                                                return
-                                            }
-                                            
-                                            let x = proxy.value(atX: xPosition, as: Date.self)
-                                            
-                                            if let x = x,
-                                               let matchingDay = viewModel.sleepBreakdownData.first(where: { 
-                                                   Calendar.current.isDate($0.date, inSameDayAs: x)
-                                               }) {
-                                                selectedPieSlice = matchingDay
-                                                tooltipPosition = drag.location
+                                    let location = value.location
+                                    if let selectedItem = findSelectedItem(at: location, proxy: proxy, geometry: geometry) {
+                                        if selectedPieSlice?.id != selectedItem.id {
+                                            withAnimation(.easeInOut(duration: 0.1)) {
+                                                selectedPieSlice = selectedItem
+                                                tooltipPosition = location
                                             }
                                         }
-                                    default:
-                                        break
                                     }
                                 }
                                 .onEnded { _ in
@@ -619,14 +518,6 @@ struct PieChart: View {
                                     }
                                 }
                         )
-                    
-                    // Tooltip gösterimi
-                    if let selectedSlice = selectedPieSlice {
-                        PieChartTooltip(for: selectedSlice, selectedTimeRange: viewModel.selectedTimeRange)
-                            .offset(x: tooltipPosition.x + 140 > geometry.size.width ? tooltipPosition.x - 150 : tooltipPosition.x + 10,
-                                    y: tooltipPosition.y - 60 < 0 ? tooltipPosition.y + 10 : tooltipPosition.y - 60)
-                            .transition(.opacity)
-                    }
                 }
             }
             
@@ -641,12 +532,43 @@ struct PieChart: View {
                     .foregroundColor(Color("SecondaryTextColor"))
             }
         }
+        .overlay {
+            if let selectedSlice = selectedPieSlice {
+                PieChartTooltip(for: selectedSlice, selectedTimeRange: viewModel.selectedTimeRange)
+                    .offset(x: tooltipPosition.x - 80, y: tooltipPosition.y - 120)
+                    .transition(.opacity.animation(.easeInOut(duration: 0.1)))
+            }
+        }
+    }
+    
+    private func findSelectedItem(at location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) -> SleepBreakdownData? {
+        let plotFrame = geometry[proxy.plotAreaFrame]
+        let center = CGPoint(x: plotFrame.midX, y: plotFrame.midY)
+        
+        let dx = location.x - center.x
+        let dy = location.y - center.y
+        
+        var angle = atan2(dy, dx)
+        if angle < 0 { angle += 2 * .pi }
+        
+        let anglePercentage = angle / (2 * .pi)
+        
+        var cumulativePercentage: Double = 0
+        for item in viewModel.sleepBreakdownData {
+            let itemPercentage = item.percentage / 100.0
+            if anglePercentage <= cumulativePercentage + itemPercentage {
+                return item
+            }
+            cumulativePercentage += itemPercentage
+        }
+        
+        return viewModel.sleepBreakdownData.last
     }
 }
 
 // MARK: - Sleep Breakdown Table
 struct SleepBreakdownTable: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -764,7 +686,7 @@ struct LegendItem: View {
 
 // MARK: - Heat Map Section (Actogram)
 struct AnalyticsHeatMapSection: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @State private var selectedDay: SleepTrendData?
     @State private var tooltipPosition: CGPoint = .zero
     
@@ -806,7 +728,7 @@ struct AnalyticsHeatMapSection: View {
 
 // MARK: - Sleep Heat Map Chart
 struct SleepHeatMapChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedDay: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
     
@@ -870,6 +792,7 @@ struct SleepHeatMapChart: View {
                 }
             }
             .frame(height: max(100, min(300, CGFloat(viewModel.sleepTrendData.suffix(daysToShow).count * 22))))
+            .frame(maxWidth: .infinity)
             
             // Renk efsanesi
             HStack(spacing: PSSpacing.lg) {
@@ -989,7 +912,7 @@ struct HeatMapTooltip: View {
 
 // MARK: - Consistency Trend Section
 struct AnalyticsConsistencyTrendSection: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @State private var selectedDataPoint: ConsistencyTrendData?
     @State private var tooltipPosition: CGPoint = .zero
     
@@ -1021,7 +944,7 @@ struct AnalyticsConsistencyTrendSection: View {
 
 // MARK: - Consistency Trend Chart
 struct ConsistencyTrendChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedDataPoint: ConsistencyTrendData?
     @Binding var tooltipPosition: CGPoint
     
@@ -1071,10 +994,10 @@ struct ConsistencyTrendChart: View {
         }
         .chartYScale(domain: 0...100)
         .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: max(1, viewModel.consistencyTrendData.count / 7))) { value in
+            AxisMarks(values: .stride(by: .day, count: getConsistencyXAxisStride(for: viewModel.selectedTimeRange))) { value in
                 AxisValueLabel {
                     if let date = value.as(Date.self) {
-                        Text(date, format: .dateTime.day().month())
+                        Text(date, format: getConsistencyDateFormat(for: viewModel.selectedTimeRange))
                             .font(PSTypography.caption)
                     }
                 }
@@ -1093,6 +1016,7 @@ struct ConsistencyTrendChart: View {
             }
         }
         .frame(height: 220)
+        .frame(maxWidth: .infinity)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 Rectangle()
@@ -1137,11 +1061,32 @@ struct ConsistencyTrendChart: View {
             }
         }
     }
+    
+    // MARK: - Helper Functions for Consistency Chart
+    private func getConsistencyXAxisStride(for timeRange: TimeRange) -> Int {
+        switch timeRange {
+        case .Week: return 1        // Her gün
+        case .Month: return 5       // 5 günde bir
+        case .Quarter: return 14    // 2 haftada bir
+        case .Year: return 60       // 2 ayda bir
+        }
+    }
+    
+    private func getConsistencyDateFormat(for timeRange: TimeRange) -> Date.FormatStyle {
+        switch timeRange {
+        case .Week, .Month: 
+            return .dateTime.day().month(.abbreviated)
+        case .Quarter: 
+            return .dateTime.day().month(.abbreviated)
+        case .Year: 
+            return .dateTime.month(.abbreviated).year(.twoDigits)
+        }
+    }
 }
 
 // MARK: - Sleep Debt Section
 struct AnalyticsSleepDebtSection: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @State private var selectedDataPoint: SleepDebtData?
     @State private var tooltipPosition: CGPoint = .zero
     
@@ -1173,7 +1118,7 @@ struct AnalyticsSleepDebtSection: View {
 
 // MARK: - Sleep Debt Chart
 struct SleepDebtChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedDataPoint: SleepDebtData?
     @Binding var tooltipPosition: CGPoint
     
@@ -1292,6 +1237,7 @@ struct SleepDebtChart: View {
             }
         }
         .frame(height: 220)
+        .frame(maxWidth: .infinity)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 Rectangle()
@@ -1340,7 +1286,7 @@ struct SleepDebtChart: View {
 
 // MARK: - Quality-Consistency Correlation Section
 struct AnalyticsQualityConsistencyCorrelation: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @State private var selectedDataPoint: QualityConsistencyData?
     @State private var tooltipPosition: CGPoint = .zero
     
@@ -1381,7 +1327,7 @@ struct AnalyticsQualityConsistencyCorrelation: View {
 
 // MARK: - Quality-Consistency Scatter Chart
 struct QualityConsistencyScatterChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedDataPoint: QualityConsistencyData?
     @Binding var tooltipPosition: CGPoint
     
@@ -1503,6 +1449,7 @@ struct QualityConsistencyScatterChart: View {
             }
         }
         .frame(height: 220)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -1510,7 +1457,7 @@ struct QualityConsistencyScatterChart: View {
 
 // MARK: - Sleep Quality Trend Chart (Yeni - Doğru Verilerle)
 struct AnalyticsSleepQualityTrendSection: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @State private var selectedDataPoint: SleepTrendData?
     @State private var tooltipPosition: CGPoint = .zero
     
@@ -1518,9 +1465,9 @@ struct AnalyticsSleepQualityTrendSection: View {
         PSCard {
             VStack(alignment: .leading, spacing: PSSpacing.lg) {
                 PSSectionHeader(
-                    "Uyku Kalitesi Trendi",
+                    L("analytics.sleepQualityTrendChart.title", table: "Analytics"),
                     icon: "star.circle.fill",
-                    subtitle: "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
+                    subtitle: L("analytics.sleepQualityTrendChart.subtitle", table: "Analytics")
                 )
                 
                 SleepQualityTrendChart(
@@ -1530,8 +1477,8 @@ struct AnalyticsSleepQualityTrendSection: View {
                 )
                 
                 PSInfoBox(
-                    title: "Kaliteyi Anlamak",
-                    message: "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin.",
+                    title: L("analytics.sleepQualityTrendChart.infoTitle", table: "Analytics"),
+                    message: L("analytics.sleepQualityTrendChart.infoMessage", table: "Analytics"),
                     icon: "lightbulb.fill"
                 )
             }
@@ -1542,7 +1489,7 @@ struct AnalyticsSleepQualityTrendSection: View {
 
 // MARK: - Sleep Quality Trend Chart Implementation
 struct SleepQualityTrendChart: View {
-    let viewModel: AnalyticsViewModel
+    @ObservedObject var viewModel: AnalyticsViewModel
     @Binding var selectedDataPoint: SleepTrendData?
     @Binding var tooltipPosition: CGPoint
     
@@ -1557,11 +1504,11 @@ struct SleepQualityTrendChart: View {
                     x: .value("Tarih", data.date, unit: .day),
                     y: .value("Kalite", qualityPercentage)
                 )
-                .foregroundStyle(data.scoreCategory.color)
+                .foregroundStyle(Color.red)
                 .lineStyle(StrokeStyle(lineWidth: 3))
                 .interpolationMethod(.catmullRom)
                 
-                // Kalite bandı (kategoriye göre renklendirme)
+                // Kalite bandı (kırmızı renk sabit)
                 AreaMark(
                     x: .value("Tarih", data.date, unit: .day),
                     yStart: .value("Alt", 0),
@@ -1569,7 +1516,7 @@ struct SleepQualityTrendChart: View {
                 )
                 .foregroundStyle(
                     .linearGradient(
-                        colors: [data.scoreCategory.color.opacity(0.6), data.scoreCategory.color.opacity(0.1)],
+                        colors: [Color.red.opacity(0.6), Color.red.opacity(0.1)],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -1581,16 +1528,16 @@ struct SleepQualityTrendChart: View {
                     x: .value("Tarih", data.date, unit: .day),
                     y: .value("Kalite", qualityPercentage)
                 )
-                .foregroundStyle(data.scoreCategory.color)
+                .foregroundStyle(Color.red)
                 .symbolSize(40)
             }
             
             // Hedef kalite çizgileri
-            RuleMark(y: .value("Mükemmel", 90))
+            RuleMark(y: .value(L("analytics.sleepQualityTrendChart.excellentTarget", table: "Analytics"), 90))
                 .foregroundStyle(SleepQualityCategory.excellent.color.opacity(0.7))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                 .annotation(position: .top, alignment: .trailing) {
-                    Text("Mükemmel (90%)")
+                    Text(L("analytics.sleepQualityTrendChart.excellentTarget", table: "Analytics"))
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
                         .padding(.horizontal, PSSpacing.xs)
@@ -1599,11 +1546,11 @@ struct SleepQualityTrendChart: View {
                         .cornerRadius(PSCornerRadius.small)
                 }
             
-            RuleMark(y: .value("Hedef", 80))
+            RuleMark(y: .value(L("analytics.sleepQualityTrendChart.goodTarget", table: "Analytics"), 80))
                 .foregroundStyle(SleepQualityCategory.good.color.opacity(0.7))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
                 .annotation(position: .top, alignment: .trailing) {
-                    Text("Hedef (80%)")
+                    Text(L("analytics.sleepQualityTrendChart.goodTarget", table: "Analytics"))
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
                         .padding(.horizontal, PSSpacing.xs)
@@ -1614,10 +1561,10 @@ struct SleepQualityTrendChart: View {
         }
         .chartYScale(domain: 0...100)
         .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: max(1, viewModel.sleepTrendData.count / 7))) { value in
+            AxisMarks(values: .stride(by: .day, count: getQualityXAxisStride(for: viewModel.selectedTimeRange))) { value in
                 AxisValueLabel {
                     if let date = value.as(Date.self) {
-                        Text(date, format: .dateTime.day().month())
+                        Text(date, format: getQualityDateFormat(for: viewModel.selectedTimeRange))
                             .font(PSTypography.caption)
                     }
                 }
@@ -1636,6 +1583,7 @@ struct SleepQualityTrendChart: View {
             }
         }
         .frame(height: 220)
+        .frame(maxWidth: .infinity)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 Rectangle()
@@ -1674,11 +1622,32 @@ struct SleepQualityTrendChart: View {
                     let yPosition = proxy.position(forY: qualityPercentage) ?? 0
                     
                     SleepQualityTooltip(for: selectedData)
-                        .offset(x: xPosition + 150 > geometry.size.width ? xPosition - 150 : xPosition + 10,
-                                y: yPosition - 60 < 0 ? yPosition + 10 : yPosition - 60)
+                        .offset(x: xPosition + 120 > geometry.size.width ? xPosition - 120 : xPosition + 10,
+                                y: yPosition - 50 < 0 ? yPosition + 10 : yPosition - 50)
                         .transition(.opacity)
                 }
             }
+        }
+    }
+    
+    // MARK: - Helper Functions for Quality Chart
+    private func getQualityXAxisStride(for timeRange: TimeRange) -> Int {
+        switch timeRange {
+        case .Week: return 1        // Her gün
+        case .Month: return 5       // 5 günde bir
+        case .Quarter: return 14    // 2 haftada bir
+        case .Year: return 60       // 2 ayda bir
+        }
+    }
+    
+    private func getQualityDateFormat(for timeRange: TimeRange) -> Date.FormatStyle {
+        switch timeRange {
+        case .Week, .Month: 
+            return .dateTime.day().month(.abbreviated)
+        case .Quarter: 
+            return .dateTime.day().month(.abbreviated)
+        case .Year: 
+            return .dateTime.month(.abbreviated).year(.twoDigits)
         }
     }
 }
@@ -1700,9 +1669,9 @@ struct SleepQualityTooltip: View {
             
             Divider()
             
-            HStack(spacing: PSSpacing.md) {
+            HStack(spacing: PSSpacing.lg) {
                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                    Text("Kalite Puanı")
+                    Text(L("analytics.sleepQualityTrendChart.tooltip.qualityScore", table: "Analytics"))
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
                     
@@ -1713,7 +1682,7 @@ struct SleepQualityTooltip: View {
                 }
                 
                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                    Text("Kategori")
+                    Text(L("analytics.sleepQualityTrendChart.tooltip.category", table: "Analytics"))
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
                     
@@ -1722,21 +1691,12 @@ struct SleepQualityTooltip: View {
                         .foregroundColor(data.scoreCategory.color)
                 }
             }
-            
-            HStack(spacing: PSSpacing.xs) {
-                Text("Toplam Uyku:")
-                    .font(PSTypography.caption)
-                    .foregroundColor(.appTextSecondary)
-                
-                Text(String(format: "%.1f saat", data.totalHours))
-                    .font(PSTypography.caption)
-                    .foregroundColor(.appText)
-            }
         }
         .padding(PSSpacing.sm)
         .background(Color.appCardBackground)
         .cornerRadius(PSCornerRadius.medium)
         .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .fixedSize()
     }
 }
 
@@ -1978,5 +1938,84 @@ struct AnalyticsQualityConsistencyCorrelationPreview: View {
                 .cornerRadius(PSCornerRadius.medium)
         }
         .frame(height: 120)
+    }
+}
+
+// MARK: - Sleep Trends Section
+struct AnalyticsSleepTrendsSection: View {
+    @ObservedObject var viewModel: AnalyticsViewModel
+    let isPremiumUser: Bool
+    @Binding var selectedTrendDataPoint: SleepTrendData?
+    @Binding var selectedBarDataPoint: SleepTrendData?
+    @Binding var tooltipPosition: CGPoint
+    @State private var selectedQualityDataPoint: SleepTrendData?
+    
+    var body: some View {
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.xl) {
+                PSSectionHeader(
+                    L("analytics.sleepTrends.title", table: "Analytics"),
+                    icon: "chart.line.uptrend.xyaxis"
+                )
+                
+                VStack(spacing: PSSpacing.xl) {
+                    // 1. Toplam Uyku Süresi Trendi (Tüm kullanıcılar için)
+                    VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                        PSSectionHeader(
+                            L("analytics.totalSleepTrend.title", table: "Analytics"),
+                            icon: "moon.circle.fill",
+                            subtitle: L("analytics.totalSleepTrend.subtitle", table: "Analytics")
+                        )
+                        
+                        SleepTrendChart(
+                            viewModel: viewModel,
+                            selectedTrendDataPoint: $selectedTrendDataPoint,
+                            tooltipPosition: $tooltipPosition
+                        )
+                    }
+                    
+                    // 2. Uyku Kalitesi Trendi (Premium kullanıcılar için)
+                    if isPremiumUser {
+                        VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                            PSSectionHeader(
+                                L("analytics.sleepQualityTrendChart.title", table: "Analytics"),
+                                icon: "star.circle.fill",
+                                subtitle: L("analytics.sleepQualityTrendChart.subtitle", table: "Analytics")
+                            )
+                            
+                            SleepQualityTrendChart(
+                                viewModel: viewModel,
+                                selectedDataPoint: $selectedQualityDataPoint,
+                                tooltipPosition: $tooltipPosition
+                            )
+                            
+                            PSInfoBox(
+                                title: L("analytics.sleepQualityTrendChart.infoTitle", table: "Analytics"),
+                                message: L("analytics.sleepQualityTrendChart.infoMessage", table: "Analytics"),
+                                icon: "lightbulb.fill"
+                            )
+                        }
+                    }
+                    
+                    // 3. Uyku Bileşenleri Trendi (Premium kullanıcılar için)
+                    if isPremiumUser {
+                        VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                            PSSectionHeader(
+                                L("analytics.sleepComponentsTrend.title", table: "Analytics"),
+                                icon: "chart.bar.fill",
+                                subtitle: L("analytics.sleepComponentsTrend.subtitle", table: "Analytics")
+                            )
+                            
+                            SleepComponentsChart(
+                                viewModel: viewModel,
+                                selectedBarDataPoint: $selectedBarDataPoint,
+                                tooltipPosition: $tooltipPosition
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, PSSpacing.lg)
     }
 } 

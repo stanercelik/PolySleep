@@ -1,5 +1,53 @@
 import SwiftUI
 
+// MARK: - Total Sleep Tooltip
+struct TotalSleepTooltip: View {
+    let data: SleepTrendData
+    
+    init(for data: SleepTrendData) {
+        self.data = data
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+            Text(data.date, style: .date)
+                .font(PSTypography.body)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
+            
+            Divider()
+            
+            HStack(spacing: PSSpacing.lg) {
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("analytics.tooltip.totalSleep", table: "Analytics"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(String(format: L("analytics.sleepQualityTrendChart.tooltip.hoursFormat", table: "Analytics"), data.totalHours))
+                        .font(PSTypography.body)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appPrimary)
+                }
+                
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("analytics.sleepQualityTrendChart.tooltip.qualityScore", table: "Analytics"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(String(format: "%.1f/5.0", data.score))
+                        .font(PSTypography.caption)
+                        .foregroundColor(data.scoreCategory.color)
+                }
+            }
+        }
+        .padding(PSSpacing.sm)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.medium)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .fixedSize()
+    }
+}
+
 // MARK: - Detailed Tooltip
 struct DetailedTooltip: View {
     let day: SleepTrendData
@@ -73,64 +121,80 @@ struct BarChartTooltip: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: PSSpacing.xs) {
             Text(day.date, format: .dateTime.weekday(.wide).day())
-                .font(.system(size: 13, weight: .bold))
-                .foregroundColor(Color("TextColor"))
+                .font(PSTypography.body)
+                .fontWeight(.semibold)
+                .foregroundColor(.appText)
             
             Divider()
             
-            HStack(spacing: 8) {
-                // Ana uyku
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 3) {
-                        Rectangle()
-                            .fill(Color("AccentColor"))
-                            .frame(width: 8, height: 8)
-                            .cornerRadius(2)
-                        
-                        Text(String(format: L("analytics.tooltip.barChart.coreLabel", table: "Analytics"), day.coreHours))
-                            .font(.system(size: 11))
-                            .foregroundColor(Color("TextColor"))
-                    }
+            HStack(spacing: PSSpacing.lg) {
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("analytics.tooltip.totalSleep", table: "Analytics"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
                     
-                    // Şekerleme 1
-                    HStack(spacing: 3) {
-                        Rectangle()
-                            .fill(Color("PrimaryColor"))
-                            .frame(width: 8, height: 8)
-                            .cornerRadius(2)
-                        
-                        Text(String(format: L("analytics.tooltip.barChart.nap1Label", table: "Analytics"), day.nap1Hours))
-                            .font(.system(size: 11))
-                            .foregroundColor(Color("TextColor"))
-                    }
+                    Text(String(format: L("analytics.sleepQualityTrendChart.tooltip.hoursFormat", table: "Analytics"), day.totalHours))
+                        .font(PSTypography.body)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appPrimary)
                 }
                 
-                // Şekerleme 2 ve Toplam
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 3) {
-                        Rectangle()
-                            .fill(Color("SecondaryColor"))
-                            .frame(width: 8, height: 8)
-                            .cornerRadius(2)
-                        
-                        Text(String(format: L("analytics.tooltip.barChart.nap2Label", table: "Analytics"), day.nap2Hours))
-                            .font(.system(size: 11))
-                            .foregroundColor(Color("TextColor"))
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("analytics.sleepQualityTrendChart.tooltip.qualityScore", table: "Analytics"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(String(format: "%.1f/5.0", day.score))
+                        .font(PSTypography.caption)
+                        .foregroundColor(day.scoreCategory.color)
+                }
+            }
+            
+            // Bileşenler detayı (varsa göster)
+            if day.coreHours > 0 || day.nap1Hours > 0 || day.nap2Hours > 0 {
+                HStack(spacing: PSSpacing.sm) {
+                    if day.coreHours > 0 {
+                        HStack(spacing: 2) {
+                            Circle()
+                                .fill(Color.appAccent)
+                                .frame(width: 6, height: 6)
+                            Text(String(format: "%.1fs", day.coreHours))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appText)
+                        }
                     }
                     
-                    Text(String(format: L("analytics.tooltip.barChart.totalLabel", table: "Analytics"), day.totalHours))
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(Color("TextColor"))
+                    if day.nap1Hours > 0 {
+                        HStack(spacing: 2) {
+                            Circle()
+                                .fill(Color.appPrimary)
+                                .frame(width: 6, height: 6)
+                            Text(String(format: "%.1fs", day.nap1Hours))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appText)
+                        }
+                    }
+                    
+                    if day.nap2Hours > 0 {
+                        HStack(spacing: 2) {
+                            Circle()
+                                .fill(Color.appSecondary)
+                                .frame(width: 6, height: 6)
+                            Text(String(format: "%.1fs", day.nap2Hours))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appText)
+                        }
+                    }
                 }
             }
         }
-        .padding(8)
-        .background(Color("CardBackground"))
-        .cornerRadius(8)
-        .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 2)
-        .frame(width: 160)
+        .padding(PSSpacing.sm)
+        .background(Color.appCardBackground)
+        .cornerRadius(PSCornerRadius.medium)
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .fixedSize()
     }
 }
 

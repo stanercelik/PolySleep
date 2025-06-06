@@ -239,6 +239,9 @@ class AnalyticsViewModel: ObservableObject {
     }
     
     func changeTimeRange(to newRange: TimeRange) {
+        // Güncelleme sırasında loading state'i göster
+        guard selectedTimeRange != newRange else { return } // Gereksiz güncellemeyi önle
+        
         selectedTimeRange = newRange
         loadRealData()
     }
@@ -246,55 +249,115 @@ class AnalyticsViewModel: ObservableObject {
     // MARK: - Private Methods
     
     private func loadRealData() {
-        guard let modelContext = modelContext else { return }
-        isLoading = true
+        guard let modelContext = modelContext else { 
+            print("❌ ModelContext bulunamadı")
+            return 
+        }
+        
+        // UI'da loading durumunu hemen göster
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.hasEnoughData = false
+        }
+        
         Task {
             do {
-                let descriptor = FetchDescriptor<HistoryModel>(sortBy: [SortDescriptor(\HistoryModel.date, order: .forward)])
+                print("�� Analytics veri yükleniyor - Zaman aralığı: \(selectedTimeRange.rawValue)")
+                
+                let descriptor = FetchDescriptor<HistoryModel>(
+                    sortBy: [SortDescriptor(\HistoryModel.date, order: .forward)]
+                )
                 let allHistoryModels = try await modelContext.fetch(descriptor)
-
+                
                 let endDate = Date()
                 let startDate = calculateStartDate(from: endDate)
                 
-                let filteredHistoryModels = allHistoryModels.filter { $0.date >= startDate && $0.date <= endDate }
-                let previousPeriodModels = allHistoryModels.filter {
-                    let prevStartDate = calculatePreviousPeriodStartDate(from: startDate, endDate: endDate)
-                    return $0.date >= prevStartDate && $0.date < startDate
+                print("📅 Tarih aralığı: \(startDate) - \(endDate)")
+                print("📊 Toplam history count: \(allHistoryModels.count)")
+                
+                // Seçilen zaman aralığına göre filtrele
+                let filteredHistoryModels = allHistoryModels.filter { historyModel in
+                    let dayStart = Calendar.current.startOfDay(for: historyModel.date)
+                    let isInRange = dayStart >= Calendar.current.startOfDay(for: startDate) && 
+                                   dayStart <= Calendar.current.startOfDay(for: endDate)
+                    return isInRange
                 }
                 
-                let uniqueDaysCount = Set(filteredHistoryModels.map { Calendar.current.startOfDay(for: $0.date) }).count
-
-                await MainActor.run {
-                    hasEnoughData = uniqueDaysCount >= minimumRequiredDays
-                    if hasEnoughData {
-                        analyzeData(historyModels: filteredHistoryModels, startDate: startDate, endDate: endDate)
-                        compareToPreviousPeriod(currentModels: filteredHistoryModels, previousModels: previousPeriodModels)
-                    } else if !filteredHistoryModels.isEmpty {
-                        analyzeData(historyModels: filteredHistoryModels, startDate: startDate, endDate: endDate)
-                        hasEnoughData = true
-                    }
-                    isLoading = false
+                print("🔍 Filtrelenmiş history count: \(filteredHistoryModels.count)")
+                
+                // Önceki dönem verilerini al (karşılaştırma için)
+                let previousPeriodModels = allHistoryModels.filter { historyModel in
+                    let prevStartDate = calculatePreviousPeriodStartDate(from: startDate, endDate: endDate)
+                    let dayStart = Calendar.current.startOfDay(for: historyModel.date)
+                    return dayStart >= Calendar.current.startOfDay(for: prevStartDate) && 
+                           dayStart < Calendar.current.startOfDay(for: startDate)
                 }
-            } catch {
-                print("Veri yüklenirken hata oluştu: \(error)")
+                
+                // Benzersiz günleri say
+                let uniqueDaysCount = Set(filteredHistoryModels.map { 
+                    Calendar.current.startOfDay(for: $0.date) 
+                }).count
+                
+                print("📈 Benzersiz gün sayısı: \(uniqueDaysCount), Minimum gerekli: \(minimumRequiredDays)")
+                
+                // Ana thread'de UI güncellemelerini yap
                 await MainActor.run {
-                    isLoading = false
-                    hasEnoughData = false
+                    let hasData = uniqueDaysCount >= minimumRequiredDays || !filteredHistoryModels.isEmpty
+                    
+                    if hasData {
+                        print("✅ Yeterli veri var, analiz başlatılıyor")
+                        self.hasEnoughData = true
+                        self.analyzeData(historyModels: filteredHistoryModels, startDate: startDate, endDate: endDate)
+                        self.compareToPreviousPeriod(currentModels: filteredHistoryModels, previousModels: previousPeriodModels)
+                    } else {
+                        print("❌ Yetersiz veri")
+                        self.hasEnoughData = false
+                        self.resetAnalyticsData()
+                    }
+                    
+                    self.isLoading = false
+                    print("✅ Analytics yükleme tamamlandı")
+                }
+                
+            } catch {
+                print("❌ Analytics veri yüklenirken hata: \(error.localizedDescription)")
+                await MainActor.run {
+                    self.isLoading = false
+                    self.hasEnoughData = false
+                    self.resetAnalyticsData()
                 }
             }
         }
     }
     
+    private func resetAnalyticsData() {
+        // Tüm analytics verilerini sıfırla
+        totalSleepHours = 0.0
+        averageDailyHours = 0.0
+        averageSleepScore = 0.0
+        timeGained = 0.0
+        sleepTrendData = []
+        sleepBreakdownData = []
+        sleepStatistics = SleepStatistics()
+        sleepQualityStats = SleepQualityStats()
+        bestSleepDay = nil
+        worstSleepDay = nil
+        previousPeriodComparison = (0, 0)
+    }
+    
     private func calculateStartDate(from endDate: Date) -> Date {
+        let calendar = Calendar.current
+        let endOfDay = calendar.startOfDay(for: endDate)
+        
         switch selectedTimeRange {
         case .Week:
-            return Calendar.current.date(byAdding: .day, value: -7, to: endDate)!
+            return calendar.date(byAdding: .day, value: -6, to: endOfDay) ?? endOfDay // 7 gün (bugün dahil)
         case .Month:
-            return Calendar.current.date(byAdding: .month, value: -1, to: endDate)!
+            return calendar.date(byAdding: .day, value: -29, to: endOfDay) ?? endOfDay // 30 gün (bugün dahil)
         case .Quarter:
-            return Calendar.current.date(byAdding: .month, value: -3, to: endDate)!
+            return calendar.date(byAdding: .day, value: -89, to: endOfDay) ?? endOfDay // 90 gün (bugün dahil)
         case .Year:
-            return Calendar.current.date(byAdding: .year, value: -1, to: endDate)!
+            return calendar.date(byAdding: .day, value: -364, to: endOfDay) ?? endOfDay // 365 gün (bugün dahil)
         }
     }
     
@@ -435,7 +498,18 @@ class AnalyticsViewModel: ObservableObject {
     }
     
     private func createTrendData(fromSleepEntries entries: [SleepEntry], startDate: Date, endDate: Date) {
-        sleepTrendData = []
+        switch selectedTimeRange {
+        case .Week, .Month:
+            createDailyTrendData(fromSleepEntries: entries, startDate: startDate, endDate: endDate)
+        case .Quarter:
+            sleepTrendData = aggregateTrendData(entries: entries, by: .weekOfYear, from: startDate, to: endDate)
+        case .Year:
+            sleepTrendData = aggregateTrendData(entries: entries, by: .month, from: startDate, to: endDate)
+        }
+    }
+    
+    private func createDailyTrendData(fromSleepEntries entries: [SleepEntry], startDate: Date, endDate: Date) {
+        var trendData: [SleepTrendData] = []
         let calendar = Calendar.current
         let maxDataPoints = selectedTimeRange.days
         
@@ -471,10 +545,62 @@ class AnalyticsViewModel: ObservableObject {
             
             sleepData.distributeNaps(nap1: nap1Duration, nap2: nap2Duration)
             
-            sleepTrendData.append(sleepData)
+            trendData.append(sleepData)
         }
         // Ensure the trend data is sorted by date if the generation order wasn't strictly chronological
-        sleepTrendData.sort(by: { $0.date < $1.date })
+        trendData.sort(by: { $0.date < $1.date })
+        self.sleepTrendData = trendData
+    }
+    
+    private func aggregateTrendData(entries: [SleepEntry], by component: Calendar.Component, from startDate: Date, to endDate: Date) -> [SleepTrendData] {
+        let calendar = Calendar.current
+        var distinctIntervals = [Date: SleepTrendData]()
+        var loopDate = startDate
+
+        while loopDate <= endDate {
+            guard let interval = calendar.dateInterval(of: component, for: loopDate) else {
+                loopDate = calendar.date(byAdding: .day, value: 1, to: loopDate) ?? endDate.addingTimeInterval(1)
+                continue
+            }
+            
+            if distinctIntervals[interval.start] == nil {
+                let entriesInInterval = entries.filter { interval.contains($0.date) }
+                
+                let avgData: SleepTrendData
+                if !entriesInInterval.isEmpty {
+                    let uniqueDays = Set(entriesInInterval.map { calendar.startOfDay(for: $0.date) })
+                    let daysCount = max(1, uniqueDays.count)
+                    
+                    let totalHours = entriesInInterval.reduce(0.0) { $0 + ($1.duration / 3600.0) }
+                    let coreHours = entriesInInterval.filter { $0.isCore }.reduce(0.0) { $0 + ($1.duration / 3600.0) }
+                    let napHours = entriesInInterval.filter { !$0.isCore }.reduce(0.0) { $0 + ($1.duration / 3600.0) }
+                    let totalScore = entriesInInterval.reduce(0.0) { $0 + Double($1.rating) }
+                    let score = entriesInInterval.isEmpty ? 0 : totalScore / Double(entriesInInterval.count)
+                    
+                    avgData = SleepTrendData(
+                        date: interval.start,
+                        totalHours: totalHours / Double(daysCount),
+                        coreHours: coreHours / Double(daysCount),
+                        napHours: napHours / Double(daysCount),
+                        score: score
+                    )
+                } else {
+                    avgData = SleepTrendData(
+                        date: interval.start,
+                        totalHours: 0,
+                        coreHours: 0,
+                        napHours: 0,
+                        score: 0
+                    )
+                }
+                distinctIntervals[interval.start] = avgData
+            }
+            
+            // Move to the next day to find the next interval
+            loopDate = calendar.date(byAdding: .day, value: 1, to: loopDate) ?? endDate.addingTimeInterval(1)
+        }
+        
+        return distinctIntervals.values.sorted(by: { $0.date < $1.date })
     }
     
     private func createBreakdownData(from entries: [SleepEntry], timeRangeDays: Int) {

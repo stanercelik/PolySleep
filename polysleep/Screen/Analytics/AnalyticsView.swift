@@ -33,6 +33,32 @@ public struct AnalyticsView: View {
                         // Zaman Aralığı Seçici
                         timeRangePicker
                         
+                        // Debug bilgisi (sadece geliştirme sırasında)
+                        #if DEBUG
+                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                            Text("🔧 Debug Info:")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text("Selected Range: \(viewModel.selectedTimeRange.rawValue)")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text("Loading: \(viewModel.isLoading ? "✅" : "❌")")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text("Has Data: \(viewModel.hasEnoughData ? "✅" : "❌")")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text("Trend Data Count: \(viewModel.sleepTrendData.count)")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                        }
+                        .padding(.horizontal, PSSpacing.lg)
+                        .padding(.vertical, PSSpacing.sm)
+                        .background(Color.appCardBackground.opacity(0.5))
+                        .cornerRadius(PSCornerRadius.small)
+                        .padding(.horizontal, PSSpacing.lg)
+                        #endif
+                        
                         if viewModel.isLoading {
                             loadingView
                         } else if viewModel.hasEnoughData {
@@ -41,29 +67,20 @@ public struct AnalyticsView: View {
                                 // Free kullanıcılar için temel özellikler
                                 AnalyticsSummaryCard(viewModel: viewModel)
                                 
-                                if isPremiumUser {
-                                    // Premium: Tam trend grafikleri
-                                    AnalyticsTrendCharts(
-                                        viewModel: viewModel,
-                                        selectedTrendDataPoint: $selectedTrendDataPoint,
-                                        selectedBarDataPoint: $selectedBarDataPoint,
-                                        tooltipPosition: $tooltipPosition
-                                    )
-                                } else {
-                                    // Free: Sadece toplam uyku süresi grafiği
-                                    AnalyticsTotalSleepChart(
-                                        viewModel: viewModel,
-                                        selectedTrendDataPoint: $selectedTrendDataPoint,
-                                        tooltipPosition: $tooltipPosition
-                                    )
-                                }
+                                // Sleep Trends Section (Tüm kullanıcılar için)
+                                AnalyticsSleepTrendsSection(
+                                    viewModel: viewModel,
+                                    isPremiumUser: isPremiumUser,
+                                    selectedTrendDataPoint: $selectedTrendDataPoint,
+                                    selectedBarDataPoint: $selectedBarDataPoint,
+                                    tooltipPosition: $tooltipPosition
+                                )
                                 
                                 AnalyticsBestWorstDays(viewModel: viewModel)
                                 
                                 // Premium özellikler - kilitli gösterim
                                 if isPremiumUser {
                                     // ✅ DOĞRU VERİLERLE ÇALIŞAN GRAFİKLER
-                                    AnalyticsSleepQualityTrendSection(viewModel: viewModel)
                                     AnalyticsQualityDistribution(viewModel: viewModel)
                                     AnalyticsSleepBreakdown(
                                         viewModel: viewModel,
@@ -115,6 +132,7 @@ public struct AnalyticsView: View {
                                     .padding(.horizontal, PSSpacing.lg)
                                 }
                             }
+                            .transition(.opacity.combined(with: .scale(scale: 0.95)))
                         } else {
                             insufficientDataView
                         }
@@ -133,6 +151,7 @@ public struct AnalyticsView: View {
             }
         }
         .onAppear {
+            print("📱 AnalyticsView appeared")
             viewModel.setModelContext(modelContext)
             loadPremiumStatus()
         }
@@ -166,9 +185,27 @@ public struct AnalyticsView: View {
                                     }
                                 }
                             )
+                            // Loading sırasında etkileşimi devre dışı bırak
+                            .disabled(viewModel.isLoading)
+                            .opacity(viewModel.isLoading ? 0.6 : 1.0)
                         }
                     }
                     .padding(.horizontal, PSSpacing.xs)
+                }
+                
+                // Loading indicator ekle
+                if viewModel.isLoading {
+                    HStack {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                            .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+                        
+                        Text("Güncelleniyor...")
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    .padding(.top, PSSpacing.xs)
+                    .transition(.opacity)
                 }
             }
         }
@@ -176,8 +213,18 @@ public struct AnalyticsView: View {
     }
     
     private var loadingView: some View {
-        PSLoadingState(message: L("analytics.loading", table: "Analytics"))
-            .padding(.vertical, PSSpacing.xxxl)
+        VStack(spacing: PSSpacing.lg) {
+            ProgressView()
+                .scaleEffect(1.2)
+                .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+            
+            Text(L("analytics.loading", table: "Analytics"))
+                .font(PSTypography.body)
+                .foregroundColor(.appTextSecondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, PSSpacing.xxxl)
     }
     
     private var insufficientDataView: some View {
@@ -222,7 +269,15 @@ struct ModernTimeRangeChip: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            // Haptic feedback ekle
+            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+            impactFeedback.prepare()
+            impactFeedback.impactOccurred()
+            
+            print("🎯 Filter seçildi: \(title)")
+            action()
+        }) {
             HStack(spacing: PSSpacing.xs) {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
@@ -234,6 +289,7 @@ struct ModernTimeRangeChip: View {
                 Text(title)
                     .font(PSTypography.button)
                     .foregroundColor(isSelected ? .appTextOnPrimary : .appText)
+                    .fontWeight(isSelected ? .semibold : .medium)
             }
             .padding(.horizontal, PSSpacing.lg)
             .padding(.vertical, PSSpacing.sm + PSSpacing.xs)
@@ -268,6 +324,7 @@ struct ModernTimeRangeChip: View {
             )
         }
         .buttonStyle(ScaleButtonStyle())
+        .scaleEffect(isSelected ? 1.02 : 1.0)
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 }

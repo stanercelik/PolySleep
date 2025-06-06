@@ -1013,6 +1013,210 @@
         }
       }
     },
+    "analytics.sleepQualityTrendChart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Quality Trend"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kalitesi Trendi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily sleep quality scores over time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.infoTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding Quality"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaliteyi Anlamak"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.infoMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High quality scores are associated with more regular sleep times and better recovery. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.qualityScore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quality Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalite Puanı"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.category" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.totalSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sleep:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Uyku:"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.hoursFormat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f hours"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f saat"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.excellentTarget" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent (90%)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel (90%)"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.goodTarget" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target (80%)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hedef (80%)"
+          }
+        }
+      }
+    },
+    "analytics.sleepTrends.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Trends"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Trendleri"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.totalSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sleep:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Uyku:"
+          }
+        }
+      }
+    },
     "analytics.summary.title" : {
       "extractionState" : "stale",
       "localizations" : {
