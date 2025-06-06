@@ -4,26 +4,26 @@
 import PackageDescription
 
 let package = Package(
-    name: "PolySleep",
+    name: "PolyNap",
     platforms: [
         .iOS(.v17)
     ],
     products: [
         .library(
-            name: "PolySleep",
-            targets: ["PolySleep"]),
+            name: "PolyNap",
+            targets: ["PolyNap"]),
     ],
     dependencies: [
         // Supabase bağımlılığı kaldırıldı
     ],
     targets: [
         .target(
-            name: "PolySleep",
+            name: "PolyNap",
             dependencies: [
                 // Supabase bağımlılığı kaldırıldı
             ]),
         .testTarget(
-            name: "PolySleepTests",
-            dependencies: ["PolySleep"]),
+            name: "PolyNapTests",
+            dependencies: ["PolyNap"]),
     ]
 )
