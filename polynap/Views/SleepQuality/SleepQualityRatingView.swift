@@ -45,7 +45,7 @@ struct SleepQualityRatingView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.appText)
                     
-                    Text(L("mainScreen.sleepQuality.subtitle", table: "MainScreen"))
+                    Text(String(format: L("mainScreen.sleepQuality.subtitle", table: "MainScreen"), formatTimeOnly(startTime), formatTimeOnly(endTime)))
                         .font(.subheadline)
                         .foregroundColor(.appTextSecondary)
                 }
@@ -249,5 +249,12 @@ struct SleepQualityRatingView: View {
         default:
             return Color.yellow
         }
+    }
+    
+    private func formatTimeOnly(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        return formatter.string(from: date)
     }
 }

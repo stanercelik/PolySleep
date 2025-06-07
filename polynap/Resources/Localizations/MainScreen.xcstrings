@@ -1079,13 +1079,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "How was your sleep quality?"
+            "value" : "Rate your sleep from %@ - %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uyku kaliteniz nasıldı?"
+            "value" : "%@ - %@ saatleri arasındaki uykunuzu değerlendirin"
           }
         }
       }
