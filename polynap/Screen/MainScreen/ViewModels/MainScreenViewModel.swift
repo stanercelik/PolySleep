@@ -58,6 +58,7 @@ class MainScreenViewModel: ObservableObject {
     
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
+    private let revenueCatManager = RevenueCatManager.shared
     
     // UserDefaults için anahtarlar
     private let ratedSleepBlocksKey = "ratedSleepBlocks" // Puanlanmış bloklar (start-end time ile)
@@ -85,8 +86,8 @@ class MainScreenViewModel: ObservableObject {
         // Uyku kalitesi değerlendirme durumunu kontrol et
         checkForPendingSleepQualityRatings()
         
-        // Premium durum değişikliklerini dinle
-        setupPremiumStatusListener()
+        // RevenueCat premium durum değişikliklerini dinle
+        setupRevenueCatListener()
     }
     
     var totalSleepTimeFormatted: String {
@@ -1009,15 +1010,11 @@ class MainScreenViewModel: ObservableObject {
     
     // MARK: - Schedule Management
     
-    /// Premium durumunu yükler (debug için UserDefaults'dan da kontrol edilebilir)
+    /// Premium durumunu yükler (RevenueCat'den gerçek premium durumu)
     private func loadPremiumStatus() {
-        // Debug amaçlı UserDefaults'dan kontrol et
-        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
-            isPremium = UserDefaults.standard.bool(forKey: "debug_premium_status")
-        } else {
-            // Production'da AuthManager'dan kontrol et
-            isPremium = authManager.currentUser?.isPremium ?? false
-        }
+        // RevenueCat'den gerçek premium durumunu al
+        isPremium = RevenueCatManager.shared.userState == .premium
+        print("🔄 MainScreenViewModel: RevenueCat premium durumu: \(isPremium)")
     }
     
     /// Kullanıcının görebileceği schedule'ları yükler
@@ -1025,12 +1022,7 @@ class MainScreenViewModel: ObservableObject {
         availableSchedules = SleepScheduleService.shared.getAvailableSchedules(isPremium: isPremium)
     }
     
-    /// Premium durumunu değiştirir (debug amaçlı)
-    func togglePremiumStatus() {
-        isPremium.toggle()
-        UserDefaults.standard.set(isPremium, forKey: "debug_premium_status")
-        loadAvailableSchedules() // Schedule listesini yeniden yükle
-    }
+
     
     /// Schedule seçim sheet'ini gösterir
     func showScheduleSelectionSheet() {
@@ -1170,18 +1162,19 @@ class MainScreenViewModel: ObservableObject {
     
     // MARK: - Premium Status Listener
     
-    /// Premium durum değişikliklerini dinler ve gerekli işlemleri yapar
-    private func setupPremiumStatusListener() {
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name("PremiumStatusChanged"),
-            object: nil,
-            queue: .main
-        ) { [weak self] notification in
-            if let isPremium = notification.userInfo?["isPremium"] as? Bool {
+
+    
+    /// RevenueCat durum değişikliklerini dinler
+    private func setupRevenueCatListener() {
+        revenueCatManager.$userState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] userState in
+                let isPremium = userState == .premium
                 self?.isPremium = isPremium
-                self?.loadAvailableSchedules() // Schedule listesini yeniden yükle
-                print("🔄 Premium durumu güncellendi: \(isPremium)")
+                self?.loadAvailableSchedules()
+                print("🔄 RevenueCat Premium durumu güncellendi: \(isPremium)")
             }
-        }
+            .store(in: &cancellables)
     }
 }
+

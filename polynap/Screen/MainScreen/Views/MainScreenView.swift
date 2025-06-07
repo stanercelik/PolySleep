@@ -166,7 +166,8 @@ struct MainScreenView: View {
                     get: { viewModel.model.schedule },
                     set: { _ in }
                 ),
-                onScheduleSelected: viewModel.selectSchedule
+                onScheduleSelected: viewModel.selectSchedule,
+                isPremiumUser: viewModel.isPremium
             )
             .environmentObject(languageManager)
         }

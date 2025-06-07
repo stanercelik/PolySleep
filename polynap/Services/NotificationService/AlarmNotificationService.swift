@@ -2,6 +2,7 @@ import Foundation
 import UserNotifications
 import SwiftData
 import AVFoundation
+import UIKit
 
 @MainActor
 class AlarmNotificationService: ObservableObject {
@@ -110,7 +111,7 @@ class AlarmNotificationService: ObservableObject {
     
     // MARK: - Long Duration Alarm System (Enhanced)
     
-    /// Medium makalesine göre 30 saniye boyunca sürekli çalan güçlü alarm başlatır
+    /// Medium makalesine göre 30 saniye boyunca SADECE BİR ALARM çalan güçlü alarm başlatır
     func startLongDurationAlarm(
         blockId: UUID,
         scheduleId: UUID,
@@ -123,17 +124,22 @@ class AlarmNotificationService: ObservableObject {
             return
         }
         
+        // Önce aynı block için mevcut alarmları iptal et
+        Task {
+            await cancelAlarmForBlock(blockId: blockId)
+        }
+        
         isLongAlarmActive = true
         alarmStartTime = Date()
         
-        print("PolyNap Debug: 30 saniye güçlü alarm başlatıldı (Medium yöntemi)")
+        print("PolyNap Debug: 30 saniye TEKLI güçlü alarm başlatıldı")
         
         // Ses dosyası geçerliliğini kontrol et
         if !validateAlarmSoundDuration(soundName: alarmSettings.soundName) {
             print("PolyNap Debug: Ses dosyası sorunlu, varsayılan kullanılacak")
         }
         
-        // Audio manager ile sürekli ses çalmayı başlat
+        // Audio manager ile sürekli ses çalmayı başlat (TEK SES ÇALMAK İÇİN)
         Task {
             await AlarmAudioManager.shared.startAlarmAudio(
                 soundName: alarmSettings.soundName,
@@ -141,7 +147,7 @@ class AlarmNotificationService: ObservableObject {
             )
         }
         
-        // İlk bildirimi hemen göster - daha agresif ayarlarla
+        // SADECE BİR TEK ALARM BİLDİRİMİ GÖNDER (notification spam yapmayacağız)
         scheduleInstantAlarmNotification(
             blockId: blockId,
             scheduleId: scheduleId,
@@ -150,32 +156,8 @@ class AlarmNotificationService: ObservableObject {
             alarmSettings: alarmSettings
         )
         
-        // Her 2 saniyede bir yeni bildirim için timer başlat (Medium önerisi)
-        var iterationCount = 1
-        longAlarmTimer = Timer.scheduledTimer(withTimeInterval: notificationInterval, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
-            
-            // 30 saniye doldu mu kontrol et
-            if let startTime = self.alarmStartTime,
-               Date().timeIntervalSince(startTime) >= self.alarmDuration {
-                self.stopLongDurationAlarm()
-                return
-            }
-            
-            // Yeni bildirim gönder
-            self.scheduleInstantAlarmNotification(
-                blockId: blockId,
-                scheduleId: scheduleId,
-                userId: userId,
-                iteration: iterationCount,
-                alarmSettings: alarmSettings
-            )
-            
-            iterationCount += 1
-        }
-        
-        // Fallback: 35 saniye sonra kesinlikle durdur
-        DispatchQueue.main.asyncAfter(deadline: .now() + 35) { [weak self] in
+        // 30 saniye sonra kesinlikle durdur
+        DispatchQueue.main.asyncAfter(deadline: .now() + alarmDuration) { [weak self] in
             self?.stopLongDurationAlarm()
         }
     }
@@ -236,12 +218,15 @@ class AlarmNotificationService: ObservableObject {
         longAlarmTimer = nil
         alarmStartTime = nil
         
+        // Badge'i temizle
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
         // Audio manager'da sesi durdur
         Task {
             await AlarmAudioManager.shared.stopAlarmAudio()
         }
         
-        print("PolyNap Debug: Uzun alarm durduruldu")
+        print("PolyNap Debug: Uzun alarm durduruldu, badge temizlendi")
         
         // İlgili tüm bekleyen bildirimleri temizle
         notificationCenter.getPendingNotificationRequests { requests in
@@ -429,8 +414,10 @@ class AlarmNotificationService: ObservableObject {
     /// Tüm alarmları iptal eder
     func cancelAllAlarms() async {
         notificationCenter.removeAllPendingNotificationRequests()
+        // Badge'i temizle
+        UIApplication.shared.applicationIconBadgeNumber = 0
         await updatePendingNotificationsCount()
-        print("PolyNap Debug: Tüm alarmlar iptal edildi")
+        print("PolyNap Debug: Tüm alarmlar iptal edildi, badge temizlendi")
     }
     
     /// Erteleme (snooze) işlemi

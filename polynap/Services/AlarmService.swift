@@ -196,14 +196,13 @@ class AlarmService {
         }
     }
     
-    /// Sleep block bitimi için kapsamlı alarm sistemi - hem immediate hem scheduled alarm
+    /// Sleep block bitimi için tekli alarm sistemi - sadece bir alarm zamanlanır
     func scheduleComprehensiveAlarmForSleepBlockEnd(date: Date, modelContext: ModelContext? = nil) {
-        print("PolyNap Debug: Sleep block bitimi için kapsamlı alarm sistemi başlatılıyor")
+        print("PolyNap Debug: Sleep block bitimi için tekli alarm sistemi başlatılıyor")
         
-        // 1. Mevcut persistent alarm'ı planla (arka plan/kapalı uygulama için)
-        schedulePersistentAlarm(date: date, modelContext: modelContext)
+        // Mevcut tüm benzer alarmları önce iptal et
+        cancelDuplicateAlarms(for: date)
         
-        // 2. Eğer uygulama önplandaysa, doğrudan alarm manager'ı tetikle
         DispatchQueue.main.async {
             let appState = UIApplication.shared.applicationState
             if appState == .active {
@@ -211,22 +210,38 @@ class AlarmService {
                 print("PolyNap Debug: Uygulama önplanda - doğrudan AlarmFiringView gösteriliyor")
                 NotificationCenter.default.post(name: .startAlarm, object: nil)
             } else {
-                // Uygulama arka planda veya kapalı - notification sistemi devreye girecek
-                print("PolyNap Debug: Uygulama arka planda/kapalı - notification sistemi aktif")
+                // Uygulama arka planda veya kapalı - SADECE TEK BİR notification sistemi kullan
+                print("PolyNap Debug: Uygulama arka planda/kapalı - tek notification sistemi aktif")
                 
-                // Ek güvenlik için immediate notification gönder
-                self.scheduleImmediateAlarmNotification(modelContext: modelContext)
+                // Immediate alarm mı yoksa scheduled alarm mı? Zamana göre karar ver
+                if date.timeIntervalSinceNow <= 1.0 {
+                    // Hemen çalacak alarm
+                    self.scheduleImmediateAlarmNotification(modelContext: modelContext)
+                } else {
+                    // Zamanlanmış alarm
+                    self.schedulePersistentAlarm(date: date, modelContext: modelContext)
+                }
             }
-        }
-        
-        // 3. Her durumda notification sistemi için backup alarm
-        if date.timeIntervalSinceNow <= 1.0 {
-            scheduleImmediateAlarmNotification(modelContext: modelContext)
         }
     }
     
-    /// Anlık alarm notification'ı (immediate) - sleep block bitiminde kullanılır
+    /// Anlık alarm notification'ı (immediate) - sleep block bitiminde kullanılır - TEKRARLANMAZ
     private func scheduleImmediateAlarmNotification(modelContext: ModelContext? = nil) {
+        // Önce aynı türdeki immediate alarm'ları iptal et
+        notificationCenter.getPendingNotificationRequests { requests in
+            let immediateAlarmIds = requests.compactMap { request in
+                if request.identifier.contains("immediate_alarm_") {
+                    return request.identifier
+                }
+                return nil
+            }
+            
+            if !immediateAlarmIds.isEmpty {
+                self.notificationCenter.removePendingNotificationRequests(withIdentifiers: immediateAlarmIds)
+                print("PolyNap Debug: \(immediateAlarmIds.count) immediate alarm iptal edildi (duplicate engellendi)")
+            }
+        }
+        
         var selectedSoundName = "alarm.caf"
         if let context = modelContext {
             let request = FetchDescriptor<AlarmSettings>()
@@ -257,8 +272,9 @@ class AlarmService {
         // Hemen tetiklenir (0.1 saniye gecikme)
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
         
+        // Unique identifier - sadece bir tane immediate alarm olacak
         let request = UNNotificationRequest(
-            identifier: "immediate_alarm_\(Date().timeIntervalSince1970)",
+            identifier: "immediate_alarm_single",
             content: content,
             trigger: trigger
         )
@@ -267,7 +283,7 @@ class AlarmService {
             if let error = error {
                 print("PolyNap Debug: Immediate alarm eklenemedi: \(error)")
             } else {
-                print("PolyNap Debug: Immediate alarm başarıyla planlandı")
+                print("PolyNap Debug: Tek immediate alarm başarıyla planlandı")
             }
         }
     }
@@ -304,7 +320,9 @@ class AlarmService {
     
     func cancelPendingAlarms() {
         notificationCenter.removeAllPendingNotificationRequests()
-        print("PolyNap Debug: Tüm bekleyen alarmlar iptal edildi")
+        // Badge'i temizle
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        print("PolyNap Debug: Tüm bekleyen alarmlar iptal edildi, badge temizlendi")
     }
     
     /// Belirli bir alarm serisini iptal et (persistent alarms için)
@@ -313,6 +331,29 @@ class AlarmService {
         
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         print("PolyNap Debug: Persistent alarm iptal edildi - \(identifier)")
+    }
+    
+    /// Aynı zamana sahip duplicate alarmları iptal eder
+    private func cancelDuplicateAlarms(for date: Date) {
+        let dateTimeInterval = date.timeIntervalSince1970
+        
+        notificationCenter.getPendingNotificationRequests { requests in
+            let duplicateIdentifiers = requests.compactMap { request -> String? in
+                let identifier = request.identifier
+                // Aynı zaman için farklı türdeki alarmları bul
+                if identifier.contains("persistent_alarm_\(dateTimeInterval)") ||
+                   identifier.contains("immediate_alarm_") ||
+                   identifier.contains("alarm_\(dateTimeInterval)") {
+                    return identifier
+                }
+                return nil
+            }
+            
+            if !duplicateIdentifiers.isEmpty {
+                self.notificationCenter.removePendingNotificationRequests(withIdentifiers: duplicateIdentifiers)
+                print("PolyNap Debug: \(duplicateIdentifiers.count) duplicate alarm iptal edildi")
+            }
+        }
     }
     
     /// Test amaçlı hızlı alarm kurma (5 saniye sonra) - Tek güçlü bildirim
@@ -329,11 +370,11 @@ class AlarmService {
         print("PolyNap Debug: 30 saniye test alarm 5 saniye sonra başlayacak (uygulama kapalıyken de)")
     }
     
-    /// Test için kapsamlı alarm sistemi - Sleep block bitimi simülasyonu
+    /// Test için tekli alarm sistemi - Sleep block bitimi simülasyonu
     func scheduleTestComprehensiveAlarm(modelContext: ModelContext? = nil) {
         let testDate = Date().addingTimeInterval(5) // 5 saniye sonra
         scheduleComprehensiveAlarmForSleepBlockEnd(date: testDate, modelContext: modelContext)
-        print("PolyNap Debug: Test kapsamlı alarm sistemi 5 saniye sonra başlayacak - tüm senaryolar test edilecek")
+        print("PolyNap Debug: Test tekli alarm sistemi 5 saniye sonra başlayacak - SADECE BİR ALARM çalacak")
     }
     
     /// Debug: Bekleyen notification'ları listele

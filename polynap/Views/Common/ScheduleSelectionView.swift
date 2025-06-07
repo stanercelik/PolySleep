@@ -5,6 +5,7 @@ struct ScheduleSelectionView: View {
     let availableSchedules: [SleepScheduleModel]
     @Binding var selectedSchedule: UserScheduleModel
     let onScheduleSelected: (SleepScheduleModel) -> Void
+    let isPremiumUser: Bool // Premium durumunu init'te alacağız
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isProcessing = false
@@ -16,6 +17,7 @@ struct ScheduleSelectionView: View {
     
     // FREE ÖNCE, PREMIUM SONRA + ALFABETİK SIRALAMA
     private var sortedSchedules: [SleepScheduleModel] {
+        // Tüm schedule'ları al (premium durumu kontrol edilmeksizin - UI'da farklı şekilde göstereceğiz)
         let allSchedules = SleepScheduleService.shared.getAllSchedules()
         let freeSchedules = allSchedules.filter { !$0.isPremium }.sorted { $0.name < $1.name }
         let premiumSchedules = allSchedules.filter { $0.isPremium }.sorted { $0.name < $1.name }
@@ -169,26 +171,18 @@ struct ScheduleSelectionView: View {
                 }
             }
             .onAppear {
+                isPremium = isPremiumUser // İlk başta parametre değerini kullan
                 loadPremiumStatus()
             }
-            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
-                if let newPremiumStatus = notification.userInfo?["isPremium"] as? Bool {
-                    isPremium = newPremiumStatus
-                    print("🔄 ScheduleSelectionView: Premium durumu güncellendi: \(newPremiumStatus)")
-                }
-            }
+
         }
     }
     
     private func loadPremiumStatus() {
-        // Debug için UserDefaults kontrolü
-        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
-            isPremium = UserDefaults.standard.bool(forKey: "debug_premium_status")
-            print("🔄 ScheduleSelectionView: Premium durumu UserDefaults'dan yüklendi: \(isPremium)")
-        } else {
-            isPremium = AuthManager.shared.currentUser?.isPremium ?? false
-            print("🔄 ScheduleSelectionView: Premium durumu AuthManager'dan yüklendi: \(isPremium)")
-        }
+        // RevenueCat'den gerçek premium durumunu al
+        let revenueCatPremium = RevenueCatManager.shared.userState == .premium
+        isPremium = revenueCatPremium
+        print("🔄 ScheduleSelectionView: Premium durumu RevenueCat'den güncellendi: \(isPremium)")
     }
     
     private func selectScheduleWithScrollCheck(_ schedule: SleepScheduleModel) {
@@ -718,7 +712,8 @@ struct DifficultyLegendItem: View {
     ScheduleSelectionView(
         availableSchedules: [schedule1, schedule2],
         selectedSchedule: .constant(UserScheduleModel.defaultSchedule),
-        onScheduleSelected: { _ in }
+        onScheduleSelected: { _ in },
+        isPremiumUser: true
     )
     .environmentObject(LanguageManager.shared)
 } 

@@ -155,11 +155,7 @@ public struct AnalyticsView: View {
             viewModel.setModelContext(modelContext)
             loadPremiumStatus()
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PremiumStatusChanged"))) { notification in
-            if let isPremium = notification.userInfo?["isPremium"] as? Bool {
-                isPremiumUser = isPremium
-            }
-        }
+
         .id(languageManager.currentLanguage)
     }
     
@@ -249,12 +245,7 @@ public struct AnalyticsView: View {
     }
     
     private func loadPremiumStatus() {
-        // Debug için UserDefaults kontrolü
-        if UserDefaults.standard.object(forKey: "debug_premium_status") != nil {
-            isPremiumUser = UserDefaults.standard.bool(forKey: "debug_premium_status")
-        } else {
-            isPremiumUser = AuthManager.shared.currentUser?.isPremium ?? false
-        }
+        isPremiumUser = RevenueCatManager.shared.userState == .premium
     }
 }
 

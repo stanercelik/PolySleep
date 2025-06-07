@@ -80,8 +80,7 @@ struct ProfileScreenView: View {
                                     }
                             }
                             
-                            // Debug Section (Premium Toggle)
-                            DebugPremiumCard()
+
                         }
                         .padding(.horizontal, PSSpacing.lg)
                         .padding(.vertical, PSSpacing.sm)
@@ -1981,71 +1980,7 @@ struct ProfileScreenView_Previews: PreviewProvider {
     }
 }
 
-// MARK: - Debug Premium Card
-struct DebugPremiumCard: View {
-    @State private var isPremium: Bool = UserDefaults.standard.bool(forKey: "debug_premium_status")
-    
-    var body: some View {
-        PSCard {
-            VStack(spacing: PSSpacing.md) {
-                HStack {
-                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                        HStack {
-                            Image(systemName: "wrench.and.screwdriver.fill")
-                                .font(.system(size: PSIconSize.small))
-                                .foregroundColor(.orange)
-                            
-                            Text("Debug Modu")
-                                .font(PSTypography.headline)
-                                .foregroundColor(.appText)
-                        }
-                        
-                        Text("Premium durumunu değiştirin")
-                            .font(PSTypography.caption)
-                            .foregroundColor(.appTextSecondary)
-                    }
-                    
-                    Spacer()
-                }
-                
-                HStack {
-                    Text("Premium Durumu")
-                        .font(PSTypography.body)
-                        .foregroundColor(.appText)
-                    
-                    Spacer()
-                    
-                    Toggle("", isOn: $isPremium)
-                        .tint(.appPrimary)
-                        .scaleEffect(0.8)
-                        .onChange(of: isPremium) { oldValue, newValue in
-                            UserDefaults.standard.set(newValue, forKey: "debug_premium_status")
-                            
-                            // MainScreenViewModel'lere değişikliği bildir
-                            NotificationCenter.default.post(
-                                name: NSNotification.Name("PremiumStatusChanged"),
-                                object: nil,
-                                userInfo: ["isPremium": newValue]
-                            )
-                        }
-                }
-                
-                HStack {
-                    Image(systemName: isPremium ? "crown.fill" : "person.fill")
-                        .font(.caption)
-                        .foregroundColor(isPremium ? .yellow : .gray)
-                    
-                    Text(isPremium ? "Premium Kullanıcı" : "Free Kullanıcı")
-                        .font(PSTypography.caption)
-                        .foregroundColor(.appTextSecondary)
-                    
-                    Spacer()
-                }
-                .padding(.top, PSSpacing.xs)
-            }
-        }
-    }
-}
+
 
 // MARK: - Schedule Change Undo Banner
 struct UndoScheduleChangeCard: View {
