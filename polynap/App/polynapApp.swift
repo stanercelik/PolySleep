@@ -28,6 +28,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
   func application(_ application: UIApplication,
   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     AppDelegate.shared = self
+    
+    // Badge sayısını uygulama başlarken sıfırla
+    UIApplication.shared.applicationIconBadgeNumber = 0
+    
     // Initialize notification manager
     let notificationManager = SleepQualityNotificationManager.shared
     notificationManager.requestAuthorization()
@@ -56,6 +60,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     return true
   }
   
+  /// Uygulama aktif hale geldiğinde badge'i temizle
+  func applicationDidBecomeActive(_ application: UIApplication) {
+      // Badge sayısını sıfırla
+      UIApplication.shared.applicationIconBadgeNumber = 0
+      print("PolyNap Debug: Uygulama aktif oldu, badge temizlendi")
+  }
+  
   // MARK: - UNUserNotificationCenterDelegate
   
   /// Uygulama ön plandayken bildirim geldiğinde çağrılır
@@ -69,8 +80,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
           print("PolyNap Debug: ALARM_CATEGORY bildirimi - uygulama önplanda, sistem notification gösterilmeyecek")
           // Alarm geldi! Sistem bildirimini gösterme, kendi UI'ımızı göstereceğiz.
           completionHandler([])
-          // AlarmManager'ı tetikle
-          NotificationCenter.default.post(name: .startAlarm, object: nil)
+          
+          // Aynı bildirimin birkaç kez tetiklenmesini engellemek için debounce
+          NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerAlarmUI), object: nil)
+          self.perform(#selector(triggerAlarmUI), with: nil, afterDelay: 0.1)
           return
       }
       
@@ -80,6 +93,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
       } else {
           completionHandler([.banner, .sound])
       }
+  }
+  
+  @objc private func triggerAlarmUI() {
+      // Badge'i temizle
+      UIApplication.shared.applicationIconBadgeNumber = 0
+      
+      // AlarmManager'ı tetikle
+      NotificationCenter.default.post(name: .startAlarm, object: nil)
   }
   
   /// Kullanıcı bildirime tıkladığında veya eylem seçtiğinde çağrılır
@@ -114,11 +135,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
               }
           case "STOP_ACTION":
               print("PolyNap Debug: ALARM_CATEGORY - Stop action")
+              // Badge'i temizle
+              UIApplication.shared.applicationIconBadgeNumber = 0
               // Alarmı tamamen durdur. Belki çalan bir ses varsa onu durdurmak için sinyal gönderilir.
               NotificationCenter.default.post(name: .stopAlarm, object: nil)
               print("PolyNap Debug: Alarm kullanıcı tarafından bildirim üzerinden kapatıldı.")
           default:
               print("PolyNap Debug: ALARM_CATEGORY - Default action (notification tapped)")
+              // Badge'i temizle
+              UIApplication.shared.applicationIconBadgeNumber = 0
               // Kullanıcı bildirimin kendisine tıkladı. Uygulama açılacak.
               // Uygulama açılırken alarmı tetiklemeliyiz.
               NotificationCenter.default.post(name: .startAlarm, object: nil)

@@ -2,6 +2,7 @@ import Foundation
 import AVFoundation
 import SwiftUI
 import SwiftData
+import UIKit
 
 class AlarmManager: ObservableObject {
     @Published var isAlarmFiring = false
@@ -39,6 +40,8 @@ class AlarmManager: ObservableObject {
     }
     
     @objc private func handleStopAlarm() {
+        // Badge'i temizle
+        UIApplication.shared.applicationIconBadgeNumber = 0
         stopAlarm()
     }
     
