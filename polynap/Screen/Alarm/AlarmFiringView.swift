@@ -275,7 +275,7 @@ struct AlarmFiringView: View {
         if !alarmManager.isAlarmFiring {
             print("🎵 AlarmFiringView: AlarmManager firing=false, manuel başlatılıyor")
             // Manuel olarak alarmı başlat
-            let soundName = alarmSettings.first?.soundName ?? "alarm.caf"
+            let soundName = alarmSettings.first?.soundName ?? "Alarm 1.caf"
             NotificationCenter.default.post(
                 name: .startAlarm,
                 object: nil,

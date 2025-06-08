@@ -25,7 +25,7 @@ struct AlarmTestView: View {
     @State private var pendingNotificationCount: Int = 0
     
     // Ses testi için ayarlar
-    @State private var testSoundName = "alarm.caf"
+    @State private var testSoundName = "Alarm 1.caf"
     @State private var testVolume: Double = 1.0
     @State private var testDuration: Double = 5.0
     
@@ -248,7 +248,7 @@ struct AlarmTestView: View {
         await checkPermissionStatus()
         if permissionStatus == .authorized {
             addTestResult("⏰ Test alarmı 5 saniye sonra çalması için planlandı.")
-            await alarmService.scheduleTestNotification(soundName: "alarm.caf", volume: 1.0)
+            await alarmService.scheduleTestNotification(soundName: "Alarm 1.caf", volume: 1.0)
         } else {
             addTestResult("❌ Bildirim izni gerekli. Lütfen izin isteyin.")
         }
@@ -273,7 +273,7 @@ struct AlarmTestView: View {
         
         // Bu view'e özel geçici bir ses çalar oluştur
         guard let url = Bundle.main.url(forResource: "alarm", withExtension: "caf") else {
-            addTestResult("❌ alarm.caf dosyası bulunamadı.")
+            addTestResult("❌ Alarm 1.caf dosyası bulunamadı.")
             return
         }
         

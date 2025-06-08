@@ -129,7 +129,7 @@ struct FallbackAlarmAlert: View {
     
     private func playAlarmSound() {
         // Alarm sesi çal
-        guard let soundURL = Bundle.main.url(forResource: "alarm", withExtension: "caf") else {
+        guard let soundURL = Bundle.main.url(forResource: "Alarm 1", withExtension: "caf") else {
             // Fallback olarak sistem sesi kullan
             AudioServicesPlaySystemSound(1005) // Sistem alarm sesi
             return
