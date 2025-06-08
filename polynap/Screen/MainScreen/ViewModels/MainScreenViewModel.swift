@@ -9,10 +9,7 @@ class MainScreenViewModel: ObservableObject {
     @Published var isEditing: Bool = false {
         didSet {
             if !isEditing && oldValue != isEditing {
-                // Düzenleme modundan çıkıldığında değişiklikleri kaydet
-                Task {
-                    await saveSchedule()
-                }
+                updateAlarms()
             }
         }
     }
@@ -43,224 +40,149 @@ class MainScreenViewModel: ObservableObject {
     @Published var showSleepQualityRating = false
     @Published var hasDeferredSleepQualityRating = false
     @Published var lastSleepBlock: SleepBlock?
-    @Published var lastCheckedCompletedBlock: String? // Son kontrol edilen bloğu tutmak için
-    @Published var showScheduleSelection = false // Schedule seçimi sheet'ini kontrol eder
-    @Published var availableSchedules: [SleepScheduleModel] = [] // Kullanıcının görebileceği schedule'lar
-    @Published var isPremium: Bool = false // Premium durumunu takip eder
-
+    @Published var showScheduleSelection = false
+    @Published var availableSchedules: [SleepScheduleModel] = []
+    @Published var isPremium: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     private var modelContext: ModelContext?
-    private var timer: Timer?
     private var timerCancellable: AnyCancellable?
     private var languageManager: LanguageManager
+    
+    /// Son kontrol edilen tamamlanmış blok
+    private var lastCheckedCompletedBlock: String?
     
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
     private let revenueCatManager = RevenueCatManager.shared
     
-    // UserDefaults için anahtarlar
-    private let ratedSleepBlocksKey = "ratedSleepBlocks" // Puanlanmış bloklar (start-end time ile)
-    private let deferredSleepBlocksKey = "deferredSleepBlocks" // Ertelenmiş bloklar (start-end time ile)
+    private let ratedSleepBlocksKey = "ratedSleepBlocks"
+    private let deferredSleepBlocksKey = "deferredSleepBlocks"
+    
+    // MARK: - Computed Properties
+    
+    /// Share için schedule bilgisini formatlar
+    var shareScheduleInfo: String {
+        let schedule = model.schedule
+        let totalHours = schedule.totalSleepHours
+        let blocksInfo = schedule.schedule.map { block in
+            "\(block.startTime) - \(block.endTime) (\(block.isCore ? "Core" : "Nap"))"
+        }.joined(separator: "\n")
+        
+        return """
+        📋 Polifazik Uyku Programım: \(schedule.name)
+        
+        ⏰ Toplam Uyku: \(String(format: "%.1f", totalHours)) saat
+        
+        🛏️ Uyku Blokları:
+        \(blocksInfo)
+        
+        📱 PolyNap ile kendi uyku programınızı oluşturun!
+        """
+    }
+    
+    /// Toplam uyku süresini formatlar
+    var totalSleepTimeFormatted: String {
+        let totalHours = model.schedule.totalSleepHours
+        let hours = Int(totalHours)
+        let minutes = Int((totalHours - Double(hours)) * 60)
+        
+        if minutes == 0 {
+            return "\(hours)h"
+        } else {
+            return "\(hours)h \(minutes)m"
+        }
+    }
+    
+    /// Günlük ilerleme yüzdesini hesaplar
+    var dailyProgress: Double {
+        let now = Date()
+        let calendar = Calendar.current
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = (currentTime.hour ?? 0) * 60 + (currentTime.minute ?? 0)
+        
+        // Günün yüzde kaçının geçtiğini hesapla
+        let totalMinutesInDay = 24 * 60
+        return Double(currentMinutes) / Double(totalMinutesInDay)
+    }
+    
+    /// Bir sonraki uyku bloğunun formatlanmış zamanını döndürür
+    var nextSleepBlockFormatted: String {
+        guard let nextBlock = nextSleepBlock else {
+            return L("mainScreen.noUpcomingBlock", table: "MainScreen")
+        }
+        
+        let hours = Int(timeUntilNextBlock) / 3600
+        let minutes = (Int(timeUntilNextBlock) % 3600) / 60
+        
+        if hours > 0 {
+            return "\(hours)h \(minutes)m"
+        } else if minutes > 0 {
+            return "\(minutes)m"
+        } else {
+            return L("mainScreen.imminent", table: "MainScreen")
+        }
+    }
+    
+    /// Günlük ipucunu döndürür
+    var dailyTip: LocalizedStringKey {
+        return DailyTipManager.getDailyTip()
+    }
+    
+    /// Program açıklamasını mevcut dilde döndürür
+    var scheduleDescription: String {
+        let description = model.schedule.description
+        return languageManager.currentLanguage == "tr" ? description.tr : description.en
+    }
+    
+    /// Kullanıcının şu anda uyku zamanında olup olmadığını kontrol eder
+    var isInSleepTime: Bool {
+        let now = Date()
+        let calendar = Calendar.current
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = (currentTime.hour ?? 0) * 60 + (currentTime.minute ?? 0)
+        
+        for block in model.schedule.schedule {
+            let startMinutes = convertTimeStringToMinutes(block.startTime)
+            let endMinutes = convertTimeStringToMinutes(block.endTime)
+            
+            // Gece yarısını geçen bloklar için özel kontrol
+            if startMinutes > endMinutes {
+                // Örn: 23:00 - 07:00
+                if currentMinutes >= startMinutes || currentMinutes <= endMinutes {
+                    return true
+                }
+            } else {
+                // Normal bloklar
+                if currentMinutes >= startMinutes && currentMinutes <= endMinutes {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    /// Uyku durumu mesajını döndürür
+    var sleepStatusMessage: String {
+        if isInSleepTime {
+            return L("mainScreen.sleepTime", table: "MainScreen")
+        } else {
+            return L("mainScreen.awakeTime", table: "MainScreen")
+        }
+    }
     
     init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), languageManager: LanguageManager = LanguageManager.shared) {
         self.model = model
         self.languageManager = languageManager
         
-        // Premium durumunu kontrol et
         loadPremiumStatus()
-        
-        // Mevcut schedule'ları yükle
         loadAvailableSchedules()
-        
-        // Timer'ı başlat
-        startTimer()
-        
-        // Auth durumunu dinle
+        setupTimerForUI()
         setupAuthStateListener()
-        
-        // Dil değişikliklerini dinle
         setupLanguageChangeListener()
-        
-        // Uyku kalitesi değerlendirme durumunu kontrol et
-        checkForPendingSleepQualityRatings()
-        
-        // RevenueCat premium durum değişikliklerini dinle
         setupRevenueCatListener()
-    }
-    
-    var totalSleepTimeFormatted: String {
-        let totalMinutes = model.schedule.schedule.reduce(0) { $0 + $1.duration }
-        let hours = totalMinutes / 60
-        let minutes = totalMinutes % 60
-        
-        if hours > 0 && minutes > 0 {
-            return String(format: L("mainScreen.timeFormat.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
-        } else if hours > 0 {
-            return String(format: L("mainScreen.timeFormat.hoursOnly", table: "MainScreen"), "\(hours)")
-        } else {
-            return String(format: L("mainScreen.timeFormat.minutesOnly", table: "MainScreen"), "\(minutes)")
-        }
-    }
-    
-    var scheduleDescription: String {
-        let currentLang = languageManager.currentLanguage
-        if currentLang == "tr" {
-            return model.schedule.description.tr
-        } else {
-            return model.schedule.description.en
-        }
-    }
-    
-    var nextSleepBlockFormatted: String {
-        guard let _ = model.schedule.nextBlock else {
-            return L("mainScreen.nextSleepBlock.none", table: "MainScreen")
-        }
-        
-        let remainingTime = model.schedule.remainingTimeToNextBlock
-        let hours = remainingTime / 60
-        let minutes = remainingTime % 60
-        
-        if hours > 0 && minutes > 0 {
-            return String(format: L("mainScreen.timeFormat.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
-        } else if hours > 0 {
-            return String(format: L("mainScreen.timeFormat.hoursOnly", table: "MainScreen"), "\(hours)")
-        } else {
-            return String(format: L("mainScreen.timeFormat.minutesOnly", table: "MainScreen"), "\(minutes)")
-        }
-    }
-    
-    var dailyTip: LocalizedStringKey {
-        DailyTipManager.getDailyTip()
-    }
-    
-    // Günlük ilerleme hesaplama fonksiyonu
-    var dailyProgress: Double {
-        calculateDailyProgress()
-    }
-    
-    // Günlük ilerlemeyi hesaplayan fonksiyon
-    func calculateDailyProgress() -> Double {
-        let todayBlocks = getTodaySleepBlocks()
-        
-        if todayBlocks.isEmpty {
-            return 0.0
-        }
-        
-        let calendar = Calendar.current
-        let now = Date()
-        let startOfDay = calendar.startOfDay(for: now)
-        
-        var completedMinutes = 0
-        var totalMinutes = 0
-        
-        for block in todayBlocks {
-            let blockStartDate = combineDateWithTime(date: startOfDay, timeString: block.startTime)
-            let blockEndDate = combineDateWithTime(date: startOfDay, timeString: block.endTime)
-            
-            // Eğer bitiş zamanı başlangıç zamanından önceyse, ertesi güne geçmiş demektir
-            var adjustedEndDate = blockEndDate
-            if blockEndDate < blockStartDate {
-                adjustedEndDate = calendar.date(byAdding: .day, value: 1, to: blockEndDate)!
-            }
-            
-            let blockDuration = Int(adjustedEndDate.timeIntervalSince(blockStartDate) / 60)
-            totalMinutes += blockDuration
-            
-            // Blok tamamlanmış mı kontrol et
-            if now > adjustedEndDate {
-                // Blok tamamen tamamlanmış
-                completedMinutes += blockDuration
-            } else if now > blockStartDate {
-                // Blok kısmen tamamlanmış
-                let completedDuration = Int(now.timeIntervalSince(blockStartDate) / 60)
-                completedMinutes += min(completedDuration, blockDuration)
-            }
-        }
-        
-        // İlerleme oranını hesapla
-        return totalMinutes > 0 ? Double(completedMinutes) / Double(totalMinutes) : 0.0
-    }
-    
-    private func getTodaySleepBlocks() -> [SleepBlock] {
-        return model.schedule.schedule
-    }
-    
-    private func combineDateWithTime(date: Date, timeString: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        
-        guard let time = dateFormatter.date(from: timeString) else {
-            return date
-        }
-        
-        let calendar = Calendar.current
-        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
-        
-        return calendar.date(bySettingHour: timeComponents.hour ?? 0, 
-                            minute: timeComponents.minute ?? 0, 
-                            second: 0, 
-                            of: date) ?? date
-    }
-    
-    var dailyReminder: String {
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: Date())
-        
-        if hour < 12 {
-            return L("mainScreen.morningReminder", table: "MainScreen")
-        } else if hour < 18 {
-            return L("mainScreen.afternoonReminder", table: "MainScreen")
-        } else {
-            return L("mainScreen.eveningReminder", table: "MainScreen")
-        }
-    }
-    
-    var isInSleepTime: Bool {
-        model.schedule.currentBlock != nil
-    }
-    
-    var sleepStatusMessage: String {
-        if isInSleepTime {
-            return L("mainScreen.goodNightMessage", table: "MainScreen")
-        } else if model.schedule.nextBlock != nil {
-            let remainingTime = model.schedule.remainingTimeToNextBlock
-            let hours = remainingTime / 60
-            let minutes = remainingTime % 60
-            
-            if hours > 0 && minutes > 0 {
-                return String(format: L("mainScreen.sleepTimeRemaining.hoursMinutes", table: "MainScreen"), "\(hours)", "\(minutes)")
-            } else if hours > 0 {
-                return String(format: L("mainScreen.sleepTimeRemaining.hoursOnly", table: "MainScreen"), "\(hours)")
-            } else {
-                return String(format: L("mainScreen.sleepTimeRemaining.minutesOnly", table: "MainScreen"), "\(minutes)")
-            }
-        } else {
-            return L("mainScreen.noSleepPlan", table: "MainScreen")
-        }
-    }
-    
-    func shareScheduleInfo() -> String {
-        var shareText = L("mainScreen.shareTitle", table: "MainScreen") + "\n\n"
-        
-        shareText += String(format: L("mainScreen.shareSchedule", table: "MainScreen"), model.schedule.name) + "\n"
-        shareText += String(format: L("mainScreen.shareTotalSleep", table: "MainScreen"), totalSleepTimeFormatted) + "\n"
-        shareText += String(format: L("mainScreen.shareProgress", table: "MainScreen"), "\(Int(dailyProgress * 100))") + "\n\n"
-        
-        shareText += L("mainScreen.shareSleepBlocks", table: "MainScreen")
-        
-        for block in model.schedule.schedule {
-            let blockType = block.isCore
-                ? L("mainScreen.shareCoreSleep", table: "MainScreen")
-                : L("mainScreen.shareNap", table: "MainScreen")
-            
-            shareText += "\n• \(block.startTime)-\(block.endTime) (\(blockType))"
-        }
-        
-        shareText += "\n\n" + L("mainScreen.shareHashtags", table: "MainScreen")
-        
-        return shareText
     }
     
     deinit {
@@ -268,263 +190,118 @@ class MainScreenViewModel: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    /// ModelContext'i ayarlar
+    /// **YENİ:** Sadece UI'daki geri sayım için kullanılan bir zamanlayıcı. Alarm tetiklemez.
+    private func setupTimerForUI() {
+        updateNextSleepBlockForUI()
+        
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updateNextSleepBlockForUI()
+            }
+    }
+    
+    /// UI için bir sonraki uyku bloğunu günceller
+    private func updateNextSleepBlockForUI() {
+        let now = Date()
+        let calendar = Calendar.current
+        let currentTime = calendar.dateComponents([.hour, .minute], from: now)
+        let currentMinutes = (currentTime.hour ?? 0) * 60 + (currentTime.minute ?? 0)
+        
+        // Tüm blokları zamanlarına göre sırala
+        let sortedBlocks = model.schedule.schedule.sorted { 
+            convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) 
+        }
+        
+        // Bir sonraki bloğu bul
+        var nextBlock: SleepBlock?
+        var timeUntilNext: TimeInterval = 0
+        
+        for block in sortedBlocks {
+            let blockStartMinutes = convertTimeStringToMinutes(block.startTime)
+            
+            if blockStartMinutes > currentMinutes {
+                // Bugün içinde bir sonraki blok
+                nextBlock = block
+                timeUntilNext = TimeInterval((blockStartMinutes - currentMinutes) * 60)
+                break
+            }
+        }
+        
+        // Eğer bugün için blok bulunamadıysa, yarının ilk bloğunu al
+        if nextBlock == nil, let firstBlock = sortedBlocks.first {
+            nextBlock = firstBlock
+            let firstBlockMinutes = convertTimeStringToMinutes(firstBlock.startTime)
+            let minutesUntilMidnight = (24 * 60) - currentMinutes
+            let minutesFromMidnight = firstBlockMinutes
+            timeUntilNext = TimeInterval((minutesUntilMidnight + minutesFromMidnight) * 60)
+        }
+        
+        self.nextSleepBlock = nextBlock
+        self.timeUntilNextBlock = timeUntilNext
+        
+        // Tamamlanan blokları kontrol et
+        checkAndShowSleepQualityRating()
+    }
+    
+    /// Zaman string'ini dakikaya çevirir (örn: "14:30" -> 870)
+    private func convertTimeStringToMinutes(_ timeString: String) -> Int {
+        let components = timeString.split(separator: ":").compactMap { Int($0) }
+        guard components.count == 2 else { return 0 }
+        return components[0] * 60 + components[1]
+    }
+
+    /// **YENİ:** Alarm yeniden planlamasını tetikleyen tek ve yetkili fonksiyon.
+    private func updateAlarms() {
+        guard let context = modelContext else {
+            print("🚨 MainScreenViewModel: Alarmları güncellemek için ModelContext mevcut değil.")
+            return
+        }
+        Task {
+            await AlarmService.shared.rescheduleNotificationsForActiveSchedule(modelContext: context)
+        }
+    }
+    
+    /// ModelContext'i ayarlar ve ilk veri yüklemesini + alarm planlamasını tetikler.
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
         print("🗂️ MainScreenViewModel: ModelContext ayarlandı.")
-        // ModelContext ayarlandıktan sonra yerel veriyi yükle
         Task {
             await loadScheduleFromRepository()
         }
     }
     
-    private func loadSavedSchedule() {
-        guard let context = modelContext else { return }
-        
-        do {
-            let descriptor = FetchDescriptor<SleepScheduleStore>()
-            let savedSchedules = try context.fetch(descriptor)
-            
-            if let latestSchedule = savedSchedules.first {
-                let scheduleModel = UserScheduleModel(
-                    id: latestSchedule.scheduleId,
-                    name: latestSchedule.name,
-                    description: latestSchedule.scheduleDescription,
-                    totalSleepHours: latestSchedule.totalSleepHours,
-                    schedule: latestSchedule.schedule,
-                    isPremium: latestSchedule.isPremium
-                )
-                
-                selectedSchedule = scheduleModel
-                model = MainScreenModel(schedule: scheduleModel)
-                print("✅ Loaded saved schedule: \(scheduleModel.name)")
-            }
-        } catch {
-            print("❌ Error loading saved schedule: \(error)")
-        }
-    }
-    
-    private func startTimer() {
-        updateNextSleepBlock()
-        
-        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                Task { @MainActor in
-                    self?.updateNextSleepBlock()
-                    self?.checkAndShowSleepQualityRating()
-                }
-            }
-    }
-    
-    private func updateNextSleepBlock() {
-        let now = Date()
-        let calendar = Calendar.current
-        let currentComponents = calendar.dateComponents([.hour, .minute], from: now)
-        let currentMinutes = currentComponents.hour! * 60 + currentComponents.minute!
-        
-        if let next = findNextBlock(currentMinutes: currentMinutes, blocks: model.schedule.schedule) {
-            nextSleepBlock = next.block
-            timeUntilNextBlock = next.timeUntil
-            return
-        }
-        
-        if let firstBlock = model.schedule.schedule.first {
-            let minutesUntilMidnight = 24 * 60 - currentMinutes
-            let blockStartMinutes = convertTimeStringToMinutes(firstBlock.startTime)
-            timeUntilNextBlock = TimeInterval((minutesUntilMidnight + blockStartMinutes) * 60)
-            nextSleepBlock = firstBlock
-        }
-    }
-    
-    private func findNextBlock(currentMinutes: Int, blocks: [SleepBlock]) -> (block: SleepBlock, timeUntil: TimeInterval)? {
-        var nextBlock: SleepBlock?
-        var minFutureTimeDifference = Int.max
-        
-        for block in blocks {
-            let startMinutes = convertTimeStringToMinutes(block.startTime)
-            var timeDifference = startMinutes - currentMinutes
-            
-            if timeDifference < 0 {
-                timeDifference += 24 * 60
-            }
-            
-            if timeDifference < minFutureTimeDifference {
-                minFutureTimeDifference = timeDifference
-                nextBlock = block
-            }
-        }
-        
-        if let block = nextBlock {
-            return (block, TimeInterval(minFutureTimeDifference * 60))
-        }
-        return nil
-    }
-    
-    private func convertTimeStringToMinutes(_ timeString: String) -> Int {
-        let components = timeString.split(separator: "-")
-        let startTime = components[0].trimmingCharacters(in: .whitespaces)
-        let parts = startTime.split(separator: ":")
-        let hours = Int(parts[0])!
-        let minutes = Int(parts[1])!
-        return hours * 60 + minutes
-    }
-    
-    private func normalizeMinutes(_ minutes: Int) -> Int {
-        return (minutes + 24 * 60) % (24 * 60)
-    }
-    
-    private func isOverlapping(start1: Int, end1: Int, start2: Int, end2: Int) -> Bool {
-        let normalizedStart1 = normalizeMinutes(start1)
-        let normalizedEnd1 = normalizeMinutes(end1)
-        let normalizedStart2 = normalizeMinutes(start2)
-        let normalizedEnd2 = normalizeMinutes(end2)
-        
-        // Eğer bitiş başlangıçtan küçükse, gece yarısını geçiyor demektir
-        let range1: Set<Int>
-        if normalizedEnd1 < normalizedStart1 {
-            range1 = Set(normalizedStart1...(24 * 60 - 1)).union(Set(0...normalizedEnd1))
-        } else {
-            range1 = Set(normalizedStart1...normalizedEnd1)
-        }
-        
-        let range2: Set<Int>
-        if normalizedEnd2 < normalizedStart2 {
-            range2 = Set(normalizedStart2...(24 * 60 - 1)).union(Set(0...normalizedEnd2))
-        } else {
-            range2 = Set(normalizedStart2...normalizedEnd2)
-        }
-        
-        return !range1.intersection(range2).isEmpty
-    }
-    
-    // MARK: - Editing Functions
-    
-    func validateNewBlock() -> Bool {
-        // Başlangıç zamanı bitiş zamanından önce olmalı
-        if newBlockStartTime >= newBlockEndTime {
-            blockErrorMessage = L("sleepBlock.error.invalidTime", table: "MainScreen")
-            showBlockError = true
-            return false
-        }
-        
-        // Bloklar çakışmamalı
-        let newStartMinutes = Calendar.current.component(.hour, from: newBlockStartTime) * 60 + Calendar.current.component(.minute, from: newBlockStartTime)
-        let newEndMinutes = Calendar.current.component(.hour, from: newBlockEndTime) * 60 + Calendar.current.component(.minute, from: newBlockEndTime)
-        
-        for block in model.schedule.schedule {
-            let blockStart = convertTimeStringToMinutes(block.startTime)
-            let blockEnd = convertTimeStringToMinutes(block.endTime)
-            
-            if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = L("sleepBlock.error.overlap", table: "MainScreen")
-                showBlockError = true
-                return false
-            }
-        }
-        
-        return true
-    }
-    
+    // MARK: - ViewModel Fonksiyonları
+
     func addNewBlock() {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         let startTime = formatter.string(from: newBlockStartTime)
         
-        let duration = Calendar.current.dateComponents([.minute], from: newBlockStartTime, to: newBlockEndTime).minute ?? 0
+        // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
+        var duration = Calendar.current.dateComponents([.minute], from: newBlockStartTime, to: newBlockEndTime).minute ?? 1
+        if duration <= 0 {
+            // Bitiş zamanı ertesi güne geçiyorsa (23:00 - 02:00 gibi)
+            duration = (24 * 60) + duration
+        }
+        duration = max(1, duration)
+        let isCore = newBlockIsCore  // Kullanıcının seçimini koru
         
-        // Süreye göre otomatik olarak ana uyku veya şekerleme belirleme
-        let isCore = duration >= 45 // 45 dakika ve üzeri ana uyku olarak kabul edilir
+        let newBlock = SleepBlock(startTime: startTime, duration: duration, type: isCore ? "core" : "nap", isCore: isCore)
         
-        let newBlock = SleepBlock(
-            startTime: startTime,
-            duration: duration,
-            type: isCore ? "core" : "nap",
-            isCore: isCore
-        )
-        
-        // Yerel model güncelleniyor
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.append(newBlock)
         updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
         self.model.schedule = updatedSchedule
         
-        // --- Bildirimleri Güncelle ---
-        print("addNewBlock: Bildirimler güncelleniyor...")
-        ScheduleManager.shared.activateSchedule(updatedSchedule)
-        // --- Bitti ---
-        
         showAddBlockSheet = false
         resetNewBlockValues()
+        updateAlarms()
         
-        // Arka planda kaydet
+        // Değişiklikleri kalıcı olarak kaydet
         Task {
             await saveSchedule()
         }
-    }
-    
-    func removeSleepBlock(at offsets: IndexSet) {
-        // Yerel model güncelleniyor
-        var updatedSchedule = model.schedule
-        updatedSchedule.schedule.remove(atOffsets: offsets)
-        model.schedule = updatedSchedule
-        
-        // --- Bildirimleri Güncelle ---
-        print("removeSleepBlock: Bildirimler güncelleniyor...")
-        ScheduleManager.shared.activateSchedule(updatedSchedule)
-        // --- Bitti ---
-        
-        // Değişiklikleri kaydet
-        Task {
-            await saveSchedule()
-        }
-    }
-    
-    func prepareForEditing(_ block: SleepBlock) {
-        editingBlockId = block.id
-        editingBlockIsCore = block.isCore
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        
-        if let startDate = formatter.date(from: block.startTime) {
-            editingBlockStartTime = startDate
-        }
-        
-        if let endDate = formatter.date(from: block.endTime) {
-            editingBlockEndTime = endDate
-        }
-    }
-    
-    func validateEditingBlock() -> Bool {
-        // Başlangıç zamanı bitiş zamanından önce olmalı
-        if editingBlockStartTime >= editingBlockEndTime {
-            blockErrorMessage = L("sleepBlock.error.invalidTime", table: "MainScreen")
-            showBlockError = true
-            return false
-        }
-        
-        // Bloklar çakışmamalı
-        let newStartMinutes = Calendar.current.component(.hour, from: editingBlockStartTime) * 60 + Calendar.current.component(.minute, from: editingBlockStartTime)
-        let newEndMinutes = Calendar.current.component(.hour, from: editingBlockEndTime) * 60 + Calendar.current.component(.minute, from: editingBlockEndTime)
-        
-        for block in model.schedule.schedule {
-            // Düzenlenen bloğu atla
-            if block.id == editingBlockId {
-                continue
-            }
-            
-            let blockStart = convertTimeStringToMinutes(block.startTime)
-            let blockEnd = convertTimeStringToMinutes(block.endTime)
-            
-            if isOverlapping(start1: newStartMinutes, end1: newEndMinutes, start2: blockStart, end2: blockEnd) {
-                blockErrorMessage = L("sleepBlock.error.overlap", table: "MainScreen")
-                showBlockError = true
-                return false
-            }
-        }
-        
-        return true
     }
     
     func updateBlock() {
@@ -534,33 +311,29 @@ class MainScreenViewModel: ObservableObject {
         formatter.dateFormat = "HH:mm"
         let startTime = formatter.string(from: editingBlockStartTime)
         
-        let duration = Calendar.current.dateComponents([.minute], from: editingBlockStartTime, to: editingBlockEndTime).minute ?? 0
-        
-        // Süreye göre otomatik olarak ana uyku veya şekerleme belirleme
-        let isCore = duration >= 45 // 45 dakika ve üzeri ana uyku olarak kabul edilir
+        // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
+        var duration = Calendar.current.dateComponents([.minute], from: editingBlockStartTime, to: editingBlockEndTime).minute ?? 1
+        if duration <= 0 {
+            // Bitiş zamanı ertesi güne geçiyorsa (23:00 - 02:00 gibi)
+            duration = (24 * 60) + duration
+        }
+        duration = max(1, duration)
+        let isCore = editingBlockIsCore  // Kullanıcının seçimini koru
         
         if let index = model.schedule.schedule.firstIndex(where: { $0.id == blockId }) {
-            let updatedBlock = SleepBlock(
-                startTime: startTime,
-                duration: duration,
-                type: isCore ? "core" : "nap",
-                isCore: isCore
-            )
+            var updatedBlock = SleepBlock(startTime: startTime, duration: duration, type: isCore ? "core" : "nap", isCore: isCore)
+            // Eski bloğun ID'sini koru
+            updatedBlock.id = blockId
             
-            // Yerel model güncelleniyor
             var updatedSchedule = model.schedule
             updatedSchedule.schedule[index] = updatedBlock
             updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
             self.model.schedule = updatedSchedule
             
-            // --- Bildirimleri Güncelle ---
-            print("updateBlock: Bildirimler güncelleniyor...")
-            ScheduleManager.shared.activateSchedule(updatedSchedule)
-            // --- Bitti ---
+            editingBlockId = nil
+            updateAlarms()
             
-            editingBlockId = nil // Düzenleme modunu kapat
-            
-            // Değişiklikleri kaydet
+            // Değişiklikleri kalıcı olarak kaydet
             Task {
                 await saveSchedule()
             }
@@ -568,26 +341,22 @@ class MainScreenViewModel: ObservableObject {
     }
     
     func deleteBlock(_ block: SleepBlock) {
-        // Yerel model güncelleniyor
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.removeAll { $0.id == block.id }
         self.model.schedule = updatedSchedule
         
-        // Silinen bloğa ait SleepEntry'leri de sil
         Task {
             await deleteSleepEntriesForBlock(blockId: block.id.uuidString)
         }
+        updateAlarms()
         
-        // --- Bildirimleri Güncelle ---
-        print("deleteBlock: Bildirimler güncelleniyor...")
-        ScheduleManager.shared.activateSchedule(updatedSchedule)
-        // --- Bitti ---
-        
-        // Değişiklikleri kaydet
+        // Değişiklikleri kalıcı olarak kaydet
         Task {
             await saveSchedule()
         }
     }
+
+
     
     // MARK: - Sleep Entry Management
     /// Belirli bir bloğa ait olan SleepEntry'leri siler
@@ -629,7 +398,7 @@ class MainScreenViewModel: ObservableObject {
             _ = try await Repository.shared.saveSchedule(model.schedule)
                         
             // Bildirimleri güncelle
-            ScheduleManager.shared.activateSchedule(model.schedule)
+            await ScheduleManager.shared.activateSchedule(model.schedule)
             
             DispatchQueue.main.async {
                 self.isLoading = false
@@ -807,9 +576,6 @@ class MainScreenViewModel: ObservableObject {
         let calendar = Calendar.current
         let currentComponents = calendar.dateComponents([.hour, .minute], from: now)
         
-        // Debug: Hangi blokların kontrol edildiğini göster
-        print("PolyNap Debug: Sleep block tamamlanma kontrolü - Şu anki zaman: \(currentComponents.hour!):\(String(format: "%02d", currentComponents.minute!))")
-        
         // Son 5 dakika içinde biten blokları kontrol et
         for block in model.schedule.schedule {
             let endTime = TimeFormatter.time(from: block.endTime)!
@@ -823,11 +589,6 @@ class MainScreenViewModel: ObservableObject {
             let blockKey = blockKey(startTime: block.startTime, endTime: block.endTime)
             let timeDifference = now.timeIntervalSince(endDate)
             
-            // Debug: Her block için durumu göster
-            if timeDifference >= -60 && timeDifference <= 120 { // Yakın zamanlı blokları debug için göster
-                print("PolyNap Debug: Block \(block.startTime)-\(block.endTime) | Bitiş: \(endTime.hour):\(String(format: "%02d", endTime.minute)) | Fark: \(Int(timeDifference))s")
-            }
-            
             // Eğer blok az önce bittiyse (son 1 dakika içinde)
             if endDate <= now && now.timeIntervalSince(endDate) <= 60 { // 1 dakika
                 print("PolyNap Debug: ✅ Sleep block bitimi tespit edildi! Block: \(block.startTime)-\(block.endTime)")
@@ -835,9 +596,26 @@ class MainScreenViewModel: ObservableObject {
                 // Eğer bu bloğu daha önce kontrol etmediyseysek
                 if lastCheckedCompletedBlock != blockKey {
                     
-                    // 🚨 KAPSAMLI ALARM SİSTEMİ: Uyku bloğu bitiminde tüm senaryolar için alarm
-                    AlarmService.shared.scheduleComprehensiveAlarmForSleepBlockEnd(date: now, modelContext: modelContext)
-                    print("🚨 KAPSAMLI ALARM AKTİF: Sleep block bitti, alarm sistemi tetiklendi: \(block.startTime)-\(block.endTime)")
+                    // 🚨 UYKU BLOĞU BİTİMİ ALARM SİSTEMİ: Sadece foreground'da alarm tetikle
+                    Task {
+                        let applicationState = await UIApplication.shared.applicationState
+                        
+                        if applicationState == .active {
+                            // Sadece uygulama ön plandayken instant alarm tetikle
+                            if let context = modelContext, let alarmSettings = getAlarmSettings(context: context) {
+                                if alarmSettings.isEnabled {
+                                    print("🚨 UYKU BLOĞU BİTİMİ ALARMI (FOREGROUND): Tetikleniyor... Block: \(block.startTime)-\(block.endTime)")
+                                    await AlarmService.shared.triggerAlarmForEndedBlock(block: block, settings: alarmSettings)
+                                } else {
+                                    print("🔇 UYKU BLOĞU BİTİMİ: Alarm kapalı, tetiklenmedi.")
+                                }
+                            } else {
+                                print("⚠️ UYKU BLOĞU BİTİMİ: Alarm ayarları bulunamadı, tetiklenemedi.")
+                            }
+                        } else {
+                            print("🔍 UYKU BLOĞU BİTİMİ (BACKGROUND): Scheduled alarm'a güveniyoruz, instant oluşturulmadı.")
+                        }
+                    }
                     
                     // Eğer bu blok hiç puanlanmamışsa ve ertelenmemişse, değerlendirme ekranını göster
                     if !isBlockRated(startTime: block.startTime, endTime: block.endTime) && 
@@ -859,6 +637,18 @@ class MainScreenViewModel: ObservableObject {
         }
     }
     
+    // MARK: - SwiftData Helper
+    
+    private func getAlarmSettings(context: ModelContext) -> AlarmSettings? {
+        do {
+            let descriptor = FetchDescriptor<AlarmSettings>()
+            return try context.fetch(descriptor).first
+        } catch {
+            print("🚨 Alarm ayarları alınırken hata: \(error)")
+            return nil
+        }
+    }
+    
     // MARK: - Repository & Offline-First Yaklaşımı
     
     /// Repository'den aktif uyku programını yükler
@@ -868,38 +658,44 @@ class MainScreenViewModel: ObservableObject {
         
         do {
             if let activeSchedule = try await Repository.shared.getActiveSchedule() {
-                // activeSchedule zaten UserScheduleModel tipinde olduğu için dönüştürmeye gerek yok
-                let scheduleModel = activeSchedule
-                
-                DispatchQueue.main.async {
-                    self.selectedSchedule = scheduleModel
-                    self.model = MainScreenModel(schedule: scheduleModel)
+                await MainActor.run {
+                    self.selectedSchedule = activeSchedule
+                    self.model = MainScreenModel(schedule: activeSchedule)
                     self.isLoading = false
-                    
-                    // Bildirimleri güncelle
-                    // ScheduleManager zaten Repository'den gelen değişikliği gözlemleyebilir
-                    // veya burada manuel tetikleme yapılabilir. Şimdilik yorum satırı:
-                    // ScheduleManager.shared.activateSchedule(scheduleModel)
+                    self.updateAlarms()
                 }
-                
-                print("✅ Repository'den aktif program yüklendi: \(activeSchedule.name)")
             } else {
-                // Aktif program yoksa, varsayılanı yükle veya boş durumu göster.
-                DispatchQueue.main.async {
+                // Aktif program bulunamadı, varsayılan programı yükle
+                await MainActor.run {
+                    print("⚠️ Aktif program bulunamadı, varsayılan program yükleniyor...")
+                    let defaultSchedule = UserScheduleModel.defaultSchedule
+                    self.selectedSchedule = defaultSchedule
+                    self.model = MainScreenModel(schedule: defaultSchedule)
                     self.isLoading = false
-                    self.errorMessage = L("error.no_active_schedule_found", table: "MainScreen")
-                    // Gerekirse burada varsayılan bir program yüklenebilir veya boş ekran gösterilebilir.
-                    // self.loadDefaultSchedule() // Örnek
+                    self.errorMessage = nil
                 }
-                 print("ℹ️ Repository'de aktif program bulunamadı.")
+                
+                // Varsayılan programı veritabanına kaydet
+                do {
+                    let defaultSchedule = UserScheduleModel.defaultSchedule
+                    _ = try await Repository.shared.saveSchedule(defaultSchedule)
+                    print("✅ Varsayılan program başarıyla kaydedildi")
+                    await ScheduleManager.shared.loadActiveScheduleFromRepository()
+                    await MainActor.run {
+                        self.updateAlarms()
+                    }
+                } catch {
+                    print("❌ Varsayılan program kaydedilirken hata: \(error)")
+                    await MainActor.run {
+                        self.updateAlarms() // Boş program için alarmları iptal et
+                    }
+                }
             }
         } catch {
-            DispatchQueue.main.async {
-                self.errorMessage = L("error.schedule_load_failed", table: "MainScreen") + ": \(error.localizedDescription)"
+            await MainActor.run {
+                self.errorMessage = "Program yüklenirken hata: \(error.localizedDescription)"
                 self.isLoading = false
             }
-            
-            print("❌ Repository'den program yüklenirken hata: \(error)")
         }
     }
     
@@ -972,33 +768,21 @@ class MainScreenViewModel: ObservableObject {
     
     /// Kullanıcı giriş durumunu takip eder ve çevrimiçi olduğunda veriyi yükler
     private func setupAuthStateListener() {
-        
-        // Kullanıcının oturum durumunu dinle
         authManager.$isAuthenticated
             .receive(on: RunLoop.main)
             .sink { [weak self] isAuthenticated in
-                if isAuthenticated {
-                    // Kullanıcı giriş yaptığında, yerel veritabanından programı yükle
-                    Task {
-                        await self?.loadScheduleFromRepository()
-                    }
-                } else {
-                    // Kullanıcı çıkış yaptığında, varsayılan programı göster
-                    self?.loadDefaultSchedule()
+                Task {
+                    await self?.loadScheduleFromRepository()
                 }
             }
             .store(in: &cancellables)
-        
     }
     
     /// Dil değişikliklerini dinler ve UI'yi günceller
     private func setupLanguageChangeListener() {
         languageManager.$currentLanguage
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                // Schedule description güncellenmesi için objectWillChange tetiklenir
-                self?.objectWillChange.send()
-            }
+            .sink { [weak self] _ in self?.objectWillChange.send() }
             .store(in: &cancellables)
     }
     
@@ -1012,7 +796,6 @@ class MainScreenViewModel: ObservableObject {
     
     /// Premium durumunu yükler (RevenueCat'den gerçek premium durumu)
     private func loadPremiumStatus() {
-        // RevenueCat'den gerçek premium durumunu al
         isPremium = RevenueCatManager.shared.userState == .premium
         print("🔄 MainScreenViewModel: RevenueCat premium durumu: \(isPremium)")
     }
@@ -1021,12 +804,12 @@ class MainScreenViewModel: ObservableObject {
     private func loadAvailableSchedules() {
         availableSchedules = SleepScheduleService.shared.getAvailableSchedules(isPremium: isPremium)
     }
-    
+
 
     
     /// Schedule seçim sheet'ini gösterir
     func showScheduleSelectionSheet() {
-        loadAvailableSchedules() // En güncel listeyi yükle
+        loadAvailableSchedules()
         showScheduleSelection = true
     }
     
@@ -1104,7 +887,7 @@ class MainScreenViewModel: ObservableObject {
                 print("✅ Repository kaydetme başarılı!")
                 
                 // Bildirimleri güncelle
-                ScheduleManager.shared.activateSchedule(userScheduleModel)
+                await ScheduleManager.shared.activateSchedule(userScheduleModel)
                 
                 await MainActor.run {
                     isLoading = false
@@ -1132,32 +915,16 @@ class MainScreenViewModel: ObservableObject {
     
     /// String ID'den deterministik UUID oluşturur
     private func generateDeterministicUUID(from stringId: String) -> UUID {
-        // PolySleep namespace UUID'si (sabit bir UUID)
-        let namespace = UUID(uuidString: "6BA7B810-9DAD-11D1-80B4-00C04FD430C8") ?? UUID()
-        
-        // String'i Data'ya dönüştür
-        let data = stringId.data(using: .utf8) ?? Data()
-        
-        // MD5 hash ile deterministik UUID oluştur
+        let namespace = UUID(uuidString: "6BA7B810-9DAD-11D1-80B4-00C04FD430C8")!
+        let data = stringId.data(using: .utf8)!
+        // Simplified hash for example
         var digest = [UInt8](repeating: 0, count: 16)
-        
-        // Basit hash algoritması (production'da CryptoKit kullanılabilir)
         let namespaceBytes = withUnsafeBytes(of: namespace.uuid) { Array($0) }
-        let stringBytes = Array(data)
-        
-        for (index, byte) in (namespaceBytes + stringBytes).enumerated() {
+        for (index, byte) in (namespaceBytes + Array(data)).enumerated() {
             digest[index % 16] ^= byte
         }
-        
-        // UUID'nin version ve variant bitlerini ayarla (version 5 için)
-        digest[6] = (digest[6] & 0x0F) | 0x50  // Version 5
-        digest[8] = (digest[8] & 0x3F) | 0x80  // Variant 10
-        
-        // UUID oluştur
-        let uuid = NSUUID(uuidBytes: digest) as UUID
-        
-        print("🔄 Deterministik UUID oluşturuldu: \(stringId) -> \(uuid.uuidString)")
-        return uuid
+        digest[6] = (digest[6] & 0x0F) | 0x50; digest[8] = (digest[8] & 0x3F) | 0x80
+        return NSUUID(uuidBytes: digest) as UUID
     }
     
     // MARK: - Premium Status Listener
@@ -1169,12 +936,180 @@ class MainScreenViewModel: ObservableObject {
         revenueCatManager.$userState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userState in
-                let isPremium = userState == .premium
-                self?.isPremium = isPremium
+                self?.isPremium = userState == .premium
                 self?.loadAvailableSchedules()
-                print("🔄 RevenueCat Premium durumu güncellendi: \(isPremium)")
             }
             .store(in: &cancellables)
+    }
+    
+    // MARK: - Validation Methods
+    
+    /// Yeni uyku bloğunu validate eder
+    func validateNewBlock() -> Bool {
+        // Başlangıç ve bitiş zamanlarını kontrol et
+        let startTime = newBlockStartTime
+        let endTime = newBlockEndTime
+        
+        // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
+        var duration = Calendar.current.dateComponents([.minute], from: startTime, to: endTime).minute ?? 0
+        if duration <= 0 {
+            // Bitiş zamanı ertesi güne geçiyorsa (23:00 - 02:00 gibi)
+            duration = (24 * 60) + duration
+        }
+        
+        // Minimum süre kontrolü (5 dakika)
+        if duration < 5 {
+            blockErrorMessage = L("sleepBlock.validation.minimumDuration", table: "MainScreen")
+            showBlockError = true
+            return false
+        }
+        
+        // Çakışma kontrolü
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let newStartTimeString = formatter.string(from: startTime)
+        let newEndTimeString = formatter.string(from: endTime)
+        
+        if hasTimeConflict(startTime: newStartTimeString, endTime: newEndTimeString, excludeBlockId: nil) {
+            blockErrorMessage = L("sleepBlock.validation.timeConflict", table: "MainScreen")
+            showBlockError = true
+            return false
+        }
+        
+        return true
+    }
+    
+    /// Düzenlenen uyku bloğunu validate eder
+    func validateEditingBlock() -> Bool {
+        guard let blockId = editingBlockId else { return false }
+        
+        // Başlangıç ve bitiş zamanlarını kontrol et
+        let startTime = editingBlockStartTime
+        let endTime = editingBlockEndTime
+        
+        // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
+        var duration = Calendar.current.dateComponents([.minute], from: startTime, to: endTime).minute ?? 0
+        if duration <= 0 {
+            // Bitiş zamanı ertesi güne geçiyorsa (23:00 - 02:00 gibi)
+            duration = (24 * 60) + duration
+        }
+        
+        // Minimum süre kontrolü (5 dakika)
+        if duration < 5 {
+            blockErrorMessage = L("sleepBlock.validation.minimumDuration", table: "MainScreen")
+            showBlockError = true
+            return false
+        }
+        
+        // Çakışma kontrolü (düzenlenen bloğu hariç tut)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let newStartTimeString = formatter.string(from: startTime)
+        let newEndTimeString = formatter.string(from: endTime)
+        
+        if hasTimeConflict(startTime: newStartTimeString, endTime: newEndTimeString, excludeBlockId: blockId) {
+            blockErrorMessage = L("sleepBlock.validation.timeConflict", table: "MainScreen")
+            showBlockError = true
+            return false
+        }
+        
+        return true
+    }
+    
+    /// Zaman çakışması olup olmadığını kontrol eder
+    private func hasTimeConflict(startTime: String, endTime: String, excludeBlockId: UUID?) -> Bool {
+        let newStartMinutes = convertTimeStringToMinutes(startTime)
+        let newEndMinutes = convertTimeStringToMinutes(endTime)
+        
+        for block in model.schedule.schedule {
+            // Eğer bu düzenlenen blok ise atla
+            if let excludeId = excludeBlockId, block.id == excludeId {
+                continue
+            }
+            
+            let blockStartMinutes = convertTimeStringToMinutes(block.startTime)
+            let blockEndMinutes = convertTimeStringToMinutes(block.endTime)
+            
+            // Çakışma kontrolü için normalize edilmiş time ranges kullan
+            if hasOverlap(
+                newStart: newStartMinutes, newEnd: newEndMinutes,
+                existingStart: blockStartMinutes, existingEnd: blockEndMinutes
+            ) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    /// İki zaman aralığının çakışıp çakışmadığını kontrol eder (gece yarısını geçen blokları da destekler)
+    private func hasOverlap(newStart: Int, newEnd: Int, existingStart: Int, existingEnd: Int) -> Bool {
+        // Gece yarısını geçen blokları tespit et
+        let newCrossesMiddnight = newEnd <= newStart
+        let existingCrossesMiddnight = existingEnd <= existingStart
+        
+        if !newCrossesMiddnight && !existingCrossesMiddnight {
+            // İki blok da normal (gece yarısını geçmiyor)
+            return newStart < existingEnd && newEnd > existingStart
+        }
+        
+        if newCrossesMiddnight && !existingCrossesMiddnight {
+            // Yeni blok gece yarısını geçiyor, mevcut blok geçmiyor
+            // Yeni blok: [newStart, 1440) ∪ [0, newEnd]
+            // Mevcut blok: [existingStart, existingEnd]
+            let overlapPart1 = newStart < existingEnd && 1440 > existingStart  // [newStart, 1440) ile [existingStart, existingEnd]
+            let overlapPart2 = 0 < existingEnd && newEnd > existingStart       // [0, newEnd] ile [existingStart, existingEnd]
+            return overlapPart1 || overlapPart2
+        }
+        
+        if !newCrossesMiddnight && existingCrossesMiddnight {
+            // Yeni blok gece yarısını geçmiyor, mevcut blok geçiyor
+            // Yeni blok: [newStart, newEnd]
+            // Mevcut blok: [existingStart, 1440) ∪ [0, existingEnd]
+            let overlapPart1 = newStart < 1440 && newEnd > existingStart       // [newStart, newEnd] ile [existingStart, 1440)
+            let overlapPart2 = newStart < existingEnd && newEnd > 0            // [newStart, newEnd] ile [0, existingEnd]
+            return overlapPart1 || overlapPart2
+        }
+        
+        // Her iki blok da gece yarısını geçiyor
+        // Yeni blok: [newStart, 1440) ∪ [0, newEnd]
+        // Mevcut blok: [existingStart, 1440) ∪ [0, existingEnd]
+        let overlapPart1 = newStart < 1440 && 1440 > existingStart           // [newStart, 1440) ile [existingStart, 1440)
+        let overlapPart2 = 0 < existingEnd && newEnd > 0                     // [0, newEnd] ile [0, existingEnd]
+        let overlapPart3 = newStart < existingEnd && 1440 > 0                // [newStart, 1440) ile [0, existingEnd]
+        let overlapPart4 = 0 < 1440 && newEnd > existingStart               // [0, newEnd] ile [existingStart, 1440)
+        return overlapPart1 || overlapPart2 || overlapPart3 || overlapPart4
+    }
+    
+    /// Düzenleme için bloğu hazırlar
+    func prepareForEditing(_ block: SleepBlock) {
+        editingBlockId = block.id
+        
+        // Mevcut zamanları Date formatına dönüştür
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let calendar = Calendar.current
+        let now = Date()
+        
+        if let startTime = formatter.date(from: block.startTime) {
+            let startComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+            editingBlockStartTime = calendar.date(bySettingHour: startComponents.hour ?? 0, minute: startComponents.minute ?? 0, second: 0, of: now) ?? now
+        }
+        
+        if let endTime = formatter.date(from: block.endTime) {
+            let endComponents = calendar.dateComponents([.hour, .minute], from: endTime)
+            var endDate = calendar.date(bySettingHour: endComponents.hour ?? 0, minute: endComponents.minute ?? 0, second: 0, of: now) ?? now
+            
+            // Eğer bitiş zamanı başlangıç zamanından önce ise (gece yarısını geçen blok), ertesi güne kaydır
+            if endDate <= editingBlockStartTime {
+                endDate = calendar.date(byAdding: .day, value: 1, to: endDate) ?? endDate
+            }
+            
+            editingBlockEndTime = endDate
+        }
+        
+        editingBlockIsCore = block.isCore
     }
 }
 

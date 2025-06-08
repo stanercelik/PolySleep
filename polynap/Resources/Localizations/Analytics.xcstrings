@@ -36,6 +36,23 @@
         }
       }
     },
+    "analytics.bestWorstDays.hours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f hours"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f saat"
+          }
+        }
+      }
+    },
     "analytics.bestWorstDays.noData" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -83,23 +100,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En Kötü Gün"
-          }
-        }
-      }
-    },
-    "analytics.bestWorstDays.hours" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f hours"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f saat"
           }
         }
       }
@@ -325,6 +325,125 @@
         }
       }
     },
+    "analytics.consistencyTrend.explanation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Higher consistency scores indicate more regular sleep timing. The shaded area shows normal variation. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksek tutarlılık skorları daha düzenli uyku zamanlamasını gösterir. Gölgeli alan normal varyasyonu gösterir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.explanation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding Consistency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutarlılığı Anlamak"
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.lowerBound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lower Bound"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alt Sınır"
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily consistency score with deviation bands"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sapma bantları ile günlük tutarlılık skoru"
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.target" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hedef"
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Consistency Trend"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Tutarlılığı Trendi"
+          }
+        }
+      }
+    },
+    "analytics.consistencyTrend.upperBound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upper Bound"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Üst Sınır"
+          }
+        }
+      }
+    },
     "analytics.dailyAverage" : {
       "comment" : "Daily average sleep time metric title",
       "extractionState" : "stale",
@@ -339,6 +458,227 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Günlük Ortalama"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.dayLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.explanation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each row represents a day, columns show hours (0-23). Colors indicate sleep states: dark for core sleep, medium for naps, light for rest periods."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her satır bir günü, sütunlar saatleri (0-23) gösterir. Renkler uyku durumlarını belirtir: koyu ana uyku, orta şekerleme, açık dinlenme dönemleri."
+          }
+        }
+      }
+    },
+    "analytics.heatMap.explanation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to Read"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nasıl Okunur"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.legend.awake" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awake"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyanık"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.legend.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.legend.light" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hafif Uyku"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.legend.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24-hour sleep pattern visualization"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24 saatlik uyku deseni görselleştirmesi"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Heat Map"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Isı Haritası"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.tooltip.core" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.tooltip.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.tooltip.score" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score: %.1f"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puan: %.1f"
+          }
+        }
+      }
+    },
+    "analytics.heatMap.tooltip.total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam: %.1fs"
           }
         }
       }
@@ -415,20 +755,189 @@
         }
       }
     },
-    "analytics.updating" : {
-      "comment" : "Updating indicator text",
+    "analytics.premium.alert.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Updating..."
+            "value" : "Cancel"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Güncelleniyor..."
+            "value" : "İptal"
+          }
+        }
+      }
+    },
+    "analytics.premium.alert.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is available with Premium subscription. Upgrade to unlock detailed analytics and insights."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu özellik Premium abonelik ile kullanılabilir. Detaylı analitik ve içgörüleri açmak için yükseltin."
+          }
+        }
+      }
+    },
+    "analytics.premium.alert.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Feature"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Özellik"
+          }
+        }
+      }
+    },
+    "analytics.premium.alert.upgrade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade Now"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şimdi Yükseltin"
+          }
+        }
+      }
+    },
+    "analytics.premium.breakdownDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep component breakdown with interactive pie charts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkileşimli pasta grafikleri ile uyku bileşeni dağılımı"
+          }
+        }
+      }
+    },
+    "analytics.premium.consistencyDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep consistency analysis and routine optimization"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku tutarlılığı analizi ve rutin optimizasyonu"
+          }
+        }
+      }
+    },
+    "analytics.premium.qualityDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detailed sleep quality analysis with distribution charts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dağılım grafikleri ile detaylı uyku kalitesi analizi"
+          }
+        }
+      }
+    },
+    "analytics.premium.required" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Required"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Gerekli"
+          }
+        }
+      }
+    },
+    "analytics.premium.timeGainedDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track time gained from polyphasic sleep with activity suggestions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivite önerileri ile polifazik uykudan kazanılan zamanı takip edin"
+          }
+        }
+      }
+    },
+    "analytics.premium.unlockMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Premium for detailed analytics"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylı analitik için Premium'u açın"
+          }
+        }
+      }
+    },
+    "analytics.premium.upgrade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade to Premium"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium'a Yükseltin"
           }
         }
       }
@@ -446,6 +955,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Önceki döneme göre:"
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistency.deviation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deviation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sapma"
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistency.quality" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quality"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalite"
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistencyCorrelation.explanation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This scatter plot shows how sleep quality relates to timing consistency. Points closer to the bottom-left indicate better quality with more consistent timing. The trend line shows overall correlation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu dağılım grafiği uyku kalitesinin zamanlama tutarlılığı ile nasıl ilişkili olduğunu gösterir. Sol alt köşeye yakın noktalar daha tutarlı zamanlamayla daha iyi kaliteyi gösterir. Trend çizgisi genel korelasyonu gösterir."
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistencyCorrelation.explanation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correlation Insights"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korelasyon İçgörüleri"
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistencyCorrelation.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relationship between sleep quality and schedule consistency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku kalitesi ve program tutarlılığı arasındaki ilişki"
+          }
+        }
+      }
+    },
+    "analytics.qualityConsistencyCorrelation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quality vs Consistency"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalite ve Tutarlılık"
           }
         }
       }
@@ -742,6 +1353,23 @@
         }
       }
     },
+    "analytics.sleepComponentsTrend.nap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
+          }
+        }
+      }
+    },
     "analytics.sleepComponentsTrend.nap1" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -823,6 +1451,210 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku Bileşenleri Trendi"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.balance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denge"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.cumulative" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cumulative"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kümülatif"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.explanation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep debt accumulates when you get less sleep than needed. Red areas show debt, green shows surplus. Persistent debt can impact cognitive performance and adaptation to polyphasic schedules."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku borcu, ihtiyacınızdan az uyuduğunuzda birikir. Kırmızı alanlar borcu, yeşil fazlayı gösterir. Sürekli borç bilişsel performansı ve polifazik programlara adaptasyonu etkileyebilir."
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.explanation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Debt Impact"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Borcu Etkisi"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.legend.daily" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Change"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük Değişim"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.legend.debt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Debt"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Borcu"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.legend.surplus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Surplus"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Fazlası"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cumulative sleep debt tracking over time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaman içinde kümülatif uyku borcu takibi"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Debt Analysis"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Borcu Analizi"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.value" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer"
+          }
+        }
+      }
+    },
+    "analytics.sleepDebt.zero" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zero"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıfır"
           }
         }
       }
@@ -1031,142 +1863,6 @@
         }
       }
     },
-    "analytics.sleepQualityTrendChart.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Quality Trend"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kalitesi Trendi"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily sleep quality scores over time"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.infoTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Understanding Quality"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaliteyi Anlamak"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.infoMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "High quality scores are associated with more regular sleep times and better recovery. Aim for scores above 80% for optimal polyphasic sleep adaptation."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.tooltip.qualityScore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality Score"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite Puanı"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.tooltip.category" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Category"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategori"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.tooltip.totalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku:"
-          }
-        }
-      }
-    },
-    "analytics.sleepQualityTrendChart.tooltip.hoursFormat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f hours"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f saat"
-          }
-        }
-      }
-    },
     "analytics.sleepQualityTrendChart.excellentTarget" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1201,6 +1897,142 @@
         }
       }
     },
+    "analytics.sleepQualityTrendChart.infoMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High quality scores are associated with more regular sleep times and better recovery. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.infoTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding Quality"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaliteyi Anlamak"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily sleep quality scores over time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Quality Trend"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kalitesi Trendi"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.category" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.hoursFormat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f hours"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f saat"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.qualityScore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quality Score"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalite Puanı"
+          }
+        }
+      }
+    },
+    "analytics.sleepQualityTrendChart.tooltip.totalSleep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Sleep:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam Uyku:"
+          }
+        }
+      }
+    },
     "analytics.sleepTrends.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1214,23 +2046,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku Trendleri"
-          }
-        }
-      }
-    },
-    "analytics.tooltip.totalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku:"
           }
         }
       }
@@ -1542,6 +2357,23 @@
         }
       }
     },
+    "analytics.timeRange.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time Range"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaman Aralığı"
+          }
+        }
+      }
+    },
     "analytics.timeRange.week" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1572,6 +2404,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yıl"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.coreLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.nap1Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap1: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek1: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.nap2Label" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap2: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şek2: %.1fs"
+          }
+        }
+      }
+    },
+    "analytics.tooltip.barChart.totalLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %.1fh"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toplam: %.1fs"
           }
         }
       }
@@ -1746,70 +2646,19 @@
         }
       }
     },
-    "analytics.tooltip.barChart.coreLabel" : {
-      "extractionState" : "stale",
+    "analytics.tooltip.totalSleep" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Core: %.1fh"
+            "value" : "Total Sleep:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ana: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.tooltip.barChart.nap1Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap1: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek1: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.tooltip.barChart.nap2Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap2: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek2: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.tooltip.barChart.totalLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
+            "value" : "Toplam Uyku:"
           }
         }
       }
@@ -1896,6 +2745,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku Trendleri"
+          }
+        }
+      }
+    },
+    "analytics.updating" : {
+      "comment" : "Updating indicator text",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güncelleniyor..."
           }
         }
       }
@@ -1998,856 +2865,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Değişkenlik"
-          }
-        }
-      }
-    },
-    "analytics.premium.required" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Required"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Gerekli"
-          }
-        }
-      }
-    },
-    "analytics.premium.qualityDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detailed sleep quality analysis with distribution charts"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dağılım grafikleri ile detaylı uyku kalitesi analizi"
-          }
-        }
-      }
-    },
-    "analytics.premium.breakdownDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep component breakdown with interactive pie charts"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etkileşimli pasta grafikleri ile uyku bileşeni dağılımı"
-          }
-        }
-      }
-    },
-    "analytics.premium.consistencyDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep consistency analysis and routine optimization"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku tutarlılığı analizi ve rutin optimizasyonu"
-          }
-        }
-      }
-    },
-    "analytics.premium.timeGainedDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Track time gained from polyphasic sleep with activity suggestions"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktivite önerileri ile polifazik uykudan kazanılan zamanı takip edin"
-          }
-        }
-      }
-    },
-    "analytics.premium.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade to Premium"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium'a Yükseltin"
-          }
-        }
-      }
-    },
-    "analytics.premium.alert.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Feature"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Özellik"
-          }
-        }
-      }
-    },
-    "analytics.premium.alert.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade Now"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şimdi Yükseltin"
-          }
-        }
-      }
-    },
-    "analytics.premium.alert.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This feature is available with Premium subscription. Upgrade to unlock detailed analytics and insights."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu özellik Premium abonelik ile kullanılabilir. Detaylı analitik ve içgörüleri açmak için yükseltin."
-          }
-        }
-      }
-    },
-    "analytics.premium.alert.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Heat Map"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Isı Haritası"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "24-hour sleep pattern visualization"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "24 saatlik uyku deseni görselleştirmesi"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How to Read"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nasıl Okunur"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Each row represents a day, columns show hours (0-23). Colors indicate sleep states: dark for core sleep, medium for naps, light for rest periods."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her satır bir günü, sütunlar saatleri (0-23) gösterir. Renkler uyku durumlarını belirtir: koyu ana uyku, orta şekerleme, açık dinlenme dönemleri."
-          }
-        }
-      }
-    },
-    "analytics.heatMap.legend.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.legend.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.legend.light" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Light Sleep"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hafif Uyku"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.legend.awake" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Awake"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyanık"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Consistency Trend"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Tutarlılığı Trendi"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily consistency score with deviation bands"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sapma bantları ile günlük tutarlılık skoru"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.target" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Target"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hedef"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Understanding Consistency"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tutarlılığı Anlamak"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Higher consistency scores indicate more regular sleep timing. The shaded area shows normal variation. Aim for scores above 80% for optimal polyphasic sleep adaptation."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüksek tutarlılık skorları daha düzenli uyku zamanlamasını gösterir. Gölgeli alan normal varyasyonu gösterir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt Analysis"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu Analizi"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cumulative sleep debt tracking over time"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaman içinde kümülatif uyku borcu takibi"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt Impact"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu Etkisi"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep debt accumulates when you get less sleep than needed. Red areas show debt, green shows surplus. Persistent debt can impact cognitive performance and adaptation to polyphasic schedules."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku borcu, ihtiyacınızdan az uyuduğunuzda birikir. Kırmızı alanlar borcu, yeşil fazlayı gösterir. Sürekli borç bilişsel performansı ve polifazik programlara adaptasyonu etkileyebilir."
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.legend.debt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.legend.surplus" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Surplus"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Fazlası"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.legend.daily" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Change"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük Değişim"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistencyCorrelation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality vs Consistency"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite ve Tutarlılık"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistencyCorrelation.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Relationship between sleep quality and schedule consistency"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku kalitesi ve program tutarlılığı arasındaki ilişki"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistencyCorrelation.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correlation Insights"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Korelasyon İçgörüleri"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistencyCorrelation.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This scatter plot shows how sleep quality relates to timing consistency. Points closer to the bottom-left indicate better quality with more consistent timing. The trend line shows overall correlation."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu dağılım grafiği uyku kalitesinin zamanlama tutarlılığı ile nasıl ilişkili olduğunu gösterir. Sol alt köşeye yakın noktalar daha tutarlı zamanlamayla daha iyi kaliteyi gösterir. Trend çizgisi genel korelasyonu gösterir."
-          }
-        }
-      }
-    },
-    "analytics.premium.unlockMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unlock Premium for detailed analytics"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaylı analitik için Premium'u açın"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.tooltip.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.tooltip.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.tooltip.total" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.tooltip.score" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Score: %.1f"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puan: %.1f"
-          }
-        }
-      }
-    },
-    "analytics.heatMap.dayLabel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.lowerBound" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lower Bound"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alt Sınır"
-          }
-        }
-      }
-    },
-    "analytics.consistencyTrend.upperBound" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upper Bound"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üst Sınır"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.day" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.zero" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zero"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sıfır"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.value" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Value"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Değer"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.cumulative" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cumulative"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kümülatif"
-          }
-        }
-      }
-    },
-    "analytics.sleepDebt.balance" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Balance"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Denge"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistency.deviation" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deviation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sapma"
-          }
-        }
-      }
-    },
-    "analytics.qualityConsistency.quality" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite"
-          }
-        }
-      }
-    },
-    "analytics.timeRange.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time Range"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaman Aralığı"
           }
         }
       }

@@ -9,70 +9,31 @@ struct AlarmSettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var languageManager: LanguageManager
     
-    @StateObject private var alarmService = AlarmNotificationService.shared
     @Query private var alarmSettings: [AlarmSettings]
     
     @State private var currentSettings: AlarmSettings?
     @State private var showingPermissionAlert = false
     @State private var showingTestAlarm = false
     
-    // Geçici ayarlar (UI binding için) - otomatik kaydetme ile
-    @State private var isEnabled = true {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var selectedSound = "alarm.caf" {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var volume: Double = 0.8 {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var vibrationEnabled = true {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var snoozeEnabled = true {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var snoozeDuration = 5 {
-        didSet { saveSettingsIfNeeded() }
-    }
-    @State private var maxSnoozeCount = 3 {
-        didSet { saveSettingsIfNeeded() }
-    }
-    
-    // Simple Alarm State
-    @State private var simpleAlarmTime = Date()
-    @State private var isSimpleAlarmRepeated = false
+    // State for UI reflecting AlarmService status
+    @State private var notificationAuthStatus: UNAuthorizationStatus = .notDetermined
     @State private var pendingAlarmsCount: Int = 0
     
-    // AlarmSound klasöründeki ses dosyalarını dinamik olarak yükle
+    // State variables
+    @State private var isEnabled = true { didSet { saveSettingsIfNeeded() } }
+    @State private var selectedSound = "alarm.caf" { didSet { saveSettingsIfNeeded() } }
+    @State private var volume: Double = 0.8 { didSet { saveSettingsIfNeeded() } }
+    @State private var vibrationEnabled = true { didSet { saveSettingsIfNeeded() } }
+    @State private var snoozeEnabled = true { didSet { saveSettingsIfNeeded() } }
+    @State private var snoozeDuration = 5 { didSet { saveSettingsIfNeeded() } }
+    @State private var maxSnoozeCount = 3 { didSet { saveSettingsIfNeeded() } }
+    
+    private var isAuthorized: Bool {
+        notificationAuthStatus == .authorized || notificationAuthStatus == .provisional
+    }
+    
     private var availableSounds: [(String, String)] {
-        var sounds: [(String, String)] = []
-        
-        // AlarmSound klasöründeki .caf dosyalarını bul
-        if let soundsPath = Bundle.main.path(forResource: "alarm", ofType: "caf") {
-            let soundsURL = URL(fileURLWithPath: soundsPath).deletingLastPathComponent()
-            
-            do {
-                let soundFiles = try FileManager.default.contentsOfDirectory(at: soundsURL, includingPropertiesForKeys: nil)
-                    .filter { $0.pathExtension == "caf" }
-                    .sorted { $0.lastPathComponent < $1.lastPathComponent }
-                
-                for soundFile in soundFiles {
-                    let fileName = soundFile.lastPathComponent
-                    let displayName = soundFile.deletingPathExtension().lastPathComponent.capitalized
-                    sounds.append((fileName, displayName))
-                }
-            } catch {
-                print("PolyNap Debug: AlarmSound klasörü okunamadı: \(error)")
-            }
-        }
-        
-        // Hiç ses bulunamazsa varsayılan ekle
-        if sounds.isEmpty {
-            sounds.append(("alarm.caf", "Alarm"))
-        }
-        
-        return sounds
+        return [("alarm.caf", "Alarm")]
     }
     
     private let snoozeDurations = [1, 3, 5, 10, 15]
@@ -80,7 +41,6 @@ struct AlarmSettingsView: View {
     
     var body: some View {
         ZStack {
-            // Modern gradient background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color.appBackground,
@@ -93,9 +53,7 @@ struct AlarmSettingsView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: PSSpacing.xl) {
-                    // Hero Header Section
                     VStack(spacing: PSSpacing.lg) {
-                        // Icon with gradient background
                         ZStack {
                             Circle()
                                 .fill(
@@ -136,7 +94,6 @@ struct AlarmSettingsView: View {
                     .padding(.top, PSSpacing.sm)
                     .padding(.horizontal, PSSpacing.xl)
                     
-                    // Alarm Durumu Section
                     ModernSettingsSection(
                         title: L("alarmSettings.status.title", table: "Settings"),
                         icon: "alarm",
@@ -144,7 +101,6 @@ struct AlarmSettingsView: View {
                         isMinimal: true
                     ) {
                         VStack(spacing: PSSpacing.lg) {
-                            // Main toggle
                             HStack {
                                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
                                     Text(L("alarmSettings.status.sleepAlarms", table: "Settings"))
@@ -176,11 +132,10 @@ struct AlarmSettingsView: View {
                     }
                     
                     if isEnabled {
-                        // İzin Durumu Section
                         ModernSettingsSection(
                             title: L("alarmSettings.permission.title", table: "Settings"),
-                            icon: alarmService.isAuthorized ? "checkmark.shield.fill" : "exclamationmark.triangle.fill",
-                            iconColor: alarmService.isAuthorized ? .green : .orange,
+                            icon: isAuthorized ? "checkmark.shield.fill" : "exclamationmark.triangle.fill",
+                            iconColor: isAuthorized ? .green : .orange,
                             isMinimal: true
                         ) {
                             VStack(spacing: PSSpacing.lg) {
@@ -190,14 +145,14 @@ struct AlarmSettingsView: View {
                                             .font(PSTypography.headline)
                                             .foregroundColor(.appText)
                                         
-                                        Text(alarmService.isAuthorized ? L("alarmSettings.permission.granted", table: "Settings") : L("alarmSettings.permission.required", table: "Settings"))
+                                        Text(isAuthorized ? L("alarmSettings.permission.granted", table: "Settings") : L("alarmSettings.permission.required", table: "Settings"))
                                             .font(PSTypography.caption)
-                                            .foregroundColor(alarmService.isAuthorized ? .green : .orange)
+                                            .foregroundColor(isAuthorized ? .green : .orange)
                                     }
                                     
                                     Spacer()
                                     
-                                    if !alarmService.isAuthorized {
+                                    if !isAuthorized {
                                         PSSecondaryButton(L("alarmSettings.permission.grantButton", table: "Settings")) {
                                             Task {
                                                 await requestNotificationPermission()
@@ -211,7 +166,7 @@ struct AlarmSettingsView: View {
                                     }
                                 }
                                 
-                                if !alarmService.isAuthorized {
+                                if !isAuthorized {
                                     ModernInfoCard(
                                         icon: "exclamationmark.triangle.fill",
                                         title: L("alarmSettings.permission.requiredTitle", table: "Settings"),
@@ -222,7 +177,6 @@ struct AlarmSettingsView: View {
                             }
                         }
                         
-                        // Ses Ayarları Section
                         ModernSettingsSection(
                             title: L("alarmSettings.sound.title", table: "Settings"),
                             icon: "speaker.wave.2.fill",
@@ -230,7 +184,6 @@ struct AlarmSettingsView: View {
                             isMinimal: true
                         ) {
                             VStack(spacing: PSSpacing.lg) {
-                                // Alarm Sesi
                                 VStack(alignment: .leading, spacing: PSSpacing.md) {
                                     Text(L("alarmSettings.sound.alarmSound", table: "Settings"))
                                         .font(PSTypography.subheadline)
@@ -241,8 +194,6 @@ struct AlarmSettingsView: View {
                                         ForEach(availableSounds, id: \.0) { sound, name in
                                             Button(action: {
                                                 selectedSound = sound
-                                                print("PolyNap Debug: Alarm sesi seçildi: \(sound)")
-                                                // Ses önizlemesi
                                                 previewSound(sound)
                                             }) {
                                                 HStack {
@@ -284,7 +235,6 @@ struct AlarmSettingsView: View {
                                 
                                 ModernDivider()
                                 
-                                // Ses Seviyesi
                                 VStack(alignment: .leading, spacing: PSSpacing.md) {
                                     HStack {
                                         Text(L("alarmSettings.sound.volume", table: "Settings"))
@@ -322,7 +272,6 @@ struct AlarmSettingsView: View {
                                 
                                 ModernDivider()
                                 
-                                // Titreşim
                                 HStack {
                                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
                                         Text(L("alarmSettings.sound.vibration", table: "Settings"))
@@ -345,7 +294,6 @@ struct AlarmSettingsView: View {
                             }
                         }
                         
-                        // Erteleme Ayarları Section
                         ModernSettingsSection(
                             title: L("alarmSettings.snooze.title", table: "Settings"),
                             icon: "clock.arrow.2.circlepath",
@@ -353,7 +301,6 @@ struct AlarmSettingsView: View {
                             isMinimal: true
                         ) {
                             VStack(spacing: PSSpacing.lg) {
-                                // Erteleme toggle
                                 HStack {
                                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
                                         Text(L("alarmSettings.snooze.allowSnooze", table: "Settings"))
@@ -376,7 +323,6 @@ struct AlarmSettingsView: View {
                                 if snoozeEnabled {
                                     ModernDivider()
                                     
-                                    // Erteleme Süresi
                                     VStack(alignment: .leading, spacing: PSSpacing.md) {
                                         Text(L("alarmSettings.snooze.duration", table: "Settings"))
                                             .font(PSTypography.subheadline)
@@ -415,7 +361,6 @@ struct AlarmSettingsView: View {
                                     
                                     ModernDivider()
                                     
-                                    // Maksimum Erteleme
                                     VStack(alignment: .leading, spacing: PSSpacing.md) {
                                         Text(L("alarmSettings.snooze.maxCount", table: "Settings"))
                                             .font(PSTypography.subheadline)
@@ -455,71 +400,6 @@ struct AlarmSettingsView: View {
                             }
                         }
                         
-                        // Yeni Basit Alarm Ayarları Bölümü
-                        ModernSettingsSection(
-                            title: "Hızlı Alarm Kur",
-                            icon: "plus.alarm.fill",
-                            iconColor: .cyan,
-                            isMinimal: true
-                        ) {
-                            VStack(spacing: PSSpacing.lg) {
-                                Text("Aşağıdan hızlıca tek seferlik veya günlük tekrar eden bir alarm kurabilirsiniz. Bu alarm, uyku programınızdan bağımsızdır.")
-                                    .font(PSTypography.caption)
-                                    .foregroundColor(.appTextSecondary)
-                                
-                                DatePicker(
-                                    "Alarm Zamanı",
-                                    selection: $simpleAlarmTime,
-                                    displayedComponents: .hourAndMinute
-                                )
-                                .font(PSTypography.body)
-                                .tint(.appPrimary)
-                                
-                                Toggle("Her gün tekrarla", isOn: $isSimpleAlarmRepeated)
-                                    .font(PSTypography.body)
-                                    .tint(.appPrimary)
-                                
-                                VStack(spacing: PSSpacing.md) {
-                                    PSPrimaryButton("Hızlı Alarm Kur", icon: "alarm.fill") {
-                                        AlarmService.shared.scheduleAlarmNotification(
-                                            date: simpleAlarmTime,
-                                            repeats: isSimpleAlarmRepeated,
-                                            modelContext: modelContext
-                                        )
-                                        updatePendingAlarmsCount()
-                                    }
-                                    
-                                    PSPrimaryButton("Test Alarmı (30sn)", icon: "testtube.2", customBackgroundColor: .orange) {
-                                        AlarmService.shared.scheduleTestAlarm(modelContext: modelContext)
-                                        updatePendingAlarmsCount()
-                                        showingTestAlarm = true
-                                    }
-                                    
-                                    PSPrimaryButton("Tüm Alarmları İptal Et", icon: "trash.fill", destructive: true) {
-                                        AlarmService.shared.cancelPendingAlarms()
-                                        updatePendingAlarmsCount()
-                                    }
-                                }
-                                
-                                ModernDivider()
-                                
-                                HStack {
-                                    Text("Bekleyen Hızlı Alarm Sayısı:")
-                                        .font(PSTypography.body)
-                                    Spacer()
-                                    Text("\(pendingAlarmsCount)")
-                                        .font(PSTypography.headline)
-                                        .foregroundColor(.appPrimary)
-                                }
-                                
-                                PSSecondaryButton("Tüm Hızlı Alarmları İptal Et", icon: "trash.fill") {
-                                    AlarmService.shared.cancelPendingAlarms()
-                                    updatePendingAlarmsCount()
-                                }
-                            }
-                        }
-                        
-                        // Test ve Bilgi Section
                         ModernSettingsSection(
                             title: L("alarmSettings.test.title", table: "Settings"),
                             icon: "testtube.2",
@@ -527,7 +407,6 @@ struct AlarmSettingsView: View {
                             isMinimal: true
                         ) {
                             VStack(spacing: PSSpacing.lg) {
-                                // Test Alarmı
                                 ModernTestButton(
                                     icon: "speaker.wave.2.fill",
                                     title: L("alarmSettings.test.playTestAlarm", table: "Settings"),
@@ -537,19 +416,8 @@ struct AlarmSettingsView: View {
                                     testAlarm()
                                 }
                                 
-                                // Kapsamlı Alarm Testi (Sleep Block Bitimi Simülasyonu)
-                                ModernTestButton(
-                                    icon: "alarm.fill",
-                                    title: "Sleep Block Alarm Testi",
-                                    subtitle: "Uyku bloğu bitimi alarmını test eder (tüm senaryolar)",
-                                    color: .blue
-                                ) {
-                                    testComprehensiveAlarm()
-                                }
-                                
                                 ModernDivider()
                                 
-                                // Bekleyen Alarmlar
                                 HStack {
                                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
                                         Text(L("alarmSettings.test.pendingAlarms", table: "Settings"))
@@ -564,7 +432,7 @@ struct AlarmSettingsView: View {
                                     
                                     Spacer()
                                     
-                                    Text("\(alarmService.pendingNotificationsCount)")
+                                    Text("\(pendingAlarmsCount)")
                                         .font(PSTypography.headline)
                                         .fontWeight(.bold)
                                         .foregroundColor(.appPrimary)
@@ -575,11 +443,18 @@ struct AlarmSettingsView: View {
                                                 .fill(Color.appPrimary.opacity(0.15))
                                         )
                                 }
+                                
+                                PSSecondaryButton("Tüm Alarmları İptal Et", icon: "trash.fill") {
+                                    Task {
+                                        let alarmService = AlarmService.shared
+                                        await alarmService.cancelAllNotifications()
+                                        await updateStatus()
+                                    }
+                                }
                             }
                         }
                     }
                     
-                    // Bottom spacing
                     Spacer(minLength: PSSpacing.xl)
                 }
                 .padding(.horizontal, PSSpacing.lg)
@@ -599,22 +474,26 @@ struct AlarmSettingsView: View {
         .alert("Test Alarmı Kuruldu", isPresented: $showingTestAlarm) {
             Button("Tamam") { }
         } message: {
-            Text("Test alarmı 5 saniye sonra çalacak ve 30 saniye boyunca sürekli çalacak. Uygulamayı kapatabilir, arka plana alabilir veya açık bırakabilirsiniz.")
+            Text("Test alarmı 5 saniye sonra çalacak. Uygulamayı kapatabilir, arka plana alabilir veya açık bırakabilirsiniz.")
         }
         .onAppear {
             loadCurrentSettings()
             Task {
-                await alarmService.checkAuthorizationStatus()
+                await updateStatus()
             }
-            updatePendingAlarmsCount()
         }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
     }
     
     // MARK: - Functions
     
+    private func updateStatus() async {
+        let alarmService = AlarmService.shared
+        notificationAuthStatus = await alarmService.getAuthorizationStatus()
+        pendingAlarmsCount = await alarmService.getPendingNotificationsCount()
+    }
+    
     private func loadCurrentSettings() {
-        // Mevcut kullanıcının ayarlarını yükle
         if let settings = alarmSettings.first {
             currentSettings = settings
             isEnabled = settings.isEnabled
@@ -625,15 +504,13 @@ struct AlarmSettingsView: View {
             snoozeDuration = settings.snoozeDurationMinutes
             maxSnoozeCount = settings.maxSnoozeCount
         } else {
-            // Varsayılan ayarları oluştur
             createDefaultSettings()
         }
     }
     
     private func createDefaultSettings() {
-        let defaultSettings = AlarmSettings(userId: UUID()) // Gerçek userId buraya gelecek
+        let defaultSettings = AlarmSettings(userId: UUID())
         modelContext.insert(defaultSettings)
-        
         do {
             try modelContext.save()
             currentSettings = defaultSettings
@@ -642,14 +519,12 @@ struct AlarmSettingsView: View {
         }
     }
     
-    // Otomatik kaydetme fonksiyonu
     private func saveSettingsIfNeeded() {
         guard let settings = currentSettings else {
             createDefaultSettings()
             return
         }
         
-        // Değişiklikleri ayarlara yansıt
         settings.isEnabled = isEnabled
         settings.soundName = selectedSound
         settings.volume = volume
@@ -659,21 +534,31 @@ struct AlarmSettingsView: View {
         settings.maxSnoozeCount = maxSnoozeCount
         settings.updatedAt = Date()
         
-        // SwiftData otomatik kaydetme
         do {
             try modelContext.save()
+            
+            Task {
+                let alarmService = AlarmService.shared
+                await alarmService.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
+            }
+            
         } catch {
             print("PolyNap Debug: Alarm ayarları otomatik kaydedilemedi: \(error)")
         }
     }
-    
+
     private func requestNotificationPermission() async {
-        let granted = await alarmService.requestAuthorization()
-        
-        if !granted {
-            await MainActor.run {
-                showingPermissionAlert = true
-            }
+        let alarmService = AlarmService.shared
+        await alarmService.requestAuthorization()
+        await updateStatus()
+    }
+    
+    private func testAlarm() {
+        Task {
+            let alarmService = AlarmService.shared
+            await alarmService.scheduleTestNotification(soundName: selectedSound, volume: Float(volume))
+            showingTestAlarm = true
+            await updateStatus()
         }
     }
     
@@ -683,7 +568,6 @@ struct AlarmSettingsView: View {
         }
     }
     
-    /// Ses önizlemesi için kısa oynatma
     private func previewSound(_ soundFileName: String) {
         let resourceName = soundFileName.replacingOccurrences(of: ".caf", with: "")
         guard let soundURL = Bundle.main.url(forResource: resourceName, withExtension: "caf") else {
@@ -691,14 +575,12 @@ struct AlarmSettingsView: View {
             return
         }
         
-        // 3 saniye önizleme oynat
         Task {
             do {
                 let player = try AVAudioPlayer(contentsOf: soundURL)
                 player.volume = Float(volume)
                 player.play()
                 
-                // 3 saniye sonra durdur
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     player.stop()
                 }
@@ -707,62 +589,10 @@ struct AlarmSettingsView: View {
             }
         }
     }
-    
-    private func testAlarm() {
-        Task {
-            // 5 saniye sonra test alarmı
-            let testContent = UNMutableNotificationContent()
-            testContent.title = "🔔 " + L("alarmSettings.test.notificationTitle", table: "Settings")
-            testContent.body = L("alarmSettings.test.notificationBody", table: "Settings")
-            testContent.categoryIdentifier = "SLEEP_ALARM" // Butonları göstermek için
-            testContent.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: selectedSound))
-            testContent.interruptionLevel = .critical
-            testContent.userInfo = [
-                "blockId": UUID().uuidString,
-                "scheduleId": UUID().uuidString,
-                "userId": UUID().uuidString,
-                "type": "sleep_alarm"
-            ]
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-            let request = UNNotificationRequest(
-                identifier: "test_alarm_\(UUID().uuidString)",
-                content: testContent,
-                trigger: trigger
-            )
-            
-            do {
-                try await UNUserNotificationCenter.current().add(request)
-                await MainActor.run {
-                    showingTestAlarm = true
-                }
-            } catch {
-                print("PolyNap Debug: Test alarmı planlanamadı: \(error)")
-            }
-        }
-    }
-    
-    /// Kapsamlı alarm testi - Sleep block bitimi simülasyonu
-    private func testComprehensiveAlarm() {
-        // Kapsamlı alarm sistemini test et (tüm senaryolar)
-        AlarmService.shared.scheduleTestComprehensiveAlarm(modelContext: modelContext)
-        
-        showingTestAlarm = true
-        print("PolyNap Debug: Kapsamlı alarm test sistemi başlatıldı - 5 saniye sonra tetiklenecek")
-    }
-    
-    private func updatePendingAlarmsCount() {
-        AlarmService.shared.notificationCenter.getPendingNotificationRequests { requests in
-            DispatchQueue.main.async {
-                self.pendingAlarmsCount = requests.filter { $0.content.categoryIdentifier == "ALARM_CATEGORY" }.count
-            }
-        }
-    }
 }
 
 // MARK: - Modern Components
 
-// Modern info card for displaying important information
 struct ModernInfoCard: View {
     let icon: String
     let title: String
@@ -809,7 +639,6 @@ struct ModernInfoCard: View {
     }
 }
 
-// Modern test button for alarm testing
 struct ModernTestButton: View {
     let icon: String
     let title: String

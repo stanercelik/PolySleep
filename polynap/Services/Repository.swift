@@ -29,6 +29,12 @@ class Repository: ObservableObject {
         logger.debug("🗂️ ModelContext ayarlandı, Repository hazır.")
     }
     
+    /// **YENİ FONKSİYON:** Diğer servislerin merkezi ModelContext'e erişmesini sağlar.
+    /// Bu, `ScheduleManager` gibi singleton'ların context'e ihtiyaç duyduğu durumu çözer.
+    func getModelContext() -> ModelContext? {
+        return self._modelContext
+    }
+    
     /// ModelContext'e erişim için ana metod
     private func ensureModelContext() throws -> ModelContext {
         guard let context = _modelContext else {
@@ -92,16 +98,16 @@ class Repository: ObservableObject {
     func getActiveSchedule() async throws -> UserScheduleModel? {
         logger.debug("🗂️ Repository.getActiveSchedule() çağrıldı")
         let context = try ensureModelContext()
+        let predicate = #Predicate<UserSchedule> { $0.isActive == true }
+        let descriptor = FetchDescriptor(predicate: predicate)
         
-        let entity = try await getActiveScheduleEntity()
-        guard let scheduleEntity = entity else {
-            logger.debug("❌ Repository: Aktif ScheduleEntity bulunamadı!")
+        guard let activeUserSchedule = try context.fetch(descriptor).first else {
+            logger.debug("ℹ️ Repository: Aktif UserSchedule bulunamadı.")
             return nil
         }
         
-        logger.debug("✅ Repository: Aktif ScheduleEntity bulundu: \(scheduleEntity.name), \(scheduleEntity.sleepBlocks.count) blok, isActive: \(scheduleEntity.isActive)")
-        let userScheduleModel = convertEntityToUserScheduleModel(scheduleEntity)
-        logger.debug("✅ Repository: UserScheduleModel'e dönüştürüldü: \(userScheduleModel.name) (ID: \(userScheduleModel.id))")
+        let userScheduleModel = convertUserScheduleToModel(activeUserSchedule)
+        logger.debug("✅ Repository: Aktif UserSchedule bulundu ve modele dönüştürüldü: \(userScheduleModel.name)")
         return userScheduleModel
     }
     
@@ -225,6 +231,35 @@ class Repository: ObservableObject {
             totalSleepHours: entity.totalSleepHours,
             schedule: sleepBlocks,
             isPremium: false // ScheduleEntity'de bu özellik olmadığı için varsayılan değer kullanıyoruz
+        )
+    }
+    
+    /// UserSchedule entity'sini UserScheduleModel'e dönüştürür.
+    private func convertUserScheduleToModel(_ schedule: UserSchedule) -> UserScheduleModel {
+        let description: LocalizedDescription
+        if let descData = schedule.scheduleDescription?.data(using: .utf8),
+           let json = try? JSONDecoder().decode([String: String].self, from: descData) {
+            description = LocalizedDescription(en: json["en"] ?? "", tr: json["tr"] ?? "")
+        } else {
+            description = LocalizedDescription(en: "Açıklama yok", tr: "No description")
+        }
+
+        let sleepBlocks = (schedule.sleepBlocks ?? []).map { block in
+            SleepBlock(
+                startTime: block.startTime.formatted(date: .omitted, time: .shortened),
+                duration: block.durationMinutes,
+                type: block.isCore ? "core" : "nap",
+                isCore: block.isCore
+            )
+        }
+        
+        return UserScheduleModel(
+            id: schedule.id.uuidString,
+            name: schedule.name,
+            description: description,
+            totalSleepHours: schedule.totalSleepHours ?? 0,
+            schedule: sleepBlocks,
+            isPremium: false // Gerekirse bu bilgiyi de UserSchedule'a ekleyin
         )
     }
     
@@ -397,7 +432,30 @@ class Repository: ObservableObject {
                 existingUserSchedule.isActive = true
                 existingUserSchedule.updatedAt = Date()
                 
-                logger.debug("🗂️ UserSchedule güncellendi: \(existingUserSchedule.name)")
+                // Mevcut UserSleepBlock'ları temizle
+                if let existingBlocks = existingUserSchedule.sleepBlocks {
+                    for block in existingBlocks {
+                        context.delete(block)
+                    }
+                }
+                
+                // Yeni UserSleepBlock'ları oluştur
+                for block in scheduleModel.schedule {
+                    let startDate = convertTimeStringToDate(block.startTime)
+                    let endDate = convertTimeStringToDate(block.endTime)
+                    
+                    let userSleepBlock = UserSleepBlock(
+                        schedule: existingUserSchedule,
+                        startTime: startDate,
+                        endTime: endDate,
+                        durationMinutes: block.duration,
+                        isCore: block.isCore,
+                        syncId: UUID().uuidString
+                    )
+                    context.insert(userSleepBlock)
+                }
+                
+                logger.debug("🗂️ UserSchedule ve UserSleepBlock'ları güncellendi: \(existingUserSchedule.name)")
             } else {
                 // Yeni oluştur
                 let newUserSchedule = UserSchedule(
@@ -431,10 +489,10 @@ class Repository: ObservableObject {
                 }
             }
             
-            try context.save()
-            logger.debug("✅ UserSchedule başarıyla kaydedildi/güncellendi")
+            // Save işlemi ana saveSchedule metodunda yapılacak
+            logger.debug("✅ UserSchedule başarıyla hazırlandı")
         } catch {
-            logger.error("❌ UserSchedule kaydedilirken hata: \(error.localizedDescription)")
+            logger.error("❌ UserSchedule hazırlanırken hata: \(error.localizedDescription)")
             throw RepositoryError.saveFailed
         }
     }

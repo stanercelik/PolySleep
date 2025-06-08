@@ -66,17 +66,14 @@ struct AnimatedMaskModifier: ViewModifier {
 }
 
 struct MainScreenView: View {
-    @ObservedObject var viewModel: MainScreenViewModel
+    @StateObject private var viewModel: MainScreenViewModel
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var alarmManager: AlarmManager
     
     init(viewModel: MainScreenViewModel? = nil) {
-        if let viewModel = viewModel {
-            self.viewModel = viewModel
-        } else {
-            self.viewModel = MainScreenViewModel(languageManager: LanguageManager.shared)
-        }
+        let initialViewModel = viewModel ?? MainScreenViewModel(languageManager: LanguageManager.shared)
+        _viewModel = StateObject(wrappedValue: initialViewModel)
     }
     
     var body: some View {
@@ -176,7 +173,7 @@ struct MainScreenView: View {
     
     private func shareSchedule() {
         let activityVC = UIActivityViewController(
-            activityItems: [viewModel.shareScheduleInfo()],
+            activityItems: [viewModel.shareScheduleInfo],
             applicationActivities: nil
         )
         

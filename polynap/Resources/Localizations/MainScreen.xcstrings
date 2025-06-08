@@ -1703,6 +1703,40 @@
         }
       }
     },
+    "sleepBlock.validation.minimumDuration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep block must be at least 5 minutes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku bloğu en az 5 dakika olmalıdır"
+          }
+        }
+      }
+    },
+    "sleepBlock.validation.timeConflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This time conflicts with an existing sleep block"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu saat mevcut bir uyku bloğu ile çakışıyor"
+          }
+        }
+      }
+    },
     "sleepBlock.error.title" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -2,16 +2,16 @@ import Foundation
 import AVFoundation
 import SwiftUI
 import SwiftData
-import UIKit
 
-class AlarmManager: ObservableObject {
+@MainActor
+final class AlarmManager: ObservableObject {
     @Published var isAlarmFiring = false
     
-    var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVAudioPlayer?
     private var modelContext: ModelContext?
+    private var firingNotification: UNNotification?
     
-    init(modelContext: ModelContext? = nil) {
-        self.modelContext = modelContext
+    init() {
         setupNotificationObservers()
     }
     
@@ -35,13 +35,36 @@ class AlarmManager: ObservableObject {
         )
     }
     
-    @objc private func handleStartAlarm() {
-        startAlarmSound()
+    @objc private func handleStartAlarm(notification: Notification) {
+        print("🎶 AlarmManager: Alarm başlatma bildirimi alındı.")
+        print("📋 AlarmManager: Bildirim detayları - name: \(notification.name), userInfo: \(notification.userInfo ?? [:])")
+        print("🔄 AlarmManager: Mevcut isAlarmFiring durumu: \(isAlarmFiring)")
+        
+        // Store the original notification object if it's passed
+        if let originalNotification = notification.object as? UNNotification {
+            self.firingNotification = originalNotification
+            print("💾 AlarmManager: Orijinal UNNotification kaydedildi")
+        }
+        
+        // Alarm zaten çalıyorsa ve bu yeni bir çağrı ise sesi güncelle
+        let userInfo = notification.userInfo
+        let soundName = userInfo?["soundName"] as? String ?? "alarm.caf"
+        print("🎵 AlarmManager: Kullanılacak ses: \(soundName)")
+        
+        if isAlarmFiring {
+            print("🔄 AlarmManager: Alarm zaten çalıyor, ses güncelleniyor.")
+            // Mevcut sesi durdur ve yeni ses başlat
+            audioPlayer?.stop()
+            startAlarmSound(soundName: soundName)
+        } else {
+            print("🎵 AlarmManager: Yeni alarm başlatılıyor. isAlarmFiring = true yapılıyor...")
+            self.isAlarmFiring = true
+            print("✅ AlarmManager: isAlarmFiring başarıyla true yapıldı. Şu anki durum: \(isAlarmFiring)")
+            startAlarmSound(soundName: soundName)
+        }
     }
     
     @objc private func handleStopAlarm() {
-        // Badge'i temizle
-        UIApplication.shared.applicationIconBadgeNumber = 0
         stopAlarm()
     }
     
@@ -49,95 +72,93 @@ class AlarmManager: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
 
-    func startAlarmSound(soundName: String = "alarm.caf") {
-        // Settings'ten ses ayarlarını al
-        var finalSoundName = soundName
-        var finalVolume: Float = 0.8
-        
-        if let context = modelContext {
-            let request = FetchDescriptor<AlarmSettings>()
-            do {
-                let alarmSettingsList = try context.fetch(request)
-                if let settings = alarmSettingsList.first {
-                    finalSoundName = settings.soundName
-                    finalVolume = Float(settings.volume)
-                }
-            } catch {
-                print("PolyNap Debug: AlarmSettings alınamadı, varsayılan ses kullanılıyor: \(error)")
-            }
+    private func startAlarmSound(soundName: String) {
+        guard let context = modelContext else {
+            print("🚨 AlarmManager: ModelContext ayarlanmadı. Alarm ayarları alınamıyor.")
+            return
         }
         
-        // AlarmSound klasöründeki .caf dosyasını kullan
-        let resourceName = finalSoundName.replacingOccurrences(of: ".caf", with: "")
+        // Ses seviyesi için en son alarm ayarlarını al
+        let request = FetchDescriptor<AlarmSettings>()
+        let volume = (try? context.fetch(request).first?.volume) ?? 0.8
         
+        // Ses dosyasının URL'sini al
+        let resourceName = soundName.replacingOccurrences(of: ".caf", with: "")
         guard let soundURL = Bundle.main.url(forResource: resourceName, withExtension: "caf") else {
-            print("PolyNap Debug: AlarmSound klasöründe ses dosyası bulunamadı: \(finalSoundName)")
-            // Fallback olarak alarm.caf kullan
-            if let defaultURL = Bundle.main.url(forResource: "alarm", withExtension: "caf") {
-                createAudioPlayer(url: defaultURL, volume: finalVolume)
-                print("PolyNap Debug: Varsayılan alarm.caf kullanılıyor")
-            } else {
-                print("PolyNap Debug: Hiçbir alarm sesi bulunamadı!")
+            print("🚨 AlarmManager: '\(soundName)' ses dosyası bundle içinde bulunamadı.")
+            print("📁 AlarmManager: Bundle içindeki ses dosyaları:")
+            if let bundlePath = Bundle.main.resourcePath {
+                let files = try? FileManager.default.contentsOfDirectory(atPath: bundlePath)
+                let audioFiles = files?.filter { $0.contains(".caf") || $0.contains(".wav") || $0.contains(".mp3") }
+                audioFiles?.forEach { print("   - \($0)") }
             }
             return
         }
         
-        createAudioPlayer(url: soundURL, volume: finalVolume)
-    }
-    
-    private func createAudioPlayer(url: URL, volume: Float) {
+        print("🎵 AlarmManager: Ses dosyası bulundu: \(soundURL.path)")
+        print("📊 AlarmManager: Volume: \(volume), Resource: \(resourceName).caf")
+        
         do {
-            // Sesin sessiz modda bile çalmasını sağlamak için.
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-            try AVAudioSession.sharedInstance().setActive(true)
+            // Sesin sessiz modda bile çalması için ses oturumunu yapılandır
+            try AVAudioSession.sharedInstance().setCategory(
+                .playback, 
+                mode: .default, 
+                options: [.mixWithOthers, .duckOthers]
+            )
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.numberOfLoops = -1 // Sonsuz döngü
-            audioPlayer?.volume = volume
-            audioPlayer?.play()
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.numberOfLoops = -1 // Süresiz döngü
+            audioPlayer?.volume = Float(volume)
+            audioPlayer?.prepareToPlay() // Ses dosyasını hazırla
             
-            print("PolyNap Debug: Alarm sesi başlatıldı - Volume: \(volume)")
+            let playResult = audioPlayer?.play()
+            print("✅ AlarmManager: '\(soundName)' alarm sesi başlatıldı. Sonuç: \(playResult ?? false)")
+            print("📊 AlarmManager: Audio session category: \(AVAudioSession.sharedInstance().category)")
             
-            // State'i güncelle, UI tetiklensin
-            DispatchQueue.main.async {
-                self.isAlarmFiring = true
-            }
         } catch {
-            print("PolyNap Debug: Ses çalınamadı: \(error.localizedDescription)")
+            print("🚨 AlarmManager: Ses çalınamadı: \(error.localizedDescription)")
+            
+            // Alternatif ses çalma yöntemi
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: .defaultToSpeaker)
+                try AVAudioSession.sharedInstance().setActive(true)
+                
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                audioPlayer?.numberOfLoops = -1
+                audioPlayer?.volume = Float(volume)
+                audioPlayer?.prepareToPlay()
+                audioPlayer?.play()
+                
+                print("✅ AlarmManager: Alternatif metod ile ses başlatıldı.")
+            } catch {
+                print("🚨 AlarmManager: Alternatif ses metodu da başarısız: \(error.localizedDescription)")
+            }
         }
     }
     
     func stopAlarm() {
+        print("🛑 AlarmManager: Alarm durduruluyor.")
         audioPlayer?.stop()
         audioPlayer = nil
-        DispatchQueue.main.async {
-            self.isAlarmFiring = false
-        }
+        isAlarmFiring = false
+        firingNotification = nil
+        
+        // Ses oturumunu devre dışı bırak
+        try? AVAudioSession.sharedInstance().setActive(false)
     }
     
-    func snoozeAlarm() {
-        stopAlarm()
+    func snoozeAlarm() async {
+        print("💤 AlarmManager: Alarm erteleniyor (ses durduruluyor).")
         
-        // Settings'ten erteleme süresini al
-        guard let context = modelContext else {
-            print("PolyNap Debug: ModelContext bulunamadı, varsayılan 5 dakika erteleme kullanılıyor")
-            let snoozeDate = Date().addingTimeInterval(5 * 60)
-            AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false)
+        guard let notificationToSnooze = firingNotification else {
+            print("🚨 AlarmManager: Ertelemek için orijinal bildirim bulunamadı.")
+            stopAlarm()
             return
         }
         
-        // AlarmSettings'i al
-        let request = FetchDescriptor<AlarmSettings>()
-        do {
-            let alarmSettingsList = try context.fetch(request)
-            let snoozeDuration = alarmSettingsList.first?.snoozeDurationMinutes ?? 5
-            let snoozeDate = Date().addingTimeInterval(TimeInterval(snoozeDuration * 60))
-            AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false, modelContext: context)
-            print("PolyNap Debug: Alarm \(snoozeDuration) dakika ertelendi")
-        } catch {
-            print("PolyNap Debug: AlarmSettings alınamadı: \(error), varsayılan 5 dakika kullanılıyor")
-            let snoozeDate = Date().addingTimeInterval(5 * 60)
-            AlarmService.shared.scheduleAlarmNotification(date: snoozeDate, repeats: false, modelContext: context)
-        }
+        await AlarmService.shared.snoozeAlarm(from: notificationToSnooze)
+        
+        stopAlarm()
     }
-} 
+}

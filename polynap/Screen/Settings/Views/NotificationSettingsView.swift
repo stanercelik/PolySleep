@@ -1,16 +1,17 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct NotificationSettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @Environment(\.colorScheme) private var colorScheme
     @Query private var userPreferences: [UserPreferences]
+    
     @State private var reminderTime: Double = 15
-    @State private var hasScheduleChanged = false
     @State private var showTestAlert = false
     @State private var testNotificationScheduled = false
-    @State private var notificationPermissionStatus = L("notifications.permission.unknown", table: "Profile")
+    @State private var notificationPermissionStatus = "Bilinmiyor"
     
     var currentPreferences: UserPreferences? {
         userPreferences.first
@@ -18,12 +19,8 @@ struct NotificationSettingsView: View {
     
     var body: some View {
         ZStack {
-            // Modern gradient background
             LinearGradient(
-                gradient: Gradient(colors: [
-                    Color.appBackground,
-                    Color.appBackground.opacity(0.95)
-                ]),
+                gradient: Gradient(colors: [Color.appBackground, Color.appBackground.opacity(0.95)]),
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -33,26 +30,11 @@ struct NotificationSettingsView: View {
                 LazyVStack(spacing: 20) {
                     // Hero Header Section
                     VStack(spacing: 16) {
-                        // Icon with gradient background
                         ZStack {
                             Circle()
-                                .fill(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            Color.appAccent.opacity(0.8),
-                                            Color.appSecondary.opacity(0.6)
-                                        ]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .fill(LinearGradient(gradient: Gradient(colors: [Color.appAccent.opacity(0.8), Color.appSecondary.opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))
                                 .frame(width: 64, height: 64)
-                                .shadow(
-                                    color: Color.appAccent.opacity(0.3),
-                                    radius: 12,
-                                    x: 0,
-                                    y: 6
-                                )
+                                .shadow(color: Color.appAccent.opacity(0.3), radius: 12, x: 0, y: 6)
                             
                             Image(systemName: "bell.badge.fill")
                                 .font(.title)
@@ -61,65 +43,37 @@ struct NotificationSettingsView: View {
                         
                         VStack(spacing: 8) {
                             Text(L("notifications.management.title", table: "Profile"))
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.appText)
-                            
+                                .font(.title2).fontWeight(.bold).foregroundColor(.appText)
                             Text(L("notifications.management.subtitle", table: "Profile"))
-                                .font(.subheadline)
-                                .foregroundColor(.appTextSecondary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
+                                .font(.subheadline).foregroundColor(.appTextSecondary)
+                                .multilineTextAlignment(.center).lineLimit(2)
                         }
                     }
-                    .padding(.top, 8)
-                    .padding(.horizontal, 24)
+                    .padding(.top, 8).padding(.horizontal, 24)
                     
                     // Reminder Time Card
                     ModernNotificationCard {
                         VStack(spacing: 20) {
-                            // Card Header
                             HStack(spacing: 12) {
                                 ZStack {
-                                    Circle()
-                                        .fill(Color.appPrimary.opacity(0.15))
-                                        .frame(width: 40, height: 40)
-                                    
-                                    Image(systemName: "clock.arrow.2.circlepath")
-                                        .font(.system(size: 18, weight: .medium))
-                                        .foregroundColor(.appPrimary)
+                                    Circle().fill(Color.appPrimary.opacity(0.15)).frame(width: 40, height: 40)
+                                    Image(systemName: "clock.arrow.2.circlepath").font(.system(size: 18, weight: .medium)).foregroundColor(.appPrimary)
                                 }
-                                
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(L("notifications.reminderTime.title", table: "Profile"))
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.appText)
-                                    
-                                    Text(L("notifications.reminderTime.subtitle", table: "Profile"))
-                                        .font(.caption)
-                                        .foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.reminderTime.title", table: "Profile")).font(.headline).fontWeight(.semibold).foregroundColor(.appText)
+                                    Text(L("notifications.reminderTime.subtitle", table: "Profile")).font(.caption).foregroundColor(.appTextSecondary)
                                 }
-                                
                                 Spacer()
                             }
                             
-                            // Time Display
                             VStack(spacing: 16) {
                                 HStack {
                                     if reminderTime > 0 {
-                                        Text("\(formatTime(minutes: Int(reminderTime)))")
-                                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                                            .foregroundColor(.appAccent)
+                                        Text("\(formatTime(minutes: Int(reminderTime)))").font(.system(size: 28, weight: .bold, design: .rounded)).foregroundColor(.appAccent)
                                     } else {
-                                        Text(L("notifications.off", table: "Profile"))
-                                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                                            .foregroundColor(.appTextSecondary)
+                                        Text(L("notifications.off", table: "Profile")).font(.system(size: 28, weight: .bold, design: .rounded)).foregroundColor(.appTextSecondary)
                                     }
-                                    
                                     Spacer()
-                                    
-                                    // Quick Actions
                                     HStack(spacing: 8) {
                                         ModernQuickTimeButton(time: 5, currentTime: $reminderTime)
                                         ModernQuickTimeButton(time: 15, currentTime: $reminderTime)
@@ -127,26 +81,15 @@ struct NotificationSettingsView: View {
                                     }
                                 }
                                 
-                                ModernSlider(
-                                    value: $reminderTime,
-                                    range: 0...120,
-                                    step: 1,
-                                    trackColor: Color.appTextSecondary.opacity(0.2),
-                                    thumbColor: Color.appAccent
-                                )
+                                Slider(value: $reminderTime, in: 0...120, step: 1)
                                 .onChange(of: reminderTime) { oldValue, newValue in
                                     saveReminderTime(minutes: Int(newValue))
-                                    hasScheduleChanged = true
                                 }
                                 
                                 HStack {
-                                    Text(L("notifications.off", table: "Profile"))
-                                        .font(.caption2)
-                                        .foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.off", table: "Profile")).font(.caption2).foregroundColor(.appTextSecondary)
                                     Spacer()
-                                    Text(L("notifications.twoHours", table: "Profile"))
-                                        .font(.caption2)
-                                        .foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.twoHours", table: "Profile")).font(.caption2).foregroundColor(.appTextSecondary)
                                 }
                             }
                         }
@@ -255,7 +198,7 @@ struct NotificationSettingsView: View {
                                     icon: "bell.circle.fill",
                                     title: L("notifications.permission.title", table: "Profile"),
                                     value: notificationPermissionStatus,
-                                    valueColor: notificationPermissionStatus == L("notifications.permission.granted", table: "Profile") ? .green : .orange
+                                    valueColor: notificationPermissionStatus == "İzin Verildi" ? .green : .orange
                                 )
                                 
                                 ModernStatusDivider()
@@ -291,12 +234,6 @@ struct NotificationSettingsView: View {
             loadCurrentSettings()
             checkNotificationPermission()
         }
-        .onChange(of: hasScheduleChanged) { oldValue, newValue in
-            if newValue {
-                updateNotificationsForActiveSchedule()
-                hasScheduleChanged = false
-            }
-        }
         .alert(L("notifications.test.alert.title", table: "Profile"), isPresented: $showTestAlert) {
             Button(L("general.ok", table: "Profile")) { }
         } message: {
@@ -308,7 +245,6 @@ struct NotificationSettingsView: View {
         if let preferences = currentPreferences {
             reminderTime = Double(preferences.reminderLeadTimeInMinutes)
         } else {
-            // İlk kez açılıyorsa UserPreferences oluştur
             createInitialPreferences()
         }
     }
@@ -316,13 +252,8 @@ struct NotificationSettingsView: View {
     private func createInitialPreferences() {
         let newPreferences = UserPreferences(reminderLeadTimeInMinutes: 15)
         modelContext.insert(newPreferences)
-        
-        do {
-            try modelContext.save()
-            reminderTime = 15
-        } catch {
-            print("UserPreferences oluşturulurken hata: \(error)")
-        }
+        do { try modelContext.save(); reminderTime = 15 }
+        catch { print("UserPreferences oluşturulurken hata: \(error)") }
     }
     
     private func saveReminderTime(minutes: Int) {
@@ -335,82 +266,50 @@ struct NotificationSettingsView: View {
         
         do {
             try modelContext.save()
-            print("✅ Hatırlatma süresi güncellendi: \(minutes) dakika")
+            print("✅ Hatırlatma süresi güncellendi: \(minutes) dakika. Bildirimler yeniden planlanıyor...")
+            updateNotificationsForActiveSchedule()
         } catch {
             print("❌ Hatırlatma süresi kaydedilemedi: \(error)")
         }
     }
     
-    private func testNotificationImmediately() {
-        let testTitle = L("notifications.test.immediate.content.title", table: "Profile")
-        let testBody = L("notifications.test.immediate.content.body", table: "Profile")
-        
-        LocalNotificationService.shared.scheduleTestNotification(
-            title: testTitle,
-            body: testBody,
-            delay: 1 // 1 saniye sonra
-        )
-        
-        showTestAlert = true
+    private func updateNotificationsForActiveSchedule() {
+        Task {
+            await AlarmService.shared.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
+        }
     }
-    
-    private func test5SecondNotification() {
-        let testTitle = L("notifications.test.delayed.content.title", table: "Profile")
-        let testBody = L("notifications.test.delayed.content.body", table: "Profile")
-        
-        LocalNotificationService.shared.scheduleTestNotification(
-            title: testTitle,
-            body: testBody,
-            delay: 5 // 5 saniye sonra
-        )
-        
-        testNotificationScheduled = true
-        
-        // 6 saniye sonra test durumunu sıfırla
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-            testNotificationScheduled = false
+
+    private func checkNotificationPermission() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .authorized: notificationPermissionStatus = "İzin Verildi"
+                case .denied: notificationPermissionStatus = "Reddedildi"
+                default: notificationPermissionStatus = "Belirlenmedi"
+                }
+            }
         }
     }
     
     private func formatTime(minutes: Int) -> String {
         if minutes < 60 {
-            return "\(minutes) " + (minutes == 1 ? L("notifications.minute", table: "Profile") : L("notifications.minutes", table: "Profile"))
+            return "\(minutes) dakika"
         } else {
             let hours = minutes / 60
             let remainingMinutes = minutes % 60
-            
-            if remainingMinutes == 0 {
-                return "\(hours) " + (hours == 1 ? L("notifications.hour", table: "Profile") : L("notifications.hours", table: "Profile"))
-            } else {
-                return "\(hours) " + (hours == 1 ? L("notifications.hour", table: "Profile") : L("notifications.hours", table: "Profile")) + " \(remainingMinutes) " + (remainingMinutes == 1 ? L("notifications.minute", table: "Profile") : L("notifications.minutes", table: "Profile"))
-            }
+            if remainingMinutes == 0 { return "\(hours) saat" }
+            else { return "\(hours) saat \(remainingMinutes) dakika" }
         }
     }
     
-    /// Aktif uyku programı için bildirimleri planlar
-    private func updateNotificationsForActiveSchedule() {
-        ScheduleManager.shared.updateNotificationsForActiveSchedule()
+    private func testNotificationImmediately() {
+        // Bu fonksiyon, yeni AlarmService yapısıyla uyumlu hale getirilebilir veya
+        // test amaçlı geçici bir bildirim gönderebilir.
     }
     
-    private func checkNotificationPermission() {
-        LocalNotificationService.shared.getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                switch settings.authorizationStatus {
-                case .authorized:
-                    notificationPermissionStatus = L("notifications.permission.granted", table: "Profile")
-                case .denied:
-                    notificationPermissionStatus = L("notifications.permission.denied", table: "Profile")
-                case .notDetermined:
-                    notificationPermissionStatus = L("notifications.permission.notDetermined", table: "Profile")
-                case .provisional:
-                    notificationPermissionStatus = L("notifications.permission.provisional", table: "Profile")
-                case .ephemeral:
-                    notificationPermissionStatus = L("notifications.permission.ephemeral", table: "Profile")
-                @unknown default:
-                    notificationPermissionStatus = L("notifications.permission.unknown", table: "Profile")
-                }
-            }
-        }
+    private func test5SecondNotification() {
+        // Bu fonksiyon, yeni AlarmService yapısıyla uyumlu hale getirilebilir veya
+        // test amaçlı geçici bir bildirim gönderebilir.
     }
 }
 

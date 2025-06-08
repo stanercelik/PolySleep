@@ -100,7 +100,7 @@ class ProfileScreenViewModel: ObservableObject {
         
         // ScheduleManager'ı yeniden yükle
         Task {
-            await ScheduleManager.shared.loadActiveSchedule()
+            await ScheduleManager.shared.loadActiveScheduleFromRepository()
         }
     }
     

@@ -342,7 +342,7 @@ final class OnboardingViewModel: ObservableObject {
                     print("✅ Önerilen program (ScheduleEntity) yerel olarak kaydedildi ve aktif edildi.")
                     
                     // ScheduleManager'ın aktif programını güncellemesini sağla
-                    await ScheduleManager.shared.loadActiveSchedule()
+                    await ScheduleManager.shared.loadActiveScheduleFromRepository()
                     
                     await MainActor.run {
                         updateProgress(1.0, "Hazır!")
@@ -361,7 +361,7 @@ final class OnboardingViewModel: ObservableObject {
                 do {
                     _ = try await Repository.shared.saveSchedule(defaultScheduleModel)
                     print("✅ Varsayılan program yerel olarak kaydedildi ve aktif edildi.")
-                    await ScheduleManager.shared.loadActiveSchedule()
+                    await ScheduleManager.shared.loadActiveScheduleFromRepository()
                     await handleErrorButContinue("Size uygun bir program önerisi bulunamadı. Varsayılan program ayarlandı.")
                 } catch {
                     print("❌ Varsayılan program kaydedilirken/aktifleştirilirken hata: \(error.localizedDescription)")

@@ -1,415 +1,385 @@
+import Foundation
 import UserNotifications
-import UIKit
 import SwiftData
-import AVFoundation
+import UIKit
 
-// Singleton service to handle notification scheduling.
-class AlarmService {
-    
+@MainActor
+final class AlarmService: ObservableObject {
     static let shared = AlarmService()
-    private init() {}
     
-    let notificationCenter = UNUserNotificationCenter.current()
+    private let notificationCenter = UNUserNotificationCenter.current()
+    private let calendar = Calendar.current
     
-    func requestAuthorization() {
-        // Uygulama kapalıyken de çalması için tüm permission'ları iste
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge, .provisional, .timeSensitive]) { granted, error in
+    // iOS'in izin verdiği maksimum bildirim sayısı 64'tür, güvenli bir sınır olarak 60 kullanıyoruz.
+    private let notificationLimit = 60
+    
+    // Bildirim kategori tanımlayıcıları
+    static let alarmCategoryIdentifier = "ALARM_CATEGORY"
+    static let reminderCategoryIdentifier = "REMINDER_CATEGORY"
+
+    // Bu sadece bir kez çağrılır.
+    private init() {
+        Task {
+            await requestAuthorization()
+            await registerNotificationCategories()
+        }
+    }
+
+    // MARK: - Yetkilendirme ve Kurulum
+
+    /// Kullanıcıdan bildirim izni ister.
+    func requestAuthorization() async {
+        do {
+            // Alarmların zamanında teslim edilmesi için .timeSensitive önemlidir.
+            let granted = try await notificationCenter.requestAuthorization(options: [.alert, .sound, .badge, .timeSensitive])
             if granted {
-                print("PolyNap Debug: Notification permission granted - uygulama kapalıyken de çalacak")
-                self.registerAlarmCategory()
-                
-                // iOS settings kontrolü
-                self.checkNotificationSettings()
-            } else if let error = error {
-                print("PolyNap Debug: Notification permission error: \(error.localizedDescription)")
+                print("✅ AlarmService: Bildirim izni verildi.")
             } else {
-                print("PolyNap Debug: Notification permission reddedildi - Ayarlar'dan açılması gerekiyor")
+                print("⚠️ AlarmService: Bildirim izni reddedildi.")
             }
+        } catch {
+            print("🚨 AlarmService: Bildirim izni istenirken hata: \(error.localizedDescription)")
         }
     }
     
-    /// iOS notification ayarlarını kontrol et
-    private func checkNotificationSettings() {
-        notificationCenter.getNotificationSettings { settings in
-            print("PolyNap Debug: Notification Settings:")
-            print("- Authorization Status: \(settings.authorizationStatus.rawValue)")
-            print("- Alert Setting: \(settings.alertSetting.rawValue)")
-            print("- Sound Setting: \(settings.soundSetting.rawValue)")
-            print("- Badge Setting: \(settings.badgeSetting.rawValue)")
-            
-            if #available(iOS 15.0, *) {
-                print("- Time Sensitive Setting: \(settings.timeSensitiveSetting.rawValue)")
-            }
-            
-            if settings.soundSetting != .enabled {
-                print("⚠️ UYARI: Bildirim sesi kapalı! Ayarlar'dan açılması gerekiyor")
-            }
-        }
-    }
-    
-    /// Settings'ten erteleme süresini alarak dinamik kategori oluşturur
-    func updateAlarmCategoryWithSnooze(snoozeDuration: Int) {
-        let snoozeAction = UNNotificationAction(identifier: "SNOOZE_ACTION", title: "\(snoozeDuration) Dakika Ertele", options: [])
-        let stopAction = UNNotificationAction(identifier: "STOP_ACTION", title: "Kapat", options: [.destructive])
-        
-        let alarmCategory = UNNotificationCategory(identifier: "ALARM_CATEGORY",
-                                                 actions: [snoozeAction, stopAction],
-                                                 intentIdentifiers: [],
-                                                 options: [.customDismissAction])
-        
-        notificationCenter.setNotificationCategories([alarmCategory])
-        print("PolyNap Debug: Alarm kategorisi güncellendi - Erteleme: \(snoozeDuration) dakika")
-    }
-    
-    private func registerAlarmCategory() {
-        // Varsayılan erteleme süresi - güncel settings'ten alınacak
+    /// "Ertele" ve "Kapat" gibi eylemlerle bildirim kategorilerini kaydeder.
+    private func registerNotificationCategories() async {
+        // ALARM Kategorisi (Eylemli)
         let snoozeAction = UNNotificationAction(identifier: "SNOOZE_ACTION", title: "Ertele", options: [])
         let stopAction = UNNotificationAction(identifier: "STOP_ACTION", title: "Kapat", options: [.destructive])
-        
-        let alarmCategory = UNNotificationCategory(identifier: "ALARM_CATEGORY",
-                                                 actions: [snoozeAction, stopAction],
-                                                 intentIdentifiers: [],
-                                                 options: [.customDismissAction])
-        
-        notificationCenter.setNotificationCategories([alarmCategory])
-    }
-
-    func scheduleAlarmNotification(date: Date, soundName: String = "alarm.caf", repeats: Bool, modelContext: ModelContext? = nil) {
-        // Settings'ten erteleme süresini al ve kategoriyi güncelle
-        if let context = modelContext {
-            let request = FetchDescriptor<AlarmSettings>()
-            do {
-                let alarmSettingsList = try context.fetch(request)
-                let snoozeDuration = alarmSettingsList.first?.snoozeDurationMinutes ?? 5
-                updateAlarmCategoryWithSnooze(snoozeDuration: snoozeDuration)
-            } catch {
-                print("PolyNap Debug: AlarmSettings alınamadı, varsayılan kategori kullanılıyor: \(error)")
-                updateAlarmCategoryWithSnooze(snoozeDuration: 5)
-            }
-        } else {
-            updateAlarmCategoryWithSnooze(snoozeDuration: 5)
-        }
-        
-        let content = UNMutableNotificationContent()
-        content.title = "🚨 UYANMA ALARMI!"
-        content.body = "Alarm çalıyor! Uyanma zamanı geldi!"
-        content.categoryIdentifier = "ALARM_CATEGORY"
-        
-        // Uygulama kapalıyken de çalması için maksimum ayarlar
-        if #available(iOS 15.0, *) {
-            content.interruptionLevel = .timeSensitive // En yüksek seviye (critical olmadan)
-            content.relevanceScore = 1.0 // En yüksek önem
-        }
-        
-        // Badge sayısını belirgin yap
-        content.badge = NSNumber(value: 1)
-        
-        // Settings'ten seçilen alarm sesini kullan veya varsayılan
-        var selectedSoundName = soundName
-        if let context = modelContext {
-            let request = FetchDescriptor<AlarmSettings>()
-            do {
-                let alarmSettingsList = try context.fetch(request)
-                if let settings = alarmSettingsList.first {
-                    selectedSoundName = settings.soundName
-                }
-            } catch {
-                print("PolyNap Debug: AlarmSettings alınamadı, varsayılan ses kullanılıyor")
-            }
-        }
-        
-        // Ses dosyası ayarları - uygulama kapalıyken de çalması için
-        content.sound = createNotificationSound(soundName: selectedSoundName)
-
-        let trigger = UNCalendarNotificationTrigger(
-            dateMatching: Calendar.current.dateComponents([.hour, .minute, .second], from: date),
-            repeats: repeats
+        let alarmCategory = UNNotificationCategory(
+            identifier: Self.alarmCategoryIdentifier,
+            actions: [snoozeAction, stopAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
         )
         
-        // Using a unique identifier for each alarm
-        let request = UNNotificationRequest(identifier: "alarm_\(date.timeIntervalSince1970)", content: content, trigger: trigger)
+        // HATIRLATICI Kategorisi (Eylemsiz)
+        let reminderCategory = UNNotificationCategory(
+            identifier: Self.reminderCategoryIdentifier,
+            actions: [],
+            intentIdentifiers: [],
+            options: []
+        )
+        
+        notificationCenter.setNotificationCategories([alarmCategory, reminderCategory])
+        print("✅ AlarmService: Bildirim kategorileri (Alarm ve Hatırlatıcı) kaydedildi.")
+    }
 
-        notificationCenter.add(request) { error in
-            if let error = error {
-                print("PolyNap Debug: Alarm notification eklenemedi: \(error.localizedDescription)")
-            } else {
-                print("PolyNap Debug: Alarm başarıyla planlandı - \(date). Repeats: \(repeats)")
-            }
-        }
-    }
-    
-    /// 30 saniye boyunca çalan güçlü alarm - Sleep block sonunda kullanılır
-    func schedulePersistentAlarm(date: Date, modelContext: ModelContext? = nil) {
-        // Settings'ten alarm sesini al
-        var selectedSoundName = "alarm.caf"
-        if let context = modelContext {
-            let request = FetchDescriptor<AlarmSettings>()
-            do {
-                let alarmSettingsList = try context.fetch(request)
-                if let settings = alarmSettingsList.first {
-                    selectedSoundName = settings.soundName
-                    updateAlarmCategoryWithSnooze(snoozeDuration: settings.snoozeDurationMinutes)
-                }
-            } catch {
-                print("PolyNap Debug: AlarmSettings alınamadı, varsayılan ayarlar kullanılıyor")
-                updateAlarmCategoryWithSnooze(snoozeDuration: 5)
-            }
-        } else {
-            updateAlarmCategoryWithSnooze(snoozeDuration: 5)
+    // MARK: - Ana Planlama Mantığı
+
+    /// Aktif uyku programı için tüm alarmları ve hatırlatıcıları planlayan ana fonksiyondur.
+    /// Kullanıcının programı veya alarm ayarları değiştiğinde çağrılmalıdır.
+    func rescheduleNotificationsForActiveSchedule(modelContext: ModelContext) async {
+        // 1. Gerekli ayarları ve programı SwiftData'dan al
+        guard let activeSchedule = try? getActiveSchedule(context: modelContext) else {
+            print("ℹ️ AlarmService: Aktif program bulunamadı. Tüm bildirimler iptal ediliyor.")
+            await cancelAllNotifications()
+            return
         }
         
-        let content = UNMutableNotificationContent()
-        content.title = "🚨 UYANMA ALARMI!"
-        content.body = "Uyku blok zamanınız doldu! Uyanma zamanı!"
-        content.categoryIdentifier = "ALARM_CATEGORY"
-        
-        // Uygulama kapalıyken de çalması için maksimum etkili ayarlar
-        if #available(iOS 15.0, *) {
-            content.interruptionLevel = .timeSensitive // Critical olmadan en güçlü
-            content.relevanceScore = 1.0 // En yüksek öncelik
+        guard let alarmSettings = try? getAlarmSettings(context: modelContext) else {
+            print("ℹ️ AlarmService: Alarm ayarları bulunamadı. Sadece hatırlatıcılar planlanacak.")
+            return // Ayarlar yoksa devam etme
         }
         
-        content.badge = NSNumber(value: 1)
-        
-        // Uygulama kapalıyken de çalacak ses ayarları
-        content.sound = createNotificationSound(soundName: selectedSoundName)
-        
-        let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: max(1.0, date.timeIntervalSinceNow),
-            repeats: false
-        )
-        
-        let request = UNNotificationRequest(
-            identifier: "persistent_alarm_\(date.timeIntervalSince1970)",
-            content: content,
-            trigger: trigger
-        )
-        
-        notificationCenter.add(request) { error in
-            if let error = error {
-                print("PolyNap Debug: Persistent alarm eklenemedi: \(error.localizedDescription)")
-                print("PolyNap Debug: Hata detayı - notification permission kontrol edilmeli")
-            } else {
-                print("PolyNap Debug: 30 saniye uzunluğunda alarm başarıyla kuruldu - \(date)")
-                print("PolyNap Debug: Alarm uygulama kapalıyken de çalacak")
-            }
+        guard let userPreferences = try? getUserPreferences(context: modelContext) else {
+            print("ℹ️ AlarmService: Kullanıcı tercihleri bulunamadı.")
+            return
         }
-    }
-    
-    /// Sleep block bitimi için tekli alarm sistemi - sadece bir alarm zamanlanır
-    func scheduleComprehensiveAlarmForSleepBlockEnd(date: Date, modelContext: ModelContext? = nil) {
-        print("PolyNap Debug: Sleep block bitimi için tekli alarm sistemi başlatılıyor")
         
-        // Mevcut tüm benzer alarmları önce iptal et
-        cancelDuplicateAlarms(for: date)
+        print("🔄 AlarmService: '\(activeSchedule.name)' programı için bildirimler yeniden planlanıyor...")
         
-        DispatchQueue.main.async {
-            let appState = UIApplication.shared.applicationState
-            if appState == .active {
-                // Uygulama önplanda - doğrudan UI alarm göster
-                print("PolyNap Debug: Uygulama önplanda - doğrudan AlarmFiringView gösteriliyor")
-                NotificationCenter.default.post(name: .startAlarm, object: nil)
-            } else {
-                // Uygulama arka planda veya kapalı - SADECE TEK BİR notification sistemi kullan
-                print("PolyNap Debug: Uygulama arka planda/kapalı - tek notification sistemi aktif")
-                
-                // Immediate alarm mı yoksa scheduled alarm mı? Zamana göre karar ver
-                if date.timeIntervalSinceNow <= 1.0 {
-                    // Hemen çalacak alarm
-                    self.scheduleImmediateAlarmNotification(modelContext: modelContext)
-                } else {
-                    // Zamanlanmış alarm
-                    self.schedulePersistentAlarm(date: date, modelContext: modelContext)
-                }
-            }
-        }
-    }
-    
-    /// Anlık alarm notification'ı (immediate) - sleep block bitiminde kullanılır - TEKRARLANMAZ
-    private func scheduleImmediateAlarmNotification(modelContext: ModelContext? = nil) {
-        // Önce aynı türdeki immediate alarm'ları iptal et
-        notificationCenter.getPendingNotificationRequests { requests in
-            let immediateAlarmIds = requests.compactMap { request in
-                if request.identifier.contains("immediate_alarm_") {
-                    return request.identifier
-                }
-                return nil
+        // 2. Kopya bildirimleri önlemek için önceden planlanmış tüm bildirimleri iptal et
+        await cancelAllNotifications()
+        
+        var scheduledCount = 0
+        
+        // 3. Gelecek 7 gün için uyku bloklarını işle
+        let futureBlocks = calculateFutureBlocks(for: activeSchedule, daysInAdvance: 7)
+        
+        for blockInstance in futureBlocks {
+            // Limiti kontrol et
+            if scheduledCount >= notificationLimit {
+                print("⚠️ AlarmService: Bildirim limitine (\(notificationLimit)) ulaşıldı. Planlama durduruldu.")
+                break
             }
             
-            if !immediateAlarmIds.isEmpty {
-                self.notificationCenter.removePendingNotificationRequests(withIdentifiers: immediateAlarmIds)
-                print("PolyNap Debug: \(immediateAlarmIds.count) immediate alarm iptal edildi (duplicate engellendi)")
+            // 4. UYKU ALARMINI PLANLA (eğer alarmlar aktifse)
+            if alarmSettings.isEnabled {
+                await scheduleAlarm(at: blockInstance.endDate, with: alarmSettings, for: activeSchedule)
+                scheduledCount += 1
+            }
+            
+            // 5. HATIRLATICI BİLDİRİMİNİ PLANLA (eğer hatırlatma süresi 0'dan büyükse)
+            let leadTime = userPreferences.reminderLeadTimeInMinutes
+            if leadTime > 0 {
+                let reminderDate = blockInstance.startDate.addingTimeInterval(-Double(leadTime * 60))
+                // Sadece gelecekteki hatırlatıcıları planla
+                if reminderDate > Date() {
+                    await scheduleReminder(at: reminderDate, for: blockInstance)
+                    scheduledCount += 1
+                }
             }
         }
         
-        var selectedSoundName = "alarm.caf"
-        if let context = modelContext {
-            let request = FetchDescriptor<AlarmSettings>()
-            do {
-                let alarmSettingsList = try context.fetch(request)
-                if let settings = alarmSettingsList.first {
-                    selectedSoundName = settings.soundName
-                }
-            } catch {
-                print("PolyNap Debug: AlarmSettings alınamadı, varsayılan ses kullanılıyor")
-            }
+        print("✅ AlarmService: Başarıyla \(scheduledCount) bildirim (alarm ve hatırlatıcı) planlandı.")
+        await printPendingNotifications() // Hata ayıklama için
+    }
+
+    // MARK: - Anlık Alarm Tetikleme
+
+    /// Bir uyku bloğu bittiğinde senaryolara göre anında alarmı tetikler.
+    /// - `MainScreenViewModel`'den çağrılır.
+    func triggerAlarmForEndedBlock(block: SleepBlock, settings: AlarmSettings) async {
+        let applicationState = await UIApplication.shared.applicationState
+        
+        // Duplicate alarm check - aynı block için zaten scheduled alarm var mı?
+        let blockEndTime = Date() // Şu an bitiş zamanı
+        let tolerance: TimeInterval = 120 // 2 dakika tolerans (daha geniş)
+        
+        let pendingRequests = await notificationCenter.pendingNotificationRequests()
+        let hasScheduledAlarm = pendingRequests.contains { request in
+            guard let trigger = request.trigger as? UNCalendarNotificationTrigger,
+                  let triggerDate = trigger.nextTriggerDate() else { return false }
+            
+            let timeDiff = abs(triggerDate.timeIntervalSince(blockEndTime))
+            let isAlarmCategory = request.content.categoryIdentifier == Self.alarmCategoryIdentifier
+            let isScheduledAlarm = request.content.userInfo["isScheduledAlarm"] as? Bool == true
+            
+            return timeDiff < tolerance && isAlarmCategory && isScheduledAlarm
+        }
+        
+        // Eğer scheduled alarm varsa ve background'daysa, duplicate alarm oluşturma
+        if hasScheduledAlarm && applicationState != .active {
+            print("⚠️ AlarmService: Bu blok için zaten scheduled alarm var ve uygulama background'da, duplicate oluşturulmuyor.")
+            return
         }
         
         let content = UNMutableNotificationContent()
-        content.title = "🚨 UYKU BLOĞU BİTTİ!"
-        content.body = "Şu anda uyanmalısınız! Alarm çalıyor!"
-        content.categoryIdentifier = "ALARM_CATEGORY"
-        
-        // Maksimum etkililik ayarları
-        if #available(iOS 15.0, *) {
-            content.interruptionLevel = .timeSensitive
-            content.relevanceScore = 1.0
-        }
-        
-        content.badge = NSNumber(value: 1)
-        content.sound = createNotificationSound(soundName: selectedSoundName)
-        
-        // Hemen tetiklenir (0.1 saniye gecikme)
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-        
-        // Unique identifier - sadece bir tane immediate alarm olacak
-        let request = UNNotificationRequest(
-            identifier: "immediate_alarm_single",
-            content: content,
-            trigger: trigger
-        )
-        
-        notificationCenter.add(request) { error in
-            if let error = error {
-                print("PolyNap Debug: Immediate alarm eklenemedi: \(error)")
-            } else {
-                print("PolyNap Debug: Tek immediate alarm başarıyla planlandı")
-            }
-        }
-    }
-    
-    /// Uygulama kapalıyken de çalacak notification sound oluşturur
-    private func createNotificationSound(soundName: String) -> UNNotificationSound {
-        // Ses dosyası adını temizle
-        let cleanSoundName = soundName.replacingOccurrences(of: ".caf", with: "")
-        
-        // Bundle'da ses dosyası var mı kontrol et
-        if let soundURL = Bundle.main.url(forResource: cleanSoundName, withExtension: "caf") {
-            // Ses dosyası süresi kontrol et
-            do {
-                let audioFile = try AVAudioFile(forReading: soundURL)
-                let duration = Double(audioFile.length) / audioFile.fileFormat.sampleRate
-                
-                if duration <= 30.0 { // Apple'ın 30 saniye kuralı
-                    print("PolyNap Debug: Özel alarm sesi kullanılıyor: \(cleanSoundName).caf (\(duration)s)")
-                    return UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(cleanSoundName).caf"))
-                } else {
-                    print("PolyNap Debug: Ses dosyası 30 saniyeden uzun (\(duration)s), varsayılan kullanılacak")
-                }
-            } catch {
-                print("PolyNap Debug: Ses dosyası kontrol edilemedi: \(error)")
+        content.title = "⏰ Uyanma Zamanı!"
+        content.body = "Uyku periyodunuz tamamlandı. Haydi güne başla!"
+        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: settings.soundName))
+        content.categoryIdentifier = Self.alarmCategoryIdentifier
+        content.interruptionLevel = .timeSensitive // Bu, "Rahatsız Etme" modunu bile atlamasını sağlar
+        content.badge = 1
+        content.userInfo = [
+            "soundName": settings.soundName,
+            "blockId": block.id.uuidString,
+            "isInstantAlarm": true  // Bu instant alarm olduğunu belirtir
+        ]
+
+        if applicationState == .active {
+            // Senaryo 3: Uygulama ön planda
+            // Hemen UI'ı güncellemek için bir bildirim gönder.
+            print("▶️ AlarmService: Uygulama ön planda. Alarm görünümünü tetiklemek için bildirim gönderiliyor.")
+            await MainActor.run {
+                NotificationCenter.default.post(
+                    name: .startAlarm,
+                    object: nil,
+                    userInfo: content.userInfo
+                )
             }
         } else {
-            print("PolyNap Debug: Ses dosyası bulunamadı: \(cleanSoundName).caf")
+            // Senaryo 1 & 2: Uygulama arka planda veya kapalı
+            // Background'da zaten scheduled alarm var, duplicate oluşturma
+            print("🔍 AlarmService: Uygulama background/closed - scheduled alarm'a güveniyoruz, duplicate oluşturulmuyor.")
+            
+            // Background'dan foreground'a geçişte alarm'ı tetiklemek için state kaydı
+            await MainActor.run {
+                UserDefaults.standard.set(true, forKey: "pendingBackgroundAlarm")
+                UserDefaults.standard.set(content.userInfo, forKey: "pendingAlarmInfo")
+                print("📝 AlarmService: Background alarm state kaydedildi.")
+            }
         }
+    }
+
+    // MARK: - Yardımcı Planlama Fonksiyonları
+
+    private func scheduleAlarm(at date: Date, with settings: AlarmSettings, for schedule: UserSchedule) async {
+        let content = UNMutableNotificationContent()
+        content.title = "🚨 Uyanma Zamanı!"
+        content.body = "Uyku bloğunuz sona erdi. Günaydın!"
+        content.categoryIdentifier = Self.alarmCategoryIdentifier
+        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: settings.soundName))
+        content.interruptionLevel = .timeSensitive
+        content.badge = 1
+        content.userInfo = [
+            "scheduleId": schedule.id.uuidString, 
+            "soundName": settings.soundName,
+            "isScheduledAlarm": true
+        ]
         
-        // Fallback: Sistem varsayılan alarm sesi (uygulama kapalıyken de çalar)
-        print("PolyNap Debug: Varsayılan sistem alarm sesi kullanılıyor")
-        return UNNotificationSound.default
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let request = UNNotificationRequest(identifier: "alarm-\(date.timeIntervalSince1970)", content: content, trigger: trigger)
+        
+        do { try await notificationCenter.add(request) }
+        catch { print("🚨 AlarmService: Alarm planlanamadı: \(error.localizedDescription)") }
     }
     
-    func cancelPendingAlarms() {
+    private func scheduleReminder(at date: Date, for block: BlockInstance) async {
+        let content = UNMutableNotificationContent()
+        content.title = "😴 Uyku Zamanı Yaklaşıyor!"
+        let startTimeFormatted = block.startDate.formatted(date: .omitted, time: .shortened)
+        content.body = "'\(block.scheduleName)' programındaki \(startTimeFormatted) uykunuz başlamak üzere."
+        content.categoryIdentifier = Self.reminderCategoryIdentifier
+        content.sound = .default
+        
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let request = UNNotificationRequest(identifier: "reminder-\(date.timeIntervalSince1970)", content: content, trigger: trigger)
+
+        do { try await notificationCenter.add(request) }
+        catch { print("🚨 AlarmService: Hatırlatıcı planlanamadı: \(error.localizedDescription)") }
+    }
+
+    // MARK: - Veri Çekme ve Hesaplama
+
+    private func getActiveSchedule(context: ModelContext) throws -> UserSchedule? {
+        let descriptor = FetchDescriptor<UserSchedule>(predicate: #Predicate { $0.isActive == true })
+        return try context.fetch(descriptor).first
+    }
+
+    private func getAlarmSettings(context: ModelContext) throws -> AlarmSettings? {
+        let descriptor = FetchDescriptor<AlarmSettings>()
+        return try context.fetch(descriptor).first
+    }
+    
+    private func getUserPreferences(context: ModelContext) throws -> UserPreferences? {
+        let descriptor = FetchDescriptor<UserPreferences>()
+        return try context.fetch(descriptor).first
+    }
+
+    private struct BlockInstance {
+        let startDate: Date
+        let endDate: Date
+        let scheduleName: String
+    }
+
+    private func calculateFutureBlocks(for schedule: UserSchedule, daysInAdvance: Int) -> [BlockInstance] {
+        var instances: [BlockInstance] = []
+        let today = calendar.startOfDay(for: Date())
+        
+        guard let blocks = schedule.sleepBlocks else { return [] }
+
+        for dayOffset in 0..<daysInAdvance {
+            guard let targetDay = calendar.date(byAdding: .day, value: dayOffset, to: today) else { continue }
+            
+            for block in blocks {
+                let startComponents = calendar.dateComponents([.hour, .minute], from: block.startTime)
+                guard var blockStartDate = calendar.date(bySettingHour: startComponents.hour!, minute: startComponents.minute!, second: 0, of: targetDay) else { continue }
+                
+                var blockEndDate = blockStartDate.addingTimeInterval(TimeInterval(block.durationMinutes * 60))
+                
+                // Bitiş saati başlangıçtan küçükse (gece yarısını aşıyorsa), hem başlangıç hem de bitiş tarihini bir gün ileri al
+                let endComponents = calendar.dateComponents([.hour, .minute], from: block.endTime)
+                if endComponents.hour! < startComponents.hour! {
+                     blockEndDate = calendar.date(byAdding: .day, value: 1, to: blockEndDate)!
+                     if blockStartDate > blockEndDate { // Örn: 23:00'da başlayan blok için, hedef gün 1 ise başlangıç 1. gün 23:00 olmalı.
+                         blockStartDate = calendar.date(byAdding: .day, value: -1, to: blockStartDate)!
+                     }
+                }
+                
+                if blockEndDate > Date() {
+                    instances.append(BlockInstance(startDate: blockStartDate, endDate: blockEndDate, scheduleName: schedule.name))
+                }
+            }
+        }
+        return instances.sorted { $0.startDate < $1.startDate }
+    }
+    
+    // MARK: - Alarm Yönetimi
+
+    /// Erteleme için tek seferlik bir alarm planlar.
+    func snoozeAlarm(from notification: UNNotification) async {
+        // Erteleme süresini ayarlardan al (veya varsayılan kullan).
+        // Basitlik için burada 5 dakika kullanıyoruz.
+        let snoozeMinutes = 5
+        let snoozeDate = Date().addingTimeInterval(TimeInterval(snoozeMinutes * 60))
+        
+        let content = notification.request.content.mutableCopy() as! UNMutableNotificationContent
+        content.title = "😴 Ertelenmiş Alarm"
+        content.body = "Uyanma zamanı geldi!"
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: snoozeDate.timeIntervalSinceNow, repeats: false)
+        let request = UNNotificationRequest(identifier: "snooze-\(UUID().uuidString)", content: content, trigger: trigger)
+        
+        do {
+            try await notificationCenter.add(request)
+            print("✅ AlarmService: Alarm \(snoozeMinutes) dakika ertelendi.")
+        } catch {
+            print("🚨 AlarmService: Erteleme alarmı planlanamadı: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Planlanmış tüm alarm bildirimlerini iptal eder.
+    func cancelAllNotifications() async {
         notificationCenter.removeAllPendingNotificationRequests()
-        // Badge'i temizle
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        print("PolyNap Debug: Tüm bekleyen alarmlar iptal edildi, badge temizlendi")
+        await MainActor.run {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
+        print("🗑️ AlarmService: Tüm bekleyen bildirimler iptal edildi.")
     }
-    
-    /// Belirli bir alarm serisini iptal et (persistent alarms için)
-    func cancelPersistentAlarms(for date: Date) {
-        let identifier = "persistent_alarm_\(date.timeIntervalSince1970)"
-        
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-        print("PolyNap Debug: Persistent alarm iptal edildi - \(identifier)")
-    }
-    
-    /// Aynı zamana sahip duplicate alarmları iptal eder
-    private func cancelDuplicateAlarms(for date: Date) {
-        let dateTimeInterval = date.timeIntervalSince1970
-        
-        notificationCenter.getPendingNotificationRequests { requests in
-            let duplicateIdentifiers = requests.compactMap { request -> String? in
-                let identifier = request.identifier
-                // Aynı zaman için farklı türdeki alarmları bul
-                if identifier.contains("persistent_alarm_\(dateTimeInterval)") ||
-                   identifier.contains("immediate_alarm_") ||
-                   identifier.contains("alarm_\(dateTimeInterval)") {
-                    return identifier
-                }
-                return nil
-            }
-            
-            if !duplicateIdentifiers.isEmpty {
-                self.notificationCenter.removePendingNotificationRequests(withIdentifiers: duplicateIdentifiers)
-                print("PolyNap Debug: \(duplicateIdentifiers.count) duplicate alarm iptal edildi")
-            }
+
+    /// Hızlı, tek seferlik bir test bildirimi planlar.
+    public func scheduleTestNotification(soundName: String, volume: Float) async {
+        let content = UNMutableNotificationContent()
+        content.title = "🔔 Test Alarmı"
+        content.body = "Bu, alarm ayarlarınız için bir test bildirimidir. Bildirime dokunarak uygulamayı açın!"
+        content.categoryIdentifier = Self.alarmCategoryIdentifier // Eylemleri göstermek için
+        content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundName))
+        content.interruptionLevel = .timeSensitive
+        content.userInfo = [
+            "soundName": soundName,
+            "isTestAlarm": true // Test alarmı olduğunu belirtelim
+        ]
+
+        let identifier = "test-alarm-\(UUID().uuidString)"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // 5 saniye içinde
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+        do {
+            try await notificationCenter.add(request)
+            print("✅ AlarmService: 5 saniye içinde çalacak test alarmı planlandı.")
+            print("📋 AlarmService: Test alarm ID: \(identifier)")
+            print("📋 AlarmService: Test alarm categoryIdentifier: \(content.categoryIdentifier)")
+            print("📋 AlarmService: Test alarm userInfo: \(content.userInfo)")
+        } catch {
+            print("🚨 AlarmService: Test alarmı planlanamadı: \(error.localizedDescription)")
         }
     }
-    
-    /// Test amaçlı hızlı alarm kurma (5 saniye sonra) - Tek güçlü bildirim
-    func scheduleTestAlarm(modelContext: ModelContext? = nil) {
-        let testDate = Date().addingTimeInterval(5) // 5 saniye sonra
-        scheduleAlarmNotification(date: testDate, repeats: false, modelContext: modelContext)
-        print("PolyNap Debug: Test alarmı 5 saniye sonra çalacak (uygulama kapalıyken de)")
+
+    // MARK: - Durum Kontrolü
+
+    public func getAuthorizationStatus() async -> UNAuthorizationStatus {
+        let settings = await notificationCenter.notificationSettings()
+        return settings.authorizationStatus
     }
     
-    /// Test amaçlı 30 saniye persistent alarm 
-    func scheduleTestPersistentAlarm(modelContext: ModelContext? = nil) {
-        let testDate = Date().addingTimeInterval(5) // 5 saniye sonra başlayacak
-        schedulePersistentAlarm(date: testDate, modelContext: modelContext)
-        print("PolyNap Debug: 30 saniye test alarm 5 saniye sonra başlayacak (uygulama kapalıyken de)")
+    public func getPendingNotificationsCount() async -> Int {
+        let requests = await notificationCenter.pendingNotificationRequests()
+        return requests.count
     }
+
+    // MARK: - Hata Ayıklama
     
-    /// Test için tekli alarm sistemi - Sleep block bitimi simülasyonu
-    func scheduleTestComprehensiveAlarm(modelContext: ModelContext? = nil) {
-        let testDate = Date().addingTimeInterval(5) // 5 saniye sonra
-        scheduleComprehensiveAlarmForSleepBlockEnd(date: testDate, modelContext: modelContext)
-        print("PolyNap Debug: Test tekli alarm sistemi 5 saniye sonra başlayacak - SADECE BİR ALARM çalacak")
-    }
-    
-    /// Debug: Bekleyen notification'ları listele
-    func debugPendingNotifications() {
-        notificationCenter.getPendingNotificationRequests { requests in
-            print("PolyNap Debug: Bekleyen notification sayısı: \(requests.count)")
+    /// Mevcut bekleyen tüm bildirimleri hata ayıklama için konsola yazdırır.
+    func printPendingNotifications() async {
+        let requests = await notificationCenter.pendingNotificationRequests()
+        if requests.isEmpty {
+            print("--- 🔔 Bekleyen Bildirim Yok ---")
+        } else {
+            print("--- 🔔 \(requests.count) Bekleyen Bildirim ---")
             for request in requests {
-                print("- ID: \(request.identifier)")
-                print("  Başlık: \(request.content.title)")
-                print("  Trigger: \(request.trigger?.description ?? "Yok")")
+                let type = request.content.categoryIdentifier == Self.alarmCategoryIdentifier ? "ALARM" : "REMINDER"
+                if let trigger = request.trigger as? UNCalendarNotificationTrigger, let date = trigger.nextTriggerDate() {
+                    print("  - [\(type)] ID: \(request.identifier), Tarih: \(date.formatted(date: .abbreviated, time: .complete))")
+                } else {
+                    print("  - [\(type)] ID: \(request.identifier), Tetikleyici: \(String(describing: request.trigger))")
+                }
             }
+            print("---------------------------------")
         }
     }
-    
-    /// iOS settings'e yönlendirme ve kullanıcı rehberliği için helper fonksiyonlar ekliyorum
-    func openNotificationSettings() {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-        
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl)
-            print("PolyNap Debug: iOS Ayarlar'a yönlendiriliyor")
-        }
-    }
-    
-    /// Kullanıcıya bildirim ayarları rehberi göster
-    func showNotificationGuide() -> String {
-        var guide = "🔔 Uygulama Kapalıyken Alarm Çalması İçin:\n\n"
-        guide += "2️⃣ Bildirimler'e tıklayın\n"
-        guide += "3️⃣ 'Bildirimlere İzin Ver'i açın\n"
-        guide += "4️⃣ 'Sesler'i açın\n"
-        guide += "5️⃣ 'Kilitleme Ekranında'yı açın\n"
-        guide += "6️⃣ 'Bildirim Merkezi'ni açın\n"
-        guide += "7️⃣ 'Afiş'leri açın\n\n"
-        guide += "⚠️ Bu ayarlar açık olmadan alarm sadece uygulama açıkken çalar!"
-        
-        return guide
-    }
-} 
+}

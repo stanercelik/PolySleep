@@ -9,6 +9,7 @@ struct AlarmFiringView: View {
     @State private var isAnimating = false
     @State private var pulseAnimation = false
     @State private var timeString = ""
+    @State private var timer: Timer?
     
     private var snoozeDuration: Int {
         alarmSettings.first?.snoozeDurationMinutes ?? 5
@@ -21,6 +22,9 @@ struct AlarmFiringView: View {
         }
         .onAppear {
             setupView()
+        }
+        .onDisappear {
+            cleanupView()
         }
         .preferredColorScheme(.dark)
     }
@@ -173,8 +177,8 @@ struct AlarmFiringView: View {
     
     private var snoozeButton: some View {
         Button(action: {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                alarmManager.snoozeAlarm()
+            Task {
+                await alarmManager.snoozeAlarm()
             }
         }) {
             HStack(spacing: PSSpacing.sm) {
@@ -214,9 +218,7 @@ struct AlarmFiringView: View {
     
     private var stopButton: some View {
         Button(action: {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                alarmManager.stopAlarm()
-            }
+            alarmManager.stopAlarm()
         }) {
             HStack(spacing: PSSpacing.sm) {
                 Image(systemName: "stop.circle.fill")
@@ -263,14 +265,38 @@ struct AlarmFiringView: View {
     
     // MARK: - Setup Methods
     private func setupView() {
+        print("🔧 AlarmFiringView: Setup başlatıldı")
         alarmManager.setModelContext(modelContext)
         isAnimating = true
         pulseAnimation = true
         updateTime()
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+        // AlarmFiringView açıldığında ses çalmaya başla
+        if !alarmManager.isAlarmFiring {
+            print("🎵 AlarmFiringView: AlarmManager firing=false, manuel başlatılıyor")
+            // Manuel olarak alarmı başlat
+            let soundName = alarmSettings.first?.soundName ?? "alarm.caf"
+            NotificationCenter.default.post(
+                name: .startAlarm,
+                object: nil,
+                userInfo: ["soundName": soundName]
+            )
+        } else {
+            print("🎵 AlarmFiringView: AlarmManager zaten firing=true durumda")
+        }
+        
+        // Timer başlat
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             updateTime()
         }
+        print("⏰ AlarmFiringView: Zaman güncelleme timer'ı başlatıldı")
+    }
+    
+    private func cleanupView() {
+        print("🧹 AlarmFiringView: Cleanup başlatıldı")
+        timer?.invalidate()
+        timer = nil
+        print("⏰ AlarmFiringView: Timer durduruldu")
     }
     
     private func updateTime() {

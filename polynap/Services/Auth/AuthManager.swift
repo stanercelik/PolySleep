@@ -36,7 +36,7 @@ class AuthManager: ObservableObject {
             }
             
             // Program yöneticisini başlat
-            await ScheduleManager.shared.loadActiveSchedule()
+            await ScheduleManager.shared.loadActiveScheduleFromRepository()
         }
     }
     
