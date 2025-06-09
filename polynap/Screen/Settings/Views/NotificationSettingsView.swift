@@ -42,9 +42,9 @@ struct NotificationSettingsView: View {
                         }
                         
                         VStack(spacing: 8) {
-                            Text(L("notifications.management.title", table: "Profile"))
+                            Text(L("notifications.management.title", table: "Settings"))
                                 .font(.title2).fontWeight(.bold).foregroundColor(.appText)
-                            Text(L("notifications.management.subtitle", table: "Profile"))
+                            Text(L("notifications.management.subtitle", table: "Settings"))
                                 .font(.subheadline).foregroundColor(.appTextSecondary)
                                 .multilineTextAlignment(.center).lineLimit(2)
                         }
@@ -60,8 +60,8 @@ struct NotificationSettingsView: View {
                                     Image(systemName: "clock.arrow.2.circlepath").font(.system(size: 18, weight: .medium)).foregroundColor(.appPrimary)
                                 }
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(L("notifications.reminderTime.title", table: "Profile")).font(.headline).fontWeight(.semibold).foregroundColor(.appText)
-                                    Text(L("notifications.reminderTime.subtitle", table: "Profile")).font(.caption).foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.reminderTime.title", table: "Settings")).font(.headline).fontWeight(.semibold).foregroundColor(.appText)
+                                    Text(L("notifications.reminderTime.subtitle", table: "Settings")).font(.caption).foregroundColor(.appTextSecondary)
                                 }
                                 Spacer()
                             }
@@ -71,7 +71,7 @@ struct NotificationSettingsView: View {
                                     if reminderTime > 0 {
                                         Text("\(formatTime(minutes: Int(reminderTime)))").font(.system(size: 28, weight: .bold, design: .rounded)).foregroundColor(.appAccent)
                                     } else {
-                                        Text(L("notifications.off", table: "Profile")).font(.system(size: 28, weight: .bold, design: .rounded)).foregroundColor(.appTextSecondary)
+                                        Text(L("notifications.off", table: "Settings")).font(.system(size: 28, weight: .bold, design: .rounded)).foregroundColor(.appTextSecondary)
                                     }
                                     Spacer()
                                     HStack(spacing: 8) {
@@ -87,9 +87,9 @@ struct NotificationSettingsView: View {
                                 }
                                 
                                 HStack {
-                                    Text(L("notifications.off", table: "Profile")).font(.caption2).foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.off", table: "Settings")).font(.caption2).foregroundColor(.appTextSecondary)
                                     Spacer()
-                                    Text(L("notifications.twoHours", table: "Profile")).font(.caption2).foregroundColor(.appTextSecondary)
+                                    Text(L("notifications.twoHours", table: "Settings")).font(.caption2).foregroundColor(.appTextSecondary)
                                 }
                             }
                         }
@@ -111,12 +111,12 @@ struct NotificationSettingsView: View {
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(L("notifications.test.title", table: "Profile"))
+                                    Text(L("notifications.test.title", table: "Settings"))
                                         .font(.headline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.appText)
                                     
-                                    Text(L("notifications.test.subtitle", table: "Profile"))
+                                    Text(L("notifications.test.subtitle", table: "Settings"))
                                         .font(.caption)
                                         .foregroundColor(.appTextSecondary)
                                 }
@@ -127,8 +127,8 @@ struct NotificationSettingsView: View {
                             VStack(spacing: 12) {
                                 ModernNotificationTestButton(
                                     icon: "bell.badge.fill",
-                                    title: L("notifications.test.immediate.title", table: "Profile"),
-                                    subtitle: L("notifications.test.immediate.subtitle", table: "Profile"),
+                                    title: L("notifications.test.immediate.title", table: "Settings"),
+                                    subtitle: L("notifications.test.immediate.subtitle", table: "Settings"),
                                     color: .appAccent
                                 ) {
                                     testNotificationImmediately()
@@ -136,8 +136,8 @@ struct NotificationSettingsView: View {
                                 
                                 ModernNotificationTestButton(
                                     icon: "timer",
-                                    title: L("notifications.test.delayed.title", table: "Profile"),
-                                    subtitle: L("notifications.test.delayed.subtitle", table: "Profile"),
+                                    title: L("notifications.test.delayed.title", table: "Settings"),
+                                    subtitle: L("notifications.test.delayed.subtitle", table: "Settings"),
                                     color: .appSecondary
                                 ) {
                                     test5SecondNotification()
@@ -147,7 +147,7 @@ struct NotificationSettingsView: View {
                                     HStack(spacing: 8) {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.green)
-                                        Text(L("notifications.test.scheduled", table: "Profile"))
+                                        Text(L("notifications.test.scheduled", table: "Settings"))
                                             .font(.caption)
                                             .foregroundColor(.green)
                                         Spacer()
@@ -180,12 +180,12 @@ struct NotificationSettingsView: View {
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(L("notifications.status.title", table: "Profile"))
+                                    Text(L("notifications.status.title", table: "Settings"))
                                         .font(.headline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.appText)
                                     
-                                    Text(L("notifications.status.subtitle", table: "Profile"))
+                                    Text(L("notifications.status.subtitle", table: "Settings"))
                                         .font(.caption)
                                         .foregroundColor(.appTextSecondary)
                                 }
@@ -196,7 +196,7 @@ struct NotificationSettingsView: View {
                             VStack(spacing: 12) {
                                 ModernStatusRow(
                                     icon: "bell.circle.fill",
-                                    title: L("notifications.permission.title", table: "Profile"),
+                                    title: L("notifications.permission.title", table: "Settings"),
                                     value: notificationPermissionStatus,
                                     valueColor: notificationPermissionStatus == "İzin Verildi" ? .green : .orange
                                 )
@@ -205,8 +205,8 @@ struct NotificationSettingsView: View {
                                 
                                 ModernStatusRow(
                                     icon: "moon.circle.fill",
-                                    title: L("notifications.status.activeProgram", table: "Profile"),
-                                    value: ScheduleManager.shared.activeSchedule?.name ?? L("notifications.status.noProgram", table: "Profile"),
+                                    title: L("notifications.status.activeProgram", table: "Settings"),
+                                    value: ScheduleManager.shared.activeSchedule?.name ?? L("notifications.status.noProgram", table: "Settings"),
                                     valueColor: ScheduleManager.shared.activeSchedule != nil ? .green : .orange
                                 )
                                 
@@ -214,8 +214,8 @@ struct NotificationSettingsView: View {
                                 
                                 ModernStatusRow(
                                     icon: "timer.circle.fill",
-                                    title: L("notifications.status.reminderTime", table: "Profile"),
-                                    value: "\(Int(reminderTime)) " + L("notifications.minutes", table: "Profile"),
+                                    title: L("notifications.status.reminderTime", table: "Settings"),
+                                    value: "\(Int(reminderTime)) " + L("notifications.minutes", table: "Settings"),
                                     valueColor: .appPrimary
                                 )
                             }
@@ -228,16 +228,16 @@ struct NotificationSettingsView: View {
                 .padding(.bottom, 20)
             }
         }
-        .navigationTitle(L("notifications.settings.title", table: "Profile"))
+        .navigationTitle(L("notifications.settings.title", table: "Settings"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadCurrentSettings()
             checkNotificationPermission()
         }
-        .alert(L("notifications.test.alert.title", table: "Profile"), isPresented: $showTestAlert) {
-            Button(L("general.ok", table: "Profile")) { }
+        .alert(L("notifications.test.alert.title", table: "Settings"), isPresented: $showTestAlert) {
+            Button(L("general.ok", table: "Settings")) { }
         } message: {
-            Text(L("notifications.test.alert.message", table: "Profile"))
+            Text(L("notifications.test.alert.message", table: "Settings"))
         }
     }
     

@@ -284,7 +284,7 @@ final class AlarmSettings {
     init(id: UUID = UUID(),
          userId: UUID,
          isEnabled: Bool = true,
-         soundName: String = "alarm.caf",
+         soundName: String = "Alarm 1.caf",
          volume: Double = 0.8,
          vibrationEnabled: Bool = true,
          snoozeEnabled: Bool = true,
