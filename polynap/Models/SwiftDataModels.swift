@@ -342,12 +342,3 @@ final class AlarmNotification {
         self.snoozedCount = snoozedCount
     }
 }
-
-// MARK: - ScheduleChangeUndoData Model
-struct ScheduleChangeUndoData: Codable {
-    let scheduleId: UUID
-    let changeDate: Date
-    let previousStreak: Int
-    let previousAdaptationPhase: Int
-    let previousAdaptationDate: Date
-} 
