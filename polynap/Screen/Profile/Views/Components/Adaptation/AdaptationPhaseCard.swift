@@ -1,4 +1,5 @@
 import SwiftUI
+import RevenueCatUI
 
 // MARK: - Adaptation Phase Card
 struct AdaptationPhaseCard: View {
@@ -7,6 +8,9 @@ struct AdaptationPhaseCard: View {
     @State private var showingResetAlert = false
     @State private var isResetting = false
     @State private var resetError: String? = nil
+    @State private var showingLaterAlert = false
+    @State private var isUndoing = false
+    @State private var undoError: String? = nil
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -42,7 +46,11 @@ struct AdaptationPhaseCard: View {
                     phaseDescription: viewModel.adaptationPhaseDescription,
                     showingResetAlert: $showingResetAlert,
                     isResetting: isResetting,
-                    viewModel: viewModel
+                    viewModel: viewModel,
+                    hasUndoData: viewModel.hasUndoData(),
+                    isUndoing: isUndoing,
+                    onUndo: performUndo,
+                    onUndoLater: dismissUndoForLater
                 )
             } else {
                 EmptyAdaptationCard()
@@ -69,6 +77,18 @@ struct AdaptationPhaseCard: View {
         } message: {
             Text(resetError ?? L("general.unknownError", table: "Profile"))
         }
+        .alert("Daha Sonra", isPresented: $showingLaterAlert) {
+            Button("Tamam", role: .cancel) {}
+        } message: {
+            Text("Adaptasyon geri alma işlemini Ayarlar > Gelişmiş bölümünden daha sonra yapabilirsiniz.")
+        }
+        .alert("Hata", isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
+            Button("Tamam", role: .cancel) {
+                undoError = nil
+            }
+        } message: {
+            Text(undoError ?? "Bilinmeyen hata oluştu")
+        }
     }
     
     private func resetAdaptationPhase() {
@@ -88,6 +108,29 @@ struct AdaptationPhaseCard: View {
                 }
             }
         }
+    }
+    
+    private func performUndo() {
+        isUndoing = true
+        
+        Task {
+            do {
+                try await viewModel.undoScheduleChange()
+                await MainActor.run {
+                    isUndoing = false
+                }
+            } catch {
+                await MainActor.run {
+                    undoError = error.localizedDescription
+                    isUndoing = false
+                }
+            }
+        }
+    }
+    
+    private func dismissUndoForLater() {
+        viewModel.dismissUndoForLater()
+        showingLaterAlert = true
     }
 }
 
@@ -125,6 +168,10 @@ struct AdaptationProgressCard: View {
     let isResetting: Bool
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ProfileScreenViewModel
+    let hasUndoData: Bool
+    let isUndoing: Bool
+    let onUndo: () -> Void
+    let onUndoLater: () -> Void
     
     var body: some View {
         let completedDays = calculateRealCompletedDays()
@@ -190,6 +237,15 @@ struct AdaptationProgressCard: View {
                     }
                 }
                 .frame(height: 10)
+            }
+            
+            // Undo Section (Premium Feature)
+            if hasUndoData {
+                UndoAdaptationSection(
+                    isUndoing: isUndoing,
+                    onUndo: onUndo,
+                    onUndoLater: onUndoLater
+                )
             }
             
             // Status description
@@ -262,6 +318,56 @@ struct AdaptationProgressCard: View {
         default:
             return L("profile.adaptation.default.description", table: "Profile")
         }
+    }
+}
+
+// MARK: - Undo Adaptation Section
+struct UndoAdaptationSection: View {
+    let isUndoing: Bool
+    let onUndo: () -> Void
+    let onUndoLater: () -> Void
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @State private var isPaywallPresented = false
+    
+    var body: some View {
+        PSInfoBox(
+            title: "Adaptasyon İlerlemesi Geri Alınabilir",
+            message: "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz.",
+            subtitle: "Program değiştirme işlemi bugün yapıldı",
+            icon: "arrow.uturn.left.circle.fill",
+            style: .warning
+        )
+        
+        HStack(spacing: PSSpacing.sm) {
+            // Later Button
+            PSSecondaryButton("Daha Sonra", icon: "clock") {
+                onUndoLater()
+            }
+            
+            // Undo Button (Premium gated)
+            PSPrimaryButton(
+                "Geri Al",
+                icon: isUndoing ? nil : "arrow.uturn.backward",
+                isLoading: isUndoing,
+                customBackgroundColor: Color.orange
+            ) {
+                handleUndoButtonTap()
+            }
+        }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallView()
+        }
+    }
+    
+    private func handleUndoButtonTap() {
+        // Premium kontrolü
+        if revenueCatManager.userState != .premium {
+            isPaywallPresented = true
+            return
+        }
+        
+        // Premium kullanıcı - undo işlemini gerçekleştir
+        onUndo()
     }
 }
 

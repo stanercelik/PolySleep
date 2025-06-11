@@ -188,6 +188,108 @@
         }
       }
     },
+    "settings.restorePurchases.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Purchases"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın Almaları Geri Yükle"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore your premium purchases"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium satın almalarınızı geri yükleyin"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.value" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to restore"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri yüklemek için dokunun"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.restore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Now"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şimdi Geri Yükle"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.success" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchases restored successfully"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın almalar başarıyla geri yüklendi"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to restore purchases. Please try again."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın almalar geri yüklenemedi. Lütfen tekrar deneyin."
+          }
+        }
+      }
+    },
     "settings.other.disclaimer.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {

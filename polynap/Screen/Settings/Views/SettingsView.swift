@@ -1,4 +1,5 @@
 import SwiftUI
+import RevenueCatUI
 
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -7,8 +8,13 @@ struct SettingsView: View {
     @AppStorage("napNotificationTime") private var napNotificationTime: Double = 15 // Dakika
     @AppStorage("showRatingNotification") private var showRatingNotification = true
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @Environment(\.dismiss) private var dismiss
     @State private var showLanguagePicker = false
     @State private var showThemePicker = false
+    @State private var showRestoreAlert = false
+    @State private var restoreSuccess = false
+    @State private var restoreMessage = ""
     
     var body: some View {
         ZStack {
@@ -111,6 +117,18 @@ struct SettingsView: View {
                         }
                     }
                     
+                    // Advanced Section
+                    ModernSettingsSection(
+                        title: "Gelişmiş",
+                        icon: "slider.horizontal.3",
+                        iconColor: .orange,
+                        isMinimal: true
+                    ) {
+                        VStack(spacing: PSSpacing.md) {
+                            AdaptationUndoRow()
+                        }
+                    }
+                    
                     // General Settings Section
                     ModernSettingsSection(
                         title: L("settings.general.title", table: "Profile"),
@@ -149,6 +167,17 @@ struct SettingsView: View {
                         isMinimal: true
                     ) {
                         VStack(spacing: PSSpacing.md) {
+                            // Restore Purchases Option
+                            ModernActionRow(
+                                icon: "arrow.clockwise.circle.fill",
+                                title: L("settings.restorePurchases.title", table: "Profile"),
+                                subtitle: L("settings.restorePurchases.subtitle", table: "Profile"),
+                                value: L("settings.restorePurchases.value", table: "Profile"),
+                                action: { showRestoreAlert = true }
+                            )
+                            
+                            ModernDivider()
+                            
                             ModernNavigationRow(
                                 icon: "info.circle.fill",
                                 title: L("settings.other.disclaimer", table: "Profile"),
@@ -233,6 +262,14 @@ struct SettingsView: View {
             }
             Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
         }
+        .confirmationDialog(L("settings.restorePurchases.title", table: "Profile"), isPresented: $showRestoreAlert, titleVisibility: .visible) {
+            Button(L("settings.restorePurchases.restore", table: "Profile")) {
+                Task {
+                    await restorePurchases()
+                }
+            }
+            Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
+        }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
     }
     
@@ -248,6 +285,17 @@ struct SettingsView: View {
     /// Seçili dilin görüntülenen metnini döndürür
     private func getLanguageDisplayText() -> String {
         return languageManager.currentLanguage == "tr" ? L("settings.language.turkish", table: "Profile") : L("settings.language.english", table: "Profile")
+    }
+    
+    private func restorePurchases() async {
+        do {
+            await revenueCatManager.restorePurchases()
+            restoreSuccess = true
+            restoreMessage = L("settings.restorePurchases.success", table: "Profile")
+        } catch {
+            restoreSuccess = false
+            restoreMessage = L("settings.restorePurchases.error", table: "Profile")
+        }
     }
 }
 
@@ -526,11 +574,121 @@ struct ModernDivider: View {
     }
 }
 
+// MARK: - Adaptation Undo Row
+struct AdaptationUndoRow: View {
+    @StateObject private var viewModel = ProfileScreenViewModel(languageManager: LanguageManager.shared)
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @State private var showingUndoAlert = false
+    @State private var isUndoing = false
+    @State private var undoError: String? = nil
+    @State private var isPaywallPresented = false
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            // Icon with background
+            ZStack {
+                Circle()
+                    .fill(Color.orange.opacity(0.1))
+                    .frame(width: 36, height: 36)
+                
+                Image(systemName: "arrow.uturn.backward.circle.fill")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.orange)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Adaptasyon Geri Alma")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appText)
+                
+                Text(viewModel.hasRawUndoData() ? "Program değişikliği bugün yapıldı, geri alabilirsiniz" : "Geri alınacak program değişikliği yok")
+                    .font(.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .lineLimit(2)
+            }
+            
+            Spacer()
+            
+            // Action button
+            if viewModel.hasRawUndoData() {
+                PSStatusBadge(
+                    "Geri Al",
+                    icon: "arrow.uturn.backward",
+                    color: .orange,
+                    backgroundColor: Color.orange.opacity(0.15)
+                )
+                .onTapGesture {
+                    handleUndoTap()
+                }
+            } else {
+                PSStatusBadge(
+                    "Mevcut Değil",
+                    icon: "xmark.circle",
+                    color: .appTextSecondary,
+                    backgroundColor: Color.appTextSecondary.opacity(0.1)
+                )
+            }
+        }
+        .padding(.vertical, 8)
+        .alert("Adaptasyon Geri Alma", isPresented: $showingUndoAlert) {
+            Button("İptal", role: .cancel) {}
+            Button("Geri Al", role: .destructive) {
+                performUndo()
+            }
+        } message: {
+            Text("Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz. Bu işlem geri alınamaz.")
+        }
+        .alert("Hata", isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
+            Button("Tamam", role: .cancel) {
+                undoError = nil
+            }
+        } message: {
+            Text(undoError ?? "Bilinmeyen hata oluştu")
+        }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallView()
+        }
+        .onAppear {
+            // ViewModelContext gerekli değil, sadece repository kullanacağız
+        }
+    }
+    
+    private func handleUndoTap() {
+        // Premium kontrolü
+        if revenueCatManager.userState != .premium {
+            isPaywallPresented = true
+            return
+        }
+        
+        showingUndoAlert = true
+    }
+    
+    private func performUndo() {
+        isUndoing = true
+        
+        Task {
+            do {
+                try await viewModel.undoScheduleChange()
+                await MainActor.run {
+                    isUndoing = false
+                }
+            } catch {
+                await MainActor.run {
+                    undoError = error.localizedDescription
+                    isUndoing = false
+                }
+            }
+        }
+    }
+}
+
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             SettingsView()
         }
         .environmentObject(LanguageManager.shared)
+        .environmentObject(RevenueCatManager.shared)
     }
 }

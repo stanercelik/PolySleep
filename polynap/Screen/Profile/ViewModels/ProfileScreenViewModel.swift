@@ -21,6 +21,7 @@ class ProfileScreenViewModel: ObservableObject {
     @Published var showingUndoScheduleChange: Bool = false
     @Published var showingAdaptationDebug: Bool = false
     @Published var debugAdaptationDay: Int = 1
+    @Published var undoDismissedByUser: Bool = false
     
     private let languageManager: LanguageManager
 
@@ -443,8 +444,18 @@ class ProfileScreenViewModel: ObservableObject {
         }
     }
     
-    /// Undo verisi mevcut mu kontrol et
+    /// Undo verisi mevcut mu kontrol et (kullanıcı ertelememiş ise)
     func hasUndoData() -> Bool {
+        return Repository.shared.hasUndoData() && !undoDismissedByUser
+    }
+    
+    /// Kullanıcı undo'yu ertelediğinde çağrılır
+    func dismissUndoForLater() {
+        undoDismissedByUser = true
+    }
+    
+    /// Raw undo verisi mevcut mu (ayarlar için)
+    func hasRawUndoData() -> Bool {
         return Repository.shared.hasUndoData()
     }
     

@@ -35,11 +35,6 @@ struct ProfileScreenView: View {
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: PSSpacing.xl) {
-                            // Schedule Change Undo Banner
-                            if viewModel.hasUndoData() {
-                                UndoScheduleChangeCard(viewModel: viewModel)
-                            }
-                            
                             // Profile Header Card
                             ProfileHeaderCard(
                                 showLoginSheet: $showLoginSheet, 

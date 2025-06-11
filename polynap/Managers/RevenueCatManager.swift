@@ -67,13 +67,15 @@ final class RevenueCatManager: NSObject, ObservableObject {
         return false
     }
     
-    func restorePurchases() async {
+    func restorePurchases() async -> Bool {
         do {
             let customerInfo = try await Purchases.shared.restorePurchases()
             updateUserState(for: customerInfo)
             print("Purchases restored successfully.")
+            return true
         } catch {
             print("Error restoring purchases: \(error)")
+            return false
         }
     }
 

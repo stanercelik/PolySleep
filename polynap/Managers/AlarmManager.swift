@@ -48,7 +48,7 @@ final class AlarmManager: ObservableObject {
         
         // Alarm zaten çalıyorsa ve bu yeni bir çağrı ise sesi güncelle
         let userInfo = notification.userInfo
-        let soundName = userInfo?["soundName"] as? String ?? "alarm.caf"
+        let soundName = userInfo?["soundName"] as? String ?? "Alarm 1.caf"
         print("🎵 AlarmManager: Kullanılacak ses: \(soundName)")
         
         if isAlarmFiring {

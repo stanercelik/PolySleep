@@ -1,10 +1,13 @@
 import SwiftUI
+import RevenueCatUI
 
-// MARK: - Schedule Change Undo Banner
+// MARK: - Schedule Change Undo Banner (Premium Feature)
 struct UndoScheduleChangeCard: View {
     @ObservedObject var viewModel: ProfileScreenViewModel
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
     @State private var isUndoing = false
     @State private var undoError: String? = nil
+    @State private var isPaywallPresented = false
     
     // Computed properties for alert binding
     private var isShowingUndoError: Binding<Bool> {
@@ -37,11 +40,26 @@ struct UndoScheduleChangeCard: View {
                         .foregroundColor(.orange)
                     
                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                        Text(L("profile.scheduleChange.undo.title", table: "Profile"))
-                            .font(PSTypography.headline)
-                            .foregroundColor(.appText)
+                        HStack {
+                            Text("Adaptasyon İlerlemesi Geri Getir")
+                                .font(PSTypography.headline)
+                                .foregroundColor(.appText)
+                            
+                            Spacer()
+                            
+                            // Premium Badge
+                            Text("PREMIUM")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.yellow)
+                                )
+                        }
                         
-                        Text(L("profile.scheduleChange.undo.message", table: "Profile"))
+                        Text("Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz")
                             .font(PSTypography.caption)
                             .foregroundColor(.appTextSecondary)
                     }
@@ -50,7 +68,7 @@ struct UndoScheduleChangeCard: View {
                 }
                 
                 Button(action: {
-                    undoScheduleChange()
+                    handleUndoButtonTap()
                 }) {
                     HStack {
                         if isUndoing {
@@ -58,11 +76,11 @@ struct UndoScheduleChangeCard: View {
                                 .scaleEffect(0.8)
                                 .foregroundColor(.white)
                         } else {
-                            Image(systemName: "arrow.uturn.backward")
+                            Image(systemName: revenueCatManager.userState == .premium ? "arrow.uturn.backward" : "crown.fill")
                                 .font(.system(size: PSIconSize.small))
                         }
                         
-                        Text(L("profile.scheduleChange.undo.button", table: "Profile"))
+                        Text(revenueCatManager.userState == .premium ? "Adaptasyonu Geri Getir" : "Premium ile Kilidi Aç")
                             .font(PSTypography.body)
                     }
                     .foregroundColor(.white)
@@ -70,7 +88,7 @@ struct UndoScheduleChangeCard: View {
                     .padding(.vertical, PSSpacing.sm)
                     .background(
                         RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                            .fill(Color.orange)
+                            .fill(revenueCatManager.userState == .premium ? Color.orange : Color.yellow)
                     )
                 }
                 .disabled(isUndoing)
@@ -87,6 +105,22 @@ struct UndoScheduleChangeCard: View {
         } message: {
             Text(undoErrorMessage)
         }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallView()
+        }
+    }
+    
+    // MARK: - Actions
+    
+    private func handleUndoButtonTap() {
+        // Premium kontrolü
+        if revenueCatManager.userState != .premium {
+            isPaywallPresented = true
+            return
+        }
+        
+        // Premium kullanıcı - undo işlemini gerçekleştir
+        undoScheduleChange()
     }
     
     private func undoScheduleChange() {
