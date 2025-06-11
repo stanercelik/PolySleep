@@ -2,8 +2,16 @@
 /Documents/
 Documents/
 Documents
-GoogleService-Info.plist
+.cursor
 
+GoogleService-Info.plist
+refactoring-plan.md
+/refactoring-plan.md
+polynap/polynap/Keys.xcconfig
+/polynap/Keys.xcconfig
 # Secret Keys
 Keys.xcconfig
 /Keys.xcconfig
+@Keys.xcconfig
+
+/polynap/Keys.xcconfig
