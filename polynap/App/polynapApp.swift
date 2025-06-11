@@ -27,8 +27,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         // Uygulama açılışında uygulama simgesi sayacını temizle
         application.applicationIconBadgeNumber = 0
         
-        // AlarmService singleton'ını başlatarak izinlerin erken istenmesini sağla
-        _ = AlarmService.shared
+        // Metal framework sorunu için ek gecikme
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // AlarmService singleton'ını başlatarak izinlerin erken istenmesini sağla
+            _ = AlarmService.shared
+        }
         
         return true
     }

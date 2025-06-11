@@ -89,11 +89,15 @@ final class OnboardingViewModel: ObservableObject {
     
     // MARK: - Methods
     func moveNext() {
+        guard !isLoadingRecommendation else { return }
+        
         if currentPage < totalPages - 1 {
-            withAnimation {
+            withAnimation(.easeInOut(duration: 0.25)) {
                 currentPage += 1
             }
         } else {
+            // Son sayfada ise, loading'i göster ve recommendation'ı başlat
+            isLoadingRecommendation = true
             Task {
                 await startRecommendationProcess()
             }
@@ -101,8 +105,12 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     func movePrevious() {
+        guard !isLoadingRecommendation else { return }
+        
         if currentPage > 0 {
-            currentPage -= 1
+            withAnimation(.easeInOut(duration: 0.25)) {
+                currentPage -= 1
+            }
         }
     }
     

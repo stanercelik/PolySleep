@@ -118,7 +118,7 @@ struct OnboardingView: View {
                             }
                         }
                         .padding(PSSpacing.lg)
-                        .animation(.easeInOut, value: viewModel.currentPage)
+                        .animation(.easeInOut(duration: 0.25), value: viewModel.currentPage)
                     }
                     
                     // Navigation buttons

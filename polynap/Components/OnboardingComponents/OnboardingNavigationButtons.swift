@@ -12,10 +12,8 @@ struct OnboardingNavigationButtons: View {
         HStack(spacing: 16) {
             if currentPage > 0 {
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        onBack()
-                    }
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    onBack()
                 }) {
                     HStack(spacing: 8) {
                         Image(systemName: "chevron.left")
@@ -35,10 +33,8 @@ struct OnboardingNavigationButtons: View {
             
             if currentPage < totalPages {
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        onNext()
-                    }
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    onNext()
                 }) {
                     HStack(spacing: 8) {
                         Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next", tableName: "Onboarding")
@@ -53,7 +49,7 @@ struct OnboardingNavigationButtons: View {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(canMoveNext ? Color("PrimaryColor") : Color("PrimaryColor").opacity(0.5))
                     )
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("TextOnPrimaryColor"))
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)

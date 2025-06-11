@@ -134,52 +134,54 @@ class WelcomeViewModel: ObservableObject {
     
     // Button Animation Controller
     func animateAndPresentOnboarding() {
+        // Timer'ı durdur
+        stopTimer()
+        
         // Button Text Visibility
-        withAnimation(.easeInOut(duration: 0.1)) {
+        withAnimation(.easeInOut(duration: 0.3)) {
             isContinueButtonVisible = false
         }
         
-        // 1) PrimaryColor Circle
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            withAnimation(.easeInOut(duration: 0.8)) {
+        // 1) PrimaryColor Circle - Butondan çıkıp tüm ekranı kaplar
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            withAnimation(.easeInOut(duration: 0.7)) {
                 self.isPrimaryCircleExpanded = true
             }
         }
         
-        // 2) BackgroundColor Circle
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            withAnimation(.easeInOut(duration: 0.8)) {
+        // 2) BackgroundColor Circle - Ortadan çıkıp tüm ekranı kaplar
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            withAnimation(.easeInOut(duration: 0.7)) {
                 self.isBackgroundCircleExpanded = true
             }
         }
         
-        // 3) OnboardingView fade in Presenting
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            withAnimation(.easeInOut(duration: 2)) {
+        // 3) OnboardingView smooth fade in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
+            withAnimation(.easeInOut(duration: 0.6)) {
                 self.isOnboardingPresented = true
+            }
+            
+            // NotificationCenter listener'ı ekle
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("OnboardingCompleted"),
+                object: nil,
+                queue: .main) { [weak self] _ in
                 
-                // Onboarding gösterildiğinde kullanıcı tecihleri objesinde markAsOnboardingCompleted'i dinlemek için
-                // işlem tamamlanınca ViewModel'den bildirim alabilmek için NotificationCenter'ı dinliyoruz
-                NotificationCenter.default.addObserver(
-                    forName: NSNotification.Name("OnboardingCompleted"),
-                    object: nil,
-                    queue: .main) { [weak self] _ in
-                    
-                    guard let self = self, let modelContext = self.modelContext else { return }
-                    
-                    // UserPreferences güncellemesi
-                    let fetchDescriptor = FetchDescriptor<UserPreferences>()
-                    do {
-                        if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
-                            userPreferences.hasCompletedOnboarding = true
-                            try modelContext.save()
-                            print("✅ Onboarding marked as completed")
-                        } else {
-                            print("❌ No UserPreferences found")
-                        }
-                    } catch {
-                        print("❌ Error updating UserPreferences: \(error.localizedDescription)")
+                guard let self = self, let modelContext = self.modelContext else { return }
+                
+                // UserPreferences güncellemesi
+                let fetchDescriptor = FetchDescriptor<UserPreferences>()
+                do {
+                    if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                        userPreferences.hasCompletedOnboarding = true
+                        try modelContext.save()
+                        print("✅ Onboarding marked as completed")
+                    } else {
+                        print("❌ No UserPreferences found")
                     }
+                } catch {
+                    print("❌ Error updating UserPreferences: \(error.localizedDescription)")
                 }
             }
         }

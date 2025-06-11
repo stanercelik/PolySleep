@@ -11,7 +11,7 @@ struct SelectionButton: View {
             HStack(spacing: 12) {
                 Text(title)
                     .font(.body)
-                    .foregroundStyle(isSelected ? .white : Color("TextColor"))
+                    .foregroundStyle(isSelected ? Color("TextOnPrimaryColor") : Color("TextColor"))
                     .multilineTextAlignment(.leading)
                     .minimumScaleFactor(0.8)
                     .lineLimit(2)
@@ -20,7 +20,7 @@ struct SelectionButton: View {
                 
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.title3)
-                    .foregroundStyle(isSelected ? .white : Color("TextColor"))
+                    .foregroundStyle(Color("TextColor"))
                     .symbolRenderingMode(.hierarchical)
             }
             .padding(.vertical, 12)
@@ -55,7 +55,7 @@ struct MultiSelectionButton: View {
             HStack(spacing: 12) {
                 Text(title)
                     .font(.body)
-                    .foregroundStyle(isSelected ? .white : Color("TextColor"))
+                    .foregroundStyle(isSelected ? Color("TextOnPrimaryColor") : Color("TextColor"))
                     .multilineTextAlignment(.leading)
                     .minimumScaleFactor(0.8)
                     .lineLimit(2)
@@ -64,7 +64,7 @@ struct MultiSelectionButton: View {
                 
                 Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                     .font(.title3)
-                    .foregroundStyle(isSelected ? .white : Color("PrimaryColor"))
+                    .foregroundStyle(Color("TextColor"))
                     .symbolRenderingMode(.hierarchical)
             }
             .padding(.vertical, 12)

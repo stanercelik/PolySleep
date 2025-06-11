@@ -25,7 +25,7 @@ struct WelcomeView: View {
                         Circle()
                             .fill(Color.appPrimary)
                             .frame(width: circleDiameter, height: circleDiameter)
-                            .scaleEffect(viewModel.isPrimaryCircleExpanded ? 2 : 0.01, anchor: .center)
+                            .scaleEffect(viewModel.isPrimaryCircleExpanded ? 1.5 : 0, anchor: .center)
                             .position(buttonCenter)
                             .opacity(viewModel.isPrimaryCircleExpanded ? 1 : 0)
                         
@@ -33,8 +33,8 @@ struct WelcomeView: View {
                         Circle()
                             .fill(Color.appBackground)
                             .frame(width: circleDiameter, height: circleDiameter)
-                            .scaleEffect(viewModel.isBackgroundCircleExpanded ? 2 : 0.01, anchor: .center)
-                            .position(buttonCenter)
+                            .scaleEffect(viewModel.isBackgroundCircleExpanded ? 1.5 : 0, anchor: .center)
+                            .position(x: geo.size.width / 2, y: geo.size.height / 2)
                             .opacity(viewModel.isBackgroundCircleExpanded ? 1 : 0)
                         
                         // 4) Onboarding View
