@@ -1,4 +1,9 @@
 /Documents
 /Documents/
+Documents/
+Documents
 GoogleService-Info.plist
-/.env
+
+# Secret Keys
+Keys.xcconfig
+/Keys.xcconfig

@@ -26,7 +26,7 @@ final class RevenueCatManager: NSObject, ObservableObject {
     @Published var offerings: Offerings?
     
     private let premiumEntitlementID = "premium"
-    private static let apiKey = "appl_QOMwGHgBIxSEHqWvDmWcWsJZEoq" // TODO: Move this to a more secure place
+    private static let apiKey = AppConfiguration.revenueCatAPIKey
 
     private override init() {
         super.init()
@@ -39,7 +39,7 @@ final class RevenueCatManager: NSObject, ObservableObject {
     static func configure() {
         Purchases.logLevel = .debug
         Purchases.configure(
-            with: Configuration.Builder(withAPIKey: apiKey)
+            with: RevenueCat.Configuration.Builder(withAPIKey: apiKey)
                 .with(appUserID: nil)
                 .build()
         )

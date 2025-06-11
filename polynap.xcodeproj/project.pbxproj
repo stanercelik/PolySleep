@@ -345,6 +345,8 @@
 /* Begin XCBuildConfiguration section */
 		2032D6D72D1E9E2400170F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -409,6 +411,8 @@
 		};
 		2032D6D82D1E9E2400170F56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -466,6 +470,8 @@
 		};
 		2032D6DA2D1E9E2400170F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -501,6 +507,8 @@
 		};
 		2032D6DB2D1E9E2400170F56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -536,6 +544,8 @@
 		};
 		2032D6DD2D1E9E2400170F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -555,6 +565,8 @@
 		};
 		2032D6DE2D1E9E2400170F56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -574,6 +586,8 @@
 		};
 		2032D6E02D1E9E2400170F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -591,6 +605,8 @@
 		};
 		2032D6E12D1E9E2400170F56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 2032D6B22D1E9E2300170F56 /* polynap */;
+			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
