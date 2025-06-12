@@ -63,13 +63,15 @@ struct UserScheduleModel {
             )
         ]
         
+        let defaultUUID = generateDeterministicUUID(from: "default")
+        
         let currentLang = LanguageManager.shared.currentLanguage
         let nameKey = currentLang == "tr" ? "schedule.default.name" : "schedule.default.name"
         let descEnKey = currentLang == "tr" ? "schedule.default.description.en" : "schedule.default.description.en"
         let descTrKey = currentLang == "tr" ? "schedule.default.description.tr" : "schedule.default.description.tr"
         
         return UserScheduleModel(
-            id: "default",
+            id: defaultUUID.uuidString,
             name: L(nameKey, table: "MainScreen"),
             description: LocalizedDescription(
                 en: L(descEnKey, table: "MainScreen"),
@@ -79,6 +81,34 @@ struct UserScheduleModel {
             schedule: schedule,
             isPremium: false
         )
+    }
+    
+    /// String ID'den deterministik UUID oluşturur
+    private static func generateDeterministicUUID(from stringId: String) -> UUID {
+        // PolySleep namespace UUID'si (sabit bir UUID) - MainScreenViewModel ile aynı
+        let namespace = UUID(uuidString: "6BA7B810-9DAD-11D1-80B4-00C04FD430C8") ?? UUID()
+        
+        // String'i Data'ya dönüştür
+        let data = stringId.data(using: .utf8) ?? Data()
+        
+        // MD5 hash ile deterministik UUID oluştur
+        var digest = [UInt8](repeating: 0, count: 16)
+        
+        // Basit hash algoritması
+        let namespaceBytes = withUnsafeBytes(of: namespace.uuid) { Array($0) }
+        let stringBytes = Array(data)
+        
+        for (index, byte) in (namespaceBytes + stringBytes).enumerated() {
+            digest[index % 16] ^= byte
+        }
+        
+        // UUID'nin version ve variant bitlerini ayarla (version 5 için)
+        digest[6] = (digest[6] & 0x0F) | 0x50  // Version 5
+        digest[8] = (digest[8] & 0x3F) | 0x80  // Variant 10
+        
+        // UUID oluştur
+        let uuid = NSUUID(uuidBytes: digest) as UUID
+        return uuid
     }
     
     var nextBlock: SleepBlock? {

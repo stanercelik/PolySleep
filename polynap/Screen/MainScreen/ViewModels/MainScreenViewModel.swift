@@ -665,36 +665,31 @@ class MainScreenViewModel: ObservableObject {
                     self.updateAlarms()
                 }
             } else {
-                // Aktif program bulunamadı, varsayılan programı yükle
+                // Aktif program bulunamadı, varsayılan programı yükle (sadece UI için, kaydetme)
                 await MainActor.run {
-                    print("⚠️ Aktif program bulunamadı, varsayılan program yükleniyor...")
+                    print("⚠️ Aktif program bulunamadı, varsayılan program UI'ya yükleniyor...")
                     let defaultSchedule = UserScheduleModel.defaultSchedule
                     self.selectedSchedule = defaultSchedule
                     self.model = MainScreenModel(schedule: defaultSchedule)
                     self.isLoading = false
                     self.errorMessage = nil
+                    self.updateAlarms()
                 }
                 
-                // Varsayılan programı veritabanına kaydet
-                do {
-                    let defaultSchedule = UserScheduleModel.defaultSchedule
-                    _ = try await Repository.shared.saveSchedule(defaultSchedule)
-                    print("✅ Varsayılan program başarıyla kaydedildi")
-                    await ScheduleManager.shared.loadActiveScheduleFromRepository()
-                    await MainActor.run {
-                        self.updateAlarms()
-                    }
-                } catch {
-                    print("❌ Varsayılan program kaydedilirken hata: \(error)")
-                    await MainActor.run {
-                        self.updateAlarms() // Boş program için alarmları iptal et
-                    }
-                }
+                // NOT: Varsayılan programı otomatik olarak kaydetmiyoruz çünkü sonsuz döngü oluşuyor
+                // Kullanıcı onboarding yapmadıysa onboarding'e yönlendirilecek
+                // Eğer onboarding yapıldıysa kullanıcı manuel olarak bir program seçebilir
             }
         } catch {
             await MainActor.run {
                 self.errorMessage = "Program yüklenirken hata: \(error.localizedDescription)"
                 self.isLoading = false
+                
+                // Hata durumunda da varsayılan programı UI'ya yükle
+                let defaultSchedule = UserScheduleModel.defaultSchedule
+                self.selectedSchedule = defaultSchedule
+                self.model = MainScreenModel(schedule: defaultSchedule)
+                self.updateAlarms()
             }
         }
     }

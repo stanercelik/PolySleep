@@ -148,14 +148,45 @@ extension SleepScheduleModel {
     
     /// Converts SleepScheduleModel to UserScheduleModel
     var toUserScheduleModel: UserScheduleModel {
+        // String ID'yi UUID formatına dönüştür
+        let uuidString = generateDeterministicUUID(from: id).uuidString
+        
         return UserScheduleModel(
-            id: id,
+            id: uuidString,
             name: name,
             description: description,
             totalSleepHours: totalSleepHours,
             schedule: schedule,
             isPremium: isPremium
         )
+    }
+    
+    /// String ID'den deterministik UUID oluşturur
+    private func generateDeterministicUUID(from stringId: String) -> UUID {
+        // PolySleep namespace UUID'si (sabit bir UUID) - MainScreenViewModel ile aynı
+        let namespace = UUID(uuidString: "6BA7B810-9DAD-11D1-80B4-00C04FD430C8") ?? UUID()
+        
+        // String'i Data'ya dönüştür
+        let data = stringId.data(using: .utf8) ?? Data()
+        
+        // MD5 hash ile deterministik UUID oluştur
+        var digest = [UInt8](repeating: 0, count: 16)
+        
+        // Basit hash algoritması
+        let namespaceBytes = withUnsafeBytes(of: namespace.uuid) { Array($0) }
+        let stringBytes = Array(data)
+        
+        for (index, byte) in (namespaceBytes + stringBytes).enumerated() {
+            digest[index % 16] ^= byte
+        }
+        
+        // UUID'nin version ve variant bitlerini ayarla (version 5 için)
+        digest[6] = (digest[6] & 0x0F) | 0x50  // Version 5
+        digest[8] = (digest[8] & 0x3F) | 0x80  // Variant 10
+        
+        // UUID oluştur
+        let uuid = NSUUID(uuidBytes: digest) as UUID
+        return uuid
     }
 }
 
