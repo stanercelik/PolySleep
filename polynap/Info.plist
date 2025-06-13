@@ -36,7 +36,14 @@
 	<array>
 		<string>remote-notification</string>
 		<string>audio</string>
-		<string>background-processing</string>
+		<string>processing</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.polynap.app.refresh</string>
+		<string>com.polynap.app.processing</string>
+	</array>
+	<key>NSCriticalMessagingUsageDescription</key>
+	<string>PolyNap, Sessiz Mod veya Odak modları gibi durumlarda bile acil uyandırma ve hatırlatma bildirimleri göndermek için kritik mesaj izinlerine ihtiyaç duyar.</string>
 </dict>
 </plist>
