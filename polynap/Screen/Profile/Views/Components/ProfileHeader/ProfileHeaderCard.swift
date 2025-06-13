@@ -6,6 +6,7 @@ struct ProfileHeaderCard: View {
     @Binding var showLogoutSheet: Bool
     @Binding var navigateToSettings: Bool
     @ObservedObject var authManager: AuthManager
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
     @State private var showImagePicker = false
     @State private var showActionSheet = false
     
@@ -122,17 +123,28 @@ struct ProfileHeaderCard: View {
                             .foregroundColor(Color.appAccent)
                     }
                 }
-                 
-                Text(L("profile.user.localAccount", table: "Profile"))
-                    .font(PSTypography.caption)
-                    .foregroundColor(.appTextSecondary)
-                    .padding(.vertical, PSSpacing.xs)
-                    .padding(.horizontal, PSSpacing.sm)
-                    .background(Capsule().fill(Color.appSecondary.opacity(0.15)))
+                
+                // Premium Durumu
+                HStack(spacing: PSSpacing.xs) {
+                    Text(revenueCatManager.userState == .premium ? 
+                         L("profile.premium.status.active", table: "Profile") : 
+                         L("profile.premium.status.free", table: "Profile"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(revenueCatManager.userState == .premium ? .appAccent : .appTextSecondary)
+                        .padding(.vertical, PSSpacing.xs)
+                        .padding(.horizontal, PSSpacing.sm)
+                        .background(
+                            Capsule().fill(
+                                revenueCatManager.userState == .premium ? 
+                                Color.appAccent.opacity(0.15) : 
+                                Color.appSecondary.opacity(0.15)
+                            )
+                        )
+                }
             }
         }
     }
-
+    
     // Ayarlar Butonu Bölümü
     @ViewBuilder
     private func settingsButtonSection() -> some View {
@@ -170,11 +182,7 @@ struct ProfileHeaderCard: View {
                 userInfoSection() // İsim, düzenle ikonu ve hesap tipini içerir
                 Spacer() // Butonları sağa iter
                 
-                // Sağ taraftaki butonlar için grup ve aralarındaki boşluk
-                //HStack(spacing: PSSpacing.md) { // Sadece Ayarlar butonu kaldı
-                //    editButtonSection() // userInfoSection içine taşındı
-                    settingsButtonSection()
-                //}
+                settingsButtonSection()
             }
             .padding(.horizontal, PSSpacing.lg)
             .padding(.vertical, PSSpacing.md)

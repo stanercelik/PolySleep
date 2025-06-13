@@ -77,6 +77,9 @@ final class ScheduleUndoService: BaseRepository {
             // Undo verisini temizle
             UserDefaults.standard.removeObject(forKey: "scheduleChangeUndoData")
             
+            // Undo başarılı olduğunda dismiss durumunu da sıfırla
+            UserDefaults.standard.set(false, forKey: "undoDismissedByUser")
+            
             logger.debug("✅ Adaptasyon ilerlemesi başarıyla geri getirildi")
             
         } catch {
@@ -100,6 +103,10 @@ final class ScheduleUndoService: BaseRepository {
     /// Undo verisini temizle (manuel cleanup)
     func clearUndoData() {
         UserDefaults.standard.removeObject(forKey: "scheduleChangeUndoData")
+        
+        // Undo verisi temizlendiğinde dismiss durumunu da sıfırla
+        UserDefaults.standard.set(false, forKey: "undoDismissedByUser")
+        
         logger.debug("🗑️ Undo verisi temizlendi")
     }
     

@@ -9,6 +9,20 @@ struct UserScheduleModel {
     var schedule: [SleepBlock]
     var isPremium: Bool
     
+    /// Schedule'daki bloklardan hesaplanan gerçek toplam uyku saati
+    var calculatedTotalSleepHours: Double {
+        return schedule.reduce(0.0) { total, block in
+            total + (Double(block.duration) / 60.0) // dakikayı saate çevir
+        }
+    }
+    
+    /// UI'da gösterilecek toplam uyku saati - hesaplanan değer öncelikli
+    var displayTotalSleepHours: Double {
+        let calculated = calculatedTotalSleepHours
+        // Eğer hesaplanan değer ile mevcut değer arasında fark varsa, hesaplanan değeri kullan
+        return calculated > 0 ? calculated : totalSleepHours
+    }
+    
     private func sortBlocks(_ blocks: [SleepBlock]) -> [SleepBlock] {
         return blocks.sorted { block1, block2 in
             let time1 = TimeFormatter.time(from: block1.startTime)!
@@ -27,6 +41,12 @@ struct UserScheduleModel {
         self.schedule = schedule
         self.isPremium = isPremium
         self.schedule = sortBlocks(self.schedule)
+        
+        // Eğer totalSleepHours ile hesaplanan değer farklıysa, güncelle
+        let calculated = self.calculatedTotalSleepHours
+        if calculated > 0 && abs(calculated - totalSleepHours) > 0.1 {
+            self.totalSleepHours = calculated
+        }
     }
     
     static var defaultSchedule: UserScheduleModel {

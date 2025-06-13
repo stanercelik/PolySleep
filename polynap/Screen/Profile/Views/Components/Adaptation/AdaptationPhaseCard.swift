@@ -39,7 +39,7 @@ struct AdaptationPhaseCard: View {
                 }
             }
             
-            if let schedule = viewModel.activeSchedule {
+            if viewModel.activeSchedule != nil {
                 AdaptationProgressCard(
                     duration: viewModel.adaptationDuration,
                     currentPhase: viewModel.adaptationPhase,

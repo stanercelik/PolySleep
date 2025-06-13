@@ -2264,6 +2264,40 @@
         }
       }
     },
+    "scheduleSelection.premium.tapToUpgrade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to upgrade"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dokunarak yükseltin"
+          }
+        }
+      }
+    },
+    "scheduleSelection.premium.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium"
+          }
+        }
+      }
+    },
     "scheduleSelection.premiumAlert.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2345,6 +2379,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Premium Programlar"
+          }
+        }
+      }
+    },
+    "mainScreen.awakeTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awake Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyanık Zamanı"
+          }
+        }
+      }
+    },
+    "mainScreen.sleepTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Zamanı"
           }
         }
       }

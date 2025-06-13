@@ -1956,6 +1956,40 @@
         }
       }
     },
+    "profile.premium.status.active" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 Premium Active"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 Premium Aktif"
+          }
+        }
+      }
+    },
+    "profile.premium.status.free" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free Account"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ücretsiz Hesap"
+          }
+        }
+      }
+    },
     "profile.progress.completed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3197,108 +3231,7 @@
         }
       }
     },
-    "profile.adaptation.debug.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptation Debug"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon Debug"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Test different adaptation days to see how your progress appears"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Farklı adaptasyon günlerini test ederek ilerlemenizin nasıl göründüğünü görün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.currentDay" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current Day:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mevcut Gün:"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.setDay" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set Debug Day:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug Günü Ayarla:"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.apply" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apply Debug Day"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug Günü Uygula"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.noSchedule" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No active schedule available for debugging"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug için aktif program mevcut değil"
-          }
-        }
-      }
-    },
+
     "profile.adaptation.completed.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3537,108 +3470,7 @@
         }
       }
     },
-    "profile.adaptation.debug.totalDays" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Days:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Gün:"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.startDate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Date:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başlangıç Tarihi:"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.reset" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyonu Sıfırla"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.resetAlert.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyonu Sıfırla"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.resetAlert.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This will reset your adaptation progress to day 1. Are you sure?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu, adaptasyon ilerlemenizi 1. güne sıfırlayacak. Emin misiniz?"
-          }
-        }
-      }
-    },
-    "profile.adaptation.debug.resetAlert.confirm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sıfırla"
-          }
-        }
-      }
-    },
+
     "profile.adaptation.celebration.title" : {
       "extractionState" : "manual",
       "localizations" : {

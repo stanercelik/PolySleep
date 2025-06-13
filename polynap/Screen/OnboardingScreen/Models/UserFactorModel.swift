@@ -115,7 +115,7 @@ final class UserFactor {
     
     // MARK: - Schedule Management
     func saveSelectedSchedule(templateId: String) async throws {
-        guard let userId = AuthManager.shared.currentUser?.id else {
+        guard (AuthManager.shared.currentUser?.id) != nil else {
             throw OnboardingError.userNotFound
         }
         

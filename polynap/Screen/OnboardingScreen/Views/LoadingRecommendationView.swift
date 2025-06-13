@@ -165,10 +165,10 @@ struct LoadingRecommendationView: View {
 }
 
 #Preview {
-    @State var progress: Double = 0.65
-    @State var statusMessage: String = "Bilgiler alındı ve hesaplama yapılıyor..."
-    @State var isComplete: Bool = false
-    @State var navigateToMainScreen: Bool = false
+    @Previewable @State var progress: Double = 0.65
+    @Previewable @State var statusMessage: String = "Bilgiler alındı ve hesaplama yapılıyor..."
+    @Previewable @State var isComplete: Bool = false
+    @Previewable @State var navigateToMainScreen: Bool = false
     
     return LoadingRecommendationView(
         progress: $progress,

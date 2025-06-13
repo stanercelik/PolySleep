@@ -65,7 +65,7 @@ class MainScreenViewModel: ObservableObject {
     /// Share için schedule bilgisini formatlar
     var shareScheduleInfo: String {
         let schedule = model.schedule
-        let totalHours = schedule.totalSleepHours
+        let totalHours = schedule.displayTotalSleepHours // Hesaplanan değeri kullan
         let blocksInfo = schedule.schedule.map { block in
             "\(block.startTime) - \(block.endTime) (\(block.isCore ? "Core" : "Nap"))"
         }.joined(separator: "\n")
@@ -84,7 +84,7 @@ class MainScreenViewModel: ObservableObject {
     
     /// Toplam uyku süresini formatlar
     var totalSleepTimeFormatted: String {
-        let totalHours = model.schedule.totalSleepHours
+        let totalHours = model.schedule.displayTotalSleepHours // Hesaplanan değeri kullan
         let hours = Int(totalHours)
         let minutes = Int((totalHours - Double(hours)) * 60)
         
@@ -109,7 +109,7 @@ class MainScreenViewModel: ObservableObject {
     
     /// Bir sonraki uyku bloğunun formatlanmış zamanını döndürür
     var nextSleepBlockFormatted: String {
-        guard let nextBlock = nextSleepBlock else {
+        guard nextSleepBlock != nil else {
             return L("mainScreen.noUpcomingBlock", table: "MainScreen")
         }
         
@@ -292,6 +292,10 @@ class MainScreenViewModel: ObservableObject {
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.append(newBlock)
         updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+        
+        // Toplam uyku saatini güncelle
+        updatedSchedule.totalSleepHours = updatedSchedule.calculatedTotalSleepHours
+        
         self.model.schedule = updatedSchedule
         
         showAddBlockSheet = false
@@ -328,6 +332,10 @@ class MainScreenViewModel: ObservableObject {
             var updatedSchedule = model.schedule
             updatedSchedule.schedule[index] = updatedBlock
             updatedSchedule.schedule.sort { convertTimeStringToMinutes($0.startTime) < convertTimeStringToMinutes($1.startTime) }
+            
+            // Toplam uyku saatini güncelle
+            updatedSchedule.totalSleepHours = updatedSchedule.calculatedTotalSleepHours
+            
             self.model.schedule = updatedSchedule
             
             editingBlockId = nil
@@ -343,6 +351,10 @@ class MainScreenViewModel: ObservableObject {
     func deleteBlock(_ block: SleepBlock) {
         var updatedSchedule = model.schedule
         updatedSchedule.schedule.removeAll { $0.id == block.id }
+        
+        // Toplam uyku saatini güncelle
+        updatedSchedule.totalSleepHours = updatedSchedule.calculatedTotalSleepHours
+        
         self.model.schedule = updatedSchedule
         
         Task {
@@ -574,7 +586,7 @@ class MainScreenViewModel: ObservableObject {
     private func checkForNewCompletedBlocks() {
         let now = Date()
         let calendar = Calendar.current
-        let currentComponents = calendar.dateComponents([.hour, .minute], from: now)
+        _ = calendar.dateComponents([.hour, .minute], from: now)
         
         // Son 5 dakika içinde biten blokları kontrol et
         for block in model.schedule.schedule {
@@ -587,11 +599,11 @@ class MainScreenViewModel: ObservableObject {
             ) ?? now
             
             let blockKey = blockKey(startTime: block.startTime, endTime: block.endTime)
-            let timeDifference = now.timeIntervalSince(endDate)
+            _ = now.timeIntervalSince(endDate)
             
             // Eğer blok az önce bittiyse (son 1 dakika içinde)
             if endDate <= now && now.timeIntervalSince(endDate) <= 60 { // 1 dakika
-                print("PolyNap Debug: ✅ Sleep block bitimi tespit edildi! Block: \(block.startTime)-\(block.endTime)")
+
                 
                 // Eğer bu bloğu daha önce kontrol etmediyseysek
                 if lastCheckedCompletedBlock != blockKey {
@@ -628,10 +640,10 @@ class MainScreenViewModel: ObservableObject {
                     } else {
                         // Block rated/deferred ise, checked olarak işaretle
                         lastCheckedCompletedBlock = blockKey
-                        print("PolyNap Debug: Block zaten değerlendirilmiş/ertelenmiş, sadece alarm tetiklendi")
+
                     }
                 } else {
-                    print("PolyNap Debug: Bu block zaten kontrol edildi: \(blockKey)")
+
                 }
             }
         }
@@ -659,8 +671,12 @@ class MainScreenViewModel: ObservableObject {
         do {
             if let activeSchedule = try await Repository.shared.getActiveSchedule() {
                 await MainActor.run {
-                    self.selectedSchedule = activeSchedule
-                    self.model = MainScreenModel(schedule: activeSchedule)
+                    // Total sleep hours'ı güncelle
+                    var updatedSchedule = activeSchedule
+                    updatedSchedule.totalSleepHours = updatedSchedule.calculatedTotalSleepHours
+                    
+                    self.selectedSchedule = updatedSchedule
+                    self.model = MainScreenModel(schedule: updatedSchedule)
                     self.isLoading = false
                     self.updateAlarms()
                 }
@@ -697,8 +713,6 @@ class MainScreenViewModel: ObservableObject {
     /// Varsayılan uyku programını yükler
     @MainActor
     func loadDefaultSchedule() {
-        print("PolyNap Debug: Varsayılan program yükleniyor")
-        
         // UserScheduleModel.defaultSchedule özelliğini kullan
         let defaultSchedule = UserScheduleModel.defaultSchedule
         
@@ -728,7 +742,6 @@ class MainScreenViewModel: ObservableObject {
                 loadDefaultSchedule()
             }
         } catch {
-            print("PolyNap Debug: Yerel veritabanından program yükleme hatası: \(error)")
             loadDefaultSchedule()
         }
     }

@@ -33,31 +33,7 @@ public struct AnalyticsView: View {
                         // Zaman Aralığı Seçici
                         timeRangePicker
                         
-                        // Debug bilgisi (sadece geliştirme sırasında)
-                        #if DEBUG
-                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                            Text("🔧 Debug Info:")
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            Text("Selected Range: \(viewModel.selectedTimeRange.rawValue)")
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            Text("Loading: \(viewModel.isLoading ? "✅" : "❌")")
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            Text("Has Data: \(viewModel.hasEnoughData ? "✅" : "❌")")
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            Text("Trend Data Count: \(viewModel.sleepTrendData.count)")
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                        }
-                        .padding(.horizontal, PSSpacing.lg)
-                        .padding(.vertical, PSSpacing.sm)
-                        .background(Color.appCardBackground.opacity(0.5))
-                        .cornerRadius(PSCornerRadius.small)
-                        .padding(.horizontal, PSSpacing.lg)
-                        #endif
+
                         
                         if viewModel.isLoading {
                             loadingView

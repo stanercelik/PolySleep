@@ -437,60 +437,6 @@ struct AlarmSettingsView: View {
                                 }
                             }
                         }
-                        
-                        ModernSettingsSection(
-                            title: L("alarmSettings.test.title", table: "Settings"),
-                            icon: "testtube.2",
-                            iconColor: .green,
-                            isMinimal: true
-                        ) {
-                            VStack(spacing: PSSpacing.lg) {
-                                ModernTestButton(
-                                    icon: "speaker.wave.2.fill",
-                                    title: L("alarmSettings.test.playTestAlarm", table: "Settings"),
-                                    subtitle: L("alarmSettings.test.testDescription", table: "Settings"),
-                                    color: .green
-                                ) {
-                                    testAlarm()
-                                }
-                                
-                                ModernDivider()
-                                
-                                HStack {
-                                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                                        Text(L("alarmSettings.test.pendingAlarms", table: "Settings"))
-                                            .font(PSTypography.subheadline)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(.appText)
-                                        
-                                        Text(L("alarmSettings.test.pendingAlarmsDescription", table: "Settings"))
-                                            .font(PSTypography.caption)
-                                            .foregroundColor(.appTextSecondary)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Text("\(pendingAlarmsCount)")
-                                        .font(PSTypography.headline)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.appPrimary)
-                                        .padding(.horizontal, PSSpacing.md)
-                                        .padding(.vertical, PSSpacing.sm)
-                                        .background(
-                                            Circle()
-                                                .fill(Color.appPrimary.opacity(0.15))
-                                        )
-                                }
-                                
-                                PSSecondaryButton("Tüm Alarmları İptal Et", icon: "trash.fill") {
-                                    Task {
-                                        let alarmService = AlarmService.shared
-                                        await alarmService.cancelAllNotifications()
-                                        await updateStatus()
-                                    }
-                                }
-                            }
-                        }
                     }
                     } // end of isLoading else
                     
@@ -603,10 +549,7 @@ struct AlarmSettingsView: View {
     }
     
     private func loadCurrentSettings() {
-        print("PolyNap Debug: Alarm ayarları yükleniyor...")
-        
         if let settings = alarmSettings.first {
-            print("PolyNap Debug: Mevcut ayarlar bulundu")
             currentSettings = settings
             
             // SwiftData'dan state değişkenlerine veri aktar
@@ -621,16 +564,11 @@ struct AlarmSettingsView: View {
             let availableSoundFiles = availableSounds.map { $0.0 }
             if !settings.soundName.isEmpty && availableSoundFiles.contains(settings.soundName) {
                 selectedSound = settings.soundName
-                print("PolyNap Debug: Kayıtlı ses dosyası kullanılıyor: \(settings.soundName)")
             } else {
                 // Eğer kayıtlı ses dosyası yoksa veya boşsa varsayılan ses kullan
                 selectedSound = "Alarm 1.caf"
-                print("PolyNap Debug: Varsayılan ses dosyası kullanılıyor: Alarm 1.caf")
             }
-            
-            print("PolyNap Debug: Yüklenen ayarlar - Ses: \(selectedSound), Ses Seviyesi: \(volume), Aktif: \(isEnabled)")
         } else {
-            print("PolyNap Debug: Hiç ayar bulunamadı, varsayılan ayarlar oluşturuluyor")
             createDefaultSettings()
         }
     }
@@ -667,8 +605,6 @@ struct AlarmSettingsView: View {
     }
     
     private func saveSettingsToSwiftData() async {
-        print("PolyNap Debug: Alarm ayarları kaydediliyor...")
-        
         await MainActor.run {
             // Mevcut ayarları bul veya yeni oluştur
             let settings: AlarmSettings
@@ -692,9 +628,8 @@ struct AlarmSettingsView: View {
             do {
                 try modelContext.save()
                 currentSettings = settings
-                print("PolyNap Debug: Alarm ayarları başarıyla kaydedildi")
             } catch {
-                print("PolyNap Debug: Alarm ayarları kaydedilemedi: \(error)")
+                // Alarm ayarları kaydedilemedi
             }
         }
         
@@ -748,15 +683,8 @@ struct AlarmSettingsView: View {
         }
         
         guard let finalSoundURL = soundURL else {
-            print("PolyNap Debug: Önizleme için ses dosyası bulunamadı: \(soundFileName)")
-            print("PolyNap Debug: Aranan yollar:")
-            print("1. AlarmSound/\(resourceName).caf")
-            print("2. \(resourceName).caf")
-            print("3. Resources/AlarmSound/\(resourceName).caf")
             return
         }
-        
-        print("PolyNap Debug: Ses dosyası bulundu: \(finalSoundURL.path)")
         
         Task {
             do {
@@ -769,7 +697,7 @@ struct AlarmSettingsView: View {
                     player.stop()
                 }
             } catch {
-                print("PolyNap Debug: Ses önizlemesi oynatılamadı: \(error)")
+                // Ses önizlemesi oynatılamadı
             }
         }
     }

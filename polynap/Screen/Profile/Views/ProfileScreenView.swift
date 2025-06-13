@@ -54,10 +54,7 @@ struct ProfileScreenView: View {
                                 AdaptationPhaseCard(viewModel: viewModel)
                             }
                             
-                            // Adaptation Debug Section (Premium only)
-                            if revenueCatManager.userState == .premium {
-                                AdaptationDebugCard(viewModel: viewModel)
-                            }
+
                             
                             // Customization Card
                             CustomizationCard(

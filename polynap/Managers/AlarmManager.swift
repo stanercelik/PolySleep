@@ -3,15 +3,31 @@ import AVFoundation
 import SwiftUI
 import SwiftData
 
+// DEĞİŞİKLİK: AlarmManager artık Singleton pattern ile yapılandırıldı
 @MainActor
 final class AlarmManager: ObservableObject {
+    
+    // YENİ: Singleton instance - Single Source of Truth
+    static let shared = AlarmManager()
+    
+    // YENİ: Alarm bilgi modeli
+    struct AlarmInfo {
+        let title: String
+        let body: String
+        let soundName: String
+        let userInfo: [AnyHashable: Any]
+        let originalNotification: UNNotification?
+    }
+    
     @Published var isAlarmFiring = false
+    // YENİ: Mevcut alarm bilgileri
+    @Published var currentAlarmInfo: AlarmInfo?
     
     private var audioPlayer: AVAudioPlayer?
     private var modelContext: ModelContext?
-    private var firingNotification: UNNotification?
     
-    init() {
+    // DEĞİŞİKLİK: Private init for singleton
+    private init() {
         setupNotificationObservers()
     }
     
@@ -19,6 +35,7 @@ final class AlarmManager: ObservableObject {
         self.modelContext = context
     }
     
+    // DEĞİŞİKLİK: NotificationCenter observers sadece ön plan alarmları için kullanılacak
     private func setupNotificationObservers() {
         NotificationCenter.default.addObserver(
             self,
@@ -35,33 +52,120 @@ final class AlarmManager: ObservableObject {
         )
     }
     
-    @objc private func handleStartAlarm(notification: Notification) {
-        print("🎶 AlarmManager: Alarm başlatma bildirimi alındı.")
-        print("📋 AlarmManager: Bildirim detayları - name: \(notification.name), userInfo: \(notification.userInfo ?? [:])")
-        print("🔄 AlarmManager: Mevcut isAlarmFiring durumu: \(isAlarmFiring)")
+    // YENİ: Ana alarm tetikleme metodu - AppDelegate'den doğrudan çağrılacak
+    func triggerAlarm(
+        title: String = "Polyphasic Sleep Alarm",
+        body: String = "Uyku zamanınız!",
+        soundName: String = "Alarm 1.caf",
+        userInfo: [AnyHashable: Any] = [:],
+        originalNotification: UNNotification? = nil
+    ) {
+        print("🚨 AlarmManager.shared: triggerAlarm çağrıldı - title: \(title)")
+        print("📊 AlarmManager.shared: Mevcut isAlarmFiring durumu: \(isAlarmFiring)")
+        print("🧵 AlarmManager.shared: Thread kontrolü - Main: \(Thread.isMainThread)")
         
-        // Store the original notification object if it's passed
-        if let originalNotification = notification.object as? UNNotification {
-            self.firingNotification = originalNotification
-            print("💾 AlarmManager: Orijinal UNNotification kaydedildi")
+        // CRITICAL FIX: State validation ve defensive programming
+        print("🔍 DIAGNOSTIC: Current state - isAlarmFiring: \(isAlarmFiring), currentAlarmInfo: \(currentAlarmInfo?.title ?? "nil")")
+        
+        // State temizliği kontrolü - eğer inconsistent state varsa temizle
+        if isAlarmFiring && currentAlarmInfo == nil {
+            print("⚠️ INCONSISTENT STATE DETECTED: isAlarmFiring=true ama currentAlarmInfo=nil")
+            print("🔧 STATE RECOVERY: isAlarmFiring false'a çekiliyor")
+            isAlarmFiring = false
+            audioPlayer?.stop()
+            audioPlayer = nil
         }
         
-        // Alarm zaten çalıyorsa ve bu yeni bir çağrı ise sesi güncelle
-        let userInfo = notification.userInfo
-        let soundName = userInfo?["soundName"] as? String ?? "Alarm 1.caf"
-        print("🎵 AlarmManager: Kullanılacak ses: \(soundName)")
+        // Alarm bilgilerini sakla
+        self.currentAlarmInfo = AlarmInfo(
+            title: title,
+            body: body,
+            soundName: soundName,
+            userInfo: userInfo,
+            originalNotification: originalNotification
+        )
         
+        print("📋 AlarmManager.shared: AlarmInfo kaydedildi - title: \(title), body: \(body)")
+        
+        // CRITICAL FIX: Explicit state management
+        let shouldStartNewAlarm = !isAlarmFiring
+        
+        // Alarm zaten çalıyorsa sesi güncelle
         if isAlarmFiring {
-            print("🔄 AlarmManager: Alarm zaten çalıyor, ses güncelleniyor.")
-            // Mevcut sesi durdur ve yeni ses başlat
+            print("🔄 AlarmManager.shared: Alarm zaten çalıyor, ses güncelleniyor")
             audioPlayer?.stop()
             startAlarmSound(soundName: soundName)
         } else {
-            print("🎵 AlarmManager: Yeni alarm başlatılıyor. isAlarmFiring = true yapılıyor...")
-            self.isAlarmFiring = true
-            print("✅ AlarmManager: isAlarmFiring başarıyla true yapıldı. Şu anki durum: \(isAlarmFiring)")
+            print("🎵 AlarmManager.shared: Yeni alarm başlatılıyor - isAlarmFiring = true")
+            
+            // CRITICAL FIX: Guaranteed main thread state update with validation
+            let updateStateOnMainThread = {
+                // Double-check state before updating
+                if !self.isAlarmFiring {
+                    self.isAlarmFiring = true
+                    print("✅ AlarmManager.shared: isAlarmFiring = true SUCCESSFULLY set!")
+                    print("🔍 AlarmManager.shared: UI Update confirmation - isAlarmFiring: \(self.isAlarmFiring)")
+                } else {
+                    print("⚠️ AlarmManager.shared: isAlarmFiring was already true - skipping update")
+                }
+            }
+            
+            if Thread.isMainThread {
+                updateStateOnMainThread()
+            } else {
+                DispatchQueue.main.sync {
+                    updateStateOnMainThread()
+                }
+            }
+            
             startAlarmSound(soundName: soundName)
         }
+        
+        print("📊 AlarmManager.shared: triggerAlarm tamamlandı - Final isAlarmFiring: \(isAlarmFiring)")
+        print("📋 AlarmManager.shared: Final currentAlarmInfo title: \(currentAlarmInfo?.title ?? "nil")")
+        
+        // CRITICAL FIX: Robust validation with retry mechanism
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            print("🔍 AlarmManager.shared: Final kontrol - isAlarmFiring: \(self.isAlarmFiring)")
+            print("🔍 AlarmManager.shared: Final kontrol - currentAlarmInfo: \(self.currentAlarmInfo?.title ?? "nil")")
+            
+            // CRITICAL FIX: Validation ve recovery mechanism
+            if shouldStartNewAlarm && !self.isAlarmFiring {
+                print("🚨 CRITICAL: Alarm state inconsistency detected! Fixing...")
+                self.isAlarmFiring = true
+                print("🔧 RECOVERY: isAlarmFiring force set to true")
+            }
+            
+            if self.currentAlarmInfo == nil {
+                print("🚨 CRITICAL: AlarmInfo lost! Recreating...")
+                self.currentAlarmInfo = AlarmInfo(
+                    title: title,
+                    body: body,
+                    soundName: soundName,
+                    userInfo: userInfo,
+                    originalNotification: originalNotification
+                )
+                print("🔧 RECOVERY: AlarmInfo recreated")
+            }
+        }
+    }
+    
+    // DEĞİŞİKLİK: Eski NotificationCenter handler'ları ön plan senaryoları için korunuyor
+    @objc private func handleStartAlarm(notification: Notification) {
+        print("🎶 AlarmManager: Ön plan alarm bildirimi alındı")
+        
+        let userInfo = notification.userInfo ?? [:]
+        let soundName = userInfo["soundName"] as? String ?? "Alarm 1.caf"
+        let title = userInfo["title"] as? String ?? "Polyphasic Sleep Alarm"
+        let body = userInfo["body"] as? String ?? "Uyku zamanınız!"
+        
+        triggerAlarm(
+            title: title,
+            body: body,
+            soundName: soundName,
+            userInfo: userInfo,
+            originalNotification: notification.object as? UNNotification
+        )
     }
     
     @objc private func handleStopAlarm() {
@@ -99,7 +203,7 @@ final class AlarmManager: ObservableObject {
         print("📊 AlarmManager: Volume: \(volume), Resource: \(resourceName).caf")
         
         do {
-            // Sesin sessiz modda bile çalması için ses oturumunu yapılandır
+            // DEĞİŞİKLİK: Critical Alert desteği için ses session yapılandırması
             try AVAudioSession.sharedInstance().setCategory(
                 .playback, 
                 mode: .default, 
@@ -110,11 +214,10 @@ final class AlarmManager: ObservableObject {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
             audioPlayer?.numberOfLoops = -1 // Süresiz döngü
             audioPlayer?.volume = Float(volume)
-            audioPlayer?.prepareToPlay() // Ses dosyasını hazırla
+            audioPlayer?.prepareToPlay()
             
             let playResult = audioPlayer?.play()
             print("✅ AlarmManager: '\(soundName)' alarm sesi başlatıldı. Sonuç: \(playResult ?? false)")
-            print("📊 AlarmManager: Audio session category: \(AVAudioSession.sharedInstance().category)")
             
         } catch {
             print("🚨 AlarmManager: Ses çalınamadı: \(error.localizedDescription)")
@@ -139,26 +242,69 @@ final class AlarmManager: ObservableObject {
     
     func stopAlarm() {
         print("🛑 AlarmManager: Alarm durduruluyor.")
+        print("🔍 DIAGNOSTIC: Pre-stop state - isAlarmFiring: \(isAlarmFiring), currentAlarmInfo: \(currentAlarmInfo?.title ?? "nil")")
+        
+        // CRITICAL FIX: Ses tamamen durdur
         audioPlayer?.stop()
         audioPlayer = nil
-        isAlarmFiring = false
-        firingNotification = nil
+        
+        // CRITICAL FIX: State'i main thread'de güvenli şekilde temizle
+        let clearStateOnMainThread = {
+            self.isAlarmFiring = false
+            self.currentAlarmInfo = nil
+            print("✅ AlarmManager: State successfully cleared - isAlarmFiring: false, currentAlarmInfo: nil")
+        }
+        
+        if Thread.isMainThread {
+            clearStateOnMainThread()
+        } else {
+            DispatchQueue.main.sync {
+                clearStateOnMainThread()
+            }
+        }
         
         // Ses oturumunu devre dışı bırak
-        try? AVAudioSession.sharedInstance().setActive(false)
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            print("✅ AlarmManager: Audio session deactivated successfully")
+        } catch {
+            print("⚠️ AlarmManager: Audio session deactivation failed: \(error)")
+        }
+        
+        // CRITICAL FIX: Final state validation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            print("🔍 FINAL CHECK: Post-stop state - isAlarmFiring: \(self.isAlarmFiring), currentAlarmInfo: \(self.currentAlarmInfo?.title ?? "nil")")
+            
+            // Eğer state hala temizlenmemişse force clear
+            if self.isAlarmFiring {
+                print("🚨 CRITICAL: isAlarmFiring still true after stop! Force clearing...")
+                self.isAlarmFiring = false
+            }
+            
+            if self.currentAlarmInfo != nil {
+                print("🚨 CRITICAL: currentAlarmInfo still exists after stop! Force clearing...")
+                self.currentAlarmInfo = nil
+            }
+        }
     }
     
     func snoozeAlarm() async {
         print("💤 AlarmManager: Alarm erteleniyor (ses durduruluyor).")
         
-        guard let notificationToSnooze = firingNotification else {
+        guard let alarmInfo = currentAlarmInfo,
+              let notificationToSnooze = alarmInfo.originalNotification else {
             print("🚨 AlarmManager: Ertelemek için orijinal bildirim bulunamadı.")
             stopAlarm()
             return
         }
         
         await AlarmService.shared.snoozeAlarm(from: notificationToSnooze)
-        
         stopAlarm()
+    }
+    
+    // YENİ: Critical Alert desteği için gelecekte kullanılacak
+    func setCriticalAlertMode(_ enabled: Bool) {
+        // Critical Alert entitlement onaylandığında burada implementasyon yapılacak
+        print("🔥 AlarmManager: Critical Alert modu: \(enabled ? "Aktif" : "Pasif")")
     }
 }

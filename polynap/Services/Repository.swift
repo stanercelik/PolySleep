@@ -9,7 +9,6 @@ import OSLog
 class Repository: ObservableObject {
     static let shared = Repository()
     
-    private let logger = Logger(subsystem: "com.tanercelik.polynap", category: "Repository")
     
     // MARK: - Sub-Repository References
     
@@ -20,12 +19,8 @@ class Repository: ObservableObject {
     private let scheduleUndoService = ScheduleUndoService.shared
     private let sleepEntryRepository = SleepEntryRepository.shared
     private let adaptationManager = AdaptationManager.shared
-    private let adaptationDebugService = AdaptationDebugService.shared
+
     private let migrationService = MigrationService.shared
-    
-    private init() {
-        logger.debug("🗂️ Repository Hub başlatıldı")
-    }
     
     // MARK: - ModelContext Management (Delegated to BaseRepository)
     
@@ -38,10 +33,8 @@ class Repository: ObservableObject {
         scheduleUndoService.setModelContext(context)
         sleepEntryRepository.setModelContext(context)
         adaptationManager.setModelContext(context)
-        adaptationDebugService.setModelContext(context)
+
         migrationService.setModelContext(context)
-        
-        logger.debug("🗂️ Repository Hub: Tüm modüllerde ModelContext ayarlandı")
     }
     
     /// Merkezi ModelContext'e erişim
@@ -138,12 +131,7 @@ class Repository: ObservableObject {
         return scheduleUndoService.hasUndoData()
     }
     
-    // MARK: - Adaptation Debug Methods (Delegated to AdaptationDebugService)
-    
-    /// Adaptasyon günü debug için manuel olarak ayarla
-    func setAdaptationDebugDay(scheduleId: UUID, dayNumber: Int) async throws {
-        try await adaptationDebugService.setAdaptationDebugDay(scheduleId: scheduleId, dayNumber: dayNumber)
-    }
+
     
     // MARK: - Direct Sub-Repository Access
     
@@ -177,10 +165,7 @@ class Repository: ObservableObject {
         return adaptationManager
     }
     
-    /// AdaptationDebugService'e direkt erişim
-    var adaptationDebug: AdaptationDebugService {
-        return adaptationDebugService
-    }
+
     
     /// MigrationService'e direkt erişim
     var migration: MigrationService {
@@ -191,7 +176,6 @@ class Repository: ObservableObject {
     
     /// Tam sistem sağlık kontrolü
     func performSystemHealthCheck() async throws -> SystemHealthReport {
-        logger.debug("🏥 Sistem sağlık kontrolü başlatılıyor...")
         
         let consistencyReport = try migrationService.validateDataConsistency()
         let hasActiveSchedule = try await scheduleRepository.getActiveSchedule() != nil
@@ -202,19 +186,15 @@ class Repository: ObservableObject {
             hasActiveSchedule: hasActiveSchedule,
             hasUndoDataAvailable: hasUndoAvailable
         )
-        
-        logger.debug("✅ Sistem sağlık kontrolü tamamlandı: \(healthReport.overallStatus)")
         return healthReport
     }
     
     /// Tam sistem temizliği
     func performSystemCleanup() async throws {
-        logger.debug("🧹 Sistem temizliği başlatılıyor...")
         
         try await migrationService.runFullMigrationAndCleanup()
         migrationService.cleanupUserDefaults()
         
-        logger.debug("✅ Sistem temizliği tamamlandı")
     }
 }
 

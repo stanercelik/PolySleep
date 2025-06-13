@@ -1,4 +1,6 @@
 import SwiftUI
+import RevenueCat
+import RevenueCatUI
 
 /// Uyku düzeni seçimi için kompakt view
 struct ScheduleSelectionView: View {
@@ -437,7 +439,8 @@ struct PremiumLockedScheduleCard: View {
     let isSelected: Bool
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isExpanded = false
-    @State private var showPremiumAlert = false
+    @State private var showPaywall = false
+    @State private var isPulsing = false
     
     var scheduleDescription: String {
         let currentLang = languageManager.currentLanguage
@@ -450,12 +453,19 @@ struct PremiumLockedScheduleCard: View {
     
     var body: some View {
         Button(action: {
-            showPremiumAlert = true
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isPulsing = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isPulsing = false
+                showPaywall = true
+            }
         }) {
             VStack(spacing: PSSpacing.sm) {
-                // Premium overlay with blur effect
+                // Ana kart içeriği
                 ZStack {
-                    // Ana kart içeriği - bulanık
+                    // Background content - blurred
                     VStack(spacing: PSSpacing.sm) {
                         // Ana header - kompakt
                         HStack(spacing: PSSpacing.md) {
@@ -466,21 +476,15 @@ struct PremiumLockedScheduleCard: View {
                             
                             // İsim ve bilgiler
                             VStack(alignment: .leading, spacing: 2) {
-                                HStack(spacing: PSSpacing.xs) {
-                                    Text(schedule.name)
-                                        .font(PSTypography.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.gray)
-                                        .lineLimit(1)
-                                    
-                                    Image(systemName: "crown.fill")
-                                        .font(.system(size: 10))
-                                        .foregroundColor(.yellow)
-                                }
+                                Text(schedule.name)
+                                    .font(PSTypography.headline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.appText)
+                                    .lineLimit(1)
                                 
                                 Text(String(format: "%.1f %@", schedule.totalSleepHours, L("scheduleSelection.hours", table: "MainScreen")))
                                     .font(.system(size: 12))
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.appTextSecondary)
                             }
                             
                             Spacer()
@@ -494,7 +498,7 @@ struct PremiumLockedScheduleCard: View {
                                     CompactBlockInfo(
                                         icon: "moon.fill",
                                         count: coreBlocks.count,
-                                        color: .gray
+                                        color: .appPrimary
                                     )
                                 }
                                 
@@ -502,15 +506,10 @@ struct PremiumLockedScheduleCard: View {
                                     CompactBlockInfo(
                                         icon: "powersleep",
                                         count: napBlocks.count,
-                                        color: .gray
+                                        color: .appAccent
                                     )
                                 }
                             }
-                            
-                            // Kilit ikonu
-                            Image(systemName: "lock.fill")
-                                .font(.system(size: 16))
-                                .foregroundColor(.gray)
                         }
                         
                         // Açıklama toggle butonu
@@ -529,7 +528,7 @@ struct PremiumLockedScheduleCard: View {
                                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                                     .font(.system(size: 10))
                             }
-                            .foregroundColor(.gray)
+                            .foregroundColor(.appTextSecondary)
                         }
                         .buttonStyle(.plain)
                         
@@ -537,7 +536,7 @@ struct PremiumLockedScheduleCard: View {
                         if isExpanded {
                             Text(scheduleDescription)
                                 .font(.system(size: 13))
-                                .foregroundColor(.gray)
+                                .foregroundColor(.appText)
                                 .lineSpacing(1)
                                 .multilineTextAlignment(.leading)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -545,68 +544,80 @@ struct PremiumLockedScheduleCard: View {
                                 .padding(.vertical, PSSpacing.xs)
                                 .background(
                                     RoundedRectangle(cornerRadius: PSCornerRadius.small)
-                                        .fill(Color.gray.opacity(0.1))
+                                        .fill(Color.appBackground.opacity(0.5))
                                 )
                                 .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
                         }
                     }
-                    .blur(radius: 1.5)
-                    .opacity(0.6)
+                    .blur(radius: 2.5)
+                    .opacity(0.4)
                     
-                    // Premium teşvik overlay
+                    // Premium overlay - minimal ve şık
                     VStack(spacing: PSSpacing.sm) {
-                        Image(systemName: "crown.fill")
-                            .font(.system(size: 24, weight: .bold))
-                            .foregroundColor(.yellow)
+                        // Premium crown icon
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [.yellow, .orange]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 50, height: 50)
+                                .shadow(color: .yellow.opacity(0.3), radius: 8, x: 0, y: 4)
+                            
+                            Image(systemName: "crown.fill")
+                                .font(.system(size: 22, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                        .scaleEffect(isPulsing ? 1.1 : 1.0)
+                        .animation(.easeInOut(duration: 0.15), value: isPulsing)
                         
-                        Text(L("scheduleSelection.premiumRequired", table: "MainScreen"))
-                            .font(PSTypography.button)
-                            .fontWeight(.bold)
-                            .foregroundColor(.appPrimary)
-                            .multilineTextAlignment(.center)
-                        
-                        Text(L("scheduleSelection.upgradePrompt", table: "MainScreen"))
-                            .font(.system(size: 11))
-                            .foregroundColor(.appTextSecondary)
-                            .multilineTextAlignment(.center)
+                        // Minimal metin
+                        VStack(spacing: 4) {
+                                                         Text(L("scheduleSelection.premium.title", table: "MainScreen"))
+                                 .font(.system(size: 16, weight: .bold, design: .rounded))
+                                 .foregroundColor(.appText)
+                            
+                                                         Text(L("scheduleSelection.premium.tapToUpgrade", table: "MainScreen"))
+                                 .font(.system(size: 12, weight: .medium))
+                                 .foregroundColor(.appTextSecondary)
+                        }
                     }
-                    .padding(.horizontal, PSSpacing.md)
+                    .padding(.vertical, PSSpacing.sm)
                 }
             }
             .padding(PSSpacing.md)
             .background(premiumCardBackground)
+            .overlay(
+                RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                    .stroke(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.yellow.opacity(0.6), .orange.opacity(0.6)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 1.5
+                    )
+            )
             .shadow(
-                color: Color.yellow.opacity(0.1),
-                radius: 3,
+                color: Color.yellow.opacity(0.15),
+                radius: 8,
                 x: 0,
-                y: 1
+                y: 4
             )
         }
         .buttonStyle(.plain)
-        .alert(L("scheduleSelection.premiumAlert.title", table: "MainScreen"), isPresented: $showPremiumAlert) {
-            Button(L("scheduleSelection.premiumAlert.upgrade", table: "MainScreen")) {
-                // Premium upgrade navigation
-            }
-            Button(L("general.cancel", table: "MainScreen"), role: .cancel) {}
-        } message: {
-            Text(L("scheduleSelection.premiumAlert.message", table: "MainScreen"))
+        .scaleEffect(isPulsing ? 0.98 : 1.0)
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(displayCloseButton: true)
         }
     }
     
     private var premiumCardBackground: some View {
         RoundedRectangle(cornerRadius: PSCornerRadius.large)
             .fill(Color.appCardBackground)
-            .overlay(
-                RoundedRectangle(cornerRadius: PSCornerRadius.large)
-                    .stroke(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.yellow.opacity(0.3), .orange.opacity(0.3)]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 2
-                    )
-            )
     }
     
     private func getDifficultyEmoji() -> String {

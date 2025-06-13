@@ -17,10 +17,8 @@ class ProfileScreenViewModel: ObservableObject {
     @Published var activeSchedule: UserSchedule? = nil
     @Published var adaptationDuration: Int = 21 // Varsayılan 21 gün
     
-    // Debug ve Undo özellikleri
+    // Undo özellikleri
     @Published var showingUndoScheduleChange: Bool = false
-    @Published var showingAdaptationDebug: Bool = false
-    @Published var debugAdaptationDay: Int = 1
     @Published var undoDismissedByUser: Bool = false
     
     private let languageManager: LanguageManager
@@ -78,6 +76,10 @@ class ProfileScreenViewModel: ObservableObject {
     init(modelContext: ModelContext? = nil, languageManager: LanguageManager = LanguageManager.shared) {
         self.languageManager = languageManager
         self.modelContext = modelContext
+        
+        // UserDefaults'tan undo dismiss durumunu yükle
+        self.undoDismissedByUser = UserDefaults.standard.bool(forKey: "undoDismissedByUser")
+        
         if modelContext != nil {
             loadData()
         }
@@ -230,7 +232,7 @@ class ProfileScreenViewModel: ObservableObject {
         
         // Eğer hesaplanan faz, veritabanındaki fazdan farklıysa güncelle
         if calculatedPhase != scheduleData.adaptationPhase {
-            print("ProfileScreenViewModel: Adaptasyon fazı güncelleniyor. Eski: \(scheduleData.adaptationPhase), Yeni: \(calculatedPhase)")
+            print("ProfileScreenViewModel: Adaptasyon fazı güncelleniyor. Eski: \(String(describing: scheduleData.adaptationPhase)), Yeni: \(calculatedPhase)")
             
             Task {
                 do {
@@ -426,7 +428,7 @@ class ProfileScreenViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Undo ve Debug Metodları
+    // MARK: - Undo Metodları
     
     /// Schedule değişimini geri al
     func undoScheduleChange() async throws {
@@ -452,6 +454,13 @@ class ProfileScreenViewModel: ObservableObject {
     /// Kullanıcı undo'yu ertelediğinde çağrılır
     func dismissUndoForLater() {
         undoDismissedByUser = true
+        UserDefaults.standard.set(true, forKey: "undoDismissedByUser")
+    }
+    
+    /// Undo dismiss durumunu sıfırla (ayarlardan çağrılır)
+    func resetUndoDismissStatus() {
+        undoDismissedByUser = false
+        UserDefaults.standard.set(false, forKey: "undoDismissedByUser")
     }
     
     /// Raw undo verisi mevcut mu (ayarlar için)
@@ -459,24 +468,7 @@ class ProfileScreenViewModel: ObservableObject {
         return Repository.shared.hasUndoData()
     }
     
-    /// Adaptasyon debug günü ayarla
-    func setAdaptationDebugDay(_ dayNumber: Int) async throws {
-        guard let scheduleId = activeSchedule?.id else {
-            throw ProfileError.noActiveSchedule
-        }
-        
-        do {
-            try await Repository.shared.setAdaptationDebugDay(scheduleId: scheduleId, dayNumber: dayNumber)
-            await loadActiveSchedule()
-        } catch {
-            throw error
-        }
-    }
-    
-    /// Debug için maksimum gün sayısını hesapla
-    var maxDebugDays: Int {
-        return adaptationDuration + 7 // Adaptasyon süresi + 7 gün extra
-    }
+
 }
 
 // MARK: - Hata Tipleri

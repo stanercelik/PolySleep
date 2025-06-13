@@ -36,7 +36,6 @@ class AlarmSoundManager {
     /// Bundle içindeki alarm seslerini tarar ve değerlendirir
     private func scanAvailableSounds() {
         guard let resourcePath = Bundle.main.resourcePath else {
-            print("PolyNap Debug: Resource path bulunamadı")
             return
         }
         
@@ -50,12 +49,11 @@ class AlarmSoundManager {
                 let fileURL = URL(fileURLWithPath: "\(alarmSoundPath)/\(file)")
                 if let profile = createSoundProfile(from: fileURL) {
                     availableSounds.append(profile)
-                    print("PolyNap Debug: Alarm sesi bulundu: \(profile.name) (\(profile.format), \(profile.duration)s)")
                 }
             }
             
         } catch {
-            print("PolyNap Debug: Alarm ses dosyaları taranamadı: \(error)")
+            // Ses dosyaları tarama hatası
         }
         
         // Varsayılan sesler yoksa oluştur
@@ -73,22 +71,18 @@ class AlarmSoundManager {
         // Format kontrolü
         let allSupportedFormats = supportedInputFormats + [targetFormat]
         guard allSupportedFormats.contains(fileExtension) else {
-            print("PolyNap Debug: Desteklenmeyen format: \(fileName)")
             return nil
         }
         
         // Süre kontrolü
         guard let duration = getAudioDuration(from: url) else {
-            print("PolyNap Debug: Ses dosyası süresi okunamadı: \(fileName)")
             return nil
         }
         
         // 30 saniye kuralı kontrolü
         let isOptimized = duration <= maxDuration && fileExtension == targetFormat
         
-        if duration > maxDuration {
-            print("PolyNap Debug: Uyarı - \(fileName) dosyası \(duration)s uzunluğunda (Apple limiti: \(maxDuration)s)")
-        }
+
         
         return AlarmSoundProfile(
             name: baseName,
@@ -106,7 +100,6 @@ class AlarmSoundManager {
             let audioFile = try AVAudioFile(forReading: url)
             return Double(audioFile.length) / audioFile.fileFormat.sampleRate
         } catch {
-            print("PolyNap Debug: Audio dosya bilgisi okunamadı: \(error)")
             return nil
         }
     }
@@ -116,7 +109,6 @@ class AlarmSoundManager {
     /// Medium makalesine göre ses dosyasını .caf formatına dönüştürür
     func optimizeSoundFile(inputFileName: String, completion: @escaping (Bool, String?) -> Void) {
         guard let inputURL = Bundle.main.url(forResource: inputFileName.replacingOccurrences(of: ".\(inputFileName.split(separator: ".").last ?? "")", with: ""), withExtension: String(inputFileName.split(separator: ".").last ?? "")) else {
-            print("PolyNap Debug: Giriş dosyası bulunamadı: \(inputFileName)")
             completion(false, "Dosya bulunamadı")
             return
         }
@@ -146,20 +138,17 @@ class AlarmSoundManager {
                 
                 if status == .haveData, error == nil {
                     try outputFile.write(from: outputBuffer)
-                    print("PolyNap Debug: Ses dosyası başarıyla optimize edildi: \(outputFileName)")
                     
                     DispatchQueue.main.async {
                         completion(true, outputFileName)
                     }
                 } else {
-                    print("PolyNap Debug: Dönüştürme hatası: \(error?.localizedDescription ?? "Bilinmeyen hata")")
                     DispatchQueue.main.async {
                         completion(false, error?.localizedDescription)
                     }
                 }
                 
             } catch {
-                print("PolyNap Debug: Ses optimizasyonu hatası: \(error)")
                 DispatchQueue.main.async {
                     completion(false, error.localizedDescription)
                 }
@@ -196,7 +185,6 @@ class AlarmSoundManager {
                 let duration = try await asset.load(.duration)
                 
                 if CMTimeGetSeconds(duration) <= maxDuration {
-                    print("PolyNap Debug: Dosya zaten 30 saniye veya daha kısa")
                     completion(true, inputFileName)
                     return
                 }
@@ -214,19 +202,16 @@ class AlarmSoundManager {
                 await exportSession.export()
                 
                 if exportSession.status == .completed {
-                    print("PolyNap Debug: Ses dosyası 30 saniyeye kırpıldı: \(outputFileName)")
                     DispatchQueue.main.async {
                         completion(true, outputFileName)
                     }
                 } else {
-                    print("PolyNap Debug: Kırpma hatası: \(exportSession.error?.localizedDescription ?? "Bilinmeyen hata")")
                     DispatchQueue.main.async {
                         completion(false, exportSession.error?.localizedDescription)
                     }
                 }
                 
             } catch {
-                print("PolyNap Debug: Ses kırpma hatası: \(error)")
                 DispatchQueue.main.async {
                     completion(false, error.localizedDescription)
                 }
@@ -267,7 +252,6 @@ class AlarmSoundManager {
         ]
         
         availableSounds.append(contentsOf: defaultSounds)
-        print("PolyNap Debug: Varsayılan alarm sesleri eklendi")
     }
     
     /// Ses dosyası validasyon raporu
@@ -314,9 +298,6 @@ extension AlarmSoundManager {
     
     /// Terminal komutunu simüle eden ses dönüştürme (Medium makalesindeki afconvert benzeri)
     func convertSoundWithSimulatedCommand(inputFile: String, completion: @escaping (Bool, String) -> Void) {
-        print("PolyNap Debug: Terminal benzeri dönüştürme başlatılıyor...")
-        print("Simulated command: afconvert \(inputFile) ~/Desktop/\(inputFile.replacingOccurrences(of: ".mp3", with: ".caf")) -d ima4 -f caff -v")
-        
         // Gerçek dönüştürme işlemini çağır
         optimizeSoundFile(inputFileName: inputFile) { success, result in
             let message = success ? 

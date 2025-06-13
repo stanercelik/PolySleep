@@ -16,8 +16,30 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     // Gerekirse servislere iletmek için model konteynerini sakla
     var modelContainer: ModelContainer?
     
-    // AlarmManager referansı ekle
-    var alarmManager: AlarmManager?
+    // YENİ: Background'dan gelen alarm tetikleme bilgisi için
+    var _pendingAlarmTrigger: AlarmTriggerInfo?
+    private var pendingAlarmTrigger: AlarmTriggerInfo? {
+        get {
+            return _pendingAlarmTrigger
+        }
+        set {
+            if let newValue = newValue {
+                print("🔖 AppDelegate: Pending alarm SET edildi - title: \(newValue.title)")
+            } else {
+                print("🗑️ AppDelegate: Pending alarm TEMIZLENDI")
+            }
+            _pendingAlarmTrigger = newValue
+        }
+    }
+    
+    // YENİ: Alarm tetikleme bilgilerini saklayan struct
+    struct AlarmTriggerInfo {
+        let title: String
+        let body: String
+        let soundName: String
+        let userInfo: [AnyHashable: Any]
+        let originalNotification: UNNotification?
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
@@ -37,22 +59,98 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        print("🔄 AppDelegate: applicationDidBecomeActive çağrıldı")
+        print("🔄🔄🔄 AppDelegate: applicationDidBecomeActive çağrıldı 🔄🔄🔄")
+        print("📱 AppDelegate: Application state: \(application.applicationState.rawValue)")
+        print("⏰ AppDelegate: Current time: \(Date())")
+        print("🔍 AppDelegate: Pending alarm durumu: \(pendingAlarmTrigger != nil ? "VAR" : "YOK")")
+        
         // Uygulama her aktif olduğunda sayacı temizle
         application.applicationIconBadgeNumber = 0
         
-        // DEĞİŞİKLİK: Pending alarm kontrolü kaldırıldı. Bu görev artık ContentView'e ait.
-        // Background'dan foreground'a geçişte pending alarm kontrolü artık ContentView'da yapılacak.
+        // YENİ: Automatic pending alarm handling kaldırıldı - sadece SwiftUI observer üzerinden kontrole bırakıldı
+        print("🔍 AppDelegate: Pending alarm kontrolü SwiftUI observer'a bırakıldı")
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         print("🔄 AppDelegate: applicationWillEnterForeground çağrıldı")
-        // DEĞİŞİKLİK: Pending alarm kontrolü kaldırıldı. Bu görev artık ContentView'e ait.
-        // Bu da background'dan foreground'a geçişi yakalar ama kontrolü ContentView yapacak.
+        print("🔍 AppDelegate: applicationWillEnterForeground - Pending alarm durumu: \(pendingAlarmTrigger != nil ? "VAR" : "YOK")")
     }
     
-    // DEĞİŞİKLİK: checkAndTriggerPendingBackgroundAlarm metodu tamamen kaldırıldı.
-    // Bu sorumluluk artık ContentView'in onAppear metodunda checkForPendingAlarm() ile yapılacak.
+    // YENİ: SwiftUI'den çağrılacak pending alarm handler
+    func handlePendingAlarmTrigger() {
+        print("🔍 AppDelegate: handlePendingAlarmTrigger çağrıldı")
+        print("🔍 AppDelegate: Pending alarm durumu: \(pendingAlarmTrigger != nil ? "VAR" : "YOK")")
+        print("🔍 AppDelegate: Thread: \(Thread.isMainThread ? "Main" : "Background")")
+        print("🔍 AppDelegate: Current time: \(Date())")
+        print("🔍 AppDelegate: AlarmManager current state - isAlarmFiring: \(AlarmManager.shared.isAlarmFiring)")
+        
+        if let triggerInfo = pendingAlarmTrigger {
+            print("🚨 AppDelegate: Pending alarm bulundu, tetikleniyor...")
+            print("📋 AppDelegate: Trigger - title: \(triggerInfo.title), body: \(triggerInfo.body)")
+            print("📋 AppDelegate: Trigger - soundName: \(triggerInfo.soundName)")
+            print("📋 AppDelegate: Trigger - userInfo: \(triggerInfo.userInfo)")
+            
+            // CRITICAL FIX: State validation before triggering
+            if AlarmManager.shared.isAlarmFiring {
+                print("⚠️ AppDelegate: AlarmManager zaten alarm firing state'de! Önce durduruyoruz...")
+                AlarmManager.shared.stopAlarm()
+                
+                // Kısa gecikme ile state'in temizlenmesini bekle
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.triggerPendingAlarm(with: triggerInfo)
+                }
+            } else {
+                // Doğrudan tetikle
+                triggerPendingAlarm(with: triggerInfo)
+            }
+            
+        } else {
+            print("📭 AppDelegate: Pending alarm trigger yok")
+        }
+    }
+    
+    // CRITICAL FIX: Separated trigger method for better error handling
+    private func triggerPendingAlarm(with triggerInfo: AlarmTriggerInfo) {
+        // Main thread'de alarm tetikle
+        DispatchQueue.main.async {
+            print("🎯 AppDelegate: Main queue'da AlarmManager.shared.triggerAlarm çağrılıyor...")
+            print("🔍 PRE-TRIGGER STATE: isAlarmFiring: \(AlarmManager.shared.isAlarmFiring)")
+            
+            AlarmManager.shared.triggerAlarm(
+                title: triggerInfo.title,
+                body: triggerInfo.body,
+                soundName: triggerInfo.soundName,
+                userInfo: triggerInfo.userInfo,
+                originalNotification: triggerInfo.originalNotification
+            )
+            
+            print("🚨 AppDelegate: Pending alarm başarıyla tetiklendi!")
+            
+            // CRITICAL FIX: Validate trigger success
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                print("🔍 POST-TRIGGER VALIDATION: isAlarmFiring: \(AlarmManager.shared.isAlarmFiring)")
+                
+                if !AlarmManager.shared.isAlarmFiring {
+                    print("🚨 CRITICAL: Alarm trigger failed! Retrying once...")
+                    AlarmManager.shared.triggerAlarm(
+                        title: triggerInfo.title,
+                        body: triggerInfo.body,
+                        soundName: triggerInfo.soundName,
+                        userInfo: triggerInfo.userInfo,
+                        originalNotification: triggerInfo.originalNotification
+                    )
+                } else {
+                    print("✅ AppDelegate: Alarm trigger validation successful!")
+                }
+                
+                // Clear pending trigger after validation
+                self.pendingAlarmTrigger = nil
+                print("🗑️ AppDelegate: Pending alarm trigger temizlendi")
+            }
+        }
+    }
+    
+
 
     // MARK: - UNUserNotificationCenterDelegate
     
@@ -81,7 +179,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     /// Kullanıcı bir bildirime yanıt verdiğinde (dokunma veya eylemlerden birini seçme) çağrılır.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        print("🔔 AppDelegate: didReceive response çağrıldı!")
+        print("🔔🔔🔔 AppDelegate: didReceive response çağrıldı! 🔔🔔🔔")
+        print("📱 AppDelegate: Application state: \(UIApplication.shared.applicationState.rawValue)")
         print("📋 AppDelegate: Response actionIdentifier: \(response.actionIdentifier)")
         print("📋 AppDelegate: Notification identifier: \(response.notification.request.identifier)")
         
@@ -91,6 +190,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         print("📋 AppDelegate: Content userInfo: \(content.userInfo)")
         print("📋 AppDelegate: Content title: \(content.title)")
         print("📋 AppDelegate: Content body: \(content.body)")
+        print("🕐 AppDelegate: Current time: \(Date())")
         
         // Sadece kendi alarm bildirimlerimizi işle
         guard content.categoryIdentifier == AlarmService.alarmCategoryIdentifier else {
@@ -118,14 +218,21 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         case UNNotificationDefaultActionIdentifier:
             // Bu durum, kullanıcı bildirim gövdesine dokunduğunda tetiklenir.
             print("▶️ EYLEM: Kullanıcı bildirime dokundu.")
+            print("📱 AppDelegate: App state check - \(UIApplication.shared.applicationState.rawValue)")
+            print("📱 AppDelegate: App state details - active: \(UIApplication.shared.applicationState == .active), inactive: \(UIApplication.shared.applicationState == .inactive), background: \(UIApplication.shared.applicationState == .background)")
             
-            // --- EN ÖNEMLİ DEĞİŞİKLİK ---
-            // Sadece durumu UserDefaults'a kaydet. Başka bir şey yapma.
-            // UI katmanı (ContentView) hazır olduğunda bu bayrağı kontrol edecek.
-            UserDefaults.standard.set(true, forKey: "pendingBackgroundAlarm")
-            UserDefaults.standard.set(content.userInfo, forKey: "pendingAlarmInfo")
+            let soundName = content.userInfo["soundName"] as? String ?? "Alarm 1.caf"
             
-            print("📝 AppDelegate: Background alarm tetikleme isteği UserDefaults'a kaydedildi. UI'ın kontrol etmesi beklenecek.")
+            // YENİ: Alarm trigger bilgisini her durumda sakla, applicationDidBecomeActive'de tetiklenecek
+            pendingAlarmTrigger = AlarmTriggerInfo(
+                title: content.title,
+                body: content.body,
+                soundName: soundName,
+                userInfo: content.userInfo,
+                originalNotification: response.notification
+            )
+            
+            print("📝 AppDelegate: Alarm trigger bilgisi kaydedildi - Her durumda SwiftUI observer tetikleyecek")
             
         default:
             print("▶️ EYLEM: Bilinmeyen eylem tanımlayıcısı: \(response.actionIdentifier)")
@@ -145,7 +252,8 @@ struct polynapApp: App {
     @StateObject private var scheduleManager = ScheduleManager.shared
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var revenueCatManager = RevenueCatManager.shared
-    @StateObject private var alarmManager = AlarmManager()
+    // DEĞİŞİKLİK: AlarmManager artık singleton olarak kullanılıyor
+    // @StateObject private var alarmManager = AlarmManager() // KALDIRILDI
     
     @Query var preferences: [UserPreferences]
     
@@ -203,12 +311,33 @@ struct polynapApp: App {
                 .environmentObject(scheduleManager)
                 .environmentObject(languageManager)
                 .environmentObject(revenueCatManager)
-                .environmentObject(alarmManager)
+                // YENİ: Singleton AlarmManager.shared kullanımı
+                .environmentObject(AlarmManager.shared)
                 .withLanguageEnvironment()
                 .onAppear {
                     delegate.modelContainer = modelContainer
-                    // AlarmManager referansını AppDelegate'e ver (erken başlatma)
-                    delegate.alarmManager = alarmManager
+                    // YENİ: ModelContext'i singleton AlarmManager'a ver
+                    AlarmManager.shared.setModelContext(modelContainer.mainContext)
+                    print("📱 polynapApp: AlarmManager ModelContext ayarlandı")
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                    print("🔄 SwiftUI: didBecomeActiveNotification alındı")
+                    print("🔍 SwiftUI: App became active, checking for pending alarms...")
+                    print("🔍 SwiftUI: Current AlarmManager state: isAlarmFiring = \(AlarmManager.shared.isAlarmFiring)")
+                    
+                    // CRITICAL FIX: Multiple timing attempts for better reliability
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        delegate.handlePendingAlarmTrigger()
+                    }
+                    
+                    // Backup timing - eğer ilki çalışmazsa
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        // Sadece hala pending alarm varsa ve alarm firing değilse tekrar dene
+                        if delegate._pendingAlarmTrigger != nil && !AlarmManager.shared.isAlarmFiring {
+                            print("🔄 SwiftUI: Backup trigger attempt...")
+                            delegate.handlePendingAlarmTrigger()
+                        }
+                    }
                 }
                 .onOpenURL { url in
                     if url.scheme == "polynap" {
@@ -225,6 +354,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var systemColorScheme
     @AppStorage("userSelectedTheme") private var userSelectedTheme: Bool?
     @Query private var userPreferences: [UserPreferences]
+    // YENİ: Singleton AlarmManager.shared kullanımı
     @EnvironmentObject var alarmManager: AlarmManager
     
     var body: some View {
@@ -260,23 +390,16 @@ struct ContentView: View {
             }
             alarmManager.setModelContext(modelContext)
             
-            // AppDelegate'e AlarmManager referansını ver
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.alarmManager = alarmManager
-                print("📱 ContentView: AppDelegate'e AlarmManager referansı verildi")
-                print("📱 ContentView: AlarmManager durumu: isAlarmFiring = \(alarmManager.isAlarmFiring)")
-            } else {
-                print("❌ ContentView: AppDelegate bulunamadı!")
-            }
-            
-            // Burası, uygulama açıldığında veya ön plana geldiğinde
-            // bekleyen bir alarm olup olmadığını kontrol etmek için en doğru yerdir.
-            checkForPendingAlarm()
+            print("📱 ContentView: AlarmManager.shared bağlandı")
+            print("📱 ContentView: AlarmManager durumu: isAlarmFiring = \(alarmManager.isAlarmFiring)")
         }
         .onChange(of: alarmManager.isAlarmFiring) { oldValue, newValue in
             print("📱 ContentView: isAlarmFiring değişti: \(oldValue) -> \(newValue)")
+            print("📱 ContentView: Thread: \(Thread.isMainThread ? "Main" : "Background")")
+            print("📱 ContentView: UIApplication state: \(UIApplication.shared.applicationState.rawValue)")
             if newValue {
                 print("🚨 ContentView: Alarm tetiklendi! AlarmFiringView gösterilecek.")
+                print("🚨 ContentView: AlarmManager referansı: \(alarmManager === AlarmManager.shared ? "Singleton" : "Farklı instance")")
             } else {
                 print("✅ ContentView: Alarm durduruldu! AlarmFiringView kapatılacak.")
             }
@@ -297,39 +420,5 @@ struct ContentView: View {
             return userChoice ? .dark : .light
         }
         return nil
-    }
-    
-    private func checkForPendingAlarm() {
-        let hasPendingAlarm = UserDefaults.standard.bool(forKey: "pendingBackgroundAlarm")
-        
-        print("🔍 ContentView: onAppear -> Bekleyen alarm kontrol ediliyor.")
-        
-        if hasPendingAlarm {
-            print("✅ ContentView: Bekleyen alarm tespit edildi! Tetikleniyor...")
-            
-            // AlarmFiringView'ı doğrudan AlarmManager üzerinden tetikle.
-            // Artık kendi kendine NotificationCenter post etmesine gerek yok.
-            DispatchQueue.main.async {
-                // Alarm sesini ve diğer detayları da başlatmak için AlarmManager'daki merkezi fonksiyonu kullanalım:
-                if let alarmInfo = UserDefaults.standard.object(forKey: "pendingAlarmInfo") as? [String: Any] {
-                    NotificationCenter.default.post(
-                        name: .startAlarm,
-                        object: nil,
-                        userInfo: alarmInfo
-                    )
-                } else {
-                    // userInfo olmasa bile alarmı tetikle
-                    alarmManager.isAlarmFiring = true
-                }
-                
-            }
-            
-            // Bayrakları temizle. Görev tamamlandı.
-            UserDefaults.standard.removeObject(forKey: "pendingBackgroundAlarm")
-            UserDefaults.standard.removeObject(forKey: "pendingAlarmInfo")
-            print("🧹 ContentView: Bekleyen alarm durumu temizlendi.")
-        } else {
-            print("📋 ContentView: Bekleyen alarm yok.")
-        }
     }
 }

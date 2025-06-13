@@ -265,7 +265,6 @@ struct AlarmFiringView: View {
     
     // MARK: - Setup Methods
     private func setupView() {
-        print("🔧 AlarmFiringView: Setup başlatıldı")
         alarmManager.setModelContext(modelContext)
         isAnimating = true
         pulseAnimation = true
@@ -273,7 +272,6 @@ struct AlarmFiringView: View {
         
         // AlarmFiringView açıldığında ses çalmaya başla
         if !alarmManager.isAlarmFiring {
-            print("🎵 AlarmFiringView: AlarmManager firing=false, manuel başlatılıyor")
             // Manuel olarak alarmı başlat
             let soundName = alarmSettings.first?.soundName ?? "Alarm 1.caf"
             NotificationCenter.default.post(
@@ -281,22 +279,17 @@ struct AlarmFiringView: View {
                 object: nil,
                 userInfo: ["soundName": soundName]
             )
-        } else {
-            print("🎵 AlarmFiringView: AlarmManager zaten firing=true durumda")
         }
         
         // Timer başlat
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             updateTime()
         }
-        print("⏰ AlarmFiringView: Zaman güncelleme timer'ı başlatıldı")
     }
     
     private func cleanupView() {
-        print("🧹 AlarmFiringView: Cleanup başlatıldı")
         timer?.invalidate()
         timer = nil
-        print("⏰ AlarmFiringView: Timer durduruldu")
     }
     
     private func updateTime() {
@@ -335,7 +328,7 @@ struct BackdropView: UIViewRepresentable {
 struct AlarmFiringView_Previews: PreviewProvider {
     static var previews: some View {
         AlarmFiringView()
-            .environmentObject(AlarmManager())
+            .environmentObject(AlarmManager.shared)
             .modelContainer(for: [AlarmSettings.self])
     }
 } 
