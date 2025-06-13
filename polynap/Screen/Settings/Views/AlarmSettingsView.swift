@@ -9,8 +9,9 @@ struct AlarmSettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var languageManager: LanguageManager
     
-    @Query private var alarmSettings: [AlarmSettings]
-    
+    // State ile async veri yükleme
+    @State private var alarmSettings: [AlarmSettings] = []
+    @State private var isLoading = true
     @State private var currentSettings: AlarmSettings?
     @State private var showingPermissionAlert = false
     @State private var showingTestAlarm = false
@@ -28,15 +29,14 @@ struct AlarmSettingsView: View {
     @State private var snoozeDuration = 5
     @State private var maxSnoozeCount = 3
     
+    // Ses dosyalarını bir kez yüklemek için State variable
+    @State private var availableSounds: [(String, String)] = []
+    
     // Değişiklikleri kaydetmek için debounce timer
     @State private var saveTimer: Timer?
     
     private var isAuthorized: Bool {
         notificationAuthStatus == .authorized || notificationAuthStatus == .provisional
-    }
-    
-    private var availableSounds: [(String, String)] {
-        return getAvailableAlarmSounds()
     }
     
     private let snoozeDurations = [1, 3, 5, 10, 15]
@@ -97,12 +97,32 @@ struct AlarmSettingsView: View {
                     .padding(.top, PSSpacing.sm)
                     .padding(.horizontal, PSSpacing.xl)
                     
-                    ModernSettingsSection(
-                        title: L("alarmSettings.status.title", table: "Settings"),
-                        icon: "alarm",
-                        iconColor: isEnabled ? .appPrimary : .appTextSecondary,
-                        isMinimal: true
-                    ) {
+                    if isLoading {
+                        // Loading State
+                        ModernSettingsSection(
+                            title: "Yükleniyor...",
+                            icon: "clock",
+                            iconColor: .appTextSecondary,
+                            isMinimal: true
+                        ) {
+                            VStack(spacing: PSSpacing.lg) {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+                                    .scaleEffect(1.2)
+                                
+                                Text("Alarm ayarları yükleniyor...")
+                                    .font(PSTypography.body)
+                                    .foregroundColor(.appTextSecondary)
+                            }
+                            .padding(.vertical, PSSpacing.xl)
+                        }
+                    } else {
+                        ModernSettingsSection(
+                            title: L("alarmSettings.status.title", table: "Settings"),
+                            icon: "alarm",
+                            iconColor: isEnabled ? .appPrimary : .appTextSecondary,
+                            isMinimal: true
+                        ) {
                         VStack(spacing: PSSpacing.lg) {
                             HStack {
                                 VStack(alignment: .leading, spacing: PSSpacing.xs) {
@@ -196,31 +216,31 @@ struct AlarmSettingsView: View {
                                         .fontWeight(.medium)
                                         .foregroundColor(.appText)
                                     
-                                                                            Menu {
-                                            ForEach(availableSounds, id: \.0) { sound, name in
-                                                                                        Button(action: {
-                                            selectedSound = sound
-                                            scheduleSettingsSave()
-                                            previewSound(sound)
-                                        }) {
-                                                    HStack {
-                                                        Image(systemName: "speaker.wave.2.fill")
+                                    Menu {
+                                        ForEach(availableSounds, id: \.0) { sound, name in
+                                            Button(action: {
+                                                selectedSound = sound
+                                                scheduleSettingsSave()
+                                                previewSound(sound)
+                                            }) {
+                                                HStack {
+                                                    Image(systemName: "speaker.wave.2.fill")
+                                                        .foregroundColor(.appPrimary)
+                                                        .frame(width: 20)
+                                                    Text(name)
+                                                    if sound == selectedSound {
+                                                        Spacer()
+                                                        Image(systemName: "checkmark")
                                                             .foregroundColor(.appPrimary)
-                                                            .frame(width: 20)
-                                                        Text(name)
-                                                        if sound == selectedSound {
-                                                            Spacer()
-                                                            Image(systemName: "checkmark")
-                                                                .foregroundColor(.appPrimary)
-                                                        }
                                                     }
                                                 }
                                             }
-                                        } label: {
-                                            HStack {
-                                                Text(availableSounds.first(where: { $0.0 == selectedSound })?.1 ?? "Alarm 1")
-                                                    .font(PSTypography.body)
-                                                    .foregroundColor(.appText)
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Text(availableSounds.first(where: { $0.0 == selectedSound })?.1 ?? "Alarm 1")
+                                                .font(PSTypography.body)
+                                                .foregroundColor(.appText)
                                             
                                             Spacer()
                                             
@@ -268,7 +288,7 @@ struct AlarmSettingsView: View {
                                             .foregroundColor(.appTextSecondary)
                                             .font(.caption)
                                         
-                                                                            Slider(value: $volume, in: 0.1...1.0, step: 0.1)
+                                        Slider(value: $volume, in: 0.1...1.0, step: 0.1)
                                         .accentColor(.appPrimary)
                                         .onChange(of: volume) { _ in
                                             scheduleSettingsSave()
@@ -472,6 +492,7 @@ struct AlarmSettingsView: View {
                             }
                         }
                     }
+                    } // end of isLoading else
                     
                     Spacer(minLength: PSSpacing.xl)
                 }
@@ -495,16 +516,12 @@ struct AlarmSettingsView: View {
             Text("Test alarmı 5 saniye sonra çalacak. Uygulamayı kapatabilir, arka plana alabilir veya açık bırakabilirsiniz.")
         }
         .onAppear {
-            debugBundleStructure()
-            loadCurrentSettings()
-            Task {
-                await updateStatus()
-            }
+            loadDataAsync()
         }
         .onDisappear {
             // Sayfa kapatılırken ayarları kaydet
-            Task { @MainActor in
-                saveTimer?.invalidate()
+            saveTimer?.invalidate()
+            Task {
                 await saveSettingsToSwiftData()
             }
         }
@@ -513,66 +530,53 @@ struct AlarmSettingsView: View {
     
     // MARK: - Functions
     
-    private func debugBundleStructure() {
-        print("PolyNap Debug: Bundle yapısını kontrol ediliyor...")
+    // MARK: - Data Loading
+    private func loadDataAsync() {
+        guard isLoading else { return }
         
-        // Bundle'daki tüm dosyaları listele
-        guard let bundlePath = Bundle.main.resourcePath else {
-            print("PolyNap Debug: Bundle path bulunamadı")
-            return
-        }
-        
-        print("PolyNap Debug: Bundle path: \(bundlePath)")
-        
-        // AlarmSound klasörünü ara
-        let alarmSoundPath = bundlePath + "/AlarmSound"
-        if FileManager.default.fileExists(atPath: alarmSoundPath) {
-            print("PolyNap Debug: AlarmSound klasörü bulundu: \(alarmSoundPath)")
-            if let files = try? FileManager.default.contentsOfDirectory(atPath: alarmSoundPath) {
-                print("PolyNap Debug: AlarmSound klasöründeki dosyalar: \(files)")
-            }
-        } else {
-            print("PolyNap Debug: AlarmSound klasörü bulunamadı")
-        }
-        
-        // Resources/AlarmSound klasörünü ara
-        let resourcesAlarmSoundPath = bundlePath + "/Resources/AlarmSound"
-        if FileManager.default.fileExists(atPath: resourcesAlarmSoundPath) {
-            print("PolyNap Debug: Resources/AlarmSound klasörü bulundu: \(resourcesAlarmSoundPath)")
-            if let files = try? FileManager.default.contentsOfDirectory(atPath: resourcesAlarmSoundPath) {
-                print("PolyNap Debug: Resources/AlarmSound klasöründeki dosyalar: \(files)")
-            }
-        }
-        
-        // Tüm .caf dosyalarını ara
-        if let allCafFiles = Bundle.main.urls(forResourcesWithExtension: "caf", subdirectory: nil) {
-            print("PolyNap Debug: Bundle'daki tüm .caf dosyaları:")
-            for url in allCafFiles {
-                print("- \(url.lastPathComponent) -> \(url.path)")
+        Task { @MainActor in
+            do {
+                // Ses dosyalarını sadece bir kez yükle
+                if availableSounds.isEmpty {
+                    availableSounds = getAvailableAlarmSounds()
+                }
+                
+                // SwiftData'dan async olarak veri çek
+                let fetchDescriptor = FetchDescriptor<AlarmSettings>()
+                let settings = try modelContext.fetch(fetchDescriptor)
+                
+                alarmSettings = settings
+                loadCurrentSettings()
+                await updateStatus()
+                isLoading = false
+            } catch {
+                print("AlarmSettingsView: Veri yükleme hatası - \(error)")
+                isLoading = false
             }
         }
     }
     
     private func getAvailableAlarmSounds() -> [(String, String)] {
+        // Optimized: Sadece bir kez bundle arama yapıyoruz
         var sounds: [(String, String)] = []
         
-        // AlarmSound klasöründeki .caf dosyalarını farklı yöntemlerle bul
-        
-        // Yöntem 1: Bundle'dan subdirectory ile
-        if let soundURLs = Bundle.main.urls(forResourcesWithExtension: "caf", subdirectory: "AlarmSound") {
-            for url in soundURLs {
-                let fileName = url.lastPathComponent
-                let displayName = fileName.replacingOccurrences(of: ".caf", with: "")
-                sounds.append((fileName, displayName))
+        // Öncelikle manuel olarak bilinen sesleri ekleyelim (en hızlı yöntem)
+        let knownAlarms = ["Alarm 1.caf", "Alarm 2.caf", "Alarm 3.caf", "Alarm 4.caf", "Alarm 5.caf"]
+        for alarm in knownAlarms {
+            // Basit bir kontrol - dosya mevcut mu?
+            if Bundle.main.path(forResource: alarm.replacingOccurrences(of: ".caf", with: ""), ofType: "caf") != nil {
+                let displayName = alarm.replacingOccurrences(of: ".caf", with: "")
+                sounds.append((alarm, displayName))
             }
         }
         
-        // Yöntem 2: Eğer subdirectory çalışmazsa, tüm .caf dosyalarını al ve Alarm ile başlayanları filtrele
+        // Eğer manuel listede hiçbir dosya bulunamazsa bundle aramaya başvur
         if sounds.isEmpty {
+            // Tek seferde tüm .caf dosyalarını al
             if let allSoundURLs = Bundle.main.urls(forResourcesWithExtension: "caf", subdirectory: nil) {
                 for url in allSoundURLs {
                     let fileName = url.lastPathComponent
-                    if fileName.hasPrefix("Alarm") {
+                    if fileName.hasPrefix("Alarm") || fileName.contains("alarm") || fileName.contains("Alarm") {
                         let displayName = fileName.replacingOccurrences(of: ".caf", with: "")
                         sounds.append((fileName, displayName))
                     }
@@ -580,26 +584,15 @@ struct AlarmSettingsView: View {
             }
         }
         
-        // Yöntem 3: Manuel olarak bilinen dosyaları ekle (güvenlik önlemi)
-        if sounds.isEmpty {
-            let knownAlarms = ["Alarm 1.caf", "Alarm 2.caf", "Alarm 3.caf", "Alarm 4.caf", "Alarm 5.caf"]
-            for alarm in knownAlarms {
-                if Bundle.main.url(forResource: alarm.replacingOccurrences(of: ".caf", with: ""), withExtension: "caf", subdirectory: "AlarmSound") != nil {
-                    let displayName = alarm.replacingOccurrences(of: ".caf", with: "")
-                    sounds.append((alarm, displayName))
-                }
-            }
-        }
-        
         // Alfabetik sıralama
         sounds.sort { $0.1 < $1.1 }
         
-        // Eğer hiç ses dosyası bulunamazsa varsayılan ses ekle
+        // Güvenlik önlemi: Hiç ses dosyası bulunamazsa varsayılan ses ekle
         if sounds.isEmpty {
             sounds.append(("Alarm 1.caf", "Alarm 1"))
         }
         
-        print("PolyNap Debug: Bulunan alarm sesleri: \(sounds)")
+        print("PolyNap: \(sounds.count) alarm sesi yüklendi")
         return sounds
     }
     
@@ -625,7 +618,7 @@ struct AlarmSettingsView: View {
             maxSnoozeCount = settings.maxSnoozeCount
             
             // Seçilen ses dosyasının hala mevcut olup olmadığını kontrol et
-            let availableSoundFiles = getAvailableAlarmSounds().map { $0.0 }
+            let availableSoundFiles = availableSounds.map { $0.0 }
             if !settings.soundName.isEmpty && availableSoundFiles.contains(settings.soundName) {
                 selectedSound = settings.soundName
                 print("PolyNap Debug: Kayıtlı ses dosyası kullanılıyor: \(settings.soundName)")
@@ -667,47 +660,47 @@ struct AlarmSettingsView: View {
         
         // 0.5 saniye sonra kaydet (debounce)
         saveTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            Task { @MainActor in
+            Task {
                 await saveSettingsToSwiftData()
             }
         }
     }
     
-    @MainActor
     private func saveSettingsToSwiftData() async {
         print("PolyNap Debug: Alarm ayarları kaydediliyor...")
         
-        // Mevcut ayarları bul veya yeni oluştur
-        let settings: AlarmSettings
-        if let existingSettings = alarmSettings.first {
-            settings = existingSettings
-        } else {
-            settings = AlarmSettings(userId: UUID())
-            modelContext.insert(settings)
+        await MainActor.run {
+            // Mevcut ayarları bul veya yeni oluştur
+            let settings: AlarmSettings
+            if let existingSettings = alarmSettings.first {
+                settings = existingSettings
+            } else {
+                settings = AlarmSettings(userId: UUID())
+                modelContext.insert(settings)
+            }
+            
+            // State değişkenlerini SwiftData modeline aktar
+            settings.isEnabled = isEnabled
+            settings.soundName = selectedSound
+            settings.volume = volume
+            settings.vibrationEnabled = vibrationEnabled
+            settings.snoozeEnabled = snoozeEnabled
+            settings.snoozeDurationMinutes = snoozeDuration
+            settings.maxSnoozeCount = maxSnoozeCount
+            settings.updatedAt = Date()
+            
+            do {
+                try modelContext.save()
+                currentSettings = settings
+                print("PolyNap Debug: Alarm ayarları başarıyla kaydedildi")
+            } catch {
+                print("PolyNap Debug: Alarm ayarları kaydedilemedi: \(error)")
+            }
         }
         
-        // State değişkenlerini SwiftData modeline aktar
-        settings.isEnabled = isEnabled
-        settings.soundName = selectedSound
-        settings.volume = volume
-        settings.vibrationEnabled = vibrationEnabled
-        settings.snoozeEnabled = snoozeEnabled
-        settings.snoozeDurationMinutes = snoozeDuration
-        settings.maxSnoozeCount = maxSnoozeCount
-        settings.updatedAt = Date()
-        
-        do {
-            try modelContext.save()
-            currentSettings = settings
-            print("PolyNap Debug: Alarm ayarları başarıyla kaydedildi")
-            
-            // Alarmları yeniden planla
-            let alarmService = AlarmService.shared
-            await alarmService.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
-            
-        } catch {
-            print("PolyNap Debug: Alarm ayarları kaydedilemedi: \(error)")
-        }
+        // Alarmları yeniden planla (async işlem)
+        let alarmService = AlarmService.shared
+        await alarmService.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
     }
     
     private func saveSettingsIfNeeded() {

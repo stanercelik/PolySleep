@@ -6,8 +6,10 @@ struct NotificationSettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @Environment(\.colorScheme) private var colorScheme
-    @Query private var userPreferences: [UserPreferences]
     
+    // State ile async veri yükleme
+    @State private var userPreferences: [UserPreferences] = []
+    @State private var isLoading = true
     @State private var reminderTime: Double = 15
     @State private var showTestAlert = false
     @State private var testNotificationScheduled = false
@@ -231,13 +233,33 @@ struct NotificationSettingsView: View {
         .navigationTitle(L("notifications.settings.title", table: "Settings"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            loadCurrentSettings()
-            checkNotificationPermission()
+            loadDataAsync()
         }
         .alert(L("notifications.test.alert.title", table: "Settings"), isPresented: $showTestAlert) {
             Button(L("general.ok", table: "Settings")) { }
         } message: {
             Text(L("notifications.test.alert.message", table: "Settings"))
+        }
+    }
+    
+    // MARK: - Data Loading
+    private func loadDataAsync() {
+        guard isLoading else { return }
+        
+        Task { @MainActor in
+            do {
+                // SwiftData'dan async olarak veri çek
+                let fetchDescriptor = FetchDescriptor<UserPreferences>()
+                let preferences = try modelContext.fetch(fetchDescriptor)
+                
+                userPreferences = preferences
+                loadCurrentSettings()
+                await checkNotificationPermission()
+                isLoading = false
+            } catch {
+                print("NotificationSettingsView: Veri yükleme hatası - \(error)")
+                isLoading = false
+            }
         }
     }
     
@@ -267,26 +289,27 @@ struct NotificationSettingsView: View {
         do {
             try modelContext.save()
             print("✅ Hatırlatma süresi güncellendi: \(minutes) dakika. Bildirimler yeniden planlanıyor...")
-            updateNotificationsForActiveSchedule()
+            
+            // Async işlemi Task içinde yap
+            Task {
+                await updateNotificationsForActiveSchedule()
+            }
         } catch {
             print("❌ Hatırlatma süresi kaydedilemedi: \(error)")
         }
     }
     
-    private func updateNotificationsForActiveSchedule() {
-        Task {
-            await AlarmService.shared.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
-        }
+    private func updateNotificationsForActiveSchedule() async {
+        await AlarmService.shared.rescheduleNotificationsForActiveSchedule(modelContext: modelContext)
     }
 
-    private func checkNotificationPermission() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                switch settings.authorizationStatus {
-                case .authorized: notificationPermissionStatus = "İzin Verildi"
-                case .denied: notificationPermissionStatus = "Reddedildi"
-                default: notificationPermissionStatus = "Belirlenmedi"
-                }
+    private func checkNotificationPermission() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        await MainActor.run {
+            switch settings.authorizationStatus {
+            case .authorized: notificationPermissionStatus = "İzin Verildi"
+            case .denied: notificationPermissionStatus = "Reddedildi"
+            default: notificationPermissionStatus = "Belirlenmedi"
             }
         }
     }
@@ -303,13 +326,29 @@ struct NotificationSettingsView: View {
     }
     
     private func testNotificationImmediately() {
-        // Bu fonksiyon, yeni AlarmService yapısıyla uyumlu hale getirilebilir veya
-        // test amaçlı geçici bir bildirim gönderebilir.
+        Task {
+            await AlarmService.shared.scheduleTestNotification(soundName: "default", volume: 0.8)
+            showTestAlert = true
+            testNotificationScheduled = true
+            
+            // 3 saniye sonra scheduled durumunu sıfırla
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                testNotificationScheduled = false
+            }
+        }
     }
     
     private func test5SecondNotification() {
-        // Bu fonksiyon, yeni AlarmService yapısıyla uyumlu hale getirilebilir veya
-        // test amaçlı geçici bir bildirim gönderebilir.
+        Task {
+            await AlarmService.shared.scheduleTestNotification(soundName: "default", volume: 0.8)
+            showTestAlert = true
+            testNotificationScheduled = true
+            
+            // 3 saniye sonra scheduled durumunu sıfırla
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                testNotificationScheduled = false
+            }
+        }
     }
 }
 

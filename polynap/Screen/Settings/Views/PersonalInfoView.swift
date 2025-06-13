@@ -2,11 +2,14 @@ import SwiftUI
 import SwiftData
 
 struct PersonalInfoView: View {
-    @Query private var onboardingAnswers: [OnboardingAnswerData]
-    @Query private var scheduleStore: [SleepScheduleStore]
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @Environment(\.colorScheme) private var colorScheme
+    
+    // State için async veri yükleme
+    @State private var onboardingAnswers: [OnboardingAnswerData] = []
+    @State private var scheduleStore: [SleepScheduleStore] = []
+    @State private var isLoading = true
     
     var answersForDisplay: [String: String] {
         var dict: [String: String] = [:]
@@ -75,7 +78,21 @@ struct PersonalInfoView: View {
                     .padding(.top, 8)
                     .padding(.horizontal, 24)
                     
-                    if answersForDisplay.isEmpty {
+                    if isLoading {
+                        // Loading State
+                        PersonalInfoModernCard {
+                            VStack(spacing: 20) {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+                                    .scaleEffect(1.2)
+                                
+                                Text("Yükleniyor...")
+                                    .font(.subheadline)
+                                    .foregroundColor(.appTextSecondary)
+                            }
+                            .padding(.vertical, 40)
+                        }
+                    } else if answersForDisplay.isEmpty {
                         // Enhanced Empty State
                         PersonalInfoModernCard {
                             VStack(spacing: 20) {
@@ -227,6 +244,33 @@ struct PersonalInfoView: View {
         }
         .navigationTitle(L("personalInfo.title", table: "Profile"))
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            loadDataAsync()
+        }
+    }
+    
+    // MARK: - Data Loading
+    private func loadDataAsync() {
+        // Zaten yüklü ise tekrar yükleme
+        guard isLoading else { return }
+        
+        Task { @MainActor in
+            do {
+                // SwiftData'dan async olarak veri çek
+                let fetchDescriptor1 = FetchDescriptor<OnboardingAnswerData>()
+                let answers = try modelContext.fetch(fetchDescriptor1)
+                
+                let fetchDescriptor2 = FetchDescriptor<SleepScheduleStore>()
+                let schedules = try modelContext.fetch(fetchDescriptor2)
+                
+                onboardingAnswers = answers
+                scheduleStore = schedules
+                isLoading = false
+            } catch {
+                print("PersonalInfoView: Veri yükleme hatası - \(error)")
+                isLoading = false
+            }
+        }
     }
     
     private func getOrderedQuestions() -> [String] {
