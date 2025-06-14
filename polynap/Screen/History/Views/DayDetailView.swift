@@ -169,7 +169,7 @@ struct SleepEntryDetailCard: View {
                 
                 Spacer()
                 
-                // Kalite yıldızları
+                // Kalite yıldızları - tam yıldız gösterimi korundu (tekli entry için)
                 HStack(spacing: 2) {
                     ForEach(1...5, id: \.self) { star in
                         Image(systemName: star <= entry.rating ? "star.fill" : "star")
@@ -265,7 +265,7 @@ struct SummarySectionCard: View {
                 }
                 .frame(maxWidth: .infinity)
                 
-                // Ortalama kalite
+                // Ortalama kalite - Yarım yıldız desteği ekli
                 VStack(spacing: 8) {
                     HStack(spacing: 4) {
                         Image(systemName: "star.fill")
@@ -276,8 +276,11 @@ struct SummarySectionCard: View {
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
                     
+                    // Yarım yıldız desteği ile yıldız gösterimi
+                    StarsView(rating: averageRating, size: 16)
+                    
                     Text(String(format: "%.1f/5", averageRating))
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color("TextColor"))
                 }
                 .frame(maxWidth: .infinity)

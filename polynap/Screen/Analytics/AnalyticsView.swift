@@ -117,14 +117,6 @@ public struct AnalyticsView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: shareAnalytics) {
-                        Image(systemName: "square.and.arrow.up")
-                            .foregroundColor(Color("PrimaryColor"))
-                    }
-                }
-            }
         }
         .onAppear {
             print("📱 AnalyticsView appeared")
@@ -214,11 +206,6 @@ public struct AnalyticsView: View {
     }
     
     // MARK: - Actions
-    
-    private func shareAnalytics() {
-        // Paylaşım işlevi burada uygulanacak
-        // iOS Share Sheet açılacak
-    }
     
     private func loadPremiumStatus() {
         isPremiumUser = RevenueCatManager.shared.userState == .premium

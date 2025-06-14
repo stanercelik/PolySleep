@@ -18,6 +18,23 @@
         }
       }
     },
+    "disclaimer.contact.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Us"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İletişime Geç"
+          }
+        }
+      }
+    },
     "disclaimer.contact.content" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -48,6 +65,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap, kullanıcıların polifazik uyku programlarını takip etmelerine ve yönetmelerine yardımcı olmak için tasarlanmıştır. Bu uygulama tarafından sağlanan bilgiler yalnızca genel bilgilendirme amaçlıdır."
+          }
+        }
+      }
+    },
+    "disclaimer.general.warning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General Warning"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genel Uyarı"
           }
         }
       }
@@ -120,23 +154,6 @@
         }
       }
     },
-    "disclaimer.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Disclaimer"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sorumluluk Reddi"
-          }
-        }
-      }
-    },
     "disclaimer.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -154,189 +171,121 @@
         }
       }
     },
-    "disclaimer.general.warning" : {
+    "disclaimer.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "General Warning"
+            "value" : "Disclaimer"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Genel Uyarı"
+            "value" : "Sorumluluk Reddi"
           }
         }
       }
     },
-    "disclaimer.contact.button" : {
+    "general.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contact Us"
+            "value" : "Cancel"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İletişime Geç"
+            "value" : "İptal"
           }
         }
       }
     },
-    "settings.restorePurchases.title" : {
+    "general.continue" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore Purchases"
+            "value" : "Continue"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satın Almaları Geri Yükle"
+            "value" : "Devam Et"
           }
         }
       }
     },
-    "settings.restorePurchases.subtitle" : {
+    "general.error" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore your premium purchases"
+            "value" : "Error"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Premium satın almalarınızı geri yükleyin"
+            "value" : "Hata"
           }
         }
       }
     },
-    "settings.restorePurchases.value" : {
+    "general.ok" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap to restore"
+            "value" : "OK"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geri yüklemek için dokunun"
+            "value" : "Tamam"
           }
         }
       }
     },
-    "settings.restorePurchases.restore" : {
+    "general.save" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restore Now"
+            "value" : "Save"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Şimdi Geri Yükle"
+            "value" : "Kaydet"
           }
         }
       }
     },
-    "settings.restorePurchases.success" : {
+    "general.unknownError" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Purchases restored successfully"
+            "value" : "An unknown error occurred"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satın almalar başarıyla geri yüklendi"
-          }
-        }
-      }
-    },
-    "settings.restorePurchases.error" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to restore purchases. Please try again."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Satın almalar geri yüklenemedi. Lütfen tekrar deneyin."
-          }
-        }
-      }
-    },
-    "settings.other.disclaimer.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terms of use and disclaimer"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kullanım koşulları ve sorumluluk reddi"
-          }
-        }
-      }
-    },
-    "settings.copyright" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2024 PolyNap. All rights reserved."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2024 PolyNap. Tüm hakları saklıdır."
-          }
-        }
-      }
-    },
-    "settings.section.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings and preferences"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ayarlar ve tercihler"
+            "value" : "Bilinmeyen hata oluştu"
           }
         }
       }
@@ -405,6 +354,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bilgi Bulunamadı"
+          }
+        }
+      }
+    },
+    "personalInfo.noData" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No personal information available. Please complete the onboarding process."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kişisel bilgi bulunamadı. Lütfen başlangıç sürecini tamamlayın."
+          }
+        }
+      }
+    },
+    "personalInfo.recommendedSchedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önerilen Program"
           }
         }
       }
@@ -494,40 +477,6 @@
         }
       }
     },
-    "personalInfo.noData" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No personal information available. Please complete the onboarding process."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kişisel bilgi bulunamadı. Lütfen başlangıç sürecini tamamlayın."
-          }
-        }
-      }
-    },
-    "personalInfo.recommendedSchedule" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recommended Schedule"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Önerilen Program"
-          }
-        }
-      }
-    },
     "personalInfo.totalSleepHours" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -562,6 +511,159 @@
         }
       }
     },
+    "profile.adaptation.celebration.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You've successfully completed your polyphasic sleep adaptation! Your body has fully adapted to your new sleep schedule."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku adaptasyonunu başarıyla tamamladın! Vücudun yeni uyku düzenine tamamen adapte oldu."
+          }
+        }
+      }
+    },
+    "profile.adaptation.celebration.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Congratulations! 🎉"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Tebrikler! 🎉"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.celebrate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to Celebrate! 🎆"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kutlamak İçin Dokun! 🎆"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed in %d days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d günde tamamlandı"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Congratulations! You've successfully completed your polyphasic sleep adaptation. Your body has adapted to your new sleep schedule. Well done!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tebrikler! Polifazik uyku adaptasyonunu başarıyla tamamladın. Vücudun yeni uyku düzenine adapte oldu. Harika iş!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your polyphasic sleep adaptation journey is complete!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku adaptasyon yolculuğunuz tamamlandı!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.completed.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Adaptation Completed!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Adaptasyon Tamamlandı!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.day.format" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day %d / %d"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün %d / %d"
+          }
+        }
+      }
+    },
+    "profile.adaptation.dayCount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d / %d days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d / %d gün"
+          }
+        }
+      }
+    },
     "profile.adaptation.dayProgress" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -575,6 +677,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gün %d / %d"
+          }
+        }
+      }
+    },
+    "profile.adaptation.days.count" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.days.remaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days Remaining"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalan Gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.default.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation process continues..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon süreci devam ediyor..."
           }
         }
       }
@@ -613,125 +766,6 @@
         }
       }
     },
-    "profile.adaptation.reset.confirm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sıfırla"
-          }
-        }
-      }
-    },
-    "profile.adaptation.reset.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The adaptation process will restart from day 1. Are you sure you want to proceed?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon süreci 1. günden tekrar başlatılacak. Bu işlemi gerçekleştirmek istediğinize emin misiniz?"
-          }
-        }
-      }
-    },
-    "profile.adaptation.reset.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyonu Sıfırla"
-          }
-        }
-      }
-    },
-    "profile.adaptation.tip.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptation Tip"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon İpucu"
-          }
-        }
-      }
-    },
-    "profile.adaptation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your Adaptation Process"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon Sürecin"
-          }
-        }
-      }
-    },
-    "profile.adaptation.progressTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptation Progress"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon İlerlemesi"
-          }
-        }
-      }
-    },
-    "profile.adaptation.dayCount" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d / %d days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d / %d gün"
-          }
-        }
-      }
-    },
     "profile.adaptation.percentCompleted" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -745,6 +779,278 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%%%d Tamamlandı"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.adaptation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.adjustment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjustment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyum"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.advanced" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleri"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.beginning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginning"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlangıç"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.complete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamamlandı"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.day1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day 1 - Beginning"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Gün - Başlangıç"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.early" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Early Adaptation (Days 1-7)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erken Adaptasyon (1-7. Günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.early.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to your polyphasic sleep journey! Your body is starting to adjust to the new schedule. Some fatigue is normal as your circadian rhythm learns the new pattern."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku yolculuğuna hoş geldin! Vücudun yeni programa alışmaya başlıyor. Sirkadiyen ritmin yeni düzeni öğrenirken biraz yorgunluk normal."
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.final" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final Adaptation (Days 22-28)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son Adaptasyon (22-28. günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.full" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tam Adaptasyon"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.initial" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initial Adaptation (Days 2-7)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk Adaptasyon (2-7. günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.late" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Late Adaptation (Days 15+)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geç Adaptasyon (15+ Günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.late.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent progress! Your sleep efficiency is improving significantly. You should feel more refreshed and have better alertness during wake periods."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel ilerleme! Uyku verimliliğin önemli ölçüde iyileşiyor. Daha dinlenmiş hissetmeli ve uyanık olduğun dönemlerde daha iyi dikkat göstermelisin."
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.middle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Middle Adaptation (Days 8-14)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orta Adaptasyon (8-14. günler)"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.middle.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're making progress! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Keep going!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlerleme kaydediyorsun! Uyku kaliten iyileşmeye başlamalı ve kestirmeler sırasında REM uykusuna geçişin kolaylaşabilir. Devam et!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase.unknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinmiyor"
           }
         }
       }
@@ -817,23 +1123,6 @@
         }
       }
     },
-    "profile.adaptation.phase4.28day.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You're in the full adaptation phase (day %d, %d days remaining)! Your body has largely adapted to the polyphasic schedule. Sleep onset should be quick, and you should feel consistently alert and energetic. Maintain your routine to solidify these positive changes and avoid schedule disruptions."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tam adaptasyon aşamasındasın (%d. gün, %d gün kaldı)! Vücudun büyük ölçüde polifazik düzene adapte oldu. Uykuya dalman hızlı olmalı ve sürekli uyanık ve enerjik hissetmelisin. Bu olumlu değişiklikleri pekiştirmek için rutinini koru ve program bozulmalarından kaçın."
-          }
-        }
-      }
-    },
     "profile.adaptation.phase4.21day.description" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -847,6 +1136,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tebrikler! Tam adaptasyon başarıldı (%d. gün)! Polifazik uyku düzenine başarıyla adapte oldun. Tutarlı enerji seviyeleri, hızlı uykuya dalma ve dinlendirici uyku kalitesi yaşamalısın. Yeni uyku düzenin artık yerleşti!"
+          }
+        }
+      }
+    },
+    "profile.adaptation.phase4.28day.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're in the full adaptation phase (day %d, %d days remaining)! Your body has largely adapted to the polyphasic schedule. Sleep onset should be quick, and you should feel consistently alert and energetic. Maintain your routine to solidify these positive changes and avoid schedule disruptions."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tam adaptasyon aşamasındasın (%d. gün, %d gün kaldı)! Vücudun büyük ölçüde polifazik düzene adapte oldu. Uykuya dalman hızlı olmalı ve sürekli uyanık ve enerjik hissetmelisin. Bu olumlu değişiklikleri pekiştirmek için rutinini koru ve program bozulmalarından kaçın."
           }
         }
       }
@@ -868,240 +1174,87 @@
         }
       }
     },
-    "profile.adaptation.default.description" : {
+    "profile.adaptation.process.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adaptation process continues..."
+            "value" : "Your Adaptation Process"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adaptasyon süreci devam ediyor..."
+            "value" : "Adaptasyon Sürecin"
           }
         }
       }
     },
-    "profile.adaptation.timeline.phase1.title" : {
+    "profile.adaptation.progressTitle" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beginning Phase"
+            "value" : "Adaptation Progress"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Başlangıç Aşaması"
+            "value" : "Adaptasyon İlerlemesi"
           }
         }
       }
     },
-    "profile.adaptation.timeline.phase1.duration" : {
+    "profile.adaptation.reset.confirm" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Day 1"
+            "value" : "Reset"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1. Gün"
+            "value" : "Sıfırla"
           }
         }
       }
     },
-    "profile.adaptation.timeline.phase2.title" : {
+    "profile.adaptation.reset.message" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adjustment Phase"
+            "value" : "The adaptation process will restart from day 1. Are you sure you want to proceed?"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uyum Aşaması"
+            "value" : "Adaptasyon süreci 1. günden tekrar başlatılacak. Bu işlemi gerçekleştirmek istediğinize emin misiniz?"
           }
         }
       }
     },
-    "profile.adaptation.timeline.phase2.duration" : {
+    "profile.adaptation.reset.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1-7 days"
+            "value" : "Reset Adaptation"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1-7 gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase3.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptation Phase"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon Aşaması"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase3.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "8-14 days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "8-14 gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase4.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Advanced Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İleri Adaptasyon"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase4.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "15-20 days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "15-20 gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase5.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tam Adaptasyon"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase5.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "21-27 days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "21-27 gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase5.21day.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "21+ days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "21+ gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase6.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full Adaptation+"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tam Adaptasyon+"
-          }
-        }
-      }
-    },
-    "profile.adaptation.timeline.phase6.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "28+ days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "28+ gün"
+            "value" : "Adaptasyonu Sıfırla"
           }
         }
       }
@@ -1140,6 +1293,227 @@
         }
       }
     },
+    "profile.adaptation.timeline.phase1.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day 1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase1.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginning Phase"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlangıç Aşaması"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase2.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1-7 days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1-7 gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase2.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjustment Phase"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyum Aşaması"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase3.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8-14 days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8-14 gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase3.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Phase"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Aşaması"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase4.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15-20 days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15-20 gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase4.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleri Adaptasyon"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase5.21day.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21+ days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21+ gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase5.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21-27 days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21-27 gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase5.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tam Adaptasyon"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase6.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "28+ days"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "28+ gün"
+          }
+        }
+      }
+    },
+    "profile.adaptation.timeline.phase6.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Adaptation+"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tam Adaptasyon+"
+          }
+        }
+      }
+    },
     "profile.adaptation.timeline.waiting" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1153,6 +1527,295 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bekliyor"
+          }
+        }
+      }
+    },
+    "profile.adaptation.tip.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Tip"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon İpucu"
+          }
+        }
+      }
+    },
+    "profile.adaptation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Adaptation Process"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Sürecin"
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri Al"
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.later" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha Sonra"
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.later.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can perform the adaptation undo process later from Settings > Advanced section."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon geri alma işlemini Ayarlar > Gelişmiş bölümünden daha sonra yapabilirsiniz."
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.later.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daha Sonra"
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your new schedule will remain the same, you'll just continue from your previous adaptation day."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz."
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule change was made today"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program değiştirme işlemi bugün yapıldı"
+          }
+        }
+      }
+    },
+    "profile.adaptation.undo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Progress Can Be Undone"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon İlerlemesi Geri Alınabilir"
+          }
+        }
+      }
+    },
+    "profile.avatar.crop.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        }
+      }
+    },
+    "profile.avatar.crop.instruction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move and scale your photo to fit in the circle"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotoğrafınızı çembere sığacak şekilde hareket ettirin ve ölçeklendirin"
+          }
+        }
+      }
+    },
+    "profile.avatar.crop.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crop Profile Picture"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil Resmini Kırp"
+          }
+        }
+      }
+    },
+    "profile.avatar.options.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        }
+      }
+    },
+    "profile.avatar.options.editProfile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Profile"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profili Düzenle"
+          }
+        }
+      }
+    },
+    "profile.avatar.options.removePhoto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Photo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotoğrafı Kaldır"
+          }
+        }
+      }
+    },
+    "profile.avatar.options.selectPhoto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Photo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotoğraf Seç"
+          }
+        }
+      }
+    },
+    "profile.avatar.options.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile Picture Options"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil Resmi Seçenekleri"
           }
         }
       }
@@ -1225,6 +1888,23 @@
         }
       }
     },
+    "profile.customization.change" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değiştir"
+          }
+        }
+      }
+    },
     "profile.customization.coreBlock.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1255,6 +1935,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ana Uyku Bloğu"
+          }
+        }
+      }
+    },
+    "profile.customization.coreEmoji" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep Emoji"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku Emojisi"
+          }
+        }
+      }
+    },
+    "profile.customization.coreEmoji.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji for your main sleep blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana uyku bloklarınız için emoji"
           }
         }
       }
@@ -1310,19 +2024,53 @@
         }
       }
     },
-    "profile.customization.title" : {
+    "profile.customization.napEmoji" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Customization"
+            "value" : "Nap Emoji"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kişiselleştirme"
+            "value" : "Şekerleme Emojisi"
+          }
+        }
+      }
+    },
+    "profile.customization.napEmoji.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji for your short sleep blocks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kısa uyku bloklarınız için emoji"
+          }
+        }
+      }
+    },
+    "profile.customization.select" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seç"
           }
         }
       }
@@ -1340,6 +2088,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uyku takibi deneyiminizi kişiselleştirin"
+          }
+        }
+      }
+    },
+    "profile.customization.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customization"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kişiselleştirme"
           }
         }
       }
@@ -1446,6 +2211,40 @@
         }
       }
     },
+    "profile.emoji.picker.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Emoji"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji Seç"
+          }
+        }
+      }
+    },
+    "profile.emoji.selected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected Emoji"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçili Emoji"
+          }
+        }
+      }
+    },
     "profile.emoji.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1493,108 +2292,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji Seç"
-          }
-        }
-      }
-    },
-    "profile.customization.change" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Değiştir"
-          }
-        }
-      }
-    },
-    "profile.customization.select" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seç"
-          }
-        }
-      }
-    },
-    "profile.customization.coreEmoji" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep Emoji"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku Emojisi"
-          }
-        }
-      }
-    },
-    "profile.customization.coreEmoji.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Emoji for your main sleep blocks"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana uyku bloklarınız için emoji"
-          }
-        }
-      }
-    },
-    "profile.customization.napEmoji" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap Emoji"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme Emojisi"
-          }
-        }
-      }
-    },
-    "profile.customization.napEmoji.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Emoji for your short sleep blocks"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kısa uyku bloklarınız için emoji"
           }
         }
       }
@@ -1922,40 +2619,6 @@
         }
       }
     },
-    "profile.premium.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PolyNap Premium"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PolyNap Premium"
-          }
-        }
-      }
-    },
-    "profile.premium.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yükselt"
-          }
-        }
-      }
-    },
     "profile.premium.status.active" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1990,6 +2653,40 @@
         }
       }
     },
+    "profile.premium.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap Premium"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap Premium"
+          }
+        }
+      }
+    },
+    "profile.premium.upgrade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükselt"
+          }
+        }
+      }
+    },
     "profile.progress.completed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2020,6 +2717,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "30 Günlük İlerleme"
+          }
+        }
+      }
+    },
+    "profile.scheduleChange.undo.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo Reset"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıfırlamayı Geri Al"
+          }
+        }
+      }
+    },
+    "profile.scheduleChange.undo.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your adaptation progress and streak were reset due to schedule change. You can undo this today."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program değişikliği nedeniyle adaptasyon ilerlemen ve seriniz sıfırlandı. Bugün geri alabilirsiniz."
+          }
+        }
+      }
+    },
+    "profile.scheduleChange.undo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Changed - Undo Available"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program Değişti - Geri Alma Mevcut"
           }
         }
       }
@@ -2466,6 +3214,193 @@
         }
       }
     },
+    "settings.adaptation.undo.alert.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your new schedule will remain the same, you'll just continue from your previous adaptation day. This action cannot be undone."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz. Bu işlem geri alınamaz."
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.alert.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Undo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Geri Alma"
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.available" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule change was made today, you can undo it"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program değişikliği bugün yapıldı, geri alabilirsiniz"
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri Al"
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.notAvailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No schedule change to undo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri alınacak program değişikliği yok"
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.notAvailableStatus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Available"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevcut Değil"
+          }
+        }
+      }
+    },
+    "settings.adaptation.undo.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Undo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Geri Alma"
+          }
+        }
+      }
+    },
+    "settings.advanced.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş"
+          }
+        }
+      }
+    },
+    "settings.alarms.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarms that will sound when sleep blocks end"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku bloğu bitiminde çalacak alarm ayarları"
+          }
+        }
+      }
+    },
+    "settings.alarms.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm Settings"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm Ayarları"
+          }
+        }
+      }
+    },
+    "settings.copyright" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2025 PolyNap. All rights reserved."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "© 2025 PolyNap. Tüm hakları saklıdır."
+          }
+        }
+      }
+    },
     "settings.general.language" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2772,6 +3707,23 @@
         }
       }
     },
+    "settings.other.disclaimer.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of use and disclaimer"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kullanım koşulları ve sorumluluk reddi"
+          }
+        }
+      }
+    },
     "settings.other.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2823,6 +3775,125 @@
         }
       }
     },
+    "settings.restorePurchases.error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to restore purchases. Please try again."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın almalar geri yüklenemedi. Lütfen tekrar deneyin."
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.restore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Now"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şimdi Geri Yükle"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore your premium purchases"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium satın almalarınızı geri yükleyin"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.success" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchases restored successfully"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın almalar başarıyla geri yüklendi"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Purchases"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın Almaları Geri Yükle"
+          }
+        }
+      }
+    },
+    "settings.restorePurchases.value" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to restore"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri yüklemek için dokunun"
+          }
+        }
+      }
+    },
+    "settings.section.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings and preferences"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarlar ve tercihler"
+          }
+        }
+      }
+    },
     "settings.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2853,739 +3924,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ayarlar"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.beginning" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beginning"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başlangıç"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.day1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day 1 - Beginning"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1. Gün - Başlangıç"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.initial" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Initial Adaptation (Days 2-7)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İlk Adaptasyon (2-7. günler)"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.middle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Middle Adaptation (Days 8-14)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta Adaptasyon (8-14. günler)"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.final" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Final Adaptation (Days 22-28)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son Adaptasyon (22-28. günler)"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.adjustment" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adjustment"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyum"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.adaptation" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.advanced" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Advanced"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İleri"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.full" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full Adaptation"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tam Adaptasyon"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.complete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Complete"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamamlandı"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.unknown" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unknown"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bilinmiyor"
-          }
-        }
-      }
-    },
-    "profile.avatar.options.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile Picture Options"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil Resmi Seçenekleri"
-          }
-        }
-      }
-    },
-    "profile.avatar.options.selectPhoto" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Photo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotoğraf Seç"
-          }
-        }
-      }
-    },
-    "profile.avatar.options.removePhoto" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove Photo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotoğrafı Kaldır"
-          }
-        }
-      }
-    },
-    "profile.avatar.options.editProfile" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Profile"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profili Düzenle"
-          }
-        }
-      }
-    },
-    "profile.avatar.options.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
-          }
-        }
-      }
-    },
-    "profile.avatar.crop.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crop Profile Picture"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil Resmini Kırp"
-          }
-        }
-      }
-    },
-    "profile.avatar.crop.done" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamam"
-          }
-        }
-      }
-    },
-    "profile.avatar.crop.instruction" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Move and scale your photo to fit in the circle"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotoğrafınızı çembere sığacak şekilde hareket ettirin ve ölçeklendirin"
-          }
-        }
-      }
-    },
-    "profile.scheduleChange.undo.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schedule Changed - Undo Available"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program Değişti - Geri Alma Mevcut"
-          }
-        }
-      }
-    },
-    "profile.scheduleChange.undo.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your adaptation progress and streak were reset due to schedule change. You can undo this today."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program değişikliği nedeniyle adaptasyon ilerlemen ve seriniz sıfırlandı. Bugün geri alabilirsiniz."
-          }
-        }
-      }
-    },
-    "profile.scheduleChange.undo.button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Undo Reset"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sıfırlamayı Geri Al"
-          }
-        }
-      }
-    },
-
-    "profile.adaptation.completed.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎉 Adaptation Completed!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎉 Adaptasyon Tamamlandı!"
-          }
-        }
-      }
-    },
-    "profile.adaptation.completed.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Congratulations! You've successfully completed your polyphasic sleep adaptation. Your body has adapted to your new sleep schedule. Well done!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tebrikler! Polifazik uyku adaptasyonunu başarıyla tamamladın. Vücudun yeni uyku düzenine adapte oldu. Harika iş!"
-          }
-        }
-      }
-    },
-    "profile.adaptation.completed.celebrate" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to Celebrate! 🎆"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kutlamak İçin Dokun! 🎆"
-          }
-        }
-      }
-    },
-    "profile.adaptation.completed.days" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Completed in %d days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d günde tamamlandı"
-          }
-        }
-      }
-    },
-    "profile.adaptation.completed.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your polyphasic sleep adaptation journey is complete!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Polifazik uyku adaptasyon yolculuğunuz tamamlandı!"
-          }
-        }
-      }
-    },
-    "profile.adaptation.process.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your Adaptation Process"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptasyon Sürecin"
-          }
-        }
-      }
-    },
-    "profile.adaptation.day.format" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day %d / %d"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün %d / %d"
-          }
-        }
-      }
-    },
-    "profile.adaptation.days.remaining" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Days Remaining"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalan Gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.days.count" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d days"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d gün"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.early" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Early Adaptation (Days 1-7)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erken Adaptasyon (1-7. Günler)"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.early.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome to your polyphasic sleep journey! Your body is starting to adjust to the new schedule. Some fatigue is normal as your circadian rhythm learns the new pattern."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Polifazik uyku yolculuğuna hoş geldin! Vücudun yeni programa alışmaya başlıyor. Sirkadiyen ritmin yeni düzeni öğrenirken biraz yorgunluk normal."
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.middle.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You're making progress! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Keep going!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İlerleme kaydediyorsun! Uyku kaliten iyileşmeye başlamalı ve kestirmeler sırasında REM uykusuna geçişin kolaylaşabilir. Devam et!"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.late" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Late Adaptation (Days 15+)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geç Adaptasyon (15+ Günler)"
-          }
-        }
-      }
-    },
-    "profile.adaptation.phase.late.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excellent progress! Your sleep efficiency is improving significantly. You should feel more refreshed and have better alertness during wake periods."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mükemmel ilerleme! Uyku verimliliğin önemli ölçüde iyileşiyor. Daha dinlenmiş hissetmeli ve uyanık olduğun dönemlerde daha iyi dikkat göstermelisin."
-          }
-        }
-      }
-    },
-
-    "profile.adaptation.celebration.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎉 Congratulations! 🎉"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎉 Tebrikler! 🎉"
-          }
-        }
-      }
-    },
-    "profile.adaptation.celebration.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You've successfully completed your polyphasic sleep adaptation! Your body has fully adapted to your new sleep schedule."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Polifazik uyku adaptasyonunu başarıyla tamamladın! Vücudun yeni uyku düzenine tamamen adapte oldu."
-          }
-        }
-      }
-    },
-    "general.continue" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Devam Et"
-          }
-        }
-      }
-    },
-    "general.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
-          }
-        }
-      }
-    },
-    "general.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
-          }
-        }
-      }
-    },
-    "profile.emoji.selected" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selected Emoji"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seçili Emoji"
-          }
-        }
-      }
-    },
-    "profile.emoji.picker.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose Emoji"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Emoji Seç"
           }
         }
       }

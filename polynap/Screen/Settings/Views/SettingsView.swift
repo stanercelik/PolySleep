@@ -107,8 +107,8 @@ struct SettingsView: View {
                             
                             ModernNavigationRow(
                                 icon: "alarm.fill",
-                                title: "Alarm Ayarları",
-                                subtitle: "Uyku bloğu bitiminde çalacak alarm ayarları",
+                                title: L("settings.alarms.title", table: "Profile"),
+                                subtitle: L("settings.alarms.subtitle", table: "Profile"),
                                 destination: AlarmSettingsView()
                             )
                         }
@@ -116,7 +116,7 @@ struct SettingsView: View {
                     
                     // Advanced Section
                     ModernSettingsSection(
-                        title: "Gelişmiş",
+                        title: L("settings.advanced.title", table: "Profile"),
                         icon: "slider.horizontal.3",
                         iconColor: .orange,
                         isMinimal: true
@@ -170,35 +170,13 @@ struct SettingsView: View {
                                 subtitle: L("settings.other.disclaimer.subtitle", table: "Profile"),
                                 destination: DisclaimerView()
                             )
-                            
-                            ModernDivider()
-                            
-                            ModernExternalLinkRow(
-                                icon: "envelope.fill",
-                                title: L("settings.other.feedback", table: "Profile"),
-                                url: "mailto:support@polynap.app"
-                            )
-                            
-                            ModernDivider()
-                            
-                            ModernExternalLinkRow(
-                                icon: "star.fill",
-                                title: L("settings.other.rateApp", table: "Profile"),
-                                url: "https://apps.apple.com/app/polynap/id123456789"
-                            )
                         }
                     }
                     
                     // Enhanced Version Info
                     VStack(spacing: PSSpacing.md) {
                         HStack(spacing: PSSpacing.sm) {
-                            Image("AppIcon")
-                                .resizable()
-                                .frame(width: PSIconSize.large, height: PSIconSize.large)
-                                .cornerRadius(PSCornerRadius.small)
-                                .shadow(color: .black.opacity(0.2), radius: PSSpacing.xs, x: 0, y: PSSpacing.xs / 2)
-                            
-                            VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                            VStack(alignment: .center , spacing: PSSpacing.xs) {
                                 Text("PolySleep")
                                     .font(PSTypography.headline)
                                     .font(.subheadline)
@@ -237,7 +215,7 @@ struct SettingsView: View {
             Button(L("settings.general.theme.dark", table: "Profile")) {
                 userSelectedTheme = true
             }
-            Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
+            Button(L("general.cancel", table: "Profile"), role: .cancel) { }
         }
         .confirmationDialog(L("settings.general.selectLanguage", table: "Profile"), isPresented: $showLanguagePicker, titleVisibility: .visible) {
             Button(L("settings.language.turkish", table: "Profile")) {
@@ -246,9 +224,8 @@ struct SettingsView: View {
             Button(L("settings.language.english", table: "Profile")) {
                 languageManager.changeLanguage(to: "en")
             }
-            Button(L("general.cancel", table: "MainScreen"), role: .cancel) { }
+            Button(L("general.cancel", table: "Profile"), role: .cancel) { }
         }
-
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
     }
     
@@ -548,6 +525,7 @@ struct ModernDivider: View {
 struct AdaptationUndoRow: View {
     @StateObject private var viewModel = ProfileScreenViewModel(languageManager: LanguageManager.shared)
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @EnvironmentObject private var languageManager: LanguageManager
     @State private var showingUndoAlert = false
     @State private var isUndoing = false
     @State private var undoError: String? = nil
@@ -567,12 +545,12 @@ struct AdaptationUndoRow: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("Adaptasyon Geri Alma")
+                Text(L("settings.adaptation.undo.title", table: "Profile"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.appText)
                 
-                Text(viewModel.hasRawUndoData() ? "Program değişikliği bugün yapıldı, geri alabilirsiniz" : "Geri alınacak program değişikliği yok")
+                Text(viewModel.hasRawUndoData() ? L("settings.adaptation.undo.available", table: "Profile") : L("settings.adaptation.undo.notAvailable", table: "Profile"))
                     .font(.caption)
                     .foregroundColor(.appTextSecondary)
                     .lineLimit(2)
@@ -583,7 +561,7 @@ struct AdaptationUndoRow: View {
             // Action button
             if viewModel.hasRawUndoData() {
                 PSStatusBadge(
-                    "Geri Al",
+                    L("settings.adaptation.undo.button", table: "Profile"),
                     icon: "arrow.uturn.backward",
                     color: .orange,
                     backgroundColor: Color.orange.opacity(0.15)
@@ -593,7 +571,7 @@ struct AdaptationUndoRow: View {
                 }
             } else {
                 PSStatusBadge(
-                    "Mevcut Değil",
+                    L("settings.adaptation.undo.notAvailableStatus", table: "Profile"),
                     icon: "xmark.circle",
                     color: .appTextSecondary,
                     backgroundColor: Color.appTextSecondary.opacity(0.1)
@@ -601,24 +579,25 @@ struct AdaptationUndoRow: View {
             }
         }
         .padding(.vertical, 8)
-        .alert("Adaptasyon Geri Alma", isPresented: $showingUndoAlert) {
-            Button("İptal", role: .cancel) {}
-            Button("Geri Al", role: .destructive) {
+        .alert(L("settings.adaptation.undo.alert.title", table: "Profile"), isPresented: $showingUndoAlert) {
+            Button(L("general.cancel", table: "Profile"), role: .cancel) {}
+            Button(L("settings.adaptation.undo.button", table: "Profile"), role: .destructive) {
                 performUndo()
             }
         } message: {
-            Text("Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz. Bu işlem geri alınamaz.")
+            Text(L("settings.adaptation.undo.alert.message", table: "Profile"))
         }
-        .alert("Hata", isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
-            Button("Tamam", role: .cancel) {
+        .alert(L("general.error", table: "Profile"), isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {
                 undoError = nil
             }
         } message: {
-            Text(undoError ?? "Bilinmeyen hata oluştu")
+            Text(undoError ?? L("general.unknownError", table: "Profile"))
         }
         .sheet(isPresented: $isPaywallPresented) {
             PaywallView(displayCloseButton: true)
         }
+        .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
         .onAppear {
             // ViewModelContext gerekli değil, sadece repository kullanacağız
         }

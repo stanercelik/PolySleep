@@ -77,17 +77,17 @@ struct AdaptationPhaseCard: View {
         } message: {
             Text(resetError ?? L("general.unknownError", table: "Profile"))
         }
-        .alert("Daha Sonra", isPresented: $showingLaterAlert) {
-            Button("Tamam", role: .cancel) {}
+        .alert(L("profile.adaptation.undo.later.title", table: "Profile"), isPresented: $showingLaterAlert) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {}
         } message: {
-            Text("Adaptasyon geri alma işlemini Ayarlar > Gelişmiş bölümünden daha sonra yapabilirsiniz.")
+            Text(L("profile.adaptation.undo.later.message", table: "Profile"))
         }
-        .alert("Hata", isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
-            Button("Tamam", role: .cancel) {
+        .alert(L("general.error", table: "Profile"), isPresented: .init(get: { undoError != nil }, set: { if !$0 { undoError = nil } })) {
+            Button(L("general.ok", table: "Profile"), role: .cancel) {
                 undoError = nil
             }
         } message: {
-            Text(undoError ?? "Bilinmeyen hata oluştu")
+            Text(undoError ?? L("general.unknownError", table: "Profile"))
         }
     }
     
@@ -331,22 +331,22 @@ struct UndoAdaptationSection: View {
     
     var body: some View {
         PSInfoBox(
-            title: "Adaptasyon İlerlemesi Geri Alınabilir",
-            message: "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz.",
-            subtitle: "Program değiştirme işlemi bugün yapıldı",
+            title: L("profile.adaptation.undo.title", table: "Profile"),
+            message: L("profile.adaptation.undo.message", table: "Profile"),
+            subtitle: L("profile.adaptation.undo.subtitle", table: "Profile"),
             icon: "arrow.uturn.left.circle.fill",
             style: .warning
         )
         
         HStack(spacing: PSSpacing.sm) {
             // Later Button
-            PSSecondaryButton("Daha Sonra", icon: "clock") {
+            PSSecondaryButton(L("profile.adaptation.undo.later", table: "Profile"), icon: "clock") {
                 onUndoLater()
             }
             
             // Undo Button (Premium gated)
             PSPrimaryButton(
-                "Geri Al",
+                L("profile.adaptation.undo.button", table: "Profile"),
                 icon: isUndoing ? nil : "arrow.uturn.backward",
                 isLoading: isUndoing,
                 customBackgroundColor: Color.orange

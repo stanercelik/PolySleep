@@ -477,14 +477,18 @@ struct ModernDayCard: View {
                     }
                 }
                 
-                // Rating Stars
-                if let firstEntry = item.sleepEntries?.first, firstEntry.rating > 0 {
+                // Rating Stars with half-star support
+                if let entries = item.sleepEntries, !entries.isEmpty, item.averageRating > 0 {
                     HStack(spacing: PSSpacing.xs) {
-                        ForEach(1...5, id: \.self) { starIndex in
-                            Image(systemName: starIndex <= firstEntry.rating ? "star.fill" : "star")
-                                .font(.system(size: PSIconSize.small))
-                                .foregroundColor(starIndex <= firstEntry.rating ? Color.appAccent : Color.appTextSecondary.opacity(0.5))
-                        }
+                        StarsView(
+                            rating: item.averageRating,
+                            size: PSIconSize.small,
+                            primaryColor: .appAccent,
+                            emptyColor: .appTextSecondary.opacity(0.3)
+                        )
+                        Text(String(format: "%.1f", item.averageRating))
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
                     }
                 }
                 
@@ -748,3 +752,5 @@ private func formatEntryDuration(_ duration: TimeInterval) -> String {
     let minutes = Int(duration / 60)
     return formatDuration(minutes)
 }
+
+
