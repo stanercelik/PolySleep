@@ -115,22 +115,29 @@ struct SleepEntryDetailCard: View {
     
     @State private var showDeleteAlert = false
     
-    var formattedStartTime: String {
-        entry.startTime.formatted(date: .omitted, time: .shortened)
+    // Computed properties
+    private var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB")
+        return formatter
     }
     
-    var formattedEndTime: String {
-        entry.endTime.formatted(date: .omitted, time: .shortened)
+    private var timeText: String {
+        return "\(timeFormatter.string(from: entry.startTime)) - \(timeFormatter.string(from: entry.endTime))"
     }
     
-    var durationText: String {
+    private var durationText: String {
         let hours = entry.durationMinutes / 60
         let minutes = entry.durationMinutes % 60
-        if hours > 0 { return "\(hours) s \(minutes) dk" }
-        else { return "\(minutes) dk" }
+        if hours > 0 {
+            return "\(hours) s \(minutes) dk"
+        } else {
+            return "\(minutes) dk"
+        }
     }
     
-    var ratingColor: Color {
+    private var ratingColor: Color {
         switch entry.rating {
         case 5:
             return Color.green
@@ -162,12 +169,7 @@ struct SleepEntryDetailCard: View {
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(Color("TextColor"))
                     
-                    // 24 saatlik format için DateFormatter kullan
-                    let timeFormatter = DateFormatter()
-                    timeFormatter.dateFormat = "HH:mm"
-                    timeFormatter.locale = Locale(identifier: "en_GB")
-                    
-                    Text("\(timeFormatter.string(from: entry.startTime)) - \(timeFormatter.string(from: entry.endTime))")
+                    Text(timeText)
                         .font(.caption)
                         .foregroundColor(Color("SecondaryTextColor"))
                 }
