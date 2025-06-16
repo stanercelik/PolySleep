@@ -89,8 +89,8 @@ struct MainScreenView: View {
                         
                         // Sleep Quality Rating Card
                         if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
-                            let startTime = TimeFormatter.time(from: lastBlock.startTime)!
-                            let endTime = TimeFormatter.time(from: lastBlock.endTime)!
+                            if let startTime = TimeFormatter.time(from: lastBlock.startTime),
+                               let endTime = TimeFormatter.time(from: lastBlock.endTime) {
                             
                             let now = Date()
                             let startDate = Calendar.current.date(
@@ -107,13 +107,14 @@ struct MainScreenView: View {
                                 of: now
                             ) ?? now
                             
-                            SleepQualityRatingCard(
-                                startTime: startDate,
-                                endTime: endDate,
-                                isPresented: $viewModel.showSleepQualityRating,
-                                viewModel: viewModel
-                            )
-                            .transition(.move(edge: .top).combined(with: .opacity))
+                                SleepQualityRatingCard(
+                                    startTime: startDate,
+                                    endTime: endDate,
+                                    isPresented: $viewModel.showSleepQualityRating,
+                                    viewModel: viewModel
+                                )
+                                .transition(.move(edge: .top).combined(with: .opacity))
+                            }
                         }
                         
                         // Status Cards Grid

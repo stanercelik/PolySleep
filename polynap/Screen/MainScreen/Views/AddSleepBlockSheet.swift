@@ -17,8 +17,10 @@ struct AddSleepBlockSheet: View {
     
     private var sortedSchedule: [SleepBlock] {
         viewModel.model.schedule.schedule.sorted { block1, block2 in
-            let time1 = TimeFormatter.time(from: block1.startTime)!
-            let time2 = TimeFormatter.time(from: block2.startTime)!
+            guard let time1 = TimeFormatter.time(from: block1.startTime),
+                  let time2 = TimeFormatter.time(from: block2.startTime) else {
+                return false
+            }
             let minutes1 = time1.hour * 60 + time1.minute
             let minutes2 = time2.hour * 60 + time2.minute
             return minutes1 < minutes2

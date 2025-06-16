@@ -276,6 +276,7 @@ class MainScreenViewModel: ObservableObject {
     func addNewBlock() {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         let startTime = formatter.string(from: newBlockStartTime)
         
         // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
@@ -313,6 +314,7 @@ class MainScreenViewModel: ObservableObject {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         let startTime = formatter.string(from: editingBlockStartTime)
         
         // Süre hesaplama - gece yarısını geçen bloklar için düzeltme
@@ -975,6 +977,7 @@ class MainScreenViewModel: ObservableObject {
         // Çakışma kontrolü
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         let newStartTimeString = formatter.string(from: startTime)
         let newEndTimeString = formatter.string(from: endTime)
         
@@ -1012,6 +1015,7 @@ class MainScreenViewModel: ObservableObject {
         // Çakışma kontrolü (düzenlenen bloğu hariç tut)
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         let newStartTimeString = formatter.string(from: startTime)
         let newEndTimeString = formatter.string(from: endTime)
         
@@ -1096,6 +1100,7 @@ class MainScreenViewModel: ObservableObject {
         // Mevcut zamanları Date formatına dönüştür
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         
         let calendar = Calendar.current
         let now = Date()

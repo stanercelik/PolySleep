@@ -18,6 +18,7 @@ struct RepositoryUtils {
     static func convertTimeStringToDate(_ timeString: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         
         // Bugünün tarihini al ve sadece saat/dakikayı ayarla
         let today = Date()
@@ -80,8 +81,13 @@ struct RepositoryUtils {
         }
 
         let sleepBlocks = (schedule.sleepBlocks ?? []).map { block in
-            SleepBlock(
-                startTime: block.startTime.formatted(date: .omitted, time: .shortened),
+            // 24 saatlik format için DateFormatter kullan
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            formatter.locale = Locale(identifier: "en_GB")
+            
+            return SleepBlock(
+                startTime: formatter.string(from: block.startTime),
                 duration: block.durationMinutes,
                 type: block.isCore ? "core" : "nap",
                 isCore: block.isCore

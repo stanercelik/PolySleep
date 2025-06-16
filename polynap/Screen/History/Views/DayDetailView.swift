@@ -162,8 +162,13 @@ struct SleepEntryDetailCard: View {
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(Color("TextColor"))
                     
-                    Text("\(formattedStartTime) - \(formattedEndTime)")
-                        .font(.system(size: 14))
+                    // 24 saatlik format için DateFormatter kullan
+                    let timeFormatter = DateFormatter()
+                    timeFormatter.dateFormat = "HH:mm"
+                    timeFormatter.locale = Locale(identifier: "en_GB")
+                    
+                    Text("\(timeFormatter.string(from: entry.startTime)) - \(timeFormatter.string(from: entry.endTime))")
+                        .font(.caption)
                         .foregroundColor(Color("SecondaryTextColor"))
                 }
                 

@@ -296,6 +296,7 @@ struct AlarmFiringView: View {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "en_GB")
         timeString = formatter.string(from: Date())
     }
 }

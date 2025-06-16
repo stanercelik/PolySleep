@@ -745,6 +745,7 @@ private func formatDuration(_ minutes: Int) -> String {
 private func formatTime(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.timeStyle = .short
+    formatter.locale = Locale(identifier: "en_GB")
     return formatter.string(from: date)
 }
 

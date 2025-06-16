@@ -220,8 +220,14 @@ final class AlarmService: ObservableObject {
     
     private func scheduleReminder(at date: Date, for block: BlockInstance) async {
         let content = UNMutableNotificationContent()
-        content.title = "😴 Uyku Zamanı Yaklaşıyor!"
-        let startTimeFormatted = block.startDate.formatted(date: .omitted, time: .shortened)
+        content.title = "⏰ Uyku Zamanı"
+        
+        // 24 saatlik format için DateFormatter kullan
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        timeFormatter.locale = Locale(identifier: "en_GB")
+        let startTimeFormatted = timeFormatter.string(from: block.startDate)
+        
         content.body = "'\(block.scheduleName)' programındaki \(startTimeFormatted) uykunuz başlamak üzere."
         content.categoryIdentifier = Self.reminderCategoryIdentifier
         content.sound = .default

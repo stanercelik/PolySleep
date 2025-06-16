@@ -255,6 +255,7 @@ struct SleepQualityRatingView: View {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .none
+        formatter.locale = Locale(identifier: "en_GB") // 24 saatlik format için zorla
         return formatter.string(from: date)
     }
 }
