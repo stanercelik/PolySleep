@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Türkçe localization for Info.plist permission descriptions
+*/
+
+/* Bildirim izni açıklaması */
+"NSUserNotificationsUsageDescription" = "PolyNap uyku bloklarınız bittiğinde sizi uyandırmak için alarm bildirimleri gönderir. Bu özellik uyku programınızın düzgün çalışması için gereklidir.";
+
+/* Kritik mesajlaşma izni açıklaması */
+"NSCriticalMessagingUsageDescription" = "PolyNap, Sessiz Mod veya Odak modları gibi durumlarda bile acil uyandırma ve hatırlatma bildirimleri göndermek için kritik mesaj izinlerine ihtiyaç duyar."; 

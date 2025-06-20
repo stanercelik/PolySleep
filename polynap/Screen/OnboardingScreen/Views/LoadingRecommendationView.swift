@@ -19,7 +19,7 @@ struct LoadingRecommendationView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 32) {
-                Text("Size Özel Program Hazırlanıyor")
+                LocalizedText("onboarding.loading.preparingProgram", tableName: "Onboarding")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.appText)
@@ -70,7 +70,7 @@ struct LoadingRecommendationView: View {
                             .contentTransition(.numericText())
                         
                         if isComplete {
-                            Text("Hazır!")
+                            LocalizedText("onboarding.loading.ready", tableName: "Onboarding")
                                 .font(.headline)
                                 .foregroundColor(.appText)
                                 .transition(.scale.combined(with: .opacity))
@@ -112,7 +112,7 @@ struct LoadingRecommendationView: View {
                             }
                         }
                     }) {
-                        Text("Uygulamaya Başla")
+                        LocalizedText("onboarding.startUsingApp", tableName: "Onboarding")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)

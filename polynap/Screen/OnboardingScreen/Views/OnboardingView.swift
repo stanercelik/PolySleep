@@ -24,7 +24,7 @@ struct OnboardingView: View {
                     ProgressView(value: Double(viewModel.currentPage + 1), total: Double(viewModel.totalPages))
                         .tint(Color.appPrimary)
                         .padding(.horizontal, PSSpacing.lg)
-                        .accessibilityValue("\(viewModel.currentPage + 1) of \(viewModel.totalPages) pages")
+                        .accessibilityValue(String(format: L("accessibility.progressPages", table: "Onboarding"), viewModel.currentPage + 1, viewModel.totalPages))
                     
                     ScrollView {
                         VStack(spacing: PSSpacing.xl) {

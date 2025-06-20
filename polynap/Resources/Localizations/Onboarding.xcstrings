@@ -86,6 +86,24 @@
         }
       }
     },
+    "accessibility.progressPages" : {
+      "comment" : "Accessibility value for progress indicator showing current page of total pages",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$d of %2$d pages"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$d sayfanın %1$d. sayfası"
+          }
+        }
+      }
+    },
     "accessibility.seeResults" : {
       "comment" : "Accessibility label for see results button",
       "localizations" : {
@@ -449,6 +467,150 @@
         }
       }
     },
+    "onboarding.error.dataProcessingFailed" : {
+      "comment" : "Error message when data processing failed",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was a problem processing your data, default program has been created."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verileriniz işlenirken bir sorun oluştu, varsayılan program oluşturuldu."
+          }
+        }
+      }
+    },
+    "onboarding.error.defaultProgramSetupFailed" : {
+      "comment" : "Error message when default program setup failed",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred while setting up the default program."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsayılan program ayarlanırken bir hata oluştu."
+          }
+        }
+      }
+    },
+    "onboarding.error.incompleteAnswers" : {
+      "comment" : "Error message when some preferences are not set",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some preferences are not set. Please answer all questions."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın."
+          }
+        }
+      }
+    },
+    "onboarding.error.noModelContext" : {
+      "comment" : "Error message when ModelContext is not available",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data could not be saved: ModelContext not found"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veriler kaydedilemedi: ModelContext bulunamadı"
+          }
+        }
+      }
+    },
+    "onboarding.error.noRecommendationFound" : {
+      "comment" : "Error message when no suitable recommendation was found",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No suitable program recommendation was found. Default program has been set."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size uygun bir program önerisi bulunamadı. Varsayılan program ayarlandı."
+          }
+        }
+      }
+    },
+    "onboarding.error.preferencesSaveFailed" : {
+      "comment" : "Error message when preferences could not be saved locally",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferences could not be saved locally: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tercihler yerel olarak kaydedilemedi: %@"
+          }
+        }
+      }
+    },
+    "onboarding.error.programSetupFailed" : {
+      "comment" : "Error message when recommended program setup failed",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was a problem setting up the recommended program. Default program will be used."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önerilen program ayarlanırken bir sorun oluştu. Varsayılan program kullanılacak."
+          }
+        }
+      }
+    },
+    "onboarding.error.unexpectedError" : {
+      "comment" : "Error message for unexpected errors",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An unexpected error occurred, default program has been created."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beklenmeyen bir hata oluştu, varsayılan program oluşturuldu."
+          }
+        }
+      }
+    },
     "onboarding.healthStatus" : {
       "comment" : "Section title for user's health status",
       "extractionState" : "stale",
@@ -706,6 +868,150 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Günlük aktivite düzeyinizi nasıl tanımlarsınız? Bu, enerji ihtiyaçlarınıza uygun bir uyku programı önerebilmemize yardımcı olur."
+          }
+        }
+      }
+    },
+    "onboarding.loading.almostReady" : {
+      "comment" : "Status message when almost complete",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almost ready..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok az kaldı..."
+          }
+        }
+      }
+    },
+    "onboarding.loading.analyzingProgram" : {
+      "comment" : "Status message when analyzing the program",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyzing your program..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programınız analiz ediliyor..."
+          }
+        }
+      }
+    },
+    "onboarding.loading.calculatingSchedule" : {
+      "comment" : "Status message when calculating sleep schedule",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculating your sleep schedule..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku programınız hesaplanıyor..."
+          }
+        }
+      }
+    },
+    "onboarding.loading.preparingProgram" : {
+      "comment" : "Title shown while preparing personalized sleep program",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing Your Custom Program"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size Özel Program Hazırlanıyor"
+          }
+        }
+      }
+    },
+    "onboarding.loading.ready" : {
+      "comment" : "Status message when program preparation is complete",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hazır!"
+          }
+        }
+      }
+    },
+    "onboarding.loading.savingDataLocally" : {
+      "comment" : "Status message when saving data locally",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving data locally..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veriler yerel olarak kaydediliyor..."
+          }
+        }
+      }
+    },
+    "onboarding.loading.savingPreferences" : {
+      "comment" : "Status message when saving user preferences",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving your preferences..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tercihleriniz kaydediliyor..."
+          }
+        }
+      }
+    },
+    "onboarding.loading.savingProgram" : {
+      "comment" : "Status message when saving the program",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving your program..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programınız kaydediliyor..."
           }
         }
       }
@@ -1285,17 +1591,18 @@
       }
     },
     "onboarding.startUsingApp" : {
+      "comment" : "Button text to start using the app after onboarding",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start Using App!"
+            "value" : "Start Using App"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kullanmaya Başla!"
+            "state" : "translated",
+            "value" : "Uygulamaya Başla"
           }
         }
       }

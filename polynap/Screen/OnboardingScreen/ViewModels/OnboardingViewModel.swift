@@ -130,7 +130,7 @@ final class OnboardingViewModel: ObservableObject {
               disruptionTolerance != nil,
               chronotype != nil else {
             await MainActor.run {
-                errorMessage = "Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın."
+                errorMessage = L("onboarding.error.incompleteAnswers", table: "Onboarding")
                 showError = true
                 showLoadingView = false
             }
@@ -140,7 +140,7 @@ final class OnboardingViewModel: ObservableObject {
         await MainActor.run {
             showLoadingView = true
             recommendationProgress = 0.0
-            recommendationStatusMessage = "Bilgiler alınıyor..."
+            recommendationStatusMessage = L("onboarding.loading.preparingProgram", table: "Onboarding")
             recommendationComplete = false
         }
         
@@ -190,11 +190,11 @@ final class OnboardingViewModel: ObservableObject {
               let chronotype = chronotype
         else {
             print("❌ Error: Some user preferences are not set")
-            await showErrorMessage("Bazı tercihler belirlenmemiş. Lütfen tüm soruları yanıtlayın.")
+            await showErrorMessage(L("onboarding.error.incompleteAnswers", table: "Onboarding"))
             return
         }
         
-        updateProgress(0.15, "Tercihleriniz kaydediliyor...")
+        updateProgress(0.15, L("onboarding.loading.savingPreferences", table: "Onboarding"))
         
         print("\nSaving values:")
         print("- Sleep Experience: \(sleepExperience.rawValue)")
@@ -225,12 +225,12 @@ final class OnboardingViewModel: ObservableObject {
             ("onboarding.chronotype", chronotype.rawValue)
         ]
         
-        updateProgress(0.30, "Veriler yerel olarak kaydediliyor...")
+        updateProgress(0.30, L("onboarding.loading.savingDataLocally", table: "Onboarding"))
         
         do {
             guard let modelContext = self.modelContext else {
                 print("❌ ModelContext bulunamadı, onboarding yanıtları kaydedilemedi")
-                await showErrorMessage("Veriler kaydedilemedi: ModelContext bulunamadı")
+                await showErrorMessage(L("onboarding.error.noModelContext", table: "Onboarding"))
                 return
             }
             
@@ -271,12 +271,12 @@ final class OnboardingViewModel: ObservableObject {
             try modelContext.save()
             print("✅ Onboarding yanıtları yerel olarak SwiftData'ya kaydedildi.")
             
-            updateProgress(0.45, "Uyku programınız hesaplanıyor...")
+            updateProgress(0.45, L("onboarding.loading.calculatingSchedule", table: "Onboarding"))
             await getRecommendedSchedule()
             
         } catch {
             print("❌ Onboarding yanıtları SwiftData'ya kaydedilirken hata: \(error.localizedDescription)")
-            await showErrorMessage("Tercihler yerel olarak kaydedilemedi: \(error.localizedDescription)")
+            await showErrorMessage(String(format: L("onboarding.error.preferencesSaveFailed", table: "Onboarding"), error.localizedDescription))
         }
     }
     
@@ -325,12 +325,12 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     func getRecommendedSchedule() async {
-        updateProgress(0.6, "Programınız analiz ediliyor...")
+        updateProgress(0.6, L("onboarding.loading.analyzingProgram", table: "Onboarding"))
         
         // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
         try? await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 saniye
         
-        updateProgress(0.75, "Çok az kaldı...")
+        updateProgress(0.75, L("onboarding.loading.almostReady", table: "Onboarding"))
         
         do {
             if let recommendation = try await recommender.recommendSchedule() {
@@ -341,7 +341,7 @@ final class OnboardingViewModel: ObservableObject {
                 // Yapay bir gecikme ekleyelim ki kullanıcı hesaplamanın yapıldığını görsün
                 try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye
                 
-                updateProgress(0.9, "Programınız kaydediliyor...")
+                updateProgress(0.9, L("onboarding.loading.savingProgram", table: "Onboarding"))
                 
                 let recommendedUserScheduleModel = recommendation.schedule.toUserScheduleModel
                 do {
@@ -353,12 +353,12 @@ final class OnboardingViewModel: ObservableObject {
                     await ScheduleManager.shared.loadActiveScheduleFromRepository()
                     
                     await MainActor.run {
-                        updateProgress(1.0, "Hazır!")
+                        updateProgress(1.0, L("onboarding.loading.ready", table: "Onboarding"))
                         recommendationComplete = true
                     }
                 } catch {
                     print("❌ Önerilen program kaydedilirken/aktifleştirilirken hata: \(error.localizedDescription)")
-                    await handleErrorButContinue("Önerilen program ayarlanırken bir sorun oluştu. Varsayılan program kullanılacak.")
+                    await handleErrorButContinue(L("onboarding.error.programSetupFailed", table: "Onboarding"))
                 }
             } else {
                 print("❌ Failed to get recommendation")
@@ -370,18 +370,18 @@ final class OnboardingViewModel: ObservableObject {
                     _ = try await Repository.shared.saveSchedule(defaultScheduleModel)
                     print("✅ Varsayılan program yerel olarak kaydedildi ve aktif edildi.")
                     await ScheduleManager.shared.loadActiveScheduleFromRepository()
-                    await handleErrorButContinue("Size uygun bir program önerisi bulunamadı. Varsayılan program ayarlandı.")
+                    await handleErrorButContinue(L("onboarding.error.noRecommendationFound", table: "Onboarding"))
                 } catch {
                     print("❌ Varsayılan program kaydedilirken/aktifleştirilirken hata: \(error.localizedDescription)")
-                    await handleErrorButContinue("Varsayılan program ayarlanırken bir hata oluştu.")
+                    await handleErrorButContinue(L("onboarding.error.defaultProgramSetupFailed", table: "Onboarding"))
                 }
             }
         } catch let error as EnumConversionError {
             print("❌ Enum conversion error: \(error.localizedDescription)")
-            await handleErrorButContinue("Verileriniz işlenirken bir sorun oluştu, varsayılan program oluşturuldu.")
+            await handleErrorButContinue(L("onboarding.error.dataProcessingFailed", table: "Onboarding"))
         } catch {
             print("❌ Error getting recommendation: \(error.localizedDescription)")
-            await handleErrorButContinue("Beklenmeyen bir hata oluştu, varsayılan program oluşturuldu.")
+            await handleErrorButContinue(L("onboarding.error.unexpectedError", table: "Onboarding"))
         }
     }
     
@@ -394,7 +394,7 @@ final class OnboardingViewModel: ObservableObject {
         await MainActor.run {
             withAnimation {
                 self.recommendationProgress = 1.0
-                self.recommendationStatusMessage = "Hazır!"
+                self.recommendationStatusMessage = L("onboarding.loading.ready", table: "Onboarding")
                 self.recommendationComplete = true
             }
         }
