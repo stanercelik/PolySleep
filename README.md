@@ -5,14 +5,14 @@ PolySleep is a modern iOS application designed to manage polyphasic sleep schedu
 
 ## 📸 Screenshots
 
-*Screenshots will be added here soon...*
-
-<!-- 
-You can add screenshots here like:
-![Main Screen](screenshots/main-screen.png)
-![Analytics](screenshots/analytics.png)
-![Sleep Schedule](screenshots/sleep-schedule.png)
--->
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/c3771891-8e05-47d6-acd7-ea3b9930d557" width="15%" style="margin-right: 24px;" />
+  <img src="https://github.com/user-attachments/assets/29783a18-27f7-4e36-9652-f275ff7f28d9" width="15%" style="margin-right: 24px;" />
+  <img src="https://github.com/user-attachments/assets/c18aba35-6423-43c7-8016-0af6fdb25f00" width="15%" style="margin-right: 24px;" />
+  <img src="https://github.com/user-attachments/assets/1172e8a4-2095-4a9f-bc87-dfb47f35a9ae" width="15%" style="margin-right: 24px;" />
+  <img src="https://github.com/user-attachments/assets/b27cae9d-7773-4307-82a6-19d43b9ecc96" width="15%" style="margin-right: 24px;" />
+  <img src="https://github.com/user-attachments/assets/7c2808c1-7832-411a-a662-b2ca5c31dcce" width="15%" />
+</p>
 
 ## ✨ Key Features
 
