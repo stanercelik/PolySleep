@@ -1,7 +1,7 @@
-# PolySleep - Smart Polyphasic Sleep Manager
+# PolyNap - Smart Polyphasic Sleep Manager
 
 ## 📱 App Overview
-PolySleep is a modern iOS application designed to manage polyphasic sleep schedules and provide personalized recommendations. It helps users track their sleep habits, switch between different sleep patterns, and evaluate their sleep quality.
+PolyNap is a modern iOS application designed to manage polyphasic sleep schedules and provide personalized recommendations. It helps users track their sleep habits, switch between different sleep patterns, and evaluate their sleep quality.
 
 ## 📸 Screenshots
 
