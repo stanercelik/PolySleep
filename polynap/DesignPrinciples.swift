@@ -18,6 +18,12 @@ enum PSTypography {
     
     static var title3: Font { .title3.weight(.semibold) }
     
+    /// H2 - Bölüm Başlığı: SF Pro Semibold, 22-24pt
+    static var h2: Font { .title2.weight(.semibold) }
+    
+    /// H3 - Kart Başlığı: SF Pro Semibold, 18-20pt
+    static var h3: Font { .headline.weight(.semibold) }
+    
     /// H3 - Kart Başlığı: SF Pro Semibold, 18-20pt
     static var headline: Font { .headline.weight(.semibold) }
     

@@ -3741,6 +3741,40 @@
         }
       }
     },
+    "settings.other.rate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate PolyNap"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap'i Değerlendir"
+          }
+        }
+      }
+    },
+    "settings.other.rate.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share your experience on the App Store"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Store'da deneyimini paylaş"
+          }
+        }
+      }
+    },
     "settings.other.rateApp" : {
       "extractionState" : "manual",
       "localizations" : {

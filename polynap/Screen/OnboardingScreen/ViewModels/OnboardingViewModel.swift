@@ -407,9 +407,33 @@ final class OnboardingViewModel: ObservableObject {
     // Ana ekrana geçiş işlemini yönetir
     func handleNavigationToMainScreen() {
         // Onboarding tamamlandı, doğrudan ana ekrana geçiş yap
-        // PaywallManager MainTabBarView'da .managePaywalls() ile yönetiliyor
         withAnimation {
             goToMainScreen = true
         }
+        
+        // Ana ekrana geçtikten 1 saniye sonra rating request
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.requestRatingIfNeeded()
+        }
+    }
+    
+    // Rating request'ini yönetir
+    private func requestRatingIfNeeded() {
+        print("📝 OnboardingViewModel: Rating request başlatılıyor...")
+        
+        RatingManager.shared.requestRating {
+            print("📝 OnboardingViewModel: Rating completed, paywall tetikleniyor...")
+            
+            // Rating tamamlandıktan 0.5 saniye sonra paywall tetikle
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.triggerOnboardingPaywall()
+            }
+        }
+    }
+    
+    // Onboarding sonrası paywall'ı tetikler
+    private func triggerOnboardingPaywall() {
+        print("📱 OnboardingViewModel: Onboarding paywall tetikleniyor...")
+        PaywallManager.shared.presentPaywall(trigger: .onboardingComplete)
     }
 }

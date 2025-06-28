@@ -11,6 +11,7 @@ extension Color {
     static let appBackground = Color("BackgroundColor")
     static let appCardBackground = Color("CardBackground")
     static let appElevatedSurface = Color("ElevatedSurfaceColor")
+    static let appSecondaryBackground = Color("ElevatedSurfaceColor") // Secondary background for buttons
     static let appBorder = Color("BorderColor")
     static let appOverlay = Color("OverlayColor")
 
@@ -18,6 +19,7 @@ extension Color {
     static let appTextOnPrimary = Color("TextOnPrimaryColor")
     static let appText = Color("TextColor")
     static let appTextSecondary = Color("SecondaryTextColor")
+    static let appSecondaryText = Color("SecondaryTextColor") // Alias for consistency
     static let appTextTertiary = Color("TextTertiaryColor")
 
     // Durum Renkleri

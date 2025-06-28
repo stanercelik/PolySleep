@@ -164,6 +164,23 @@ struct SettingsView: View {
                         isMinimal: true
                     ) {
                         VStack(spacing: PSSpacing.md) {
+                            // Rating Section - sadece daha önce rating vermediyse göster
+                            if !hasUserRatedBefore() {
+                                ModernActionRow(
+                                    icon: "star.fill",
+                                    title: L("settings.other.rate", table: "Profile"),
+                                    subtitle: L("settings.other.rate.subtitle", table: "Profile"),
+                                    value: "",
+                                    action: {
+                                        RatingManager.shared.requestRating {
+                                            // Rating tamamlandı
+                                        }
+                                    }
+                                )
+                                
+                                ModernDivider()
+                            }
+                            
                             ModernNavigationRow(
                                 icon: "info.circle.fill",
                                 title: L("settings.other.disclaimer", table: "Profile"),
@@ -173,22 +190,7 @@ struct SettingsView: View {
                         }
                     }
                     
-                    // Debug & Test Section
-                    ModernSettingsSection(
-                        title: "🧪 Test & Debug",
-                        icon: "wrench.and.screwdriver.fill",
-                        iconColor: .purple,
-                        isMinimal: true
-                    ) {
-                        VStack(spacing: PSSpacing.md) {
-                            ModernNavigationRow(
-                                icon: "creditcard.and.123",
-                                title: "Paywall Test Arayüzü",
-                                subtitle: "Paywall senaryolarını test et",
-                                destination: PaywallTestView()
-                            )
-                        }
-                    }
+
                     
                     // Enhanced Version Info
                     VStack(spacing: PSSpacing.md) {
@@ -244,6 +246,11 @@ struct SettingsView: View {
             Button(L("general.cancel", table: "Profile"), role: .cancel) { }
         }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
+    }
+    
+    /// Kullanıcının daha önce rating verip vermediğini kontrol eder
+    private func hasUserRatedBefore() -> Bool {
+        return UserDefaults.standard.bool(forKey: "has_requested_review")
     }
     
     /// Seçili temanın görüntülenen metnini döndürür
@@ -447,17 +454,24 @@ struct ModernActionRow: View {
                 
                 Spacer()
                 
-                // Value badge
-                Text(value)
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appSecondary)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(
-                        Capsule()
-                            .fill(Color.appSecondary.opacity(0.15))
-                    )
+                // Value badge - sadece value boş değilse göster
+                if !value.isEmpty {
+                    Text(value)
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appSecondary)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(
+                            Capsule()
+                                .fill(Color.appSecondary.opacity(0.15))
+                        )
+                } else {
+                    // Boş value için chevron icon göster
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.appTextSecondary.opacity(0.6))
+                }
             }
             .padding(.vertical, 8)
             .contentShape(Rectangle())
