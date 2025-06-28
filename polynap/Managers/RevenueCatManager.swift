@@ -55,6 +55,19 @@ final class RevenueCatManager: NSObject, ObservableObject {
             print("Error fetching offerings: \(error)")
         }
     }
+    
+    /// Belirli bir offering identifier'ı ile offering getirir
+    func getOffering(identifier: String) async -> Offering? {
+        do {
+            let offerings = try await Purchases.shared.offerings()
+            return offerings.all[identifier]
+        } catch {
+            print("Error fetching offering \(identifier): \(error)")
+            return nil
+        }
+    }
+    
+
 
     func purchase(package: Package) async throws -> Bool {
         let purchaseResult = try await Purchases.shared.purchase(package: package)

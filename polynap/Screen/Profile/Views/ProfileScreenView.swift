@@ -19,7 +19,7 @@ struct ProfileScreenView: View {
     @State private var showSuccessMessage = false
     @State private var adaptationTimer: Timer?
     @State private var showingCelebration = false
-    @State private var isPaywallPresented = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     init() {
         self._viewModel = StateObject(wrappedValue: ProfileScreenViewModel(languageManager: LanguageManager.shared))
@@ -68,7 +68,7 @@ struct ProfileScreenView: View {
                             if revenueCatManager.userState != .premium {
                                 PremiumUpgradeCard()
                                     .onTapGesture {
-                                        isPaywallPresented.toggle()
+                                        paywallManager.presentPaywall(trigger: .manualTrigger)
                                     }
                             }
                         }
@@ -126,9 +126,7 @@ struct ProfileScreenView: View {
                     LogoutSheetView(authManager: authManager)
                         .presentationDetents([.height(200)])
                 }
-                .sheet(isPresented: $isPaywallPresented) {
-                    PaywallView()
-                }
+
                 .navigationDestination(isPresented: $navigateToSettings) {
                     SettingsView()
                 }

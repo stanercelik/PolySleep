@@ -6,7 +6,7 @@ import RevenueCatUI
 /// It overlays a tappable clear view if the user is not subscribed to the "premium" entitlement.
 struct RequirePremiumViewModifier: ViewModifier {
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
-    @State private var isPaywallPresented = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     func body(content: Content) -> some View {
         content
@@ -19,14 +19,12 @@ struct RequirePremiumViewModifier: ViewModifier {
                             .foregroundColor(.clear)
                             .contentShape(Rectangle()) // Make the whole area tappable
                             .onTapGesture {
-                                isPaywallPresented.toggle()
+                                // PaywallManager ile dinamik paywall göster
+                                paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
                             }
                     }
                 }
             )
-            .sheet(isPresented: $isPaywallPresented) {
-                PaywallView()
-            }
     }
 }
 

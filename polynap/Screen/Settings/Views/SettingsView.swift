@@ -173,6 +173,23 @@ struct SettingsView: View {
                         }
                     }
                     
+                    // Debug & Test Section
+                    ModernSettingsSection(
+                        title: "🧪 Test & Debug",
+                        icon: "wrench.and.screwdriver.fill",
+                        iconColor: .purple,
+                        isMinimal: true
+                    ) {
+                        VStack(spacing: PSSpacing.md) {
+                            ModernNavigationRow(
+                                icon: "creditcard.and.123",
+                                title: "Paywall Test Arayüzü",
+                                subtitle: "Paywall senaryolarını test et",
+                                destination: PaywallTestView()
+                            )
+                        }
+                    }
+                    
                     // Enhanced Version Info
                     VStack(spacing: PSSpacing.md) {
                         HStack(spacing: PSSpacing.sm) {
@@ -529,7 +546,7 @@ struct AdaptationUndoRow: View {
     @State private var showingUndoAlert = false
     @State private var isUndoing = false
     @State private var undoError: String? = nil
-    @State private var isPaywallPresented = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     var body: some View {
         HStack(spacing: 16) {
@@ -594,9 +611,6 @@ struct AdaptationUndoRow: View {
         } message: {
             Text(undoError ?? L("general.unknownError", table: "Profile"))
         }
-        .sheet(isPresented: $isPaywallPresented) {
-            PaywallView(displayCloseButton: true)
-        }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
         .onAppear {
             // ViewModelContext gerekli değil, sadece repository kullanacağız
@@ -606,7 +620,7 @@ struct AdaptationUndoRow: View {
     private func handleUndoTap() {
         // Premium kontrolü
         if revenueCatManager.userState != .premium {
-            isPaywallPresented = true
+            paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
             return
         }
         

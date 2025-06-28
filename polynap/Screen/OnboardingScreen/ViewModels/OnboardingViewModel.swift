@@ -406,7 +406,8 @@ final class OnboardingViewModel: ObservableObject {
     
     // Ana ekrana geçiş işlemini yönetir
     func handleNavigationToMainScreen() {
-        // FullScreenCover'ı kapattıktan sonra NavigationLink ile ana ekrana geçiş yapar
+        // Onboarding tamamlandı, doğrudan ana ekrana geçiş yap
+        // PaywallManager MainTabBarView'da .managePaywalls() ile yönetiliyor
         withAnimation {
             goToMainScreen = true
         }

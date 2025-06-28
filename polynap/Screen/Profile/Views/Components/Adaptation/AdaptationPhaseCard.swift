@@ -327,7 +327,7 @@ struct UndoAdaptationSection: View {
     let onUndo: () -> Void
     let onUndoLater: () -> Void
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
-    @State private var isPaywallPresented = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     var body: some View {
         PSInfoBox(
@@ -354,15 +354,12 @@ struct UndoAdaptationSection: View {
                 handleUndoButtonTap()
             }
         }
-        .sheet(isPresented: $isPaywallPresented) {
-            PaywallView()
-        }
     }
     
     private func handleUndoButtonTap() {
         // Premium kontrolü
         if revenueCatManager.userState != .premium {
-            isPaywallPresented = true
+            paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
             return
         }
         

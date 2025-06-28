@@ -439,8 +439,8 @@ struct PremiumLockedScheduleCard: View {
     let isSelected: Bool
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isExpanded = false
-    @State private var showPaywall = false
     @State private var isPulsing = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     var scheduleDescription: String {
         let currentLang = languageManager.currentLanguage
@@ -459,7 +459,7 @@ struct PremiumLockedScheduleCard: View {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 isPulsing = false
-                showPaywall = true
+                paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
             }
         }) {
             VStack(spacing: PSSpacing.sm) {
@@ -610,9 +610,6 @@ struct PremiumLockedScheduleCard: View {
         }
         .buttonStyle(.plain)
         .scaleEffect(isPulsing ? 0.98 : 1.0)
-        .sheet(isPresented: $showPaywall) {
-            PaywallView(displayCloseButton: true)
-        }
     }
     
     private var premiumCardBackground: some View {

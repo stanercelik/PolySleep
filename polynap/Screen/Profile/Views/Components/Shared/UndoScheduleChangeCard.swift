@@ -7,7 +7,7 @@ struct UndoScheduleChangeCard: View {
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
     @State private var isUndoing = false
     @State private var undoError: String? = nil
-    @State private var isPaywallPresented = false
+    @StateObject private var paywallManager = PaywallManager.shared
     
     // Computed properties for alert binding
     private var isShowingUndoError: Binding<Bool> {
@@ -105,9 +105,6 @@ struct UndoScheduleChangeCard: View {
         } message: {
             Text(undoErrorMessage)
         }
-        .sheet(isPresented: $isPaywallPresented) {
-            PaywallView()
-        }
     }
     
     // MARK: - Actions
@@ -115,7 +112,7 @@ struct UndoScheduleChangeCard: View {
     private func handleUndoButtonTap() {
         // Premium kontrolü
         if revenueCatManager.userState != .premium {
-            isPaywallPresented = true
+            paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
             return
         }
         

@@ -252,6 +252,7 @@ struct polynapApp: App {
     @StateObject private var scheduleManager = ScheduleManager.shared
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var revenueCatManager = RevenueCatManager.shared
+    @StateObject private var paywallManager = PaywallManager.shared
     // DEĞİŞİKLİK: AlarmManager artık singleton olarak kullanılıyor
     // @StateObject private var alarmManager = AlarmManager() // KALDIRILDI
     
@@ -308,9 +309,10 @@ struct polynapApp: App {
             ContentView()
                 .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
                 .environmentObject(authManager)
-                .environmentObject(scheduleManager)
-                .environmentObject(languageManager)
-                .environmentObject(revenueCatManager)
+                            .environmentObject(scheduleManager)
+            .environmentObject(languageManager)
+            .environmentObject(revenueCatManager)
+            .environmentObject(paywallManager)
                 // YENİ: Singleton AlarmManager.shared kullanımı
                 .environmentObject(AlarmManager.shared)
                 .withLanguageEnvironment()
