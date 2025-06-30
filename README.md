@@ -83,15 +83,108 @@ PolyNap is a modern iOS application designed to manage polyphasic sleep schedule
 - **Critical Alerts**: Emergency notifications
 - **Audio Services**: Alarm sound management
 
+### **Analytics & Tracking**
+- **Firebase Analytics**: User behavior and engagement tracking
+- **Google Analytics**: Comprehensive analytics integration
+- **Custom Events**: Step-by-step onboarding tracking
+- **Conversion Funnels**: User acquisition and retention analysis
+- **Revenue Analytics**: Subscription and monetization metrics
+
 ### **Subscription & Monetization**
 - **RevenueCat**: Subscription management
 - **StoreKit**: App Store integration
 - **Premium Features**: Freemium model
+- **Dynamic Paywall System**: Context-aware premium offerings
 
 ### **Localization**
 - **XCStrings**: Modern localization system
 - **Turkish & English**: Multi-language support
 - **Dynamic Localization**: Real-time language switching
+
+## 📊 Analytics & Data Strategy
+
+### **Firebase Analytics Integration**
+PolyNap implements comprehensive analytics tracking through Firebase Analytics to monitor user behavior, feature adoption, and revenue metrics. The analytics system follows a structured approach with predefined events and custom parameters.
+
+#### **Core Tracked Events**
+- **User Lifecycle**: `first_open`, `onboarding_started`, `onboarding_step_completed`, `onboarding_completed`
+- **Feature Usage**: `sleep_entry_added`, `schedule_selected`, `schedule_successfully_applied`, `schedule_changed`
+- **Revenue**: `app_store_subscription_convert`, `app_store_subscription_renew`, `in_app_purchase`, `purchase`
+- **Engagement**: `user_retention`, `close_convert_lead`, `qualify_lead`
+
+#### **Step-by-Step Onboarding Tracking**
+The onboarding process is meticulously tracked to identify drop-off points and optimize user activation:
+
+```swift
+// Each onboarding step is tracked with detailed parameters
+onboarding_step_completed {
+  step_number: Int,
+  step_name: String,
+  time_on_step: Int,
+  completion_rate: Double,
+  user_selections: [String]
+}
+```
+
+**Tracked Onboarding Steps:**
+1. Welcome screen interaction
+2. Sleep experience assessment
+3. Current sleep schedule evaluation
+4. Lifestyle and preferences survey
+5. Schedule recommendation acceptance
+6. Initial setup completion
+
+#### **Key Performance Indicators (KPIs)**
+- **User Acquisition**: Daily/weekly/monthly new users
+- **User Activation**: Onboarding completion rate (target: >75%)
+- **User Engagement**: Daily/weekly active users
+- **User Retention**: D1, D7, D30 retention rates
+- **Revenue Metrics**: MRR, ARPU, conversion rates
+- **Feature Adoption**: Schedule selection and sleep tracking rates
+
+### **Advanced Analytics Features**
+- **Funnel Analysis**: Complete user journey from acquisition to conversion
+- **Cohort Analysis**: User behavior tracking over time
+- **Segmentation**: Behavioral and demographic user groups
+- **A/B Testing Framework**: Feature and UI optimization
+- **Predictive Analytics**: Churn prediction and LTV calculation
+
+## 💰 Dynamic Paywall System
+
+PolyNap implements a sophisticated paywall strategy that adapts to user behavior and engagement patterns. The system presents different premium offerings based on user interaction history.
+
+### **Paywall Display Strategy**
+The app uses a multi-layered approach that presents different offers based on how many times a user has encountered the paywall:
+
+#### **Scenario 1: First Encounter - Complete Value Proposition**
+- **Trigger**: User completes onboarding and navigates to main screen
+- **Action**: Display `all_plans` paywall with full feature overview
+- **Goal**: Capture users at peak interest with comprehensive plan comparison
+- **Content**: Monthly/yearly plans with savings highlight
+
+#### **Scenario 2: Second Encounter - Reinforcement**
+- **Trigger**: User closes first paywall and later attempts to access premium features
+- **Action**: Display `all_plans` paywall again
+- **Goal**: Provide second chance for informed decision-making
+- **Content**: Same comprehensive plan overview with feature benefits
+
+#### **Scenario 3: Special Discount Offer - Conversion Focus**
+- **Trigger**: User closes second paywall and attempts premium feature access again
+- **Action**: Display `exit_discount` paywall with limited-time offer
+- **Goal**: Convert price-sensitive users with exclusive discount
+- **Content**: Special pricing with urgency messaging
+
+#### **Scenario 4: Frictionless Approach - Trial Focus**
+- **Trigger**: User has seen all previous paywalls and continues accessing premium features
+- **Action**: Display `trial_focus` paywall emphasizing free trial
+- **Goal**: Minimize friction with low-commitment trial offer
+- **Content**: Simplified trial-focused messaging
+
+### **Paywall Optimization**
+- **Context-Aware Timing**: Paywalls triggered at optimal user engagement points
+- **Progressive Disclosure**: Gradually more targeted offers based on user response
+- **Local State Management**: Paywall history stored on-device for privacy
+- **A/B Testing Ready**: Framework supports testing different strategies
 
 ## ⚙️ Installation
 
@@ -106,9 +199,11 @@ cd PolySleep
 open polynap.xcodeproj
 ```
 
-3. **Configure RevenueCat API Key**
+3. **Configure API Keys and Analytics**
 - Set your RevenueCat API key in `AppConfiguration.swift`
 - Add `RevenueCatAPIKey` key to `Info.plist`
+- Configure Firebase Analytics by adding `GoogleService-Info.plist`
+- Set up Firebase project and enable Analytics
 
 4. **Set up notification permissions**
 - The app will automatically request notification permissions
@@ -161,12 +256,16 @@ polynap/
 
 ### Current Features
 - ✅ 10+ different sleep schedule support
-- ✅ Smart alarm system
-- ✅ Detailed sleep analytics
+- ✅ Smart alarm system with background processing
+- ✅ Detailed sleep analytics and reporting
+- ✅ Comprehensive Firebase Analytics integration
+- ✅ Step-by-step onboarding tracking and optimization
+- ✅ Dynamic paywall system with 4-tier strategy
 - ✅ Offline-first data management
 - ✅ Turkish/English localization
-- ✅ Premium subscription system
+- ✅ Premium subscription system with RevenueCat
 - ✅ Customizable profile management
+- ✅ User behavior analytics and funnel tracking
 
 ### Upcoming Updates
 - 🔄 Apple Watch integration

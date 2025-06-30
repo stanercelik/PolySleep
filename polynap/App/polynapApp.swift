@@ -4,6 +4,8 @@ import Combine
 import Network
 import UserNotifications
 import RevenueCat
+import FirebaseCore
+import FirebaseAnalytics
 
 // Uygulama içi iletişim için özel bildirim adları
 extension Notification.Name {
@@ -253,6 +255,7 @@ struct polynapApp: App {
     @StateObject private var languageManager = LanguageManager.shared
     @StateObject private var revenueCatManager = RevenueCatManager.shared
     @StateObject private var paywallManager = PaywallManager.shared
+    @StateObject private var analyticsManager = AnalyticsManager.shared
     // DEĞİŞİKLİK: AlarmManager artık singleton olarak kullanılıyor
     // @StateObject private var alarmManager = AlarmManager() // KALDIRILDI
     
@@ -262,6 +265,7 @@ struct polynapApp: App {
     
     init() {
         RevenueCatManager.configure()
+        FirebaseApp.configure()
 
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: false)
@@ -309,10 +313,11 @@ struct polynapApp: App {
             ContentView()
                 .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
                 .environmentObject(authManager)
-                            .environmentObject(scheduleManager)
-            .environmentObject(languageManager)
-            .environmentObject(revenueCatManager)
-            .environmentObject(paywallManager)
+                .environmentObject(scheduleManager)
+                .environmentObject(languageManager)
+                .environmentObject(revenueCatManager)
+                .environmentObject(paywallManager)
+                .environmentObject(analyticsManager)
                 // YENİ: Singleton AlarmManager.shared kullanımı
                 .environmentObject(AlarmManager.shared)
                 .withLanguageEnvironment()
@@ -321,11 +326,20 @@ struct polynapApp: App {
                     // YENİ: ModelContext'i singleton AlarmManager'a ver
                     AlarmManager.shared.setModelContext(modelContainer.mainContext)
                     print("📱 polynapApp: AlarmManager ModelContext ayarlandı")
+                    
+                    // 📊 Analytics: App açılış event'ı
+                    analyticsManager.logAppOpen()
+                    #if DEBUG
+                    analyticsManager.enableDebugMode()
+                    #endif
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                     print("🔄 SwiftUI: didBecomeActiveNotification alındı")
                     print("🔍 SwiftUI: App became active, checking for pending alarms...")
                     print("🔍 SwiftUI: Current AlarmManager state: isAlarmFiring = \(AlarmManager.shared.isAlarmFiring)")
+                    
+                    // 📊 Analytics: App foreground event'ı
+                    analyticsManager.logAppForeground()
                     
                     // CRITICAL FIX: Multiple timing attempts for better reliability
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -340,6 +354,10 @@ struct polynapApp: App {
                             delegate.handlePendingAlarmTrigger()
                         }
                     }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                    // 📊 Analytics: App background event'ı
+                    analyticsManager.logAppBackground()
                 }
                 .onOpenURL { url in
                     if url.scheme == "polynap" {
@@ -358,6 +376,7 @@ struct ContentView: View {
     @Query private var userPreferences: [UserPreferences]
     // YENİ: Singleton AlarmManager.shared kullanımı
     @EnvironmentObject var alarmManager: AlarmManager
+    @EnvironmentObject var analyticsManager: AnalyticsManager
     
     var body: some View {
         Group {

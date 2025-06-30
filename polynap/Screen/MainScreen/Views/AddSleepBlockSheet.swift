@@ -6,6 +6,9 @@ struct AddSleepBlockSheet: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var languageManager: LanguageManager
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     // Kullanıcının seçtiği emojiler
     private var coreEmoji: String {
         UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
@@ -48,11 +51,25 @@ struct AddSleepBlockSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(L("general.save", table: "MainScreen")) {
                         if viewModel.validateNewBlock() {
+                            // Analytics: Sleep block ekleme
+                            let duration = Int(viewModel.newBlockEndTime.timeIntervalSince(viewModel.newBlockStartTime) / 60)
+                            analyticsManager.logSleepEntryAdded(
+                                sleepType: "manual_block",
+                                duration: duration
+                            )
+                            
                             viewModel.addNewBlock()
                             dismiss()
                         }
                     }
                 }
+            }
+            .onAppear {
+                // Analytics: Add Sleep Block sheet görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "add_sleep_block_sheet",
+                    screenClass: "AddSleepBlockSheet"
+                )
             }
             .alert(L("sleepBlock.error.title", table: "MainScreen"),
                    isPresented: $viewModel.showBlockError) {

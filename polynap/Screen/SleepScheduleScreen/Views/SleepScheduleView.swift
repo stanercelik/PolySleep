@@ -9,6 +9,9 @@ struct SleepScheduleView: View {
     @State private var scrollOffset: CGFloat = 0
     @State private var animatedProgress: CGFloat = 0
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     private let headerHeight: CGFloat = 80
     private let chartHeight: CGFloat = UIScreen.main.bounds.height * 0.4
 
@@ -54,6 +57,12 @@ struct SleepScheduleView: View {
                         }
                         
                         Button(action: {
+                            // Analytics: Start using app button tap
+                            analyticsManager.logFeatureUsed(
+                                featureName: "onboarding_complete",
+                                action: "start_app_button_tap"
+                            )
+                            
                             if let preferences = userPreferences.first {
                                 preferences.hasCompletedOnboarding = true
                                 navigateToMainScreen = true
@@ -80,6 +89,18 @@ struct SleepScheduleView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.setModelContext(modelContext)
+                
+                // Analytics: Sleep Schedule screen görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "sleep_schedule_detail",
+                    screenClass: "SleepScheduleView"
+                )
+                
+                // Analytics: Schedule görüntüleme event'ı
+                analyticsManager.logFeatureUsed(
+                    featureName: "schedule_detail_view",
+                    action: "schedule_viewed"
+                )
             }
             .onChange(of: scrollOffset) { oldValue, newValue in
                 let newProgress = min(max(-newValue / (headerHeight + chartHeight), 0), 1)
@@ -89,6 +110,12 @@ struct SleepScheduleView: View {
             }
             .onChange(of: viewModel.recommendedSchedule) { oldValue, newValue in
                 if let schedule = newValue {
+                    // Analytics: Schedule recommended and selected
+                    analyticsManager.logScheduleSelected(
+                        scheduleName: schedule.name,
+                        difficulty: schedule.difficulty.rawValue
+                    )
+                    
                     // Save the recommended schedule to the store
                     let store = SleepScheduleStore(
                         scheduleId: schedule.id,
@@ -162,6 +189,12 @@ struct SleepScheduleView: View {
     
     private var shareButton: some View {
         Button(action: {
+            // Analytics: Schedule share button tap
+            analyticsManager.logFeatureUsed(
+                featureName: "schedule_share",
+                action: "share_button_tap"
+            )
+            
             viewModel.shareSchedule()
         }) {
             Image(systemName: "square.and.arrow.up")

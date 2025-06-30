@@ -9,6 +9,7 @@ struct MainTabBarView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var alarmManager: AlarmManager
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @EnvironmentObject private var analyticsManager: AnalyticsManager
     
     @State private var hasCheckedOnboardingPaywall = false
     
@@ -51,18 +52,25 @@ struct MainTabBarView: View {
                     .tag(3)
             }
             .accentColor(Color("AccentColor"))
-        }
-        .managePaywalls() // PaywallManager ile otomatik paywall yönetimi
-        .onAppear {
-            mainScreenViewModel.setModelContext(modelContext)
-            checkAndTriggerOnboardingPaywall()
-        }
-        .onChange(of: revenueCatManager.userState) { _, _ in
-            // User state değiştiğinde tekrar kontrol et
-            if !hasCheckedOnboardingPaywall {
+            .onAppear {
+                // 📊 Analytics: İlk tab screen view
+                logTabScreenView(selectedTab)
+                mainScreenViewModel.setModelContext(modelContext)
                 checkAndTriggerOnboardingPaywall()
             }
+            .onChange(of: revenueCatManager.userState) { _, _ in
+                // User state değiştiğinde tekrar kontrol et
+                if !hasCheckedOnboardingPaywall {
+                    checkAndTriggerOnboardingPaywall()
+                }
+            }
+            .onChange(of: selectedTab) { oldValue, newValue in
+                // 📊 Analytics: Tab değişikliği tracking
+                logTabScreenView(newValue)
+                analyticsManager.logFeatureUsed(featureName: "tab_navigation", action: "tab_changed")
+            }
         }
+        .managePaywalls() // PaywallManager ile otomatik paywall yönetimi
     }
     
     private func checkAndTriggerOnboardingPaywall() {
@@ -70,6 +78,20 @@ struct MainTabBarView: View {
         // Bu fonksiyon devre dışı bırakıldı - rating sonrası paywall akışı için
         print("📱 MainTabBarView: Onboarding paywall OnboardingViewModel'da yönetiliyor, burada skip ediliyor")
         hasCheckedOnboardingPaywall = true
+    }
+    
+    // 📊 Analytics: Tab screen view tracking helper
+    private func logTabScreenView(_ tabIndex: Int) {
+        let screenNames = [
+            0: ("MainScreen", "MainScreenView"),
+            1: ("History", "HistoryView"),
+            2: ("Analytics", "AnalyticsView"), 
+            3: ("Profile", "ProfileScreenView")
+        ]
+        
+        if let (screenName, screenClass) = screenNames[tabIndex] {
+            analyticsManager.logScreenView(screenName: screenName, screenClass: screenClass)
+        }
     }
 }
 

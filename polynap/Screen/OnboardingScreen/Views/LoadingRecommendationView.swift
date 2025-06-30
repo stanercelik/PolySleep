@@ -100,15 +100,21 @@ struct LoadingRecommendationView: View {
                 
                 if isComplete {
                     Button(action: {
+                        print("🚀 LoadingRecommendationView: START USING APP butonuna basıldı!")
+                        print("🚀 navigateToMainScreen mevcut değeri: \(navigateToMainScreen)")
+                        
                         // WelcomeView'dan gelen animasyonla benzer bir animasyon ile ana ekrana git
                         withAnimation(.easeInOut(duration: 0.5)) {
                             // Ana ekrana geçmek için önce bu ekranı kapatıyoruz
+                            print("🚀 LoadingRecommendationView: dismiss() çağrılıyor...")
                             dismiss()
                             
                             // navigateToMainScreen'i doğrudan değiştirmek yerine, 
                             // dismiss işleminden sonra yapılacak
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                print("🚀 LoadingRecommendationView: navigateToMainScreen = true yapılıyor...")
                                 navigateToMainScreen = true
+                                print("🚀 LoadingRecommendationView: navigateToMainScreen yeni değeri: \(navigateToMainScreen)")
                             }
                         }
                     }) {

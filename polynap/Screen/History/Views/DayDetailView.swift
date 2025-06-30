@@ -7,6 +7,9 @@ struct DayDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isAddingSleepEntry = false
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     // Kullanıcının seçtiği emojiler
     private var coreEmoji: String {
         UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
@@ -89,6 +92,12 @@ struct DayDetailView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        // Analytics: Add sleep entry from day detail
+                        analyticsManager.logFeatureUsed(
+                            featureName: "add_sleep_entry_day_detail",
+                            action: "button_tap"
+                        )
+                        
                         isAddingSleepEntry = true
                     }) {
                         Text(L("general.add", table: "DayDetail"))
@@ -101,6 +110,13 @@ struct DayDetailView: View {
                 if let selectedDay = viewModel.selectedDay {
                     AddSleepEntrySheet(viewModel: viewModel, initialDate: selectedDay)
                 }
+            }
+            .onAppear {
+                // Analytics: Day detail screen görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "day_detail_screen",
+                    screenClass: "DayDetailView"
+                )
             }
         }
     }

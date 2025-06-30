@@ -11,6 +11,7 @@ struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var analyticsManager: AnalyticsManager
     @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
@@ -135,16 +136,51 @@ struct OnboardingView: View {
                 .padding(.top, PSSpacing.lg)
                 .onAppear {
                     viewModel.setModelContext(modelContext)
+                    
+                    // 📊 Analytics: Onboarding başlangıç
+                    analyticsManager.logOnboardingStarted()
+                    analyticsManager.logScreenView(screenName: "onboarding_screen", screenClass: "OnboardingView")
+                }
+                .onChange(of: viewModel.currentPage) { oldValue, newValue in
+                    // 📊 Analytics: Onboarding adım tracking
+                    let stepNames = [
+                        0: "sleep_experience",
+                        1: "age_range", 
+                        2: "work_schedule",
+                        3: "nap_environment",
+                        4: "lifestyle",
+                        5: "knowledge_level",
+                        6: "health_status",
+                        7: "motivation_level",
+                        8: "sleep_goal",
+                        9: "social_obligations",
+                        10: "disruption_tolerance",
+                        11: "chronotype"
+                    ]
+                    
+                    if let stepName = stepNames[newValue] {
+                        analyticsManager.logOnboardingStepCompleted(step: newValue + 1, stepName: stepName)
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(isPresented: $viewModel.showLoadingView, onDismiss: {
+                print("📱 OnboardingView: LoadingView DISMISSED!")
+                print("📱 OnboardingView: navigateToMainScreen değeri: \(viewModel.navigateToMainScreen)")
+                
                 // Loading view kapandığında ve navigateToMainScreen true ise ana ekrana geçiş yap
                 if viewModel.navigateToMainScreen {
+                    print("📱 OnboardingView: navigateToMainScreen TRUE, işlemler başlatılıyor...")
                     Task {
+                        print("📱 OnboardingView: markOnboardingAsCompletedInSwiftData çağrılıyor...")
                         await viewModel.markOnboardingAsCompletedInSwiftData()
+                        print("📱 OnboardingView: markOnboardingAsCompletedInSwiftData tamamlandı!")
                     }
+                    print("📱 OnboardingView: handleNavigationToMainScreen çağrılıyor...")
                     viewModel.handleNavigationToMainScreen()
+                    print("📱 OnboardingView: handleNavigationToMainScreen tamamlandı!")
+                } else {
+                    print("📱 OnboardingView: navigateToMainScreen FALSE, analytics event gönderilmeyecek!")
                 }
             }) {
                 LoadingRecommendationView(

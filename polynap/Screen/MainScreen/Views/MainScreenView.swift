@@ -71,6 +71,9 @@ struct MainScreenView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var alarmManager: AlarmManager
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     init(viewModel: MainScreenViewModel? = nil) {
         let initialViewModel = viewModel ?? MainScreenViewModel(languageManager: LanguageManager.shared)
         _viewModel = StateObject(wrappedValue: initialViewModel)
@@ -152,10 +155,25 @@ struct MainScreenView: View {
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
+                
+                // Analytics: Main screen görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "main_screen",
+                    screenClass: "MainScreenView"
+                )
             }
         }
         .sheet(isPresented: $viewModel.showAddBlockSheet) {
             AddSleepBlockSheet(viewModel: viewModel)
+        }
+        .onChange(of: viewModel.showAddBlockSheet) { isPresented in
+            if isPresented {
+                // Analytics: Add Sleep Block sheet açılma
+                analyticsManager.logFeatureUsed(
+                    featureName: "add_sleep_block",
+                    action: "sheet_opened"
+                )
+            }
         }
         .sheet(isPresented: $viewModel.showScheduleSelection) {
             ScheduleSelectionView(
@@ -173,6 +191,12 @@ struct MainScreenView: View {
     }
     
     private func shareSchedule() {
+        // Analytics: Schedule share
+        analyticsManager.logFeatureUsed(
+            featureName: "main_schedule_share",
+            action: "share_button_tap"
+        )
+        
         let activityVC = UIActivityViewController(
             activityItems: [viewModel.shareScheduleInfo],
             applicationActivities: nil

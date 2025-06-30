@@ -6,6 +6,9 @@ struct AlarmFiringView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var alarmSettings: [AlarmSettings]
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     @State private var isAnimating = false
     @State private var pulseAnimation = false
     @State private var timeString = ""
@@ -177,6 +180,9 @@ struct AlarmFiringView: View {
     
     private var snoozeButton: some View {
         Button(action: {
+            // Analytics: Alarm snooze
+            analyticsManager.logAlarmStopped(snoozeUsed: true)
+            
             Task {
                 await alarmManager.snoozeAlarm()
             }
@@ -218,6 +224,9 @@ struct AlarmFiringView: View {
     
     private var stopButton: some View {
         Button(action: {
+            // Analytics: Alarm stop
+            analyticsManager.logAlarmStopped(snoozeUsed: false)
+            
             alarmManager.stopAlarm()
         }) {
             HStack(spacing: PSSpacing.sm) {
@@ -265,6 +274,15 @@ struct AlarmFiringView: View {
     
     // MARK: - Setup Methods
     private func setupView() {
+        // Analytics: Alarm tetikleme
+        analyticsManager.logAlarmTriggered()
+        
+        // Analytics: Alarm Firing screen görüntüleme
+        analyticsManager.logScreenView(
+            screenName: "alarm_firing_screen",
+            screenClass: "AlarmFiringView"
+        )
+        
         alarmManager.setModelContext(modelContext)
         isAnimating = true
         pulseAnimation = true

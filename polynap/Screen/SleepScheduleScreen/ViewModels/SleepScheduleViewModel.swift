@@ -7,6 +7,7 @@ class SleepScheduleViewModel: ObservableObject {
     @Published private(set) var defaultSchedule: SleepScheduleModel
     
     private var recommender: SleepScheduleRecommender?
+    private let analyticsManager = AnalyticsManager.shared
     
     init() {
         // Monophasic varsayılan
@@ -76,7 +77,36 @@ class SleepScheduleViewModel: ObservableObject {
     
     func updateToRecommendedSchedule() {
         if let recommended = recommendedSchedule {
+            let previousScheduleName = schedule.name
             schedule = recommended
+            
+            // 📊 Analytics: Schedule seçimi/değişikliği tracking
+            if previousScheduleName != recommended.name {
+                analyticsManager.logScheduleChanged(
+                    fromSchedule: previousScheduleName,
+                    toSchedule: recommended.name,
+                    reason: "recommended_schedule_selected"
+                )
+            }
+            
+            analyticsManager.logScheduleSelected(
+                scheduleName: recommended.name,
+                difficulty: determineDifficultyLevel(recommended)
+            )
+        }
+    }
+    
+    // 📊 Analytics: Schedule zorluk seviyesi belirleme helper
+    private func determineDifficultyLevel(_ schedule: SleepScheduleModel) -> String {
+        switch schedule.name.lowercased() {
+        case "monophasic", "siesta", "biphasic":
+            return "easy"
+        case "everyman", "triphasic":
+            return "medium"
+        case "uberman", "dymaxion":
+            return "hard"
+        default:
+            return "unknown"
         }
     }
 }

@@ -15,7 +15,11 @@ struct EnumConversionError: Error, LocalizedError {
 final class OnboardingViewModel: ObservableObject {
     // MARK: - Dependencies
     private let recommender: SleepScheduleRecommender
+    private let analyticsManager = AnalyticsManager.shared
     private var modelContext: ModelContext?
+    
+    // 📊 Analytics: Onboarding timing tracking
+    private var onboardingStartTime: Date?
     
     // MARK: - Published Properties
     @Published var currentPage = 0
@@ -64,6 +68,12 @@ final class OnboardingViewModel: ObservableObject {
     func setModelContext(_ context: ModelContext) {
         if self.modelContext == nil { // Sadece nil ise ata, birden fazla kez atanmasını engelle
             self.modelContext = context
+            
+            // 📊 Analytics: Onboarding başlangıç zamanını kaydet
+            if onboardingStartTime == nil {
+                onboardingStartTime = Date()
+            }
+            
             print("✅ OnboardingViewModel: setModelContext çağrıldı.")
         }
     }
@@ -404,8 +414,40 @@ final class OnboardingViewModel: ObservableObject {
         navigateToMainScreen = true
     }
     
+    // 📊 Analytics: Seçilen schedule'ı analytics için string olarak döndür
+    private func getSelectedScheduleForAnalytics() -> String {
+        // Schedule Manager'dan aktif schedule'ı al
+        if let activeSchedule = ScheduleManager.shared.activeSchedule {
+            return activeSchedule.name
+        }
+        
+        // Eğer schedule henüz aktif değilse, varsayılan schedule'ı döndür
+        return UserScheduleModel.defaultSchedule.name
+    }
+    
     // Ana ekrana geçiş işlemini yönetir
     func handleNavigationToMainScreen() {
+        print("🎯 OnboardingViewModel: handleNavigationToMainScreen() ÇAĞRILDI!")
+        
+        // 📊 Analytics: Onboarding tamamlanma event'ı (enhanced parameters ile)
+        let timeTaken = onboardingStartTime != nil ? Date().timeIntervalSince(onboardingStartTime!) : 0
+        let stepsCompleted = totalPages // Tüm adımları tamamladığı için totalPages
+        let selectedSchedule = getSelectedScheduleForAnalytics()
+        
+        print("🎯 Analytics Debug:")
+        print("   - timeTaken: \(timeTaken) seconds")
+        print("   - stepsCompleted: \(stepsCompleted)")
+        print("   - selectedSchedule: \(selectedSchedule)")
+        print("   - onboardingStartTime: \(onboardingStartTime?.description ?? "nil")")
+        
+        print("📊 Analytics: logOnboardingCompleted ÇAĞRILIYOR...")
+        analyticsManager.logOnboardingCompleted(
+            timeTaken: timeTaken,
+            stepsCompleted: stepsCompleted,
+            selectedSchedule: selectedSchedule
+        )
+        print("📊 Analytics: logOnboardingCompleted ÇAĞRILDI ✅")
+        
         // Onboarding tamamlandı, doğrudan ana ekrana geçiş yap
         withAnimation {
             goToMainScreen = true

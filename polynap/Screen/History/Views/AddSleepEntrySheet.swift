@@ -6,6 +6,9 @@ struct AddSleepEntrySheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var languageManager: LanguageManager
+    
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
     @State private var selectedEmoji = "😊"
     @State private var sliderValue: Double = 3 // 1-5 rating için (0-4 slider) -> Başlangıçta "😊" (rating 4)
     @State private var selectedDate: Date
@@ -583,6 +586,13 @@ private var napEmoji: String {
                     dismissButton: .default(Text(L("general.ok", table: "AddSleepEntrySheet")))
                 )
             }
+            .onAppear {
+                // Analytics: Add Sleep Entry sheet görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "add_sleep_entry_sheet",
+                    screenClass: "AddSleepEntrySheet"
+                )
+            }
         }
     }
     
@@ -671,6 +681,20 @@ private var napEmoji: String {
             blockId: scheduledBlock.id.uuidString, // MainViewModel'deki SleepBlock'tan ID
             emoji: currentEmoji, // Slider'dan gelen emoji
             rating: ratingValue  // Slider'dan gelen rating
+        )
+        
+        // Analytics: Manual sleep entry ekleme
+        analyticsManager.logSleepEntryAdded(
+            sleepType: scheduledBlock.isCore ? "core" : "nap",
+            duration: durationMinutes,
+            quality: ratingValue,
+            isFirstEntry: false
+        )
+        
+        // Analytics: Sleep quality rating
+        analyticsManager.logSleepQualityRated(
+            rating: ratingValue,
+            sleepType: scheduledBlock.isCore ? "core" : "nap"
         )
         
         // ViewModel aracılığıyla kaydet

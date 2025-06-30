@@ -11,6 +11,8 @@
 		206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9D2DF33CC40013D385 /* RevenueCatUI */; };
 		206D5B062DF357EC00366C90 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 206D5B052DF357EC00366C90 /* StoreKit.framework */; };
 		206DE0792DF195E7007EE33B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 206DE0782DF195E7007EE33B /* Lottie */; };
+		20D266AA2E113B9D001EA025 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20D266A92E113B9D001EA025 /* FirebaseAnalytics */; };
+		20D266AC2E113B9D001EA025 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20D266AB2E113B9D001EA025 /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 				206D5B062DF357EC00366C90 /* StoreKit.framework in Frameworks */,
 				206D2A9C2DF33CC40013D385 /* RevenueCat in Frameworks */,
 				206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */,
+				20D266AC2E113B9D001EA025 /* FirebaseCrashlytics in Frameworks */,
+				20D266AA2E113B9D001EA025 /* FirebaseAnalytics in Frameworks */,
 				206DE0792DF195E7007EE33B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +159,8 @@
 				206DE0782DF195E7007EE33B /* Lottie */,
 				206D2A9B2DF33CC40013D385 /* RevenueCat */,
 				206D2A9D2DF33CC40013D385 /* RevenueCatUI */,
+				20D266A92E113B9D001EA025 /* FirebaseAnalytics */,
+				20D266AB2E113B9D001EA025 /* FirebaseCrashlytics */,
 			);
 			productName = polynap;
 			productReference = 2032D6B02D1E9E2300170F56 /* polynap.app */;
@@ -246,6 +252,7 @@
 			packageReferences = (
 				206DE0772DF195E7007EE33B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				206D2A9A2DF33CC40013D385 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+				20D266A82E113B9D001EA025 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2032D6B12D1E9E2300170F56 /* Products */;
@@ -480,7 +487,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -517,7 +524,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -664,6 +671,14 @@
 				minimumVersion = 4.5.2;
 			};
 		};
+		20D266A82E113B9D001EA025 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.15.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -681,6 +696,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 206DE0772DF195E7007EE33B /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		20D266A92E113B9D001EA025 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20D266A82E113B9D001EA025 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		20D266AB2E113B9D001EA025 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20D266A82E113B9D001EA025 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

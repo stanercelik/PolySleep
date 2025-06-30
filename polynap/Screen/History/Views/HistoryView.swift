@@ -7,6 +7,9 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -34,6 +37,12 @@ struct HistoryView: View {
                 
                 // Floating Action Button
                 ModernFloatingActionButton(action: {
+                    // Analytics: FAB Add Sleep Entry button tap
+                    analyticsManager.logFeatureUsed(
+                        featureName: "add_sleep_entry_fab",
+                        action: "button_tap"
+                    )
+                    
                     // Önce tüm sheet state'lerini sıfırla
                     viewModel.isDayDetailPresented = false
                     viewModel.selectedDay = nil
@@ -53,6 +62,15 @@ struct HistoryView: View {
                     DayDetailView(viewModel: viewModel)
                 }
             }
+            .onChange(of: viewModel.isDayDetailPresented) { isPresented in
+                if isPresented {
+                    // Analytics: Day detail navigation
+                    analyticsManager.logFeatureUsed(
+                        featureName: "day_detail_navigation",
+                        action: "day_selected"
+                    )
+                }
+            }
             .sheet(isPresented: $viewModel.isAddSleepEntryPresented) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     viewModel.reloadData()
@@ -62,6 +80,12 @@ struct HistoryView: View {
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
+                
+                // Analytics: History screen görüntüleme
+                analyticsManager.logScreenView(
+                    screenName: "history_screen",
+                    screenClass: "HistoryView"
+                )
             }
 
         }

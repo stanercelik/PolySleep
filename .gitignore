@@ -1,8 +1,9 @@
 Documents/
 .cursor
 refactoring-plan.md
-App-Store-Review-Hatalarini-Cozme-Kilavuzu.md
-
+paywall-scenarios.md
+Analytics-Implementation-TODO.md
+Analytics-Strategy.md
 GoogleService-Info.plist
 
 # Secret Keys

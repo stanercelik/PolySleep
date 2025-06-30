@@ -11,6 +11,9 @@ struct WelcomeView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     
+    // Analytics
+    private let analyticsManager = AnalyticsManager.shared
+    
     @State private var buttonCenter: CGPoint = .zero
     @State private var circleDiameter: CGFloat = 0
     
@@ -58,6 +61,12 @@ struct WelcomeView: View {
                         
                         // ModelContext'i ViewModel'e ilet
                         viewModel.setModelContext(modelContext)
+                        
+                        // Analytics: Welcome screen görüntüleme
+                        analyticsManager.logScreenView(
+                            screenName: "welcome_screen",
+                            screenClass: "WelcomeView"
+                        )
                     }
                 }
                 .toolbar(.hidden, for: .navigationBar)
@@ -133,6 +142,12 @@ struct WelcomeView: View {
     
     private var continueButton: some View {
         PSPrimaryButton(NSLocalizedString("continue", tableName: "Welcome", comment: "")) {
+            // Analytics: Get Started button tap
+            analyticsManager.logFeatureUsed(
+                featureName: "welcome_get_started",
+                action: "button_tap"
+            )
+            
             viewModel.animateAndPresentOnboarding()
         }
         .padding(.bottom, PSSpacing.lg)
