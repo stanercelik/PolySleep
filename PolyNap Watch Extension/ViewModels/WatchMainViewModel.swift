@@ -23,14 +23,20 @@ extension SharedSleepEntry {
 @MainActor
 class WatchMainViewModel: ObservableObject {
     
-    // MARK: - Published Properties
+    // MARK: - Published Properties for Milestone 2.1
     
+    // Schedule-related properties
+    @Published var currentSchedule: SharedUserSchedule?
+    @Published var nextSleepTime: String?
+    @Published var currentStatusMessage: String = "Program yükleniyor..."
+    @Published var isLoading: Bool = false
+    
+    // Legacy properties (keeping for compatibility)
     @Published var currentSleepBlock: SharedSleepBlock?
     @Published var nextSleepBlock: SharedSleepBlock?
     @Published var isSleeping: Bool = false
     @Published var canRateLastSleep: Bool = false
     @Published var selectedRating: Int = 0
-    @Published var isLoading: Bool = false
     
     // Daily Statistics
     @Published var todayTotalSleep: TimeInterval = 0
@@ -63,12 +69,28 @@ class WatchMainViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Public Methods
+    // MARK: - Public Methods for Milestone 2.1
+    
+    func requestDataSync() {
+        print("🔄 Requesting data sync for schedule...")
+        isLoading = true
+        currentStatusMessage = "Veri senkronize ediliyor..."
+        
+        // WatchConnectivity ile iPhone'dan veri iste
+        watchConnectivity.requestSync()
+        
+        // Mock data ile schedule yükle (gerçek implementasyonda Repository'den gelecek)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.loadMockScheduleData()
+            self?.updateCurrentStatus()
+            self?.isLoading = false
+        }
+    }
     
     func startTracking() {
         print("🎯 Watch tracking started")
         startPeriodicUpdates()
-        requestSyncFromPhone()
+        requestDataSync()
     }
     
     func stopTracking() {
@@ -76,6 +98,143 @@ class WatchMainViewModel: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
+    
+    // MARK: - Schedule Management
+    
+    private func loadMockScheduleData() {
+        // Mock SharedUserSchedule oluştur
+        let mockSchedule = SharedUserSchedule(
+            name: "Everyman 4-2",
+            scheduleDescription: "Core sleep + 2 naps",
+            totalSleepHours: 4.5,
+            adaptationPhase: 2,
+            isActive: true
+        )
+        
+        // Mock sleep blocks oluştur
+        let coreBlock = SharedSleepBlock(
+            schedule: mockSchedule,
+            startTime: "23:00",
+            endTime: "02:30",
+            durationMinutes: 210,
+            isCore: true
+        )
+        
+        let napBlock1 = SharedSleepBlock(
+            schedule: mockSchedule,
+            startTime: "08:00", 
+            endTime: "08:20",
+            durationMinutes: 20,
+            isCore: false
+        )
+        
+        let napBlock2 = SharedSleepBlock(
+            schedule: mockSchedule,
+            startTime: "14:00",
+            endTime: "14:20", 
+            durationMinutes: 20,
+            isCore: false
+        )
+        
+        mockSchedule.sleepBlocks = [coreBlock, napBlock1, napBlock2]
+        
+        self.currentSchedule = mockSchedule
+        self.updateNextSleepTime()
+        
+        print("✅ Mock schedule data loaded: \(mockSchedule.name)")
+    }
+    
+    private func updateNextSleepTime() {
+        guard let schedule = currentSchedule,
+              let sleepBlocks = schedule.sleepBlocks else {
+            nextSleepTime = nil
+            return
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+        let currentTotalMinutes = currentHour * 60 + currentMinute
+        
+        // Bir sonraki uyku bloğunu bul
+        var nextBlock: SharedSleepBlock?
+        var minDifference = Int.max
+        
+        for block in sleepBlocks {
+            if let startTime = timeComponents(from: block.startTime) {
+                let blockTotalMinutes = startTime.hour * 60 + startTime.minute
+                var difference = blockTotalMinutes - currentTotalMinutes
+                
+                // Eğer negatifse, yarın için hesapla
+                if difference < 0 {
+                    difference += 24 * 60
+                }
+                
+                if difference < minDifference {
+                    minDifference = difference
+                    nextBlock = block
+                }
+            }
+        }
+        
+        if let next = nextBlock {
+            nextSleepTime = next.startTime
+        } else {
+            nextSleepTime = nil
+        }
+    }
+    
+    private func updateCurrentStatus() {
+        guard let schedule = currentSchedule else {
+            currentStatusMessage = "Program bulunamadı"
+            return
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: now)
+        
+        // Basit durum kontrolü
+        if let sleepBlocks = schedule.sleepBlocks {
+            let isInSleepTime = sleepBlocks.contains { block in
+                if let startTime = timeComponents(from: block.startTime),
+                   let endTime = timeComponents(from: block.endTime) {
+                    
+                    if startTime.hour <= endTime.hour {
+                        // Aynı gün içinde
+                        return currentHour >= startTime.hour && currentHour < endTime.hour
+                    } else {
+                        // Gece yarısını geçen
+                        return currentHour >= startTime.hour || currentHour < endTime.hour
+                    }
+                }
+                return false
+            }
+            
+            if isInSleepTime {
+                currentStatusMessage = "Şu anda uyku zamanı 😴"
+            } else {
+                currentStatusMessage = "Aktif dönem - uyanık kalın ☀️"
+            }
+        } else {
+            currentStatusMessage = "Program verisi eksik"
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func timeComponents(from timeString: String) -> (hour: Int, minute: Int)? {
+        let components = timeString.split(separator: ":")
+        guard components.count == 2,
+              let hour = Int(components[0]),
+              let minute = Int(components[1]) else {
+            return nil
+        }
+        return (hour, minute)
+    }
+    
+    // MARK: - Legacy Methods (keeping for compatibility)
     
     func startSleep() {
         guard !isSleeping, let currentBlock = currentSleepBlock else {
@@ -86,17 +245,14 @@ class WatchMainViewModel: ObservableObject {
         let sleepEntry = SharedSleepEntry(
             date: Date(),
             startTime: Date(),
-            endTime: Date(), // Will be updated when sleep ends
-            durationMinutes: 0, // Will be calculated when sleep ends
+            endTime: Date(),
+            durationMinutes: 0,
             isCore: currentBlock.isCore,
             blockId: currentBlock.id.uuidString
         )
         
         currentSleepEntry = sleepEntry
         isSleeping = true
-        
-        // iPhone'a bildir
-        watchConnectivity.notifySleepStarted(sleepEntry.dictionary)
         
         // Haptic feedback
         WKInterfaceDevice.current().play(.start)
@@ -121,15 +277,11 @@ class WatchMainViewModel: ObservableObject {
         isSleeping = false
         canRateLastSleep = true
         
-        // iPhone'a bildir
-        watchConnectivity.notifySleepEnded(currentEntry.dictionary)
-        
         // Haptic feedback
         WKInterfaceDevice.current().play(.stop)
         
         print("😊 Sleep ended. Duration: \(Int(duration / 60)) minutes")
         
-        // Statistics'i güncelle
         updateDailyStatistics()
     }
     
@@ -139,33 +291,22 @@ class WatchMainViewModel: ObservableObject {
             return
         }
         
-        let sleepEntry = lastEntry
-        sleepEntry.rating = rating
+        lastEntry.rating = rating
         selectedRating = rating
         canRateLastSleep = false
-        lastSleepEntry = sleepEntry
-        
-        // iPhone'a bildir
-        let message = WatchMessage(type: .qualityRated, data: [
-            "id": sleepEntry.id.uuidString,
-            "rating": rating
-        ])
-        watchConnectivity.sendMessage(message)
         
         print("⭐ Sleep rated: \(rating) stars")
         
-        // Statistics'i güncelle
         updateDailyStatistics()
     }
     
     // MARK: - Private Methods
     
     private func setupWatchConnectivityObservers() {
-        // WatchConnectivity durumunu izle
         watchConnectivity.$isReachable
             .sink { [weak self] isReachable in
                 if isReachable {
-                    self?.requestSyncFromPhone()
+                    self?.requestDataSync()
                 }
             }
             .store(in: &cancellables)
@@ -174,7 +315,6 @@ class WatchMainViewModel: ObservableObject {
     private func loadInitialData() {
         isLoading = true
         
-        // Simulated data loading
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.updateSleepBlocks()
             self?.updateDailyStatistics()
@@ -186,25 +326,20 @@ class WatchMainViewModel: ObservableObject {
     private func startPeriodicUpdates() {
         timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
+                self?.updateNextSleepTime()
+                self?.updateCurrentStatus()
                 self?.updateSleepBlocks()
                 self?.updateDailyStatistics()
             }
         }
     }
     
-    private func requestSyncFromPhone() {
-        watchConnectivity.requestSync()
-    }
-    
     private func updateSleepBlocks() {
-        // Bu method gerçek implementasyonda SharedRepository'den veri çekecek
-        // Şimdilik mock data kullanıyoruz
-        
+        // Legacy method - keeping for compatibility with old views
         let now = Date()
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: now)
         
-        // Mock current sleep block
         if hour >= 23 || hour <= 6 {
             currentSleepBlock = SharedSleepBlock(
                 startTime: "23:00",
@@ -223,7 +358,6 @@ class WatchMainViewModel: ObservableObject {
             currentSleepBlock = nil
         }
         
-        // Mock next sleep block
         if hour < 14 {
             nextSleepBlock = SharedSleepBlock(
                 startTime: "14:00",
@@ -241,29 +375,17 @@ class WatchMainViewModel: ObservableObject {
         } else {
             nextSleepBlock = nil
         }
-        
-        print("🔄 Sleep blocks updated - Current: \(currentSleepBlock?.startTime ?? "none"), Next: \(nextSleepBlock?.startTime ?? "none")")
     }
     
     private func updateDailyStatistics() {
-        // Bu method gerçek implementasyonda SharedRepository'den veri çekecek
-        // Şimdilik mock data
-        
-        todayTotalSleep = 7.5 * 3600 // 7.5 hours in seconds
+        todayTotalSleep = 7.5 * 3600
         todaySleepCount = 4
         todayAverageQuality = 4.2
-        
-        print("📊 Daily statistics updated")
     }
     
     private func updateWeeklyStatistics() {
-        // Bu method gerçek implementasyonda SharedRepository'den veri çekecek
-        // Şimdilik mock data
-        
-        weekTotalSleep = 52.5 * 3600 // 52.5 hours in seconds
-        weekGoalCompletion = 0.85 // 85%
-        
-        print("📈 Weekly statistics updated")
+        weekTotalSleep = 52.5 * 3600
+        weekGoalCompletion = 0.85
     }
 }
 

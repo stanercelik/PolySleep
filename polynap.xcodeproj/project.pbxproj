@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203133F52E1D956500124001 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 203133F42E1D956500124001 /* PolyNapShared */; };
 		206D2A9C2DF33CC40013D385 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9B2DF33CC40013D385 /* RevenueCat */; };
 		206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9D2DF33CC40013D385 /* RevenueCatUI */; };
 		206D5B062DF357EC00366C90 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 206D5B052DF357EC00366C90 /* StoreKit.framework */; };
@@ -195,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				203133F52E1D956500124001 /* PolyNapShared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +378,7 @@
 			);
 			name = "watchkitapp Watch App";
 			packageProductDependencies = (
+				203133F42E1D956500124001 /* PolyNapShared */,
 			);
 			productName = "watchkitapp Watch App";
 			productReference = 20D266C02E196EFE001EA025 /* watchkitapp Watch App.app */;
@@ -1309,6 +1312,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		203133F42E1D956500124001 /* PolyNapShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20D267112E197294001EA025 /* XCLocalSwiftPackageReference "PolyNapShared" */;
+			productName = PolyNapShared;
+		};
 		206D2A9B2DF33CC40013D385 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 206D2A9A2DF33CC40013D385 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;

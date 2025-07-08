@@ -213,4 +213,61 @@ public final class SharedSleepEntry {
         self.updatedAt = updatedAt
         self.syncId = syncId
     }
+}
+
+// MARK: - Adaptation Progress Model
+
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@Model
+public final class SharedAdaptationProgress {
+    @Attribute(.unique) public var id: UUID
+    public var user: SharedUser?
+    public var schedule: SharedUserSchedule?
+    public var currentPhase: Int
+    public var totalPhases: Int
+    public var daysSinceStart: Int
+    public var estimatedTotalDays: Int
+    public var progressPercentage: Double // 0.0 - 1.0
+    public var isCompleted: Bool
+    public var phaseName: String
+    public var phaseDescription: String
+    public var createdAt: Date
+    public var updatedAt: Date
+
+    public var remainingDays: Int {
+        return max(0, estimatedTotalDays - daysSinceStart)
+    }
+    
+    public var phaseProgress: Double {
+        guard totalPhases > 0 else { return 0.0 }
+        return Double(currentPhase) / Double(totalPhases)
+    }
+
+    public init(id: UUID = UUID(),
+                user: SharedUser? = nil,
+                schedule: SharedUserSchedule? = nil,
+                currentPhase: Int = 1,
+                totalPhases: Int = 4,
+                daysSinceStart: Int = 0,
+                estimatedTotalDays: Int = 30,
+                progressPercentage: Double = 0.0,
+                isCompleted: Bool = false,
+                phaseName: String = "Başlangıç",
+                phaseDescription: String = "Adaptasyon süreci başladı",
+                createdAt: Date = Date(),
+                updatedAt: Date = Date()) {
+        self.id = id
+        self.user = user
+        self.schedule = schedule
+        self.currentPhase = currentPhase
+        self.totalPhases = totalPhases
+        self.daysSinceStart = daysSinceStart
+        self.estimatedTotalDays = estimatedTotalDays
+        self.progressPercentage = progressPercentage
+        self.isCompleted = isCompleted
+        self.phaseName = phaseName
+        self.phaseDescription = phaseDescription
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
 } 
