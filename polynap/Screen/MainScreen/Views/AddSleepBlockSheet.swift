@@ -77,7 +77,7 @@ struct AddSleepBlockSheet: View {
             } message: {
                 Text(viewModel.blockErrorMessage)
             }
-            .onChange(of: scenePhase) { newPhase in
+            .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .inactive {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }
