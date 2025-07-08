@@ -1,5 +1,8 @@
 import Foundation
+
+#if canImport(SwiftData)
 import SwiftData
+#endif
 
 // MARK: - Shared Enums
 
@@ -37,6 +40,7 @@ public enum SleepQuality: Int, Codable, CaseIterable {
 
 // MARK: - Shared Data Models
 
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 @Model
 public final class SharedUser {
     @Attribute(.unique) public var id: UUID
@@ -77,6 +81,7 @@ public final class SharedUser {
     }
 }
 
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 @Model
 public final class SharedUserSchedule {
     @Attribute(.unique) public var id: UUID
@@ -114,6 +119,7 @@ public final class SharedUserSchedule {
     }
 }
 
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 @Model
 public final class SharedSleepBlock {
     @Attribute(.unique) public var id: UUID
@@ -151,6 +157,7 @@ public final class SharedSleepBlock {
     }
 }
 
+@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 @Model
 public final class SharedSleepEntry {
     @Attribute(.unique) public var id: UUID

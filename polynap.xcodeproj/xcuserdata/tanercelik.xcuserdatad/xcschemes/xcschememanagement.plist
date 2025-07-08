@@ -9,10 +9,35 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Promises (Playground).xcscheme</key>
+		<key>Promises (Playground) 1.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>7</integer>
+		</dict>
+		<key>Promises (Playground) 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>Promises (Playground) 3.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>Promises (Playground) 4.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>Promises (Playground) 5.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>Promises (Playground).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>polynap Debug.xcscheme_^#shared#^_</key>
 		<dict>
@@ -58,6 +83,31 @@
 			<true/>
 		</dict>
 		<key>2032D6CE2D1E9E2400170F56</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20D266BA2E196EFE001EA025</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20D266BF2E196EFE001EA025</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20D266D12E196F00001EA025</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20D266DB2E196F00001EA025</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20D266F42E197168001EA025</key>
 		<dict>
 			<key>primary</key>
 			<true/>

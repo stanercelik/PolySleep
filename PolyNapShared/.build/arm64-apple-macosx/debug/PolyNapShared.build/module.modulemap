@@ -1,0 +1,4 @@
+module PolyNapShared {
+    header "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/PolyNapShared-Swift.h"
+    requires objc
+}

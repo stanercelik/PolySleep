@@ -4,6 +4,22 @@ import WatchKit
 import PolyNapShared
 import Combine
 
+// MARK: - SharedSleepEntry Extension
+extension SharedSleepEntry {
+    var dictionary: [String: Any] {
+        return [
+            "id": id.uuidString,
+            "date": date.timeIntervalSince1970,
+            "startTime": startTime.timeIntervalSince1970,
+            "endTime": endTime.timeIntervalSince1970,
+            "durationMinutes": durationMinutes,
+            "isCore": isCore,
+            "blockId": blockId ?? "",
+            "rating": rating
+        ]
+    }
+}
+
 @MainActor
 class WatchMainViewModel: ObservableObject {
     
@@ -42,7 +58,8 @@ class WatchMainViewModel: ObservableObject {
     
     deinit {
         Task { @MainActor in
-            stopTracking()
+            timer?.invalidate()
+            timer = nil
         }
     }
     
@@ -79,7 +96,7 @@ class WatchMainViewModel: ObservableObject {
         isSleeping = true
         
         // iPhone'a bildir
-        watchConnectivity.notifySleepStarted(sleepEntry: sleepEntry)
+        watchConnectivity.notifySleepStarted(sleepEntry.dictionary)
         
         // Haptic feedback
         WKInterfaceDevice.current().play(.start)
@@ -96,17 +113,16 @@ class WatchMainViewModel: ObservableObject {
         let endTime = Date()
         let duration = endTime.timeIntervalSince(currentEntry.startTime)
         
-        var sleepEntry = currentEntry
-        sleepEntry.endTime = endTime
-        sleepEntry.durationMinutes = Int(duration / 60)
+        currentEntry.endTime = endTime
+        currentEntry.durationMinutes = Int(duration / 60)
         
         currentSleepEntry = nil
-        lastSleepEntry = sleepEntry
+        lastSleepEntry = currentEntry
         isSleeping = false
         canRateLastSleep = true
         
         // iPhone'a bildir
-        watchConnectivity.notifySleepEnded(sleepEntry: sleepEntry)
+        watchConnectivity.notifySleepEnded(currentEntry.dictionary)
         
         // Haptic feedback
         WKInterfaceDevice.current().play(.stop)
@@ -123,7 +139,7 @@ class WatchMainViewModel: ObservableObject {
             return
         }
         
-        var sleepEntry = lastEntry
+        let sleepEntry = lastEntry
         sleepEntry.rating = rating
         selectedRating = rating
         canRateLastSleep = false
@@ -159,11 +175,11 @@ class WatchMainViewModel: ObservableObject {
         isLoading = true
         
         // Simulated data loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.updateSleepBlocks()
-            self.updateDailyStatistics()
-            self.updateWeeklyStatistics()
-            self.isLoading = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.updateSleepBlocks()
+            self?.updateDailyStatistics()
+            self?.updateWeeklyStatistics()
+            self?.isLoading = false
         }
     }
     

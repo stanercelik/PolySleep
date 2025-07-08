@@ -1,19 +1,25 @@
 //
 //  ContentView.swift
-//  watchkitapp Watch App
+//  PolyNap Watch App
 //
 //  Created by Taner Çelik on 5.07.2025.
 //
 
 import SwiftUI
 
+// Not: MainWatchView PolyNap Watch Extension'da tanımlı
+// Watch Extension'dan view'lere erişim sağlanması gerekiyor
+
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("PolyNap")
+                .font(.title2)
+                .padding()
+            
+            Text("Watch bağlantısı kurulurken...")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
         .padding()
     }
