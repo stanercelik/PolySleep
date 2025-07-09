@@ -4,12 +4,14 @@ enum CircularChartSize {
     case small
     case medium
     case large
+    case extraLarge
     
     var radius: CGFloat {
         switch self {
         case .small: return 60
         case .medium: return 80
         case .large: return 100
+        case .extraLarge: return 140
         }
     }
     
@@ -18,6 +20,7 @@ enum CircularChartSize {
         case .small: return 20
         case .medium: return 28
         case .large: return 35
+        case .extraLarge: return 45
         }
     }
 }
@@ -49,23 +52,30 @@ struct CircularSleepChart: View {
         GeometryReader { geometry in
             // Ekran boyutuna göre responsive chart size ayarı
             let availableSize = min(geometry.size.width, geometry.size.height)
-            let chartDiameter = min(availableSize * 0.9, circleRadius * 2.2) // Padding için %90 kullan
-            let adjustedRadius = chartDiameter / 2.2
+            let chartDiameter = min(availableSize * 0.95, circleRadius * 2.5) // Daha büyük chart için %95 kullan
+            let adjustedRadius = chartDiameter / 2.5
             let adjustedStrokeWidth = adjustedRadius * (strokeWidth / circleRadius)
-            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            let center = CGPoint(x: chartDiameter / 2, y: chartDiameter / 2)
             
-            ZStack {
-                backgroundCircle(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                sleepBlocksView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                hourTickMarks(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                    .opacity(textOpacity)
-                hourMarkersView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                    .opacity(textOpacity)
-                innerTimeLabelsView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                    .opacity(textOpacity)
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    ZStack {
+                        backgroundCircle(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                        sleepBlocksView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                        hourTickMarks(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                            .opacity(textOpacity)
+                        hourMarkersView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                            .opacity(textOpacity)
+                        innerTimeLabelsView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                            .opacity(textOpacity)
+                    }
+                    .frame(width: chartDiameter, height: chartDiameter)
+                    Spacer()
+                }
+                Spacer()
             }
-            .frame(width: chartDiameter, height: chartDiameter)
-            .position(center)
         }
         .aspectRatio(1, contentMode: .fit)
         .animation(.easeInOut(duration: 0.3), value: textOpacity)
@@ -142,29 +152,28 @@ struct CircularSleepChart: View {
     @ViewBuilder
     private func sleepBlockArc(for block: SleepBlock, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         // Düzeltilmiş time parsing - String formatından direkt parse et
-        guard let startTimeComponents = TimeFormatter.time(from: block.startTime) else {
+        if let startTimeComponents = TimeFormatter.time(from: block.startTime) {
+            let startAngle = angleForTime(hour: startTimeComponents.hour, minute: startTimeComponents.minute)
+            let durationHours = Double(block.duration) / 60.0
+            let endAngle = startAngle + (durationHours * (360.0 / 24.0))
+            
+            Path { path in
+                path.addArc(
+                    center: center,
+                    radius: radius,
+                    startAngle: .degrees(startAngle),
+                    endAngle: .degrees(endAngle),
+                    clockwise: false
+                )
+            }
+            .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
+            .opacity(0.85)
+        } else {
             EmptyView()
                 .onAppear {
                     print("⚠️ CircularSleepChart: Geçersiz startTime formatı: \(block.startTime)")
                 }
-            return
         }
-        
-        let startAngle = angleForTime(hour: startTimeComponents.hour, minute: startTimeComponents.minute)
-        let durationHours = Double(block.duration) / 60.0
-        let endAngle = startAngle + (durationHours * (360.0 / 24.0))
-        
-        Path { path in
-            path.addArc(
-                center: center,
-                radius: radius,
-                startAngle: .degrees(startAngle),
-                endAngle: .degrees(endAngle),
-                clockwise: false
-            )
-        }
-        .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
-        .opacity(0.85)
     }
     
     private func innerTimeLabelsView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {

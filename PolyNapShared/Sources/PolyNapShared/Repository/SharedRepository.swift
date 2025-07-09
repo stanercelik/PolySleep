@@ -231,13 +231,10 @@ public class SharedRepository: ObservableObject {
         )
     }
     
-    /// Shared ModelContainer oluşturur (acil durum için)
+    /// Shared ModelContainer oluşturur (deprecated - SharedModelContainer.createSharedModelContainer() kullan)
+    @available(*, deprecated, message: "Use SharedModelContainer.createSharedModelContainer() instead")
     public static func createSharedModelContainer() throws -> ModelContainer {
-        let config = ModelConfiguration(isStoredInMemoryOnly: false)
-        return try ModelContainer(
-            for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
-            configurations: config
-        )
+        return try SharedModelContainer.createSharedModelContainer()
     }
     
     // MARK: - Direct Sub-Repository Access

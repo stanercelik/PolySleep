@@ -378,16 +378,16 @@ struct SleepChartSection: View {
     
     var body: some View {
         PSCard {
-            VStack(spacing: PSSpacing.lg) {
+            VStack(spacing: PSSpacing.md) {
                 PSSectionHeader(
                     L("mainScreen.sleepChart.title", table: "MainScreen"),
                     icon: "chart.pie.fill"
                 )
                 
-                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel, chartSize: .medium)
+                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel, chartSize: .extraLarge)
                     .aspectRatio(1, contentMode: .fit)
-                    .frame(maxHeight: 280)
-                    .padding(.horizontal, PSSpacing.md)
+                    .frame(minHeight: 320, maxHeight: 500)
+                    .padding(.vertical, PSSpacing.md)
             }
         }
     }
