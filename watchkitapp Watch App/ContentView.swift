@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-// Not: MainWatchView PolyNap Watch Extension'da tanımlı
-// Watch Extension'dan view'lere erişim sağlanması gerekiyor
+// MARK: - ContentView (Placeholder)
+// Bu dosya artık kullanılmıyor - MainWatchView Ana entry point olarak kullanılıyor
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Text("PolyNap")
-                .font(.title2)
-                .padding()
-            
-            Text("Watch bağlantısı kurulurken...")
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding()
+        Text("Bu view artık kullanılmıyor")
+            .font(.caption)
+            .foregroundColor(.secondary)
     }
 }
 

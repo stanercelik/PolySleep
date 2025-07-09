@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Combine
+import PolyNapShared
 
 @MainActor
 class MainScreenViewModel: ObservableObject {
@@ -56,6 +57,7 @@ class MainScreenViewModel: ObservableObject {
     private let authManager = AuthManager.shared
     private var cancellables = Set<AnyCancellable>()
     private let revenueCatManager = RevenueCatManager.shared
+    private let watchConnectivity = WatchConnectivityManager.shared
     
     private let ratedSleepBlocksKey = "ratedSleepBlocks"
     private let deferredSleepBlocksKey = "deferredSleepBlocks"
@@ -413,6 +415,9 @@ class MainScreenViewModel: ObservableObject {
                         
             // Bildirimleri güncelle
             await ScheduleManager.shared.activateSchedule(model.schedule)
+            
+            // Apple Watch'a schedule güncellemesini bildir
+            await notifyWatchOfScheduleUpdate()
             
             DispatchQueue.main.async {
                 self.isLoading = false
@@ -899,6 +904,9 @@ class MainScreenViewModel: ObservableObject {
                 // Bildirimleri güncelle
                 await ScheduleManager.shared.activateSchedule(userScheduleModel)
                 
+                // Apple Watch'a schedule güncellemesini bildir
+                await notifyWatchOfScheduleUpdate()
+                
                 await MainActor.run {
                     isLoading = false
                     print("✅ Yeni schedule başarıyla seçildi ve kaydedildi: \(schedule.name)")
@@ -950,6 +958,42 @@ class MainScreenViewModel: ObservableObject {
                 self?.loadAvailableSchedules()
             }
             .store(in: &cancellables)
+    }
+    
+    // MARK: - Apple Watch Integration
+    
+    /// Apple Watch'a aktif schedule güncellemesini bildirir
+    private func notifyWatchOfScheduleUpdate() async {
+        guard watchConnectivity.isReachable else {
+            print("📱 Apple Watch'a schedule bildirimi gönderilemedi - bağlantı yok")
+            return
+        }
+        
+        let schedule = model.schedule
+        
+        // Schedule'ı Watch'a gönderilecek formata dönüştür
+        let scheduleData: [String: Any] = [
+            "id": schedule.id,
+            "name": schedule.name,
+            "description": ["en": schedule.description.en, "tr": schedule.description.tr],
+            "totalSleepHours": schedule.totalSleepHours,
+            "isPremium": schedule.isPremium,
+            "blocks": schedule.schedule.map { block in
+                [
+                    "id": block.id.uuidString,
+                    "startTime": block.startTime,
+                    "endTime": block.endTime,
+                    "duration": block.duration,
+                    "isCore": block.isCore,
+                    "type": block.type
+                ]
+            }
+        ]
+        
+        // WatchConnectivity ile gönder
+        watchConnectivity.notifyScheduleUpdate(scheduleData)
+        
+        print("📡 iPhone: Apple Watch'a aktif schedule bildirimi gönderildi - \(schedule.name)")
     }
     
     // MARK: - Validation Methods

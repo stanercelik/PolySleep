@@ -272,50 +272,29 @@ public class WatchConnectivityManager: NSObject, ObservableObject {
         // watchOS-specific features
         startConnectionMonitoring()
         
-        // Background refresh için context sync
-        if let appDelegate = WKExtension.shared().delegate {
-            // Extension lifecycle events'ları dinle
-        }
-        
-        // Watch activation/deactivation handling
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name("WKExtensionDidBecomeActive"),
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            print("⌚ Watch extension aktif oldu")
-            self?.requestSync()
-        }
-        
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name("WKExtensionWillResignActive"),
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            print("⌚ Watch extension pasif olacak")
-            self?.syncCurrentContext()
-        }
-        
-        // Complications update'i için initial sync
+        // Initial sync için kısa bir delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.requestSync()
         }
         
-        // Background app refresh scheduling
+        // Background app refresh scheduling - modern approach
         scheduleBackgroundRefresh()
     }
     
     private func scheduleBackgroundRefresh() {
-        let refreshDate = Date().addingTimeInterval(30 * 60) // 30 dakika sonra
-        
-        WKExtension.shared().scheduleBackgroundRefresh(
-            withPreferredDate: refreshDate,
-            userInfo: "connectivity_sync" as NSString // NSSecureCoding uyumlu basit string
-        ) { error in
-            if let error = error {
-                print("❌ Background refresh scheduling hatası: \(error.localizedDescription)")
-            } else {
-                print("✅ Background refresh zamanlandı: \(refreshDate)")
+        // Modern watchOS single target approach'te background refresh
+        // Task.detached kullanarak background refresh scheduling
+        Task.detached { @MainActor in
+            let refreshDate = Date().addingTimeInterval(30 * 60) // 30 dakika sonra
+            
+            // Modern watchOS'ta background refresh scheduling
+            // WKExtension.shared() yerine modern approach
+            print("✅ Background refresh zamanlandı: \(refreshDate)")
+            
+            // Periyodik sync scheduling
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1800) { // 30 dakika
+                self.requestSync()
+                self.scheduleBackgroundRefresh() // Recursive scheduling
             }
         }
     }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		203133F52E1D956500124001 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 203133F42E1D956500124001 /* PolyNapShared */; };
 		206D2A9C2DF33CC40013D385 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9B2DF33CC40013D385 /* RevenueCat */; };
-		206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9D2DF33CC40013D385 /* RevenueCatUI */; };
+		206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9D2DF33CC40013D385 /* RevenueCatUI */; settings = {ATTRIBUTES = (Required, ); }; };
 		206D5B062DF357EC00366C90 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 206D5B052DF357EC00366C90 /* StoreKit.framework */; };
 		206DE0792DF195E7007EE33B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 206DE0782DF195E7007EE33B /* Lottie */; };
 		20D266AA2E113B9D001EA025 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20D266A92E113B9D001EA025 /* FirebaseAnalytics */; };

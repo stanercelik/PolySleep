@@ -1,8 +1,10 @@
 import SwiftUI
 import WatchKit
 import PolyNapShared
+import SwiftData
 
 struct MainWatchView: View {
+    @StateObject private var watchConnectivity = WatchConnectivityManager.shared
     @StateObject private var mainViewModel = WatchMainViewModel()
     @StateObject private var adaptationViewModel = AdaptationViewModel()
     @StateObject private var sleepEntryViewModel = SleepEntryViewModel()
@@ -34,7 +36,37 @@ struct MainWatchView: View {
                 .tag(2)
         }
         .onAppear {
+            configureSharedRepository()
             mainViewModel.requestDataSync()
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    /// SharedRepository'yi Apple Watch için konfigüre eder
+    private func configureSharedRepository() {
+        do {
+            // SharedModels için ModelContainer oluştur
+            let config = ModelConfiguration(isStoredInMemoryOnly: false)
+            let container = try ModelContainer(
+                for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
+                configurations: config
+            )
+            
+            let modelContext = container.mainContext
+            
+            // SharedRepository'ye ModelContext ayarla
+            SharedRepository.shared.setModelContext(modelContext)
+            
+            // ViewModels'e SharedRepository'nin hazır olduğunu bildir
+            mainViewModel.configureSharedRepository(with: modelContext)
+            
+            print("✅ Apple Watch: SharedRepository başarıyla konfigüre edildi")
+        } catch {
+            print("❌ Apple Watch: SharedRepository konfigürasyon hatası - \(error.localizedDescription)")
+            
+            // Hata durumunda fallback data yükle
+            mainViewModel.loadMockData()
         }
     }
 }
@@ -85,6 +117,9 @@ struct CurrentScheduleView: View {
                 
                 // Status ve Next Sleep Info
                 statusInfoSection
+                
+                // Enhanced Sleep Tracking Controls
+                sleepTrackingControlsSection
             }
             .padding()
         }
@@ -117,11 +152,162 @@ struct CurrentScheduleView: View {
                 .background(Color.blue.opacity(0.1))
                 .cornerRadius(8)
             }
+            
+            // Sleep Session Timer
+            if case .sleeping = viewModel.sleepTrackingState {
+                VStack(spacing: 4) {
+                    Text("Uyku Süresi")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                    
+                    Text(viewModel.sleepSessionTimer)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.green)
+                        .monospacedDigit()
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.green.opacity(0.1))
+                .cornerRadius(8)
+            }
+        }
+    }
+    
+    @ViewBuilder 
+    private var sleepTrackingControlsSection: some View {
+        VStack(spacing: 12) {
+            // Ana sleep tracking butonu
+            sleepActionButton
+            
+            // Rating section (sadece rating modunda göster)
+            if viewModel.isRatingMode {
+                sleepRatingSection
+            }
+            
+            // Sync status indicator
+            syncStatusIndicator
+        }
+    }
+    
+    @ViewBuilder
+    private var sleepActionButton: some View {
+        Button(action: {
+            viewModel.toggleSleepState()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: sleepButtonIcon)
+                    .font(.title3)
+                
+                Text(sleepButtonText)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 36)
+            .background(sleepButtonColor)
+            .cornerRadius(18)
+        }
+        .disabled(viewModel.isProcessing)
+    }
+    
+    @ViewBuilder
+    private var sleepRatingSection: some View {
+        VStack(spacing: 12) {
+            Text("Uyku Kalitesi")
+                .font(.caption)
+                .fontWeight(.medium)
+            
+            // Star rating
+            HStack(spacing: 4) {
+                ForEach(1...5, id: \.self) { star in
+                    Button(action: {
+                        viewModel.setSleepRating(star)
+                    }) {
+                        Image(systemName: star <= viewModel.currentRating ? "star.fill" : "star")
+                            .font(.system(size: 18))
+                            .foregroundColor(star <= viewModel.currentRating ? .yellow : .gray)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            
+            // Rating confirmation
+            if viewModel.currentRating > 0 {
+                Button("Kaydet") {
+                    viewModel.confirmSleepRating()
+                }
+                .font(.caption)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 28)
+                .background(Color.blue)
+                .cornerRadius(14)
+            }
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 12)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
+    }
+    
+    @ViewBuilder
+    private var syncStatusIndicator: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(viewModel.syncStatus.color)
+                .frame(width: 6, height: 6)
+            
+            Text(viewModel.syncStatus.message)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var sleepButtonIcon: String {
+        switch viewModel.sleepTrackingState {
+        case .idle:
+            return "moon.fill"
+        case .sleeping:
+            return "sun.max.fill"
+        case .waitingForRating:
+            return "star.fill"
+        default:
+            return "moon.fill"
+        }
+    }
+    
+    private var sleepButtonText: String {
+        switch viewModel.sleepTrackingState {
+        case .idle:
+            return "Uyku Başlat"
+        case .sleeping:
+            return "Uyku Bitir"
+        case .waitingForRating:
+            return "Değerlendirme"
+        default:
+            return "Uyku Başlat"
+        }
+    }
+    
+    private var sleepButtonColor: Color {
+        switch viewModel.sleepTrackingState {
+        case .idle:
+            return .blue
+        case .sleeping:
+            return .orange
+        case .waitingForRating:
+            return .green
+        default:
+            return .blue
         }
     }
 }
 
-// MARK: - Sayfa 2: Adaptation Progress View (Placeholder)
+// MARK: - Sayfa 2: Adaptation Progress View
 
 struct AdaptationProgressView: View {
     @ObservedObject var viewModel: AdaptationViewModel
@@ -129,559 +315,290 @@ struct AdaptationProgressView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                // Placeholder content for Milestone 2.2
-                VStack(spacing: 8) {
-                    Image(systemName: "chart.line.uptrend.xyaxis")
-                        .font(.largeTitle)
-                        .foregroundColor(.orange)
-                    
-                    Text("Adaptasyon İlerlemesi")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    
-                    Text("Milestone 2.2'de implement edilecek")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(12)
+                // Adaptasyon Fazı Header
+                phaseHeaderSection
                 
-                Spacer()
+                // İlerleme Çubuğu
+                progressBarSection
+                
+                // Kalan Süre veya Tamamlanma Durumu
+                remainingTimeSection
+                
+                // Faz Açıklaması
+                phaseDescriptionSection
             }
             .padding()
         }
         .navigationTitle("Adaptasyon")
     }
+    
+    @ViewBuilder
+    private var phaseHeaderSection: some View {
+        VStack(spacing: 8) {
+            Text("Adaptasyon Fazı")
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            Text(viewModel.currentPhaseDescription)
+                .font(.caption)
+                .foregroundColor(.blue)
+                .multilineTextAlignment(.center)
+        }
+    }
+    
+    @ViewBuilder
+    private var progressBarSection: some View {
+        VStack(spacing: 8) {
+            // İlerleme Çubuğu
+            if let progress = viewModel.adaptationProgress {
+                AdaptationProgressBar(
+                    progress: progress.progressPercentage,
+                    currentPhase: progress.currentPhase,
+                    totalPhases: progress.totalPhases
+                )
+                
+                // Gün Bilgisi
+                HStack {
+                    Text("Gün \(progress.daysSinceStart)")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                    
+                    Spacer()
+                    
+                    Text("\(progress.estimatedTotalDays) Gün")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            } else {
+                // Placeholder
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.secondary.opacity(0.3))
+                    .frame(height: 8)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var remainingTimeSection: some View {
+        if let progress = viewModel.adaptationProgress {
+            if !progress.isCompleted {
+                VStack(spacing: 4) {
+                    Text("Kalan Süre")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Text("\(progress.remainingDays) Gün")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.orange)
+                }
+            } else {
+                HStack(spacing: 4) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                    
+                    Text("Tamamlandı!")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.green)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var phaseDescriptionSection: some View {
+        Text(viewModel.phaseDescription)
+            .font(.caption2)
+            .foregroundColor(.secondary)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 8)
+    }
 }
 
-// MARK: - Sayfa 3: Quick Sleep Entry View (Placeholder)
+// MARK: - Sayfa 3: Quick Sleep Entry View
 
 struct QuickSleepEntryView: View {
     @ObservedObject var viewModel: SleepEntryViewModel
+    @State private var selectedQuality: Int = 3
+    @State private var selectedEmoji: String = "😴"
+    
+    private let qualityEmojis = ["😩", "😴", "😊", "😃", "🤩"]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                // Placeholder content for Milestone 2.3
-                VStack(spacing: 8) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.green)
-                    
-                    Text("Hızlı Uyku Girişi")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    
-                    Text("Milestone 2.3'te implement edilecek")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(12)
+                // Emoji Display
+                emojiDisplaySection
                 
-                Spacer()
+                // Star Rating
+                starRatingSection
+                
+                // Save Button
+                saveButtonSection
+                
+                // Last Entry Info
+                lastEntrySection
             }
             .padding()
         }
         .navigationTitle("Uyku Girişi")
+        .onChange(of: selectedQuality) { _, quality in
+            selectedEmoji = qualityEmojis[quality - 1]
+        }
+    }
+    
+    @ViewBuilder
+    private var emojiDisplaySection: some View {
+        VStack(spacing: 8) {
+            Text("Uyku Kalitesi")
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            Text(selectedEmoji)
+                .font(.system(size: 40))
+                .scaleEffect(1.2)
+        }
+    }
+    
+    @ViewBuilder
+    private var starRatingSection: some View {
+        VStack(spacing: 8) {
+            // Star Rating
+            HStack(spacing: 4) {
+                ForEach(1...5, id: \.self) { star in
+                    Button(action: {
+                        selectedQuality = star
+                        // Haptic feedback
+                        WKInterfaceDevice.current().play(.click)
+                    }) {
+                        Image(systemName: star <= selectedQuality ? "star.fill" : "star")
+                            .font(.system(size: 24))
+                            .foregroundColor(star <= selectedQuality ? .yellow : .gray)
+                            .scaleEffect(star == selectedQuality ? 1.2 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: selectedQuality)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            
+            // Quality Description
+            Text(qualityDescription(for: selectedQuality))
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+    }
+    
+    @ViewBuilder
+    private var saveButtonSection: some View {
+        Button(action: {
+            viewModel.saveSleepEntry(
+                quality: selectedQuality,
+                emoji: selectedEmoji
+            )
+        }) {
+            HStack {
+                Image(systemName: "checkmark.circle.fill")
+                Text("Kaydet")
+                    .fontWeight(.semibold)
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 36)
+            .background(Color.blue)
+            .cornerRadius(18)
+        }
+        .disabled(viewModel.isSaving)
+    }
+    
+    @ViewBuilder
+    private var lastEntrySection: some View {
+        if let lastEntry = viewModel.lastSleepEntry {
+            VStack(spacing: 4) {
+                Text("Son Kayıt")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                HStack(spacing: 8) {
+                    Text(lastEntry.emoji ?? "😴")
+                        .font(.title3)
+                    
+                    Text("\(lastEntry.rating)/5")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                    
+                    Text(lastEntry.date, style: .time)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.top, 8)
+        }
+    }
+    
+    private func qualityDescription(for quality: Int) -> String {
+        switch quality {
+        case 1: return "Çok Kötü"
+        case 2: return "Kötü"
+        case 3: return "Orta"
+        case 4: return "İyi"
+        case 5: return "Mükemmel"
+        default: return "Orta"
+        }
     }
 }
 
-// MARK: - WatchCircularSleepChart Component
+// MARK: - Watch Components
 
 /// Watch için optimize edilmiş CircularSleepChart
 struct WatchCircularSleepChart: View {
     let schedule: SharedUserSchedule
-    let textOpacity: Double
-    let isEditing: Bool
-    let chartSize: WatchCircularChartSize
-    @Environment(\.colorScheme) var colorScheme
-
-    private var circleRadius: CGFloat { chartSize.radius }
-    private var strokeWidth: CGFloat { chartSize.strokeWidth }
-    private let hourMarkers = [0, 6, 12, 18] // Watch için sadece ana saatler
-
-    init(
-        schedule: SharedUserSchedule,
-        textOpacity: Double = 1.0,
-        isEditing: Bool = false,
-        chartSize: WatchCircularChartSize = .small
-    ) {
-        self.schedule = schedule
-        self.textOpacity = textOpacity
-        self.isEditing = isEditing
-        self.chartSize = chartSize
+    
+    var body: some View {
+        // iOS'dan CircularSleepChart'ı watch için optimize et
+        Circle()
+            .stroke(Color.secondary.opacity(0.3), lineWidth: 20)
+            .overlay(
+                VStack {
+                    Image(systemName: "moon.circle")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
+                    Text(schedule.name)
+                        .font(.caption2)
+                        .foregroundColor(.primary)
+                        .multilineTextAlignment(.center)
+                }
+            )
     }
+}
 
+/// Watch için adaptasyon progress bar
+struct AdaptationProgressBar: View {
+    let progress: Double
+    let currentPhase: Int
+    let totalPhases: Int
+    
     var body: some View {
         GeometryReader { geometry in
-            let safeWidth = max(100, geometry.size.width.isNaN || geometry.size.width.isInfinite ? 140 : geometry.size.width)
-            let safeHeight = max(100, geometry.size.height.isNaN || geometry.size.height.isInfinite ? 140 : geometry.size.height)
-            let size = min(safeWidth, safeHeight)
-            let center = CGPoint(x: size / 2, y: size / 2)
-            
-            ZStack {
-                backgroundCircle(center: center, size: size)
-                sleepBlocksView(center: center, size: size)
-                hourTickMarks(center: center, size: size)
-                    .opacity(textOpacity)
-                hourMarkersView(center: center, size: size)
-                    .opacity(textOpacity)
-                innerTimeLabelsView(center: center, size: size)
-                    .opacity(textOpacity)
-            }
-            .frame(width: size, height: size)
-            .position(x: safeWidth / 2, y: safeHeight / 2)
-        }
-        .aspectRatio(1, contentMode: .fit)
-        .animation(.easeInOut(duration: 0.3), value: textOpacity)
-    }
-    
-    // MARK: - Chart Components
-    
-    private func backgroundCircle(center: CGPoint, size: CGFloat) -> some View {
-        Circle()
-            .stroke(Color.secondary.opacity(0.2), lineWidth: strokeWidth)
-            .frame(width: circleRadius * 2, height: circleRadius * 2)
-            .position(center)
-    }
-    
-    private func hourTickMarks(center: CGPoint, size: CGFloat) -> some View {
-        ZStack {
-            ForEach([0, 6, 12, 18], id: \.self) { hour in
-                createTickMark(for: hour, center: center)
-            }
-        }
-    }
-    
-    private func createTickMark(for hour: Int, center: CGPoint) -> some View {
-        let angle = Double(hour) * (360.0 / 24.0) - 90
-        let outerRadius = circleRadius + strokeWidth / 2
-        let innerRadius = circleRadius - strokeWidth / 2
-        
-        let startX = center.x + outerRadius * cos(angle * .pi / 180)
-        let startY = center.y + outerRadius * sin(angle * .pi / 180)
-        let endX = center.x + innerRadius * cos(angle * .pi / 180)
-        let endY = center.y + innerRadius * sin(angle * .pi / 180)
-        
-        return Path { path in
-            path.move(to: CGPoint(x: startX, y: startY))
-            path.addLine(to: CGPoint(x: endX, y: endY))
-        }
-        .stroke(Color.secondary.opacity(0.4), lineWidth: 2)
-    }
-    
-    private func hourMarkersView(center: CGPoint, size: CGFloat) -> some View {
-        ZStack {
-            ForEach(hourMarkers, id: \.self) { hour in
-                hourMarkerLabel(for: hour, center: center)
-            }
-        }
-    }
-    
-    private func hourMarkerLabel(for hour: Int, center: CGPoint) -> some View {
-        let angle = Double(hour) * (360.0 / 24.0) - 90
-        let labelRadius = circleRadius + strokeWidth / 2 + 12
-        let xPosition = center.x + labelRadius * cos(angle * .pi / 180)
-        let yPosition = center.y + labelRadius * sin(angle * .pi / 180)
-        
-        return Text(String(format: "%02d", hour))
-            .font(.system(size: 8, weight: .medium))
-            .foregroundColor(.secondary)
-            .position(x: xPosition, y: yPosition)
-    }
-    
-    private func sleepBlocksView(center: CGPoint, size: CGFloat) -> some View {
-        ZStack {
-            if let sleepBlocks = schedule.sleepBlocks {
-                ForEach(Array(sleepBlocks.enumerated()), id: \.offset) { index, block in
-                    sleepBlockArc(for: block, center: center)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func sleepBlockArc(for block: SharedSleepBlock, center: CGPoint) -> some View {
-        if let startTime = timeComponents(from: block.startTime) {
-            let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-            let durationHours = Double(block.durationMinutes) / 60.0
-            let endAngle = startAngle + (durationHours * (360.0 / 24.0))
-            
-            Path { path in
-                path.addArc(
-                    center: center,
-                    radius: circleRadius,
-                    startAngle: .degrees(startAngle),
-                    endAngle: .degrees(endAngle),
-                    clockwise: false
-                )
-            }
-            .stroke(block.isCore ? Color.blue : Color.orange, lineWidth: strokeWidth)
-            .opacity(0.85)
-        }
-    }
-    
-    // MARK: - Time Labels
-    
-    private func innerTimeLabelsView(center: CGPoint, size: CGFloat) -> some View {
-        ZStack {
-            if let sleepBlocks = schedule.sleepBlocks {
-                ForEach(Array(sleepBlocks.enumerated()), id: \.offset) { index, block in
-                    timeLabel(for: block, center: center)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func timeLabel(for block: SharedSleepBlock, center: CGPoint) -> some View {
-        if let labelData = generateLabelData(for: block, center: center) {
-            Group {
-                if labelData.isVertical {
-                    // Dikey layout - sağ/sol tarafta
-                    VStack(spacing: 1) {
-                        Text(labelData.startTimeStr)
-                            .font(.system(size: 7, weight: .semibold))
-                        Text(labelData.endTimeStr)
-                            .font(.system(size: 7, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 3)
-                    .padding(.vertical, 2)
-                    .background(
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(Color.black.opacity(0.8))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
-                            )
-                    )
-                    .position(x: labelData.xPosition, y: labelData.yPosition)
-                } else {
-                    // Yatay layout - üst/alt tarafta
-                    HStack(spacing: 1) {
-                        Text(labelData.startTimeStr)
-                            .font(.system(size: 7, weight: .semibold))
-                        Text("-")
-                            .font(.system(size: 6, weight: .medium))
-                        Text(labelData.endTimeStr)
-                            .font(.system(size: 7, weight: .semibold))
-                    }
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 3)
-                    .padding(.vertical, 2)
-                    .background(
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(Color.black.opacity(0.8))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 3)
-                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
-                            )
-                    )
-                    .position(x: labelData.xPosition, y: labelData.yPosition)
-                }
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
-    private struct LabelData {
-        let startTimeStr: String
-        let endTimeStr: String
-        let isVertical: Bool
-        let isLongBlock: Bool
-        let xPosition: CGFloat
-        let yPosition: CGFloat
-    }
-    
-    private func generateLabelData(for block: SharedSleepBlock, center: CGPoint) -> LabelData? {
-        guard let startTime = timeComponents(from: block.startTime) else {
-            return nil
-        }
-        
-        let endTime = calculateEndTime(startTime: startTime, duration: block.durationMinutes)
-        
-        // Başlangıç ve bitiş açıları
-        let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-        let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
-        
-        // Gece yarısını geçen uyku bloklarını doğru şekilde hesapla
-        var adjustedEndAngle = endAngle
-        if endAngle < startAngle {
-            adjustedEndAngle = endAngle + 360
-        }
-        
-        // Bloğun ortasında etiket göster
-        let midAngle = (startAngle + adjustedEndAngle) / 2
-        
-        // Açıyı normalize et
-        let normalizedAngle = normalizeAngle(midAngle)
-        
-        // Watch için kompakt etiket yönü
-        let isVertical = (normalizedAngle >= 315 || normalizedAngle <= 45) || (normalizedAngle >= 135 && normalizedAngle <= 225)
-        
-        // Watch için optimize edilmiş radius
-        let isLongBlock = block.durationMinutes > 90
-        let radius = circleRadius - strokeWidth / 2 - (isLongBlock ? 6 : 10)
-        let xPosition = center.x + radius * cos(midAngle * .pi / 180)
-        let yPosition = center.y + radius * sin(midAngle * .pi / 180)
-        
-        let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
-        let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
-        
-        return LabelData(
-            startTimeStr: startTimeStr,
-            endTimeStr: endTimeStr,
-            isVertical: isVertical,
-            isLongBlock: isLongBlock,
-            xPosition: xPosition,
-            yPosition: yPosition
-        )
-    }
-    
-    private func normalizeAngle(_ angle: Double) -> Double {
-        var normalizedAngle = angle
-        while normalizedAngle < 0 {
-            normalizedAngle += 360
-        }
-        while normalizedAngle >= 360 {
-            normalizedAngle -= 360
-        }
-        return normalizedAngle
-    }
-    
-    private func calculateEndTime(startTime: (hour: Int, minute: Int), duration: Int) -> (hour: Int, minute: Int) {
-        let totalMinutes = startTime.hour * 60 + startTime.minute + duration
-        let hour = (totalMinutes / 60) % 24
-        let minute = totalMinutes % 60
-        return (hour: hour, minute: minute)
-    }
-
-    // MARK: - Helper Functions
-    
-    private func timeComponents(from timeString: String) -> (hour: Int, minute: Int)? {
-        let components = timeString.split(separator: ":")
-        guard components.count == 2,
-              let hour = Int(components[0]),
-              let minute = Int(components[1]) else {
-            return nil
-        }
-        return (hour, minute)
-    }
-    
-    private func angleForTime(hour: Int, minute: Int) -> Double {
-        let totalMinutes = Double(hour * 60 + minute)
-        return (totalMinutes / (24 * 60)) * 360 - 90
-    }
-}
-
-// MARK: - Watch Chart Size Enum
-
-enum WatchCircularChartSize {
-    case small
-    case medium
-    
-    var radius: CGFloat {
-        switch self {
-        case .small: return 60    // Watch için küçültülmüş
-        case .medium: return 70   // Watch için küçültülmüş
-        }
-    }
-    
-    var strokeWidth: CGFloat {
-        switch self {
-        case .small: return 16    // Watch için küçültülmüş
-        case .medium: return 20   // Watch için küçültülmüş
-        }
-    }
-}
-
-// MARK: - Placeholder ViewModels
-
-@MainActor
-class AdaptationViewModel: ObservableObject {
-    // Milestone 2.2'de implement edilecek
-    @Published var adaptationProgress: SharedAdaptationProgress?
-    @Published var currentPhaseDescription: String = ""
-    @Published var phaseDescription: String = ""
-    
-    init() {
-        // Placeholder initialization
-    }
-}
-
-@MainActor  
-class SleepEntryViewModel: ObservableObject {
-    // Milestone 2.3'te implement edilecek
-    @Published var lastSleepEntry: SharedSleepEntry?
-    @Published var isSaving: Bool = false
-    
-    init() {
-        // Placeholder initialization
-    }
-}
-
-// MARK: - Mock WatchMainViewModel (Simplified for watchkitapp)
-
-@MainActor
-class WatchMainViewModel: ObservableObject {
-    @Published var currentSchedule: SharedUserSchedule?
-    @Published var nextSleepTime: String?
-    @Published var currentStatusMessage: String = "Program yükleniyor..."
-    @Published var isLoading: Bool = false
-    
-    init() {
-        requestDataSync()
-    }
-    
-    func requestDataSync() {
-        print("🔄 Requesting data sync for schedule...")
-        isLoading = true
-        currentStatusMessage = "Veri senkronize ediliyor..."
-        
-        // Mock data ile schedule yükle
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.loadMockScheduleData()
-            self?.updateCurrentStatus()
-            self?.isLoading = false
-        }
-    }
-    
-    private func loadMockScheduleData() {
-        // Mock SharedUserSchedule oluştur
-        let mockSchedule = SharedUserSchedule(
-            name: "Everyman 4-2",
-            scheduleDescription: "Core sleep + 2 naps",
-            totalSleepHours: 4.5,
-            adaptationPhase: 2,
-            isActive: true
-        )
-        
-        // Mock sleep blocks oluştur
-        let coreBlock = SharedSleepBlock(
-            schedule: mockSchedule,
-            startTime: "23:00",
-            endTime: "02:30",
-            durationMinutes: 210,
-            isCore: true
-        )
-        
-        let napBlock1 = SharedSleepBlock(
-            schedule: mockSchedule,
-            startTime: "08:00", 
-            endTime: "08:20",
-            durationMinutes: 20,
-            isCore: false
-        )
-        
-        let napBlock2 = SharedSleepBlock(
-            schedule: mockSchedule,
-            startTime: "14:00",
-            endTime: "14:20", 
-            durationMinutes: 20,
-            isCore: false
-        )
-        
-        mockSchedule.sleepBlocks = [coreBlock, napBlock1, napBlock2]
-        
-        self.currentSchedule = mockSchedule
-        self.updateNextSleepTime()
-        
-        print("✅ Mock schedule data loaded: \(mockSchedule.name)")
-    }
-    
-    private func updateNextSleepTime() {
-        guard let schedule = currentSchedule,
-              let sleepBlocks = schedule.sleepBlocks else {
-            nextSleepTime = nil
-            return
-        }
-        
-        let now = Date()
-        let calendar = Calendar.current
-        let currentHour = calendar.component(.hour, from: now)
-        let currentMinute = calendar.component(.minute, from: now)
-        let currentTotalMinutes = currentHour * 60 + currentMinute
-        
-        // Bir sonraki uyku bloğunu bul
-        var nextBlock: SharedSleepBlock?
-        var minDifference = Int.max
-        
-        for block in sleepBlocks {
-            if let startTime = timeComponents(from: block.startTime) {
-                let blockTotalMinutes = startTime.hour * 60 + startTime.minute
-                var difference = blockTotalMinutes - currentTotalMinutes
+            ZStack(alignment: .leading) {
+                // Background
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.secondary.opacity(0.3))
+                    .frame(height: 8)
                 
-                // Eğer negatifse, yarın için hesapla
-                if difference < 0 {
-                    difference += 24 * 60
-                }
-                
-                if difference < minDifference {
-                    minDifference = difference
-                    nextBlock = block
-                }
+                // Progress
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(LinearGradient(
+                        gradient: Gradient(colors: [.blue, .blue.opacity(0.7)]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ))
+                    .frame(width: geometry.size.width * CGFloat(progress), height: 8)
+                    .animation(.easeInOut(duration: 0.5), value: progress)
             }
         }
-        
-        if let next = nextBlock {
-            nextSleepTime = next.startTime
-        } else {
-            nextSleepTime = nil
-        }
-    }
-    
-    private func updateCurrentStatus() {
-        guard let schedule = currentSchedule else {
-            currentStatusMessage = "Program bulunamadı"
-            return
-        }
-        
-        let now = Date()
-        let calendar = Calendar.current
-        let currentHour = calendar.component(.hour, from: now)
-        
-        // Basit durum kontrolü
-        if let sleepBlocks = schedule.sleepBlocks {
-            let isInSleepTime = sleepBlocks.contains { block in
-                if let startTime = timeComponents(from: block.startTime),
-                   let endTime = timeComponents(from: block.endTime) {
-                    
-                    if startTime.hour <= endTime.hour {
-                        // Aynı gün içinde
-                        return currentHour >= startTime.hour && currentHour < endTime.hour
-                    } else {
-                        // Gece yarısını geçen
-                        return currentHour >= startTime.hour || currentHour < endTime.hour
-                    }
-                }
-                return false
-            }
-            
-            if isInSleepTime {
-                currentStatusMessage = "Şu anda uyku zamanı 😴"
-            } else {
-                currentStatusMessage = "Aktif dönem - uyanık kalın ☀️"
-            }
-        } else {
-            currentStatusMessage = "Program verisi eksik"
-        }
-    }
-    
-    private func timeComponents(from timeString: String) -> (hour: Int, minute: Int)? {
-        let components = timeString.split(separator: ":")
-        guard components.count == 2,
-              let hour = Int(components[0]),
-              let minute = Int(components[1]) else {
-            return nil
-        }
-        return (hour, minute)
+        .frame(height: 8)
     }
 }
 

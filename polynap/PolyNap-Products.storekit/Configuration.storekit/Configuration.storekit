@@ -14,7 +14,26 @@
 
   ],
   "products" : [
-
+    {
+      "displayPrice" : "99.99",
+      "familyShareable" : true,
+      "internalID" : "90476A64",
+      "localizations" : [
+        {
+          "description" : "Unlock premium sleep tools for lifetime",
+          "displayName" : "PolyNap Premium Lifetime",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Premium uyku araçlarına ömür boyu erişin",
+          "displayName" : "PolyNap Premium Ömür Boyu",
+          "locale" : "tr"
+        }
+      ],
+      "productID" : "polynap_premium_lifetime_offer",
+      "referenceName" : "Polynap Premium Lifetime",
+      "type" : "NonConsumable"
+    }
   ],
   "settings" : {
     "_askToBuyEnabled" : false,
