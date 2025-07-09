@@ -5,160 +5,49 @@ import WatchKit
 import PolyNapShared
 import Combine
 
-// MARK: - SharedSleepEntry Extension
-extension SharedSleepEntry {
-    var dictionary: [String: Any] {
-        return [
-            "id": id.uuidString,
-            "date": date.timeIntervalSince1970,
-            "startTime": startTime.timeIntervalSince1970,
-            "endTime": endTime.timeIntervalSince1970,
-            "durationMinutes": durationMinutes,
-            "isCore": isCore,
-            "blockId": blockId ?? "",
-            "rating": rating
-        ]
-    }
-}
-
-// MARK: - Sleep Tracking State Enum
-public enum SleepTrackingState: Equatable {
-    case idle
-    case preparing
-    case sleeping(startTime: Date)
-    case awakening
-    case completed(entry: SharedSleepEntry)
-    case waitingForRating(entry: SharedSleepEntry)
-    
-    public var isSleeping: Bool {
-        if case .sleeping = self {
-            return true
-        }
-        return false
-    }
-    
-    public var canRate: Bool {
-        if case .waitingForRating = self {
-            return true
-        }
-        return false
-    }
-}
-
+// MARK: - Clean Architecture ile refactor edilmiş WatchMainViewModel
 @MainActor
 class WatchMainViewModel: ObservableObject {
     
-    // MARK: - Published Properties for Milestone 2.1
+    // MARK: - Published Properties for UI
     
     // Schedule-related properties
     @Published var currentSchedule: SharedUserSchedule?
+    @Published var currentSleepBlock: SharedSleepBlock?
+    @Published var nextSleepBlock: SharedSleepBlock?
     @Published var nextSleepTime: String?
     @Published var currentStatusMessage: String = "Program yükleniyor..."
     @Published var isLoading: Bool = false
     
-    // MARK: - Milestone 2.2: Enhanced Sleep Tracking State
-    
-    // Core sleep tracking state
-    @Published var sleepTrackingState: SleepTrackingState = .idle
-    @Published var currentSleepSession: SharedSleepEntry?
-    @Published var lastCompletedSleep: SharedSleepEntry?
-    @Published var pendingRatingEntry: SharedSleepEntry?
-    
-    // Sleep quality rating system
-    @Published var selectedQualityRating: Int = 3
-    @Published var selectedEmoji: String = "😴"
-    @Published var isRatingMode: Bool = false
-    @Published var qualityEmojis: [String] = ["😩", "😪", "😐", "😊", "🤩"]
-    @Published var currentRating: Int = 0
-    @Published var isProcessing: Bool = false
-    
-    // Real-time sync state
-    @Published var syncStatus: SyncStatus = .idle
-    @Published var lastSyncTime: Date?
-    @Published var hasPendingSync: Bool = false
-    @Published var offlineEntries: [SharedSleepEntry] = []
-    
-    // Enhanced sleep stats
-    @Published var sleepSessionDuration: TimeInterval = 0
-    @Published var sleepSessionTimer: String = "00:00"
-    @Published var estimatedWakeTime: Date?
-    @Published var sleepEfficiency: Double = 0.0
-    
-    // Legacy properties (keeping for compatibility)
-    @Published var currentSleepBlock: SharedSleepBlock?
-    @Published var nextSleepBlock: SharedSleepBlock?
+    // Legacy compatibility properties
     @Published var isSleeping: Bool = false
     @Published var canRateLastSleep: Bool = false
     @Published var selectedRating: Int = 0
+    @Published var selectedQualityRating: Int = 3
+    @Published var selectedEmoji: String = "😴"
+    @Published var isRatingMode: Bool = false
+    @Published var currentRating: Int = 0
+    @Published var qualityEmojis: [String] = ["😩", "😪", "😐", "😊", "🤩"]
     
-    // Daily Statistics
-    @Published var todayTotalSleep: TimeInterval = 0
-    @Published var todaySleepCount: Int = 0
-    @Published var todayAverageQuality: Double = 0.0
-    
-    // Weekly Statistics  
-    @Published var weekTotalSleep: TimeInterval = 0
-    @Published var weekGoalCompletion: Double = 0.0
+    // MARK: - Service Dependencies (Lazy Initialized)
+    private lazy var sleepTrackingService: SleepTrackingService = SleepTrackingService()
+    private lazy var syncService: SyncService = SyncService()
+    private lazy var statisticsService: SleepStatisticsService = SleepStatisticsService()
     
     // MARK: - Private Properties
-    
     private var cancellables = Set<AnyCancellable>()
-    private let watchConnectivity = WatchConnectivityManager.shared
-    private let sharedRepository = SharedRepository.shared
-    private var currentSleepEntry: SharedSleepEntry?
-    private var lastSleepEntry: SharedSleepEntry?
-    private var timer: Timer?
-    private var sessionTimer: Timer?
     private var modelContext: ModelContext?
-    
-    // MARK: - Sync Status Enum
-    public enum SyncStatus: Equatable {
-        case idle
-        case syncing
-        case success(Date)
-        case failed(String)
-        case offline
-        
-        var color: Color {
-            switch self {
-            case .idle: return .gray
-            case .syncing: return .blue
-            case .success: return .green
-            case .failed: return .red
-            case .offline: return .orange
-            }
-        }
-        
-        var message: String {
-            switch self {
-            case .idle: return "Bekleniyor"
-            case .syncing: return "Senkronize ediliyor"
-            case .success(let date): return "Senkronize edildi \(date.formatted(date: .omitted, time: .shortened))"
-            case .failed(let error): return "Hata: \(error)"
-            case .offline: return "Çevrimdışı"
-            }
-        }
-    }
+    private var timer: Timer?
     
     // MARK: - Initialization
     
     init() {
-        setupWatchConnectivityObservers()
+        setupServiceObservers()
         loadInitialData()
-        setupSleepTrackingObservers()
     }
     
     deinit {
-        let currentTimer = timer
-        let currentSessionTimer = sessionTimer
-        
-        Task { @MainActor in
-            currentTimer?.invalidate()
-            currentSessionTimer?.invalidate()
-        }
-        
-        timer = nil
-        sessionTimer = nil
+        timer?.invalidate()
     }
     
     // MARK: - Configuration Methods
@@ -168,210 +57,241 @@ class WatchMainViewModel: ObservableObject {
         print("✅ WatchMainViewModel: SharedRepository configured")
     }
     
+    // MARK: - Public Methods - Sleep Tracking
+    
+    /// Uyku durumunu toggle eder
+    func toggleSleepState() {
+        sleepTrackingService.toggleSleepState()
+    }
+    
+    /// Uyku kalitesi rating'ini ayarlar
+    func setSleepRating(_ rating: Int) {
+        currentRating = rating
+        selectedQualityRating = rating
+        
+        let index = max(0, min(rating - 1, qualityEmojis.count - 1))
+        selectedEmoji = qualityEmojis[index]
+        
+        // Haptic feedback
+        WKInterfaceDevice.current().play(.click)
+    }
+    
+    /// Rating'i confirm eder ve kaydeder
+    func confirmSleepRating() {
+        sleepTrackingService.confirmSleepRating(rating: currentRating, emoji: selectedEmoji)
+        
+        // Reset UI state
+        currentRating = 0
+        selectedRating = 0
+        isRatingMode = false
+        
+        // Update statistics
+        if let entry = sleepTrackingService.lastCompletedSleep {
+            statisticsService.addSleepEntry(entry)
+        }
+    }
+    
+    // MARK: - Public Methods - Data Sync
+    
+    /// Data senkronizasyonu başlatır
+    func requestDataSync() {
+        syncService.requestDataSync()
+    }
+    
+    /// Sync durumunu sıfırlar
+    func resetSyncStatus() {
+        syncService.resetSyncStatus()
+    }
+    
+    // MARK: - Public Methods - Schedule Management
+    
+    /// Bir sonraki uyku bloğunun zamanını hesaplar
+    func calculateNextSleepTime() {
+        guard let schedule = currentSchedule else {
+            nextSleepTime = nil
+            currentStatusMessage = "Program bulunamadı"
+            return
+        }
+        
+        let now = Date()
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: now)
+        
+        guard let sleepBlocks = schedule.sleepBlocks else {
+            nextSleepTime = nil
+            currentStatusMessage = "Uyku blokları bulunamadı"
+            return
+        }
+        
+        // Tüm uyku bloklarını zamanla birlikte sırala
+        var upcomingSleepBlocks: [(time: Date, block: SharedSleepBlock)] = []
+        
+        for block in sleepBlocks {
+            guard let startTime = timeStringToDate(block.startTime) else {
+                continue
+            }
+            
+            // Bugün için zamanı hesapla
+            let todayTime = calendar.date(bySettingHour: calendar.component(.hour, from: startTime),
+                                        minute: calendar.component(.minute, from: startTime),
+                                        second: 0,
+                                        of: today) ?? today
+            
+            // Yarın için zamanı hesapla
+            let tomorrowTime = calendar.date(byAdding: .day, value: 1, to: todayTime) ?? todayTime
+            
+            // Eğer bugünün zamanı geçmişse, yarının zamanını kullan
+            if todayTime > now {
+                upcomingSleepBlocks.append((time: todayTime, block: block))
+            } else {
+                upcomingSleepBlocks.append((time: tomorrowTime, block: block))
+            }
+        }
+        
+        // En yakın uyku bloğunu bul
+        let sortedBlocks = upcomingSleepBlocks.sorted { $0.time < $1.time }
+        
+        if let nextBlock = sortedBlocks.first {
+            nextSleepBlock = nextBlock.block
+            currentSleepBlock = nextBlock.block
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            nextSleepTime = formatter.string(from: nextBlock.time)
+            
+            let timeUntilNext = nextBlock.time.timeIntervalSince(now)
+            let hours = Int(timeUntilNext) / 3600
+            let minutes = Int(timeUntilNext) % 3600 / 60
+            
+            if hours > 0 {
+                currentStatusMessage = "Sonraki uyku: \(hours)s \(minutes)dk"
+            } else {
+                currentStatusMessage = "Sonraki uyku: \(minutes)dk"
+            }
+        } else {
+            nextSleepTime = nil
+            currentStatusMessage = "Sonraki uyku bulunamadı"
+        }
+    }
+    
+    /// Mock data yükler
     func loadMockData() {
-        // Fallback mock data
+        // Create mock sleep blocks
+        let mockBlocks = [
+            SharedSleepBlock(
+                id: UUID(),
+                schedule: nil,
+                startTime: formatTimeString(from: createMockTime(hour: 22, minute: 0)),
+                endTime: formatTimeString(from: createMockTime(hour: 2, minute: 0)),
+                durationMinutes: 240,
+                isCore: true,
+                createdAt: Date(),
+                updatedAt: Date(),
+                syncId: "mock_core"
+            ),
+            SharedSleepBlock(
+                id: UUID(),
+                schedule: nil,
+                startTime: formatTimeString(from: createMockTime(hour: 13, minute: 0)),
+                endTime: formatTimeString(from: createMockTime(hour: 13, minute: 30)),
+                durationMinutes: 30,
+                isCore: false,
+                createdAt: Date(),
+                updatedAt: Date(),
+                syncId: "mock_nap"
+            )
+        ]
+        
         let mockSchedule = SharedUserSchedule(
             id: UUID(),
             user: nil,
             name: "Biphasic Schedule",
-            scheduleDescription: "2 saatlik uyku blokları",
-            totalSleepHours: 6.0,
+            scheduleDescription: "Ana uyku + 1 şekerleme",
+            totalSleepHours: 4.5,
             adaptationPhase: 2,
             createdAt: Date(),
             updatedAt: Date(),
             isActive: true
         )
         
+        // Set sleep blocks manually since we can't use relationships in mock
+        mockSchedule.sleepBlocks = mockBlocks
+        
         currentSchedule = mockSchedule
-        nextSleepTime = "22:00"
         currentStatusMessage = "Mock data yüklendi"
         
-        print("📱 Mock data loaded for Watch")
+        // Calculate next sleep time based on mock data
+        calculateNextSleepTime()
+        
+        print("📱 Mock data loaded for Watch with next sleep time: \(nextSleepTime ?? "N/A")")
     }
     
-    // MARK: - Milestone 2.2: Enhanced Sleep Tracking Methods
+    // MARK: - Private Methods
     
-    /// Uyku durumunu toggle eder
-    func toggleSleepState() {
-        switch sleepTrackingState {
-        case .idle:
-            startSleepSession()
-        case .sleeping:
-            endSleepSession()
-        case .waitingForRating:
-            // Rating mode'a geç
-            isRatingMode = true
-        default:
-            break
-        }
-    }
-    
-    /// Uyku oturumunu başlatır
-    func startSleepSession() {
-        guard sleepTrackingState == .idle else {
-            print("❌ Cannot start sleep: already in tracking state")
-            return
-        }
+    private func setupServiceObservers() {
+        // Sleep tracking service observers
+        sleepTrackingService.$sleepTrackingState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.updateLegacyProperties(from: state)
+                self?.currentStatusMessage = self?.sleepTrackingService.getCurrentStatusMessage() ?? ""
+            }
+            .store(in: &cancellables)
         
-        isProcessing = true
-        let startTime = Date()
+        sleepTrackingService.$pendingRatingEntry
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] entry in
+                self?.isRatingMode = entry != nil
+                self?.canRateLastSleep = entry != nil
+            }
+            .store(in: &cancellables)
         
-        // Determine if this is a core sleep or nap
-        let isCore = determineIfCoreSleep(at: startTime)
+        // Sync service observers
+        syncService.$syncStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.updateSyncStatus(status)
+            }
+            .store(in: &cancellables)
         
-        // Create new sleep entry
-        let sleepEntry = SharedSleepEntry(
-            date: startTime,
-            startTime: startTime,
-            endTime: startTime, // Will be updated when ended
-            durationMinutes: 0,
-            isCore: isCore,
-            blockId: currentSleepBlock?.id.uuidString,
-            rating: 0
-        )
-        
-        currentSleepSession = sleepEntry
-        sleepTrackingState = .sleeping(startTime: startTime)
-        
-        // Update legacy compatibility
-        isSleeping = true
-        
-        // Start session timer
-        startSessionTimer()
-        
-        // Estimate wake time
-        estimateWakeTime()
-        
-        // Haptic feedback
-        WKInterfaceDevice.current().play(.start)
-        
-        print("😴 Sleep session started at \(startTime.formatted(date: .omitted, time: .shortened))")
-        
-        // Update current status
-        updateCurrentStatus()
-        
-        isProcessing = false
-    }
-    
-    /// Uyku oturumunu sonlandırır
-    func endSleepSession() {
-        guard case .sleeping(let startTime) = sleepTrackingState,
-              let session = currentSleepSession else {
-            print("❌ Cannot end sleep: not in sleeping state")
-            return
-        }
-        
-        isProcessing = true
-        let endTime = Date()
-        let duration = endTime.timeIntervalSince(startTime)
-        
-        // Update sleep entry
-        session.endTime = endTime
-        session.durationMinutes = Int(duration / 60)
-        
-        // Stop session timer
-        stopSessionTimer()
-        
-        // Transition to rating mode
-        sleepTrackingState = .waitingForRating(entry: session)
-        pendingRatingEntry = session
-        isRatingMode = true
-        
-        // Update legacy compatibility
-        isSleeping = false
-        canRateLastSleep = true
-        
-        // Haptic feedback
-        WKInterfaceDevice.current().play(.stop)
-        
-        print("🌅 Sleep session ended. Duration: \(Int(duration/60)) minutes")
-        
-        // Update current status
-        updateCurrentStatus()
-        
-        isProcessing = false
-    }
-    
-    /// Uyku kalitesi rating'ini ayarlar
-    func setSleepRating(_ rating: Int) {
-        currentRating = rating
-        
-        let emojis = ["😩", "😪", "😐", "😊", "🤩"]
-        let index = max(0, min(rating - 1, emojis.count - 1))
-        selectedEmoji = emojis[index]
-        
-        // Haptic feedback
-        WKInterfaceDevice.current().play(.click)
-    }
-    
-    /// Rating'i confirm eder ve kaydet
-    func confirmSleepRating() {
-        guard let entry = pendingRatingEntry else { return }
-        
-        isProcessing = true
-        
-        // Update entry with rating
-        entry.rating = currentRating
-        entry.emoji = selectedEmoji
-        
-        // Save entry
-        saveSleepEntry(entry)
-        
-        // Complete the sleep tracking cycle
-        sleepTrackingState = .completed(entry: entry)
-        lastCompletedSleep = entry
-        isRatingMode = false
-        currentRating = 0
-        pendingRatingEntry = nil
-        
-        // Update legacy compatibility
-        canRateLastSleep = false
-        
-        // Reset to idle after brief delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.sleepTrackingState = .idle
-            self?.updateCurrentStatus()
-        }
-        
-        print("⭐ Sleep rating confirmed: \(currentRating) stars")
-        
-        isProcessing = false
-    }
-    
-    // MARK: - Data Sync Methods
-    
-    func requestDataSync() {
-        syncStatus = .syncing
-        
-        // Request data from iPhone
-        watchConnectivity.requestSync()
-        
-        // Simulate sync delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.syncStatus = .success(Date())
-            self?.lastSyncTime = Date()
-        }
-    }
-    
-    // MARK: - Private Helper Methods
-    
-    private func setupWatchConnectivityObservers() {
-        watchConnectivity.$isReachable
-            .sink { [weak self] isReachable in
-                if isReachable {
+        syncService.$isConnected
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isConnected in
+                if isConnected {
                     self?.requestDataSync()
                 }
             }
             .store(in: &cancellables)
     }
     
-    private func setupSleepTrackingObservers() {
-        // Observer for sleep tracking state changes
-        $sleepTrackingState
-            .sink { [weak self] state in
-                self?.updateCurrentStatus()
+    private func updateLegacyProperties(from state: SleepTrackingState) {
+        // Legacy compatibility için state'i legacy properties'e map et
+        isSleeping = state.isSleeping
+        canRateLastSleep = state.canRate
+        
+        // Reset rating when not in rating mode
+        if !state.canRate {
+            selectedRating = 0
+            currentRating = 0
+        }
+    }
+    
+    private func updateSyncStatus(_ status: SyncStatus) {
+        switch status {
+        case .success:
+            // Sync başarılı olduğunda schedule'ı güncelle
+            if currentSchedule == nil {
+                loadMockData()
             }
-            .store(in: &cancellables)
+            calculateNextSleepTime()
+        case .failed:
+            // Sync başarısız olduğunda fallback data kullan
+            if currentSchedule == nil {
+                loadMockData()
+            }
+        default:
+            break
+        }
     }
     
     private func loadInitialData() {
@@ -379,91 +299,96 @@ class WatchMainViewModel: ObservableObject {
         loadMockData()
     }
     
-    private func determineIfCoreSleep(at date: Date) -> Bool {
-        // Simple heuristic: if it's between 21:00 and 06:00, it's likely core sleep
-        let hour = Calendar.current.component(.hour, from: date)
-        return hour >= 21 || hour <= 6
+    // MARK: - Helper Methods
+    
+    private func createMockTime(hour: Int, minute: Int) -> Date {
+        let calendar = Calendar.current
+        let now = Date()
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: now) ?? now
     }
     
-    private func startSessionTimer() {
-        sessionTimer?.invalidate()
-        sessionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.updateSleepSessionTimer()
-            }
+    private func formatTimeString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: date)
+    }
+    
+    private func timeStringToDate(_ timeString: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        // Bugünün tarihini al ve time string'den sadece saat/dakika bilgisini al
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        // Time string'i parse et
+        guard let time = formatter.date(from: timeString) else {
+            return nil
         }
-    }
-    
-    private func stopSessionTimer() {
-        sessionTimer?.invalidate()
-        sessionTimer = nil
-    }
-    
-    private func updateSleepSessionTimer() {
-        guard case .sleeping(let startTime) = sleepTrackingState else { return }
         
-        let duration = Date().timeIntervalSince(startTime)
-        sleepSessionDuration = duration
+        // Saat ve dakika bilgilerini al
+        let hour = calendar.component(.hour, from: time)
+        let minute = calendar.component(.minute, from: time)
         
-        let hours = Int(duration) / 3600
-        let minutes = Int(duration) % 3600 / 60
-        
-        if hours > 0 {
-            sleepSessionTimer = String(format: "%d:%02d", hours, minutes)
-        } else {
-            sleepSessionTimer = String(format: "%02d:%02d", minutes, Int(duration) % 60)
-        }
-    }
-    
-    private func estimateWakeTime() {
-        // Estimate wake time based on current sleep block or default duration
-        let defaultDuration: TimeInterval = 90 * 60 // 90 minutes
-        estimatedWakeTime = Date().addingTimeInterval(defaultDuration)
-    }
-    
-    private func updateCurrentStatus() {
-        switch sleepTrackingState {
-        case .idle:
-            currentStatusMessage = "Sonraki uyku için hazır"
-        case .preparing:
-            currentStatusMessage = "Uyku hazırlanıyor..."
-        case .sleeping(let startTime):
-            let duration = Date().timeIntervalSince(startTime)
-            let minutes = Int(duration / 60)
-            currentStatusMessage = "Uyku devam ediyor (\(minutes) dakika)"
-        case .awakening:
-            currentStatusMessage = "Uyanma süreci..."
-        case .waitingForRating:
-            currentStatusMessage = "Uyku kalitesini değerlendirin"
-        case .completed:
-            currentStatusMessage = "Uyku tamamlandı"
-        }
-    }
-    
-    private func saveSleepEntry(_ entry: SharedSleepEntry) {
-        // Save to repository
-        // For now, just send to iPhone
-        let message = WatchMessage(
-            type: .sleepEnded,
-            data: entry.dictionary
-        )
-        watchConnectivity.sendMessage(message)
-        
-        print("💾 Sleep entry saved: \(entry.rating) stars, \(entry.durationMinutes) minutes")
+        // Bugünün tarihi ile birleştir
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: today)
     }
 }
 
-// MARK: - WatchMessage Helper
-
-struct WatchMessage {
-    let type: WatchMessageType
-    let data: [String: Any]
+// MARK: - Extensions - Service Access
+extension WatchMainViewModel {
+    
+    /// Sleep tracking service'e erişim
+    var sleepTracking: SleepTrackingService {
+        return sleepTrackingService
+    }
+    
+    /// Sync service'e erişim
+    var sync: SyncService {
+        return syncService
+    }
+    
+    /// Statistics service'e erişim
+    var statistics: SleepStatisticsService {
+        return statisticsService
+    }
 }
 
-enum WatchMessageType: String, CaseIterable {
-    case sleepStarted = "sleepStarted"
-    case sleepEnded = "sleepEnded"
-    case qualityRated = "qualityRated"
-    case syncRequest = "syncRequest"
-    case scheduleUpdate = "scheduleUpdate"
+// MARK: - Extensions - Convenience Properties
+extension WatchMainViewModel {
+    
+    /// Mevcut uyku durumu
+    var currentSleepState: SleepTrackingState {
+        return sleepTrackingService.sleepTrackingState
+    }
+    
+    /// Uyku session timer'ı
+    var sleepSessionTimer: String {
+        return sleepTrackingService.sleepSessionTimer
+    }
+    
+    /// Processing durumu
+    var isProcessing: Bool {
+        return sleepTrackingService.isProcessing || syncService.isSyncing
+    }
+    
+    /// Sync durumu
+    var syncStatusMessage: String {
+        return syncService.syncStatusMessage
+    }
+    
+    /// Sync durumu rengi
+    var syncStatusColor: Color {
+        return syncService.syncStatusColor
+    }
+    
+    /// Bugünkü uyku summary'si
+    var todayPerformanceSummary: String {
+        return statisticsService.todayPerformanceSummary
+    }
+    
+    /// Bugünkü uyku efficiency'si
+    var todaySleepEfficiency: String {
+        return statisticsService.getSleepEfficiencyFormatted()
+    }
 } 
