@@ -8,14 +8,19 @@
 import SwiftUI
 import WatchKit
 import PolyNapShared
+import SwiftData
 
 @main
 struct PolyNap_Watch_AppApp: App {
+    
+    // SwiftData Model Container
+    private var sharedModelContainer: ModelContainer
     
     // MARK: - Scene Configuration
     var body: some Scene {
         WindowGroup {
             MainWatchView()
+                .modelContainer(sharedModelContainer)
                 .onAppear {
                     // App aktif olduğunda sync isteği
                     WatchConnectivityManager.shared.requestSync()
@@ -32,6 +37,37 @@ struct PolyNap_Watch_AppApp: App {
     init() {
         // App did finish launching
         print("🌙 PolyNap Watch App launched")
+        
+        // SwiftData Container'ı initialize et
+        do {
+            let config = ModelConfiguration(isStoredInMemoryOnly: false)
+            sharedModelContainer = try ModelContainer(
+                for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
+                configurations: config
+            )
+            
+            // SharedRepository'ye ModelContext'i hemen ayarla
+            SharedRepository.shared.setModelContext(sharedModelContainer.mainContext)
+            print("✅ SwiftData ModelContainer başarıyla initialize edildi")
+            
+        } catch {
+            print("❌ SwiftData ModelContainer initialize hatası: \(error.localizedDescription)")
+            
+            // Fallback: In-memory container oluştur
+            do {
+                let memoryConfig = ModelConfiguration(isStoredInMemoryOnly: true)
+                sharedModelContainer = try ModelContainer(
+                    for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
+                    configurations: memoryConfig
+                )
+                SharedRepository.shared.setModelContext(sharedModelContainer.mainContext)
+                print("⚠️ Fallback: In-memory ModelContainer kullanılıyor")
+            } catch {
+                print("💥 Fallback ModelContainer bile oluşturulamadı: \(error.localizedDescription)")
+                // Bu durumda app crash olacak, fakat debug için daha iyi mesaj verir
+                fatalError("SwiftData ModelContainer oluşturulamadı: \(error)")
+            }
+        }
         
         // WatchConnectivity'yi başlat
         _ = WatchConnectivityManager.shared

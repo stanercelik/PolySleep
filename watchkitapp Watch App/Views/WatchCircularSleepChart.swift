@@ -227,22 +227,22 @@ struct WatchCircularSleepChart: View {
         let hour = calendar.component(.hour, from: date)
         let minute = calendar.component(.minute, from: date)
         
-        let totalMinutes = hour * 60 + minute
-        let totalHoursDecimal = Double(totalMinutes) / 60.0
-        
-        return (totalHoursDecimal * (360.0 / 24.0)) - 90.0
+        let totalMinutes = Double(hour * 60 + minute)
+        return (totalMinutes / (24 * 60)) * 360 - 90
     }
     
-    /// String time'dan açıyı hesaplar
+    /// String time'dan açıyı hesaplar - mobil ile tutarlı
     private func angleForTime(from timeString: String) -> Double {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        
-        guard let time = formatter.date(from: timeString) else {
+        let components = timeString.components(separatedBy: ":")
+        guard components.count == 2,
+              let hour = Int(components[0]),
+              let minute = Int(components[1]) else {
+            print("⚠️ WatchCircularSleepChart: Geçersiz time format: \(timeString)")
             return 0.0
         }
         
-        return angleForTime(from: time)
+        let totalMinutes = Double(hour * 60 + minute)
+        return (totalMinutes / (24 * 60)) * 360 - 90
     }
     
     /// Time'ı display için formatlar

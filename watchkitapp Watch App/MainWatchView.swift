@@ -8,6 +8,7 @@ struct MainWatchView: View {
     @StateObject private var mainViewModel = WatchMainViewModel()
     @StateObject private var adaptationViewModel = AdaptationViewModel()
     @StateObject private var sleepEntryViewModel = SleepEntryViewModel()
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         TabView {
@@ -40,7 +41,16 @@ struct MainWatchView: View {
                 .tag(2)
         }
         .onAppear {
-            configureSharedRepository()
+            // Environment'dan gelen modelContext'i ViewModel'e ayarla
+            if SharedRepository.shared.getModelContext() == nil {
+                print("⚠️ SharedRepository'de ModelContext bulunamadı, Environment'dan ayarlanıyor")
+                SharedRepository.shared.setModelContext(modelContext)
+            }
+            
+            // ViewModels'i configure et
+            mainViewModel.configureSharedRepository(with: modelContext)
+            
+            // İlk data sync
             mainViewModel.requestDataSync()
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSExtensionHostDidBecomeActive)) { _ in
@@ -54,33 +64,6 @@ struct MainWatchView: View {
     }
     
     // MARK: - Private Methods
-    
-    /// SharedRepository'yi Apple Watch için konfigüre eder
-    private func configureSharedRepository() {
-        do {
-            // SharedModels için ModelContainer oluştur
-            let config = ModelConfiguration(isStoredInMemoryOnly: false)
-            let container = try ModelContainer(
-                for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
-                configurations: config
-            )
-            
-            let modelContext = container.mainContext
-            
-            // SharedRepository'ye ModelContext ayarla
-            SharedRepository.shared.setModelContext(modelContext)
-            
-            // ViewModels'e SharedRepository'nin hazır olduğunu bildir
-            mainViewModel.configureSharedRepository(with: modelContext)
-            
-            print("✅ Apple Watch: SharedRepository başarıyla konfigüre edildi")
-        } catch {
-            print("❌ Apple Watch: SharedRepository konfigürasyon hatası - \(error.localizedDescription)")
-            
-            // Hata durumunda fallback data yükle
-            mainViewModel.loadMockData()
-        }
-    }
     
     /// Sync durumu değişikliklerini handle eder
     private func handleSyncStatusChange(_ syncStatus: SyncStatus) {

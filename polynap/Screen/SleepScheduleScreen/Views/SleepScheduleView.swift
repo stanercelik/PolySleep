@@ -28,13 +28,16 @@ struct SleepScheduleView: View {
                             .animation(.easeInOut(duration: 0.3), value: animatedProgress)
                         
                         CircularSleepChart(
-                            schedule: viewModel.schedule, textOpacity: 1 - animatedProgress
+                            schedule: viewModel.schedule, 
+                            textOpacity: 1 - animatedProgress,
+                            chartSize: animatedProgress > 0.3 ? .small : .large
                         )
+                        .aspectRatio(1, contentMode: .fit)
                         .frame(
-                            width: animatedProgress > 0.3 ? 120 : UIScreen.main.bounds.width * 0.8,
-                            height: animatedProgress > 0.3 ? 120 : chartHeight
+                            maxWidth: animatedProgress > 0.3 ? 120 : UIScreen.main.bounds.width * 0.85,
+                            maxHeight: animatedProgress > 0.3 ? 120 : chartHeight
                         )
-                        .padding(.leading, 34)
+                        .padding(.horizontal, 16)
                         
                         if let recommendedSchedule = viewModel.recommendedSchedule {
                             if animatedProgress < 0.3 {

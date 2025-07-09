@@ -384,8 +384,10 @@ struct SleepChartSection: View {
                     icon: "chart.pie.fill"
                 )
                 
-                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel)
-                    .frame(height: 280)
+                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel, chartSize: .medium)
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(maxHeight: 280)
+                    .padding(.horizontal, PSSpacing.md)
             }
         }
     }

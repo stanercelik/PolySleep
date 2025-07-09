@@ -7,17 +7,17 @@ enum CircularChartSize {
     
     var radius: CGFloat {
         switch self {
-        case .small: return 80
-        case .medium: return 100
-        case .large: return 110
+        case .small: return 60
+        case .medium: return 80
+        case .large: return 100
         }
     }
     
     var strokeWidth: CGFloat {
         switch self {
-        case .small: return 25
-        case .medium: return 35
-        case .large: return 40
+        case .small: return 20
+        case .medium: return 28
+        case .large: return 35
         }
     }
 }
@@ -47,63 +47,59 @@ struct CircularSleepChart: View {
 
     var body: some View {
         GeometryReader { geometry in
-            // Geçersiz frame boyutlarını engelle
-            let safeWidth = max(100, geometry.size.width.isNaN || geometry.size.width.isInfinite ? 100 : geometry.size.width)
-            let safeHeight = max(100, geometry.size.height.isNaN || geometry.size.height.isInfinite ? 100 : geometry.size.height)
-            let size = min(safeWidth, safeHeight)
-            let center = CGPoint(x: size / 2, y: size / 2)
+            // Ekran boyutuna göre responsive chart size ayarı
+            let availableSize = min(geometry.size.width, geometry.size.height)
+            let chartDiameter = min(availableSize * 0.9, circleRadius * 2.2) // Padding için %90 kullan
+            let adjustedRadius = chartDiameter / 2.2
+            let adjustedStrokeWidth = adjustedRadius * (strokeWidth / circleRadius)
+            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
             
             ZStack {
-                backgroundCircle(center: center, size: size)
-                sleepBlocksView(center: center, size: size)
-                hourTickMarks(center: center, size: size)
+                backgroundCircle(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                sleepBlocksView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                hourTickMarks(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
                     .opacity(textOpacity)
-                hourMarkersView(center: center, size: size)
+                hourMarkersView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
                     .opacity(textOpacity)
-                innerTimeLabelsView(center: center, size: size)
+                innerTimeLabelsView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
                     .opacity(textOpacity)
             }
-            .frame(width: size, height: size)
-            .position(x: safeWidth / 2, y: safeHeight / 2)
-            
+            .frame(width: chartDiameter, height: chartDiameter)
+            .position(center)
         }
         .aspectRatio(1, contentMode: .fit)
         .animation(.easeInOut(duration: 0.3), value: textOpacity)
         .animation(.easeInOut(duration: 0.3), value: isEditing)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(generateAccessibilityLabel())
-        
     }
     
     // MARK: - Alt Görünümler
     
-    private func backgroundCircle(center: CGPoint, size: CGFloat) -> some View {
+    private func backgroundCircle(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         Circle()
             .stroke(Color.appTextSecondary.opacity(0.12), lineWidth: strokeWidth)
-            .frame(width: circleRadius * 2, height: circleRadius * 2)
+            .frame(width: radius * 2, height: radius * 2)
             .position(center)
     }
     
-    private func hourTickMarks(center: CGPoint, size: CGFloat) -> some View {
+    private func hourTickMarks(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         ZStack {
             ForEach(0..<24, id: \.self) { hour in
-                createTickMark(for: hour, center: center)
+                createTickMark(for: hour, center: center, radius: radius, strokeWidth: strokeWidth)
             }
         }
     }
     
-    private func createTickMark(for hour: Int, center: CGPoint) -> some View {
+    private func createTickMark(for hour: Int, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
         
-        // Tick mark'ın başlangıç ve bitiş noktaları için radius değerleri
-        let outerRadius = circleRadius + strokeWidth / 2
-        let innerRadius = circleRadius - strokeWidth / 2
+        let outerRadius = radius + strokeWidth / 2
+        let innerRadius = radius - strokeWidth / 2
         
-        // Tick mark'ın başlangıç noktası (dış çemberde)
         let startX = center.x + outerRadius * cos(angle * .pi / 180)
         let startY = center.y + outerRadius * sin(angle * .pi / 180)
         
-        // Tick mark'ın bitiş noktası (iç çemberde)
         let endX = center.x + innerRadius * cos(angle * .pi / 180)
         let endY = center.y + innerRadius * sin(angle * .pi / 180)
         
@@ -115,76 +111,81 @@ struct CircularSleepChart: View {
         .foregroundColor(Color.appTextSecondary.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
-    private func hourMarkersView(center: CGPoint, size: CGFloat) -> some View {
+    private func hourMarkersView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         ZStack {
             ForEach(hourMarkers, id: \.self) { hour in
-                hourMarkerLabel(for: hour, center: center)
+                hourMarkerLabel(for: hour, center: center, radius: radius, strokeWidth: strokeWidth)
             }
         }
     }
     
-    private func hourMarkerLabel(for hour: Int, center: CGPoint) -> some View {
+    private func hourMarkerLabel(for hour: Int, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
-        // Saat etiketleri için, dış çemberin biraz dışında konumlandırıyoruz
-        let labelRadius = circleRadius + strokeWidth / 2 + 20
+        let labelRadius = radius + strokeWidth / 2 + 16
         let xPosition = center.x + labelRadius * cos(angle * .pi / 180)
         let yPosition = center.y + labelRadius * sin(angle * .pi / 180)
         
         return Text(String(format: "%02d:00", hour))
-            .font(.system(size: 12, weight: .medium))
+            .font(.system(size: max(9, radius / 10), weight: .medium))
             .foregroundColor(Color.appTextSecondary)
             .position(x: xPosition, y: yPosition)
     }
     
-    private func sleepBlocksView(center: CGPoint, size: CGFloat) -> some View {
+    private func sleepBlocksView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         ZStack {
             ForEach(schedule.schedule.indices, id: \.self) { index in
-                sleepBlockArc(for: schedule.schedule[index], center: center)
+                sleepBlockArc(for: schedule.schedule[index], center: center, radius: radius, strokeWidth: strokeWidth)
             }
         }
     }
     
     @ViewBuilder
-    private func sleepBlockArc(for block: SleepBlock, center: CGPoint) -> some View {
-        if let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) {
-            let startTime = timeComponents(from: startTimeInt)
-            let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-            let durationHours = Double(block.duration) / 60.0
-            let endAngle = startAngle + (durationHours * (360.0 / 24.0))
-            
-            Path { path in
-                path.addArc(
-                    center: center,
-                    radius: circleRadius,
-                    startAngle: .degrees(startAngle),
-                    endAngle: .degrees(endAngle),
-                    clockwise: false
-                )
-            }
-            .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
-            .opacity(0.85)
+    private func sleepBlockArc(for block: SleepBlock, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+        // Düzeltilmiş time parsing - String formatından direkt parse et
+        guard let startTimeComponents = TimeFormatter.time(from: block.startTime) else {
+            EmptyView()
+                .onAppear {
+                    print("⚠️ CircularSleepChart: Geçersiz startTime formatı: \(block.startTime)")
+                }
+            return
         }
+        
+        let startAngle = angleForTime(hour: startTimeComponents.hour, minute: startTimeComponents.minute)
+        let durationHours = Double(block.duration) / 60.0
+        let endAngle = startAngle + (durationHours * (360.0 / 24.0))
+        
+        Path { path in
+            path.addArc(
+                center: center,
+                radius: radius,
+                startAngle: .degrees(startAngle),
+                endAngle: .degrees(endAngle),
+                clockwise: false
+            )
+        }
+        .stroke(block.isCore ? Color.appPrimary : Color.appSecondary, lineWidth: strokeWidth)
+        .opacity(0.85)
     }
     
-    private func innerTimeLabelsView(center: CGPoint, size: CGFloat) -> some View {
+    private func innerTimeLabelsView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
         ZStack {
             ForEach(schedule.schedule.indices, id: \.self) { index in
-                timeLabel(for: schedule.schedule[index], center: center)
+                timeLabel(for: schedule.schedule[index], center: center, radius: radius, strokeWidth: strokeWidth)
             }
         }
     }
     
     @ViewBuilder
-    private func timeLabel(for block: SleepBlock, center: CGPoint) -> some View {
-        if let labelData = generateLabelData(for: block, center: center) {
+    private func timeLabel(for block: SleepBlock, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+        if let labelData = generateLabelData(for: block, center: center, radius: radius, strokeWidth: strokeWidth) {
             Group {
                 if labelData.isVertical {
                     // Dikey layout - sağ/sol tarafta (alt alta)
                     VStack(spacing: 1) {
                         Text(labelData.startTimeStr)
-                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
+                            .font(.system(size: labelData.fontSize, weight: .semibold))
                         Text(labelData.endTimeStr)
-                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
+                            .font(.system(size: labelData.fontSize, weight: .semibold))
                     }
                     .foregroundColor(.white)
                     .padding(.horizontal, labelData.isLongBlock ? 6 : 4)
@@ -202,11 +203,11 @@ struct CircularSleepChart: View {
                     // Yatay layout - üst/alt tarafta (yan yana)
                     HStack(spacing: 2) {
                         Text(labelData.startTimeStr)
-                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
+                            .font(.system(size: labelData.fontSize, weight: .semibold))
                         Text("-")
-                            .font(.system(size: labelData.isLongBlock ? 8 : 7, weight: .medium))
+                            .font(.system(size: labelData.fontSize - 1, weight: .medium))
                         Text(labelData.endTimeStr)
-                            .font(.system(size: labelData.isLongBlock ? 9 : 8, weight: .semibold))
+                            .font(.system(size: labelData.fontSize, weight: .semibold))
                     }
                     .foregroundColor(.white)
                     .padding(.horizontal, labelData.isLongBlock ? 6 : 4)
@@ -232,21 +233,23 @@ struct CircularSleepChart: View {
         let endTimeStr: String
         let isVertical: Bool
         let isLongBlock: Bool
+        let fontSize: CGFloat
         let xPosition: CGFloat
         let yPosition: CGFloat
     }
     
-    private func generateLabelData(for block: SleepBlock, center: CGPoint) -> LabelData? {
-        guard let startTimeInt = Int(block.startTime.replacingOccurrences(of: ":", with: "")) else {
+    private func generateLabelData(for block: SleepBlock, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> LabelData? {
+        // Düzeltilmiş time parsing
+        guard let startTimeComponents = TimeFormatter.time(from: block.startTime) else {
+            print("⚠️ CircularSleepChart.generateLabelData: Geçersiz startTime formatı: \(block.startTime)")
             return nil
         }
         
-        let startTime = timeComponents(from: startTimeInt)
-        let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
+        let endTimeComponents = TimeFormatter.time(from: block.endTime) ?? (0, 0)
         
         // Başlangıç ve bitiş açıları
-        let startAngle = angleForTime(hour: startTime.hour, minute: startTime.minute)
-        let endAngle = angleForTime(hour: endTime.hour, minute: endTime.minute)
+        let startAngle = angleForTime(hour: startTimeComponents.hour, minute: startTimeComponents.minute)
+        let endAngle = angleForTime(hour: endTimeComponents.hour, minute: endTimeComponents.minute)
         
         // Gece yarısını geçen uyku bloklarını doğru şekilde hesapla
         var adjustedEndAngle = endAngle
@@ -260,25 +263,25 @@ struct CircularSleepChart: View {
         // Açıyı normalize et
         let normalizedAngle = normalizeAngle(midAngle)
         
-        // Etiket yönünü belirle - doğru mantık:
-        // Sağ taraf (315°-45°) veya sol taraf (135°-225°) ise dikey layout
-        // Üst taraf (45°-135°) veya alt taraf (225°-315°) ise yatay layout
+        // Etiket yönünü belirle
         let isVertical = (normalizedAngle >= 315 || normalizedAngle <= 45) || (normalizedAngle >= 135 && normalizedAngle <= 225)
         
-        // Akıllı etiket gösterimi
+        // Responsive font size ve positioning
         let isLongBlock = block.duration > 90
-        let radius = circleRadius - strokeWidth / 2 - (isLongBlock ? 8 : 15)
-        let xPosition = center.x + radius * cos(midAngle * .pi / 180)
-        let yPosition = center.y + radius * sin(midAngle * .pi / 180)
+        let fontSize = max(7, radius / 12)
+        let labelRadius = radius - strokeWidth / 2 - (isLongBlock ? 8 : 12)
+        let xPosition = center.x + labelRadius * cos(midAngle * .pi / 180)
+        let yPosition = center.y + labelRadius * sin(midAngle * .pi / 180)
         
-        let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
-        let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
+        let startTimeStr = String(format: "%02d:%02d", startTimeComponents.hour, startTimeComponents.minute)
+        let endTimeStr = String(format: "%02d:%02d", endTimeComponents.hour, endTimeComponents.minute)
         
         return LabelData(
             startTimeStr: startTimeStr,
             endTimeStr: endTimeStr,
             isVertical: isVertical,
             isLongBlock: isLongBlock,
+            fontSize: fontSize,
             xPosition: xPosition,
             yPosition: yPosition
         )
@@ -295,48 +298,20 @@ struct CircularSleepChart: View {
         return normalizedAngle
     }
     
-    private func innerTimeLabel(time: String, angle: Double, center: CGPoint) -> some View {
-        // İç etiketler için, iç çemberin biraz içinde konumlandırıyoruz
-        let radius = circleRadius - strokeWidth / 2 - 15
-        let xPosition = center.x + radius * cos(angle * .pi / 180)
-        let yPosition = center.y + radius * sin(angle * .pi / 180)
-        return Text(time)
-            .font(.system(size: 10, weight: .medium))
-            .foregroundColor(Color.appTextSecondary)
-            .padding(2)
-            .background(Color.black.opacity(0.3))
-            .cornerRadius(4)
-            .position(x: xPosition, y: yPosition)
-    }
-    
     // MARK: - Yardımcı Fonksiyonlar
-    
-    private func timeComponents(from time: Int) -> (hour: Int, minute: Int) {
-        let timeString = String(format: "%04d", time)
-        let hour = Int(timeString.prefix(2)) ?? 0
-        let minute = Int(timeString.suffix(2)) ?? 0
-        return (hour, minute)
-    }
     
     private func angleForTime(hour: Int, minute: Int) -> Double {
         let totalMinutes = Double(hour * 60 + minute)
         return (totalMinutes / (24 * 60)) * 360 - 90
     }
     
-    private func calculateEndTime(startTime: (hour: Int, minute: Int), duration: Int) -> (hour: Int, minute: Int) {
-        let totalMinutes = startTime.hour * 60 + startTime.minute + duration
-        let hour = (totalMinutes / 60) % 24
-        let minute = totalMinutes % 60
-        return (hour: hour, minute: minute)
-    }
-    
     private func generateAccessibilityLabel() -> String {
         var descriptions: [String] = []
         for (index, block) in schedule.schedule.enumerated() {
-            let startTime = timeComponents(from: Int(block.startTime) ?? 1)
-            let endTime = calculateEndTime(startTime: startTime, duration: block.duration)
-            let startTimeStr = String(format: "%02d:%02d", startTime.hour, startTime.minute)
-            let endTimeStr = String(format: "%02d:%02d", endTime.hour, endTime.minute)
+            guard let startTimeComponents = TimeFormatter.time(from: block.startTime) else { continue }
+            let endTimeComponents = TimeFormatter.time(from: block.endTime) ?? (0, 0)
+            let startTimeStr = String(format: "%02d:%02d", startTimeComponents.hour, startTimeComponents.minute)
+            let endTimeStr = String(format: "%02d:%02d", endTimeComponents.hour, endTimeComponents.minute)
             let blockType = block.isCore ?
                 NSLocalizedString("sleepBlock.core", tableName: "MainScreen", comment: "Core sleep block") :
                 NSLocalizedString("sleepBlock.nap", tableName: "MainScreen", comment: "Nap block")
@@ -352,49 +327,4 @@ struct CircularSleepChart: View {
             arguments: [scheduleDescription]
         )
     }
-}
-
-#Preview {
-    let schedule = SleepScheduleModel(
-        id: "everyman",
-        name: "Everyman",
-        description: LocalizedDescription(
-            en: "A schedule with one core sleep and multiple naps",
-            tr: "Bir ana uyku ve birden fazla şekerleme içeren uyku düzeni"
-        ),
-        totalSleepHours: 4.6,
-        schedule: [
-            SleepBlock(
-                startTime: "22:00",
-                duration: 240,
-                type: "core",
-                isCore: true
-            ),
-            SleepBlock(
-                startTime: "06:00",
-                duration: 20,
-                type: "nap",
-                isCore: false
-            ),
-            SleepBlock(
-                startTime: "12:00",
-                duration: 20,
-                type: "nap",
-                isCore: false
-            ),
-            SleepBlock(
-                startTime: "18:00",
-                duration: 20,
-                type: "nap",
-                isCore: false
-            )
-        ]
-    )
-    Group {
-        CircularSleepChart(schedule: schedule, textOpacity: 1)
-            .frame(width: 300, height: 300)
-            .previewDisplayName("Everyman Schedule - Text On")
-    }
-    .previewLayout(.sizeThatFits)
-    .padding()
 }

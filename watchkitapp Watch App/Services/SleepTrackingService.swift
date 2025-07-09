@@ -6,8 +6,8 @@ import Combine
 
 // MARK: - Notification Names
 extension Notification.Name {
-    static let sleepDidStart = Notification.Name("sleepDidStart")
-    static let sleepDidEnd = Notification.Name("sleepDidEnd")
+    public static let sleepDidStart = Notification.Name("sleepDidStart")
+    public static let sleepDidEnd = Notification.Name("sleepDidEnd")
 }
 
 // MARK: - Sleep Tracking State
@@ -70,7 +70,10 @@ class SleepTrackingService: ObservableObject {
     
     deinit {
         Task { @MainActor in
-            stopSessionTimer()
+            await MainActor.run {
+                sessionTimer?.invalidate()
+                sessionTimer = nil
+            }
         }
     }
     

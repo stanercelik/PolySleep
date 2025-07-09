@@ -40,13 +40,20 @@ public class SharedBaseRepository: ObservableObject {
         guard let context = _modelContext else {
             logger.error("❌ SharedBaseRepository: ModelContext ayarlanmadı!")
             
-            // Shared emergency context oluşturma
-            setupSharedEmergencyModelContext()
-            if let emergencyContext = _modelContext {
-                logger.warning("⚠️ SharedBaseRepository: ACİL DURUM shared ModelContext kullanılıyor")
-                return emergencyContext
+            // Shared emergency context oluşturma denemesi
+            do {
+                try setupSharedEmergencyModelContext()
+                if let emergencyContext = _modelContext {
+                    logger.warning("⚠️ SharedBaseRepository: ACİL DURUM shared ModelContext kullanılıyor")
+                    return emergencyContext
+                } else {
+                    logger.error("❌ SharedBaseRepository: ACİL DURUM ModelContext oluşturulamadı")
+                    throw SharedRepositoryError.modelContextNotSet
+                }
+            } catch {
+                logger.error("❌ SharedBaseRepository: ACİL DURUM ModelContext kurulum hatası: \(error.localizedDescription)")
+                throw SharedRepositoryError.modelContextNotSet
             }
-            throw SharedRepositoryError.modelContextNotSet
         }
         return context
     }
@@ -54,19 +61,34 @@ public class SharedBaseRepository: ObservableObject {
     // MARK: - Private Helper Methods
     
     /// Shared models için acil durum ModelContext'i oluşturur
-    private func setupSharedEmergencyModelContext() {
-        if _modelContext != nil { return }
+    private func setupSharedEmergencyModelContext() throws {
+        if _modelContext != nil { 
+            logger.debug("🔍 SharedBaseRepository: ModelContext zaten mevcut, emergency setup atlanıyor")
+            return 
+        }
         
         logger.warning("🚨 SharedBaseRepository: Acil durum shared ModelContext oluşturuluyor")
+        
+        // Availability check
+        guard #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) else {
+            logger.error("❌ SharedBaseRepository: SwiftData bu platform versiyonunda desteklenmiyor")
+            throw SharedRepositoryError.platformNotSupported
+        }
+        
         do {
-            let config = ModelConfiguration(isStoredInMemoryOnly: false)
+            // In-memory fallback container oluştur
+            let config = ModelConfiguration(isStoredInMemoryOnly: true)
             let emergencyContainer = try ModelContainer(
                 for: SharedUser.self, SharedUserSchedule.self, SharedSleepBlock.self, SharedSleepEntry.self,
                 configurations: config
             )
+            
             _modelContext = emergencyContainer.mainContext
+            logger.info("✅ SharedBaseRepository: ACİL DURUM in-memory ModelContext oluşturuldu")
+            
         } catch {
             logger.error("❌ SharedBaseRepository: ACİL DURUM shared ModelContext oluşturulamadı: \(error.localizedDescription)")
+            throw error
         }
     }
     
