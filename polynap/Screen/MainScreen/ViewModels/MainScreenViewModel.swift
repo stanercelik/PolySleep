@@ -99,8 +99,6 @@ class MainScreenViewModel: ObservableObject {
                 action: selectedSegment == 0 ? "overview_selected" : "details_selected"
             )
             
-            // Save user preference
-            UserDefaults.standard.set(selectedSegment, forKey: "MainScreenSelectedSegment")
         }
     }
     
@@ -251,12 +249,10 @@ class MainScreenViewModel: ObservableObject {
         }
     }
     
-    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), languageManager: LanguageManager = LanguageManager.shared) {
+    init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.placeholder), languageManager: LanguageManager = LanguageManager.shared) {
         self.model = model
         self.languageManager = languageManager
-        
-        // Load saved segment preference
-        self.selectedSegment = UserDefaults.standard.integer(forKey: "MainScreenSelectedSegment")
+        self.isLoading = true // Başlangıçta yükleme durumunu aktif et
         
         loadPremiumStatus()
         loadAvailableSchedules()

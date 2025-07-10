@@ -359,37 +359,53 @@ struct MinimalSegmentView: View {
                 // Header with schedule name
                 VStack(spacing: PSSpacing.md) {
                     Text(viewModel.model.schedule.name)
-                        .font(PSTypography.largeTitle.weight(.bold))
+                        .font(PSTypography.title1.weight(.semibold))
                         .foregroundColor(.appPrimary)
-                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(2)
-                    
-                    // Toplam uyku saati chip
-                    HStack(spacing: PSSpacing.sm) {
-                        Image(systemName: "bed.double.fill")
-                            .font(.system(size: PSIconSize.small))
-                            .foregroundColor(.appPrimary)
-                        
-                        VStack(spacing: 2) {
-                            Text("Toplam uyku süresi")
-                                .font(.caption2)
-                                .foregroundColor(.appPrimary.opacity(0.8))
-                            Text(viewModel.totalSleepTimeFormatted)
-                                .font(PSTypography.subheadline.weight(.medium))
-                                .foregroundColor(.appPrimary)
-                        }
-                    }
-                    .padding(.horizontal, PSSpacing.md)
-                    .padding(.vertical, PSSpacing.sm)
-                    .background(
-                        RoundedRectangle(cornerRadius: PSCornerRadius.large)
-                            .fill(Color.appPrimary.opacity(0.1))
-                    )
                 }
                 .padding(.top, PSSpacing.md)
+
+
+                // Bilgi Kartı (Sonraki Uyku & Toplam Uyku)
+                PSCard(padding: PSSpacing.md) {
+                    HStack(alignment: .center, spacing: PSSpacing.lg) {
+                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                            Text(L("mainScreen.nextSleepBlock", table: "MainScreen"))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text(viewModel.nextSleepBlockFormatted)
+                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                .foregroundColor(.appSecondary)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                            Text(L("mainScreen.totalSleep", table: "MainScreen"))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            Text(viewModel.totalSleepTimeFormatted)
+                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                .foregroundColor(.appPrimary)
+                        }
+
+                        Spacer()
+
+                        PSStatusBadge(
+                            viewModel.sleepStatusMessage,
+                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
+                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent,
+                            style: .compact
+                        )
+                    }
+                }
+            }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.bottom, PSSpacing.lg)
                 
                 // Circular Sleep Chart with Edit Mode
-                PSCard {
+                PSCard(padding: PSSpacing.md) {
                     VStack(spacing: PSSpacing.sm) {
                         // Chart edit controls
                         if viewModel.isChartEditMode {
@@ -422,44 +438,8 @@ struct MinimalSegmentView: View {
                     .padding(PSSpacing.sm)
                     .animation(.easeInOut(duration: 0.3), value: viewModel.isChartEditMode)
                 }
+                .padding(.horizontal, PSSpacing.lg)
                 
-                // Sonraki uyku bloğu bilgisi - compact
-                PSCard {
-                    HStack(spacing: PSSpacing.md) {
-                        // İkon
-                        Image(systemName: "clock.fill")
-                            .font(.system(size: PSIconSize.medium))
-                            .foregroundColor(.appSecondary)
-                            .frame(width: PSIconSize.large, height: PSIconSize.large)
-                            .background(
-                                Circle()
-                                    .fill(Color.appSecondary.opacity(0.1))
-                            )
-                        
-                        // İçerik
-                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                            Text(L("mainScreen.nextSleepBlock", table: "MainScreen"))
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            
-                            Text(viewModel.nextSleepBlockFormatted)
-                                .font(PSTypography.title3.weight(.semibold))
-                                .foregroundColor(.appSecondary)
-                        }
-                        
-                        Spacer()
-                        
-                        // Status badge
-                        PSStatusBadge(
-                            viewModel.sleepStatusMessage,
-                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
-                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
-                        )
-                    }
-                }
-            }
-            .padding(.horizontal, PSSpacing.lg)
-            .padding(.bottom, PSSpacing.xl)
         }
         .accessibilityLabel(L("mainScreen.segment.overview", table: "MainScreen"))
     }
@@ -515,7 +495,7 @@ struct ScheduleManagementSection: View {
     
     var body: some View {
         PSCard {
-            VStack(spacing: PSSpacing.lg) {
+            VStack(spacing: PSSpacing.md) {
                 // Schedule name and change button
                 HStack(spacing: PSSpacing.md) {
                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
@@ -581,7 +561,7 @@ struct ScheduleManagementSection: View {
                         .foregroundColor(.appTextSecondary)
                         .lineSpacing(4)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(PSSpacing.md)
+                        .padding(PSSpacing.sm)
                         .background(.quaternary, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
                         .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
                 }
@@ -596,46 +576,31 @@ struct ProgressInfoSection: View {
     
     var body: some View {
         PSCard {
-            VStack(spacing: PSSpacing.lg) {
-                PSSectionHeader(
-                    L("mainScreen.nextSleepBlock", table: "MainScreen"),
-                    icon: "clock.fill"
-                )
-                
-                HStack(spacing: PSSpacing.md) {
-                    // Sonraki uyku bloğu bilgisi
-                    VStack(alignment: .leading, spacing: PSSpacing.sm) {
-                        Text(viewModel.nextSleepBlockFormatted)
-                            .font(PSTypography.title2.weight(.semibold))
-                            .foregroundColor(.appSecondary)
-                        
-                        // Status badge
-                        PSStatusBadge(
-                            viewModel.sleepStatusMessage,
-                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
-                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
-                        )
-                    }
-                    
-                    Spacer()
-                    
-                    // Toplam uyku saati
-                    VStack(alignment: .trailing, spacing: PSSpacing.sm) {
-                        Text(L("mainScreen.totalSleep", table: "MainScreen"))
-                            .font(PSTypography.caption)
-                            .foregroundColor(.appTextSecondary)
-                        
-                        HStack(spacing: PSSpacing.xs) {
-                            Image(systemName: "bed.double.fill")
-                                .font(.system(size: PSIconSize.small))
-                                .foregroundColor(.appPrimary)
-                            
-                            Text(viewModel.totalSleepTimeFormatted)
-                                .font(PSTypography.title2.weight(.semibold))
-                                .foregroundColor(.appText)
-                        }
-                    }
+            HStack(alignment: .center, spacing: PSSpacing.md) {
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("mainScreen.nextSleepBlock", table: "MainScreen"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    Text(viewModel.nextSleepBlockFormatted)
+                        .font(PSTypography.subheadline)
+                        .fontWeight(.semibold)
                 }
+                Spacer()
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("mainScreen.totalSleep", table: "MainScreen"))
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    Text(viewModel.totalSleepTimeFormatted)
+                        .font(PSTypography.subheadline)
+                        .fontWeight(.semibold)
+                }
+                Spacer()
+                PSStatusBadge(
+                    viewModel.sleepStatusMessage,
+                    icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
+                    color: viewModel.isInSleepTime ? .appSecondary : .appAccent,
+                    style: .compact
+                )
             }
         }
     }
@@ -773,7 +738,7 @@ struct SleepBlocksSection: View {
     
     var body: some View {
         PSCard {
-            VStack(spacing: PSSpacing.lg) {
+            VStack(spacing: PSSpacing.md) {
                 HStack {
                     PSSectionHeader(
                         L("mainScreen.sleepBlocks", table: "MainScreen"),
@@ -842,18 +807,18 @@ struct DailyTipSection: View {
     
     var body: some View {
         PSCard {
-            VStack(spacing: PSSpacing.lg) {
+            VStack(spacing: PSSpacing.md) {
                 PSSectionHeader(
                     L("mainScreen.dailyTip.title", table: "MainScreen"),
                     icon: "lightbulb.fill"
                 )
                 
                 Text(viewModel.dailyTip, tableName: "Tips")
-                    .font(PSTypography.body)
+                    .font(PSTypography.subheadline)
                     .foregroundColor(.appTextSecondary)
                     .lineSpacing(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(PSSpacing.md)
+                    .padding(PSSpacing.sm)
                     .background(.quaternary, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
             }
         }

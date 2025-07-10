@@ -52,6 +52,25 @@ struct UserScheduleModel {
         }
     }
     
+    static var placeholder: UserScheduleModel {
+        // Shimmer efekti için boş bir yer tutucu model.
+        // Adı boşluktan oluşur ki metin alanı için yer ayrılsın ama görünmesin.
+        return UserScheduleModel(
+            id: "placeholder_id",
+            name: " ",
+            description: LocalizedDescription(en: " ", tr: " "),
+            totalSleepHours: 8, // Ortalama bir değer, grafiğin çizilmesi için
+            schedule: [
+                // Shimmer'ın doğru görünmesi için birkaç boş blok ekleyelim.
+                // Bu blokların süresi vs. önemli değil, sadece var olmaları yeterli.
+                SleepBlock(startTime: "00:00", duration: 60, type: "core", isCore: true),
+                SleepBlock(startTime: "00:00", duration: 60, type: "nap", isCore: false),
+                SleepBlock(startTime: "00:00", duration: 60, type: "nap", isCore: false)
+            ],
+            isPremium: false
+        )
+    }
+
     static var defaultSchedule: UserScheduleModel {
         let schedule = [
             SleepBlock(
