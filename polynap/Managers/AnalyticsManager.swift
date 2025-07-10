@@ -2,7 +2,7 @@ import Foundation
 import FirebaseAnalytics
 
 /// Firebase Analytics yönetim sınıfı
-/// PolySleep uygulaması için özel analytics event'larını yönetir
+/// PolyNap uygulaması için özel analytics event'larını yönetir
 class AnalyticsManager: ObservableObject {
     
     // MARK: - Singleton

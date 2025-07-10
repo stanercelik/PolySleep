@@ -8,37 +8,43 @@ struct EducationView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                // Search Bar
-                searchSection
+            ZStack(alignment: .top) {
+                // Ana Sayfa (Search kaldırıldı)
+                VStack(spacing: 0) {
+                    categoriesGrid
+                }
+                .opacity(viewModel.selectedCategory == nil ? 1 : 0)
+                .transition(.opacity)
                 
-                // Category Filter
-                categoryFilterSection
-                
-                // Content
+                // Kategori Detay Sayfası
                 ScrollView {
                     LazyVStack(spacing: 16) {
-                        if viewModel.shouldShowNoResults {
-                            noResultsView
-                        } else {
-                            // Articles Section
-                            if !viewModel.filteredArticles.isEmpty {
-                                articlesSection
-                            }
-                            
-                            // FAQ Section - genel görünümde veya FAQ kategorisi seçildiğinde göster
-                            if !viewModel.filteredFAQs.isEmpty && (viewModel.selectedCategory == nil || viewModel.selectedCategory == .faq) {
-                                faqSection
-                            }
+                        if !viewModel.filteredArticles.isEmpty {
+                            articlesSection
+                        }
+                        if viewModel.selectedCategory == .faq && !viewModel.filteredFAQs.isEmpty {
+                            faqSection
                         }
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 100) // Tab bar spacing
+                    .padding(.bottom, 100)
                 }
+                .opacity(viewModel.selectedCategory == nil ? 0 : 1)
+                .transition(.opacity)
             }
-            .navigationTitle(L("education.title", table: "Education"))
+            .navigationTitle(viewModel.selectedCategory?.title ?? L("education.title", table: "Education"))
             .navigationBarTitleDisplayMode(.large)
             .background(Color.appBackground)
+            .toolbar {
+                // Geri Dönüş Butonu
+                if viewModel.selectedCategory != nil {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: { withAnimation(.easeInOut) { viewModel.selectCategory(nil) } }) {
+                            Image(systemName: "chevron.left")
+                        }
+                    }
+                }
+            }
         }
         .sheet(item: $selectedArticle) { article in
             ArticleDetailView(article: article)
@@ -47,6 +53,29 @@ struct EducationView: View {
             if let faq = selectedFAQ {
                 FAQDetailView(faq: faq)
             }
+        }
+        .animation(.easeInOut, value: viewModel.selectedCategory)
+    }
+    
+    // MARK: - Categories Grid
+    private var categoriesGrid: some View {
+        ScrollView {
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 16),
+                    GridItem(.flexible(), spacing: 16)
+                ],
+                spacing: 16
+            ) {
+                ForEach(viewModel.categories, id: \.self) { category in
+                    CategoryCard(category: category) {
+                        withAnimation(.easeInOut) { viewModel.selectCategory(category) }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+            .padding(.bottom, 100) // Tab bar spacing
         }
     }
     
@@ -77,38 +106,6 @@ struct EducationView: View {
             .padding(.horizontal, 16)
         }
         .padding(.top, 8)
-        .background(Color.appBackground)
-    }
-    
-    // MARK: - Category Filter Section
-    private var categoryFilterSection: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
-                // All Categories Button
-                CategoryFilterChip(
-                    title: L("education.all_categories", table: "Education"),
-                    icon: "square.grid.2x2",
-                    isSelected: viewModel.selectedCategory == nil,
-                    category: nil
-                ) {
-                    viewModel.selectCategory(nil)
-                }
-                
-                // Category Buttons
-                ForEach(viewModel.categories, id: \.self) { category in
-                    CategoryFilterChip(
-                        title: category.title,
-                        icon: category.icon,
-                        isSelected: viewModel.selectedCategory == category,
-                        category: category
-                    ) {
-                        viewModel.selectCategory(category)
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-        }
-        .padding(.vertical, 12)
         .background(Color.appBackground)
     }
     
@@ -154,7 +151,7 @@ struct EducationView: View {
             }
             .padding(.horizontal, 4)
             
-            LazyVStack(spacing: 8) {
+            LazyVStack(spacing: 12) {
                 ForEach(viewModel.filteredFAQs, id: \.id) { faq in
                     FAQCard(faq: faq) {
                         selectedFAQ = faq

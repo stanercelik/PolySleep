@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - PolyNap Design System
 /**
- PolySleep Tasarım Sistemi
+ PolyNap Tasarım Sistemi
  Bu dosya, uygulamanın tüm UI bileşenlerinde kullanılacak tutarlı tasarım prensiplerini içerir.
  */
 
@@ -255,22 +255,30 @@ struct PSIconButton: View {
 }
 
 // MARK: - Status Badge
+enum PSStatusBadgeStyle {
+    case `default`
+    case compact
+}
+
 struct PSStatusBadge: View {
     let text: String
     let icon: String?
     let color: Color
     let backgroundColor: Color
+    let style: PSStatusBadgeStyle
     
     init(
         _ text: String,
         icon: String? = nil,
         color: Color = .appPrimary,
-        backgroundColor: Color? = nil
+        backgroundColor: Color? = nil,
+        style: PSStatusBadgeStyle = .default
     ) {
         self.text = text
         self.icon = icon
         self.color = color
         self.backgroundColor = backgroundColor ?? color.opacity(0.15)
+        self.style = style
     }
     
     var body: some View {
@@ -285,8 +293,8 @@ struct PSStatusBadge: View {
                 .font(PSTypography.caption)
                 .foregroundColor(color)
         }
-        .padding(.horizontal, PSSpacing.sm)
-        .padding(.vertical, PSSpacing.xs)
+        .padding(.horizontal, style == .compact ? PSSpacing.sm : PSSpacing.md)
+        .padding(.vertical, style == .compact ? PSSpacing.xs / 2 : PSSpacing.xs)
         .background(backgroundColor, in: Capsule())
     }
 }

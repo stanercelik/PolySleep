@@ -54,7 +54,7 @@ struct ArticleCard: View {
                 // Content
                 VStack(alignment: .leading, spacing: 10) {
                     // Title
-                    Text(article.title)
+                    Text(L(article.titleKey, table: "Education", fallback: article.titleKey))
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.appText)
                         .multilineTextAlignment(.leading)
@@ -62,8 +62,8 @@ struct ArticleCard: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // Summary
-                    if !article.summary.isEmpty {
-                        Text(article.summary)
+                    if let summaryKey = article.summaryKey, !summaryKey.isEmpty {
+                        Text(L(summaryKey, table: "Education", fallback: summaryKey))
                             .font(.system(size: 15, weight: .regular))
                             .foregroundColor(.appTextSecondary)
                             .multilineTextAlignment(.leading)

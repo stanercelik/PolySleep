@@ -205,7 +205,7 @@ struct SettingsView: View {
                     VStack(spacing: PSSpacing.md) {
                         HStack(spacing: PSSpacing.sm) {
                             VStack(alignment: .center , spacing: PSSpacing.xs) {
-                                Text("PolySleep")
+                                Text("PolyNap")
                                     .font(PSTypography.headline)
                                     .font(.subheadline)
                                     .fontWeight(.semibold)

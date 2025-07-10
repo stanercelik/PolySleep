@@ -26,11 +26,11 @@ extension LocalizedText {
 }
 
 /// Helper function to get localized string
-func L(_ key: String, tableName: String? = nil) -> String {
-    return LanguageManager.shared.localizedString(key, tableName: tableName)
+func L(_ key: String, tableName: String? = nil, fallback: String? = nil) -> String {
+    return LanguageManager.shared.localizedString(key, tableName: tableName, fallback: fallback)
 }
 
 /// Macro-style helper for table-specific localizations
-func L(_ key: String, table: String) -> String {
-    return LanguageManager.shared.localizedString(key, tableName: table)
+func L(_ key: String, table: String, fallback: String? = nil) -> String {
+    return LanguageManager.shared.localizedString(key, tableName: table, fallback: fallback)
 } 

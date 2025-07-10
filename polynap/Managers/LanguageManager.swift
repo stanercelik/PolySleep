@@ -89,8 +89,16 @@ class LanguageManager: ObservableObject {
     }
     
     /// Mevcut dilde lokalize edilmiş string döndürür
-    func localizedString(_ key: String, tableName: String? = nil) -> String {
-        return NSLocalizedString(key, tableName: tableName, bundle: Bundle.appBundle, value: "", comment: "")
+    func localizedString(_ key: String, tableName: String? = nil, fallback: String? = nil) -> String {
+        let localized = NSLocalizedString(key, tableName: tableName, bundle: Bundle.appBundle, value: "", comment: "")
+        
+        // Eğer çeviri bulunamazsa NSLocalizedString key'in kendisini döner.
+        // Bu durumda, fallback değerini kullanalım.
+        if localized == key {
+            return fallback ?? key
+        }
+        
+        return localized
     }
     
     /// LocalizedStringKey için custom implementation
