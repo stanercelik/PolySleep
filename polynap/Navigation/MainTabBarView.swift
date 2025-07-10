@@ -30,26 +30,33 @@ struct MainTabBarView: View {
                     }
                     .tag(0)
                 
+                EducationView()
+                    .tabItem {
+                        Image(systemName: "book.fill")
+                        Text(L("tabbar.education", table: "Common"))
+                    }
+                    .tag(1)
+                
                 HistoryView()
                     .tabItem {
                         Image(systemName: "clock.fill")
                         Text(L("tabbar.history", table: "Common"))
                     }
-                    .tag(1)
+                    .tag(2)
                 
                 AnalyticsView()
                     .tabItem {
                         Image(systemName: "chart.bar.fill")
                         Text(L("tabbar.analytics", table: "Common"))
                     }
-                    .tag(2)
+                    .tag(3)
                 
                 ProfileScreenView()
                     .tabItem {
                         Image(systemName: "person.fill")
                         Text(L("tabbar.profile", table: "Common"))
                     }
-                    .tag(3)
+                    .tag(4)
             }
             .accentColor(Color("AccentColor"))
             .onAppear {
@@ -84,9 +91,10 @@ struct MainTabBarView: View {
     private func logTabScreenView(_ tabIndex: Int) {
         let screenNames = [
             0: ("MainScreen", "MainScreenView"),
-            1: ("History", "HistoryView"),
-            2: ("Analytics", "AnalyticsView"), 
-            3: ("Profile", "ProfileScreenView")
+            1: ("Education", "EducationView"),
+            2: ("History", "HistoryView"),
+            3: ("Analytics", "AnalyticsView"), 
+            4: ("Profile", "ProfileScreenView")
         ]
         
         if let (screenName, screenClass) = screenNames[tabIndex] {

@@ -1,0 +1,2199 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "education.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Education"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eğitim"
+          }
+        }
+      }
+    },
+    "education.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn about polyphasic sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku hakkında bilgi edinin"
+          }
+        }
+      }
+    },
+    "education.readTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d min read"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d dakika okuma"
+          }
+        }
+      }
+    },
+    "education.search_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search articles..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makale ara..."
+          }
+        }
+      }
+    },
+    "education.all_categories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Categories"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Kategoriler"
+          }
+        }
+      }
+    },
+    "education.articles_section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Articles"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makaleler"
+          }
+        }
+      }
+    },
+    "education.reading_time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okuma Süresi"
+          }
+        }
+      }
+    },
+    "education.categories.basics" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basics & Introduction"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temel Bilgiler ve Giriş"
+          }
+        }
+      }
+    },
+    "education.categories.schedules" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Schedules"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Programları"
+          }
+        }
+      }
+    },
+    "education.categories.adaptation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Process"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Süreci"
+          }
+        }
+      }
+    },
+    "education.categories.myths" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myths & Facts"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsaneler ve Gerçekler"
+          }
+        }
+      }
+    },
+    "education.categories.risks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benefits & Risks"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avantajlar ve Riskler"
+          }
+        }
+      }
+    },
+    "education.categories.preparation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparation Guide"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hazırlık Rehberi"
+          }
+        }
+      }
+    },
+    "education.categories.faq" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sık Sorulan Sorular"
+          }
+        }
+      }
+    },
+    "education.article.whatIs.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is Polyphasic Sleep?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik Uyku Nedir?"
+          }
+        }
+      }
+    },
+    "education.article.whatIs.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding the differences between monophasic, biphasic, and polyphasic sleep patterns."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monofazik, bifazik ve polifazik uyku düzenleri arasındaki farkları anlama."
+          }
+        }
+      }
+    },
+    "education.article.whatIs.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Monophasic Sleep (Single-Phase)**\nThe traditional sleep pattern where you sleep for one continuous period, typically 7-9 hours at night.\n\n**Biphasic Sleep (Two-Phase)**\nA sleep pattern consisting of two periods: a longer night sleep and a shorter afternoon nap (siesta).\n\n**Polyphasic Sleep (Multiple-Phase)**\nA sleep pattern that involves sleeping multiple times per day in short segments called naps. This approach can potentially reduce total sleep time while maintaining alertness through strategic napping.\n\nPolyphasic sleep spreads sleep across several shorter periods throughout the day, aiming to optimize sleep efficiency by aligning with natural sleep cycles and entering REM sleep more quickly."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Monofazik Uyku (Tek Fazlı)**\nGeleneksel uyku düzeni: genellikle geceleri 7-9 saat boyunca kesintisiz tek bir dönem halinde uyuma.\n\n**Bifazik Uyku (Çift Fazlı)**\nİki dönemden oluşan uyku düzeni: uzun bir gece uykusu ve kısa bir öğleden sonra şekerlemesi (siesta).\n\n**Polifazik Uyku (Çok Fazlı)**\nGün içinde şekerleme adı verilen kısa dönemler halinde birden fazla kez uyuma düzeni. Bu yaklaşım, stratejik şekerleme yoluyla uyanıklığı korurken toplam uyku süresini potansiyel olarak azaltabilir.\n\nPolifazik uyku, doğal uyku döngüleriyle uyumlu hale gelerek ve REM uykusuna daha hızlı girerek uyku verimliliğini optimize etmeyi amaçlar."
+          }
+        }
+      }
+    },
+    "education.article.basicTheory.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Theory Behind Polyphasic Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik Uykunun Arkasındaki Teori"
+          }
+        }
+      }
+    },
+    "education.article.basicTheory.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How polyphasic sleep aims to optimize REM and deep sleep phases."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uykunun REM ve derin uyku evrelerini nasıl optimize etmeyi amaçladığı."
+          }
+        }
+      }
+    },
+    "education.article.basicTheory.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**The Core Principle**\nPolyphasic sleep theory suggests that by creating controlled sleep deprivation, the body can adapt to enter the most restorative sleep phases (REM and deep sleep) more quickly.\n\n**REM Sleep Optimization**\nREM sleep is crucial for:\n• Memory consolidation\n• Emotional processing\n• Brain detoxification\n• Creativity enhancement\n\n**Deep Sleep (SWS) Importance**\nSlow-Wave Sleep handles:\n• Physical recovery\n• Immune system strengthening\n• Growth hormone release\n• Tissue repair\n\n**Sleep Pressure Theory**\nThe theory proposes that sleep pressure forces the body to prioritize essential sleep phases, potentially achieving restoration in less time.\n\n**⚠️ Important Note**\nThis theory remains largely unproven by scientific research. Individual results vary significantly."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Temel İlke**\nPolifazik uyku teorisi, kontrollü uyku yoksunluğu yaratarak vücudun en onarıcı uyku evrelerine (REM ve derin uyku) daha hızlı girmeye adapte olabileceğini öne sürer.\n\n**REM Uyku Optimizasyonu**\nREM uykusu şunlar için hayati önem taşır:\n• Hafıza pekişmesi\n• Duygusal işleme\n• Beyin detoksifikasyonu\n• Yaratıcılık artırımı\n\n**Derin Uyku (SWS) Önemi**\nYavaş Dalga Uykusu şunları yönetir:\n• Fiziksel iyileşme\n• Bağışıklık sistemi güçlendirmesi\n• Büyüme hormonu salınımı\n• Doku onarımı\n\n**Uyku Baskısı Teorisi**\nTeori, uyku baskısının vücudu temel uyku evrelerine öncelik vermeye zorladığını, potansiyel olarak daha az zamanda onarım sağlayabileceğini öne sürer.\n\n**⚠️ Önemli Not**\nBu teori büyük ölçüde bilimsel araştırmalarla kanıtlanmamıştır. Bireysel sonuçlar önemli ölçüde değişir."
+          }
+        }
+      }
+    },
+    "education.article.sleepStages.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Stages Explained"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Evreleri Açıklaması"
+          }
+        }
+      }
+    },
+    "education.article.sleepStages.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding the functions of light sleep, deep sleep, and REM phases."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hafif uyku, derin uyku ve REM evrelerinin işlevlerini anlama."
+          }
+        }
+      }
+    },
+    "education.article.sleepStages.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Stage 1: Light Sleep (N1)**\n• Transition from wakefulness to sleep\n• Muscle activity slows down\n• Easy to wake up\n• Typically 5-10% of total sleep\n\n**Stage 2: Light Sleep (N2)**\n• Deeper than Stage 1\n• Sleep spindles and K-complexes appear\n• Body temperature drops\n• Heart rate slows\n• Typically 45-55% of total sleep\n\n**Stage 3: Deep Sleep (N3/SWS)**\n• Slow-wave sleep phase\n• Very difficult to wake up\n• Physical restoration occurs\n• Growth hormone release\n• Immune system strengthening\n• Typically 15-20% of total sleep\n\n**REM Sleep**\n• Rapid eye movement phase\n• Vivid dreams occur\n• Brain activity similar to wakefulness\n• Memory consolidation\n• Emotional processing\n• Typically 20-25% of total sleep\n\n**Complete Sleep Cycle**\nA full cycle takes 90-110 minutes and includes all stages. Normal nights involve 4-6 complete cycles."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Evre 1: Hafif Uyku (N1)**\n• Uyanıklıktan uykuya geçiş\n• Kas aktivitesi yavaşlar\n• Uyanması kolay\n• Genellikle toplam uykunun %5-10'u\n\n**Evre 2: Hafif Uyku (N2)**\n• Evre 1'den daha derin\n• Uyku iğcikleri ve K-kompleksleri görülür\n• Vücut sıcaklığı düşer\n• Kalp hızı yavaşlar\n• Genellikle toplam uykunun %45-55'i\n\n**Evre 3: Derin Uyku (N3/SWS)**\n• Yavaş dalga uykusu evresi\n• Uyanması çok zor\n• Fiziksel onarım gerçekleşir\n• Büyüme hormonu salınımı\n• Bağışıklık sistemi güçlendirmesi\n• Genellikle toplam uykunun %15-20'si\n\n**REM Uykusu**\n• Hızlı göz hareketi evresi\n• Canlı rüyalar görülür\n• Beyin aktivitesi uyanıklığa benzer\n• Hafıza pekişmesi\n• Duygusal işleme\n• Genellikle toplam uykunun %20-25'i\n\n**Tam Uyku Döngüsü**\nTam bir döngü 90-110 dakika sürer ve tüm evreleri içerir. Normal geceler 4-6 tam döngü içerir."
+          }
+        }
+      }
+    },
+    "education.article.famousPeople.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Famous People & Sleep Myths"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ünlü İsimler ve Uyku Efsaneleri"
+          }
+        }
+      }
+    },
+    "education.article.famousPeople.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examining claims about da Vinci, Tesla, and other historical figures."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "da Vinci, Tesla ve diğer tarihi figürler hakkındaki iddiaları inceleme."
+          }
+        }
+      }
+    },
+    "education.article.famousPeople.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Leonardo da Vinci**\n❌ Myth: Slept 15 minutes every 4 hours\n✅ Reality: No historical evidence supports this claim\n\n**Nikola Tesla**\n❌ Myth: Slept only 2 hours per night\n✅ Reality: Suffered from insomnia and mental health issues\n\n**Thomas Edison**\n❌ Myth: Slept 4 hours with multiple naps\n✅ Reality: Often slept 6-8 hours at night, statements were exaggerated\n\n**Napoleon Bonaparte**\n❌ Myth: \"Four hours for a man, five for a woman, six for a fool\"\n✅ Reality: Usually slept 6-7 hours when possible\n\n**Important Facts:**\n• Most historical claims are myths or exaggerations\n• Many suffered from sleep disorders or stress-related insomnia\n• Irregular sleep was often a symptom of illness, not optimization\n• Modern polyphasic schedules are recent inventions\n\n**Conclusion:**\nDon't base sleep decisions on historical myths. Modern science provides better guidance."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Leonardo da Vinci**\n❌ Efsane: Her 4 saatte 15 dakika uyudu\n✅ Gerçek: Bu iddiayı destekleyen hiçbir tarihi kanıt yok\n\n**Nikola Tesla**\n❌ Efsane: Geceleri sadece 2 saat uyudu\n✅ Gerçek: Uykusuzluk ve ruh sağlığı sorunları yaşadı\n\n**Thomas Edison**\n❌ Efsane: 4 saat uyudu ve çok şekerleme yaptı\n✅ Gerçek: Genellikle geceleri 6-8 saat uyudu, açıklamaları abartılıydı\n\n**Napolyon Bonaparte**\n❌ Efsane: \"Bir erkek için dört saat, bir kadın için beş, bir aptal için altı\"\n✅ Gerçek: Mümkün olduğunda genellikle 6-7 saat uyudu\n\n**Önemli Gerçekler:**\n• Çoğu tarihi iddia efsane veya abartıdır\n• Birçoğu uyku bozuklukları veya stres kaynaklı uykusuzluk yaşadı\n• Düzensiz uyku genellikle hastalığın belirtisiydi, optimizasyon değil\n• Modern polifazik programlar yakın tarihli icatlardır\n\n**Sonuç:**\nUyku kararlarınızı tarihi efsanelere dayandırmayın. Modern bilim daha iyi rehberlik sağlar."
+          }
+        }
+      }
+    },
+    "education.article.biphasic.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biphasic Sleep (Beginner)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bifazik Uyku (Başlangıç)"
+          }
+        }
+      }
+    },
+    "education.article.biphasic.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The most accessible polyphasic schedule, perfect for beginners."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En erişilebilir polifazik program, yeni başlayanlar için mükemmel."
+          }
+        }
+      }
+    },
+    "education.article.biphasic.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Structure:** One main sleep period + One nap\n**Total Sleep:** 6.5-7 hours\n**Difficulty:** ⭐⭐☆☆☆ (Beginner-friendly)\n\n**Schedule Example:**\n• Core Sleep: 11:00 PM - 5:00 AM (6 hours)\n• Nap: 1:00 PM - 1:30 PM (30 minutes)\n\n**Benefits:**\n• Natural adaptation for many people\n• Maintains social compatibility\n• Moderate time savings\n• Less adaptation stress\n\n**Best For:**\n• Beginners to polyphasic sleep\n• People with regular work schedules\n• Those wanting moderate time gains\n\n**Adaptation Time:** Usually 1-2 weeks\n\n**Tips:**\n• Keep nap time consistent\n• Dark, quiet environment for naps\n• Avoid caffeine before nap time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Yapı:** Bir ana uyku dönemi + Bir şekerleme\n**Toplam Uyku:** 6,5-7 saat\n**Zorluk:** ⭐⭐☆☆☆ (Başlangıç dostu)\n\n**Program Örneği:**\n• Ana Uyku: 23:00 - 05:00 (6 saat)\n• Şekerleme: 13:00 - 13:30 (30 dakika)\n\n**Faydalar:**\n• Çoğu insan için doğal adaptasyon\n• Sosyal uyumluluğu korur\n• Orta düzeyde zaman tasarrufu\n• Daha az adaptasyon stresi\n\n**Kimler İçin İdeal:**\n• Polifazik uyku yeni başlayanlar\n• Düzenli iş programı olanlar\n• Orta düzeyde zaman kazancı isteyenler\n\n**Adaptasyon Süresi:** Genellikle 1-2 hafta\n\n**İpuçları:**\n• Şekerleme saatini tutarlı tutun\n• Şekerleme için karanlık, sessiz ortam\n• Şekerleme öncesi kafeinden kaçının"
+          }
+        }
+      }
+    },
+    "education.article.everyman.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyman Sleep (Intermediate)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyman Uyku (Orta Seviye)"
+          }
+        }
+      }
+    },
+    "education.article.everyman.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popular intermediate schedules balancing sleep reduction with practicality."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku azaltma ile pratikliği dengeleyen popüler orta seviye programlar."
+          }
+        }
+      }
+    },
+    "education.article.everyman.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Structure:** One shortened core sleep + Multiple naps\n**Difficulty:** ⭐⭐⭐☆☆ (Intermediate)\n\n**Variants:**\n• **E1:** 6h core + 1 nap (6.5h total)\n• **E2:** 4.5h core + 2 naps (5.5h total)\n• **E3:** 3h core + 3 naps (4.5h total)\n\n**E2 Example Schedule:**\n• Core: 12:00 AM - 4:30 AM\n• Nap 1: 9:00 AM - 9:20 AM\n• Nap 2: 2:00 PM - 2:20 PM\n\n**Benefits:**\n• Significant time savings\n• Flexible scheduling options\n• Good balance of benefits and difficulty\n\n**Challenges:**\n• Requires precise timing\n• Social restrictions increase\n• Longer adaptation period\n\n**Adaptation Time:** 2-4 weeks typically\n\n**Important:**\n• Start with E1 before attempting E2/E3\n• Never skip naps during adaptation\n• Use light alarms for naps"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Yapı:** Bir kısaltılmış ana uyku + Çoklu şekerlemeler\n**Zorluk:** ⭐⭐⭐☆☆ (Orta seviye)\n\n**Varyantlar:**\n• **E1:** 6s ana + 1 şekerleme (6,5s toplam)\n• **E2:** 4,5s ana + 2 şekerleme (5,5s toplam)\n• **E3:** 3s ana + 3 şekerleme (4,5s toplam)\n\n**E2 Örnek Program:**\n• Ana: 00:00 - 04:30\n• Şekerleme 1: 09:00 - 09:20\n• Şekerleme 2: 14:00 - 14:20\n\n**Faydalar:**\n• Önemli zaman tasarrufu\n• Esnek programlama seçenekleri\n• Fayda ve zorluk arasında iyi denge\n\n**Zorluklar:**\n• Kesin zamanlama gerektirir\n• Sosyal kısıtlamalar artar\n• Daha uzun adaptasyon süresi\n\n**Adaptasyon Süresi:** Genellikle 2-4 hafta\n\n**Önemli:**\n• E2/E3'e geçmeden önce E1 ile başlayın\n• Adaptasyon sırasında şekerleme atlamayın\n• Şekerlemeler için hafif alarmlar kullanın"
+          }
+        }
+      }
+    },
+    "education.article.triphasic.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triphasic Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triphasik Uyku"
+          }
+        }
+      }
+    },
+    "education.article.triphasic.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Three equal sleep periods distributed throughout the day."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gün boyunca dağıtılmış üç eşit uyku dönemi."
+          }
+        }
+      }
+    },
+    "education.article.triphasic.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Structure:** Three equal sleep periods\n**Total Sleep:** 4.5-5 hours\n**Difficulty:** ⭐⭐⭐⭐☆ (Advanced)\n\n**Schedule Example:**\n• Sleep 1: 11:00 PM - 12:30 AM (1.5h)\n• Sleep 2: 7:00 AM - 8:30 AM (1.5h)\n• Sleep 3: 3:00 PM - 4:30 PM (1.5h)\n\n**Benefits:**\n• No single long sleep period\n• Good for shift workers\n• Balanced energy distribution\n\n**Challenges:**\n• Very restrictive schedule\n• Difficult social coordination\n• Requires precise timing\n• Long adaptation period\n\n**Adaptation Time:** 3-6 weeks\n\n**Warning:**\nThis schedule is very challenging and not recommended for beginners. Consider starting with biphasic or E1 first."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Yapı:** Üç eşit uyku dönemi\n**Toplam Uyku:** 4,5-5 saat\n**Zorluk:** ⭐⭐⭐⭐☆ (İleri seviye)\n\n**Program Örneği:**\n• Uyku 1: 23:00 - 00:30 (1,5s)\n• Uyku 2: 07:00 - 08:30 (1,5s)\n• Uyku 3: 15:00 - 16:30 (1,5s)\n\n**Faydalar:**\n• Tek uzun uyku dönemi yok\n• Vardiya çalışanları için iyi\n• Dengeli enerji dağılımı\n\n**Zorluklar:**\n• Çok kısıtlayıcı program\n• Zor sosyal koordinasyon\n• Kesin zamanlama gerektirir\n• Uzun adaptasyon süresi\n\n**Adaptasyon Süresi:** 3-6 hafta\n\n**Uyarı:**\nBu program çok zorlayıcıdır ve yeni başlayanlar için önerilmez. Önce bifazik veya E1 ile başlamayı düşünün."
+          }
+        }
+      }
+    },
+    "education.article.uberman.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uberman Sleep (Extreme)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uberman Uyku (Ekstrem)"
+          }
+        }
+      }
+    },
+    "education.article.uberman.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The most extreme polyphasic schedule - 6 naps, no core sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En ekstrem polifazik program - 6 şekerleme, ana uyku yok."
+          }
+        }
+      }
+    },
+    "education.article.uberman.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Structure:** 6 naps, no core sleep\n**Total Sleep:** 2-3 hours\n**Difficulty:** ⭐⭐⭐⭐⭐ (Extreme)\n\n**Schedule:**\n• 6 naps of 20-30 minutes each\n• Spaced 3.5-4 hours apart\n• Example: 2:00, 6:00, 10:00, 14:00, 18:00, 22:00\n\n**Benefits:**\n• Maximum time savings (21-22 hours awake)\n• Unique sleep efficiency\n• Ultimate polyphasic experience\n\n**Challenges:**\n• Extremely difficult adaptation\n• Very strict schedule requirements\n• Severe social limitations\n• High failure rate (>90%)\n• Not sustainable long-term for most\n\n**Health Risks:**\n• Cognitive impairment\n• Mood disorders\n• Immune system suppression\n• Hormone disruption\n\n**⚠️ Strong Warning:**\nThis schedule is extremely challenging and carries significant health risks. Not recommended for anyone. Consult healthcare professionals before attempting."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Yapı:** 6 şekerleme, ana uyku yok\n**Toplam Uyku:** 2-3 saat\n**Zorluk:** ⭐⭐⭐⭐⭐ (Ekstrem)\n\n**Program:**\n• Her biri 20-30 dakika olan 6 şekerleme\n• 3,5-4 saat arayla\n• Örnek: 02:00, 06:00, 10:00, 14:00, 18:00, 22:00\n\n**Faydalar:**\n• Maksimum zaman tasarrufu (21-22 saat uyanık)\n• Eşsiz uyku verimliliği\n• Nihai polifazik deneyim\n\n**Zorluklar:**\n• Son derece zor adaptasyon\n• Çok sıkı program gereksinimleri\n• Ciddi sosyal sınırlamalar\n• Yüksek başarısızlık oranı (>%90)\n• Çoğu için uzun vadede sürdürülebilir değil\n\n**Sağlık Riskleri:**\n• Bilişsel bozukluk\n• Duygudurum bozuklukları\n• Bağışıklık sistemi baskılanması\n• Hormon bozukluğu\n\n**⚠️ Güçlü Uyarı:**\nBu program son derece zorlayıcıdır ve önemli sağlık riskleri taşır. Kimse için önerilmez. Denemeden önce sağlık uzmanlarına danışın."
+          }
+        }
+      }
+    },
+    "education.article.dymaxion.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dymaxion Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dymaxion Uyku"
+          }
+        }
+      }
+    },
+    "education.article.dymaxion.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Four 30-minute naps spaced 6 hours apart - theoretical and impractical."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "6 saat arayla 4 adet 30 dakikalık şekerleme - teorik ve pratik dışı."
+          }
+        }
+      }
+    },
+    "education.article.dymaxion.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Structure:** 4 naps, no core sleep\n**Total Sleep:** 2 hours\n**Difficulty:** ⭐⭐⭐⭐⭐ (Extreme/Theoretical)\n\n**Schedule:**\n• 4 naps of 30 minutes each\n• Spaced exactly 6 hours apart\n• Example: 6:00, 12:00, 18:00, 24:00\n\n**Origin:**\nNamed after Buckminster Fuller, who claimed to follow this schedule. However, historical evidence suggests he eventually abandoned it due to practical difficulties.\n\n**Why It's Impractical:**\n• Extremely rigid timing\n• Impossible to maintain socially\n• No flexibility for life events\n• Very high failure rate\n• Significant health risks\n\n**Reality Check:**\nThis schedule is more of a theoretical concept than a practical sleep pattern. Even its namesake couldn't maintain it long-term.\n\n**⚠️ Not Recommended:**\nThis schedule is included for educational purposes only. It's not recommended for anyone to attempt."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Yapı:** 4 şekerleme, ana uyku yok\n**Toplam Uyku:** 2 saat\n**Zorluk:** ⭐⭐⭐⭐⭐ (Ekstrem/Teorik)\n\n**Program:**\n• Her biri 30 dakika olan 4 şekerleme\n• Tam 6 saat arayla\n• Örnek: 06:00, 12:00, 18:00, 24:00\n\n**Kökeni:**\nBu programı takip ettiğini iddia eden Buckminster Fuller'dan adını alır. Ancak tarihi kanıtlar, pratik zorluklardan dolayı sonunda bunu terk ettiğini gösteriyor.\n\n**Neden Pratik Değil:**\n• Son derece katı zamanlama\n• Sosyal olarak sürdürülemez\n• Yaşam olayları için esneklik yok\n• Çok yüksek başarısızlık oranı\n• Önemli sağlık riskleri\n\n**Gerçek Kontrol:**\nBu program, pratik bir uyku düzeninden çok teorik bir konsepttir. Adını veren kişi bile bunu uzun vadede sürdüremedi.\n\n**⚠️ Önerilmez:**\nBu program yalnızca eğitim amaçlı dahil edilmiştir. Kimsenin denemesi önerilmez."
+          }
+        }
+      }
+    },
+    "education.article.scheduleComparison.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Comparison Guide"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program Karşılaştırma Rehberi"
+          }
+        }
+      }
+    },
+    "education.article.scheduleComparison.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detailed comparison of all polyphasic schedules by difficulty, flexibility, and time savings."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm polifazik programların zorluk, esneklik ve zaman tasarrufu açısından detaylı karşılaştırması."
+          }
+        }
+      }
+    },
+    "education.article.scheduleComparison.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Schedule Comparison Table:**\n\n**Biphasic**\n• Total Sleep: 6.5-7h\n• Difficulty: ⭐⭐☆☆☆\n• Flexibility: High\n• Social Impact: Low\n• Success Rate: 80-90%\n\n**Everyman E1**\n• Total Sleep: 6.5h\n• Difficulty: ⭐⭐⭐☆☆\n• Flexibility: Medium\n• Social Impact: Low-Medium\n• Success Rate: 60-70%\n\n**Everyman E2**\n• Total Sleep: 5.5h\n• Difficulty: ⭐⭐⭐☆☆\n• Flexibility: Medium\n• Social Impact: Medium\n• Success Rate: 40-50%\n\n**Triphasic**\n• Total Sleep: 4.5-5h\n• Difficulty: ⭐⭐⭐⭐☆\n• Flexibility: Low\n• Social Impact: High\n• Success Rate: 20-30%\n\n**Uberman**\n• Total Sleep: 2-3h\n• Difficulty: ⭐⭐⭐⭐⭐\n• Flexibility: None\n• Social Impact: Extreme\n• Success Rate: <10%\n\n**Recommendation:**\nStart with Biphasic → E1 → E2 progression. Never attempt extreme schedules without extensive experience."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Program Karşılaştırma Tablosu:**\n\n**Bifazik**\n• Toplam Uyku: 6,5-7s\n• Zorluk: ⭐⭐☆☆☆\n• Esneklik: Yüksek\n• Sosyal Etki: Düşük\n• Başarı Oranı: %80-90\n\n**Everyman E1**\n• Toplam Uyku: 6,5s\n• Zorluk: ⭐⭐⭐☆☆\n• Esneklik: Orta\n• Sosyal Etki: Düşük-Orta\n• Başarı Oranı: %60-70\n\n**Everyman E2**\n• Toplam Uyku: 5,5s\n• Zorluk: ⭐⭐⭐☆☆\n• Esneklik: Orta\n• Sosyal Etki: Orta\n• Başarı Oranı: %40-50\n\n**Triphasic**\n• Toplam Uyku: 4,5-5s\n• Zorluk: ⭐⭐⭐⭐☆\n• Esneklik: Düşük\n• Sosyal Etki: Yüksek\n• Başarı Oranı: %20-30\n\n**Uberman**\n• Toplam Uyku: 2-3s\n• Zorluk: ⭐⭐⭐⭐⭐\n• Esneklik: Yok\n• Sosyal Etki: Ekstrem\n• Başarı Oranı: <%10\n\n**Öneri:**\nBifazik → E1 → E2 ilerlemesi ile başlayın. Kapsamlı deneyim olmadan ekstrem programları asla denemeyin."
+          }
+        }
+      }
+    },
+    "education.article.scheduleSelection.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to Choose Your Schedule"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programınızı Nasıl Seçersiniz"
+          }
+        }
+      }
+    },
+    "education.article.scheduleSelection.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step-by-step guide to selecting the right polyphasic schedule for your lifestyle."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yaşam tarzınıza uygun polifazik programı seçmek için adım adım rehber."
+          }
+        }
+      }
+    },
+    "education.article.scheduleSelection.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Step 1: Assess Your Situation**\n• Work schedule flexibility\n• Social commitments\n• Family responsibilities\n• Health status\n• Previous sleep experience\n\n**Step 2: Define Your Goals**\n• How much time do you want to save?\n• What's your risk tolerance?\n• How important is social flexibility?\n• Are you doing this temporarily or long-term?\n\n**Step 3: Choose Based on Experience**\n\n**Complete Beginner:**\nStart with Biphasic sleep. It's the safest introduction to polyphasic concepts.\n\n**Some Experience:**\nTry Everyman E1 if biphasic feels too easy and you want more time savings.\n\n**Experienced:**\nE2 might be suitable if you've successfully adapted to E1 and want further optimization.\n\n**Step 4: Consider Your Lifestyle**\n\n**Students:** E1 or E2 can work well\n**Office Workers:** Biphasic is often most practical\n**Shift Workers:** Triphasic might suit irregular schedules\n**Parents:** Usually stick to biphasic\n**Retirees:** More flexibility for experimentation\n\n**Golden Rule:**\nAlways start easier than you think you can handle. You can always increase difficulty later."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Adım 1: Durumunuzu Değerlendirin**\n• İş programı esnekliği\n• Sosyal taahhütler\n• Aile sorumlulukları\n• Sağlık durumu\n• Önceki uyku deneyimi\n\n**Adım 2: Hedeflerinizi Tanımlayın**\n• Ne kadar zaman tasarrufu istiyorsunuz?\n• Risk toleransınız nedir?\n• Sosyal esneklik ne kadar önemli?\n• Bunu geçici mi yoksa uzun vadeli mi yapıyorsunuz?\n\n**Adım 3: Deneyime Göre Seçin**\n\n**Tam Yeni Başlayan:**\nBifazik uyku ile başlayın. Polifazik kavramlara en güvenli giriştir.\n\n**Biraz Deneyim:**\nBifazik çok kolay geliyorsa ve daha fazla zaman tasarrufu istiyorsanız Everyman E1 deneyin.\n\n**Deneyimli:**\nE1'e başarıyla adapte olduysanız ve daha fazla optimizasyon istiyorsanız E2 uygun olabilir.\n\n**Adım 4: Yaşam Tarzınızı Düşünün**\n\n**Öğrenciler:** E1 veya E2 iyi çalışabilir\n**Ofis Çalışanları:** Bifazik genellikle en pratik\n**Vardiya Çalışanları:** Triphasic düzensiz programlara uyabilir\n**Ebeveynler:** Genellikle bifazik ile kalın\n**Emekliler:** Deney için daha fazla esneklik\n\n**Altın Kural:**\nHer zaman kaldırabileceğinizi düşündüğünüzden daha kolay başlayın. Zorluğu sonra artırabilirsiniz."
+          }
+        }
+      }
+    },
+    "education.faq_section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frequently Asked Questions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sık Sorulan Sorular"
+          }
+        }
+      }
+    },
+    "education.no_results_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Results Found"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonuç Bulunamadı"
+          }
+        }
+      }
+    },
+    "education.no_results_message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try adjusting your search terms or browse all categories to find what you're looking for."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arama terimlerinizi ayarlamayı deneyin veya aradığınızı bulmak için tüm kategorilere göz atın."
+          }
+        }
+      }
+    },
+    "education.clear_search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Search"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aramayı Temizle"
+          }
+        }
+      }
+    },
+    "education.article.adaptationProcess.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Adaptation Process: From \"Zombie Mode\" to Success"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Süreci: \"Zombi Modu\"ndan Başarıya"
+          }
+        }
+      }
+    },
+    "education.article.adaptationProcess.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding the challenging but critical transition period when your body adapts to polyphasic sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vücudunuzun polifazik uykuya adapte olduğu zorlu ama kritik geçiş dönemini anlama."
+          }
+        }
+      }
+    },
+    "education.article.adaptationProcess.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**What is the Adaptation Process?**\n\nTransitioning to polyphasic sleep isn't like flipping a switch to start a new routine. The adaptation process is the challenging but critical period when your body and brain transition from monophasic (single-phase) to polyphasic (multi-phase) sleep. This process includes a difficult stage commonly called \"Zombie Mode,\" and the success or failure of polyphasic sleep attempts is largely determined during this period.\n\n**Purpose of Adaptation:**\nAdaptation is the process of teaching your brain to reprogram sleep stages. Normally, you need to go through certain light sleep stages to reach deep sleep (SWS) and REM sleep. The sleep deprivation during the adaptation process puts the brain into a \"crisis mode.\" This crisis mode forces the brain to enter valuable REM and deep sleep much more quickly. After successful adaptation, your body can rapidly enter these critical sleep stages even in a 20-minute nap.\n\n**Duration and Stages:**\nWhile adaptation time varies from person to person and depends on the chosen schedule, it typically lasts 2 to 4 weeks. This process generally consists of the following stages:\n\n**Stage 1: First Few Days (Deceptive Ease)**\nSince the body hasn't yet felt the sleep debt, the first 1-2 days can be surprisingly easy. You might even feel energetic.\n\n**Stage 2: Beginning of Zombie Mode (Approximately Days 3-10)**\nThis is the most challenging stage. Serious sleep deprivation begins. The body applies intense pressure to return to the old routine. This is why this period is called \"Zombie Mode.\"\n\n**Stage 3: Breaking Point and Recovery (Approximately Days 10-21)**\nIf you can stick to the schedule, the brain slowly begins to adapt. You start waking up more refreshed from naps, and the effects of \"Zombie Mode\" diminish.\n\n**Stage 4: Full Adaptation (After 2-4 Weeks)**\nThe schedule now starts to feel natural. You feel energetic and alert between naps. You're no longer fighting sleep but living in your new rhythm.\n\n**⚠️ Important Note:**\nThis is a controlled sleep deprivation process. Success depends on strict adherence to the schedule and understanding your body's limits."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Adaptasyon Süreci Nedir?**\n\nPolifazik uykuya geçiş, bir düğmeye basıp yeni bir düzene başlamak gibi değildir. Vücudunuzun ve beyninizin monofazik (tek fazlı) uykudan polifazik (çok fazlı) uykuya geçiş yaptığı bu sancılı ama kritik döneme adaptasyon süreci denir. Bu süreç, genellikle \"Zombi Modu\" olarak adlandırılan zorlu bir evreyi içerir ve polifazik uyku denemelerinin başarısı veya başarısızlığı bu süreçte belli olur.\n\n**Adaptasyonun Amacı:**\nAdaptasyon, beyninize uyku evrelerini yeniden programlamayı öğretme sürecidir. Normalde, derin uyku (SWS) ve REM uykusuna ulaşmak için belirli bir süre hafif uyku evrelerinden geçmeniz gerekir. Adaptasyon sürecindeki uyku yoksunluğu, beyni bir \"kriz moduna\" sokar. Bu kriz modu, beyni değerli olan REM ve derin uykuya çok daha hızlı girmeye zorlar. Başarılı bir adaptasyonun sonunda, 20 dakikalık bir şekerlemede bile vücudunuz hızla bu kritik uyku evrelerine girebilir hale gelir.\n\n**Süre ve Evreler:**\nAdaptasyon süresi kişiden kişiye ve seçilen programa göre değişmekle birlikte, genellikle 2 ila 4 hafta sürer. Bu süreç genellikle aşağıdaki evrelerden oluşur:\n\n**Evre 1: İlk Birkaç Gün (Aldatıcı Kolaylık)**\nVücut henüz uyku borcunu hissetmediği için ilk 1-2 gün şaşırtıcı derecede kolay geçebilir. Hatta kendinizi enerjik hissedebilirsiniz.\n\n**Evre 2: Zombi Modunun Başlangıcı (Yaklaşık 3-10. Günler)**\nBu, en zorlu evredir. Ciddi bir uyku yoksunluğu başlar. Vücut eski düzenine dönmek için yoğun bir baskı uygular. Bu döneme \"Zombi Modu\" denmesinin sebebi budur.\n\n**Evre 3: Kırılma Noktası ve İyileşme (Yaklaşık 10-21. Günler)**\nEğer programa sadık kalabilirseniz, beyin yavaş yavaş adapte olmaya başlar. Şekerlemelerden daha dinlenmiş uyanmaya başlarsınız ve \"Zombi Modu\"nun etkileri azalır.\n\n**Evre 4: Tam Adaptasyon (2-4 Hafta Sonrası)**\nProgram artık doğal hissettirmeye başlar. Şekerlemeler arasında kendinizi enerjik ve zinde hissedersiniz. Artık uykuyla savaşmıyor, yeni ritminizde yaşıyorsunuzdur.\n\n**⚠️ Önemli Not:**\nBu, kontrollü bir uyku yoksunluğu sürecidir. Başarı, programa katı bir şekilde bağlı kalmaya ve vücudunuzun sınırlarını anlamaya bağlıdır."
+          }
+        }
+      }
+    },
+    "education.article.adaptationChallenges.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physical and Mental Challenges During Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon Sırasında Yaşanacak Fiziksel ve Zihinsel Zorluklar"
+          }
+        }
+      }
+    },
+    "education.article.adaptationChallenges.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding the symptoms and challenges you'll face during the adaptation process."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon sürecinde karşılaşacağınız semptomları ve zorlukları anlama."
+          }
+        }
+      }
+    },
+    "education.article.adaptationChallenges.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The adaptation process is essentially a controlled sleep deprivation process. Therefore, you should be prepared to experience all the challenges that come with sleep deprivation:\n\n**Mental Challenges:**\n\n**Brain Fog**\nThe most common symptom. You'll have difficulty organizing your thoughts, focusing, and making simple decisions.\n\n**Excessive Irritability and Emotional Instability**\nYou may get angry at the smallest things and become overly emotional (crying, anger outbursts) in situations you normally wouldn't react to.\n\n**Memory Problems**\nYour short-term memory can be severely affected. You may forget what you just said or what you were going to do.\n\n**Lack of Motivation**\nEven the simplest tasks can seem like mountains.\n\n**Microsleeps and Hallucinations**\nIn extreme fatigue situations, you may fall asleep for seconds while your eyes are open (microsleep) or experience auditory/visual hallucinations. This is a sign that you've reached a dangerous level.\n\n**Physical Challenges:**\n\n**Deep and Crushing Fatigue**\nNot just feeling sleepy, but a exhaustion that penetrates to your bones.\n\n**Headaches**\nA common response from the body to stress and changing sleep patterns.\n\n**Feeling Cold**\nYour ability to regulate body temperature may be temporarily impaired.\n\n**Burning and Dryness in Eyes**\nThe constant effort to stay awake tires the eyes.\n\n**Nausea and Loss of Appetite**\nThe body's stress response can affect the digestive system.\n\n**⚠️ Warning Signs**\nIf you experience hallucinations, severe cognitive impairment, or safety concerns, you should consider stopping the process and consulting a healthcare professional."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon süreci, aslında kontrollü bir uyku yoksunluğu sürecidir. Bu nedenle, uyku yoksunluğunun getirdiği tüm zorlukları deneyimlemeye hazır olmalısınız:\n\n**Zihinsel Zorluklar:**\n\n**Beyin Sisi (Brain Fog)**\nEn yaygın belirtidir. Düşüncelerinizi toparlamakta, odaklanmakta ve basit kararlar vermekte zorlanırsınız.\n\n**Aşırı Sinirlilik ve Duygusal Dengesizlik**\nEn küçük şeylere bile sinirlenebilir, normalde tepki vermeyeceğiniz durumlarda aşırı duygusal (ağlama, öfke patlamaları) olabilirsiniz.\n\n**Hafıza Sorunları**\nKısa süreli hafızanız ciddi şekilde etkilenebilir. Az önce ne dediğinizi veya ne yapacağınızı unutabilirsiniz.\n\n**Motivasyon Eksikliği**\nEn basit görevler bile dağ gibi görünebilir.\n\n**Mikro Uykular ve Halüsinasyonlar**\nAşırı yorgunluk durumlarında, gözleriniz açıkken saniyelerliğine uykuya dalabilir (mikro uyku) veya işitsel/görsel halüsinasyonlar yaşayabilirsiniz. Bu, tehlikeli bir seviyeye ulaştığınızın işaretidir.\n\n**Fiziksel Zorluklar:**\n\n**Derin ve Ezici Yorgunluk**\nSadece uykulu hissetmek değil, kemiklerinize kadar işleyen bir bitkinlik hali.\n\n**Baş Ağrıları**\nVücudun strese ve değişen uyku düzenine verdiği yaygın bir tepkidir.\n\n**Üşüme Hissi**\nVücut ısısını düzenleme yeteneğiniz geçici olarak bozulabilir.\n\n**Gözlerde Yanma ve Kuruluk**\nSürekli uyanık kalma çabası gözleri yorar.\n\n**Mide Bulantısı ve İştahsızlık**\nVücudun stres tepkisi sindirim sistemini etkileyebilir.\n\n**⚠️ Uyarı İşaretleri**\nHalüsinasyonlar, ciddi bilişsel bozukluk veya güvenlik kaygıları yaşıyorsanız, süreci durdurmayı ve bir sağlık uzmanına danışmayı düşünmelisiniz."
+          }
+        }
+      }
+    },
+    "education.article.zombieMode.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overcoming \"Zombie Mode\": Tips and Strategies"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Zombi Modu\"nu Aşmak İçin İpuçları ve Stratejiler"
+          }
+        }
+      }
+    },
+    "education.article.zombieMode.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Essential strategies to survive and overcome the most challenging phase of polyphasic sleep adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku adaptasyonunun en zorlu evresini atlatmak için hayati stratejiler."
+          }
+        }
+      }
+    },
+    "education.article.zombieMode.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here are some vital strategies to help you get through this challenging period:\n\n**GOLDEN RULE: 100% Adherence to Schedule**\nThis is the most important rule in adaptation. Missing a nap, snoozing an alarm, or sleeping extra can reset the entire process. Sending mixed signals to your body makes adaptation impossible.\n\n**Alarm Discipline**\nDon't rely on a single alarm. Use multiple loud alarms, ones placed across the room, or ones that require solving a puzzle. Get out of bed immediately when the alarm goes off, without negotiation.\n\n**Immediate Wake-Up Ritual**\nCreate a routine to do as soon as the alarm goes off. For example: splash cold water on your face, turn on a bright light, drink a glass of water, or do 10 jumping jacks. The goal is to shock the body out of sleep stupor.\n\n**Proper Nutrition**\nAvoid heavy, carbohydrate-rich and sugary foods when in \"Zombie Mode.\" These make your sleepiness worse. Choose light snacks containing protein and healthy fats. Stay hydrated by drinking plenty of water.\n\n**Avoid Caffeine**\nAlthough caffeine may seem like a lifeline, it sabotages adaptation. It prevents your brain from naturally learning to enter REM/deep sleep and reduces the quality of your naps.\n\n**Stay Active**\nAvoid monotonous and boring tasks during times when you need to stay awake. Move, chat with someone, listen to music, clean the house. Keep your mind and body busy.\n\n**Build a Support System**\nIt's very difficult to get through this process alone. Tell your family, friends, or roommates what you're doing. Ask them to check on you, call to keep you awake, or provide moral support when you're struggling.\n\n**⚠️ Important Note:**\nThese strategies can help, but safety should always be your top priority. If you experience dangerous symptoms, consider stopping the process."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu zorlu süreci atlatmanıza yardımcı olacak bazı hayati stratejiler şunlardır:\n\n**ALTIN KURAL: Programa %100 Sadakat**\nAdaptasyondaki en önemli kural budur. Bir şekerlemeyi kaçırmak, alarmı ertelemek veya fazladan uyumak tüm süreci sıfırlayabilir. Vücudunuza karışık sinyaller göndermek, adaptasyonu imkansız hale getirir.\n\n**Alarm Disiplini**\nTek bir alarma güvenmeyin. Çok sesli, odanın diğer ucunda duran veya çözmeniz gereken bir bulmaca içeren alarmlar kullanın. Alarm çaldığı anda pazarlıksız bir şekilde yataktan kalkın.\n\n**Anında Uyanma Ritüeli**\nAlarm çalar çalmaz yapacağınız bir rutin oluşturun. Örneğin: Yüzünüze soğuk su çarpmak, parlak bir ışığı açmak, bir bardak su içmek veya 10 tane zıplama (jumping jack) yapmak. Amaç, vücudu şoklayarak uyku sersemliğinden çıkarmaktır.\n\n**Doğru Beslenme**\n\"Zombi Modu\"ndayken ağır, karbonhidratlı ve şekerli yiyeceklerden kaçının. Bunlar uykunuzu daha da ağırlaştırır. Hafif, protein ve sağlıklı yağ içeren atıştırmalıkları tercih edin. Bol su içerek hidratlı kalın.\n\n**Kafeinden Uzak Durun**\nKafein bir can simidi gibi görünse de, adaptasyonu sabote eder. Beyninizin doğal olarak REM/derin uykuya girmeyi öğrenmesini engeller ve şekerlemelerinizin kalitesini düşürür.\n\n**Aktif Kalın**\nUyanık kalmanız gereken zamanlarda monoton ve sıkıcı işlerden kaçının. Hareket edin, biriyle sohbet edin, müzik dinleyin, evi temizleyin. Zihninizi ve bedeninizi meşgul tutun.\n\n**Destek Sistemi Oluşturun**\nBu süreci tek başınıza atlatmak çok zordur. Ailenize, arkadaşlarınıza veya ev arkadaşınıza ne yaptığınızı anlatın. Sizi kontrol etmelerini, uyanık tutmak için aramalarını veya zorlandığınızda moral vermelerini isteyin.\n\n**⚠️ Önemli Not:**\nBu stratejiler yardımcı olabilir ancak güvenlik her zaman en önemli önceliğiniz olmalıdır. Tehlikeli semptomlar yaşıyorsanız, süreci durdurmayı düşünün."
+          }
+        }
+      }
+    },
+    "education.article.adaptationSuccess.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signs of Successful Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarılı Bir Adaptasyonun İşaretleri"
+          }
+        }
+      }
+    },
+    "education.article.adaptationSuccess.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recognizing the positive signs that indicate your body is successfully adapting to polyphasic sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vücudunuzun polifazik uykuya başarıyla adapte olduğunu gösteren olumlu işaretleri tanıma."
+          }
+        }
+      }
+    },
+    "education.article.adaptationSuccess.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Zombie Mode\" doesn't last forever. If you stick to your schedule, you'll notice these positive signs indicating your body is beginning to adapt:\n\n**Refreshing Naps**\nYou start waking up from 20-minute sleeps feeling refreshed and energetic, as if you've slept for hours.\n\n**Easy Awakening**\nYou begin to naturally wake up just before the alarm goes off, or you wake up easily without struggle when the alarm sounds.\n\n**Mental Clarity**\nBrain fog disappears. You feel consistently awake, focused, and clear throughout the day.\n\n**REM Burst**\nYou start having very vivid, intense, and easily memorable dreams during your naps. This is the strongest evidence that your brain is quickly entering REM sleep.\n\n**Stable Energy**\nYou don't experience sudden energy drops during the day. Your energy level becomes stable.\n\n**Natural Schedule Adherence**\nThe schedule begins to feel natural and automatic. You no longer need to force yourself to follow it.\n\n**⚠️ Important Note:**\nThese signs typically appear gradually between weeks 2-4. If you don't see any improvement after 3-4 weeks, consider whether the schedule is right for you."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Zombi Modu\" sonsuza dek sürmez. Eğer programa sadık kalırsanız, vücudunuzun adapte olmaya başladığını gösteren şu olumlu işaretleri fark edeceksiniz:\n\n**Canlandırıcı Şekerlemeler**\n20 dakikalık uykudan sonra sanki saatlerce uyumuş gibi dinç ve enerjik uyanmaya başlarsınız.\n\n**Kolay Uyanma**\nAlarm çalmadan hemen önce doğal olarak uyanmaya başlarsınız veya alarm çaldığında zorlanmadan kalkarsınız.\n\n**Zihinsel Netlik**\nBeyin sisi ortadan kalkar. Gün boyunca kendinizi tutarlı bir şekilde uyanık, odaklanmış ve net hissedersiniz.\n\n**REM Patlaması**\nŞekerlemelerinizde çok canlı, yoğun ve kolayca hatırlanabilen rüyalar görmeye başlarsınız. Bu, beyninizin REM uykusuna hızlıca girdiğinin en güçlü kanıtıdır.\n\n**İstikrarlı Enerji**\nGün içinde ani enerji düşüşleri yaşamazsınız. Enerji seviyeniz stabil hale gelir.\n\n**Doğal Program Uyumu**\nProgram doğal ve otomatik hissettirmeye başlar. Artık kendinizi bunu takip etmeye zorlamanız gerekmez.\n\n**⚠️ Önemli Not:**\nBu işaretler genellikle 2-4. haftalar arasında kademeli olarak ortaya çıkar. 3-4 hafta sonra hiçbir iyileşme görmüyorsanız, programın size uygun olup olmadığını düşünün."
+          }
+        }
+      }
+    },
+    "education.article.adaptationFailure.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When to Stop: Safe Return to Normal Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne Zaman Durmalı: Normal Düzene Güvenli Dönüş"
+          }
+        }
+      }
+    },
+    "education.article.adaptationFailure.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knowing when to stop the adaptation process and how to safely return to monophasic sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon sürecini ne zaman durduracağınızı ve monofazik uykuya nasıl güvenli dönüş yapacağınızı bilme."
+          }
+        }
+      }
+    },
+    "education.article.adaptationFailure.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not everyone can adapt to polyphasic sleep, and this is not a failure. Your health should always be the priority. You should consider stopping the process and consulting a professional in the following situations:\n\n**When to Stop (Red Lines):**\n\n• If you're experiencing situations that threaten your safety (such as microsleeps while driving or at work)\n• If your mental health is severely affected (excessive anxiety, depressive thoughts, paranoia)\n• If your physical health is deteriorating (constantly getting sick, dizziness, etc.)\n• If the adaptation process lasts longer than 2-3 weeks without showing any positive development\n• If you experience severe hallucinations or cognitive impairment\n• If you cannot maintain basic daily functions\n\n**Safe Return to Normal Schedule:**\n\n**Don't Oversleep Suddenly**\nWhen you quit the process, don't try to sleep 12-14 hours immediately. This can further disrupt your body rhythm.\n\n**Gradual Recovery**\nAim for 8-10 hours of sleep the first night. It's natural for your body to sleep more than normal for a few days to pay off the \"sleep debt.\"\n\n**Focus on Sleep Hygiene**\nHelp your body return to its natural monophasic rhythm by establishing regular bedtime and wake times, staying away from screens, and creating a relaxing bedtime routine.\n\n**Be Kind to Yourself**\nThis was an experiment. You learned your body's limits. View this as a learning process, not a failure.\n\n**⚠️ Important Note:**\nIf you experience persistent health problems after stopping, consult a healthcare professional. Your safety and health are always more important than any sleep experiment."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herkes polifazik uykuya adapte olamaz ve bu bir başarısızlık değildir. Sağlığınız her zaman önceliklidir. Aşağıdaki durumlarda süreci durdurup bir uzmana danışmayı düşünmelisiniz:\n\n**Ne Zaman Durmalı (Kırmızı Çizgiler):**\n\n• Güvenliğinizi tehdit eden durumlar yaşıyorsanız (örneğin, araba kullanırken veya işte mikro uykulara dalıyorsanız)\n• Zihinsel sağlığınız ciddi şekilde etkileniyorsa (aşırı anksiyete, depresif düşünceler, paranoya)\n• Fiziksel sağlığınız bozuluyorsa (sürekli hasta olmak, baş dönmesi, vb.)\n• Adaptasyon süreci 2-3 haftadan uzun sürmesine rağmen hiçbir olumlu gelişme göstermiyorsanız\n• Ciddi halüsinasyonlar veya bilişsel bozukluk yaşıyorsanız\n• Temel günlük işlevleri sürdüremiyorsanız\n\n**Normal Düzene Güvenli Dönüş:**\n\n**Aniden Aşırı Uyumayın**\nSüreci bıraktığınızda hemen 12-14 saat uyumaya çalışmayın. Bu, vücut ritminizi daha da bozabilir.\n\n**Yavaşça İyileşin**\nİlk gece 8-10 saatlik bir uyku hedefleyin. Vücudunuzun \"uyku borcunu\" ödemesi için birkaç gün boyunca normalden daha fazla uyuması doğaldır.\n\n**Uyku Hijyenine Odaklanın**\nDüzenli bir yatma ve kalkma saati belirleyerek, ekranlardan uzak durarak ve rahatlatıcı bir yatma rutini oluşturarak vücudunuzun doğal monofazik ritmine dönmesine yardımcı olun.\n\n**Kendinize Karşı Nazik Olun**\nBu bir deneydi. Vücudunuzun sınırlarını öğrendiniz. Bunu bir başarısızlık olarak değil, bir öğrenme süreci olarak görün.\n\n**⚠️ Önemli Not:**\nDurduktan sonra sürekli sağlık sorunları yaşıyorsanız, bir sağlık uzmanına danışın. Güvenliğiniz ve sağlığınız her zaman herhangi bir uyku deneyinden daha önemlidir."
+          }
+        }
+      }
+    },
+    "education.article.myth.intelligence.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: Geniuses Sleep Less (Da Vinci, Tesla)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Dahiler Az Uyur (Da Vinci, Tesla)"
+          }
+        }
+      }
+    },
+    "education.article.myth.intelligence.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debunking the myth that famous historical figures practiced polyphasic sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ünlü tarihsel figürlerin polifazik uyku uyguladığı efsanesini çürütme."
+          }
+        }
+      }
+    },
+    "education.article.myth.intelligence.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is the biggest and most misleading marketing argument for polyphasic sleep.\n\n**No Historical Evidence**\nThere is no concrete historical evidence that Leonardo da Vinci or Nikola Tesla applied a systematic polyphasic sleep program. These claims mostly come from unreliable biographies or hearsay information. While these individuals were likely extremely hardworking and sometimes had irregular sleep habits, this doesn't mean they consciously followed an Uberman or Dymaxion program.\n\n**Intelligence and Sleep Relationship**\nModern science shows the opposite. Adequate and quality sleep is critically important for cognitive functions like learning, memory consolidation, and problem-solving. Serious sleep deprivation can temporarily lower IQ scores and severely impair mental performance.\n\n**The Reality**\nBeing intelligent doesn't require sleeping less; on the contrary, the brain needs sufficient sleep to function optimally. The association between genius and sleep deprivation is a dangerous myth that can lead people to harm their health in pursuit of productivity.\n\n**⚠️ Important Note**\nMany of history's greatest thinkers actually emphasized the importance of sleep and rest for creativity and problem-solving."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu, polifazik uykunun en büyük ve en yanıltıcı pazarlama argümanıdır.\n\n**Tarihsel Kanıt Yok**\nLeonardo da Vinci veya Nikola Tesla'nın sistematik bir polifazik uyku programı uyguladığına dair hiçbir somut tarihsel kanıt yoktur. Bu iddialar, çoğunlukla güvenilir olmayan biyografilerden veya kulaktan dolma bilgilerden kaynaklanan söylentilerdir. Bu kişilerin son derece çalışkan ve bazen düzensiz uyku alışkanlıklarına sahip olmaları muhtemeldir, ancak bu, bilinçli bir Uberman veya Dymaxion programı uyguladıkları anlamına gelmez.\n\n**Zeka ve Uyku İlişkisi**\nModern bilim, tam tersini göstermektedir. Yeterli ve kaliteli uyku; öğrenme, hafıza konsolidasyonu ve problem çözme gibi bilişsel işlevler için kritik öneme sahiptir. Ciddi uyku yoksunluğu, IQ puanını geçici olarak düşürebilir ve zihinsel performansı ciddi şekilde baltalar.\n\n**Gerçek**\nZeki olmak daha az uyumayı gerektirmez; tam aksine, beynin en iyi şekilde çalışması için yeterli uykuya ihtiyacı vardır. Deha ile uyku yoksunluğu arasındaki ilişki, insanları verimlilik peşinde sağlıklarına zarar vermeye yönlendirebilecek tehlikeli bir efsanedir.\n\n**⚠️ Önemli Not**\nTarihteki en büyük düşünürlerden çoğu aslında yaratıcılık ve problem çözme için uyku ve dinlenmenin önemini vurgulamışlardır."
+          }
+        }
+      }
+    },
+    "education.article.myth.sleepStages.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: Light Sleep is 'Unnecessary' and Can Be Skipped"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Hafif Uyku 'Gereksizdir' ve Atlanabilir"
+          }
+        }
+      }
+    },
+    "education.article.myth.sleepStages.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why light sleep stages are essential and cannot be simply eliminated without consequences."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hafif uyku evrelerinin neden gerekli olduğu ve sonuçları olmadan atlanamayacağı."
+          }
+        }
+      }
+    },
+    "education.article.myth.sleepStages.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light sleep also has important and necessary functions.\n\n**Light Sleep is a Transition Stage**\nLight sleep (N1 and N2 stages) serves as a natural and necessary bridge for transitioning from wakefulness to deep sleep and REM. Defining these stages as 'unnecessary' is like viewing a house's foundation or corridors as 'unnecessary.'\n\n**The Role of N2 Sleep**\nThe N2 stage, which comprises about half of our sleep, plays a role in memory consolidation and processing motor skills (such as learning to play a musical instrument). The long-term consequences of constantly skipping this stage are not fully known.\n\n**Forced Adaptation vs. Natural Function**\nPolyphasic sleep forces the body into a 'survival mode' by minimizing these stages, but it hasn't been proven that this situation is completely harmless. The body naturally progresses through all sleep stages for good reasons.\n\n**Sleep Architecture Matters**\nResearch shows that the natural progression through sleep stages is important for:\n• Memory consolidation\n• Brain detoxification\n• Emotional regulation\n• Physical restoration\n\n**⚠️ Important Note**\nWhile the body can adapt to prioritize REM and deep sleep during extreme sleep deprivation, this doesn't mean light sleep is unnecessary - it means the body is in crisis mode."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hafif uykunun da önemli ve gerekli işlevleri vardır.\n\n**Hafif Uyku Bir Geçiş Evresidir**\nHafif uyku (N1 ve N2 evreleri), uyanıklıktan derin uykuya ve REM'e geçiş için doğal ve gerekli bir köprü görevi görür. Bu evreleri 'gereksiz' olarak tanımlamak, bir evin temelini veya koridorlarını 'gereksiz' olarak görmeye benzer.\n\n**N2 Uykusunun Rolü**\nUykumuzun yaklaşık yarısını oluşturan N2 evresi, hafızanın pekiştirilmesinde ve motor becerilerin (örneğin bir müzik aleti çalmayı öğrenme) işlenmesinde rol oynar. Bu evreyi sürekli olarak atlamanın uzun vadeli sonuçları tam olarak bilinmemektedir.\n\n**Zorlanmış Adaptasyon vs Doğal İşlev**\nPolifazik uyku, vücudu bir 'hayatta kalma moduna' sokarak bu evreleri en aza indirmeye zorlar, ancak bu durumun tamamen zararsız olduğu kanıtlanmamıştır. Vücut doğal olarak tüm uyku evrelerinden geçer ve bunun iyi nedenleri vardır.\n\n**Uyku Mimarisi Önemlidir**\nAraştırmalar, uyku evrelerindeki doğal ilerlemenin şunlar için önemli olduğunu göstermektedir:\n• Hafıza pekişmesi\n• Beyin detoksifikasyonu\n• Duygusal düzenleme\n• Fiziksel onarım\n\n**⚠️ Önemli Not**\nVücut aşırı uyku yoksunluğu sırasında REM ve derin uykuya öncelik verecek şekilde adapte olabilse de, bu hafif uykunun gereksiz olduğu anlamına gelmez - vücudun kriz modunda olduğu anlamına gelir."
+          }
+        }
+      }
+    },
+    "education.article.myth.suitability.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: Polyphasic Sleep is Suitable for Everyone"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Polifazik Uyku Herkes İçin Uygundur"
+          }
+        }
+      }
+    },
+    "education.article.myth.suitability.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understanding why biological and genetic differences make polyphasic sleep impossible or dangerous for many people."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biyolojik ve genetik farklılıkların neden polifazik uykuyu birçok insan için imkansız veya tehlikeli hale getirdiğini anlama."
+          }
+        }
+      }
+    },
+    "education.article.myth.suitability.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biological and genetic differences make polyphasic sleep impossible or very dangerous for some people.\n\n**Genetic Factors**\nSome people naturally need less sleep ('short sleepers'), but this condition covers a very small percentage of the population. Most people are genetically programmed for 7-9 hours of continuous sleep per day. Fighting this biological need is not just a matter of willpower, but also fighting against genetics.\n\n**Age Considerations**\n• **Children and Teenagers**: Need more sleep for growth and development\n• **Elderly**: Often have fragmented sleep naturally\n• **Adults**: Most are suited for monophasic sleep patterns\n\n**Health Conditions**\nAs detailed in Chapter 5, it's extremely risky for certain groups to attempt polyphasic sleep:\n• Pregnant women\n• People with chronic illnesses\n• Those with mental health conditions\n• People taking certain medications\n• Those with sleep disorders\n\n**Individual Chronotype**\nEveryone has a natural circadian rhythm preference:\n• Morning larks vs. night owls\n• Different optimal sleep timing\n• Varying sleep duration needs\n\n**⚠️ Important Note**\nClaiming that polyphasic sleep works for everyone with 'enough willpower' is not only false but potentially dangerous. It ignores individual biology and health considerations."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biyolojik ve genetik farklılıklar, polifazik uykuyu bazı insanlar için imkansız veya çok tehlikeli hale getirir.\n\n**Genetik Faktörler**\nBazı insanlar doğal olarak daha az uykuya ihtiyaç duyar ('kısa uyuyanlar'), ancak bu durum toplumun çok küçük bir yüzdesini kapsar. Çoğu insan genetik olarak günde 7-9 saatlik kesintisiz uykuya programlanmıştır. Bu biyolojik ihtiyaca karşı savaşmak, sadece irade meselesi değil, aynı zamanda genetiğe karşı savaşmaktır.\n\n**Yaş Değerlendirmeleri**\n• **Çocuklar ve Gençler**: Büyüme ve gelişim için daha fazla uykuya ihtiyaç duyar\n• **Yaşlılar**: Doğal olarak genellikle parçalı uykuya sahiptir\n• **Yetişkinler**: Çoğu monofazik uyku düzenleri için uygundur\n\n**Sağlık Durumları**\nBölüm 5'te detaylandırıldığı gibi, belirli gruplar için polifazik uyku denemek son derece risklidir:\n• Hamile kadınlar\n• Kronik hastalığı olanlar\n• Zihinsel sağlık sorunları yaşayanlar\n• Belirli ilaçlar alanlar\n• Uyku bozukluğu olanlar\n\n**Bireysel Kronotip**\nHerkesin doğal bir sirkadyen ritim tercihi vardır:\n• Sabah insanları vs. gece kuşları\n• Farklı optimal uyku zamanlamaları\n• Değişen uyku süresi ihtiyaçları\n\n**⚠️ Önemli Not**\nPolifazik uykunun 'yeterli irade' ile herkes için işe yaradığını iddia etmek sadece yanlış değil, aynı zamanda potansiyel olarak tehlikelidir. Bireysel biyoloji ve sağlık değerlendirmelerini göz ardı eder."
+          }
+        }
+      }
+    },
+    "education.article.myth.flexibility.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: You Can Be Flexible Once Adapted"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Adapte Olduktan Sonra Esnek Olabilirsiniz"
+          }
+        }
+      }
+    },
+    "education.article.myth.flexibility.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why polyphasic sleep schedules are extremely rigid and offer almost no flexibility."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku programlarının neden son derece katı olduğu ve neredeyse hiç esneklik sunmadığı."
+          }
+        }
+      }
+    },
+    "education.article.myth.flexibility.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polyphasic sleep is extremely fragile and offers almost no flexibility.\n\n**Fragile Balance**\nSuccessful adaptation depends on the body establishing a delicate balance. This balance relies on strict adherence to the schedule. An unexpected social event, illness, or just 'one-time' skipping a nap can upset this balance.\n\n**Crash Risk**\nMissing a nap can cause the body to be unable to handle the next waking period and 'crash.' This crash can result in uncontrollable falling asleep and sleeping for hours, which resets the entire adaptation process.\n\n**Lifestyle Constraints**\nA polyphasic lifestyle means you need to plan the rest of your life around this rigid sleep schedule:\n• No spontaneous social activities\n• Limited travel options\n• Difficulty with work meetings or events\n• Relationship challenges\n• Emergency situations become problematic\n\n**Social Isolation**\nThe inflexibility often leads to:\n• Missing family gatherings\n• Inability to attend evening events\n• Sleeping separately from partners\n• Declining social invitations\n\n**⚠️ Important Note**\nThe promise of 'flexibility once adapted' is misleading. Most successful polyphasic sleepers report that maintaining the schedule becomes a constant constraint on their lives."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku, son derece kırılgandır ve esneklik payı neredeyse sıfırdır.\n\n**Kırılgan Denge**\nBaşarılı bir adaptasyon, vücudun hassas bir denge kurmasıyla mümkündür. Bu denge, katı bir programa bağlılığa dayanır. Beklenmedik bir sosyal etkinlik, bir hastalık veya sadece 'bir kereliğine' atlanan bir şekerleme, bu dengeyi altüst edebilir.\n\n**Çöküş Riski**\nBir şekerlemeyi kaçırmak, vücudun bir sonraki uyanıklık periyodunu kaldıramamasına ve 'çökmesine' (crash) neden olabilir. Bu çöküş, kontrol edilemeyen bir uykuya dalma ve saatlerce uyuma ile sonuçlanabilir, bu da tüm adaptasyon sürecini başa döndürür.\n\n**Yaşam Tarzı Kısıtlamaları**\nPolifazik bir yaşam tarzı, hayatınızın geri kalanını bu katı uyku programı etrafında planlamanız gerektiği anlamına gelir:\n• Kendiliğinden sosyal aktivite yok\n• Sınırlı seyahat seçenekleri\n• İş toplantıları veya etkinliklerde zorluk\n• İlişki zorlukları\n• Acil durumlar sorunlu hale gelir\n\n**Sosyal İzolasyon**\nEsneklik eksikliği genellikle şunlara yol açar:\n• Aile toplantılarını kaçırma\n• Akşam etkinliklerine katılamama\n• Partnerlerden ayrı uyuma\n• Sosyal davetleri geri çevirme\n\n**⚠️ Önemli Not**\n'Adapte olduktan sonra esneklik' vaadi yanıltıcıdır. Başarılı polifazik uyuyanların çoğu, programı sürdürmenin hayatlarında sürekli bir kısıtlama haline geldiğini rapor ediyor."
+          }
+        }
+      }
+    },
+    "education.article.myth.caffeine.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: Caffeine Helps With Adaptation"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Kafein Adaptasyona Yardımcı Olur"
+          }
+        }
+      }
+    },
+    "education.article.myth.caffeine.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why caffeine and energy drinks actually sabotage the polyphasic sleep adaptation process."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kafein ve enerji içeceklerinin polifazik uyku adaptasyon sürecini neden sabote ettiği."
+          }
+        }
+      }
+    },
+    "education.article.myth.caffeine.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caffeine and other stimulants actively sabotage the adaptation process.\n\n**Impairs Sleep Quality**\nCaffeine blocks adenosine receptors, which allow the brain to detect sleep signals. This makes it difficult or impossible to enter deep sleep or REM during naps. So even if you sleep, you won't get the quality rest your body needs.\n\n**Prevents Natural Adaptation**\nThe adaptation process depends on the body learning to naturally prioritize essential sleep stages under sleep pressure. Caffeine interferes with this natural learning process by artificially masking sleepiness signals.\n\n**Dependency and Side Effects**\nAdding caffeine dependency on top of sleep deprivation increases side effects like:\n• Irritability and anxiety\n• Heart palpitations\n• Jitteriness\n• Digestive issues\n• Tolerance buildup requiring more caffeine\n\n**Timing Issues**\nCaffeine has a half-life of 6-8 hours, meaning it can interfere with sleep quality even many hours after consumption. This is particularly problematic for polyphasic schedules with frequent naps.\n\n**Withdrawal Complications**\nIf you're dependent on caffeine and try to eliminate it during adaptation, withdrawal symptoms can compound the already difficult adaptation process.\n\n**⚠️ Important Note**\nFor successful adaptation, the body needs to learn its natural sleep rhythms without chemical interference. Caffeine prevents this learning process from occurring."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kafein ve diğer uyarıcılar, adaptasyon sürecini aktif olarak sabote eder.\n\n**Uyku Kalitesini Bozar**\nKafein, beynin uyku sinyallerini algılamasını sağlayan adenozin reseptörlerini bloke eder. Bu, şekerlemeler sırasında derin uykuya veya REM'e girmenizi zorlaştırır veya engeller. Yani, uyusanız bile vücudunuzun ihtiyaç duyduğu kaliteli dinlenmeyi alamazsınız.\n\n**Doğal Adaptasyonu Engeller**\nAdaptasyon süreci, vücudun uyku baskısı altında doğal olarak temel uyku evrelerine öncelik vermeyi öğrenmesine bağlıdır. Kafein, uykusuzluk sinyallerini yapay olarak maskeleyerek bu doğal öğrenme sürecini engeller.\n\n**Bağımlılık ve Yan Etkiler**\nUyku yoksunluğunun üzerine bir de kafein bağımlılığı eklemek, şu yan etkileri artırır:\n• Sinirlilik ve anksiyete\n• Kalp çarpıntısı\n• Titreme\n• Sindirim sorunları\n• Daha fazla kafein gerektiren tolerans oluşumu\n\n**Zamanlama Sorunları**\nKafeinin yarı ömrü 6-8 saattir, yani tüketimden saatler sonra bile uyku kalitesini etkileyebilir. Bu, sık şekerleme yapılan polifazik programlar için özellikle sorunludur.\n\n**Yoksunluk Komplikasyonları**\nKafeine bağımlıysanız ve adaptasyon sırasında onu elimine etmeye çalışırsanız, yoksunluk semptomları zaten zor olan adaptasyon sürecini daha da zorlaştırabilir.\n\n**⚠️ Önemli Not**\nBaşarılı adaptasyon için, vücudun kimyasal müdahale olmadan doğal uyku ritimlerini öğrenmesi gerekir. Kafein bu öğrenme sürecinin gerçekleşmesini engeller."
+          }
+        }
+      }
+    },
+    "education.article.myth.productivity.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myth: All Extra Time is Productive Time"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efsane: Tüm Ekstra Zaman Verimli Zamandır"
+          }
+        }
+      }
+    },
+    "education.article.myth.productivity.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why the quality of gained time may not always be high and comes with significant social costs."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kazanılan zamanın kalitesinin neden her zaman yüksek olmayabileceği ve önemli sosyal maliyetleri olduğu."
+          }
+        }
+      }
+    },
+    "education.article.myth.productivity.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The quality of gained time may not always be high.\n\n**Low-Productivity Hours**\nEspecially when you're awake at midnight or very early in the morning, while the world sleeps, the things you can do are limited. You need very good advance planning to use these hours productively. Otherwise, you might spend these 'gained' hours aimlessly browsing the internet or sitting around not knowing what to do.\n\n**Limited Activities**\nDuring off-peak hours, you can't:\n• Contact business associates\n• Shop at most stores\n• Attend social events\n• Access many services\n• Collaborate with others easily\n\n**Social Cost**\nThe time you gain is often stolen from your social life. You can't:\n• Go out with friends in the evening\n• Watch a movie with family\n• Sleep in the same bed as your spouse\n• Attend dinner parties or gatherings\n• Participate in evening activities\n\n**Quality vs. Quantity**\nMore time doesn't automatically mean better productivity. Factors affecting productivity during extra hours:\n• Reduced cognitive performance from sleep deprivation\n• Lack of external stimulation and collaboration\n• Difficulty maintaining motivation during isolated hours\n• Limited access to resources and support\n\n**The Hidden Cost**\nThe psychological cost of social isolation can outweigh the benefits of gained time. Human connections and shared experiences are crucial for mental health and overall life satisfaction.\n\n**⚠️ Important Note**\nBefore committing to polyphasic sleep for productivity, honestly assess whether you can meaningfully use the extra hours without sacrificing important relationships and experiences."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kazanılan zamanın kalitesi, her zaman yüksek olmayabilir.\n\n**Düşük Verimli Saatler**\nÖzellikle gecenin bir yarısı veya sabahın çok erken saatlerinde uyanık olduğunuzda, dünya uyurken yapabileceğiniz şeyler sınırlıdır. Bu saatleri verimli kullanmak için önceden çok iyi bir planlama yapmanız gerekir. Aksi takdirde, bu 'kazanılmış' saatleri amaçsızca internette gezinerek veya ne yapacağınızı bilemeden boş boş oturarak geçirebilirsiniz.\n\n**Sınırlı Aktiviteler**\nYoğun olmayan saatlerde şunları yapamazsınız:\n• İş ortakları ile iletişim kurmak\n• Çoğu mağazadan alışveriş yapmak\n• Sosyal etkinliklere katılmak\n• Birçok hizmete erişmek\n• Başkalarıyla kolayca işbirliği yapmak\n\n**Sosyal Maliyet**\nKazandığınız zaman genellikle sosyal yaşamınızdan çaldığınız zamandır. Şunları yapamazsınız:\n• Arkadaşlarınızla akşam dışarı çıkmak\n• Ailenizle bir film izlemek\n• Eşinizle aynı yatakta uyumak\n• Akşam yemeklerine veya toplantılara katılmak\n• Akşam aktivitelerine katılmak\n\n**Kalite vs. Miktar**\nDaha fazla zaman otomatik olarak daha iyi verimlilik anlamına gelmez. Ekstra saatlerde verimi etkileyen faktörler:\n• Uyku yoksunluğundan azalan bilişsel performans\n• Dış uyarım ve işbirliği eksikliği\n• İzole saatlerde motivasyonu sürdürme zorluğu\n• Kaynak ve destek erişimi sınırlılığı\n\n**Gizli Maliyet**\nSosyal izolasyonun psikolojik maliyeti, kazanılan zamandan daha ağır basabilir. İnsan bağlantıları ve paylaşılan deneyimler, zihinsel sağlık ve genel yaşam memnuniyeti için çok önemlidir.\n\n**⚠️ Önemli Not**\nVerimlilik için polifazik uykuya geçmeden önce, önemli ilişkiler ve deneyimler feda etmeden ekstra saatleri anlamlı bir şekilde kullanabilip kullanamayacağınızı dürüstçe değerlendirin."
+          }
+        }
+      }
+    },
+    "education.article.benefits.timeGain.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claimed Benefit: Time Gain"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İddia Edilen Avantaj: Zaman Kazanma"
+          }
+        }
+      }
+    },
+    "education.article.benefits.timeGain.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The primary promise of polyphasic sleep: gaining 3-6 extra hours of wakefulness daily."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uykunun temel vaadi: günde 3-6 saat ekstra uyanıklık kazanma."
+          }
+        }
+      }
+    },
+    "education.article.benefits.timeGain.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is the biggest and most appealing promise of polyphasic sleep.\n\n**The Basic Promise**\nInstead of traditional 8-hour sleep, by sleeping a total of 2-5 hours daily depending on your program, you gain 3-6 extra hours of 'wakefulness time' each day. This can equal a full workday per week.\n\n**Potential Use Cases**\n• Students: More study time\n• Entrepreneurs: Advancing their projects\n• Artists: Nurturing their creativity\n• Personal development and hobbies\n• Learning new skills\n\n**Post-Adaptation Claims**\nAfter successful adaptation, users report that this gained time is quality and productive since they don't experience energy drops during the day.\n\n**Reality Check**\nWhile the math is appealing, the quality of these extra hours and the long-term sustainability of this approach are questionable. The time gained often comes at the cost of health, relationships, and social life.\n\n**⚠️ Important Note**\nMost of these benefits come from anecdotal user experiences rather than scientific studies. The actual quality and sustainability of gained time vary greatly between individuals."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu, polifazik uykunun en büyük ve en çekici vaadi.\n\n**Temel Vaat**\nGeleneksel 8 saatlik uyku yerine, programınıza bağlı olarak günde toplam 2 ila 5 saat uyuyarak, her gün fazladan 3 ila 6 saat 'uyanık kalma süresi' kazanırsınız. Bu, haftada fazladan tam bir iş gününe denk gelebilir.\n\n**Potansiyel Kullanım Alanları**\n• Öğrenciler: Daha fazla ders çalışma zamanı\n• Girişimciler: Projelerini ilerletme\n• Sanatçılar: Yaratıcılıklarını besleme\n• Kişisel gelişim ve hobiler\n• Yeni beceriler öğrenme\n\n**Adaptasyon Sonrası İddialar**\nBaşarılı bir adaptasyon sonrası, kullanıcılar gün içinde enerji düşüşleri yaşanmadığı için bu kazanılan zamanın kaliteli ve verimli olduğunu bildiriyor.\n\n**Gerçeklik Kontrolü**\nMatematik çekici olsa da, bu ekstra saatlerin kalitesi ve bu yaklaşımın uzun vadeli sürdürülebilirliği sorgulanabilir. Kazanılan zaman genellikle sağlık, ilişkiler ve sosyal yaşam pahasına gelir.\n\n**⚠️ Önemli Not**\nBu avantajların büyük bir kısmı bilimsel çalışmalardan çok, kullanıcıların kişisel deneyimlerinden geliyor. Kazanılan zamanın gerçek kalitesi ve sürdürülebilirliği kişiden kişiye büyük farklar gösteriyor."
+          }
+        }
+      }
+    },
+    "education.article.benefits.mentalClarity.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claimed Benefit: Mental Clarity and Focus"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İddia Edilen Avantaj: Zihinsel Netlik ve Odaklanma"
+          }
+        }
+      }
+    },
+    "education.article.benefits.mentalClarity.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reports of continuous mental clarity and focus throughout the day after successful adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarılı adaptasyon sonrası gün boyunca sürekli zihinsel netlik ve odaklanma raporları."
+          }
+        }
+      }
+    },
+    "education.article.benefits.mentalClarity.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After overcoming the 'zombie mode,' many users report experiencing continuous mental clarity and focus throughout the day.\n\n**Claimed Benefits**\n• No afternoon crashes like in monophasic sleep\n• No post-meal drowsiness\n• Consistent energy levels throughout the day\n• Enhanced cognitive performance\n• Better concentration for extended periods\n\n**The Science Behind It**\nThe theory is that by forcing the brain to quickly enter essential sleep stages (REM and deep sleep), the body becomes more efficient at obtaining restorative sleep in shorter periods.\n\n**Creativity Enhancement**\nFrequent REM sleep entry may enhance the brain's ability to make unusual connections between different ideas, potentially triggering creativity.\n\n**Individual Variation**\nThese benefits are highly individual and depend on:\n• Successful adaptation completion\n• Individual sleep genetics\n• Lifestyle factors\n• Stress levels\n\n**⚠️ Important Note**\nThese benefits are primarily reported during the honeymoon phase of adaptation. Long-term sustainability and whether these effects persist over months or years is largely unknown."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Zombi modu' atlatıldıktan sonra, birçok kullanıcı gün boyunca kesintisiz bir zihinsel netlik ve odaklanma durumu yaşadığını bildiriyor.\n\n**İddia Edilen Faydalar**\n• Monofazik uykudaki gibi öğleden sonra çöküşleri yok\n• Yemek sonrası uyuşukluk yaşanmıyor\n• Gün boyunca tutarlı enerji seviyeleri\n• Gelişmiş bilişsel performans\n• Uzun süre daha iyi konsantrasyon\n\n**Arkasındaki Bilim**\nTeori, beyni hızla temel uyku evrelerine (REM ve derin uyku) girmeye zorlayarak, vücudun daha kısa sürelerde restoratif uyku elde etmede daha verimli hale geldiğidir.\n\n**Yaratıcılık Artışı**\nSık sık REM uykusuna girmenin, beynin farklı fikirler arasında alışılmadık bağlantılar kurma yeteneğini artırabileceği ve bunun da yaratıcılığı tetikleyebileceği öne sürülüyor.\n\n**Bireysel Farklılık**\nBu faydalar oldukça bireyseldir ve şunlara bağlıdır:\n• Başarılı adaptasyon tamamlanması\n• Bireysel uyku genetiği\n• Yaşam tarzı faktörleri\n• Stres seviyeleri\n\n**⚠️ Önemli Not**\nBu faydalar esas olarak adaptasyonun balayı evresinde rapor ediliyor. Uzun vadeli sürdürülebilirlik ve bu etkilerin aylar veya yıllar boyunca devam edip etmediği büyük ölçüde bilinmiyor."
+          }
+        }
+      }
+    },
+    "education.article.benefits.dreamQuality.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claimed Benefit: Enhanced Dream Quality and Lucid Dreaming"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İddia Edilen Avantaj: Rüya Kalitesi Artışı ve Lüsid Rüya"
+          }
+        }
+      }
+    },
+    "education.article.benefits.dreamQuality.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Increased vivid dreams and lucid dreaming opportunities due to frequent REM sleep entry."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sık REM uykusuna girme nedeniyle canlı rüyalar ve lüsid rüya fırsatları artışı."
+          }
+        }
+      }
+    },
+    "education.article.benefits.dreamQuality.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is the most frequently reported and scientifically explainable side effect.\n\n**REM Rebound Effect**\nWhen the body experiences sleep deprivation, it prioritizes the most critical sleep stages at the first opportunity. This phenomenon is called 'REM Rebound.'\n\n**Enhanced Dream Experience**\nBecause the brain rapidly enters REM stage during naps, dreams become:\n• Extremely vivid and detailed\n• Easily remembered\n• More emotionally intense\n• More surreal and creative\n\n**Lucid Dreaming Opportunities**\nThe frequent REM entry significantly increases the likelihood of experiencing lucid dreams - the ability to realize you're dreaming and potentially control the dream.\n\n**Scientific Explanation**\nThis effect is well-documented in sleep research. When sleep-deprived, the brain compensates by maximizing REM sleep density during available sleep periods.\n\n**Individual Variation**\nNot everyone experiences enhanced dreams to the same degree. Factors include:\n• Natural dream recall ability\n• Individual REM sensitivity\n• Adaptation success\n• Stress levels\n\n**⚠️ Important Note**\nWhile enhanced dreams can be enjoyable, they're actually a sign that your body is in sleep debt and compensating, not necessarily a healthy long-term state."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu, en sık rapor edilen ve bilimsel olarak en açıklanabilir yan etki.\n\n**REM Rebound (Geri Tepmesi)**\nVücut uyku yoksunluğu çektiğinde, ilk fırsatta en kritik uyku evrelerine öncelik verir. Bu fenomene 'REM Rebound' denir.\n\n**Gelişmiş Rüya Deneyimi**\nBeyin şekerlemeler sırasında hızla REM evresine geçtiği için, rüyalar:\n• Son derece canlı ve ayrıntılı\n• Kolay hatırlanabilir\n• Daha duygusal olarak yoğun\n• Daha gerçeküstü ve yaratıcı\n\n**Lüsid Rüya Fırsatları**\nSık REM girişi, lüsid rüya deneyimleme - rüya içinde olduğunuzun farkına varma ve potansiyel olarak rüyayı kontrol etme - olasılığını önemli ölçüde artırır.\n\n**Bilimsel Açıklama**\nBu etki uyku araştırmalarında iyi belgelenmiştir. Uyku yoksunu olduğunda, beyin mevcut uyku periyotlarında REM uyku yoğunluğunu maksimize ederek telafi eder.\n\n**Bireysel Farklılık**\nHerkes aynı derecede gelişmiş rüyalar yaşamaz. Faktörler şunları içerir:\n• Doğal rüya hatırlama yeteneği\n• Bireysel REM duyarlılığı\n• Adaptasyon başarısı\n• Stres seviyeleri\n\n**⚠️ Önemli Not**\nGelişmiş rüyalar keyifli olabilse de, aslında vücudunuzun uyku borcunda olduğu ve telafi ettiği, mutlaka sağlıklı uzun vadeli bir durum olmadığının işareti."
+          }
+        }
+      }
+    },
+    "education.article.benefits.discipline.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claimed Benefit: Enhanced Self-Discipline"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İddia Edilen Avantaj: Öz Disiplin Geliştirme"
+          }
+        }
+      }
+    },
+    "education.article.benefits.discipline.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rigid schedule requirements may lead to improved discipline and time management skills."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katı program gereksinimleri gelişmiş disiplin ve zaman yönetimi becerilerine yol açabilir."
+          }
+        }
+      }
+    },
+    "education.article.benefits.discipline.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rigidity of polyphasic sleep schedules can instill discipline that spreads to all areas of life.\n\n**Forced Discipline**\nPolyphasic sleep programs require strict adherence to nap times, forcing you to plan every minute of your day meticulously.\n\n**Time Management Skills**\nThis strict planning and time management ability can help you become more organized and efficient in:\n• Work tasks\n• Study schedules\n• Personal projects\n• Daily routines\n\n**Structure and Routine**\nThe need for precise scheduling can lead to:\n• Better daily structure\n• Improved punctuality\n• Enhanced planning abilities\n• Greater awareness of time usage\n\n**Potential Spillover Effects**\n• Improved work productivity\n• Better academic performance\n• More efficient personal projects\n• Enhanced goal achievement\n\n**The Double-Edged Sword**\nWhile this discipline can be beneficial, it also comes with:\n• Extreme inflexibility\n• Constant stress about schedule adherence\n• Difficulty handling unexpected situations\n• Potential obsessive behavior patterns\n\n**⚠️ Important Note**\nThe discipline gained from polyphasic sleep is often born out of necessity rather than healthy habit formation. This type of forced discipline may not be sustainable or transferable to other life areas once the sleep schedule is abandoned."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku programlarının katılığı, hayatınızın her alanına yayılan bir öz disiplin kazandırabilir.\n\n**Zorunlu Disiplin**\nPolifazik uyku programları, şekerleme saatlerine katı bir şekilde uymanızı gerektirerek gününüzü dakikası dakikasına planlamanızı zorlar.\n\n**Zaman Yönetimi Becerileri**\nBu katı planlama ve zaman yönetimi yeteneği, şu alanlarda daha organize ve verimli olmanıza yardımcı olabilir:\n• İş görevleri\n• Ders çalışma programları\n• Kişisel projeler\n• Günlük rutinler\n\n**Yapı ve Rutin**\nKesin zamanlama ihtiyacı şunlara yol açabilir:\n• Daha iyi günlük yapı\n• Gelişmiş dakiklik\n• Artırılmış planlama yetenekleri\n• Zaman kullanımı konusunda daha fazla farkındalık\n\n**Potansiyel Yayılma Etkileri**\n• Gelişmiş iş verimliliği\n• Daha iyi akademik performans\n• Daha verimli kişisel projeler\n• Artırılmış hedef başarısı\n\n**İki Ucu Keskin Kılıç**\nBu disiplin faydalı olabilirken, aynı zamanda şunları da beraberinde getirir:\n• Aşırı katılık\n• Program uyumuna dair sürekli stres\n• Beklenmedik durumları ele alma zorluğu\n• Potansiyel obsesif davranış kalıpları\n\n**⚠️ Önemli Not**\nPolifazik uykudan kazanılan disiplin, genellikle sağlıklı alışkanlık oluşumundan çok zorunluluktan doğar. Bu tür zorlanmış disiplin, uyku programı terk edildiğinde sürdürülebilir olmayabilir veya yaşamın diğer alanlarına aktarılamayabilir."
+          }
+        }
+      }
+    },
+    "education.article.risks.hormonal.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serious Risk: Hormonal Imbalance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciddi Risk: Hormonal Dengesizlik"
+          }
+        }
+      }
+    },
+    "education.article.risks.hormonal.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep deprivation disrupts critical hormones affecting stress, growth, and appetite regulation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku yoksunluğu stres, büyüme ve iştah düzenlemesini etkileyen kritik hormonları bozar."
+          }
+        }
+      }
+    },
+    "education.article.risks.hormonal.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep is critical for hormone regulation. Insufficient sleep disrupts multiple hormonal systems:\n\n**Cortisol (Stress Hormone)**\n• Increased levels lead to chronic stress\n• Contributes to anxiety and weight gain\n• Impairs immune function\n• Affects memory and concentration\n\n**Growth Hormone**\n• Essential for muscle repair and cell renewal\n• Primarily released during deep sleep\n• Deficiency leads to poor recovery\n• Affects physical and mental development\n\n**Hunger Hormones (Ghrelin and Leptin)**\n• Ghrelin increases appetite\n• Leptin signals fullness\n• Imbalance leads to increased appetite\n• Particularly craving carbohydrates\n• Significantly increases obesity risk\n\n**Insulin Regulation**\n• Sleep deprivation causes insulin resistance\n• Increases diabetes risk\n• Affects blood sugar stability\n• Contributes to metabolic syndrome\n\n**Reproductive Hormones**\n• Disrupts testosterone and estrogen production\n• Affects fertility in both men and women\n• Impacts libido and sexual function\n• Can cause menstrual irregularities\n\n**⚠️ Important Note**\nThese hormonal disruptions are not temporary adjustments but serious health risks that can have lasting effects on your physical and mental well-being."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku, hormon düzenlemesi için kritik öneme sahiptir. Yetersiz uyku, birden fazla hormonal sistemi bozar:\n\n**Kortizol (Stres Hormonu)**\n• Artmış seviyeler kronik strese yol açar\n• Anksiyete ve kilo alımına katkıda bulunur\n• Bağışıklık işlevini bozar\n• Hafıza ve konsantrasyonu etkiler\n\n**Büyüme Hormonu**\n• Kas onarımı ve hücre yenilenmesi için gerekli\n• Öncelikle derin uyku sırasında salınır\n• Eksiklik kötü toparlanmaya yol açar\n• Fiziksel ve zihinsel gelişimi etkiler\n\n**Açlık Hormonları (Ghrelin ve Leptin)**\n• Ghrelin iştahı artırır\n• Leptin tokluk sinyali verir\n• Dengesizlik artan iştaha yol açar\n• Özellikle karbonhidrat aşermesi\n• Obezite riskini önemli ölçüde artırır\n\n**İnsülin Düzenlemesi**\n• Uyku yoksunluğu insülin direncine neden olur\n• Diyabet riskini artırır\n• Kan şekeri stabilitesini etkiler\n• Metabolik sendroma katkıda bulunur\n\n**Üreme Hormonları**\n• Testosteron ve östrojen üretimini bozar\n• Hem erkek hem kadınlarda doğurganlığı etkiler\n• Libido ve cinsel işlevi etkiler\n• Adet düzensizliklerine neden olabilir\n\n**⚠️ Önemli Not**\nBu hormonal bozukluklar geçici düzenlemeler değil, fiziksel ve zihinsel sağlığınızda kalıcı etkiler bırakabilecek ciddi sağlık riskleridir."
+          }
+        }
+      }
+    },
+    "education.article.risks.immune.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serious Risk: Immune System Weakening"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciddi Risk: Bağışıklık Sistemi Zayıflaması"
+          }
+        }
+      }
+    },
+    "education.article.risks.immune.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep deprivation severely compromises immune function, increasing susceptibility to infections and diseases."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku yoksunluğu bağışıklık işlevini ciddi şekilde bozar, enfeksiyon ve hastalıklara duyarlılığı artırır."
+          }
+        }
+      }
+    },
+    "education.article.risks.immune.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The body produces infection-fighting T-cells and cytokines during sleep. Insufficient sleep weakens your immune system.\n\n**Immediate Effects**\n• Increased susceptibility to common colds\n• Longer recovery times from illnesses\n• Reduced vaccine effectiveness\n• Higher risk of bacterial infections\n\n**T-Cell Production**\n• T-cells are crucial for immune response\n• Production peaks during deep sleep\n• Sleep deprivation reduces T-cell count\n• Compromises ability to fight new pathogens\n\n**Cytokine Regulation**\n• Cytokines coordinate immune response\n• Imbalance leads to chronic inflammation\n• Affects healing and recovery processes\n• Contributes to autoimmune conditions\n\n**Long-term Consequences**\n• Increased risk of serious infections\n• Reduced ability to fight cancer cells\n• Chronic inflammatory conditions\n• Accelerated aging process\n\n**Research Evidence**\nStudies show that people getting less than 7 hours of sleep are:\n• 3x more likely to develop a cold\n• More susceptible to flu viruses\n• Have reduced antibody response to vaccines\n• Take longer to recover from injuries\n\n**⚠️ Important Note**\nA weakened immune system puts you at risk for both minor illnesses and serious health conditions. This is particularly dangerous during flu seasons or disease outbreaks."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vücut, enfeksiyonlarla savaşan T-hücrelerini ve sitokinleri uyku sırasında üretir. Yetersiz uyku, bağışıklık sisteminizi zayıflatır.\n\n**Anında Etkiler**\n• Soğuk algınlığına artan duyarlılık\n• Hastalıklardan daha uzun toparlanma süreleri\n• Azalan aşı etkinliği\n• Bakteriyel enfeksiyon riski artışı\n\n**T-Hücre Üretimi**\n• T-hücreler bağışıklık tepkisi için çok önemlidir\n• Üretim derin uyku sırasında zirve yapar\n• Uyku yoksunluğu T-hücre sayısını azaltır\n• Yeni patojenlerle savaşma yeteneğini bozar\n\n**Sitokin Düzenlemesi**\n• Sitokinler bağışıklık tepkisini koordine eder\n• Dengesizlik kronik inflamasyona yol açar\n• İyileşme ve toparlanma süreçlerini etkiler\n• Otoimmün durumları tetikler\n\n**Uzun Vadeli Sonuçlar**\n• Ciddi enfeksiyon riski artışı\n• Kanser hücrelerini savaşma yeteneği azalması\n• Kronik inflamatuar durumlar\n• Hızlanmış yaşlanma süreci\n\n**Araştırma Kanıtları**\nÇalışmalar 7 saatten az uyuyan kişilerin:\n• Soğuk algınlığı geliştirme olasılığının 3 kat daha fazla\n• Grip virüslerine daha duyarlı\n• Aşılara karşı azalan antikor tepkisi\n• Yaralardan daha uzun toparlanma süresi\n\n**⚠️ Önemli Not**\nZayıflamış bağışıklık sistemi sizi hem küçük hastalıklara hem de ciddi sağlık sorunlarına karşı riske atar. Bu, özellikle grip sezonları veya hastalık salgınları sırasında tehlikelidir."
+          }
+        }
+      }
+    },
+    "education.article.risks.cognitive.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serious Risk: Cognitive Impairment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciddi Risk: Bilişsel Bozulma"
+          }
+        }
+      }
+    },
+    "education.article.risks.cognitive.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep deprivation severely impacts memory, learning, decision-making, and overall cognitive function."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku yoksunluğu hafıza, öğrenme, karar verme ve genel bilişsel işlevleri ciddi şekilde etkiler."
+          }
+        }
+      }
+    },
+    "education.article.risks.cognitive.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The brain consolidates new information into permanent memory during sleep, especially during SWS and REM stages.\n\n**Memory and Learning Impairment**\n• Difficulty forming new memories\n• Reduced ability to recall information\n• Impaired skill acquisition\n• Slower learning processes\n• Problems with information retention\n\n**Decision-Making and Judgment**\nSleep deprivation impairs the prefrontal cortex, responsible for:\n• Logical thinking and reasoning\n• Risk assessment and evaluation\n• Planning and organization\n• Impulse control and self-regulation\n• Executive decision-making\n\n**Attention and Concentration**\n• Reduced sustained attention\n• Increased distractibility\n• Difficulty focusing on tasks\n• Impaired multitasking abilities\n• Slower reaction times\n\n**Problem-Solving Abilities**\n• Reduced creative thinking\n• Difficulty with complex problems\n• Impaired analytical skills\n• Decreased mental flexibility\n• Poor abstract reasoning\n\n**Academic and Work Performance**\n• Decreased productivity\n• Increased errors and mistakes\n• Poor academic performance\n• Reduced professional competence\n• Difficulty meeting deadlines\n\n**Long-term Consequences**\n• Potential permanent cognitive damage\n• Increased risk of dementia\n• Accelerated brain aging\n• Reduced neuroplasticity\n\n**⚠️ Important Note**\nCognitive impairment from chronic sleep deprivation can be irreversible. The brain needs adequate sleep to maintain and repair neural connections essential for optimal cognitive function."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beyin, yeni öğrenilen bilgileri uyku sırasında, özellikle SWS ve REM evrelerinde kalıcı hafızaya kaydeder.\n\n**Hafıza ve Öğrenme Bozukluğu**\n• Yeni hafızalar oluşturmada zorluk\n• Bilgi hatırlamada azalan yetenek\n• Bozulmuş beceri edinimi\n• Yavaşlayan öğrenme süreçleri\n• Bilgi tutma sorunları\n\n**Karar Verme ve Muhakeme**\nUyku yoksunluğu, şunlardan sorumlu prefrontal korteksi bozar:\n• Mantıklı düşünme ve akıl yürütme\n• Risk değerlendirmesi ve analizi\n• Planlama ve organizasyon\n• Dürtü kontrolü ve öz düzenleme\n• Yürütücü karar verme\n\n**Dikkat ve Konsantrasyon**\n• Azalan sürekli dikkat\n• Artan dikkat dağınıklığı\n• Görevlere odaklanma zorluğu\n• Bozulmuş çoklu görev yetenekleri\n• Yavaşlayan tepki süreleri\n\n**Problem Çözme Yetenekleri**\n• Azalan yaratıcı düşünme\n• Karmaşık problemlerle zorluk\n• Bozulmuş analitik beceriler\n• Azalan zihinsel esneklik\n• Kötü soyut akıl yürütme\n\n**Akademik ve İş Performansı**\n• Azalan verimlilik\n• Artan hata ve yanlışlar\n• Kötü akademik performans\n• Azalan profesyonel yetkinlik\n• Son tarihleri karşılama zorluğu\n\n**Uzun Vadeli Sonuçlar**\n• Potansiyel kalıcı bilişsel hasar\n• Artan demans riski\n• Hızlanan beyin yaşlanması\n• Azalan nöroplastisite\n\n**⚠️ Önemli Not**\nKronik uyku yoksunluğundan kaynaklanan bilişsel bozulma geri dönüşümsüz olabilir. Beyin optimal bilişsel işlev için gerekli sinir bağlantılarını sürdürmek ve onarmak için yeterli uykuya ihtiyaç duyar."
+          }
+        }
+      }
+    },
+    "education.article.risks.mentalHealth.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serious Risk: Mental Health Problems"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciddi Risk: Zihinsel Sağlık Sorunları"
+          }
+        }
+      }
+    },
+    "education.article.risks.mentalHealth.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chronic sleep deprivation significantly increases the risk of anxiety, depression, and other mental health disorders."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kronik uyku yoksunluğu anksiyete, depresyon ve diğer zihinsel sağlık bozuklukları riskini önemli ölçüde artırır."
+          }
+        }
+      }
+    },
+    "education.article.risks.mentalHealth.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The combination of chronic fatigue, schedule adherence stress, and social isolation creates a perfect storm for mental health problems.\n\n**Anxiety and Panic Disorders**\n• Chronic sleep deprivation increases anxiety levels\n• Heightened stress response\n• Increased panic attack frequency\n• Difficulty managing worry and fear\n• Physical symptoms of anxiety\n\n**Depression and Mood Disorders**\n• Sleep deprivation directly increases depression risk\n• Emotional instability and mood swings\n• Feelings of hopelessness and despair\n• Loss of interest in activities\n• Difficulty experiencing pleasure\n\n**Social Isolation Effects**\nThe rigid schedule leads to:\n• Missing family gatherings and social events\n• Inability to maintain relationships\n• Sleeping separately from partners\n• Declining social invitations\n• Increased loneliness and isolation\n\n**Emotional Dysregulation**\n• Difficulty controlling emotions\n• Increased irritability and anger\n• Emotional overreactions\n• Reduced empathy and social awareness\n• Impaired emotional processing\n\n**Stress and Burnout**\n• Constant pressure to maintain schedule\n• Inability to handle unexpected situations\n• Chronic stress from sleep debt\n• Physical and emotional exhaustion\n• Reduced resilience and coping abilities\n\n**Paranoia and Psychotic Symptoms**\nSevere sleep deprivation can cause:\n• Paranoid thoughts and suspicions\n• Hallucinations (visual or auditory)\n• Delusions and distorted thinking\n• Loss of touch with reality\n• Psychotic episodes\n\n**⚠️ Important Note**\nMental health problems from chronic sleep deprivation can become severe and may require professional treatment. Some effects may persist even after returning to normal sleep patterns."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kronik yorgunluk, program uyma stresi ve sosyal izolasyon birleşimi, zihinsel sağlık sorunları için mükemmel bir fırtına yaratır.\n\n**Anksiyete ve Panik Bozuklukları**\n• Kronik uyku yoksunluğu anksiyete seviyelerini artırır\n• Yüksek stres tepkisi\n• Artan panik atak sıklığı\n• Endişe ve korku yönetme zorluğu\n• Anksiyetenin fiziksel semptomları\n\n**Depresyon ve Duygudurum Bozuklukları**\n• Uyku yoksunluğu doğrudan depresyon riskini artırır\n• Duygusal dengesizlik ve ruh hali değişimleri\n• Umutsuzluk ve çaresizlik hisleri\n• Aktivitelere karşı ilgi kaybı\n• Zevk alma zorluğu\n\n**Sosyal İzolasyon Etkileri**\nKatı program şunlara yol açar:\n• Aile toplantılarını ve sosyal etkinlikleri kaçırma\n• İlişkileri sürdürememe\n• Partnerlerden ayrı uyuma\n• Sosyal davetleri geri çevirme\n• Artan yalnızlık ve izolasyon\n\n**Duygusal Düzensizlik**\n• Duyguları kontrol etme zorluğu\n• Artan sinirlilik ve öfke\n• Duygusal aşırı tepkiler\n• Azalan empati ve sosyal farkındalık\n• Bozulmuş duygusal işleme\n\n**Stres ve Tükenmişlik**\n• Programı sürdürme konusunda sürekli baskı\n• Beklenmedik durumları ele alamama\n• Uyku borcundan kronik stres\n• Fiziksel ve duygusal tükenme\n• Azalan direnç ve başa çıkma yetenekleri\n\n**Paranoya ve Psikotik Semptomlar**\nŞiddetli uyku yoksunluğu şunlara neden olabilir:\n• Paranoid düşünceler ve şüpheler\n• Halüsinasyonlar (görsel veya işitsel)\n• Delüzyonlar ve çarpıtılmış düşünme\n• Gerçeklikle bağlantıyı kaybetme\n• Psikotik epizodlar\n\n**⚠️ Önemli Not**\nKronik uyku yoksunluğundan kaynaklanan zihinsel sağlık sorunları ciddi hale gelebilir ve profesyonel tedavi gerektirebilir. Bazı etkiler normal uyku düzenine dönüldükten sonra bile devam edebilir."
+          }
+        }
+      }
+    },
+    "education.article.risks.microsleep.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serious Risk: Microsleep and Safety Hazards"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciddi Risk: Mikro Uykular ve Güvenlik Tehlikeleri"
+          }
+        }
+      }
+    },
+    "education.article.risks.microsleep.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Involuntary microsleep episodes can occur during critical tasks, leading to potentially fatal accidents."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kritik görevler sırasında istemsiz mikro uyku epizodları meydana gelebilir ve potansiyel olarak ölümcül kazalara yol açabilir."
+          }
+        }
+      }
+    },
+    "education.article.risks.microsleep.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is one of the most dangerous risks. Your body becomes so exhausted that your brain shuts down for seconds without your awareness, even with your eyes open.\n\n**What is Microsleep?**\n• Brief episodes of sleep lasting 1-30 seconds\n• Occurs involuntarily during wakefulness\n• Can happen with eyes open\n• Person is unaware it's happening\n• Brain activity shows sleep patterns\n\n**High-Risk Situations**\nMicrosleep can occur during:\n• Driving vehicles\n• Operating heavy machinery\n• Working at heights\n• Medical procedures\n• Monitoring critical systems\n• Walking down stairs\n\n**Research Evidence**\nStudies show that staying awake for 24 hours has cognitive effects similar to:\n• Being legally intoxicated\n• Blood alcohol content of 0.08%\n• Severely impaired reaction times\n• Reduced decision-making ability\n• Compromised motor skills\n\n**Fatal Consequences**\nMicrosleep episodes have been linked to:\n• Fatal car accidents\n• Industrial accidents\n• Medical errors\n• Aviation incidents\n• Maritime disasters\n• Workplace injuries\n\n**Warning Signs**\n• Difficulty keeping eyes open\n• Frequent blinking or heavy eyelids\n• Nodding off during conversations\n• Difficulty concentrating\n• Slower reaction times\n• Memory lapses\n\n**Occupational Hazards**\nParticularly dangerous for:\n• Healthcare workers\n• Transportation operators\n• Factory workers\n• Construction workers\n• Security personnel\n• Emergency responders\n\n**⚠️ Important Note**\nMicrosleep makes polyphasic sleep an unacceptable risk for anyone whose job requires sustained attention. The potential for fatal accidents to yourself and others cannot be ignored."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu, en tehlikeli risklerden biridir. Vücudunuz o kadar yorgun düşer ki, beyniniz siz farkında olmadan, gözleriniz açıkken bile saniyeler boyunca kapanır.\n\n**Mikro Uyku Nedir?**\n• 1-30 saniye süren kısa uyku epizodları\n• Uyanıklık sırasında istemsiz olarak meydana gelir\n• Gözler açıkken olabilir\n• Kişi bunun olduğunun farkında değildir\n• Beyin aktivitesi uyku kalıpları gösterir\n\n**Yüksek Risk Durumları**\nMikro uyku şu sırada meydana gelebilir:\n• Araç kullanma\n• Ağır makine çalıştırma\n• Yüksekte çalışma\n• Tıbbi prosedürler\n• Kritik sistemleri izleme\n• Merdiven inme\n\n**Araştırma Kanıtları**\nÇalışmalar 24 saat uyanık kalmanın bilişsel etkilerinin şunlara benzer olduğunu gösteriyor:\n• Yasal olarak sarhoş olmak\n• %0,08 kan alkol içeriği\n• Ciddi şekilde bozulmuş tepki süreleri\n• Azalan karar verme yeteneği\n• Bozulmuş motor beceriler\n\n**Ölümcül Sonuçlar**\nMikro uyku epizodları şunlarla bağlantılı:\n• Ölümcül trafik kazaları\n• Endüstriyel kazalar\n• Tıbbi hatalar\n• Havacılık olayları\n• Denizcilik felaketleri\n• İş yerinde yaralanmalar\n\n**Uyarı İşaretleri**\n• Gözleri açık tutma zorluğu\n• Sık göz kırpma veya ağır göz kapakları\n• Konuşmalar sırasında uyuklama\n• Konsantrasyon zorluğu\n• Yavaşlayan tepki süreleri\n• Hafıza boşlukları\n\n**Mesleki Tehlikeler**\nÖzellikle şunlar için tehlikeli:\n• Sağlık çalışanları\n• Ulaşım operatörleri\n• Fabrika işçileri\n• İnşaat işçileri\n• Güvenlik personeli\n• Acil müdahale ekipleri\n\n**⚠️ Önemli Not**\nMikro uyku, sürekli dikkat gerektiren bir işi olan herkes için polifazik uykuyu kabul edilemez bir risk haline getirir. Kendinize ve başkalarına karşı ölümcül kaza potansiyeli göz ardı edilemez."
+          }
+        }
+      }
+    },
+    "education.article.preparation.healthCheck.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Essential Preparation: Health Check and Mental Readiness"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temel Hazırlık: Sağlık Kontrolü ve Zihinsel Hazırlık"
+          }
+        }
+      }
+    },
+    "education.article.preparation.healthCheck.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Critical steps for physical and mental preparation before attempting polyphasic sleep."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uyku denemesinden önce fiziksel ve zihinsel hazırlık için kritik adımlar."
+          }
+        }
+      }
+    },
+    "education.article.preparation.healthCheck.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting polyphasic sleep with a spontaneous decision is almost a guaranteed recipe for failure. Comprehensive preparation is essential to increase your chances of success and minimize risks. Think of this like preparing for a marathon - you wouldn't run 26 miles without months of training.\n\n**STEP 1: CONSULT A DOCTOR (MOST IMPORTANT STEP)**\nBefore attempting polyphasic sleep, absolutely consult a doctor or sleep specialist. This is not a recommendation, it's a requirement. \n\n**What to Discuss with Your Doctor:**\n• Any underlying health conditions (heart problems, blood pressure, diabetes, sleep apnea, anxiety, depression, thyroid issues)\n• Current medications and how they might interact with sleep changes\n• Your medical history of sleep disorders\n• Any family history of sleep-related issues\n• Your current stress levels and mental health status\n\n**Questions to Ask:**\n• Are there any medical reasons I shouldn't attempt this?\n• What warning signs should I watch for?\n• How often should I check in during the adaptation?\n• Are there any supplements I should avoid or consider?\n\n**Red Flags - DO NOT ATTEMPT if you have:**\n• Untreated sleep apnea\n• Severe depression or anxiety\n• History of seizures\n• Cardiovascular issues\n• Diabetes (without medical supervision)\n• Pregnancy or breastfeeding\n• History of eating disorders\n\n**STEP 2: MENTAL DETERMINATION AND GOAL SETTING**\nThis is not a whim; it's a serious lifestyle change that requires unwavering commitment.\n\n**Define Your 'Why' - Be Specific:**\n❌ Bad: 'I want more time'\n✅ Good: 'I need 3 extra hours daily to complete my master's thesis by March'\n❌ Bad: 'It sounds interesting'\n✅ Good: 'I want to optimize my creative hours for my art project'\n\n**Mental Preparation Exercises:**\n• Write down your specific goal and post it where you'll see it daily\n• Visualize yourself successfully completing the adaptation\n• Research success stories from others with similar goals\n• Prepare mentally for the worst days (days 3-10 are typically hardest)\n\n**Accept the Reality of Zombie Mode:**\n• Days 3-10: Severe fatigue, mood swings, difficulty concentrating\n• You may feel like you're getting sick\n• Simple tasks will feel overwhelming\n• You might question your decision multiple times daily\n• This is normal and temporary, but it's genuinely difficult\n\n**STEP 3: CLEAR YOUR CALENDAR COMPLETELY**\nThis cannot be overstated - social flexibility is the enemy of successful adaptation.\n\n**What to Cancel/Postpone:**\n• All social gatherings (parties, dinners, movies)\n• Non-essential work travel\n• Important deadlines or presentations\n• Dating or relationship commitments\n• Family visits or holidays\n• Volunteer commitments\n• Exercise classes or sports leagues\n\n**What You Can Keep:**\n• Work (if schedule allows)\n• Essential appointments (doctor, dentist)\n• Grocery shopping and basic errands\n• Solo activities that don't require timing flexibility\n\n**Timeline Planning:**\n• Week -2: Start informing people about your upcoming unavailability\n• Week -1: Finalize all preparations, confirm calendar is clear\n• Weeks 1-4: Adaptation period - ZERO social flexibility\n• Week 5+: Gradual reintroduction of social activities\n\n**STEP 4: FINANCIAL PREPARATION**\nAdaptation may temporarily affect your productivity and decision-making.\n\n**Financial Considerations:**\n• Avoid major financial decisions during adaptation\n• Stock up on essentials (food, toiletries) beforehand\n• Consider taking time off work if possible\n• Budget for potential productivity loss\n• Don't attempt during tax season or major work deadlines\n\n**STEP 5: PSYCHOLOGICAL PREPARATION**\nPrepare for the mental challenges ahead.\n\n**Mindset Strategies:**\n• This is a temporary experiment, not a permanent lifestyle change\n• Focus on one day at a time during difficult periods\n• Remember that adaptation gets easier after the first 2 weeks\n• Have a clear exit strategy if things go poorly\n\n**Warning Signs to Stop:**\n• Persistent severe depression or anxiety\n• Inability to perform essential work tasks\n• Relationship problems becoming severe\n• Physical symptoms that concern you\n• Complete inability to fall asleep during naps for 3+ days\n\n**⚠️ Important Note**\nWithout proper preparation, polyphasic sleep attempts fail 90% of the time. Most failures occur not because of the sleep schedule itself, but because of inadequate preparation and unrealistic expectations. Taking these preparatory steps seriously is crucial for any chance of success."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polifazik uykuya spontane bir kararla başlamak, neredeyse kesin bir başarısızlık reçetesidir. Başarı şansınızı artırmak ve riskleri en aza indirmek için kapsamlı bir hazırlık süreci şarttır. Bunu bir maratona hazırlanmak gibi düşünün - aylarca antrenman yapmadan 42 km koşmazdınız.\n\n**1. ADIM: DOKTORA DANIŞIN (EN ÖNEMLİ ADIM)**\nPolifazik uyku denemesine başlamadan önce mutlaka bir doktora veya bir uyku uzmanına danışın. Bu, bir tavsiye değil, bir zorunluluktur.\n\n**Doktorunuzla Konuşmanız Gerekenler:**\n• Altta yatan sağlık sorunları (kalp problemleri, tansiyon, diyabet, uyku apnesi, anksiyete, depresyon, tiroid sorunları)\n• Mevcut ilaçlarınız ve uyku değişiklikleriyle nasıl etkileşime girebilecekleri\n• Uyku bozuklukları tıbbi geçmişiniz\n• Ailede uyku ile ilgili sorunlar\n• Mevcut stres seviyeniz ve ruh sağlığı durumunuz\n\n**Sormanız Gereken Sorular:**\n• Bunu denememem için herhangi bir tıbbi neden var mı?\n• Hangi uyarı işaretlerine dikkat etmeliyim?\n• Adaptasyon sırasında ne sıklıkla kontrol etmeliyim?\n• Kaçınmam veya düşünmem gereken herhangi bir takviye var mı?\n\n**Kırmızı Bayraklar - Bu durumlar varsa DENEMEYİN:**\n• Tedavi edilmemiş uyku apnesi\n• Şiddetli depresyon veya anksiyete\n• Nöbet geçmişi\n• Kardiyovasküler sorunlar\n• Diyabet (tıbbi gözetim olmadan)\n• Hamilelik veya emzirme\n• Yeme bozukluğu geçmişi\n\n**2. ADIM: ZİHİNSEL KARARLILIK VE HEDEF BELİRLEME**\nBu bir heves değildir; sarsılmaz bağlılık gerektiren ciddi bir yaşam tarzı değişikliğidir.\n\n**'Neden'inizi Tanımlayın - Spesifik Olun:**\n❌ Kötü: 'Daha fazla zaman istiyorum'\n✅ İyi: 'Yüksek lisans tezimi Mart'ta bitirmek için günde fazladan 3 saate ihtiyacım var'\n❌ Kötü: 'İlginç geliyor'\n✅ İyi: 'Sanat projeme en yaratıcı saatlerimi optimize etmek istiyorum'\n\n**Zihinsel Hazırlık Egzersizleri:**\n• Spesifik hedefinizi yazın ve her gün göreceğiniz yere asın\n• Adaptasyonu başarıyla tamamladığınızı görselleştirin\n• Benzer hedefleri olan başkalarının başarı hikayelerini araştırın\n• En kötü günlere zihinsel olarak hazırlanın (3-10. günler genellikle en zorlu)\n\n**Zombi Modu Gerçeğini Kabul Edin:**\n• 3-10. günler: Şiddetli yorgunluk, ruh hali değişimleri, konsantrasyon güçlüğü\n• Hasta oluyormuş gibi hissedebilirsiniz\n• Basit görevler bile çok zor gelecek\n• Kararınızı günde birden fazla kez sorgulayabilirsiniz\n• Bu normal ve geçici, ama gerçekten zor\n\n**3. ADIM: TAKVİMİNİZİ TAMAMEN TEMİZLEYİN**\nBu çok önemli - sosyal esneklik başarılı adaptasyonun düşmanıdır.\n\n**İptal Etmeniz/Ertelemeniz Gerekenler:**\n• Tüm sosyal toplantılar (partiler, akşam yemekleri, sinemalar)\n• Zorunlu olmayan iş seyahatleri\n• Önemli son tarihler veya sunumlar\n• Flört veya ilişki taahhütleri\n• Aile ziyaretleri veya tatiller\n• Gönüllü taahhütler\n• Egzersiz dersleri veya spor ligleri\n\n**Tutabileceğiniz Şeyler:**\n• İş (program izin verirse)\n• Temel randevular (doktor, diş hekimi)\n• Market alışverişi ve temel işler\n• Zamanlama esnekliği gerektirmeyen tek başına aktiviteler\n\n**Zaman Çizelgesi Planlaması:**\n• -2. hafta: İnsanlara yaklaşan erişilemezliğinizi bildirmeye başlayın\n• -1. hafta: Tüm hazırlıkları tamamlayın, takviminizin boş olduğunu onaylayın\n• 1-4. haftalar: Adaptasyon dönemi - SIFIR sosyal esneklik\n• 5. hafta+: Sosyal aktivitelerin aşamalı olarak yeniden başlatılması\n\n**4. ADIM: FİNANSAL HAZIRLIK**\nAdaptasyon geçici olarak verimliliğinizi ve karar verme becerinizi etkileyebilir.\n\n**Finansal Hususlar:**\n• Adaptasyon sırasında büyük finansal kararlardan kaçının\n• Önceden temel ihtiyaçları (yiyecek, hijyen malzemeleri) stokla\n• Mümkünse işten izin almayı düşünün\n• Potansiyel verimlilik kaybı için bütçe yapın\n• Vergi sezonu veya büyük iş son tarihleri sırasında denemeyin\n\n**5. ADIM: PSİKOLOJİK HAZIRLIK**\nÖndeki zihinsel zorluklara hazırlanın.\n\n**Zihinsel Strateji:**\n• Bu geçici bir deney, kalıcı yaşam tarzı değişikliği değil\n• Zor dönemlerde bir gün tek seferde odaklanın\n• Adaptasyonun ilk 2 haftadan sonra kolaylaştığını unutmayın\n• İşler kötü giderse net çıkış stratejiniz olsun\n\n**Durdurmaya İşaret Eden Uyarı İşaretleri:**\n• Sürekli şiddetli depresyon veya anksiyete\n• Temel iş görevlerini yerine getirememe\n• İlişki sorunlarının şiddetlenmesi\n• Sizi endişelendiren fiziksel belirtiler\n• 3+ gün boyunca şekerlemelerde hiç uykuya dalamama\n\n**⚠️ Önemli Not**\nDoğru hazırlık yapılmadan polifazik uyku denemelerinin %90'ı başarısız oluyor. Çoğu başarısızlık uyku programının kendisinden değil, yetersiz hazırlık ve gerçekçi olmayan beklentilerden kaynaklanır. Bu hazırlık adımlarını ciddiye almak, herhangi bir başarı şansı için kritik önem taşır."
+          }
+        }
+      }
+    },
+    "education.article.preparation.environment.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environment Preparation: Perfect Napping Environment"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ortam Hazırlığı: Mükemmel Şekerleme Ortamı"
+          }
+        }
+      }
+    },
+    "education.article.preparation.environment.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creating the optimal environment for high-quality naps during adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon sırasında yüksek kaliteli şekerlemeler için optimal ortam yaratma."
+          }
+        }
+      }
+    },
+    "education.article.preparation.environment.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The quality of your naps is vital for successful adaptation. You need to optimize your sleep environment to fall asleep quickly and get quality rest. Think of creating a 'nap cave' - a perfect micro-environment for sleep.\n\n**DARKNESS - COMPLETE LIGHT ELIMINATION**\nMelatonin, the body's sleep hormone, is only released in darkness. Even small amounts of light can disrupt this process.\n\n**Professional Solutions:**\n• Install blackout curtains or cellular shades (brands like Redi Shade, Blackout EZ)\n• Use blackout window film for permanent solution\n• Consider blackout blinds + curtains for double protection\n• Install weather stripping around windows to eliminate light gaps\n\n**Budget-Friendly Options:**\n• Aluminum foil taped to windows (temporary but effective)\n• Heavy blankets or towels over windows\n• Cardboard cutouts for specific light leaks\n\n**Sleep Mask Requirements:**\n• Contoured design to prevent pressure on eyes\n• Adjustable strap that doesn't slip\n• Breathable materials (silk, cotton, bamboo)\n• Complete light blockage when tested\n• Recommended: Manta Sleep Mask, Sleep Master Sleep Mask\n\n**Light Pollution Sources to Address:**\n• Digital clocks - turn away or cover\n• Charging indicators on devices\n• Smoke detectors (usually can't be covered)\n• Light under doors - use door draft stoppers\n• Streetlights, car headlights from outside\n\n**SILENCE - SOUND MANAGEMENT SYSTEM**\nUnexpected sounds are sleep adaptation killers. You need consistent, predictable sound environment.\n\n**Earplug Strategy:**\n• Try multiple types - foam, silicone, wax\n• Foam earplugs: 3M E-A-R Classic (high NRR rating)\n• Silicone: Mack's Pillow Soft (comfortable for side sleepers)\n• Custom molded earplugs from audiologist (expensive but perfect fit)\n• Practice wearing them before adaptation starts\n\n**White Noise Solutions:**\n• Dedicated white noise machine (Dohm Classic, LectroFan)\n• Fan for consistent ambient sound\n• Air purifier with consistent hum\n• Smartphone apps: Noisli, MyNoise, White Noise\n\n**Household Sound Management:**\n• Inform all household members about nap times\n• Create 'quiet zones' around napping areas\n• Use 'Do Not Disturb' signs\n• Consider carpeting or rugs to dampen footsteps\n• Oil squeaky hinges and floorboards\n\n**External Noise Control:**\n• Weatherstrip windows and doors\n• Use heavy curtains for sound absorption\n• Consider acoustic panels if budget allows\n• Move napping location away from busy streets\n\n**COOL TEMPERATURE - THERMAL REGULATION**\nBody temperature naturally drops 1-2 degrees when falling asleep. A cool environment (65-68°F/18-20°C) facilitates this process.\n\n**Cooling Strategies:**\n• Set thermostat 2-3 degrees below normal comfort level\n• Use ceiling fan or portable fan for air circulation\n• Cool shower or cold feet soak before naps\n• Breathable bedding: cotton, linen, bamboo\n• Cooling mattress pad or gel pillow\n\n**Clothing Considerations:**\n• Loose-fitting, breathable fabrics\n• Avoid synthetic materials that trap heat\n• Consider cooling pajamas or moisture-wicking materials\n• Minimal clothing if appropriate for your situation\n\n**Seasonal Adjustments:**\n• Summer: Focus on cooling, use AC or fans\n• Winter: Avoid overheating, dress in layers you can remove\n• Spring/Fall: Be prepared for temperature fluctuations\n\n**COMFORT OPTIMIZATION - THE GOLDILOCKS PRINCIPLE**\nNot too soft, not too firm - just right for quick sleep onset without oversleeping.\n\n**Napping Location Hierarchy:**\n1. **Reclining chair** - Easy to wake up, prevents oversleeping\n2. **Firm sofa** - Comfortable but not too cozy\n3. **Floor with yoga mat** - Firm surface, less likely to oversleep\n4. **Bed** - Only if you're confident you won't oversleep\n\n**Positioning Tips:**\n• Slightly elevated head position (helps with breathing)\n• Support for neck and back\n• Legs slightly elevated to improve circulation\n• Side sleeping often works better than back sleeping\n\n**Multiple Napping Stations:**\n• Set up 2-3 different locations\n• Test each location during practice naps\n• Have backup locations ready\n• Consider work/travel napping setups\n\n**ENVIRONMENTAL TESTING PROTOCOL**\nBefore starting adaptation, test your environment:\n\n**Week Before Adaptation:**\n• Take practice naps in your setup\n• Test all equipment (masks, earplugs, alarms)\n• Identify and fix any environmental issues\n• Time how long it takes to fall asleep\n• Adjust based on test results\n\n**Final Environment Checklist:**\n✓ Complete darkness achieved\n✓ Consistent sound environment\n✓ Comfortable temperature\n✓ Supportive but not too comfortable surface\n✓ All electronic devices silenced/dimmed\n✓ Household members informed\n✓ Backup systems in place\n\n**EMERGENCY NAPPING LOCATIONS**\nPrepare for situations where your primary location isn't available:\n\n• Car with sunshades and blanket\n• Office with door lock and eye mask\n• Library study rooms\n• Quiet areas in workplace\n• Friend's house (with permission)\n\n**⚠️ Important Note**\nEnvironmental optimization can make the difference between successful adaptation and failure. Invest time and resources into creating the perfect napping environment. Poor sleep environment is responsible for about 30% of polyphasic sleep failures. Don't underestimate the importance of getting this right."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerlemelerinizin kalitesi, adaptasyonun başarısı için hayati önem taşır. Hızlıca uykuya dalabilmek ve kaliteli dinlenme sağlayabilmek için uyku ortamınızı optimize etmelisiniz. Uyku için mükemmel bir mikro ortam olan 'şekerleme mağarası' yaratmayı düşünün.\n\n**KARANLIK - TAMAMEN IŞIK ELİMİNASYONU**\nVücudun uyku hormonu olan melatonin, sadece karanlıkta salgılanır. Küçük miktarda ışık bile bu süreci bozabilir.\n\n**Profesyonel Çözümler:**\n• Karartma perdeleri veya hücresel perdeler kurun (Redi Shade, Blackout EZ gibi markalar)\n• Kalıcı çözüm için karartma cam filmi kullanın\n• Çifte koruma için karartma jaluziler + perdeler düşünün\n• Işık boşluklarını elimine etmek için pencerelerin etrafına hava sızdırmazlık bandı yerleştirin\n\n**Bütçe Dostu Seçenekler:**\n• Pencerelere bantlanan alüminyum folyo (geçici ama etkili)\n• Pencerelerin üzerine ağır battaniye veya havlular\n• Belirli ışık sızıntıları için karton kesimler\n\n**Uyku Maskesi Gereksinimleri:**\n• Gözlere basınç yapmayı önleyecek konturlu tasarım\n• Kaymayacak ayarlanabilir kayış\n• Nefes alabilen malzemeler (ipek, pamuk, bambu)\n• Test edildiğinde tam ışık engelleme\n• Önerilen: Manta Sleep Mask, Sleep Master Sleep Mask\n\n**Çözülmesi Gereken Işık Kirliliği Kaynakları:**\n• Dijital saatler - çevirin veya kapatın\n• Cihazlardaki şarj göstergeleri\n• Duman dedektörleri (genellikle kapatamazsınız)\n• Kapı altından gelen ışık - kapı altlığı kullanın\n• Sokak lambaları, dışarıdan gelen araç farları\n\n**SESSİZLİK - SES YÖNETİM SİSTEMİ**\nBeklenmedik sesler uyku adaptasyonu katilidir. Tutarlı, öngörülebilir ses ortamına ihtiyacınız var.\n\n**Kulak Tıkacı Stratejisi:**\n• Birden fazla türü deneyin - köpük, silikon, balmumu\n• Köpük kulak tıkacı: 3M E-A-R Classic (yüksek NRR derecesi)\n• Silikon: Mack's Pillow Soft (yan yatanlar için rahat)\n• Odyologdan özel kalıplı kulak tıkacı (pahalı ama mükemmel uyum)\n• Adaptasyona başlamadan önce takmayı pratik edin\n\n**Beyaz Gürültü Çözümleri:**\n• Özel beyaz gürültü makinesi (Dohm Classic, LectroFan)\n• Sürekli ortam sesi için vantilatör\n• Sürekli uğultusu olan hava temizleyici\n• Akıllı telefon uygulamaları: Noisli, MyNoise, White Noise\n\n**Ev Ses Yönetimi:**\n• Tüm ev halkını şekerleme saatleri hakkında bilgilendirin\n• Şekerleme alanları etrafında 'sessiz bölgeler' oluşturun\n• 'Rahatsız Etmeyin' işaretleri kullanın\n• Ayak seslerini azaltmak için halı veya kilim düşünün\n• Gıcırdayan menteşeleri ve döşeme tahtalarını yağlayın\n\n**Dış Ses Kontrolü:**\n• Pencere ve kapıları hava sızdırmaz hale getirin\n• Ses emilimi için ağır perdeler kullanın\n• Bütçe izin veriyorsa akustik paneller düşünün\n• Şekerleme yerini yoğun caddelerden uzağa taşıyın\n\n**SERİN SICAKLIK - TERMAL DÜZENLEME**\nVücut ısısı, uykuya dalarken doğal olarak 1-2 derece düşer. Serin ortam (18-20°C) bu süreci kolaylaştırır.\n\n**Soğutma Stratejileri:**\n• Termostatı normal konfor seviyesinin 2-3 derece altına ayarlayın\n• Hava sirkülasyonu için tavan vantilatörü veya taşınabilir vantilatör kullanın\n• Şekerlemelerden önce soğuk duş veya soğuk ayak banyosu\n• Nefes alabilen yatak takımı: pamuk, keten, bambu\n• Soğutucu yatak pedi veya jel yastık\n\n**Kıyafet Değerlendirmeleri:**\n• Bol, nefes alabilen kumaşlar\n• Isıyı hapseden sentetik malzemelerden kaçının\n• Soğutucu pijamalar veya nem emici malzemeler düşünün\n• Durumunuza uygunsa minimal kıyafet\n\n**Mevsimsel Ayarlamalar:**\n• Yaz: Soğutmaya odaklanın, AC veya vantilatör kullanın\n• Kış: Aşırı ısınmaktan kaçının, çıkarabileceğiniz katmanlar giyin\n• İlkbahar/Sonbahar: Sıcaklık dalgalanmalarına hazırlıklı olun\n\n**KONFOR OPTİMİZASYONU - GOLDILOCKS PRENSİBİ**\nÇok yumuşak değil, çok sert değil - fazla uyumadan hızlı uyku başlangıcı için tam doğru.\n\n**Şekerleme Yeri Hiyerarşisi:**\n1. **Yatabilir koltuk** - Uyanması kolay, fazla uyumayı önler\n2. **Sert kanepe** - Rahat ama çok rahat değil\n3. **Yoga matı ile zemin** - Sert yüzey, fazla uyuma olasılığı daha az\n4. **Yatak** - Sadece fazla uyumayacağınızdan eminseniz\n\n**Pozisyon İpuçları:**\n• Hafif yükseltilmiş baş pozisyonu (nefes almaya yardımcı)\n• Boyun ve sırt desteği\n• Dolaşımı iyileştirmek için hafif yükseltilmiş bacaklar\n• Yan yatmak genellikle sırt üstü yatmaktan daha iyi çalışır\n\n**Çoklu Şekerleme İstasyonları:**\n• 2-3 farklı konum ayarlayın\n• Pratik şekerlemeler sırasında her konumu test edin\n• Yedek konumları hazır bulundurun\n• İş/seyahat şekerleme düzenlerini düşünün\n\n**ÇEVRE TEST PROTOKOLÜ**\nAdaptasyona başlamadan önce çevrenizi test edin:\n\n**Adaptasyondan Bir Hafta Önce:**\n• Düzeneğinizde pratik şekerlemeler yapın\n• Tüm ekipmanı test edin (maskeler, kulak tıkacı, alarmlar)\n• Çevresel sorunları belirleyin ve düzeltin\n• Uykuya dalmanızın ne kadar sürdüğünü ölçün\n• Test sonuçlarına göre ayarlayın\n\n**Son Çevre Kontrol Listesi:**\n✓ Tam karanlık sağlandı\n✓ Tutarlı ses ortamı\n✓ Rahat sıcaklık\n✓ Destekleyici ama çok rahat olmayan yüzey\n✓ Tüm elektronik cihazlar sessize alındı/karartıldı\n✓ Ev halkı bilgilendirildi\n✓ Yedek sistemler hazır\n\n**ACIL DURUM ŞEKERLEME YERLERİ**\nBirincil konumunuzun müsait olmadığı durumlar için hazırlık yapın:\n\n• Güneşlik ve battaniye ile araba\n• Kapısı kilitlenebilen ve göz maskesi olan ofis\n• Kütüphane çalışma odaları\n• İş yerindeki sessiz alanlar\n• Arkadaşın evi (izinle)\n\n**⚠️ Önemli Not**\nÇevresel optimizasyon, başarılı adaptasyon ile başarısızlık arasındaki farkı yaratabilir. Mükemmel şekerleme ortamı yaratmak için zaman ve kaynak yatırımı yapın. Kötü uyku ortamı, polifazik uyku başarısızlıklarının yaklaşık %30'undan sorumludur. Bunun doğru yapılmasının önemini küçümsemeyin."
+          }
+        }
+      }
+    },
+    "education.article.preparation.alarms.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm Strategies: Guaranteeing Wake-Up Success"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm Stratejileri: Uyanmayı Garanti Altına Almak"
+          }
+        }
+      }
+    },
+    "education.article.preparation.alarms.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprehensive alarm systems to ensure you wake up during the most challenging adaptation phases."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En zorlu adaptasyon aşamalarında uyanmanızı sağlayacak kapsamlı alarm sistemleri."
+          }
+        }
+      }
+    },
+    "education.article.preparation.alarms.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "During adaptation, your biggest enemy will be the urge to snooze or ignore alarms. Your sleep-deprived brain will actively work against you, making excuses and justifications. You need to set up an alarm system so foolproof that even your zombie-mode brain can't sabotage it.\n\n**THE MULTI-LAYERED ALARM DEFENSE SYSTEM**\nNever rely on just one alarm. Create multiple layers of redundancy.\n\n**Layer 1: Primary Phone Alarms**\n• Set 5-7 alarms, starting at exact wake time\n• Interval pattern: 0, +2min, +5min, +7min, +10min\n• Each alarm uses different tone (prevent habituation)\n• Volume at maximum\n• Phone placed 6+ feet from sleeping area\n\n**Layer 2: Secondary Device Alarms**\n• Tablet, old phone, or second smartphone\n• Different alarm tones from primary device\n• Offset by 1-2 minutes from primary alarms\n• Placed in different location (bathroom, kitchen)\n\n**Layer 3: Mechanical Backup**\n• Wind-up alarm clock (doesn't rely on electricity)\n• Placed across the room\n• Set 3-5 minutes after primary alarms\n• Extremely loud, persistent ringing\n\n**CHALLENGING ALARM APPS - BRAIN ACTIVATION REQUIRED**\nUse apps that force your brain to engage before dismissing alarms.\n\n**Recommended Apps with Specific Setup:**\n\n**Alarmy (Android/iOS):**\n• Math mode: Set to 3-5 simple equations\n• Barcode mode: Scan bathroom product to dismiss\n• Photo mode: Take picture of specific object\n• Shake mode: Vigorous shaking for 30+ seconds\n• Mission mode: Complete multiple tasks\n\n**I Can't Wake Up! (Android):**\n• Multi-task mode: Math + barcode + shake\n• Gradually increasing difficulty\n• Captcha mode for visual challenges\n• Memory game mode\n\n**Sleep as Android (Android):**\n• QR code scanning\n• NFC tag touching\n• Sheep counting\n• Typing challenges\n\n**Puzzle Alarm Clock (iOS):**\n• Jigsaw puzzles to solve\n• Memory games\n• Pattern matching\n• Logic puzzles\n\n**STRATEGIC ALARM PLACEMENT - FORCE PHYSICAL MOVEMENT**\nLocation strategy is crucial for ensuring you actually get up.\n\n**Bedroom Setup:**\n• No alarms within arm's reach\n• Closest alarm minimum 6 feet away\n• One alarm requires leaving the room entirely\n• Multiple alarms in different directions\n\n**Advanced Placement Strategy:**\n• Alarm in bathroom (forces movement + bright light)\n• Alarm in kitchen (can start morning routine)\n• Alarm in living room (furthest from bed)\n• Car alarm (for people who might drive during adaptation)\n\n**SOUND SELECTION - MAXIMUM DISRUPTION**\nChoose sounds that are impossible to ignore or incorporate into dreams.\n\n**Most Effective Alarm Sounds:**\n• High-pitched beeping (fire alarm style)\n• Intermittent honking (car alarm)\n• Discordant music (avoid harmonious melodies)\n• Voice commands (\"GET UP NOW!\")\n• Animal sounds (rooster, dog barking)\n• Alert tones (emergency broadcast)\n\n**Sounds to Avoid:**\n• Gentle melodies\n• Nature sounds\n• Gradual fade-in alarms\n• Music you enjoy\n• Soft chimes\n\n**BACKUP SYSTEMS - REDUNDANCY IS KEY**\nPrepare for every possible failure scenario.\n\n**Human Backup Systems:**\n• Designated wake-up caller (family/friend)\n• Roommate/partner as backup\n• Work colleague check-in\n• Online accountability partner\n\n**Technology Backup Systems:**\n• Smart home devices (Alexa, Google Home)\n• Vibrating bed shaker\n• Sunrise alarm clock\n• Wearable device alarms (smartwatch)\n• Home automation (lights, music)\n\n**Mechanical Backup Systems:**\n• Battery-powered alarm clock\n• Wind-up alarm clock\n• Water alarm clock (drops water)\n• Puzzle alarm clock (physical puzzles)\n\n**TESTING PROTOCOL - FAIL-SAFE VERIFICATION**\nTest your entire system before starting adaptation.\n\n**Pre-Adaptation Testing:**\n• Test all alarms during actual planned nap times\n• Verify all apps work correctly\n• Check alarm volumes and placement\n• Practice dismissing challenging alarms\n• Test backup systems\n\n**Weekly Testing During Adaptation:**\n• Verify all alarms are set correctly\n• Check battery levels on all devices\n• Test challenging app functions\n• Confirm backup systems are ready\n\n**PSYCHOLOGICAL TRICKS - OUTSMART YOUR SLEEPY BRAIN**\nYour sleep-deprived brain is sneaky. Use psychology against it.\n\n**Commitment Devices:**\n• Put phone in time-locked container\n• Give backup phone to someone else\n• Set up automatic social media posts if you oversleep\n• Financial penalties for oversleeping\n\n**Environmental Tricks:**\n• Bright lights on timer\n• Automatic coffee maker\n• Playlist of energizing music\n• Preset temperature increase\n\n**FAILURE RECOVERY PROTOCOLS**\nPlan for what happens if you do oversleep.\n\n**Immediate Actions:**\n• Don't panic or give up\n• Assess how much you overslept\n• Adjust next nap accordingly\n• Analyze what went wrong\n• Strengthen weak points in system\n\n**System Improvements:**\n• Add more alarms if needed\n• Increase challenge difficulty\n• Move alarms further away\n• Add more backup systems\n• Recruit human help\n\n**SPECIAL CONSIDERATIONS**\n\n**For Heavy Sleepers:**\n• Use bed shaker/vibrator alarms\n• Combine sound + vibration + light\n• Recruit someone to physically wake you\n• Consider sonic boom alarm clocks\n\n**For Light Sleepers:**\n• Focus on preventing snoozing rather than volume\n• Use puzzles and challenges\n• Gradual increasing difficulty\n• Multiple low-volume alarms\n\n**For Shift Workers:**\n• Coordinate with work schedule\n• Use multiple time zones if needed\n• Account for schedule changes\n• Have work-appropriate backup plans\n\n**⚠️ Critical Warning**\nYour alarm system is your lifeline during adaptation. Oversleeping just once can set your adaptation back by days or weeks. 60% of polyphasic sleep failures are due to oversleeping, not inability to fall asleep. Treat alarm setup as seriously as you would any life-critical system. Test extensively, have multiple backups, and never trust just one alarm."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon sırasında en büyük düşmanınız, alarmı erteleme veya duymama dürtüsü olacaktır. Uyku yoksunu beyniniz aktif olarak size karşı çalışacak, bahaneler ve gerekçeler uydurarak. Zombi modu beyninizin bile sabote edemeyeceği kadar kusursuz bir alarm sistemi kurmalısınız.\n\n**ÇOKLU KATMANLI ALARM SAVUNMA SİSTEMİ**\nAsla tek bir alarma güvenmeyin. Çoklu yedeklilik katmanları oluşturun.\n\n**Katman 1: Birincil Telefon Alarmları**\n• Tam uyanma saatinden başlayarak 5-7 alarm kurun\n• Aralık kalıbı: 0, +2dk, +5dk, +7dk, +10dk\n• Her alarm farklı ton kullanır (alışmayı önler)\n• Ses maksimum seviyede\n• Telefon uyku alanından 2+ metre uzağa yerleştirilir\n\n**Katman 2: İkincil Cihaz Alarmları**\n• Tablet, eski telefon veya ikinci akıllı telefon\n• Birincil cihazdan farklı alarm tonları\n• Birincil alarmlardan 1-2 dakika ofset\n• Farklı konuma yerleştirilir (banyo, mutfak)\n\n**Katman 3: Mekanik Yedek**\n• Kurmalar saat (elektriğe bağlı değil)\n• Odanın karşı tarafına yerleştirilir\n• Birincil alarmlardan 3-5 dakika sonra ayarlanır\n• Son derece yüksek sesli, sürekli çalan\n\n**ZORLAYICI ALARM UYGULAMALARI - BEYİN AKTİVASYONU GEREKLİ**\nAlarmları kapatmadan önce beyninizin devreye girmesini zorunlu kılan uygulamalar kullanın.\n\n**Önerilen Uygulamalar ve Özel Kurulum:**\n\n**Alarmy (Android/iOS):**\n• Matematik modu: 3-5 basit denklem ayarlayın\n• Barkod modu: Banyo ürününü taratarak kapatın\n• Fotoğraf modu: Belirli nesnenin fotoğrafını çekin\n• Sallanma modu: 30+ saniye şiddetli sallama\n• Görev modu: Çoklu görevleri tamamlayın\n\n**I Can't Wake Up! (Android):**\n• Çoklu görev modu: Matematik + barkod + sallama\n• Kademeli olarak artan zorluk\n• Görsel meydan okumalar için captcha modu\n• Hafıza oyunu modu\n\n**Sleep as Android (Android):**\n• QR kod tarama\n• NFC etiket dokunma\n• Koyun sayma\n• Yazma meydan okumaları\n\n**Puzzle Alarm Clock (iOS):**\n• Çözülecek yapboz bulmacalar\n• Hafıza oyunları\n• Desen eşleştirme\n• Mantık bulmacaları\n\n**STRATEJİK ALARM YERLEŞİMİ - FİZİKSEL HAREKETİ ZORUNLU KILMAK**\nYerleşim stratejisi gerçekten kalkmanızı sağlamak için çok önemlidir.\n\n**Yatak Odası Düzeni:**\n• Kol mesafesinde alarm olmasın\n• En yakın alarm minimum 2 metre uzaklıkta\n• Bir alarm odayı tamamen terk etmeyi gerektirir\n• Farklı yönlerde çoklu alarmlar\n\n**İleri Yerleştirme Stratejisi:**\n• Banyoda alarm (hareket + parlak ışık zorlar)\n• Mutfakta alarm (sabah rutinine başlayabilir)\n• Oturma odasında alarm (yataktan en uzak)\n• Arabada alarm (adaptasyon sırasında araba kullanacak kişiler için)\n\n**SES SEÇİMİ - MAKSİMUM KESİNTİ**\nGörmezden gelmenin veya rüyalara dahil etmenin imkansız olduğu sesler seçin.\n\n**En Etkili Alarm Sesleri:**\n• Yüksek perdeli bip sesi (yangın alarmı stili)\n• Aralıklı korna (araba alarmı)\n• Uyumsuz müzik (uyumlu melodilerden kaçının)\n• Sesli komutlar (\"HEMEN KALK!\")\n• Hayvan sesleri (horoz, köpek havlaması)\n• Uyarı tonları (acil durum yayını)\n\n**Kaçınılacak Sesler:**\n• Nazik melodiler\n• Doğa sesleri\n• Kademeli artış alarmları\n• Sevdiğiniz müzik\n• Yumuşak zil sesleri\n\n**YEDEK SİSTEMLER - YEDEKLİLİK ANAHTARDIR**\nHer olası başarısızlık senaryosu için hazırlık yapın.\n\n**İnsan Yedek Sistemleri:**\n• Belirlenmiş uyandırma arayanı (aile/arkadaş)\n• Oda arkadaşı/partner yedek olarak\n• İş arkadaşı kontrol etme\n• Çevrimiçi hesap verebilirlik partneri\n\n**Teknoloji Yedek Sistemleri:**\n• Akıllı ev cihazları (Alexa, Google Home)\n• Titreşimli yatak sallayıcı\n• Gün doğumu alarm saati\n• Giyilebilir cihaz alarmları (akıllı saat)\n• Ev otomasyonu (ışıklar, müzik)\n\n**Mekanik Yedek Sistemler:**\n• Pilli alarm saati\n• Kurmalar alarm saati\n• Su alarm saati (su damlatır)\n• Bulmaca alarm saati (fiziksel bulmacalar)\n\n**TEST PROTOKOLÜ - HATASIZ DOĞRULAMA**\nAdaptasyona başlamadan önce tüm sisteminizi test edin.\n\n**Adaptasyon Öncesi Test:**\n• Gerçek planlanan şekerleme saatlerinde tüm alarmları test edin\n• Tüm uygulamaların doğru çalıştığını doğrulayın\n• Alarm ses seviyelerini ve yerleşimini kontrol edin\n• Zorlayıcı alarmları kapatmayı pratik edin\n• Yedek sistemleri test edin\n\n**Adaptasyon Sırasında Haftalık Test:**\n• Tüm alarmların doğru ayarlandığını doğrulayın\n• Tüm cihazlarda pil seviyelerini kontrol edin\n• Zorlayıcı uygulama fonksiyonlarını test edin\n• Yedek sistemlerin hazır olduğunu onaylayın\n\n**PSİKOLOJİK HILELER - UYUKLU BEYNİNİZİ KANDIRIN**\nUyku yoksunu beyniniz kurnaz. Ona karşı psikoloji kullanın.\n\n**Taahhüt Cihazları:**\n• Telefonu zamanlı kilitli kutuya koyun\n• Yedek telefonu başkasına verin\n• Fazla uyursanız otomatik sosyal medya gönderileri ayarlayın\n• Fazla uyuma için finansal cezalar\n\n**Çevresel Hileler:**\n• Zamanlayıcıda parlak ışıklar\n• Otomatik kahve makinesi\n• Enerji verici müzik çalma listesi\n• Önceden ayarlı sıcaklık artışı\n\n**BAŞARISIZLIK İYİLEŞTİRME PROTOKOLLERI**\nFazla uyursanız ne olacağını planlayın.\n\n**Acil Eylemler:**\n• Panik yapmayın veya pes etmeyin\n• Ne kadar fazla uyuduğunuzu değerlendirin\n• Bir sonraki şekerlemeleri buna göre ayarlayın\n• Neyin yanlış gittiğini analiz edin\n• Sistemdeki zayıf noktaları güçlendirin\n\n**Sistem İyileştirmeleri:**\n• Gerekirse daha fazla alarm ekleyin\n• Meydan okuma zorluğunu artırın\n• Alarmları daha uzağa taşıyın\n• Daha fazla yedek sistem ekleyin\n• İnsan yardımı alın\n\n**ÖZEL DÜŞÜNCELER**\n\n**Ağır Uyuyanlar İçin:**\n• Yatak sallayıcı/titreşimli alarmlar kullanın\n• Ses + titreşim + ışık kombinasyonu\n• Fiziksel olarak uyandırması için birini görevlendirin\n• Sonic boom alarm saatleri düşünün\n\n**Hafif Uyuyanlar İçin:**\n• Ses seviyesinden çok ertelemeyi önlemeye odaklanın\n• Bulmacalar ve meydan okumalar kullanın\n• Kademeli artan zorluk\n• Çoklu düşük sesli alarmlar\n\n**Vardiya Çalışanları İçin:**\n• İş programı ile koordine edin\n• Gerekirse çoklu zaman dilimlerini kullanın\n• Program değişikliklerini hesaba katın\n• İşe uygun yedek planlar hazırlayın\n\n**⚠️ Kritik Uyarı**\nAlarm sisteminiz adaptasyon sırasındaki yaşam hattınızdır. Sadece bir kez fazla uyumak adaptasyonunuzu günler veya haftalar geriye götürebilir. Polifazik uyku başarısızlıklarının %60'ı uykuya dalamama değil, fazla uyumaktan kaynaklanır. Alarm kurulumunu yaşamsal önemde herhangi bir sistem kadar ciddiye alın. Kapsamlı test yapın, çoklu yedekler bulundurun ve asla sadece bir alarma güvenmeyin."
+          }
+        }
+      }
+    },
+    "education.article.preparation.nutrition.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutrition and Exercise: Optimizing Your Body for Polyphasic Sleep"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beslenme ve Egzersiz: Vücudunuzu Polifazik Uyku İçin Optimize Etmek"
+          }
+        }
+      }
+    },
+    "education.article.preparation.nutrition.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How diet and exercise directly impact your energy levels and sleep quality during adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diyet ve egzersizin adaptasyon sırasında enerji seviyenizi ve uyku kalitenizi nasıl doğrudan etkilediği."
+          }
+        }
+      }
+    },
+    "education.article.preparation.nutrition.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What you put into your body directly affects your energy levels and sleep quality during adaptation. Your nutrition and exercise habits can be the difference between successful adaptation and failure.\n\n**NUTRITION OPTIMIZATION - FUEL YOUR ADAPTATION**\n\n**Phase 1: Pre-Adaptation Detox (2 weeks before)**\n\n**Eliminate Caffeine Completely:**\n• Stop all caffeine sources: coffee, tea, soda, chocolate, energy drinks\n• Gradual reduction over 7-10 days to avoid withdrawal headaches\n• Withdrawal timeline: Day 1-3 (headaches, fatigue), Day 4-7 (irritability), Day 8+ (normalized)\n• Replace with herbal teas, water, or decaf alternatives\n• Check medications and supplements for hidden caffeine\n\n**Eliminate Alcohol Entirely:**\n• Stop alcohol consumption at least 1 week before adaptation\n• Alcohol disrupts REM sleep and sleep architecture\n• Withdrawal effects must resolve before starting\n• Consider this especially if you're a regular drinker\n\n**Phase 2: Adaptation Period Nutrition (Weeks 1-4)**\n\n**Meal Timing Strategy:**\n• Eat main meals 2-3 hours before naps\n• Light snacks 30-60 minutes before naps if needed\n• Avoid eating immediately before or after naps\n• Plan meals around your nap schedule, not traditional meal times\n\n**Optimal Food Choices:**\n\n**Sustained Energy Foods:**\n• Complex carbohydrates: oats, quinoa, sweet potatoes, brown rice\n• Lean proteins: chicken, fish, eggs, legumes, tofu\n• Healthy fats: avocados, nuts, seeds, olive oil\n• Avoid simple sugars and processed foods\n\n**Pre-Nap Nutrition (if needed):**\n• Light protein snack: Greek yogurt, handful of nuts\n• Avoid: caffeine, alcohol, heavy meals, high sugar\n• Timing: 30-60 minutes before nap\n\n**Post-Nap Nutrition:**\n• Protein-rich snack within 30 minutes of waking\n• Examples: protein shake, hard-boiled egg, protein bar\n• Helps with alertness and recovery\n\n**Hydration Protocol:**\n• Daily target: 8-10 glasses of water\n• Front-load hydration early in wake periods\n• Reduce fluids 1-2 hours before naps\n• Electrolyte balance crucial during adaptation stress\n• Consider adding electrolyte powder to water\n\n**Foods to Avoid During Adaptation:**\n• Heavy, fatty meals (slow digestion)\n• High-sugar foods (energy crashes)\n• Spicy foods (can disrupt sleep)\n• Dairy if you're lactose sensitive\n• Large meals within 3 hours of naps\n\n**EXERCISE OPTIMIZATION - STRATEGIC MOVEMENT**\n\n**The Exercise Paradox:**\nExercise helps with energy and sleep quality, but timing is crucial. Wrong timing can sabotage your naps.\n\n**During Adaptation Exercise Rules:**\n\n**Timing Guidelines:**\n• No intense exercise 4+ hours before naps\n• Light movement 30-60 minutes before naps is OK\n• Best exercise windows: immediately after waking from naps\n• Morning exercise (after core sleep) often works well\n\n**Intensity Levels:**\n\n**Week 1-2 (Zombie Mode):**\n• Gentle yoga or stretching only\n• Short walks (10-15 minutes)\n• Avoid gym workouts entirely\n• Focus on movement for circulation\n\n**Week 3-4 (Stabilization):**\n• Light cardio: walking, easy cycling\n• Bodyweight exercises: push-ups, squats\n• Yoga or pilates\n• Keep intensity at 60-70% of normal\n\n**Week 5+ (Adapted):**\n• Gradually return to normal exercise routine\n• Monitor how exercise affects sleep quality\n• Still avoid intense workouts before naps\n\n**Sample Day Structure:**\n• 6:00 AM - Wake from core sleep, light breakfast\n• 9:00 AM - Snack\n• 12:00 PM - Lunch (3 hours before 3 PM nap)\n• 3:00-3:20 PM - Nap\n• 3:30 PM - Light snack\n• 6:00 PM - Dinner (3 hours before 9 PM nap)\n• 9:00-9:20 PM - Nap\n• 9:30 PM - Light snack if needed\n• 11:00 PM - Begin winding down for core sleep\n\n**⚠️ Critical Warning**\nYour body will be under significant stress during adaptation. This is NOT the time to start extreme diets or intense fitness programs. Focus on gentle, consistent nutrition and exercise habits. Many adaptation failures are caused by trying to optimize too many things simultaneously."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vücudunuza ne koyduğunuz, enerji seviyenizi ve uyku kalitenizi doğrudan etkiler.\n\n**BESLENME REHBERİ**\n\n**Kafein ve Alkolü Kesin**\nAdaptasyondan en az bir hafta önce kafeini ve alkolü tamamen hayatınızdan çıkarın. İkisi de uyku mimarisini bozar.\n\n**Neden Önemli:**\n• Kafein sisteminizde 6-8 saat kalabilir\n• Alkol REM uykusunu ve derin uykuyu engeller\n• İkisi de doğal uyku döngülerini bozan bağımlılık yaratır\n• Yoksunluk belirtileri adaptasyonu karmaşık hale getirebilir\n\n**Ağır Öğünlerden Kaçının**\nŞekerlemelerden hemen önce ağır, yağlı veya yüksek karbonhidratlı yemekler yemek, uyuşukluğa neden olur ve uyanmayı zorlaştırır.\n\n**Daha İyi Seçenekler:**\n• Gün boyunca hafif, dengeli öğünler\n• Şekelemelerden 2-3 saat önce yemek yemekten kaçının\n• Açsanız, küçük sağlıklı atıştırmalıklar alın\n• Protein ve sağlıklı yağlara odaklanın\n\n**Hafif ve Sık Beslenin**\nEnerji seviyenizi sabit tutmak için gün boyunca daha küçük, protein ve sağlıklı yağ ağırlıklı öğünler tüketin.\n\n**Önerilen Yiyecekler:**\n• Fındık ve çekirdekler\n• Yunan yoğurdu\n• Taze meyveler\n• Yağsız proteinler (tavuk, balık, fasulye)\n• Sebzeler\n• Tam tahıllar (ölçülü olarak)\n\n**Hidrasyon**\nBol bol su için. Susuzluk, yorgunluğu artırır.\n\n**Hidrasyon İpuçları:**\n• Günde 8-10 bardak su hedefleyin\n• Gün boyunca daha çok, şekerlemelerden önce daha az için\n• Hidrasyon göstergesi olarak idrar rengini izleyin\n• Adaptasyon sırasında elektrolit dengesini düşünün\n\n**EGZERSİZ REHBERİ**\n\n**Düzenli Egzersiz Faydaları**\nDüzenli egzersiz enerji seviyenizi yükseltir ve stresi azaltır. Ancak şekerleme saatlerinize çok yakın zamanlarda yoğun egzersiz yapmaktan kaçının.\n\n**Egzersiz Zamanlaması:**\n• Sabah antrenmanları uyanıklığı artırır\n• Şekerlemelerden 3-4 saat önce yoğun egzersizden kaçının\n• Şekerlemelerden önce hafif esneme veya yoga yardımcı olabilir\n• Şekerlemelerden sonra yürüyüş yapın\n\n**Egzersiz Zamanlaması Neden Önemli:**\n• Yoğun egzersiz vücut ısısını artırır\n• Adrenalin ve kortizol seviyelerini yükseltir\n• Uykuya dalmayı zorlaştırabilir\n• Vücudun başlangıç seviyesine dönmesi zaman alır\n\n**Önerilen Aktiviteler:**\n• Hafif kardiyovasküler egzersizler (yürüyüş, yüzme)\n• Yoga veya esneme\n• Vücut ağırlığı egzersizleri\n• Şekerleme saatlerine yakın ağır ağırlık kaldırmaktan kaçının\n\n**⚠️ Önemli Not**\nDoğru beslenme ve egzersiz zamanlaması, adaptasyon başarı oranınızı önemli ölçüde artırabilir. Öğünlerinizi ve antrenmanlarınızı uyku programınıza göre planlayın."
+          }
+        }
+      }
+    },
+    "education.article.preparation.tracking.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep Tracking: Journals, Apps, and Technology's Role"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Takibi: Günlükler, Uygulamalar ve Teknolojinin Rolü"
+          }
+        }
+      }
+    },
+    "education.article.preparation.tracking.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to effectively track your progress and stay motivated during adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon sırasında ilerlemenizi etkili bir şekilde nasıl takip edecek ve motive kalacaksınız."
+          }
+        }
+      }
+    },
+    "education.article.preparation.tracking.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracking your progress helps you understand what works and what doesn't, and keeps you motivated.\n\n**SLEEP JOURNAL**\nKeep a notebook or digital document. Record the following every day:\n\n**Essential Information to Track:**\n• Exact times you fell asleep and woke up\n• How you felt after each nap (refreshed, tired, groggy)\n• Your energy levels throughout the day (rate 1-10)\n• Any challenges or successes you experienced\n• Physical symptoms (headaches, nausea, etc.)\n• Mental state (mood, concentration, irritability)\n\n**Weekly Review Questions:**\n• Which naps were most effective?\n• What patterns do you notice in your energy levels?\n• Are there specific times when you struggle most?\n• What environmental factors helped or hindered your sleep?\n\n**SMART WATCHES AND SLEEP TRACKING DEVICES**\nIf you have a smartwatch or sleep tracking ring, use it to monitor your sleep stages (REM, deep, light).\n\n**Valuable Metrics:**\n• Sleep efficiency (time asleep vs. time in bed)\n• REM and deep sleep percentages\n• Heart rate variability during sleep\n• Sleep onset time (how quickly you fall asleep)\n\n**What to Look For:**\n• Starting to get REM or deep sleep in naps is a sign you're on the right track\n• Decreased sleep onset time indicates adaptation\n• Consistent sleep patterns show successful adjustment\n• Improved sleep efficiency over time\n\n**MOBILE APPS FOR TRACKING**\nConsider using dedicated sleep tracking apps that can provide detailed insights.\n\n**Recommended Apps:**\n• Sleep Cycle - Tracks sleep phases and wakes you during light sleep\n• AutoSleep (Apple Watch) - Comprehensive sleep tracking\n• Oura Ring App - Detailed sleep and recovery metrics\n• Fitbit App - Sleep stages and sleep score\n\n**PROGRESS INDICATORS**\nTrack these key indicators to monitor your adaptation progress:\n\n**Positive Signs:**\n• Falling asleep faster during naps\n• Waking up more refreshed\n• Stable energy levels throughout the day\n• REM sleep appearing in short naps\n• Reduced daytime fatigue\n\n**Warning Signs:**\n• Consistently oversleeping naps\n• Severe mood changes or depression\n• Inability to fall asleep during scheduled naps\n• Persistent physical symptoms\n• Declining performance in daily activities\n\n**⚠️ Important Note**\nData is only useful if you act on it. Review your tracking information weekly and adjust your approach based on what you learn. If warning signs persist, consider stopping the adaptation attempt."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlerlemenizi takip etmek, neyin işe yarayıp neyin yaramadığını anlamanıza ve motive kalmanıza yardımcı olur.\n\n**UYKU GÜNLÜĞÜ**\nBir defter veya dijital bir belge tutun. Her gün şunları not edin:\n\n**Takip Edilmesi Gereken Temel Bilgiler:**\n• Uyuduğunuz ve uyandığınız kesin saatler\n• Her şekerlemeden sonra nasıl hissettiğiniz (dinlenmiş, yorgun, sersem)\n• Gün içindeki enerji seviyeniz (1-10 arası puanlayın)\n• Yaşadığınız zorluklar veya başarılar\n• Fiziksel belirtiler (baş ağrısı, mide bulantısı vb.)\n• Zihinsel durum (ruh hali, konsantrasyon, sinirlilik)\n\n**Haftalık Değerlendirme Soruları:**\n• Hangi şekerlemeler en etkili oldu?\n• Enerji seviyelerinizde hangi kalıpları fark ediyorsunuz?\n• En çok zorlandığınız belirli zamanlar var mı?\n• Hangi çevresel faktörler uykunuza yardımcı oldu veya engel oldu?\n\n**AKILLI SAATLER VE UYKU TAKİP CİHAZLARI**\nAkıllı saatiniz veya uyku takip yüzüğünüz varsa, uyku evrelerinizi (REM, derin, hafif) izlemek için kullanın.\n\n**Değerli Metrikler:**\n• Uyku verimliliği (uyku süresi / yatakta geçirilen süre)\n• REM ve derin uyku yüzdeleri\n• Uyku sırasında kalp hızı değişkenliği\n• Uyku başlangıç süresi (ne kadar hızlı uykuya dalıyorsunuz)\n\n**Nelere Dikkat Etmeli:**\n• Şekerlemelerde REM veya derin uyku görmeye başlamanız doğru yolda olduğunuzun bir işareti\n• Azalan uyku başlangıç süresi adaptasyonu gösterir\n• Tutarlı uyku kalıpları başarılı uyumu gösterir\n• Zamanla artan uyku verimliliği\n\n**TAKİP İÇİN MOBİL UYGULAMALAR**\nDetaylı içgörüler sağlayabilen özel uyku takip uygulamaları kullanmayı düşünün.\n\n**Önerilen Uygulamalar:**\n• Sleep Cycle - Uyku evrelerini takip eder ve hafif uyku sırasında uyandırır\n• AutoSleep (Apple Watch) - Kapsamlı uyku takibi\n• Oura Ring App - Detaylı uyku ve toparlanma metrikleri\n• Fitbit App - Uyku evreleri ve uyku puanı\n\n**İLERLEME GÖSTERGELERİ**\nAdaptasyon ilerlemenizi izlemek için bu anahtar göstergeleri takip edin:\n\n**Olumlu İşaretler:**\n• Şekerlemelerde daha hızlı uykuya dalma\n• Daha dinlenmiş uyanma\n• Gün boyunca stabil enerji seviyeleri\n• Kısa şekerlemelerde REM uykusunun görünmesi\n• Gündüz yorgunluğunda azalma\n\n**Uyarı İşaretleri:**\n• Sürekli olarak şekerlemelerde fazla uyuma\n• Şiddetli ruh hali değişiklikleri veya depresyon\n• Planlanan şekerlemelerde uykuya dalamama\n• Sürekli fiziksel belirtiler\n• Günlük aktivitelerde performans düşüşü\n\n**⚠️ Önemli Not**\nVeri, ancak üzerinde harekete geçtiğinizde yararlıdır. Takip bilgilerinizi haftalık olarak gözden geçirin ve öğrendiklerinize göre yaklaşımınızı ayarlayın. Uyarı işaretleri devam ederse, adaptasyon denemesini durdurmayı düşünün."
+          }
+        }
+      }
+    },
+    "education.article.preparation.support.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Social Support: Informing Your Environment and Family"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sosyal Destek: Çevrenizi ve Ailenizi Bilgilendirmek"
+          }
+        }
+      }
+    },
+    "education.article.preparation.support.summary" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Building a support system is crucial for successful polyphasic sleep adaptation."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başarılı polifazik uyku adaptasyonu için bir destek sistemi kurmak çok önemlidir."
+          }
+        }
+      }
+    },
+    "education.article.preparation.support.content" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Going through this process alone is nearly impossible. Building a strong support system is essential for success.\n\n**OPEN COMMUNICATION**\nExplain in detail to the people you live with (family, spouse, roommates) what you're going to do and why you're doing it. Ask for their understanding and support.\n\n**Key Points to Communicate:**\n• The duration of the adaptation period (3-4 weeks minimum)\n• Your specific nap schedule and timing\n• Why this is important to you\n• How they can help you succeed\n• What changes they might notice in your behavior\n\n**SETTING EXPECTATIONS**\nBe honest about the challenges you'll face during adaptation.\n\n**What to Explain:**\n• You may be irritable or moody during 'Zombie Mode'\n• Your social availability will be limited\n• You'll need to prioritize sleep over social activities\n• This is temporary and necessary for success\n\n**ASK FOR HELP**\nDon't hesitate to ask for specific assistance during the most challenging days of adaptation.\n\n**Specific Requests:**\n• 'If my alarm goes off at 3:00 AM and I don't come to the living room within 5 minutes, please wake me up'\n• 'Please remind me about my nap times if you see me getting distracted'\n• 'Help me stay accountable to my schedule'\n• 'Be patient with me if I seem tired or irritable'\n\n**WORKPLACE CONSIDERATIONS**\nIf possible, inform your workplace about your adaptation period.\n\n**Professional Approach:**\n• Explain this is a temporary health optimization experiment\n• Assure them your work performance is a priority\n• Suggest flexible arrangements if possible\n• Have a backup plan if adaptation affects work\n\n**ONLINE COMMUNITIES**\nJoin online communities of people attempting or practicing polyphasic sleep.\n\n**Benefits of Community Support:**\n• Share experiences and get advice\n• Find motivation from others' success stories\n• Get troubleshooting help for specific challenges\n• Feel less alone in the process\n\n**Popular Communities:**\n• Reddit: r/polyphasic\n• Discord servers dedicated to polyphasic sleep\n• Facebook groups\n• Specialized forums\n\n**ACCOUNTABILITY PARTNERS**\nConsider finding someone else interested in trying polyphasic sleep to do it together.\n\n**Advantages:**\n• Mutual accountability and motivation\n• Shared problem-solving\n• Emotional support during difficult phases\n• Celebration of milestones together\n\n**DEALING WITH SKEPTICISM**\nPrepare for negative reactions from some people.\n\n**Common Responses:**\n• 'That's not healthy'\n• 'You're going to hurt yourself'\n• 'Why would you do that?'\n• 'It's not natural'\n\n**How to Handle Skepticism:**\n• Acknowledge their concerns\n• Explain that you've researched the risks\n• Emphasize that you're monitoring your health\n• Set boundaries about unsolicited advice\n\n**⚠️ Important Note**\nYour support system can make or break your adaptation attempt. Invest time in building understanding and getting people on your side before you start. Their support during difficult moments can be the difference between success and failure."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu süreci tek başınıza yürütmek neredeyse imkansızdır. Güçlü bir destek sistemi kurmak başarı için şarttır.\n\n**AÇIK İLETİŞİM**\nBirlikte yaşadığınız insanlara (aile, eş, ev arkadaşı) ne yapacağınızı ve neden yapacağınızı detaylıca anlatın. Onlardan anlayış ve destek isteyin.\n\n**İletişim Kurulması Gereken Ana Noktalar:**\n• Adaptasyon süresinin süresi (minimum 3-4 hafta)\n• Spesifik şekerleme programınız ve zamanlamanız\n• Bu neden sizin için önemli\n• Size nasıl yardımcı olabilecekleri\n• Davranışınızda fark edebilecekleri değişiklikler\n\n**BEKLENTİLERİ BELİRLEME**\nAdaptasyon sırasında karşılaşacağınız zorluklar hakkında dürüst olun.\n\n**Açıklanması Gerekenler:**\n• 'Zombi Modu' sırasında sinirli veya huysuz olabileceğiniz\n• Sosyal erişilebilirliğinizin sınırlı olacağı\n• Sosyal aktivitelerden çok uykuya öncelik vermeniz gerekeceği\n• Bunun geçici ve başarı için gerekli olduğu\n\n**YARDIM İSTEYİN**\nAdaptasyonun en zorlu günlerinde spesifik yardım istemekten çekinmeyin.\n\n**Spesifik Ricalar:**\n• 'Saat 03:00'te alarmım çalacak, eğer 5 dakika içinde salona gelmezsem lütfen beni uyandır'\n• 'Dikkatimin dağıldığını görürsen lütfen şekerleme saatlerimi hatırlat'\n• 'Programıma sadık kalmam için bana yardım et'\n• 'Yorgun veya sinirli göründüğümde sabırlı ol'\n\n**İŞYERİ HUSUSLARI**\nMümkünse, işyerinizi adaptasyon döneminiz hakkında bilgilendirin.\n\n**Profesyonel Yaklaşım:**\n• Bunun geçici bir sağlık optimizasyon deneyi olduğunu açıklayın\n• İş performansınızın öncelik olduğunu garanti edin\n• Mümkünse esnek düzenlemeler önerin\n• Adaptasyon işi etkilerse yedek planınız olsun\n\n**ONLİNE TOPLULUKLAR**\nPolifazik uyku deneyen veya uygulayan insanların çevrimiçi topluluklarına katılın.\n\n**Topluluk Desteğinin Faydaları:**\n• Deneyimleri paylaşın ve tavsiye alın\n• Başkalarının başarı hikayelerinden motivasyon bulun\n• Spesifik zorluklar için sorun giderme yardımı alın\n• Süreçte daha az yalnız hissedin\n\n**Popüler Topluluklar:**\n• Reddit: r/polyphasic\n• Polifazik uykuya adanmış Discord sunucuları\n• Facebook grupları\n• Uzmanlaşmış forumlar\n\n**HESAP VERİLEBİLİRLİK ORTAKLARI**\nPolifazik uyku denemeye ilgi duyan başka birini bulup birlikte yapmayı düşünün.\n\n**Avantajları:**\n• Karşılıklı hesap verebilirlik ve motivasyon\n• Paylaşılan problem çözme\n• Zor aşamalarda duygusal destek\n• Kilometre taşlarını birlikte kutlama\n\n**ŞÜPHECİLİKLE BAŞA ÇIKMA**\nBazı insanlardan gelebilecek olumsuz tepkilere hazırlıklı olun.\n\n**Yaygın Tepkiler:**\n• 'Bu sağlıklı değil'\n• 'Kendine zarar vereceksin'\n• 'Neden böyle bir şey yapıyorsun?'\n• 'Bu doğal değil'\n\n**Şüpheciliği Nasıl Ele Alırsınız:**\n• Endişelerini kabul edin\n• Riskleri araştırdığınızı açıklayın\n• Sağlığınızı izlediğinizi vurgulayın\n• İstenmeyen tavsiyeler için sınırlar koyun\n\n**⚠️ Önemli Not**\nDestek sisteminiz adaptasyon denemesini başarıya ulaştırabilir veya başarısızlığa uğratabilir. Başlamadan önce anlayış oluşturmak ve insanları yanınıza almak için zaman yatırımı yapın. Zor anlardaki destekleri başarı ile başarısızlık arasındaki fark olabilir."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+} 

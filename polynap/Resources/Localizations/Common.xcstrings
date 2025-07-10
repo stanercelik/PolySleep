@@ -906,6 +906,23 @@
         }
       }
     },
+    "tabbar.education" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Education"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eğitim"
+          }
+        }
+      }
+    },
     "tabbar.history" : {
       "extractionState" : "manual",
       "localizations" : {
