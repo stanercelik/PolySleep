@@ -3,51 +3,42 @@ import SwiftUI
 // MARK: - Premium Upgrade Card
 struct PremiumUpgradeCard: View {
     var body: some View {
-        VStack(spacing: PSSpacing.lg) {
-            HStack {
-                VStack(alignment: .leading, spacing: PSSpacing.sm) {
-                    HStack {
-                        Image(systemName: "crown.fill")
-                            .font(PSTypography.title1)
-                            .foregroundColor(.yellow)
-                        
-                        Text(L("profile.premium.title", table: "Profile"))
-                            .font(PSTypography.headline)
-                            .foregroundColor(.appTextOnPrimary)
-                    }
+        HStack(spacing: PSSpacing.md) {
+            // Sol taraf - İkon ve başlık
+            HStack(spacing: PSSpacing.sm) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.yellow)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(L("profile.premium.title", table: "Profile"))
+                        .font(PSTypography.body)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appTextOnPrimary)
                     
                     Text(L("profile.premium.description", table: "Profile"))
-                        .font(PSTypography.body)
-                        .foregroundColor(.appTextOnPrimary.opacity(0.9))
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text(L("profile.premium.upgrade", table: "Profile"))
                         .font(PSTypography.caption)
-                        .foregroundColor(.appTextOnPrimary)
-                        .padding(.horizontal, PSSpacing.lg)
-                        .padding(.vertical, PSSpacing.sm)
-                        .background(
-                            Capsule()
-                                .fill(Color.appTextOnPrimary.opacity(0.25))
-                        )
-                    
-                    Image(systemName: "arrow.right.circle.fill")
-                        .font(PSTypography.title1)
-                        .foregroundColor(.appTextOnPrimary.opacity(0.7))
+                        .foregroundColor(.appTextOnPrimary.opacity(0.8))
+                        .lineLimit(1)
                 }
             }
             
-            // Premium Features
-            HStack(spacing: PSSpacing.xl) {
-                PremiumFeature(icon: "chart.line.uptrend.xyaxis", title: L("profile.premium.features.statistics", table: "Profile"))
-                PremiumFeature(icon: "bell.badge", title: L("profile.premium.features.notifications", table: "Profile"))
-                PremiumFeature(icon: "paintbrush", title: L("profile.premium.features.themes", table: "Profile"))
-            }
+            Spacer()
+            
+            // Sağ taraf - Upgrade butonu
+            Text(L("profile.premium.upgrade", table: "Profile"))
+                .font(PSTypography.caption)
+                .fontWeight(.medium)
+                .foregroundColor(.appTextOnPrimary)
+                .padding(.horizontal, PSSpacing.md)
+                .padding(.vertical, PSSpacing.sm)
+                .background(
+                    Capsule()
+                        .fill(Color.appTextOnPrimary.opacity(0.2))
+                )
         }
-        .padding(PSSpacing.lg)
+        .padding(.horizontal, PSSpacing.md)
+        .padding(.vertical, PSSpacing.md)
         .background(
             LinearGradient(
                 gradient: Gradient(colors: [Color.appSecondary, Color.appAccent]),
@@ -55,27 +46,8 @@ struct PremiumUpgradeCard: View {
                 endPoint: .bottomTrailing
             )
         )
-        .cornerRadius(PSCornerRadius.extraLarge)
-        .shadow(color: Color.appSecondary.opacity(0.3), radius: PSSpacing.sm, x: 0, y: PSSpacing.xs)
+        .cornerRadius(PSCornerRadius.large)
+        .shadow(color: Color.appSecondary.opacity(0.2), radius: PSSpacing.xs, x: 0, y: 2)
         .contentShape(Rectangle()) // Tıklama alanını genişletmek için
-    }
-}
-
-struct PremiumFeature: View {
-    let icon: String
-    let title: String
-    
-    var body: some View {
-        VStack(spacing: PSSpacing.xs) {
-            Image(systemName: icon)
-                .font(PSTypography.title1)
-                .foregroundColor(.appTextOnPrimary)
-            
-            Text(title)
-                .font(PSTypography.caption)
-                .foregroundColor(.appTextOnPrimary.opacity(0.9))
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
     }
 } 

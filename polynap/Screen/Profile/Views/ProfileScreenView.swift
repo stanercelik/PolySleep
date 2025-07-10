@@ -43,6 +43,14 @@ struct ProfileScreenView: View {
                                 authManager: authManager
                             )
                             
+                            // Premium Upgrade Card - Premium kullanıcılar için gizle ve en üstte göster
+                            if revenueCatManager.userState != .premium {
+                                PremiumUpgradeCard()
+                                    .onTapGesture {
+                                        paywallManager.presentPaywall(trigger: .manualTrigger)
+                                    }
+                            }
+                            
                             // Stats Grid
                             StatsGridSection(viewModel: viewModel)
                             
@@ -63,14 +71,6 @@ struct ProfileScreenView: View {
                                 isPickingCoreEmoji: $isPickingCoreEmoji
                             )
                             .requiresPremium()
-                            
-                            // Premium Upgrade Card - Premium kullanıcılar için gizle
-                            if revenueCatManager.userState != .premium {
-                                PremiumUpgradeCard()
-                                    .onTapGesture {
-                                        paywallManager.presentPaywall(trigger: .manualTrigger)
-                                    }
-                            }
                         }
                         .padding(.horizontal, PSSpacing.lg)
                         .padding(.vertical, PSSpacing.sm)

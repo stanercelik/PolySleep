@@ -191,7 +191,6 @@ struct ProfileHeaderCard: View {
         .background(Color.appCardBackground)
         .cornerRadius(PSCornerRadius.extraLarge)
         .shadow(color: Color.black.opacity(0.08), radius: 10, x: 0, y: 5)
-        .padding(.horizontal)
         .confirmationDialog(L("profile.avatar.options.title", table: "Profile"), isPresented: $showActionSheet) {
             Button(L("profile.avatar.options.selectPhoto", table: "Profile")) {
                 showImagePicker = true
