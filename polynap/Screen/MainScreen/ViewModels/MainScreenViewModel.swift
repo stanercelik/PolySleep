@@ -47,6 +47,77 @@ class MainScreenViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
+    // MARK: - Chart Edit Mode
+    @Published var isChartEditMode: Bool = false
+    @Published var draggedBlockId: UUID? = nil
+    @Published var draggedBlockPosition: CGPoint = .zero
+    @Published var snapInterval: Int = 10 // 5 veya 10 dakika
+    
+    // Canlı zaman gösterimi için yeni değişken
+    @Published var liveBlockTimeString: String? = nil
+    
+    // Sürükleme işlemi için yeni değişkenler
+    @Published var dragStartAngle: Double? = nil
+    @Published var dragAngleOffset: Double = 0
+    @Published var initialDragState: [UUID: String] = [:] // Block ID'si ve orijinal başlangıç zamanı
+    
+    @Published var tempScheduleBlocks: [SleepBlock] = []
+    @Published var isResizing: Bool = false
+    @Published var resizeBlockId: UUID? = nil
+    @Published var resizeHandle: ResizeHandle? = nil
+    
+    // MARK: - Enhanced Edit Mode Features
+    @Published var editFeedbackMessage: String = ""
+    @Published var editFeedbackType: EditFeedbackType = .none
+    @Published var currentEditingTime: String = ""
+    @Published var currentEditingDuration: String = ""
+    @Published var isValidEdit: Bool = true
+    
+    // Cached calculation values for performance
+    private var cachedAngleCalculations: [String: Double] = [:]
+    private var lastUpdateTime: Date = Date()
+    private let updateDebounceInterval: TimeInterval = 0.016 // ~60fps
+    
+    enum ResizeHandle {
+        case start, end
+    }
+    
+    enum EditFeedbackType {
+        case none, moving, resizing, collision, tooShort, success
+    }
+    
+    // MARK: - Segment Management
+    @Published var selectedSegment: Int = 0 {
+        didSet {
+            // Analytics tracking
+            AnalyticsManager.shared.logFeatureUsed(
+                featureName: "main_screen_segment_switch",
+                action: selectedSegment == 0 ? "overview_selected" : "details_selected"
+            )
+            
+            // Save user preference
+            UserDefaults.standard.set(selectedSegment, forKey: "MainScreenSelectedSegment")
+        }
+    }
+    
+    /// Programmatically switches to the specified segment
+    func switchToSegment(_ segment: Int) {
+        guard segment >= 0 && segment <= 1 else { return }
+        withAnimation(.easeInOut(duration: 0.3)) {
+            selectedSegment = segment
+        }
+    }
+    
+    /// Switches to overview segment
+    func switchToOverview() {
+        switchToSegment(0)
+    }
+    
+    /// Switches to details segment  
+    func switchToDetails() {
+        switchToSegment(1)
+    }
+    
     private var modelContext: ModelContext?
     private var timerCancellable: AnyCancellable?
     private var languageManager: LanguageManager
@@ -55,6 +126,7 @@ class MainScreenViewModel: ObservableObject {
     private var lastCheckedCompletedBlock: String?
     
     private let authManager = AuthManager.shared
+    private let analyticsManager = AnalyticsManager.shared
     private var cancellables = Set<AnyCancellable>()
     private let revenueCatManager = RevenueCatManager.shared
     private let watchConnectivity = WatchConnectivityManager.shared
@@ -178,6 +250,9 @@ class MainScreenViewModel: ObservableObject {
     init(model: MainScreenModel = MainScreenModel(schedule: UserScheduleModel.defaultSchedule), languageManager: LanguageManager = LanguageManager.shared) {
         self.model = model
         self.languageManager = languageManager
+        
+        // Load saved segment preference
+        self.selectedSegment = UserDefaults.standard.integer(forKey: "MainScreenSelectedSegment")
         
         loadPremiumStatus()
         loadAvailableSchedules()
@@ -1011,8 +1086,8 @@ class MainScreenViewModel: ObservableObject {
             duration = (24 * 60) + duration
         }
         
-        // Minimum süre kontrolü (5 dakika)
-        if duration < 5 {
+        // Minimum süre kontrolü (15 dakika)
+        if duration < 15 {
             blockErrorMessage = L("sleepBlock.validation.minimumDuration", table: "MainScreen")
             showBlockError = true
             return false
@@ -1049,8 +1124,8 @@ class MainScreenViewModel: ObservableObject {
             duration = (24 * 60) + duration
         }
         
-        // Minimum süre kontrolü (5 dakika)
-        if duration < 5 {
+        // Minimum süre kontrolü (15 dakika)
+        if duration < 15 {
             blockErrorMessage = L("sleepBlock.validation.minimumDuration", table: "MainScreen")
             showBlockError = true
             return false
@@ -1168,5 +1243,93 @@ class MainScreenViewModel: ObservableObject {
         
         editingBlockIsCore = block.isCore
     }
+    
+    // MARK: - Chart Edit Mode Functions
+    
+    /// Grafik düzenleme modunu başlatır
+    func startChartEdit() {
+        tempScheduleBlocks = model.schedule.schedule
+        initialDragState = Dictionary(uniqueKeysWithValues: tempScheduleBlocks.map { ($0.id, $0.startTime) })
+        isChartEditMode = true
+        
+        analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_started", action: "edit_started")
+    }
+    
+    /// Grafik düzenleme değişikliklerini kaydeder
+    func saveChartEdit() {
+        var updatedSchedule = model.schedule
+        updatedSchedule.schedule = tempScheduleBlocks
+        updatedSchedule.totalSleepHours = updatedSchedule.calculatedTotalSleepHours
+        model.schedule = updatedSchedule
+        
+        isChartEditMode = false
+        resetDragState()
+        
+        Task {
+            await saveSchedule()
+        }
+        
+        analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_saved", action: "edit_saved")
+    }
+    
+    /// Grafik düzenleme modunu iptal eder
+    func cancelChartEdit() {
+        isChartEditMode = false
+        tempScheduleBlocks = []
+        resetDragState()
+        analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_cancelled", action: "edit_cancelled")
+    }
+    
+    /// Bir bloğu sürüklemeye başlar
+    func startDragging(blockId: UUID, at position: CGPoint) {
+        guard isChartEditMode else { return }
+        
+        if draggedBlockId == nil {
+            draggedBlockId = blockId
+            // Diğer sürükleme başlangıç durumu `updateBlockPosition` içinde ayarlanacak
+        }
+    }
+    
+    /// Bloğu sürüklemeyi bitirir
+    func endDragging() {
+        if let blockId = draggedBlockId {
+            // Başarılı bir sürükleme sonrası geri bildirim
+            if let index = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
+                let block = tempScheduleBlocks[index]
+                let originalStartTime = initialDragState[blockId]
+                
+                if block.startTime != originalStartTime {
+                    // Bir sonraki sürüklemenin yeni pozisyondan başlaması için başlangıç durumunu güncelle
+                    initialDragState[blockId] = block.startTime
+                    
+                    // Final mesajı kaldırıldı - sadece smooth bir şekilde kaybolsun
+                }
+            }
+        }
+        
+        resetDragState()
+    }
+    
+    /// Sürükleme durumunu sıfırlar
+    private func resetDragState() {
+        draggedBlockId = nil
+        dragStartAngle = nil
+        dragAngleOffset = 0
+        liveBlockTimeString = nil // Canlı zaman gösterimini temizle
+    }
+    
+    // MARK: - Enhanced Edit Mode Feedback
+    
+    func showEditFeedback(message: String, type: EditFeedbackType, duration: TimeInterval = 1.5) {
+        self.editFeedbackMessage = message
+        self.editFeedbackType = type
+        
+        // Geri bildirimi bir süre sonra gizle
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            if self.editFeedbackMessage == message { // Başka bir mesaj gelmediyse
+                self.editFeedbackMessage = ""
+                self.editFeedbackType = .none
+            }
+        }
+    }
 }
-

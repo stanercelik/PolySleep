@@ -50,32 +50,30 @@ struct CircularSleepChart: View {
 
     var body: some View {
         GeometryReader { geometry in
-            // Ekran boyutuna göre responsive chart size ayarı
-            let availableSize = min(geometry.size.width, geometry.size.height)
-            let chartDiameter = min(availableSize * 0.95, circleRadius * 2.5) // Daha büyük chart için %95 kullan
-            let adjustedRadius = chartDiameter / 2.5
-            let adjustedStrokeWidth = adjustedRadius * (strokeWidth / circleRadius)
-            let center = CGPoint(x: chartDiameter / 2, y: chartDiameter / 2)
+            let availableWidth = geometry.size.width
+            let labelFontSize = max(8, availableWidth / 35) // Yazı boyutunu ayarla
+            let labelWidthApproximation = labelFontSize * 5 // "22:00" için yaklaşık genişlik
+            let labelPadding: CGFloat = 8 // Etiket ve daire arasındaki boşluk
+
+            // strokeWidth ve etiketler için gereken toplam alanı hesaba kat
+            let totalPadding = strokeWidth + labelPadding + labelWidthApproximation
+            let chartDiameter = availableWidth - totalPadding
+            let adjustedRadius = chartDiameter / 2
+            let center = CGPoint(x: availableWidth / 2, y: availableWidth / 2)
             
-            HStack {
-                Spacer()
-                VStack {
-                    Spacer()
-                    ZStack {
-                        backgroundCircle(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                        sleepBlocksView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                        hourTickMarks(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                            .opacity(textOpacity)
-                        hourMarkersView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                            .opacity(textOpacity)
-                        innerTimeLabelsView(center: center, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
-                            .opacity(textOpacity)
-                    }
-                    .frame(width: chartDiameter, height: chartDiameter)
-                    Spacer()
+            VStack {
+                ZStack {
+                    backgroundCircle(center: center, radius: adjustedRadius, strokeWidth: strokeWidth)
+                    sleepBlocksView(center: center, radius: adjustedRadius, strokeWidth: strokeWidth)
+                    hourTickMarks(center: center, radius: adjustedRadius, strokeWidth: strokeWidth)
+                        .opacity(textOpacity)
+                    hourMarkersView(center: center, radius: adjustedRadius, strokeWidth: strokeWidth, labelPadding: labelPadding)
+                        .opacity(textOpacity)
+                    innerTimeLabelsView(center: center, radius: adjustedRadius, strokeWidth: strokeWidth)
+                        .opacity(textOpacity)
                 }
-                Spacer()
             }
+            .frame(width: availableWidth, height: availableWidth) // ZStack'i sarmalayan VStack'e tam genişlik ver
         }
         .aspectRatio(1, contentMode: .fit)
         .animation(.easeInOut(duration: 0.3), value: textOpacity)
@@ -121,22 +119,25 @@ struct CircularSleepChart: View {
         .foregroundColor(Color.appTextSecondary.opacity(hour % 3 == 0 ? 0.3 : 0.2))
     }
     
-    private func hourMarkersView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+    private func hourMarkersView(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat, labelPadding: CGFloat) -> some View {
         ZStack {
             ForEach(hourMarkers, id: \.self) { hour in
-                hourMarkerLabel(for: hour, center: center, radius: radius, strokeWidth: strokeWidth)
+                hourMarkerLabel(for: hour, center: center, radius: radius, strokeWidth: strokeWidth, labelPadding: labelPadding)
             }
         }
     }
     
-    private func hourMarkerLabel(for hour: Int, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+    private func hourMarkerLabel(for hour: Int, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat, labelPadding: CGFloat) -> some View {
         let angle = Double(hour) * (360.0 / 24.0) - 90
-        let labelRadius = radius + strokeWidth / 2 + 16
+        let labelRadius = radius + strokeWidth / 2 + labelPadding + 12 // 12, metnin kendi genişliğinin yarısı için bir tampon
         let xPosition = center.x + labelRadius * cos(angle * .pi / 180)
         let yPosition = center.y + labelRadius * sin(angle * .pi / 180)
         
+        let availableWidth = 2 * (radius + strokeWidth / 2 + labelPadding) // Yaklaşık olarak kullanılabilir genişlik
+        let fontSize = max(8, availableWidth / 40)
+
         return Text(String(format: "%02d:00", hour))
-            .font(.system(size: max(9, radius / 10), weight: .medium))
+            .font(.system(size: fontSize, weight: .medium))
             .foregroundColor(Color.appTextSecondary)
             .position(x: xPosition, y: yPosition)
     }
@@ -278,7 +279,7 @@ struct CircularSleepChart: View {
         // Responsive font size ve positioning
         let isLongBlock = block.duration > 90
         let fontSize = max(7, radius / 12)
-        let labelRadius = radius - strokeWidth / 2 - (isLongBlock ? 8 : 12)
+        let labelRadius = radius - strokeWidth / 2 - (isLongBlock ? 24 : 28) // 18/22'den 24/28'e artırıldı (daha uzağa)
         let xPosition = center.x + labelRadius * cos(midAngle * .pi / 180)
         let yPosition = center.y + labelRadius * sin(midAngle * .pi / 180)
         

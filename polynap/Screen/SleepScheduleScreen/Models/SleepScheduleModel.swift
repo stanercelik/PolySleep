@@ -62,6 +62,14 @@ public struct SleepBlock: Codable, Identifiable, Equatable {
         self.isCore = isCore
     }
     
+    public init(id: UUID, startTime: String, duration: Int, type: String, isCore: Bool) {
+        self.id = id
+        self.startTime = startTime
+        self.duration = duration
+        self.type = type
+        self.isCore = isCore
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case startTime, duration, type, isCore
     }

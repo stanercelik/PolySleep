@@ -1,6 +1,66 @@
 import SwiftUI
 import SwiftData
 
+// MARK: - Modern Segmented Control
+struct ModernSegmentedControl: View {
+    @Binding var selectedSegment: Int
+    @Namespace private var animation
+    
+    private let segments = [
+        ("chart.pie.fill", L("mainScreen.segment.overview", table: "MainScreen")),
+        ("list.bullet.clipboard.fill", L("mainScreen.segment.details", table: "MainScreen"))
+    ]
+    
+    var body: some View {
+        HStack(spacing: PSSpacing.xs) {
+            ForEach(Array(segments.enumerated()), id: \.offset) { index, segment in
+                let isSelected = selectedSegment == index
+                Button(action: {
+                    let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                    impactFeedback.impactOccurred()
+                    
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.1)) {
+                        selectedSegment = index
+                    }
+                }) {
+                    HStack(spacing: PSSpacing.xs) {
+                        Image(systemName: segment.0)
+                            .font(.system(size: 15, weight: .medium))
+                            .symbolVariant(isSelected ? .fill : .none)
+                            .symbolRenderingMode(.hierarchical)
+                        
+                        Text(segment.1)
+                            .font(PSTypography.caption.weight(.semibold))
+                    }
+                    .foregroundColor(isSelected ? .appTextOnPrimary : .appTextSecondary)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 36)
+                    .background {
+                        if isSelected {
+                            RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                .fill(Color.appPrimary)
+                                .matchedGeometryEffect(id: "selectedSegment", in: animation)
+                        }
+                    }
+                    .scaleEffect(isSelected ? 1.0 : 0.96)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isSelected)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(PSSpacing.xs)
+        .background(
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .fill(Color.appCardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .stroke(Color.appPrimary.opacity(0.06), lineWidth: 0.5)
+                )
+        )
+        .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+    }
+}
+
 // MARK: - Redacted Shimmer Effect Modifier
 struct RedactedShimmerModifier: ViewModifier {
     func body(content: Content) -> some View {
@@ -85,16 +145,41 @@ struct MainScreenView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack(spacing: PSSpacing.md) {
-                        // Header Section
-                        HeaderSection(viewModel: viewModel)
+                VStack(spacing: 0) {
+                    // Modern Segmented Control
+                    ModernSegmentedControl(selectedSegment: $viewModel.selectedSegment)
+                        .padding(.horizontal, PSSpacing.lg)
+                        .padding(.top, PSSpacing.sm)
+                        .padding(.bottom, PSSpacing.md)
+                    
+                    // Content based on selected segment
+                    Group {
+                        if viewModel.selectedSegment == 0 {
+                            MinimalSegmentView(viewModel: viewModel)
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: .leading).combined(with: .opacity),
+                                    removal: .move(edge: .trailing).combined(with: .opacity)
+                                ))
+                        } else {
+                            DetailedSegmentView(viewModel: viewModel)
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: .trailing).combined(with: .opacity),
+                                    removal: .move(edge: .leading).combined(with: .opacity)
+                                ))
+                        }
+                    }
+                    .animation(.spring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.2), value: viewModel.selectedSegment)
+                    
+                    // Error Overlay
+                    if let errorMessage = viewModel.errorMessage {
+                        ErrorOverlayCard(errorMessage: errorMessage, viewModel: viewModel)
+                    }
+                    
+                    // Sleep Quality Rating Card (Global overlay)
+                    if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
+                        if let startTime = TimeFormatter.time(from: lastBlock.startTime),
+                           let endTime = TimeFormatter.time(from: lastBlock.endTime) {
                         
-                        // Sleep Quality Rating Card
-                        if viewModel.showSleepQualityRating, let lastBlock = viewModel.lastSleepBlock {
-                            if let startTime = TimeFormatter.time(from: lastBlock.startTime),
-                               let endTime = TimeFormatter.time(from: lastBlock.endTime) {
-                            
                             let now = Date()
                             let startDate = Calendar.current.date(
                                 bySettingHour: startTime.hour,
@@ -110,47 +195,88 @@ struct MainScreenView: View {
                                 of: now
                             ) ?? now
                             
-                                SleepQualityRatingCard(
-                                    startTime: startDate,
-                                    endTime: endDate,
-                                    isPresented: $viewModel.showSleepQualityRating,
-                                    viewModel: viewModel
-                                )
-                                .transition(.move(edge: .top).combined(with: .opacity))
-                            }
+                            SleepQualityRatingCard(
+                                startTime: startDate,
+                                endTime: endDate,
+                                isPresented: $viewModel.showSleepQualityRating,
+                                viewModel: viewModel
+                            )
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                            .zIndex(100)
                         }
-                        
-                        // Status Cards Grid
-                        StatusCardsGrid(viewModel: viewModel)
-                        
-                        // Sleep Chart
-                        SleepChartSection(viewModel: viewModel)
-                        
-                        // Sleep Blocks
-                        SleepBlocksSection(viewModel: viewModel)
-                        
-                        // Daily Tip
-                        DailyTipSection(viewModel: viewModel)
                     }
-                    .padding(.horizontal, PSSpacing.lg)
-                    .padding(.top, PSSpacing.sm)
-                    .padding(.bottom, PSSpacing.xl)
-                }
-                
-                // Error Overlay
-                if let errorMessage = viewModel.errorMessage {
-                    ErrorOverlayCard(errorMessage: errorMessage, viewModel: viewModel)
                 }
             }
             .navigationTitle(L("mainScreen.title", table: "MainScreen"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.appBackground, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: shareSchedule) {
-                        Image(systemName: "square.and.arrow.up")
-                            .symbolRenderingMode(.hierarchical)
-                            .foregroundColor(.appPrimary)
+                    // Cancel button for edit mode
+                    if viewModel.isChartEditMode {
+                        Button(action: {
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                            impactFeedback.impactOccurred()
+                            viewModel.cancelChartEdit()
+                        }) {
+                            Text(L("common.cancel", table: "Common"))
+                                .font(PSTypography.caption.weight(.medium))
+                                .foregroundColor(.appTextSecondary)
+                                .padding(.horizontal, PSSpacing.sm)
+                                .padding(.vertical, PSSpacing.xs)
+                                .background(
+                                    RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                        .fill(Color.appTextSecondary.opacity(0.1))
+                                )
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
+                    } else {
+                        Button(action: shareSchedule) {
+                            Image(systemName: "square.and.arrow.up")
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(.appPrimary)
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
                     }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                        impactFeedback.impactOccurred()
+                        if viewModel.isChartEditMode {
+                            viewModel.saveChartEdit()
+                        } else {
+                            viewModel.startChartEdit()
+                        }
+                    }) {
+                        HStack(spacing: PSSpacing.xs) {
+                            Image(systemName: viewModel.isChartEditMode ? "checkmark" : "pencil")
+                                .symbolRenderingMode(.hierarchical)
+                                .font(.system(size: 16, weight: .medium))
+                            
+                            if viewModel.isChartEditMode {
+                                Text(L("mainScreen.chart.save", table: "MainScreen"))
+                                    .font(PSTypography.caption.weight(.medium))
+                            } else {
+                                Text(L("mainScreen.chart.edit", table: "MainScreen"))
+                                    .font(PSTypography.caption.weight(.medium))
+                            }
+                        }
+                        .foregroundColor(viewModel.isChartEditMode ? .appSuccess : .appPrimary)
+                        .padding(.horizontal, PSSpacing.sm)
+                        .padding(.vertical, PSSpacing.xs)
+                        .background(
+                            RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                .fill(
+                                    viewModel.isChartEditMode ? 
+                                    Color.appSuccess.opacity(0.1) : 
+                                    Color.appPrimary.opacity(0.1)
+                                )
+                        )
+                    }
+                    .animation(.easeInOut(duration: 0.2), value: viewModel.isChartEditMode)
                 }
             }
             .onAppear {
@@ -210,66 +336,239 @@ struct MainScreenView: View {
     }
 }
 
-// MARK: - Header Section
-struct HeaderSection: View {
+// MARK: - Minimal Segment View (Overview)
+struct MinimalSegmentView: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    @State private var chartDragInfo: String? = nil
+    
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: PSSpacing.xl) {
+                // Header with schedule name
+                VStack(spacing: PSSpacing.md) {
+                    Text(viewModel.model.schedule.name)
+                        .font(PSTypography.largeTitle.weight(.bold))
+                        .foregroundColor(.appPrimary)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                    
+                    // Toplam uyku saati chip
+                    HStack(spacing: PSSpacing.sm) {
+                        Image(systemName: "bed.double.fill")
+                            .font(.system(size: PSIconSize.small))
+                            .foregroundColor(.appPrimary)
+                        
+                        Text(viewModel.totalSleepTimeFormatted)
+                            .font(PSTypography.subheadline.weight(.medium))
+                            .foregroundColor(.appPrimary)
+                    }
+                    .padding(.horizontal, PSSpacing.md)
+                    .padding(.vertical, PSSpacing.sm)
+                    .background(
+                        RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                            .fill(Color.appPrimary.opacity(0.1))
+                    )
+                }
+                .padding(.top, PSSpacing.md)
+                
+                // Circular Sleep Chart with Edit Mode
+                PSCard {
+                    VStack(spacing: PSSpacing.sm) {
+                        // Chart edit controls
+                        if viewModel.isChartEditMode {
+                            ChartEditControls(viewModel: viewModel)
+                                .transition(.move(edge: .top).combined(with: .opacity))
+                        }
+                        
+                        // Chart
+                        EditableCircularSleepChart(
+                            viewModel: viewModel,
+                            chartSize: .extraLarge,
+                            activeDragInfo: $chartDragInfo
+                        )
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(minHeight: 280)
+                        
+                        // Edit mode info text
+                        if viewModel.isChartEditMode {
+                            let infoText = chartDragInfo ?? L("mainScreen.chart.dragToMove", table: "MainScreen")
+                            let isDefaultText = chartDragInfo == nil
+                            
+                            Text(infoText)
+                                .font(isDefaultText ? .caption : .system(.caption, design: .monospaced).weight(.medium))
+                                .foregroundColor(isDefaultText ? .appTextSecondary : .appPrimary)
+                                .padding(.top, PSSpacing.sm)
+                                .transition(.opacity)
+                                .id(infoText) // Animates text content changes
+                        }
+                    }
+                    .padding(PSSpacing.sm)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.isChartEditMode)
+                }
+                
+                // Sonraki uyku bloğu bilgisi - compact
+                PSCard {
+                    HStack(spacing: PSSpacing.md) {
+                        // İkon
+                        Image(systemName: "clock.fill")
+                            .font(.system(size: PSIconSize.medium))
+                            .foregroundColor(.appSecondary)
+                            .frame(width: PSIconSize.large, height: PSIconSize.large)
+                            .background(
+                                Circle()
+                                    .fill(Color.appSecondary.opacity(0.1))
+                            )
+                        
+                        // İçerik
+                        VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                            Text(L("mainScreen.nextSleepBlock", table: "MainScreen"))
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appTextSecondary)
+                            
+                            Text(viewModel.nextSleepBlockFormatted)
+                                .font(PSTypography.title3.weight(.semibold))
+                                .foregroundColor(.appSecondary)
+                        }
+                        
+                        Spacer()
+                        
+                        // Status badge
+                        PSStatusBadge(
+                            viewModel.sleepStatusMessage,
+                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
+                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
+                        )
+                    }
+                }
+            }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.bottom, PSSpacing.xl)
+        }
+        .accessibilityLabel(L("mainScreen.segment.overview", table: "MainScreen"))
+    }
+}
+
+// MARK: - Chart Edit UI Components
+
+struct ChartEditControls: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        VStack(spacing: PSSpacing.sm) {
+            Text(L("mainScreen.chart.editTitle", table: "MainScreen"))
+                .font(PSTypography.headline.weight(.semibold))
+                .foregroundColor(.appPrimary)
+            
+            if !viewModel.editFeedbackMessage.isEmpty {
+                 HStack {
+                     Image(systemName: feedbackIcon)
+                         .foregroundColor(feedbackColor)
+                     Text(viewModel.editFeedbackMessage)
+                         .font(.caption)
+                         .foregroundColor(.appTextSecondary)
+                 }
+                 .padding(PSSpacing.sm)
+                 .background(feedbackColor.opacity(0.1))
+                 .cornerRadius(PSCornerRadius.small)
+                 .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .padding(.top, PSSpacing.sm)
+        .animation(.spring(), value: viewModel.editFeedbackMessage)
+    }
+    
+    private var feedbackIcon: String {
+        switch viewModel.editFeedbackType {
+        case .success:
+            return "checkmark.circle.fill"
+        case .collision:
+            return "xmark.octagon.fill"
+        case .tooShort:
+            return "ruler.fill"
+        default:
+            return "info.circle.fill"
+        }
+    }
+    
+    private var feedbackColor: Color {
+        switch viewModel.editFeedbackType {
+        case .success:
+            return .appSuccess
+        case .collision, .tooShort:
+            return .appError
+        default:
+            return .appInfo
+        }
+    }
+}
+
+// MARK: - Detailed Segment View
+struct DetailedSegmentView: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(spacing: PSSpacing.lg) {
+                // Schedule Management Section
+                ScheduleManagementSection(viewModel: viewModel)
+                
+                // Quick Status Section
+                ProgressInfoSection(viewModel: viewModel)
+                
+                // Sleep Blocks Section
+                SleepBlocksSection(viewModel: viewModel)
+                
+                // Daily Tip Section
+                DailyTipSection(viewModel: viewModel)
+            }
+            .padding(.horizontal, PSSpacing.lg)
+            .padding(.top, PSSpacing.md)
+            .padding(.bottom, PSSpacing.xl)
+        }
+        .accessibilityLabel(L("mainScreen.segment.details", table: "MainScreen"))
+    }
+}
+
+// MARK: - Schedule Management Section
+struct ScheduleManagementSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     @State private var showScheduleDescription = false
     
     var body: some View {
         PSCard {
             VStack(spacing: PSSpacing.lg) {
-                // Ana bilgi kartı
-                VStack(spacing: PSSpacing.md) {
-                    // Program adı ve toplam uyku - VStack olarak yeniden düzenlendi
-                    VStack(spacing: PSSpacing.md) {
-                    // Üst satır: Program adı + toplam uyku
-                    HStack(alignment: .center) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(viewModel.model.schedule.name)
-                                .font(PSTypography.headline)
-                                .foregroundColor(.appPrimary)
-                            
-                            // Program değiştirme butonu
-                            Button(action: {
-                                viewModel.showScheduleSelectionSheet()
-                            }) {
-                                HStack(spacing: 4) {
-                                    Text(L("mainScreen.changeSchedule.button", table: "MainScreen"))
-                                        .font(.system(size: 12, weight: .medium))
-                                        .foregroundColor(.appTextSecondary)
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .font(.system(size: 10, weight: .medium))
-                                        .foregroundColor(.appTextSecondary)
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        
-                        Spacer()
-                        
-                        // Toplam uyku süresi
-                        VStack(alignment: .trailing, spacing: PSSpacing.xs) {
-                            Text(L("mainScreen.totalSleepLabel", table: "MainScreen"))
-                                .font(PSTypography.caption)
-                                .foregroundColor(.appTextSecondary)
-                            
-                            Text(viewModel.totalSleepTimeFormatted)
-                                .font(PSTypography.headline)
-                                .foregroundColor(.appPrimary)
-                        }
+                // Schedule name and change button
+                HStack(spacing: PSSpacing.md) {
+                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                        Text(viewModel.model.schedule.name)
+                            .font(PSTypography.headline.weight(.semibold))
+                            .foregroundColor(.appPrimary)
+                            .lineLimit(2)
                     }
                     
-                    // Alt satır: Durum badge
-                    HStack {
-                        PSStatusBadge(
-                            viewModel.sleepStatusMessage,
-                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
-                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
+                    Spacer()
+                    
+                    // Program değiştirme butonu - daha modern
+                    Button(action: {
+                        viewModel.showScheduleSelectionSheet()
+                    }) {
+                        HStack(spacing: PSSpacing.xs) {
+                            Text(L("mainScreen.changeSchedule.button", table: "MainScreen"))
+                                .font(PSTypography.caption.weight(.medium))
+                                .foregroundColor(.appPrimary)
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 10, weight: .semibold))
+                                .foregroundColor(.appPrimary)
+                        }
+                        .padding(.horizontal, PSSpacing.sm)
+                        .padding(.vertical, PSSpacing.xs)
+                        .background(
+                            RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                .fill(Color.appPrimary.opacity(0.1))
                         )
-                        
-                        Spacer()
                     }
+                    .buttonStyle(.plain)
                 }
                 
                 // Program açıklaması toggle
@@ -280,20 +579,20 @@ struct HeaderSection: View {
                 }) {
                     HStack(spacing: PSSpacing.sm) {
                         Image(systemName: "info.circle")
-                            .font(PSTypography.caption)
+                            .font(.system(size: PSIconSize.small))
                         
                         Text(L("mainScreen.scheduleDescription.title", table: "MainScreen"))
-                            .font(PSTypography.caption)
+                            .font(PSTypography.caption.weight(.medium))
                         
                         Spacer()
                         
                         Image(systemName: showScheduleDescription ? "chevron.up" : "chevron.down")
-                            .font(PSTypography.caption)
+                            .font(.system(size: PSIconSize.small))
                     }
-                    .foregroundColor(.appPrimary)
+                    .foregroundColor(.appTextSecondary)
                     .padding(.horizontal, PSSpacing.md)
                     .padding(.vertical, PSSpacing.sm)
-                    .background(Color.appPrimary.opacity(0.1), in: RoundedRectangle(cornerRadius: PSCornerRadius.small))
+                    .background(Color.appTextSecondary.opacity(0.05), in: RoundedRectangle(cornerRadius: PSCornerRadius.small))
                 }
                 
                 // Program açıklaması
@@ -301,19 +600,69 @@ struct HeaderSection: View {
                     Text(viewModel.scheduleDescription)
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
-                        .lineSpacing(3)
+                        .lineSpacing(4)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(PSSpacing.md)
                         .background(.quaternary, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
                         .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
-                }
                 }
             }
         }
     }
 }
 
-// MARK: - Status Cards Grid
+// MARK: - Progress Info Section
+struct ProgressInfoSection: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        PSCard {
+            VStack(spacing: PSSpacing.lg) {
+                PSSectionHeader(
+                    L("mainScreen.nextSleepBlock", table: "MainScreen"),
+                    icon: "clock.fill"
+                )
+                
+                HStack(spacing: PSSpacing.md) {
+                    // Sonraki uyku bloğu bilgisi
+                    VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                        Text(viewModel.nextSleepBlockFormatted)
+                            .font(PSTypography.title2.weight(.semibold))
+                            .foregroundColor(.appSecondary)
+                        
+                        // Status badge
+                        PSStatusBadge(
+                            viewModel.sleepStatusMessage,
+                            icon: viewModel.isInSleepTime ? "moon.fill" : "sun.max.fill",
+                            color: viewModel.isInSleepTime ? .appSecondary : .appAccent
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Toplam uyku saati
+                    VStack(alignment: .trailing, spacing: PSSpacing.sm) {
+                        Text(L("mainScreen.totalSleep", table: "MainScreen"))
+                            .font(PSTypography.caption)
+                            .foregroundColor(.appTextSecondary)
+                        
+                        HStack(spacing: PSSpacing.xs) {
+                            Image(systemName: "bed.double.fill")
+                                .font(.system(size: PSIconSize.small))
+                                .foregroundColor(.appPrimary)
+                            
+                            Text(viewModel.totalSleepTimeFormatted)
+                                .font(PSTypography.title2.weight(.semibold))
+                                .foregroundColor(.appText)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Status Cards Grid (Legacy - kept for backward compatibility)
 struct StatusCardsGrid: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
@@ -375,21 +724,49 @@ struct StatusCard: View {
 // MARK: - Sleep Chart Section
 struct SleepChartSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
+    @State private var chartDragInfo: String? = nil
     
     var body: some View {
-        PSCard {
-            VStack(spacing: PSSpacing.md) {
-                PSSectionHeader(
-                    L("mainScreen.sleepChart.title", table: "MainScreen"),
-                    icon: "chart.pie.fill"
+        VStack(spacing: PSSpacing.md) {
+            
+            ZStack(alignment: .bottom) {
+                EditableCircularSleepChart(
+                    viewModel: viewModel,
+                    activeDragInfo: $chartDragInfo
                 )
-                
-                CircularSleepChart(schedule: viewModel.model.schedule.toSleepScheduleModel, chartSize: .extraLarge)
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(minHeight: 320, maxHeight: 500)
-                    .padding(.vertical, PSSpacing.md)
+                    .frame(height: 300)
+                    .padding(.horizontal, -PSSpacing.lg)
+
+                // Canlı zaman ve geri bildirim göstergesi
+                if viewModel.isChartEditMode {
+                    let (text, color) = feedbackTextAndColor()
+                    
+                    if let text = text, let color = color {
+                        Text(text)
+                            .font(.system(size: 18, weight: .bold, design: .monospaced))
+                            .foregroundColor(color)
+                            .padding(.vertical, PSSpacing.sm)
+                            .padding(.horizontal, PSSpacing.md)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
+                            .transition(.opacity.animation(.easeInOut(duration: 0.3)))
+                            .id("feedback_\(text)") // Animasyonun tekrarlanması için
+                            .padding(.bottom, 10) // Chart'ın biraz altında durması için
+                    }
+                }
+            }
+            
+            if viewModel.isChartEditMode {
+                ChartEditControls(viewModel: viewModel)
             }
         }
+    }
+    
+    private func feedbackTextAndColor() -> (String?, Color?) {
+        // Sadece sürükleme sırasındaki canlı zamanı göster
+        if let liveTime = viewModel.liveBlockTimeString {
+            return (liveTime, .appPrimary)
+        }
+        return (nil, nil)
     }
 }
 
@@ -749,6 +1126,15 @@ struct EditSleepBlockSheet: View {
 
 // MARK: - Legacy Components (Backward Compatibility)
 
+// MARK: - Header Section (Legacy - now ScheduleManagementSection)
+struct HeaderSection: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        ScheduleManagementSection(viewModel: viewModel)
+    }
+}
+
 // MARK: - Header Card
 struct HeaderCard: View {
     @ObservedObject var viewModel: MainScreenViewModel
@@ -756,7 +1142,7 @@ struct HeaderCard: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        HeaderSection(viewModel: viewModel)
+        ScheduleManagementSection(viewModel: viewModel)
     }
 }
 
@@ -778,12 +1164,12 @@ struct SleepBlocksCard: View {
     }
 }
 
-// MARK: - Info Cards Section
+// MARK: - Info Cards Section (Legacy - now ProgressInfoSection)
 struct InfoCardsSection: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        StatusCardsGrid(viewModel: viewModel)
+        ProgressInfoSection(viewModel: viewModel)
     }
 }
 
@@ -858,6 +1244,63 @@ struct EditActionButton: View {
     }
 }
 
+// MARK: - Chart Edit Action Buttons
+struct ChartEditActionButtons: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    
+    var body: some View {
+        HStack(spacing: PSSpacing.md) {
+            // Cancel button
+            Button(action: {
+                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                impactFeedback.impactOccurred()
+                viewModel.cancelChartEdit()
+            }) {
+                HStack(spacing: PSSpacing.xs) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 16))
+                    Text(L("common.cancel", table: "MainScreen"))
+                        .font(PSTypography.subheadline.weight(.medium))
+                }
+                .foregroundColor(.appError)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, PSSpacing.sm)
+                .background(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .fill(Color.appError.opacity(0.1))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                                .stroke(Color.appError.opacity(0.3), lineWidth: 1)
+                        )
+                )
+            }
+            
+            // Save button
+            Button(action: {
+                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                impactFeedback.impactOccurred()
+                viewModel.saveChartEdit() // Değişiklikleri kaydet
+            }) {
+                HStack(spacing: PSSpacing.xs) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 16))
+                    Text(L("common.save", table: "MainScreen"))
+                        .font(PSTypography.subheadline.weight(.medium))
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, PSSpacing.sm)
+                .background(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .fill(Color.appSuccess)
+                        .shadow(color: Color.appSuccess.opacity(0.3), radius: 4, x: 0, y: 2)
+                )
+            }
+        }
+        .padding(.horizontal, PSSpacing.sm)
+    }
+}
+
 #Preview {
     let config = ModelConfiguration()
     let container = try! ModelContainer(for: SleepScheduleStore.self, configurations: config)
@@ -865,4 +1308,5 @@ struct EditActionButton: View {
         .modelContainer(container)
         .environmentObject(LanguageManager.shared)
 }
+
 
