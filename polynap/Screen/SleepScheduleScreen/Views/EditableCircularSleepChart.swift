@@ -191,44 +191,71 @@ struct EditableCircularSleepChart: View {
                     viewModel.isChartEditMode ?
                     DragGesture(coordinateSpace: .local)
                         .onChanged { value in
-                            if viewModel.draggedBlockId == nil {
+                            if viewModel.draggedBlockId == nil && !viewModel.isResizing {
                                 viewModel.startDragging(blockId: block.id, at: value.location)
                             }
                             
-                            updateBlockPosition(
-                                blockId: block.id,
-                                to: value.location,
-                                center: center,
-                                radius: radius
-                            )
+                            if viewModel.draggedBlockId == block.id {
+                                updateBlockPosition(
+                                    blockId: block.id,
+                                    to: value.location,
+                                    center: center,
+                                    radius: radius
+                                )
+                            }
                         }
                         .onEnded { _ in
-                            viewModel.endDragging()
-                            
-                            let lastTime = viewModel.liveBlockTimeString
-                            
-                            // Set the binding with the final time
-                            activeDragInfo = lastTime
+                            if viewModel.draggedBlockId == block.id {
+                                viewModel.endDragging()
+                                
+                                let lastTime = viewModel.liveBlockTimeString
+                                
+                                // Set the binding with the final time
+                                activeDragInfo = lastTime
 
-                            // After 1 second, clear the binding, but only if a new drag hasn't started
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                if activeDragInfo == lastTime {
-                                    activeDragInfo = nil
+                                // After 1 second, clear the binding, but only if a new drag hasn't started
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    if activeDragInfo == lastTime {
+                                        activeDragInfo = nil
+                                    }
                                 }
+                                
+                                // Clear the internal VM property so it doesn't persist
+                                viewModel.liveBlockTimeString = nil
                             }
-                            
-                            // Clear the internal VM property so it doesn't persist
-                            viewModel.liveBlockTimeString = nil
                         }
                     : nil
                 )
                 
                 // Enhanced drag handle sadece edit mode'da
-                if viewModel.isChartEditMode {
+                if viewModel.isChartEditMode && !viewModel.isResizing {
                     enhancedDragHandle(
                         for: block,
                         startAngle: startAngle,
                         endAngle: endAngle,
+                        center: center,
+                        radius: radius,
+                        strokeWidth: strokeWidth
+                    )
+                }
+                
+                // Resizing handles
+                if viewModel.isChartEditMode {
+                    ResizeHandleView(
+                        viewModel: viewModel,
+                        blockId: block.id,
+                        handleType: .start,
+                        angle: startAngle,
+                        center: center,
+                        radius: radius,
+                        strokeWidth: strokeWidth
+                    )
+                    
+                    ResizeHandleView(
+                        viewModel: viewModel,
+                        blockId: block.id,
+                        handleType: .end,
+                        angle: endAngle,
                         center: center,
                         radius: radius,
                         strokeWidth: strokeWidth
@@ -456,8 +483,8 @@ struct EditableCircularSleepChart: View {
         let angleDifference = currentAngle - startAngle
         
         // Bloğun başlangıç açısını al
-        guard let blockIndex = viewModel.tempScheduleBlocks.firstIndex(where: { $0.id == blockId }),
-              let originalStartTime = TimeFormatter.time(from: viewModel.initialDragState[blockId] ?? "") else {
+        guard let originalStartTimeString = viewModel.initialDragState[blockId]?.startTime,
+              let originalStartTime = TimeFormatter.time(from: originalStartTimeString) else {
             return
         }
 
@@ -468,10 +495,10 @@ struct EditableCircularSleepChart: View {
         let newAngleInDegrees = newAngleInRadians * 180 / .pi
         
         // 5 dakika snap
-        let snappedAngle = snapAngleToFiveMinutes(newAngleInDegrees)
+        let snappedAngle = viewModel.snapAngleToFiveMinutes(newAngleInDegrees)
         
         // Açıdan zamanı hesapla
-        let newStartTime = timeFromAngle(snappedAngle)
+        let newStartTime = viewModel.timeFromAngle(snappedAngle)
         
         // Temp schedule'da bloğu güncelle
         if let blockIndex = viewModel.tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
@@ -486,7 +513,7 @@ struct EditableCircularSleepChart: View {
             activeDragInfo = timeString
             
             // Collision detection - diğer bloklar ile çakışma kontrolü
-            if !hasCollisionInTemp(
+            if !viewModel.hasCollisionInTemp(
                 blockId: blockId,
                 startTime: newStartTime,
                 endTime: newEndTime
@@ -504,74 +531,60 @@ struct EditableCircularSleepChart: View {
         }
     }
     
-    /// Açıyı 5 dakikaya snap eder
-    private func snapAngleToFiveMinutes(_ angle: Double) -> Double {
-        let degreesPerMinute = 360.0 / (24.0 * 60.0) // 0.25 derece/dakika
-        let snapDegrees = 5.0 * degreesPerMinute // 5 dakika = 1.25 derece
-        let snappedAngle = round(angle / snapDegrees) * snapDegrees
-        return snappedAngle
+
+}
+
+// MARK: - Resize Handle View
+struct ResizeHandleView: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    let blockId: UUID
+    let handleType: MainScreenViewModel.ResizeHandle
+    let angle: Double
+    let center: CGPoint
+    let radius: CGFloat
+    let strokeWidth: CGFloat
+    
+    private var isBeingResized: Bool {
+        viewModel.resizeBlockId == blockId && viewModel.resizeHandle == handleType
     }
     
-    /// Açıdan zamanı hesapla
-    private func timeFromAngle(_ angle: Double) -> String {
-        let normalizedAngle = normalizeAngle(angle + 90) // Chart'ta 12:00 üstte olduğu için +90
-        let totalMinutes = Int(round((normalizedAngle / 360.0) * (24.0 * 60.0)))
-        let hour = (totalMinutes / 60) % 24
-        let minute = totalMinutes % 60
-        return TimeFormatter.formatTime(hour, minute)
-    }
-    
-    /// Temp schedule'da collision var mı kontrol et
-    private func hasCollisionInTemp(blockId: UUID, startTime: String, endTime: String) -> Bool {
-        let newStartMinutes = convertTimeStringToMinutes(startTime)
-        let newEndMinutes = convertTimeStringToMinutes(endTime)
+    var body: some View {
+        let handleRadius: CGFloat = radius
+        let posX = center.x + handleRadius * cos(angle * .pi / 180)
+        let posY = center.y + handleRadius * sin(angle * .pi / 180)
+        let touchAreaSize: CGFloat = max(strokeWidth, 44)
         
-        for block in viewModel.tempScheduleBlocks {
-            // Kendi bloğunu hariç tut
-            if block.id == blockId { continue }
+        ZStack {
+            Circle()
+                .fill(Color.white)
+                .frame(width: isBeingResized ? 20 : 14, height: isBeingResized ? 20 : 14)
+                .overlay(
+                    Circle()
+                        .stroke(Color.appPrimary, lineWidth: 2)
+                )
+                .shadow(radius: 2)
             
-            let blockStartMinutes = convertTimeStringToMinutes(block.startTime)
-            let blockEndMinutes = convertTimeStringToMinutes(block.endTime)
-            
-            if hasOverlap(
-                newStart: newStartMinutes, newEnd: newEndMinutes,
-                existingStart: blockStartMinutes, existingEnd: blockEndMinutes
-            ) {
-                return true
-            }
+            Circle()
+                .fill(Color.clear)
+                .frame(width: touchAreaSize, height: touchAreaSize)
         }
-        
-        return false
-    }
-    
-    /// Zaman string'ini dakikaya çevirir
-    private func convertTimeStringToMinutes(_ timeString: String) -> Int {
-        let components = timeString.split(separator: ":").compactMap { Int($0) }
-        guard components.count == 2 else { return 0 }
-        return components[0] * 60 + components[1]
-    }
-    
-    /// İki zaman aralığının örtüşüp örtüşmediğini kontrol eder
-    private func hasOverlap(newStart: Int, newEnd: Int, existingStart: Int, existingEnd: Int) -> Bool {
-        // Gece yarısını geçen bloklar için özel kontrol
-        let newIsOvernight = newEnd < newStart
-        let existingIsOvernight = existingEnd < existingStart
-        
-        if !newIsOvernight && !existingIsOvernight {
-            // Her iki blok da aynı gün içinde
-            return newStart < existingEnd && newEnd > existingStart
-        } else if newIsOvernight && !existingIsOvernight {
-            // Yeni blok gece yarısını geçiyor, mevcut blok geçmiyor
-            return newStart < existingEnd || newEnd > existingStart
-        } else if !newIsOvernight && existingIsOvernight {
-            // Mevcut blok gece yarısını geçiyor, yeni blok geçmiyor
-            return existingStart < newEnd || existingEnd > newStart
-        } else {
-            // Her iki blok da gece yarısını geçiyor
-            return true
-        }
+        .position(x: posX, y: posY)
+        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isBeingResized)
+        .gesture(
+            DragGesture(coordinateSpace: .local)
+                .onChanged { value in
+                    if !viewModel.isResizing {
+                        viewModel.startResizing(blockId: blockId, handle: handleType, at: value.location, center: center)
+                    }
+                    viewModel.updateResize(to: value.location, center: center, radius: radius)
+                }
+                .onEnded { _ in
+                    viewModel.endResizing()
+                }
+        )
     }
 }
+
 
 // MARK: - Shimmer Effect Component
 

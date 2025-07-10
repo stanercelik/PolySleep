@@ -73,6 +73,24 @@ public struct SleepBlock: Codable, Identifiable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case startTime, duration, type, isCore
     }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        startTime = try container.decode(String.self, forKey: .startTime)
+        duration = try container.decode(Int.self, forKey: .duration)
+        type = try container.decode(String.self, forKey: .type)
+        isCore = try container.decode(Bool.self, forKey: .isCore)
+        id = UUID() // Her zaman yeni UUID oluştur
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(startTime, forKey: .startTime)
+        try container.encode(duration, forKey: .duration)
+        try container.encode(type, forKey: .type)
+        try container.encode(isCore, forKey: .isCore)
+        // id'yi encode etme - her zaman yeni oluşturulsun
+    }
 }
 
 /// Represents a localized description

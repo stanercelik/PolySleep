@@ -245,10 +245,22 @@ struct MainScreenView: View {
                     Button(action: {
                         let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
                         impactFeedback.impactOccurred()
+                        
                         if viewModel.isChartEditMode {
                             viewModel.saveChartEdit()
                         } else {
-                            viewModel.startChartEdit()
+                            // Eğer detailed segment'tayken edit'e basılırsa, önce overview'e geç
+                            if viewModel.selectedSegment != 0 {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    viewModel.selectedSegment = 0
+                                }
+                                // Biraz bekle, sonra edit modunu başlat
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    viewModel.startChartEdit()
+                                }
+                            } else {
+                                viewModel.startChartEdit()
+                            }
                         }
                     }) {
                         HStack(spacing: PSSpacing.xs) {
@@ -358,9 +370,14 @@ struct MinimalSegmentView: View {
                             .font(.system(size: PSIconSize.small))
                             .foregroundColor(.appPrimary)
                         
-                        Text(viewModel.totalSleepTimeFormatted)
-                            .font(PSTypography.subheadline.weight(.medium))
-                            .foregroundColor(.appPrimary)
+                        VStack(spacing: 2) {
+                            Text("Toplam uyku süresi")
+                                .font(.caption2)
+                                .foregroundColor(.appPrimary.opacity(0.8))
+                            Text(viewModel.totalSleepTimeFormatted)
+                                .font(PSTypography.subheadline.weight(.medium))
+                                .foregroundColor(.appPrimary)
+                        }
                     }
                     .padding(.horizontal, PSSpacing.md)
                     .padding(.vertical, PSSpacing.sm)
@@ -458,48 +475,10 @@ struct ChartEditControls: View {
             Text(L("mainScreen.chart.editTitle", table: "MainScreen"))
                 .font(PSTypography.headline.weight(.semibold))
                 .foregroundColor(.appPrimary)
-            
-            if !viewModel.editFeedbackMessage.isEmpty {
-                 HStack {
-                     Image(systemName: feedbackIcon)
-                         .foregroundColor(feedbackColor)
-                     Text(viewModel.editFeedbackMessage)
-                         .font(.caption)
-                         .foregroundColor(.appTextSecondary)
-                 }
-                 .padding(PSSpacing.sm)
-                 .background(feedbackColor.opacity(0.1))
-                 .cornerRadius(PSCornerRadius.small)
-                 .transition(.opacity.combined(with: .move(edge: .top)))
-            }
         }
         .padding(.top, PSSpacing.sm)
-        .animation(.spring(), value: viewModel.editFeedbackMessage)
     }
-    
-    private var feedbackIcon: String {
-        switch viewModel.editFeedbackType {
-        case .success:
-            return "checkmark.circle.fill"
-        case .collision:
-            return "xmark.octagon.fill"
-        case .tooShort:
-            return "ruler.fill"
-        default:
-            return "info.circle.fill"
-        }
-    }
-    
-    private var feedbackColor: Color {
-        switch viewModel.editFeedbackType {
-        case .success:
-            return .appSuccess
-        case .collision, .tooShort:
-            return .appError
-        default:
-            return .appInfo
-        }
-    }
+
 }
 
 // MARK: - Detailed Segment View
@@ -762,10 +741,28 @@ struct SleepChartSection: View {
     }
     
     private func feedbackTextAndColor() -> (String?, Color?) {
-        // Sadece sürükleme sırasındaki canlı zamanı göster
+        // Önce edit feedback mesajını kontrol et
+        if !viewModel.editFeedbackMessage.isEmpty {
+            let color: Color = {
+                switch viewModel.editFeedbackType {
+                case .success:
+                    return .appSuccess
+                case .collision, .tooShort:
+                    return .appError
+                case .resizing, .moving:
+                    return .appInfo
+                default:
+                    return .appTextSecondary
+                }
+            }()
+            return (viewModel.editFeedbackMessage, color)
+        }
+        
+        // Sonra canlı zaman gösterimini kontrol et
         if let liveTime = viewModel.liveBlockTimeString {
             return (liveTime, .appPrimary)
         }
+        
         return (nil, nil)
     }
 }
@@ -1037,7 +1034,7 @@ struct SleepBlockCard: View {
         .background(Color.appCardBackground, in: RoundedRectangle(cornerRadius: PSCornerRadius.medium))
         .overlay(
             RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                .stroke(block.isCore ? Color.appPrimary.opacity(0.2) : Color.appAccent.opacity(0.2), lineWidth: 1)
+                .stroke(block.isCore ? Color.appPrimary.opacity(0.2) : Color.appSecondary.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingEditSheet) {
             EditSleepBlockSheet(viewModel: viewModel)

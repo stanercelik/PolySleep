@@ -59,13 +59,17 @@ class MainScreenViewModel: ObservableObject {
     // Sürükleme işlemi için yeni değişkenler
     @Published var dragStartAngle: Double? = nil
     @Published var dragAngleOffset: Double = 0
-    @Published var initialDragState: [UUID: String] = [:] // Block ID'si ve orijinal başlangıç zamanı
+    @Published var initialDragState: [UUID: (startTime: String, duration: Int)] = [:]
     
     @Published var tempScheduleBlocks: [SleepBlock] = []
+    
+    // MARK: - Resizing Properties
     @Published var isResizing: Bool = false
     @Published var resizeBlockId: UUID? = nil
     @Published var resizeHandle: ResizeHandle? = nil
-    
+    @Published var initialResizeBlock: SleepBlock? = nil
+
+
     // MARK: - Enhanced Edit Mode Features
     @Published var editFeedbackMessage: String = ""
     @Published var editFeedbackType: EditFeedbackType = .none
@@ -363,7 +367,7 @@ class MainScreenViewModel: ObservableObject {
             duration = (24 * 60) + duration
         }
         duration = max(1, duration)
-        let isCore = newBlockIsCore  // Kullanıcının seçimini koru
+        let isCore = duration > 45  // 45 dakikadan uzunsa core, kısaysa nap
         
         let newBlock = SleepBlock(startTime: startTime, duration: duration, type: isCore ? "core" : "nap", isCore: isCore)
         
@@ -401,7 +405,7 @@ class MainScreenViewModel: ObservableObject {
             duration = (24 * 60) + duration
         }
         duration = max(1, duration)
-        let isCore = editingBlockIsCore  // Kullanıcının seçimini koru
+        let isCore = duration > 45  // 45 dakikadan uzunsa core, kısaysa nap
         
         if let index = model.schedule.schedule.firstIndex(where: { $0.id == blockId }) {
             var updatedBlock = SleepBlock(startTime: startTime, duration: duration, type: isCore ? "core" : "nap", isCore: isCore)
@@ -1249,7 +1253,7 @@ class MainScreenViewModel: ObservableObject {
     /// Grafik düzenleme modunu başlatır
     func startChartEdit() {
         tempScheduleBlocks = model.schedule.schedule
-        initialDragState = Dictionary(uniqueKeysWithValues: tempScheduleBlocks.map { ($0.id, $0.startTime) })
+        initialDragState = Dictionary(uniqueKeysWithValues: tempScheduleBlocks.map { ($0.id, (startTime: $0.startTime, duration: $0.duration)) })
         isChartEditMode = true
         
         analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_started", action: "edit_started")
@@ -1296,11 +1300,11 @@ class MainScreenViewModel: ObservableObject {
             // Başarılı bir sürükleme sonrası geri bildirim
             if let index = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
                 let block = tempScheduleBlocks[index]
-                let originalStartTime = initialDragState[blockId]
+                let originalStartTime = initialDragState[blockId]?.startTime
                 
                 if block.startTime != originalStartTime {
                     // Bir sonraki sürüklemenin yeni pozisyondan başlaması için başlangıç durumunu güncelle
-                    initialDragState[blockId] = block.startTime
+                    initialDragState[blockId]?.startTime = block.startTime
                     
                     // Final mesajı kaldırıldı - sadece smooth bir şekilde kaybolsun
                 }
@@ -1316,6 +1320,120 @@ class MainScreenViewModel: ObservableObject {
         dragStartAngle = nil
         dragAngleOffset = 0
         liveBlockTimeString = nil // Canlı zaman gösterimini temizle
+        
+        isResizing = false
+        resizeBlockId = nil
+        resizeHandle = nil
+        initialResizeBlock = nil
+    }
+
+    // MARK: - Resizing Functions
+
+    func startResizing(blockId: UUID, handle: ResizeHandle, at position: CGPoint, center: CGPoint) {
+        guard isChartEditMode, draggedBlockId == nil, resizeBlockId == nil else { return }
+
+        isResizing = true
+        resizeBlockId = blockId
+        resizeHandle = handle
+        
+        if let block = tempScheduleBlocks.first(where: { $0.id == blockId }) {
+            initialResizeBlock = block
+        }
+        
+        // Sürükleme başlangıcındaki açıyı sakla
+        let dx = position.x - center.x
+        let dy = position.y - center.y
+        dragStartAngle = atan2(dy, dx)
+        
+        showEditFeedback(message: "Bloğu yeniden boyutlandır", type: .resizing, duration: 2.0)
+    }
+
+    func updateResize(to position: CGPoint, center: CGPoint, radius: CGFloat) {
+        guard isResizing, let blockId = resizeBlockId, let handle = resizeHandle, let initialBlock = initialResizeBlock else { return }
+
+        // Açı hesaplaması
+        let dx = position.x - center.x
+        let dy = position.y - center.y
+        let currentAngle = atan2(dy, dx)
+        let newAngleInDegrees = currentAngle * 180 / .pi
+        
+        // Açıyı 5 dakikaya yuvarla
+        let snappedAngle = snapAngleToFiveMinutes(newAngleInDegrees)
+        let newTime = timeFromAngle(snappedAngle)
+
+        var newStartTime = initialBlock.startTime
+        var newEndTime = initialBlock.endTime
+        
+        if handle == .start {
+            newStartTime = newTime
+        } else {
+            newEndTime = newTime
+        }
+        
+        // Yeni süreyi hesapla
+        let startMinutes = convertTimeStringToMinutes(newStartTime)
+        let endMinutes = convertTimeStringToMinutes(newEndTime)
+        
+        var newDuration = endMinutes - startMinutes
+        if newDuration <= 0 { // Gece yarısını geçtiyse
+            newDuration += 24 * 60
+        }
+
+        // Kısıtlamaları kontrol et
+        let minDuration = 15
+        if newDuration < minDuration {
+            showEditFeedback(message: "En az 15 dakika olmalı", type: .tooShort, duration: 1.5)
+            // Hatalı durumu kullanıcıya göstermek için belki UI'da bir değişiklik yapılabilir
+            // Şimdilik güncellemeyi durduruyoruz.
+            return
+        }
+        
+        if hasCollisionInTemp(blockId: blockId, startTime: newStartTime, endTime: newEndTime) {
+            showEditFeedback(message: "Bloklar çakışamaz", type: .collision, duration: 1.5)
+            // Çakışma durumunda da güncellemeyi durdur.
+            return
+        }
+
+        // Geçici bloğu güncelle - Yeni SleepBlock instance'ı oluştur
+        if let index = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
+            let currentBlock = tempScheduleBlocks[index]
+            let isCore = newDuration > 45  // 45 dakikadan uzunsa core, kısaysa nap
+            let updatedBlock = SleepBlock(
+                id: currentBlock.id,
+                startTime: newStartTime,
+                duration: newDuration,
+                type: isCore ? "core" : "nap",
+                isCore: isCore
+            )
+            
+            // Canlı geri bildirim
+            liveBlockTimeString = "\(newStartTime) - \(updatedBlock.endTime) (\(newDuration) dk)"
+            isValidEdit = true // Reset validity
+            
+            tempScheduleBlocks[index] = updatedBlock
+            
+            // Başarılı geri bildirim
+            if editFeedbackType == .collision || editFeedbackType == .tooShort {
+                 showEditFeedback(message: "Boyutlandırılıyor...", type: .resizing, duration: 1.0)
+            }
+        }
+    }
+
+    func endResizing() {
+        if isResizing, let blockId = resizeBlockId {
+             if let index = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
+                let block = tempScheduleBlocks[index]
+                let originalStartTime = initialDragState[blockId]?.startTime
+                let originalDuration = initialDragState[blockId]?.duration
+
+                if block.startTime != originalStartTime || block.duration != originalDuration {
+                    // Değişiklik varsa başlangıç durumunu güncelle
+                    initialDragState[blockId] = (startTime: block.startTime, duration: block.duration)
+                    showEditFeedback(message: "Blok güncellendi", type: .success, duration: 1.5)
+                }
+            }
+        }
+        resetDragState()
     }
     
     // MARK: - Enhanced Edit Mode Feedback
@@ -1332,4 +1450,60 @@ class MainScreenViewModel: ObservableObject {
             }
         }
     }
+    
+    // MARK: - Helper Functions for Chart Editing
+    
+    /// Açıyı 5 dakikaya snap eder
+    func snapAngleToFiveMinutes(_ angle: Double) -> Double {
+        let degreesPerMinute = 360.0 / (24.0 * 60.0) // 0.25 derece/dakika
+        let snapDegrees = 5.0 * degreesPerMinute // 5 dakika = 1.25 derece
+        let snappedAngle = round(angle / snapDegrees) * snapDegrees
+        return snappedAngle
+    }
+    
+    /// Açıdan zamanı hesapla
+    func timeFromAngle(_ angle: Double) -> String {
+        let normalizedAngle = normalizeAngle(angle + 90) // Chart'ta 12:00 üstte olduğu için +90
+        let totalMinutes = Int(round((normalizedAngle / 360.0) * (24.0 * 60.0)))
+        let hour = (totalMinutes / 60) % 24
+        let minute = totalMinutes % 60
+        return String(format: "%02d:%02d", hour, minute)
+    }
+    
+    /// Açıyı normalize eder (0-360 arası)
+    private func normalizeAngle(_ angle: Double) -> Double {
+        var normalized = angle
+        while normalized < 0 {
+            normalized += 360
+        }
+        while normalized >= 360 {
+            normalized -= 360
+        }
+        return normalized
+    }
+    
+    /// Temp schedule'da collision var mı kontrol et
+    func hasCollisionInTemp(blockId: UUID, startTime: String, endTime: String) -> Bool {
+        let newStartMinutes = convertTimeStringToMinutes(startTime)
+        let newEndMinutes = convertTimeStringToMinutes(endTime)
+        
+        for block in tempScheduleBlocks {
+            // Kendi bloğunu hariç tut
+            if block.id == blockId { continue }
+            
+            let blockStartMinutes = convertTimeStringToMinutes(block.startTime)
+            let blockEndMinutes = convertTimeStringToMinutes(block.endTime)
+            
+            if hasOverlap(
+                newStart: newStartMinutes, newEnd: newEndMinutes,
+                existingStart: blockStartMinutes, existingEnd: blockEndMinutes
+            ) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+
 }
