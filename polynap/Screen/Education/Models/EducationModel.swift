@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // MARK: - Education Category
 enum EducationCategory: String, CaseIterable, Identifiable {
@@ -47,6 +48,25 @@ enum EducationCategory: String, CaseIterable, Identifiable {
             return "checklist"
         case .faq:
             return "questionmark.circle.fill"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .basics:
+            return .blue
+        case .schedules:
+            return .green
+        case .adaptation:
+            return .purple
+        case .myths:
+            return .orange
+        case .risks:
+            return .red
+        case .preparation:
+            return .cyan
+        case .faq:
+            return .teal
         }
     }
 }

@@ -26,8 +26,8 @@ struct EducationView: View {
                                 articlesSection
                             }
                             
-                            // FAQ Section
-                            if !viewModel.filteredFAQs.isEmpty && viewModel.selectedCategory == nil {
+                            // FAQ Section - genel görünümde veya FAQ kategorisi seçildiğinde göster
+                            if !viewModel.filteredFAQs.isEmpty && (viewModel.selectedCategory == nil || viewModel.selectedCategory == .faq) {
                                 faqSection
                             }
                         }
@@ -88,7 +88,8 @@ struct EducationView: View {
                 CategoryFilterChip(
                     title: L("education.all_categories", table: "Education"),
                     icon: "square.grid.2x2",
-                    isSelected: viewModel.selectedCategory == nil
+                    isSelected: viewModel.selectedCategory == nil,
+                    category: nil
                 ) {
                     viewModel.selectCategory(nil)
                 }
@@ -98,7 +99,8 @@ struct EducationView: View {
                     CategoryFilterChip(
                         title: category.title,
                         icon: category.icon,
-                        isSelected: viewModel.selectedCategory == category
+                        isSelected: viewModel.selectedCategory == category,
+                        category: category
                     ) {
                         viewModel.selectCategory(category)
                     }

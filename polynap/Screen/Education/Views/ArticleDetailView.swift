@@ -6,7 +6,7 @@ struct ArticleDetailView: View {
     @State private var scrollOffset: CGFloat = 0
     
     private var readTimeText: String {
-        String(format: L("education.reading_time", table: "Education"), article.readTimeMinutes)
+        String(format: L("education.readTime", table: "Education"), article.readTimeMinutes)
     }
     
     private var difficultyText: String {
@@ -27,30 +27,33 @@ struct ArticleDetailView: View {
             return .purple
         }
     }
-    
+
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
+            ZStack {
+                // Background
+                Color.appBackground
+                    .ignoresSafeArea()
+                
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
+                    VStack(spacing: 0) {
                         // Hero Section
                         heroSection
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        article.category.color.opacity(0.1),
+                                        Color.appBackground
+                                    ]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
                         
                         // Content Section
                         contentSection
-                            .padding(.top, 24)
+                            .padding(.top, 32)
                     }
-                    .background(
-                        GeometryReader { proxy in
-                            Color.clear
-                                .onAppear {
-                                    scrollOffset = proxy.frame(in: .named("scroll")).minY
-                                }
-                                .onChange(of: proxy.frame(in: .named("scroll")).minY) { newValue in
-                                    scrollOffset = newValue
-                                }
-                        }
-                    )
                 }
                 .coordinateSpace(name: "scroll")
             }
@@ -58,59 +61,69 @@ struct ArticleDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: { dismiss() }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.appTextSecondary)
-                            .font(.title2)
+                        HStack(spacing: 6) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 16, weight: .medium))
+                            Text("Geri")
+                                .font(.system(size: 16, weight: .medium))
+                        }
+                        .foregroundColor(article.category.color)
                     }
                 }
             }
-            .background(Color.appBackground)
         }
     }
     
     // MARK: - Hero Section
     private var heroSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 24) {
             // Category Badge
             HStack {
-                Image(systemName: article.category.icon)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(.appPrimary)
-                
-                Text(article.category.title)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appPrimary)
+                HStack(spacing: 8) {
+                    Image(systemName: article.category.icon)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.white)
+                    
+                    Text(article.category.title)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(article.category.color)
+                )
                 
                 Spacer()
             }
             
             // Title
             Text(article.title)
-                .font(.largeTitle)
-                .fontWeight(.bold)
+                .font(.system(size: 28, weight: .bold, design: .default))
                 .foregroundColor(.appText)
                 .multilineTextAlignment(.leading)
+                .lineSpacing(2)
             
             // Summary
             if !article.summary.isEmpty {
                 Text(article.summary)
-                    .font(.title3)
-                    .fontWeight(.medium)
+                    .font(.system(size: 18, weight: .regular))
                     .foregroundColor(.appTextSecondary)
                     .multilineTextAlignment(.leading)
+                    .lineSpacing(4)
             }
             
             // Metadata
-            HStack(spacing: 16) {
+            HStack(spacing: 20) {
                 // Read Time
                 HStack(spacing: 6) {
                     Image(systemName: "clock")
-                        .font(.subheadline)
-                        .foregroundColor(.appTextSecondary)
+                        .font(.system(size: 14))
+                        .foregroundColor(article.category.color)
                     
                     Text(readTimeText)
-                        .font(.subheadline)
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundColor(.appTextSecondary)
                 }
                 
@@ -122,8 +135,7 @@ struct ArticleDetailView: View {
                             .frame(width: 8, height: 8)
                         
                         Text(difficultyText)
-                            .font(.subheadline)
-                            .fontWeight(.medium)
+                            .font(.system(size: 14, weight: .medium))
                             .foregroundColor(difficultyColor)
                     }
                 }
@@ -131,101 +143,103 @@ struct ArticleDetailView: View {
                 Spacer()
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 24)
-        .background(
-            RoundedRectangle(cornerRadius: 0)
-                .fill(Color.appCardBackground)
-        )
+        .padding(.horizontal, 24)
+        .padding(.vertical, 32)
     }
     
     // MARK: - Content Section
     private var contentSection: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 24) {
             // Content Text with Markdown Support
-            MarkdownTextView(text: article.content)
+            MarkdownTextView(text: article.content, categoryColor: article.category.color)
         }
-        .padding(.horizontal, 20)
-        .padding(.bottom, 40)
-        .background(
-            RoundedRectangle(cornerRadius: 0)
-                .fill(Color.appCardBackground)
-        )
+        .padding(.horizontal, 24)
+        .padding(.bottom, 50)
     }
 }
 
 // MARK: - Markdown Text View
 struct MarkdownTextView: View {
     let text: String
+    let categoryColor: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 20) {
             ForEach(parseMarkdown(text: text), id: \.id) { element in
                 switch element.type {
                 case .header:
-                    Text(element.text)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.appText)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 8)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(element.text)
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundColor(.appText)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Rectangle()
+                            .fill(categoryColor.opacity(0.3))
+                            .frame(height: 2)
+                            .frame(maxWidth: 60)
+                    }
+                    .padding(.top, 16)
                         
                 case .boldText:
                     Text(element.text)
-                        .font(.body)
-                        .fontWeight(.bold)
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.appText)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
                 case .bullet:
-                    HStack(alignment: .top, spacing: 8) {
-                        Text("•")
-                            .font(.body)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appTextSecondary)
-                            .frame(width: 16, alignment: .leading)
+                    HStack(alignment: .top, spacing: 12) {
+                        Circle()
+                            .fill(categoryColor.opacity(0.6))
+                            .frame(width: 6, height: 6)
+                            .padding(.top, 8)
                         
                         Text(element.text)
-                            .font(.body)
-                            .lineSpacing(4)
-                            .foregroundColor(.primary)
+                            .font(.system(size: 16, weight: .regular))
+                            .lineSpacing(6)
+                            .foregroundColor(.appText)
                             .multilineTextAlignment(.leading)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 8)
+                    .padding(.leading, 4)
                     
                 case .paragraph:
                     Text(element.text)
-                        .font(.body)
-                        .lineSpacing(6)
+                        .font(.system(size: 16, weight: .regular))
+                        .lineSpacing(8)
                         .foregroundColor(.appText)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
                 case .warning:
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack(spacing: 8) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 10) {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundColor(.orange)
-                                .font(.system(size: 16))
+                                .font(.system(size: 18))
                             
                             Text(element.text.contains("Important Note") || element.text.contains("Warning") ? "Important Note" : "Önemli Not")
-                                .font(.headline)
-                                .fontWeight(.semibold)
+                                .font(.system(size: 16, weight: .bold))
                                 .foregroundColor(.orange)
                         }
                         
                         Text(element.text)
-                            .font(.body)
-                            .lineSpacing(4)
+                            .font(.system(size: 15, weight: .regular))
+                            .lineSpacing(6)
                             .foregroundColor(.appText)
                             .multilineTextAlignment(.leading)
                     }
-                    .padding(16)
-                    .background(Color.orange.opacity(0.1))
-                    .cornerRadius(12)
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color.orange.opacity(0.08))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.orange.opacity(0.2), lineWidth: 1)
+                            )
+                    )
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

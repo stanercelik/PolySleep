@@ -9,138 +9,173 @@ struct ArticleCard: View {
     
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 16) {
                 // Header
                 HStack {
-                    // Category Icon
-                    Image(systemName: article.category.icon)
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.appPrimary)
-                        .frame(width: 20, height: 20)
-                    
-                    // Category Name
-                    Text(article.category.title)
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .foregroundColor(.appTextSecondary)
+                    // Category Badge
+                    HStack(spacing: 6) {
+                        Image(systemName: article.category.icon)
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.white)
+                        
+                        Text(article.category.title)
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(article.category.color)
+                    )
                     
                     Spacer()
                     
                     // Difficulty Badge
-                    HStack(spacing: 4) {
-                        Circle()
-                            .fill(difficultyColor)
-                            .frame(width: 6, height: 6)
-                        
-                        Text(difficultyText)
-                            .font(.caption2)
-                            .fontWeight(.medium)
-                            .foregroundColor(difficultyColor)
+                    if !difficultyText.isEmpty {
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(difficultyColor)
+                                .frame(width: 6, height: 6)
+                            
+                            Text(difficultyText)
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(difficultyColor)
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(difficultyColor.opacity(0.12))
+                        )
                     }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule()
-                            .fill(difficultyColor.opacity(0.1))
-                    )
                 }
                 
-                // Title
-                Text(article.title)
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.appText)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
-                
-                // Summary
-                if !article.summary.isEmpty {
-                    Text(article.summary)
-                        .font(.subheadline)
-                        .foregroundColor(.appTextSecondary)
+                // Content
+                VStack(alignment: .leading, spacing: 10) {
+                    // Title
+                    Text(article.title)
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.appText)
                         .multilineTextAlignment(.leading)
-                        .lineLimit(3)
+                        .lineLimit(2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    // Summary
+                    if !article.summary.isEmpty {
+                        Text(article.summary)
+                            .font(.system(size: 15, weight: .regular))
+                            .foregroundColor(.appTextSecondary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(3)
+                            .lineSpacing(2)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 
                 // Footer
                 HStack {
                     // Read Time
-                    HStack(spacing: 4) {
+                    HStack(spacing: 6) {
                         Image(systemName: "clock")
-                            .font(.caption)
-                            .foregroundColor(.appTextSecondary)
+                            .font(.system(size: 13))
+                            .foregroundColor(article.category.color.opacity(0.7))
                         
                         Text(readTimeText)
-                            .font(.caption)
+                            .font(.system(size: 13, weight: .medium))
                             .foregroundColor(.appTextSecondary)
                     }
                     
                     Spacer()
                     
                     // Arrow
-                    Image(systemName: "chevron.right")
-                        .font(.caption)
-                        .fontWeight(.medium)
-                        .foregroundColor(.appTextSecondary)
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(article.category.color)
                 }
             }
-            .padding(16)
+            .padding(20)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(Color.appCardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(article.category.color.opacity(0.1), lineWidth: 1)
+                    )
                     .shadow(
-                        color: Color.black.opacity(0.05),
-                        radius: 8,
+                        color: article.category.color.opacity(0.08),
+                        radius: 12,
                         x: 0,
-                        y: 2
+                        y: 4
                     )
             )
         }
-        .buttonStyle(ArticleCardButtonStyle())
+        .buttonStyle(ArticleCardButtonStyle(categoryColor: article.category.color))
     }
 }
 
 // MARK: - Button Style
 struct ArticleCardButtonStyle: ButtonStyle {
+    let categoryColor: Color
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .opacity(configuration.isPressed ? 0.8 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(categoryColor.opacity(configuration.isPressed ? 0.05 : 0))
+            )
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: configuration.isPressed)
     }
 }
 
 // MARK: - Preview
 #Preview {
-    VStack(spacing: 16) {
-        ArticleCard(
-            article: EducationArticle(
-                titleKey: "education.article.whatIs.title",
-                summaryKey: "education.article.whatIs.summary",
-                contentKey: "education.article.whatIs.content",
-                category: .basics,
-                readTimeMinutes: 5,
-                difficulty: .beginner
-            ),
-            readTimeText: "5 min read",
-            difficultyText: "Beginner",
-            difficultyColor: .green
-        ) { }
-        
-        ArticleCard(
-            article: EducationArticle(
-                titleKey: "education.article.adaptationProcess.title",
-                summaryKey: "education.article.adaptationProcess.summary",
-                contentKey: "education.article.adaptationProcess.content",
-                category: .adaptation,
-                readTimeMinutes: 12,
-                difficulty: .advanced
-            ),
-            readTimeText: "12 min read",
-            difficultyText: "Advanced",
-            difficultyColor: .red
-        ) { }
+    ScrollView {
+        VStack(spacing: 20) {
+            ArticleCard(
+                article: EducationArticle(
+                    titleKey: "education.article.whatIs.title",
+                    summaryKey: "education.article.whatIs.summary",
+                    contentKey: "education.article.whatIs.content",
+                    category: .basics,
+                    readTimeMinutes: 5,
+                    difficulty: .beginner
+                ),
+                readTimeText: "5 min read",
+                difficultyText: "Beginner",
+                difficultyColor: .green
+            ) { }
+            
+            ArticleCard(
+                article: EducationArticle(
+                    titleKey: "education.article.adaptationProcess.title",
+                    summaryKey: "education.article.adaptationProcess.summary",
+                    contentKey: "education.article.adaptationProcess.content",
+                    category: .adaptation,
+                    readTimeMinutes: 12,
+                    difficulty: .advanced
+                ),
+                readTimeText: "12 min read",
+                difficultyText: "Advanced",
+                difficultyColor: .red
+            ) { }
+            
+            ArticleCard(
+                article: EducationArticle(
+                    titleKey: "education.article.risks.title",
+                    summaryKey: "education.article.risks.summary",
+                    contentKey: "education.article.risks.content",
+                    category: .risks,
+                    readTimeMinutes: 8,
+                    difficulty: .intermediate
+                ),
+                readTimeText: "8 min read",
+                difficultyText: "Intermediate",
+                difficultyColor: .orange
+            ) { }
+        }
+        .padding()
     }
-    .padding()
-    .background(Color(.systemGroupedBackground))
+    .background(Color.appBackground)
 } 

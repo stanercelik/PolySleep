@@ -36,6 +36,11 @@ class EducationViewModel: ObservableObject {
     }
     
     var filteredFAQs: [FAQItem] {
+        // FAQ kategorisi seçilmediyse ve arama yoksa FAQ'ları göster
+        if selectedCategory != nil && selectedCategory != .faq {
+            return []
+        }
+        
         if searchText.isEmpty {
             return contentProvider.faqItems
         }
