@@ -187,6 +187,15 @@ struct SettingsView: View {
                                 subtitle: L("settings.other.disclaimer.subtitle", table: "Profile"),
                                 destination: DisclaimerView()
                             )
+                            
+                            ModernDivider()
+                            
+                            ModernNavigationRow(
+                                icon: "envelope.fill",
+                                title: L("feedback.title", table: "Profile"),
+                                subtitle: L("feedback.settings.subtitle", table: "Profile"),
+                                destination: FeedbackView()
+                            )
                         }
                     }
                     
