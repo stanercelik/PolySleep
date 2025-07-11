@@ -4,6 +4,12 @@
     "accessibility.completeCurrentPage" : {
       "comment" : "Accessibility hint for completing the current onboarding step",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte fülle zuerst diese Seite aus"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
     "accessibility.description" : {
       "comment" : "Accessibility label for descriptive text in onboarding",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50,6 +62,12 @@
     "accessibility.nextPage" : {
       "comment" : "Accessibility label for next page button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste Seite"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +91,12 @@
     "accessibility.notSelected" : {
       "comment" : "Accessibility value for an unselected option",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht ausgewählt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -96,6 +120,12 @@
     "accessibility.previousPage" : {
       "comment" : "Accessibility label for previous page button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorherige Seite"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -120,6 +150,12 @@
       "comment" : "Accessibility value for progress indicator showing current page of total pages",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seite %1$d von %2$d"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -143,6 +179,12 @@
     "accessibility.seeResults" : {
       "comment" : "Accessibility label for see results button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnisse ansehen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -166,6 +208,12 @@
     "accessibility.selected" : {
       "comment" : "Accessibility value for a selected option",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewählt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -190,6 +238,12 @@
       "comment" : "Section title for age range",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altersbereich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -213,6 +267,12 @@
     "onboarding.ageRange.18to24" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧑 18-24"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -236,6 +296,12 @@
     "onboarding.ageRange.25to34" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨 25-34"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -259,6 +325,12 @@
     "onboarding.ageRange.35to44" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦰 35-44"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -282,6 +354,12 @@
     "onboarding.ageRange.45to54" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨‍🦳 45-54"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -305,6 +383,12 @@
     "onboarding.ageRange.55plus" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👴 55+"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -328,6 +412,12 @@
     "onboarding.ageRange.under18" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 Unter 18"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -352,6 +442,12 @@
       "comment" : "Description about age range importance",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anpassung an den polyphasischen Schlaf kann während der Jugend oder im Alter variieren."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -375,6 +471,12 @@
     "onboarding.back" : {
       "comment" : "Button text to move back to previous page",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +501,12 @@
       "comment" : "Section title for user's chronotype",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlaf-Chronotyp"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -422,6 +530,12 @@
     "onboarding.chronotype.morningLark" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Morgenlerche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -445,6 +559,12 @@
     "onboarding.chronotype.neutral" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Neutral"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -468,6 +588,12 @@
     "onboarding.chronotype.nightOwl" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Nachteule"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -492,6 +618,12 @@
       "comment" : "Description about morning or evening preference",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du von Natur aus morgens oder abends aktiver?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -516,6 +648,12 @@
       "comment" : "Section title for how user handles disruptions",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Störungstoleranz"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -539,6 +677,12 @@
     "onboarding.disruptionTolerance.notSensitive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔇 Nicht empfindlich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -562,6 +706,12 @@
     "onboarding.disruptionTolerance.somewhatSensitive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔕 Etwas empfindlich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -585,6 +735,12 @@
     "onboarding.disruptionTolerance.verySensitive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 Sehr empfindlich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -609,6 +765,12 @@
       "comment" : "Description about tolerance to sleep schedule disruptions",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie gut kommst du mit Störungen deines Schlafplans zurecht?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -633,6 +795,12 @@
       "comment" : "Error message when data processing failed",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei der Verarbeitung deiner Daten ist ein Problem aufgetreten, ein Standardprogramm wurde erstellt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -657,6 +825,12 @@
       "comment" : "Error message when default program setup failed",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Einrichten des Standardprogramms ist ein Fehler aufgetreten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -681,6 +855,12 @@
       "comment" : "Error message when some preferences are not set",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einige Präferenzen sind nicht festgelegt. Bitte beantworte alle Fragen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,6 +885,12 @@
       "comment" : "Error message when ModelContext is not available",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten konnten nicht gespeichert werden: ModelContext nicht gefunden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -729,6 +915,12 @@
       "comment" : "Error message when no suitable recommendation was found",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es wurde keine passende Programmempfehlung gefunden. Das Standardprogramm wurde festgelegt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -753,6 +945,12 @@
       "comment" : "Error message when preferences could not be saved locally",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Präferenzen konnten nicht lokal gespeichert werden: %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -777,6 +975,12 @@
       "comment" : "Error message when recommended program setup failed",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Einrichten des empfohlenen Programms ist ein Problem aufgetreten. Das Standardprogramm wird verwendet."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -801,6 +1005,12 @@
       "comment" : "Error message for unexpected errors",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein unerwarteter Fehler ist aufgetreten, ein Standardprogramm wurde erstellt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -825,6 +1035,12 @@
       "comment" : "Section title for user's health status",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheitszustand"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -848,6 +1064,12 @@
     "onboarding.healthStatus.healthy" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💪 Gesund"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -871,6 +1093,12 @@
     "onboarding.healthStatus.managedConditions" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏥 Behandelte Erkrankungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -894,6 +1122,12 @@
     "onboarding.healthStatus.seriousConditions" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 Ernste Erkrankungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -918,6 +1152,12 @@
       "comment" : "Description about user's medications or chronic conditions",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nimmst du regelmäßig Medikamente ein oder hast du chronische Erkrankungen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -942,6 +1182,12 @@
       "comment" : "Section title for knowledge level about polyphasic sleep",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissensstand"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -965,6 +1211,12 @@
     "onboarding.knowledgeLevel.advanced" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤓 Sehr erfahren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -988,6 +1240,12 @@
     "onboarding.knowledgeLevel.beginner" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤔 Fange gerade erst an"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1011,6 +1269,12 @@
     "onboarding.knowledgeLevel.intermediate" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😎 Etwas Erfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1035,6 +1299,12 @@
       "comment" : "Description about user's familiarity with polyphasic sleep",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie vertraut bist du mit dem polyphasischen Schlaf? Dies hilft uns, das richtige Maß an Anleitung und Informationen bereitzustellen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1059,6 +1329,12 @@
       "comment" : "Section title for daily lifestyle",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Lebensstil"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1082,6 +1358,12 @@
     "onboarding.lifestyle.calm" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧘‍♂️ Ruhig - Größtenteils sitzend, geringe körperliche Aktivität"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1105,6 +1387,12 @@
     "onboarding.lifestyle.moderatelyActive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ Mäßig aktiv - Regelmäßiges Gehen, leichte Bewegung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1128,6 +1416,12 @@
     "onboarding.lifestyle.veryActive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ Sehr aktiv - Intensive Trainingseinheiten, Sport, körperliche Arbeit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1152,6 +1446,12 @@
       "comment" : "Description about user's daily activity level",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie würdest du dein tägliches Aktivitätsniveau beschreiben? Dies hilft uns, einen Schlafplan zu empfehlen, der deinem Energiebedarf entspricht."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1176,6 +1476,12 @@
       "comment" : "Status message when almost complete",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast fertig..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1200,6 +1506,12 @@
       "comment" : "Status message when analyzing the program",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysiere dein Programm..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1224,6 +1536,12 @@
       "comment" : "Status message when calculating sleep schedule",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berechne deinen Schlafplan..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1248,6 +1566,12 @@
       "comment" : "Title shown while preparing personalized sleep program",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bereite dein individuelles Programm vor"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1272,6 +1596,12 @@
       "comment" : "Status message when program preparation is complete",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1296,6 +1626,12 @@
       "comment" : "Status message when saving data locally",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten werden lokal gespeichert..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1320,6 +1656,12 @@
       "comment" : "Status message when saving user preferences",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichere deine Präferenzen..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1344,6 +1686,12 @@
       "comment" : "Status message when saving the program",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichere dein Programm..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1368,6 +1716,12 @@
       "comment" : "Section title for user's motivation level",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivationsebene"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1391,6 +1745,12 @@
     "onboarding.motivationLevel.high" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 Hoch - Ich bin sehr entschlossen und bereit für Herausforderungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1414,6 +1774,12 @@
     "onboarding.motivationLevel.low" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💫 Niedrig - Ich bevorzuge allmähliche, einfache Änderungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1437,6 +1803,12 @@
     "onboarding.motivationLevel.moderate" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✨ Mäßig - Ich bin bereit, es mit etwas Anstrengung zu versuchen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1461,6 +1833,12 @@
       "comment" : "Description about readiness for a challenging adaptation process",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie bereit bist du für einen herausfordernden Anpassungsprozess?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1485,6 +1863,12 @@
       "comment" : "Section title for daytime nap environment",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen-Umgebung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1508,6 +1892,12 @@
     "onboarding.napEnvironment.ideal" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ Ideal - Ruhiges, dunkles Zimmer mit bequemem Bett"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1531,6 +1921,12 @@
     "onboarding.napEnvironment.limited" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🪑 Begrenzt - Nur Stuhl oder Schreibtisch zum Schlafen verfügbar"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1554,6 +1950,12 @@
     "onboarding.napEnvironment.suitable" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛋️ Geeignet - Couch oder Sessel mit etwas Privatsphäre"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1577,6 +1979,12 @@
     "onboarding.napEnvironment.unsuitable" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Ungeeignet - Laute, helle Umgebung ohne Privatsphäre"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1601,6 +2009,12 @@
       "comment" : "Description about environment suitability for naps",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie geeignet ist deine Umgebung für Nickerchen während des Tages? Berücksichtige Faktoren wie Lärmpegel, Lichtkontrolle und Komfort."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1625,6 +2039,12 @@
       "comment" : "Button text for going to next step/page",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1649,6 +2069,12 @@
       "comment" : "No label for boolean selections",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1673,6 +2099,12 @@
       "comment" : "Button text for final step to see results or schedule",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnisse ansehen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1697,6 +2129,12 @@
       "comment" : "Section title for previous sleep experience",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlaferfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1720,6 +2158,12 @@
     "onboarding.sleepExperience.beginner" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Anfänger"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1743,6 +2187,12 @@
     "onboarding.sleepExperience.extensive" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "☀️ Umfangreiche Erfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1766,6 +2216,12 @@
     "onboarding.sleepExperience.intermediate" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌄 Mittel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1789,6 +2245,12 @@
     "onboarding.sleepExperience.moderate" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌃 Mehrere Monate Erfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1812,6 +2274,12 @@
     "onboarding.sleepExperience.none" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 Keine Erfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1835,6 +2303,12 @@
     "onboarding.sleepExperience.some" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌅 Etwas Erfahrung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1859,6 +2333,12 @@
       "comment" : "Description/question about previous sleep experience",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du bereits Erfahrung mit polyphasischem (oder anderem) Schlaf?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1883,6 +2363,12 @@
       "comment" : "Section title for user's main sleep goal",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafziel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1906,6 +2392,12 @@
     "onboarding.sleepGoal.balancedLifestyle" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚖️ Ausgewogener Lebensstil"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1929,6 +2421,12 @@
     "onboarding.sleepGoal.curiosity" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔍 Neugier"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1952,6 +2450,12 @@
     "onboarding.sleepGoal.improveHealth" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❤️ Gesundheit verbessern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1975,6 +2479,12 @@
     "onboarding.sleepGoal.moreProductivity" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ Mehr Produktivität"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1999,6 +2509,12 @@
       "comment" : "Description about user's primary goal for adopting polyphasic sleep",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was ist dein Hauptziel bei der Einführung eines polyphasischen Schlafplans?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2023,6 +2539,12 @@
       "comment" : "Section title for social commitments/responsibilities",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soziale Verpflichtungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2046,6 +2568,12 @@
     "onboarding.socialObligations.minimal" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧍 Minimal - Ich habe sehr wenige feste soziale Verpflichtungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2069,6 +2597,12 @@
     "onboarding.socialObligations.moderate" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👤 Mäßig - Ich habe einige regelmäßige soziale Aktivitäten und Familienzeit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2092,6 +2626,12 @@
     "onboarding.socialObligations.significant" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👥 Erheblich - Ich habe viele feste soziale Verpflichtungen und Verantwortlichkeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2116,6 +2656,12 @@
       "comment" : "Description about user's flexibility for social commitments",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie flexibel sind deine sozialen Verpflichtungen und täglichen Verantwortlichkeiten? Berücksichtige Familienzeit, gesellschaftliche Veranstaltungen, Treffen und andere Aktivitäten, die eine bestimmte Zeitplanung erfordern."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2139,6 +2685,12 @@
     "onboarding.startUsingApp" : {
       "comment" : "Button text to start using the app after onboarding",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App verwenden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2163,6 +2715,12 @@
       "comment" : "Section title for user's work schedule",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsplan"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2186,6 +2744,12 @@
     "onboarding.workSchedule.flexible" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 Flexibel - Ich kann meine Arbeitszeiten nach Bedarf anpassen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2209,6 +2773,12 @@
     "onboarding.workSchedule.irregular" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎲 Unregelmäßig - Mein Zeitplan ändert sich häufig und unvorhersehbar"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2232,6 +2802,12 @@
     "onboarding.workSchedule.regular" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📅 Regelmäßig - Ich habe jeden Tag feste Arbeitszeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2255,6 +2831,12 @@
     "onboarding.workSchedule.shift" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Schicht - Ich arbeite in wechselnden Schichten (Tag/Nacht/Abend)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2279,6 +2861,12 @@
       "comment" : "Description about user's current work or daily schedule",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie sieht dein aktueller Arbeits- oder Tagesablauf aus?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2303,6 +2891,12 @@
       "comment" : "Yes label for boolean selections",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2326,6 +2920,12 @@
     "sleepSchedule.core" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2349,6 +2949,12 @@
     "sleepSchedule.nap" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2372,6 +2978,12 @@
     "sleepSchedule.naps" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2395,6 +3007,12 @@
     "sleepSchedule.timeRanges" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafblöcke"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2418,6 +3036,12 @@
     "sleepSchedule.totalSleep" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtschlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2442,6 +3066,12 @@
       "comment" : "Button text for starting to use the app after onboarding",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App verwenden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",

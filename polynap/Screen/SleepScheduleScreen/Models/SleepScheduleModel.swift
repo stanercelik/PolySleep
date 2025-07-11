@@ -97,15 +97,47 @@ public struct SleepBlock: Codable, Identifiable, Equatable {
 public struct LocalizedDescription: Codable, Equatable {
     public let en: String
     public let tr: String
+    public let ja: String?
+    public let de: String?
 
-     public init(en: String, tr: String) {
+    public init(en: String, tr: String, ja: String? = nil, de: String? = nil) {
         self.en = en
         self.tr = tr
+        self.ja = ja
+        self.de = de
     }
     
-    public func localized() -> String {
-        // For now, just return English. In a real app, this would use the system language
-        return en
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        en = try container.decode(String.self, forKey: .en)
+        tr = try container.decode(String.self, forKey: .tr)
+        ja = try container.decodeIfPresent(String.self, forKey: .ja)
+        de = try container.decodeIfPresent(String.self, forKey: .de)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(en, forKey: .en)
+        try container.encode(tr, forKey: .tr)
+        try container.encodeIfPresent(ja, forKey: .ja)
+        try container.encodeIfPresent(de, forKey: .de)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case en, tr, ja, de
+    }
+    
+    public func localized(for language: String = "en") -> String {
+        switch language {
+        case "tr":
+            return tr
+        case "ja":
+            return ja ?? en
+        case "de":
+            return de ?? en
+        default:
+            return en
+        }
     }
 }
 

@@ -1,0 +1,1160 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "-" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        }
+      }
+    },
+    "—" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
+        }
+      }
+    },
+    "・" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "・"
+          }
+        }
+      }
+    },
+    "%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
+    "%@ - %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ - %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ - %2$@"
+          }
+        }
+      }
+    },
+    "%@h" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Std."
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld Dakika Ertele" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Minuten schlummern"
+          }
+        }
+      }
+    },
+    "%lld s %lld dk" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld S %2$lld Min"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld s %2$lld dk"
+          }
+        }
+      }
+    },
+    "%lld/12" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/12"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "%llddk" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldMin"
+          }
+        }
+      }
+    },
+    "%lldh" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldStd"
+          }
+        }
+      }
+    },
+    "%lldh %lldm" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lldStd %2$lldMin"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lldh %2$lldm"
+          }
+        }
+      }
+    },
+    "%lldm" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldMin"
+          }
+        }
+      }
+    },
+    "⏰ Ertele (5dk)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Schlummern (5 Min.)"
+          }
+        }
+      }
+    },
+    "⏰ UYKU ALARMI" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ SCHLAFALARM"
+          }
+        }
+      }
+    },
+    "⏹️ Kapat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏹️ Ausschalten"
+          }
+        }
+      }
+    },
+    "🎉" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉"
+          }
+        }
+      }
+    },
+    "🎬 1 film izlemek" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎬 1 Film ansehen"
+          }
+        }
+      }
+    },
+    "📚 75 sayfa kitap okumak" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📚 75 Seiten Buch lesen"
+          }
+        }
+      }
+    },
+    "🚨 UYANMA ALARMI!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 WECK-ALARM!"
+          }
+        }
+      }
+    },
+    "🚶‍♂️ 12.5 km yürümek" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ 12,5 km gehen"
+          }
+        }
+      }
+    },
+    "2.5" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2,5"
+          }
+        }
+      }
+    },
+    "75" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "75"
+          }
+        }
+      }
+    },
+    "Adaptasyon İlerlemesi Geri Getir" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsfortschritt wiederherstellen"
+          }
+        }
+      }
+    },
+    "Adaptasyonu Geri Getir" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung wiederherstellen"
+          }
+        }
+      }
+    },
+    "Alarm ayarları yükleniyor..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmeinstellungen werden geladen..."
+          }
+        }
+      }
+    },
+    "Alarmı Kapat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm ausschalten"
+          }
+        }
+      }
+    },
+    "Alarmı kapatmak için yukarıdaki butona dokunun" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf die Schaltfläche oben, um den Alarm auszuschalten"
+          }
+        }
+      }
+    },
+    "Alt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unten"
+          }
+        }
+      }
+    },
+    "Ana Uyku: 75%" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kernschlaf: 75%"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this sleep entry? This action cannot be undone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher, dass du diesen Schlafeintrag löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        }
+      }
+    },
+    "Bildirim izni olmadığı için bu uyarı gösteriliyor" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Warnung wird angezeigt, da keine Benachrichtigungsberechtigung vorliegt"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
+    },
+    "Core" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kern"
+          }
+        }
+      }
+    },
+    "Create a sleep schedule first to add entries" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstelle zuerst einen Schlafplan, um Einträge hinzuzufügen"
+          }
+        }
+      }
+    },
+    "Daha Sonra" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später"
+          }
+        }
+      }
+    },
+    "Değişkenlik: 25 Puan" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Variabilität: 25 Punkte"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        }
+      }
+    },
+    "Delete Sleep Entry" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafeintrag löschen"
+          }
+        }
+      }
+    },
+    "Free 🆓" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kostenlos 🆓"
+          }
+        }
+      }
+    },
+    "Geri" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück"
+          }
+        }
+      }
+    },
+    "Gün" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        }
+      }
+    },
+    "Harika bir uyku rutininiz var!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast eine großartige Schlafroutine!"
+          }
+        }
+      }
+    },
+    "Hedef" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ziel"
+          }
+        }
+      }
+    },
+    "Important Note" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wichtiger Hinweis"
+          }
+        }
+      }
+    },
+    "Kalite" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualität"
+          }
+        }
+      }
+    },
+    "Kaydet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        }
+      }
+    },
+    "Kazanılan Zaman" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewonnene Zeit"
+          }
+        }
+      }
+    },
+    "Kötü" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlecht"
+          }
+        }
+      }
+    },
+    "Mevcut Paywall Sayısı" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzahl aktueller Paywalls"
+          }
+        }
+      }
+    },
+    "Mükemmel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgezeichnet"
+          }
+        }
+      }
+    },
+    "Nap 1" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen 1"
+          }
+        }
+      }
+    },
+    "Nap 2" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen 2"
+          }
+        }
+      }
+    },
+    "Offerings'leri Yenile" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angebote aktualisieren"
+          }
+        }
+      }
+    },
+    "onboarding.ageRange" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altersbereich"
+          }
+        }
+      }
+    },
+    "onboarding.ageRangeDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anpassung an den polyphasischen Schlaf kann während der Jugend oder im Alter variieren."
+          }
+        }
+      }
+    },
+    "onboarding.chronotype" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlaf-Chronotyp"
+          }
+        }
+      }
+    },
+    "onboarding.chronotypeDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du von Natur aus morgens oder abends aktiver?"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionTolerance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Störungstoleranz"
+          }
+        }
+      }
+    },
+    "onboarding.disruptionToleranceDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie gut gehst du mit Störungen deines Schlafplans um?"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatus" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheitszustand"
+          }
+        }
+      }
+    },
+    "onboarding.healthStatusDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nimmst du regelmäßig Medikamente ein oder hast du chronische Erkrankungen?"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissensstand"
+          }
+        }
+      }
+    },
+    "onboarding.knowledgeLevelDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie vertraut bist du mit dem polyphasischen Schlaf? Dies hilft uns, das richtige Maß an Anleitung und Informationen bereitzustellen."
+          }
+        }
+      }
+    },
+    "onboarding.lifestyle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Lebensstil"
+          }
+        }
+      }
+    },
+    "onboarding.lifestyleDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie würdest du dein tägliches Aktivitätsniveau beschreiben? Dies hilft uns, einen Schlafplan zu empfehlen, der zu deinem Energiebedarf passt."
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivationslevel"
+          }
+        }
+      }
+    },
+    "onboarding.motivationLevelQuestion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie bereit bist du für einen herausfordernden Anpassungsprozess?"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironment" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen-Umgebung"
+          }
+        }
+      }
+    },
+    "onboarding.napEnvironmentDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie geeignet ist deine Umgebung für Nickerchen während des Tages? Berücksichtige Faktoren wie Lärmpegel, Lichtkontrolle und Komfort."
+          }
+        }
+      }
+    },
+    "onboarding.next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        }
+      }
+    },
+    "onboarding.no" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein"
+          }
+        }
+      }
+    },
+    "onboarding.seeResults" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnisse ansehen"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperience" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlaferfahrung"
+          }
+        }
+      }
+    },
+    "onboarding.sleepExperienceQuestion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du bereits Erfahrung mit polyphasischem (oder anderem) Schlaf?"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoal" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafziel"
+          }
+        }
+      }
+    },
+    "onboarding.sleepGoalDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was ist dein Hauptziel bei der Einführung eines polyphasischen Schlafplans?"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligations" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soziale Verpflichtungen"
+          }
+        }
+      }
+    },
+    "onboarding.socialObligationsDescription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie flexibel sind deine sozialen Verpflichtungen und täglichen Verantwortlichkeiten? Berücksichtige Familienzeit, gesellschaftliche Veranstaltungen, Treffen und andere Aktivitäten, die eine bestimmte Zeitplanung erfordern."
+          }
+        }
+      }
+    },
+    "onboarding.workSchedule" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsplan"
+          }
+        }
+      }
+    },
+    "onboarding.workScheduleQuestion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie sieht dein typischer Arbeitsplan aus?"
+          }
+        }
+      }
+    },
+    "onboarding.yes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        }
+      }
+    },
+    "Önemli Not" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wichtiger Hinweis"
+          }
+        }
+      }
+    },
+    "Paywall Geçmişini Sıfırla" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paywall-Verlauf zurücksetzen"
+          }
+        }
+      }
+    },
+    "Paywall Test" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paywall-Test"
+          }
+        }
+      }
+    },
+    "Paywall Test Arayüzü" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paywall-Testoberfläche"
+          }
+        }
+      }
+    },
+    "PolyNap" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        }
+      }
+    },
+    "PREMIUM" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PREMIUM"
+          }
+        }
+      }
+    },
+    "Premium ✅" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium ✅"
+          }
+        }
+      }
+    },
+    "Premium ile Kilidi Aç" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Premium freischalten"
+          }
+        }
+      }
+    },
+    "Premium Status:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium-Status:"
+          }
+        }
+      }
+    },
+    "Puan" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkte"
+          }
+        }
+      }
+    },
+    "Recommended" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empfohlen"
+          }
+        }
+      }
+    },
+    "saat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stunde"
+          }
+        }
+      }
+    },
+    "Saat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stunde"
+          }
+        }
+      }
+    },
+    "Şekerleme 1: 20%" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen 1: 20%"
+          }
+        }
+      }
+    },
+    "Şekerleme 2: 5%" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen 2: 5%"
+          }
+        }
+      }
+    },
+    "Şu An" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt"
+          }
+        }
+      }
+    },
+    "Tamam" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Tarih" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum"
+          }
+        }
+      }
+    },
+    "Teklifler yükleniyor..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angebote werden geladen..."
+          }
+        }
+      }
+    },
+    "Test alarmı 5 saniye sonra çalacak. Uygulamayı kapatabilir, arka plana alabilir veya açık bırakabilirsiniz." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Testalarm klingelt in 5 Sekunden. Du kannst die App schließen, in den Hintergrund verschieben oder geöffnet lassen."
+          }
+        }
+      }
+    },
+    "Test Alarmı Kuruldu" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testalarm eingestellt"
+          }
+        }
+      }
+    },
+    "U" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O"
+          }
+        }
+      }
+    },
+    "Uyanma zamanınız geldi!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es ist Zeit aufzuwachen!"
+          }
+        }
+      }
+    },
+    "Uyku bloğunuz sona erdi!\nUyanma zamanı!" : {
+
+    },
+    "Uyku Dağılımı" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafverteilung"
+          }
+        }
+      }
+    },
+    "Uyku Kalitesi Dağılımı" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafqualitätsverteilung"
+          }
+        }
+      }
+    },
+    "Uyku Tutarlılığı" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafkonsistenz"
+          }
+        }
+      }
+    },
+    "v1.2.0" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v1.2.0"
+          }
+        }
+      }
+    },
+    "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein neuer Zeitplan bleibt derselbe, du wirst nur von deinem vorherigen Anpassungstag an weitermachen"
+          }
+        }
+      }
+    },
+    "Yükleniyor..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen..."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -255,6 +255,9 @@ struct SettingsView: View {
             Button(L("settings.language.japanese", table: "Profile")) {
                 languageManager.changeLanguage(to: "ja")
             }
+            Button(L("settings.language.german", table: "Profile")) {
+                languageManager.changeLanguage(to: "de")
+            }
             Button(L("general.cancel", table: "Profile"), role: .cancel) { }
         }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
@@ -281,6 +284,8 @@ struct SettingsView: View {
             return L("settings.language.turkish", table: "Profile")
         case "ja":
             return L("settings.language.japanese", table: "Profile")
+        case "de":
+            return L("settings.language.german", table: "Profile")
         default:
             return L("settings.language.english", table: "Profile")
         }

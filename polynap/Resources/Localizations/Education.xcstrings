@@ -4,6 +4,12 @@
     "education.all_categories" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Kategorien"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
     "education.article.adaptationChallenges.content" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Anpassungsprozess ist im Grunde ein kontrollierter Schlafentzug. Daher solltest du auf alle Herausforderungen vorbereitet sein, die mit Schlafentzug einhergehen:\n\n**Mentale Herausforderungen:**\n\n**Gehirnnebel**\nDas häufigste Symptom. Du wirst Schwierigkeiten haben, deine Gedanken zu ordnen, dich zu konzentrieren und einfache Entscheidungen zu treffen.\n\n**Übermäßige Reizbarkeit und emotionale Instabilität**\nDu könntest wegen Kleinigkeiten wütend werden und in Situationen, in denen du normalerweise nicht so reagieren würdest, übermäßig emotional werden (weinen, Wutausbrüche).\n\n**Gedächtnisprobleme**\nDein Kurzzeitgedächtnis kann stark beeinträchtigt sein. Du könntest vergessen, was du gerade gesagt hast oder was du tun wolltest.\n\n**Mangelnde Motivation**\nSelbst die einfachsten Aufgaben können wie Berge erscheinen.\n\n**Mikroschlaf und Halluzinationen**\nIn Situationen extremer Müdigkeit könntest du für Sekunden einschlafen, während deine Augen geöffnet sind (Mikroschlaf), oder auditive/visuelle Halluzinationen erleben. Dies ist ein Zeichen dafür, dass du ein gefährliches Niveau erreicht hast.\n\n**Körperliche Herausforderungen:**\n\n**Tiefe und erdrückende Müdigkeit**\nNicht nur ein Gefühl der Schläfrigkeit, sondern eine Erschöpfung, die bis in die Knochen dringt.\n\n**Kopfschmerzen**\nEine häufige Reaktion des Körpers auf Stress und veränderte Schlafmuster.\n\n**Kältegefühl**\nDeine Fähigkeit, die Körpertemperatur zu regulieren, kann vorübergehend beeinträchtigt sein.\n\n**Brennen und Trockenheit in den Augen**\nDie ständige Anstrengung, wach zu bleiben, ermüdet die Augen.\n\n**Übelkeit und Appetitlosigkeit**\nDie Stressreaktion des Körpers kann das Verdauungssystem beeinträchtigen.\n\n**⚠️ Warnzeichen**\nWenn du Halluzinationen, schwere kognitive Beeinträchtigungen oder Sicherheitsbedenken hast, solltest du in Betracht ziehen, den Prozess abzubrechen und einen Arzt aufzusuchen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50,6 +62,12 @@
     "education.article.adaptationChallenges.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Symptome und Herausforderungen verstehen, denen du während des Anpassungsprozesses begegnen wirst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +91,12 @@
     "education.article.adaptationChallenges.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Körperliche und geistige Herausforderungen während der Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +143,12 @@
     "education.article.adaptationFailure.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissen, wann man den Anpassungsprozess abbrechen und wie man sicher zum monophasischen Schlaf zurückkehren kann."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -142,6 +172,12 @@
     "education.article.adaptationFailure.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wann man aufhören sollte: Sichere Rückkehr zum normalen Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -188,6 +224,12 @@
     "education.article.adaptationProcess.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die herausfordernde, aber entscheidende Übergangsphase verstehen, in der sich dein Körper an den polyphasischen Schlaf anpasst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -211,6 +253,12 @@
     "education.article.adaptationProcess.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Anpassungsprozess: Vom „Zombie-Modus“ zum Erfolg"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +305,12 @@
     "education.article.adaptationSuccess.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die positiven Anzeichen erkennen, die darauf hindeuten, dass sich dein Körper erfolgreich an den polyphasischen Schlaf anpasst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -280,6 +334,12 @@
     "education.article.adaptationSuccess.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzeichen einer erfolgreichen Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -326,6 +386,12 @@
     "education.article.alternatives.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichere Wege zur Verbesserung der Schlafqualität und der Wachheit am Tag"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -349,6 +415,12 @@
     "education.article.alternatives.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesunde Alternativen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -395,6 +467,12 @@
     "education.article.basicTheory.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie polyphasischer Schlaf darauf abzielt, die REM- und Tiefschlafphasen zu optimieren."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -418,6 +496,12 @@
     "education.article.basicTheory.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Theorie hinter dem polyphasischen Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,6 +571,12 @@
     "education.article.benefits.creativity.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Häufiger Eintritt in den REM-Schlaf kann die Fähigkeit des Gehirns verbessern, ungewöhnliche Verbindungen herzustellen und das kreative Denken zu fördern."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -510,6 +600,12 @@
     "education.article.benefits.creativity.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behaupteter Vorteil: Gesteigerte Kreativität und Innovation"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -556,6 +652,12 @@
     "education.article.benefits.discipline.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die starren Anforderungen des Zeitplans können zu verbesserter Disziplin und Zeitmanagementfähigkeiten führen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -579,6 +681,12 @@
     "education.article.benefits.discipline.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behaupteter Vorteil: Gesteigerte Selbstdisziplin"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -625,6 +733,12 @@
     "education.article.benefits.dreamQuality.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zunahme lebhafter Träume und Möglichkeiten für luzides Träumen durch häufigen Eintritt in den REM-Schlaf."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -648,6 +762,12 @@
     "education.article.benefits.dreamQuality.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behaupteter Vorteil: Verbesserte Traumqualität und luzides Träumen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -694,6 +814,12 @@
     "education.article.benefits.mentalClarity.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berichte über kontinuierliche geistige Klarheit und Konzentration während des Tages nach erfolgreicher Anpassung."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -717,6 +843,12 @@
     "education.article.benefits.mentalClarity.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behaupteter Vorteil: Geistige Klarheit und Konzentration"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -740,6 +872,12 @@
     "education.article.benefits.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entdecke die behaupteten Vorteile des polyphasischen Schlafs"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -786,6 +924,12 @@
     "education.article.benefits.timeGain.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Hauptversprechen des polyphasischen Schlafs: täglich 3-6 zusätzliche Stunden Wachheit gewinnen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -809,6 +953,12 @@
     "education.article.benefits.timeGain.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behaupteter Vorteil: Zeitgewinn"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -832,6 +982,12 @@
     "education.article.benefits.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mögliche Vorteile"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -878,6 +1034,12 @@
     "education.article.biphasic.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der zugänglichste polyphasische Zeitplan, perfekt für Anfänger."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -901,6 +1063,12 @@
     "education.article.biphasic.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biphasischer Schlaf (Anfänger)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -947,6 +1115,12 @@
     "education.article.cognitiveEffects.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie sich Schlafentzug auf Denken, Gedächtnis und geistige Leistungsfähigkeit auswirkt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -970,6 +1144,12 @@
     "education.article.cognitiveEffects.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kognitive Auswirkungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1016,6 +1196,12 @@
     "education.article.dymaxion.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vier 30-minütige Nickerchen im Abstand von 6 Stunden - theoretisch und unpraktisch."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1039,6 +1225,12 @@
     "education.article.dymaxion.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dymaxion-Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1085,6 +1277,12 @@
     "education.article.everyman.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beliebte mittlere Zeitpläne, die Schlafreduktion mit Praktikabilität in Einklang bringen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1108,6 +1306,12 @@
     "education.article.everyman.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyman-Schlaf (Mittel)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1154,6 +1358,12 @@
     "education.article.famousPeople.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untersuchung von Behauptungen über da Vinci, Tesla und andere historische Persönlichkeiten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1177,6 +1387,12 @@
     "education.article.famousPeople.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berühmte Persönlichkeiten & Schlafmythen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1223,6 +1439,12 @@
     "education.article.healthRisks.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfahre mehr über die körperlichen Gesundheitsrisiken von chronischem Schlafentzug"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1246,6 +1468,12 @@
     "education.article.healthRisks.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernste Gesundheitsrisiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1292,6 +1520,12 @@
     "education.article.legalDisclaimer.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wichtige rechtliche und medizinische Haftungsausschlüsse bezüglich des polyphasischen Schlafs"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1315,6 +1549,12 @@
     "education.article.legalDisclaimer.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechtlicher Hinweis"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1361,6 +1601,12 @@
     "education.article.myth.caffeine.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warum Koffein und Energy-Drinks den Anpassungsprozess an den polyphasen Schlaf tatsächlich sabotieren."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1384,6 +1630,12 @@
     "education.article.myth.caffeine.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Koffein hilft bei der Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1430,6 +1682,12 @@
     "education.article.myth.flexibility.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warum polyphasische Schlafpläne extrem starr sind und fast keine Flexibilität bieten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1453,6 +1711,12 @@
     "education.article.myth.flexibility.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Nach der Anpassung kann man flexibel sein"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1499,6 +1763,12 @@
     "education.article.myth.intelligence.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entlarvung des Mythos, dass berühmte historische Persönlichkeiten polyphasischen Schlaf praktizierten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1522,6 +1792,12 @@
     "education.article.myth.intelligence.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Genies schlafen weniger (Da Vinci, Tesla)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1568,6 +1844,12 @@
     "education.article.myth.productivity.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warum die Qualität der gewonnenen Zeit nicht immer hoch ist und mit erheblichen sozialen Kosten verbunden ist."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1591,6 +1873,12 @@
     "education.article.myth.productivity.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Jede zusätzliche Zeit ist produktive Zeit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1637,6 +1925,12 @@
     "education.article.myth.sleepStages.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warum Leichtschlafphasen unerlässlich sind und nicht einfach ohne Folgen eliminiert werden können."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1660,6 +1954,12 @@
     "education.article.myth.sleepStages.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Leichtschlaf ist „unnötig“ und kann übersprungen werden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1706,6 +2006,12 @@
     "education.article.myth.suitability.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verstehen, warum biologische und genetische Unterschiede den polyphasischen Schlaf für viele Menschen unmöglich oder gefährlich machen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1729,6 +2035,12 @@
     "education.article.myth.suitability.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythos: Polyphasischer Schlaf ist für jeden geeignet"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1775,6 +2087,12 @@
     "education.article.preparation.alarms.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umfassende Wecksysteme, um sicherzustellen, dass du während der schwierigsten Anpassungsphasen aufwachst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1798,6 +2116,12 @@
     "education.article.preparation.alarms.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weckerstrategien: Den Aufwacherfolg garantieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1844,6 +2168,12 @@
     "education.article.preparation.environment.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaffung der optimalen Umgebung für hochwertige Nickerchen während der Anpassung."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1867,6 +2197,12 @@
     "education.article.preparation.environment.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umgebungsvorbereitung: Perfekte Nickerchen-Umgebung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1913,6 +2249,12 @@
     "education.article.preparation.healthCheck.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kritische Schritte zur körperlichen und geistigen Vorbereitung vor dem Versuch des polyphasischen Schlafs."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1936,6 +2278,12 @@
     "education.article.preparation.healthCheck.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wesentliche Vorbereitung: Gesundheitscheck und mentale Bereitschaft"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1982,6 +2330,12 @@
     "education.article.preparation.nutrition.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie Ernährung und Bewegung dein Energieniveau und deine Schlafqualität während der Anpassung direkt beeinflussen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2005,6 +2359,12 @@
     "education.article.preparation.nutrition.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernährung und Bewegung: Optimierung deines Körpers für den polyphasischen Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2051,6 +2411,12 @@
     "education.article.preparation.physical.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die ernsten körperlichen Gesundheitsrisiken verstehen und den Körper auf den Stress der Anpassung vorbereiten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2074,6 +2440,12 @@
     "education.article.preparation.physical.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Körperliche Gesundheitsaspekte und medizinische Warnhinweise"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2120,6 +2492,12 @@
     "education.article.preparation.social.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beziehungen managen und Unterstützungssysteme für eine erfolgreiche Anpassung an den polyphasischen Schlaf aufbauen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2143,6 +2521,12 @@
     "education.article.preparation.social.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soziale Vorbereitung: Management von Beziehungen und Unterstützungssystemen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2189,6 +2573,12 @@
     "education.article.preparation.support.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Aufbau eines Unterstützungssystems ist entscheidend für eine erfolgreiche Anpassung an den polyphasischen Schlaf."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2212,6 +2602,12 @@
     "education.article.preparation.support.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soziale Unterstützung: Information von Umfeld und Familie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2258,6 +2654,12 @@
     "education.article.preparation.tracking.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie du deinen Fortschritt effektiv verfolgst und während der Anpassung motiviert bleibst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2281,6 +2683,12 @@
     "education.article.preparation.tracking.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlaftracking: Tagebücher, Apps und die Rolle der Technologie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2327,6 +2735,12 @@
     "education.article.riskGroups.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer unter keinen Umständen jemals den polyphasischen Schlaf versuchen sollte"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2350,6 +2764,12 @@
     "education.article.riskGroups.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hochrisikogruppen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2396,6 +2816,12 @@
     "education.article.risks.cognitive.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafentzug beeinträchtigt Gedächtnis, Lernen, Entscheidungsfindung und die allgemeine kognitive Funktion erheblich."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2419,6 +2845,12 @@
     "education.article.risks.cognitive.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernstes Risiko: Kognitive Beeinträchtigung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2465,6 +2897,12 @@
     "education.article.risks.hormonal.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafentzug stört kritische Hormone, die Stress, Wachstum und Appetitregulation beeinflussen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2488,6 +2926,12 @@
     "education.article.risks.hormonal.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernstes Risiko: Hormonelles Ungleichgewicht"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2534,6 +2978,12 @@
     "education.article.risks.immune.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafentzug beeinträchtigt die Immunfunktion erheblich und erhöht die Anfälligkeit für Infektionen und Krankheiten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2557,6 +3007,12 @@
     "education.article.risks.immune.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernstes Risiko: Schwächung des Immunsystems"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2603,6 +3059,12 @@
     "education.article.risks.microsleep.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unwillkürliche Sekundenschlaf-Episoden können bei kritischen Aufgaben auftreten und zu potenziell tödlichen Unfällen führen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2626,6 +3088,12 @@
     "education.article.risks.microsleep.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernstes Risiko: Sekundenschlaf und Sicherheitsgefahren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2672,6 +3140,12 @@
     "education.article.risks.socialIsolation.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der starre Schlafplan führt zur Unvereinbarkeit mit dem normalen Sozialleben, was zu Isolation und beschädigten Beziehungen führt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2695,6 +3169,12 @@
     "education.article.risks.socialIsolation.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ernstes Risiko: Soziale Isolation und Beziehungsschäden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2741,6 +3221,12 @@
     "education.article.safetyRisks.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebensbedrohliche Risiken durch Sekundenschlaf und beeinträchtigtes Urteilsvermögen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2764,6 +3250,12 @@
     "education.article.safetyRisks.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sicherheitsrisiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2810,6 +3302,12 @@
     "education.article.scheduleComparison.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaillierter Vergleich aller polyphasischen Zeitpläne nach Schwierigkeit, Flexibilität und Zeitersparnis."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2833,6 +3331,12 @@
     "education.article.scheduleComparison.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leitfaden zum Zeitplanvergleich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2879,6 +3383,12 @@
     "education.article.scheduleSelection.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schritt-für-Schritt-Anleitung zur Auswahl des richtigen polyphasischen Zeitplans für deinen Lebensstil."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2902,6 +3412,12 @@
     "education.article.scheduleSelection.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie du deinen Zeitplan wählst"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2948,6 +3464,12 @@
     "education.article.scientificResearch.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was sagt die aktuelle Schlafwissenschaft über den polyphasischen Schlaf?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2971,6 +3493,12 @@
     "education.article.scientificResearch.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaftliche Forschung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3017,6 +3545,12 @@
     "education.article.sleepStages.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Funktionen von Leichtschlaf, Tiefschlaf und REM-Phasen verstehen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3040,6 +3574,12 @@
     "education.article.sleepStages.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafphasen erklärt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3086,6 +3626,12 @@
     "education.article.socialPsychRisks.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie polyphasischer Schlaf Beziehungen und die psychische Gesundheit schädigen kann"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3109,6 +3655,12 @@
     "education.article.socialPsychRisks.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soziale und psychologische Risiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3155,6 +3707,12 @@
     "education.article.triphasic.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drei gleich lange Schlafperioden, über den Tag verteilt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3178,6 +3736,12 @@
     "education.article.triphasic.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triphasischer Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3224,6 +3788,12 @@
     "education.article.uberman.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der extremste polyphasische Zeitplan - 6 Nickerchen, kein Kernschlaf."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3247,6 +3817,12 @@
     "education.article.uberman.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uberman-Schlaf (Extrem)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3293,6 +3869,12 @@
     "education.article.warningSignals.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kritische Anzeichen, bei denen du den polyphasischen Schlaf sofort beenden musst"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3316,6 +3898,12 @@
     "education.article.warningSignals.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warnsignale"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3362,6 +3950,12 @@
     "education.article.whatIs.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Unterschiede zwischen monophasischen, biphasischen und polyphasischen SchlaMustern verstehen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3385,6 +3979,12 @@
     "education.article.whatIs.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was ist polyphasischer Schlaf?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3431,6 +4031,12 @@
     "education.article.zombieMode.summary" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wesentliche Strategien, um die schwierigste Phase der Anpassung an den polyphasischen Schlaf zu überleben und zu überwinden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3454,6 +4060,12 @@
     "education.article.zombieMode.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den „Zombie-Modus“ überwinden: Tipps und Strategien"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3477,6 +4089,12 @@
     "education.articles_section" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artikel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3500,6 +4118,12 @@
     "education.categories.adaptation" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsprozess"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3523,6 +4147,12 @@
     "education.categories.basics" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grundlagen & Einführung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3546,6 +4176,12 @@
     "education.categories.faq" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3569,6 +4205,12 @@
     "education.categories.myths" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mythen & Fakten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3592,6 +4234,12 @@
     "education.categories.preparation" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorbereitungsleitfaden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3615,6 +4263,12 @@
     "education.categories.risks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorteile & Risiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3638,6 +4292,12 @@
     "education.categories.schedules" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafpläne"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3661,6 +4321,12 @@
     "education.clear_search" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche löschen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3684,6 +4350,12 @@
     "education.faq_section" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Häufig gestellte Fragen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3707,6 +4379,12 @@
     "education.faq.a1" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein, der polyphasische Schlaf birgt erhebliche Gesundheitsrisiken, einschließlich Herz-Kreislauf-Problemen, Funktionsstörungen des Immunsystems und einem erhöhten Unfallrisiko. Medizinisches Fachpersonal rät dringend davon ab."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3730,6 +4408,12 @@
     "education.faq.a2" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obwohl du technisch gesehen mehr Wachstunden haben magst, machen die schwere Beeinträchtigung der kognitiven Funktion, Gesundheitsprobleme und erhöhte Müdigkeit diese Zeit für produktive Aktivitäten weitgehend unbrauchbar."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3753,6 +4437,12 @@
     "education.faq.a3" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die behaupteten Anpassungsperioden reichen von Wochen bis zu Monaten, aber wissenschaftliche Beweise zeigen, dass eine echte Anpassung niemals stattfindet – der Körper leidet weiterhin unter den Auswirkungen des chronischen Schlafentzugs."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3776,6 +4466,12 @@
     "education.faq.a4" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundenschlaf-Episoden sind kurze, unwillkürliche Perioden, in denen das Gehirn für 1-30+ Sekunden abschaltet. Sie sind extrem gefährlich und können beim Fahren, Arbeiten oder jeder anderen Aktivität auftreten, was zu Unfällen und potenziell tödlichen Folgen führt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3799,6 +4495,12 @@
     "education.faq.a5" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behauptungen über historische Persönlichkeiten, die den polyphasischen Schlaf nutzten, sind größtenteils Mythen oder Fehlinterpretationen. Moderne erfolgreiche Menschen priorisieren qualitativ hochwertigen Schlaf und befolgen medizinische Empfehlungen für 7-9 Stunden zusammenhängenden Schlaf."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3822,6 +4524,12 @@
     "education.faq.a6" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine wissenschaftlichen Beweise stützen eine Kreativitätssteigerung durch polyphasischen Schlaf. Tatsächlich beeinträchtigt chronischer Schlafentzug typischerweise das kreative Denken, die Problemlösungsfähigkeiten und die kognitive Flexibilität."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3845,6 +4553,12 @@
     "education.faq.a7" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Höre sofort auf und kehre zu einem normalen Schlafplan zurück. Wenn du besorgniserregende Symptome feststellst, konsultiere einen Gesundheitsdienstleister. Gib deinem Körper mehrere Wochen Zeit, sich von den Auswirkungen des Schlafentzugs zu erholen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3868,6 +4582,12 @@
     "education.faq.a8" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja! Konzentriere dich auf Zeitmanagement, eliminiere Zeitfresser, optimiere deinen Arbeitsablauf und nutze bei Bedarf strategische 10-20-minütige Power-Naps. Diese Ansätze bieten echte Vorteile ohne Gesundheitsrisiken."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3891,6 +4611,12 @@
     "education.faq.a9" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menschen mit medizinischen Erkrankungen, Personen in Hochrisikoberufen (Gesundheitswesen, Transport, Notdienste), Eltern, Studenten, jeder unter 25 und Personen mit bestehenden Schlafstörungen sollten niemals den polyphasischen Schlaf versuchen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3914,6 +4640,12 @@
     "education.faq.a10" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein. Diese App rät dringend vom polyphasischen Schlaf ab und existiert hauptsächlich, um Benutzer über die ernsten Gesundheitsrisiken und den Mangel an wissenschaftlicher Unterstützung aufzuklären. Wir empfehlen, bei Schlafproblemen medizinisches Fachpersonal zu konsultieren."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3937,6 +4669,12 @@
     "education.faq.q1" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ist polyphasischer Schlaf sicher?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3960,6 +4698,12 @@
     "education.faq.q2" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kann ich mit polyphasischem Schlaf zusätzliche Zeit gewinnen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3983,6 +4727,12 @@
     "education.faq.q3" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie lange dauert die polyphasische Anpassung?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4006,6 +4756,12 @@
     "education.faq.q4" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was sind Sekundenschlaf-Episoden?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4029,6 +4785,12 @@
     "education.faq.q5" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzen berühmte Leute den polyphasischen Schlaf?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4052,6 +4814,12 @@
     "education.faq.q6" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kann polyphasischer Schlaf die Kreativität verbessern?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4075,6 +4843,12 @@
     "education.faq.q7" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was soll ich tun, wenn ich bereits polyphasischen Schlaf versuche?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4098,6 +4872,12 @@
     "education.faq.q8" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gibt es sichere Alternativen, um mehr Zeit zu gewinnen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4121,6 +4901,12 @@
     "education.faq.q9" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer sollte niemals versuchen, polyphasisch zu schlafen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4144,6 +4930,12 @@
     "education.faq.q10" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ermutigt diese App zum polyphasischen Schlaf?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4167,6 +4959,12 @@
     "education.no_results_message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versuche, deine Suchbegriffe anzupassen oder durchsuche alle Kategorien, um zu finden, was du suchst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4190,6 +4988,12 @@
     "education.no_results_title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Ergebnisse gefunden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4213,6 +5017,12 @@
     "education.reading_time" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesezeit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4236,6 +5046,12 @@
     "education.readTime" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d Min. Lesezeit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4259,6 +5075,12 @@
     "education.search_placeholder" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artikel suchen..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4282,6 +5104,12 @@
     "education.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lerne über den polyphasischen Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4305,6 +5133,12 @@
     "education.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",

@@ -1,154 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "general.add" : {
-      "comment" : "Generic add button",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "追加"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ekle"
-          }
-        }
-      }
-    },
-    "general.cancel" : {
-      "comment" : "Generic cancel button",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "キャンセル"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
-          }
-        }
-      }
-    },
-    "general.delete" : {
-      "comment" : "Generic delete button",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "削除"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sil"
-          }
-        }
-      }
-    },
-    "sleep.type.core" : {
-      "comment" : "Core sleep type",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コア睡眠"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
-          }
-        }
-      }
-    },
-    "sleep.type.nap" : {
-      "comment" : "Nap sleep type",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仮眠"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
-          }
-        }
-      }
-    },
-    "dayDetail.delete.title" : {
-      "comment" : "Alert title for deleting sleep entry",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Sleep Entry"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "睡眠記録を削除"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kaydını Sil"
-          }
-        }
-      }
-    },
     "dayDetail.delete.message" : {
       "comment" : "Alert message for deleting sleep entry",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher, dass du diesen Schlafeintrag löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -169,10 +31,136 @@
         }
       }
     },
+    "dayDetail.delete.title" : {
+      "comment" : "Alert title for deleting sleep entry",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafeintrag löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Sleep Entry"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠記録を削除"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Kaydını Sil"
+          }
+        }
+      }
+    },
+    "dayDetail.noData.message" : {
+      "comment" : "Message for no data state",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für diesen Tag wurden keine Schlafaufzeichnungen gefunden. Füge deinen ersten Eintrag über die Schaltfläche oben hinzu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No sleep records found for this day. Add your first entry using the button above."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の睡眠記録はまだないみたい。上のボタンから最初の記録を追加してね。"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu gün için uyku kaydı bulunamadı. Yukarıdaki butonu kullanarak ilk kaydınızı ekleyin."
+          }
+        }
+      }
+    },
+    "dayDetail.noData.title" : {
+      "comment" : "Title for no data state",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Schlafdaten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Sleep Data"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠データなし"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku Verisi Yok"
+          }
+        }
+      }
+    },
+    "dayDetail.summary.averageQuality" : {
+      "comment" : "Label for average sleep quality",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnittliche Qualität"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average Quality"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均の質"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ortalama Kalite"
+          }
+        }
+      }
+    },
     "dayDetail.summary.title" : {
       "comment" : "Title for day summary section",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tageszusammenfassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +185,12 @@
       "comment" : "Label for total sleep time",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtschlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -217,78 +211,156 @@
         }
       }
     },
-    "dayDetail.summary.averageQuality" : {
-      "comment" : "Label for average sleep quality",
+    "general.add" : {
+      "comment" : "Generic add button",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Average Quality"
+            "value" : "Add"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "平均の質"
+            "value" : "追加"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ortalama Kalite"
+            "value" : "Ekle"
           }
         }
       }
     },
-    "dayDetail.noData.title" : {
-      "comment" : "Title for no data state",
+    "general.cancel" : {
+      "comment" : "Generic cancel button",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No Sleep Data"
+            "value" : "Cancel"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "睡眠データなし"
+            "value" : "キャンセル"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uyku Verisi Yok"
+            "value" : "İptal"
           }
         }
       }
     },
-    "dayDetail.noData.message" : {
-      "comment" : "Message for no data state",
+    "general.delete" : {
+      "comment" : "Generic delete button",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No sleep records found for this day. Add your first entry using the button above."
+            "value" : "Delete"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今日の睡眠記録はまだないみたい。上のボタンから最初の記録を追加してね。"
+            "value" : "削除"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu gün için uyku kaydı bulunamadı. Yukarıdaki butonu kullanarak ilk kaydınızı ekleyin."
+            "value" : "Sil"
+          }
+        }
+      }
+    },
+    "sleep.type.core" : {
+      "comment" : "Core sleep type",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kernschlaf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Core Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コア睡眠"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana Uyku"
+          }
+        }
+      }
+    },
+    "sleep.type.nap" : {
+      "comment" : "Nap sleep type",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nap"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şekerleme"
           }
         }
       }
     }
   },
   "version" : "1.0"
-} 
+}

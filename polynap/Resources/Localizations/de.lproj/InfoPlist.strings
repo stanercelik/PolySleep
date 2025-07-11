@@ -1,0 +1,21 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "PolyNap";
+
+/* Bundle name */
+"CFBundleName" = "polynap";
+
+/* Critical messaging permission description */
+"NSCriticalMessagingUsageDescription" = "PolyNap benötigt Berechtigungen für kritische Mitteilungen, um dringende Weck- und Erinnerungsbenachrichtigungen auch im Stumm- oder Fokusmodus senden zu können.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "PolyNap möchte deine Gesundheitsdaten lesen, um die Auswirkungen deines Schlafplans auf deine Schlafgesundheit zu analysieren und personalisierte Empfehlungen anzubieten.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "PolyNap benötigt diese Berechtigung, um deine Schlafblöcke und Schlafqualitätsbewertungen in der Health-App zu speichern.";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Für das PolyNap-Alarmsystem ist eine Tonausgabe erforderlich.";
+
+/* Notification permission description */
+"NSUserNotificationsUsageDescription" = "PolyNap sendet Weckbenachrichtigungen, um dich am Ende deiner Schlafblöcke zu wecken. Diese Funktion ist für das ordnungsgemäße Funktionieren deines Schlafplans unerlässlich.";
+

@@ -4,6 +4,12 @@
     "disclaimer.contact" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
     "disclaimer.contact.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontaktiere uns"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50,6 +62,12 @@
     "disclaimer.contact.content" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du Fragen oder Bedenken zu diesem Haftungsausschluss hast, kontaktiere uns bitte unter support@polynap.app"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +91,12 @@
     "disclaimer.content" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap wurde entwickelt, um Benutzern zu helfen, ihre polyphasischen Schlafpläne zu verfolgen und zu verwalten. Die von dieser Anwendung bereitgestellten Informationen dienen nur zu allgemeinen Informationszwecken."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -96,6 +120,12 @@
     "disclaimer.general.warning" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allgemeine Warnung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +149,12 @@
     "disclaimer.liability" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftungsbeschränkung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -142,6 +178,12 @@
     "disclaimer.liability.content" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Entwickler und Mitwirkenden von PolyNap haften nicht für direkte, indirekte, zufällige, besondere, Folge- oder exemplarische Schäden, die sich aus deiner Nutzung der Anwendung oder einem von dir umgesetzten Schlafplan ergeben, der auf von der Anwendung bereitgestellten Informationen basiert."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +207,12 @@
     "disclaimer.medical" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine medizinische Beratung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -188,6 +236,12 @@
     "disclaimer.medical.content" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Inhalt dieser Anwendung ist nicht als Ersatz für professionelle medizinische Beratung, Diagnose oder Behandlung gedacht. Suche immer den Rat deines Arztes oder eines anderen qualifizierten Gesundheitsdienstleisters bei Fragen zu einem medizinischen Zustand oder schlafbezogenen Problemen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -211,6 +265,12 @@
     "disclaimer.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wichtige Informationen und Nutzungsbedingungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -234,6 +294,12 @@
     "disclaimer.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftungsausschluss"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +323,12 @@
     "feedback.alert.failed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback konnte nicht gesendet werden. Bitte versuche es später erneut."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -280,6 +352,12 @@
     "feedback.alert.noMail" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte konfiguriere ein E-Mail-Konto in den Einstellungen, um Feedback zu senden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -303,6 +381,12 @@
     "feedback.alert.saved" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Feedback wurde in den Entwürfen gespeichert."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -326,6 +410,12 @@
     "feedback.alert.sent" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vielen Dank! Dein Feedback wurde erfolgreich gesendet."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -349,6 +439,12 @@
     "feedback.alert.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -372,6 +468,12 @@
     "feedback.info" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Feedback wird direkt an unser Entwicklungsteam gesendet. Wir lesen jede Nachricht und schätzen deinen Beitrag!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -395,6 +497,12 @@
     "feedback.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachricht"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -418,6 +526,12 @@
     "feedback.name" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Name"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,6 +555,12 @@
     "feedback.name.placeholder" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib deinen Namen ein"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -464,6 +584,12 @@
     "feedback.send" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback senden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,6 +613,12 @@
     "feedback.settings.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sende uns dein Feedback und deine Vorschläge"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -510,6 +642,12 @@
     "feedback.subject" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betreff"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -533,6 +671,12 @@
     "feedback.subject.placeholder" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Worum geht es in deinem Feedback?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -556,6 +700,12 @@
     "feedback.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilf uns, PolyNap zu verbessern, indem du deine Gedanken und Vorschläge teilst"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -579,6 +729,12 @@
     "feedback.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -602,6 +758,12 @@
     "general.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -625,6 +787,12 @@
     "general.continue" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -648,6 +816,12 @@
     "general.error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +845,12 @@
     "general.ok" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -694,6 +874,12 @@
     "general.save" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -717,6 +903,12 @@
     "general.unknownError" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein unbekannter Fehler ist aufgetreten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -740,6 +932,12 @@
     "personalInfo.answers" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Informationen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -763,6 +961,12 @@
     "personalInfo.answers.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Antworten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -786,6 +990,12 @@
     "personalInfo.empty.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließe den Onboarding-Prozess ab, um hier deine persönlichen Informationen zu sehen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -809,6 +1019,12 @@
     "personalInfo.empty.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Informationen verfügbar"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -832,6 +1048,12 @@
     "personalInfo.noData" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine persönlichen Informationen verfügbar. Bitte schließe den Onboarding-Prozess ab."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -855,6 +1077,12 @@
     "personalInfo.recommendedSchedule" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empfohlener Zeitplan"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -878,6 +1106,12 @@
     "personalInfo.schedule.hours" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stunden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -901,6 +1135,12 @@
     "personalInfo.schedule.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein aktuell ausgewählter Schlafplan"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -924,6 +1164,12 @@
     "personalInfo.schedule.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktueller Zeitplan"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -947,6 +1193,12 @@
     "personalInfo.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informationen zu deiner polyphasischen Schlafreise"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -970,6 +1222,12 @@
     "personalInfo.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Informationen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -993,6 +1251,12 @@
     "personalInfo.totalSleepHours" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtschlafstunden: %@ Stunden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1016,6 +1280,12 @@
     "profile.achievements" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolge"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1039,6 +1309,12 @@
     "profile.adaptation.celebration.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast deine polyphasische Schlafanpassung erfolgreich abgeschlossen! Dein Körper hat sich vollständig an deinen neuen Schlafplan angepasst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1062,6 +1338,12 @@
     "profile.adaptation.celebration.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Herzlichen Glückwunsch! 🎉"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1085,6 +1367,12 @@
     "profile.adaptation.completed.celebrate" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe zum Feiern! 🎆"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1108,6 +1396,12 @@
     "profile.adaptation.completed.days" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen in %d Tagen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1131,6 +1425,12 @@
     "profile.adaptation.completed.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herzlichen Glückwunsch! Du hast deine polyphasische Schlafanpassung erfolgreich abgeschlossen. Dein Körper hat sich an deinen neuen Schlafplan angepasst. Gut gemacht!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1154,6 +1454,12 @@
     "profile.adaptation.completed.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine polyphasische Schlafanpassungsreise ist abgeschlossen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1177,6 +1483,12 @@
     "profile.adaptation.completed.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 Anpassung abgeschlossen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1200,6 +1512,12 @@
     "profile.adaptation.day.format" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag %d / %d"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1223,6 +1541,12 @@
     "profile.adaptation.dayCount" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d / %d Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1246,6 +1570,12 @@
     "profile.adaptation.dayProgress" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag %d / %d"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1269,6 +1599,12 @@
     "profile.adaptation.days.count" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1292,6 +1628,12 @@
     "profile.adaptation.days.remaining" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbleibende Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1315,6 +1657,12 @@
     "profile.adaptation.default.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsprozess geht weiter..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1338,6 +1686,12 @@
     "profile.adaptation.empty.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein Schlafprogramm, um deinen Anpassungsprozess zu verfolgen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1361,6 +1715,12 @@
     "profile.adaptation.empty.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch kein aktives Programm"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1384,6 +1744,12 @@
     "profile.adaptation.percentCompleted" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d%% Abgeschlossen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1407,6 +1773,12 @@
     "profile.adaptation.phase.adaptation" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1430,6 +1802,12 @@
     "profile.adaptation.phase.adjustment" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Justierung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1453,6 +1831,12 @@
     "profile.adaptation.phase.advanced" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortgeschritten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1476,6 +1860,12 @@
     "profile.adaptation.phase.beginning" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfang"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1499,6 +1889,12 @@
     "profile.adaptation.phase.complete" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1522,6 +1918,12 @@
     "profile.adaptation.phase.day1" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag 1 - Anfang"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1545,6 +1947,12 @@
     "profile.adaptation.phase.early" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frühe Anpassung (Tage 1-7)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1568,6 +1976,12 @@
     "profile.adaptation.phase.early.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen auf deiner polyphasischen Schlafreise! Dein Körper beginnt sich an den neuen Zeitplan zu gewöhnen. Etwas Müdigkeit ist normal, da dein zirkadianer Rhythmus das neue Muster lernt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1591,6 +2005,12 @@
     "profile.adaptation.phase.final" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finale Anpassung (Tage 22-28)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1614,6 +2034,12 @@
     "profile.adaptation.phase.full" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vollständige Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1637,6 +2063,12 @@
     "profile.adaptation.phase.initial" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfängliche Anpassung (Tage 2-7)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1660,6 +2092,12 @@
     "profile.adaptation.phase.late" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Späte Anpassung (Tage 15+)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1683,6 +2121,12 @@
     "profile.adaptation.phase.late.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgezeichneter Fortschritt! Deine Schlafeffizienz verbessert sich deutlich. Du solltest dich erfrischter fühlen und während der Wachphasen wacher sein."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1706,6 +2150,12 @@
     "profile.adaptation.phase.middle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittlere Anpassung (Tage 8-14)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1729,6 +2179,12 @@
     "profile.adaptation.phase.middle.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du machst Fortschritte! Die Schlafqualität sollte sich verbessern und du könntest leichtere Übergänge in den REM-Schlaf während der Nickerchen bemerken. Mach weiter so!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1752,6 +2208,12 @@
     "profile.adaptation.phase.unknown" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1775,6 +2237,12 @@
     "profile.adaptation.phase0.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen auf deiner polyphasischen Schlafreise! Tag %d von %d. Heute beginnt deine Anpassung. Du könntest dich müde und benommen fühlen, da dein Körper beginnt, sich an den neuen Zeitplan zu gewöhnen. Das ist völlig normal – dein zirkadianer Rhythmus lernt ein neues Muster."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1798,6 +2266,12 @@
     "profile.adaptation.phase1.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du befindest dich in der herausfordernden Anpassungsphase (Tag %d, %d Tage verbleibend). Das ist der schwierigste Teil! Du könntest Schlafentzug, Einschlafschwierigkeiten, häufiges Aufwachen und Stimmungsschwankungen erleben. Bleib stark und halte dich an deinen Zeitplan – dein Körper arbeitet hart daran, sich anzupassen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1821,6 +2295,12 @@
     "profile.adaptation.phase2.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du machst Fortschritte in der Anpassungsphase (Tag %d, %d Tage verbleibend)! Die Schlafqualität sollte sich verbessern und du könntest leichtere Übergänge in den REM-Schlaf während der Nickerchen bemerken. Etwas Müdigkeit ist immer noch normal, aber du bist auf dem richtigen Weg. Halte weiterhin konsistente Schlafzeiten ein."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1844,6 +2324,12 @@
     "profile.adaptation.phase3.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgezeichneter Fortschritt in der fortgeschrittenen Anpassungsphase (Tag %d, %d Tage verbleibend)! Deine Schlafeffizienz verbessert sich deutlich. Du solltest dich nach den Schlafphasen erfrischter fühlen und während der Wachphasen wacher sein. Kleinere Anpassungen können noch auftreten, während dein Körper den neuen Rhythmus feinabstimmt."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1867,6 +2353,12 @@
     "profile.adaptation.phase4.21day.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herzlichen Glückwunsch! Vollständige Anpassung erreicht (Tag %d)! Du hast dich erfolgreich an den polyphasischen Schlafplan angepasst. Du solltest konstante Energieniveaus, schnelles Einschlafen und erfrischende Schlafqualität erleben. Dein neues Schlafmuster ist jetzt etabliert!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1890,6 +2382,12 @@
     "profile.adaptation.phase4.28day.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du befindest dich in der vollständigen Anpassungsphase (Tag %d, %d Tage verbleibend)! Dein Körper hat sich weitgehend an den polyphasischen Zeitplan angepasst. Das Einschlafen sollte schnell gehen, und du solltest dich durchgehend wach und energiegeladen fühlen. Behalte deine Routine bei, um diese positiven Veränderungen zu festigen und Zeitplanstörungen zu vermeiden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1913,6 +2411,12 @@
     "profile.adaptation.phase5.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hervorragende Leistung - Vollständige Anpassung+ (Tag %d)! Du hast selbst die anspruchsvollsten polyphasischen Zeitpläne gemeistert. Deine Schlafeffizienz ist optimiert, und du hast wahrscheinlich eine ausgezeichnete Schlafflexibilität entwickelt. Du bist jetzt ein Experte für polyphasischen Schlaf mit stabilen, erfrischenden SchlaMustern."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1936,6 +2440,12 @@
     "profile.adaptation.process.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Anpassungsprozess"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1959,6 +2469,12 @@
     "profile.adaptation.progressTitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsfortschritt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1982,6 +2498,12 @@
     "profile.adaptation.reset.confirm" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2005,6 +2527,12 @@
     "profile.adaptation.reset.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Anpassungsprozess wird von Tag 1 neu gestartet. Bist du sicher, dass du fortfahren möchtest?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2028,6 +2556,12 @@
     "profile.adaptation.reset.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung zurücksetzen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2051,6 +2585,12 @@
     "profile.adaptation.timeline.completed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2074,6 +2614,12 @@
     "profile.adaptation.timeline.inProgress" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Bearbeitung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2097,6 +2643,12 @@
     "profile.adaptation.timeline.phase1.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag 1"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2120,6 +2672,12 @@
     "profile.adaptation.timeline.phase1.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfangsphase"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2143,6 +2701,12 @@
     "profile.adaptation.timeline.phase2.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1-7 Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2166,6 +2730,12 @@
     "profile.adaptation.timeline.phase2.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Justierungsphase"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2189,6 +2759,12 @@
     "profile.adaptation.timeline.phase3.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8-14 Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2212,6 +2788,12 @@
     "profile.adaptation.timeline.phase3.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsphase"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2235,6 +2817,12 @@
     "profile.adaptation.timeline.phase4.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15-20 Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2258,6 +2846,12 @@
     "profile.adaptation.timeline.phase4.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortgeschrittene Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2281,6 +2875,12 @@
     "profile.adaptation.timeline.phase5.21day.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21+ Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2304,6 +2904,12 @@
     "profile.adaptation.timeline.phase5.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21-27 Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2327,6 +2933,12 @@
     "profile.adaptation.timeline.phase5.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vollständige Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2350,6 +2962,12 @@
     "profile.adaptation.timeline.phase6.duration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "28+ Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2373,6 +2991,12 @@
     "profile.adaptation.timeline.phase6.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vollständige Anpassung+"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2396,6 +3020,12 @@
     "profile.adaptation.timeline.waiting" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2419,6 +3049,12 @@
     "profile.adaptation.tip.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungstipp"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2442,6 +3078,12 @@
     "profile.adaptation.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Anpassungsprozess"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2465,6 +3107,12 @@
     "profile.adaptation.undo.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rückgängig"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2488,6 +3136,12 @@
     "profile.adaptation.undo.later" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2511,6 +3165,12 @@
     "profile.adaptation.undo.later.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst den Anpassungs-Rückgängig-Prozess später unter Einstellungen > Erweitert durchführen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2534,6 +3194,12 @@
     "profile.adaptation.undo.later.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2557,6 +3223,12 @@
     "profile.adaptation.undo.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein neuer Zeitplan bleibt derselbe, du wirst nur von deinem vorherigen Anpassungstag an weitermachen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2580,6 +3252,12 @@
     "profile.adaptation.undo.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplanänderung wurde heute vorgenommen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2603,6 +3281,12 @@
     "profile.adaptation.undo.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsfortschritt kann rückgängig gemacht werden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2626,6 +3310,12 @@
     "profile.avatar.crop.done" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2649,6 +3339,12 @@
     "profile.avatar.crop.instruction" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewege und skaliere dein Foto, damit es in den Kreis passt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2672,6 +3368,12 @@
     "profile.avatar.crop.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilbild zuschneiden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2695,6 +3397,12 @@
     "profile.avatar.options.cancel" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2718,6 +3426,12 @@
     "profile.avatar.options.editProfile" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil bearbeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2741,6 +3455,12 @@
     "profile.avatar.options.removePhoto" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto entfernen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2764,6 +3484,12 @@
     "profile.avatar.options.selectPhoto" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2787,6 +3513,12 @@
     "profile.avatar.options.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profilbild-Optionen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2810,6 +3542,12 @@
     "profile.backup.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sicherung & Wiederherstellung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2833,6 +3571,12 @@
     "profile.badges.locked" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesperrt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2856,6 +3600,12 @@
     "profile.badges.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abzeichen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2879,6 +3629,12 @@
     "profile.badges.unlocked" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freigeschaltet"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2902,6 +3658,12 @@
     "profile.customization.change" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2925,6 +3687,12 @@
     "profile.customization.coreBlock.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji für deine Hauptschlafblöcke"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2948,6 +3716,12 @@
     "profile.customization.coreBlock.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kernschlafblock"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2971,6 +3745,12 @@
     "profile.customization.coreEmoji" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kernschlaf-Emoji"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2994,6 +3774,12 @@
     "profile.customization.coreEmoji.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji für deine Hauptschlafblöcke"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3017,6 +3803,12 @@
     "profile.customization.infoText" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine ausgewählten Emojis werden in der gesamten App verwendet, einschließlich Kalenderansicht, Schlaferfassung und Statistiken."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3040,6 +3832,12 @@
     "profile.customization.napBlock.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji für deine kurzen Schlafblöcke"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3063,6 +3861,12 @@
     "profile.customization.napBlock.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen-Block"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3086,6 +3890,12 @@
     "profile.customization.napEmoji" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen-Emoji"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3109,6 +3919,12 @@
     "profile.customization.napEmoji.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji für deine kurzen Schlafblöcke"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3132,6 +3948,12 @@
     "profile.customization.select" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3155,6 +3977,12 @@
     "profile.customization.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalisiere dein Schlaferlebnis"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3178,6 +4006,12 @@
     "profile.customization.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3201,6 +4035,12 @@
     "profile.edit.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst dein Erlebnis personalisieren, indem du einen Anzeigenamen festlegst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3224,6 +4064,12 @@
     "profile.edit.name.placeholder" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Name"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3247,6 +4093,12 @@
     "profile.edit.save" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil speichern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3270,6 +4122,12 @@
     "profile.edit.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil bearbeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3293,6 +4151,12 @@
     "profile.emoji.core" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kernschlaf-Emoji"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3316,6 +4180,12 @@
     "profile.emoji.nap" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nickerchen-Emoji"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3339,6 +4209,12 @@
     "profile.emoji.picker.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3362,6 +4238,12 @@
     "profile.emoji.selected" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewähltes Emoji"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3385,6 +4267,12 @@
     "profile.emoji.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emojis anpassen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3408,6 +4296,12 @@
     "profile.emojiPicker.save" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3431,6 +4325,12 @@
     "profile.emojiPicker.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3454,6 +4354,12 @@
     "profile.login.apple" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Apple anmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3477,6 +4383,12 @@
     "profile.login.back" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück zu den Anmeldeoptionen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3500,6 +4412,12 @@
     "profile.login.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3523,6 +4441,12 @@
     "profile.login.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So verlierst du deine Daten nicht, wenn du dein Gerät wechselst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3546,6 +4470,12 @@
     "profile.login.email" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit E-Mail anmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3569,6 +4499,12 @@
     "profile.login.google" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Google anmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3592,6 +4528,12 @@
     "profile.login.signout" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3615,6 +4557,12 @@
     "profile.login.status.signed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angemeldet als"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3638,6 +4586,12 @@
     "profile.login.status.unsigned" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht angemeldet"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3661,6 +4615,12 @@
     "profile.login.success" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolgreich angemeldet"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3684,6 +4644,12 @@
     "profile.login.switch" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du bereits ein Konto? Anmelden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3707,6 +4673,12 @@
     "profile.login.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde dich an, um deine Daten zu synchronisieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3730,6 +4702,12 @@
     "profile.logout.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3753,6 +4731,12 @@
     "profile.premium.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 Auf Premium upgraden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3776,6 +4760,12 @@
     "profile.premium.description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweiterte Funktionen und unbegrenzter Zugriff"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3799,6 +4789,12 @@
     "profile.premium.features.notifications" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intelligente Benachrichtigungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3822,6 +4818,12 @@
     "profile.premium.features.statistics" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3845,6 +4847,12 @@
     "profile.premium.features.themes" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Themen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3868,6 +4876,12 @@
     "profile.premium.go" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LOS"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3891,6 +4905,12 @@
     "profile.premium.status.active" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 Premium Aktiv"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3914,6 +4934,12 @@
     "profile.premium.status.free" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kostenloses Konto"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3937,6 +4963,12 @@
     "profile.premium.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap Premium"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3960,6 +4992,12 @@
     "profile.premium.upgrade" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3983,6 +5021,12 @@
     "profile.progress.completed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4006,6 +5050,12 @@
     "profile.progress.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30-Tage-Fortschritt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4029,6 +5079,12 @@
     "profile.scheduleChange.undo.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen rückgängig machen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4052,6 +5108,12 @@
     "profile.scheduleChange.undo.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Anpassungsfortschritt und deine Serie wurden aufgrund einer Zeitplanänderung zurückgesetzt. Du kannst dies heute rückgängig machen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4075,6 +5137,12 @@
     "profile.scheduleChange.undo.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplan geändert - Rückgängigmachen verfügbar"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4098,6 +5166,12 @@
     "profile.settings.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4121,6 +5195,12 @@
     "profile.signup.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4144,6 +5224,12 @@
     "profile.signup.switch" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du noch kein Konto? Registrieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4167,6 +5253,12 @@
     "profile.signup.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto erstellen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4190,6 +5282,12 @@
     "profile.stats.completion" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschluss"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4213,6 +5311,12 @@
     "profile.stats.currentStreak" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Serie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4236,6 +5340,12 @@
     "profile.stats.days" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4259,6 +5369,12 @@
     "profile.stats.longestStreak" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Längste Serie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4282,6 +5398,12 @@
     "profile.stats.sessions" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitzungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4305,6 +5427,12 @@
     "profile.stats.successRate" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolgsquote"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4328,6 +5456,12 @@
     "profile.stats.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistiken"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4351,6 +5485,12 @@
     "profile.stats.totalSleep" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtschlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4374,6 +5514,12 @@
     "profile.streak.current" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Serie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4397,6 +5543,12 @@
     "profile.streak.day" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4420,6 +5572,12 @@
     "profile.streak.days" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4443,6 +5601,12 @@
     "profile.streak.longest" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Längste Serie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4466,6 +5630,12 @@
     "profile.streak.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4489,6 +5659,12 @@
     "profile.tips.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipps zum polyphasischen Schlaf"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4512,6 +5688,12 @@
     "profile.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4535,6 +5717,12 @@
     "profile.user.defaultName" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzer"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4558,6 +5746,12 @@
     "profile.user.editProfile" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil bearbeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4581,6 +5775,12 @@
     "profile.user.local" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokaler Benutzer"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4604,6 +5804,12 @@
     "profile.user.localAccount" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokales Konto"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4627,6 +5833,12 @@
     "settings.about.personalInfo" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Informationen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4650,6 +5862,12 @@
     "settings.about.personalInfo.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeite deine Profilinformationen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4673,6 +5891,12 @@
     "settings.about.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über mich"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4696,6 +5920,12 @@
     "settings.adaptation.undo.alert.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein neuer Zeitplan bleibt derselbe, du wirst nur von deinem vorherigen Anpassungstag an weitermachen. Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4719,6 +5949,12 @@
     "settings.adaptation.undo.alert.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung rückgängig machen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4742,6 +5978,12 @@
     "settings.adaptation.undo.available" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplanänderung wurde heute vorgenommen, du kannst sie rückgängig machen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4765,6 +6007,12 @@
     "settings.adaptation.undo.button" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rückgängig"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4788,6 +6036,12 @@
     "settings.adaptation.undo.notAvailable" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Zeitplanänderung zum Rückgängigmachen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4811,6 +6065,12 @@
     "settings.adaptation.undo.notAvailableStatus" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht verfügbar"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4834,6 +6094,12 @@
     "settings.adaptation.undo.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassung rückgängig machen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4857,6 +6123,12 @@
     "settings.advanced.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweitert"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4880,6 +6152,12 @@
     "settings.alarms.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarme, die am Ende der Schlafblöcke ertönen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4903,6 +6181,12 @@
     "settings.alarms.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmeinstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4926,6 +6210,12 @@
     "settings.copyright" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2025 PolyNap. Alle Rechte vorbehalten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4949,6 +6239,12 @@
     "settings.general.language" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4972,6 +6268,12 @@
     "settings.general.selectLanguage" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4995,6 +6297,12 @@
     "settings.general.selectTheme" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thema auswählen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5018,6 +6326,12 @@
     "settings.general.theme" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thema"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5041,6 +6355,12 @@
     "settings.general.theme.dark" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dunkel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5064,6 +6384,12 @@
     "settings.general.theme.light" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hell"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5087,6 +6413,12 @@
     "settings.general.theme.system" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5110,6 +6442,12 @@
     "settings.general.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allgemeine Einstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5133,6 +6471,12 @@
     "settings.language.changed.message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App-Sprache wurde geändert. Die Benutzeroberfläche wird aktualisiert, um die Änderungen zu übernehmen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5156,6 +6500,12 @@
     "settings.language.changed.ok" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5179,6 +6529,12 @@
     "settings.language.changed.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache geändert"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5202,6 +6558,12 @@
     "settings.language.english" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Englisch"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5222,9 +6584,73 @@
         }
       }
     },
+    "settings.language.german" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deutsch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "German"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ドイツ語 "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almanca"
+          }
+        }
+      }
+    },
+    "settings.language.japanese" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanisch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日本語"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japonca"
+          }
+        }
+      }
+    },
     "settings.language.loading" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheinstellungen werden angewendet..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5248,6 +6674,12 @@
     "settings.language.turkish" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Türkisch"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5268,32 +6700,15 @@
         }
       }
     },
-    "settings.language.japanese" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Japanese"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "日本語"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Japonca"
-          }
-        }
-      }
-    },
     "settings.notifications.settings" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5317,6 +6732,12 @@
     "settings.notifications.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungszeiten anpassen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5340,6 +6761,12 @@
     "settings.notifications.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5363,6 +6790,12 @@
     "settings.other.disclaimer" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haftungsausschluss"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5386,6 +6819,12 @@
     "settings.other.disclaimer.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzungsbedingungen und Haftungsausschluss"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5409,6 +6848,12 @@
     "settings.other.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback senden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5432,6 +6877,12 @@
     "settings.other.rate" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap bewerten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5455,6 +6906,12 @@
     "settings.other.rate.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teile deine Erfahrung im App Store"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5478,6 +6935,12 @@
     "settings.other.rateApp" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewerte uns"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5501,6 +6964,12 @@
     "settings.other.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonstiges"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5524,6 +6993,12 @@
     "settings.restorePurchases.error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käufe konnten nicht wiederhergestellt werden. Bitte versuche es erneut."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5547,6 +7022,12 @@
     "settings.restorePurchases.restore" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt wiederherstellen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5570,6 +7051,12 @@
     "settings.restorePurchases.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle deine Premium-Käufe wieder her"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5593,6 +7080,12 @@
     "settings.restorePurchases.success" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käufe erfolgreich wiederhergestellt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5616,6 +7109,12 @@
     "settings.restorePurchases.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käufe wiederherstellen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5639,6 +7138,12 @@
     "settings.restorePurchases.value" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe zum Wiederherstellen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5662,6 +7167,12 @@
     "settings.section.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen und Präferenzen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5685,6 +7196,12 @@
     "settings.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalisiere dein App-Erlebnis"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5708,6 +7225,12 @@
     "settings.title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",

@@ -505,6 +505,8 @@
 				Base,
 				tr,
 				ja,
+				"es-419",
+				de,
 			);
 			mainGroup = 2032D6A72D1E9E2300170F56;
 			minimizedProjectReferenceProxies = 1;

@@ -5,16 +5,16 @@
       "comment" : "Default local user name",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokaler Benutzer"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Local User"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yerel Kullanıcı"
           }
         },
         "ja" : {
@@ -22,9 +22,15 @@
             "state" : "translated",
             "value" : "ローカルユーザー"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yerel Kullanıcı"
+          }
         }
       }
     }
   },
   "version" : "1.0"
-} 
+}

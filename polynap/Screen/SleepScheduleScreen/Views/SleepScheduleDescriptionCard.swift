@@ -32,7 +32,7 @@ struct SleepScheduleDescriptionCard: View {
                     }
                 }
                 HStack(spacing: 8) {
-                    Text(Locale.current.language.languageCode?.identifier == "tr" ? schedule.description.tr : schedule.description.en)
+                    Text(schedule.description.localized(for: LanguageManager.shared.currentLanguage))
                         .font(.body)
                         .foregroundColor(Color.appTextSecondary)
                     Spacer()

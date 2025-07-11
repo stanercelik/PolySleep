@@ -209,7 +209,7 @@ class MainScreenViewModel: ObservableObject {
     /// Program açıklamasını mevcut dilde döndürür
     var scheduleDescription: String {
         let description = model.schedule.description
-        return languageManager.currentLanguage == "tr" ? description.tr : description.en
+        return description.localized(for: languageManager.currentLanguage)
     }
     
     /// Kullanıcının şu anda uyku zamanında olup olmadığını kontrol eder
