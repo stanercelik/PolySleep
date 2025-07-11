@@ -16,6 +16,12 @@
             "state" : "translated",
             "value" : "Yerel Kullanıcı"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ローカルユーザー"
+          }
         }
       }
     }

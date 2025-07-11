@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "🎯 Polifazik uyku, adaptasyon sürecinde baş ağrısı veya kafein ihtiyacı artışı yaratabilse de düzene girildiğinde bu etkiler azalır."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 多相睡眠は、慣れるまで頭痛がしたりカフェインがもっと必要になったりすることがあるけど、習慣になればそういった影響は減っていくよ。"
+          }
         }
       }
     },
@@ -31,6 +37,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚀 Polifazik uyku, zamanla esneme sıklığını azaltıp 'Her an uyanık ve hazırım!' hissi yaşatabilir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 多相睡眠を続けると、あくびの回数がだんだん減って、「いつでも起きてて準備万端！」って気分になれるかも。"
           }
         }
       }
@@ -49,6 +61,12 @@
             "state" : "translated",
             "value" : "🏺 Polifazik uyku, antik dönemde de tespit edilen bir uygulama olup, bilgeler tarafından yoğun meditasyon süreçlerinde tercih edilmiştir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏺 多相睡眠は昔からあるやり方で、賢者たちが集中して瞑想するときなんかに好んで使ってたんだ。"
+          }
         }
       }
     },
@@ -65,6 +83,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🐱 Polifazik uyku, kediler ve filler gibi pek çok hayvanda gözlemlenen doğal bir dinlenme döngüsüdür."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐱 多相睡眠は、猫や象みたいに、たくさんの動物に見られる自然な休憩サイクルなんだ。"
           }
         }
       }
@@ -83,6 +107,12 @@
             "state" : "translated",
             "value" : "🏃‍♂️ Polifazik uyku, gün içinde sürekli aktif kalmaya ihtiyaç duyan sporcular ve atletler için toparlanma sürecini hızlandırabilir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃‍♂️ 一日中アクティブでいる必要があるアスリートにとって、多相睡眠は回復を早めるのに役立つことがあるよ。"
+          }
         }
       }
     },
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🦇 Polifazik uyku, karanlıkta ekolokasyon yapan yarasaların kısa dinlenme patternlerine benzerlik göstermesiyle de ilgi uyandırır."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦇 多相睡眠が面白いのは、暗闇で反響定位を使うコウモリの短い休息パターンに似ているからなんだ。"
           }
         }
       }
@@ -117,6 +153,12 @@
             "state" : "translated",
             "value" : "🧬 Polifazik uyku, kişiyi 'gece kuşu' veya 'sabah insanı' tanımlarının ötesine taşıyıp kendi biyolojik sınırlarını keşfetmeye teşvik eder."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧬 多相睡眠は、「夜型」とか「朝型」っていう枠を超えて、自分の生物学的な限界を探求するきっかけをくれるんだ。"
+          }
         }
       }
     },
@@ -133,6 +175,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔄 Polifazik uyku, beynin uyku döngülerini sıklaştırıp kısaltarak, gece boyunca sekiz saat uyunmadan da canlı kalma potansiyelini artırır."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 多相睡眠は、脳の睡眠サイクルを濃縮して短くすることで、夜8時間寝なくても元気に過ごせる可能性を高めてくれるよ。"
           }
         }
       }
@@ -151,6 +199,12 @@
             "state" : "translated",
             "value" : "♟️ Polifazik uyku, strateji oyunlarında veya satranç turnuvalarında 'beyin doping' niyetine mini aralarla denenmiştir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "♟️ 多相睡眠は、戦略ゲームやチェスの大会で「脳のドーピング」として、短い休憩を挟む形で試されたことがあるんだ。"
+          }
         }
       }
     },
@@ -167,6 +221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎨 Polifazik uyku, REM fazına daha sık girildiğinden yaratıcı düşünceyi ve problem çözme becerisini besleyebilir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎨 多相睡眠ではレム睡眠に頻繁に入るから、創造的な思考や問題解決能力を育てることができるんだ。"
           }
         }
       }
@@ -185,6 +245,12 @@
             "state" : "translated",
             "value" : "💭 Polifazik uyku, rüyaları daha net hatırlamayı ve bazen de lusid rüya görmeyi kolaylaştırabilir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💭 頻繁に眠ることで、多相睡眠は夢をはっきり覚えやすくしたり、時には明晰夢を見やすくしたりすることもあるよ。"
+          }
         }
       }
     },
@@ -201,6 +267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🧠 Polifazik uyku, EEG çalışmalarıyla da incelenmekte ve sıklaşan derin dinlenme bölümleri sayesinde bilimin dikkatini çekmektedir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 多相睡眠は脳波（EEG）の研究対象にもなっていて、深い休息部分が増えることから科学的にも注目されてるんだ。"
           }
         }
       }
@@ -219,6 +291,12 @@
             "state" : "translated",
             "value" : "⚡ Polifazik uyku, vücudun enerjiyi küçük parçalara bölerek kullanması sayesinde uzun süreli görevlerde tükenmişliği geciktirebilir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡ 多相睡眠は、体がエネルギーを小分けにして使うようになるから、長丁場のタスクでも燃え尽きにくくなるよ。"
+          }
         }
       }
     },
@@ -235,6 +313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎮 Polifazik uyku, e-Spor oyuncuları arasında yoğun odaklanma gerektiren turnuvalara hazırlık amacıyla test edilmiştir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎮 eスポーツ選手の間で、集中力が必要な大会の準備として多相睡眠が試されたことがあるんだ。"
           }
         }
       }
@@ -253,6 +337,12 @@
             "state" : "translated",
             "value" : "🎯 Polifazik uyku, Leonardo da Vinci ve Nikola Tesla gibi dahilerin uyku programlarına atfedilen bir düzen olarak bilinir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎯 多相睡眠は、レオナルド・ダ・ヴィンチやニコラ・テスラみたいな天才たちの睡眠パターンとして知られているよ。"
+          }
         }
       }
     },
@@ -269,6 +359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌾 Polifazik uyku, geçmişte bazı çiftçiler tarafından farklı saatlerde hayvan bakımı yapabilmek için benimsenmiştir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌾 昔は、違う時間に動物の世話をするために、一部の農家で多相睡眠が取り入れられていたんだ。"
           }
         }
       }
@@ -287,6 +383,12 @@
             "state" : "translated",
             "value" : "⚔️ Polifazik uyku, geçmişte uzun seferlerde ve zorlu koşullarda dayanıklılığı artırmak için Roma lejyonlarından Samuraylara kadar kullanılmıştır."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚔️ 歴史上、ローマ軍団から侍まで、厳しい状況下での長期間の活動で体力を維持するために多相睡眠が使われてきたんだ。"
+          }
         }
       }
     },
@@ -303,6 +405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎌 Polifazik uyku, Japon kültüründe 'inemuri' şeklinde anlık şekerlemelerle benzerlik göstererek sosyal kabul görmüş bir dinlenme yöntemiyle örtüşür."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎌 日本の「居眠り」文化みたいに、多相睡眠も社会的に受け入れられている短い休息方法と似ているところがあるね。"
           }
         }
       }
@@ -321,6 +429,12 @@
             "state" : "translated",
             "value" : "🌙 Polifazik uyku, bedenin melatonin salınım ritmini parçalara ayırarak uyku-uyanıklık döngüsünde yeni bir denge kurmaya yardımcı olabilir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 多相睡眠は、体のメラトニン分泌リズムを分けることで、睡眠と覚醒のサイクルに新しいバランスをもたらす手助けをしてくれるよ。"
+          }
         }
       }
     },
@@ -337,6 +451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🧠 Polifazik uyku, kısa uyku periyotları sayesinde beynin REM evresine hızla ulaşıp bilgileri pekiştirme ve hafızayı güçlendirme olanağı sunar."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 短い睡眠を繰り返す多相睡眠は、脳がすぐにレム睡眠に入って情報を定着させるから、記憶力を高めるチャンスだよ。"
           }
         }
       }
@@ -355,6 +475,12 @@
             "state" : "translated",
             "value" : "🏃 Polifazik uyku, kısa uykuların metabolizmayı dengelediğini gösteren araştırmalar sayesinde fiziksel sağlığa da olumlu katkıda bulunabilir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏃 短い睡眠が代謝のバランスを整えるという研究もあって、多相睡眠は体の健康にも良い影響を与える可能性があるんだ。"
+          }
         }
       }
     },
@@ -371,6 +497,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⛰️ Tıpkı yüksek irtifaya alışması gereken dağcılar gibi, vücudunuzun da yeni uyku düzenine adapte olması için zamana ihtiyacı var. Sabırlı ve tutarlı olun!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⛰️ 高地に体を慣らす登山家みたいに、君の体も新しい睡眠スケジュールに慣れる時間が必要だよ。焦らず、コツコツ続けよう！"
           }
         }
       }
@@ -389,6 +521,12 @@
             "state" : "translated",
             "value" : "🚀 Polifazik uyku, NASA'nın astronotlara önerdiği kısa şekerleme araştırmalarında en iyi performans gösteren yöntemler arasında yer alır."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 NASAが宇宙飛行士に勧める短時間仮眠の研究でも、多相睡眠は特にパフォーマンスが高い方法の一つなんだ。"
+          }
         }
       }
     },
@@ -405,6 +543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⏰ Polifazik uyku, doğru adapte olunduğunda sabah alarmı kullanmadan doğal bir uyanma düzeni sağlamasıyla dikkat çeker."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ うまく適応できれば、朝のアラームなしで自然に起きられるようになるのが多相睡眠のすごいところ。"
           }
         }
       }
@@ -423,6 +567,12 @@
             "state" : "translated",
             "value" : "👶 Polifazik uyku, bebek bakımında gece gündüz uyanık kalma ihtiyacı duyan ebeveynler için teorik bir çare olarak gündeme gelmiştir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👶 赤ちゃんのお世話で昼も夜も起きてなきゃいけない親にとって、多相睡眠は理論上、一つの解決策として考えられているよ。"
+          }
         }
       }
     },
@@ -439,6 +589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚢 Polifazik uyku, 20. yüzyıl ortalarında okyanus devriyesi yapan denizcilerin vardiya sistemiyle harmanladığı bir uyku yaklaşımıdır."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚢 20世紀半ば、海のパトロールをしていた船乗りたちが、シフト勤務と組み合わせて取り入れていたのが多相睡眠なんだ。"
           }
         }
       }
@@ -457,6 +613,12 @@
             "state" : "translated",
             "value" : "💼 Polifazik uyku, bazı ünlü girişimcilerin start-up süreçlerinde zamandan tasarruf ederek projelerini daha hızlı büyütmelerine yardımcı olmuştur."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💼 有名な起業家の中には、スタートアップ期に多相睡眠で時間を確保して、プロジェクトを早く成長させた人もいるんだ。"
+          }
         }
       }
     },
@@ -473,6 +635,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🛡️ Polifazik uyku, insan beyninin kriz veya aşırı stres durumlarında kendiliğinden geçici olarak benimseyebildiği bir savunma mekanizmasıdır."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛡️ 実は多相睡眠って、脳が危機的な状況や極度のストレス下で、一時的に自分を守るために自然と行うまれな防御メカニズムなんだ。"
           }
         }
       }
@@ -491,6 +659,12 @@
             "state" : "translated",
             "value" : "⌚ Polifazik uyku, zaman yönetimi konusunda geleneksel yaklaşımlardan bağımsızlaşmak isteyenlerin sık başvurduğu bir düzen haline gelmiştir."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌚ これまでの時間管理術から自由になりたい人たちが、よく多相睡眠を試しているんだ。"
+          }
         }
       }
     },
@@ -507,6 +681,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚗 Polifazik uyku, sürücüler veya uzun mesafe yolculuk yapan kişiler tarafından yolda kısa molalarla güvende kalmak için de tercih edilebilir."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚗 長距離ドライバーや旅行者が、短い休憩を挟んで安全運転を続けるために多相睡眠を選ぶこともあるよ。"
           }
         }
       }

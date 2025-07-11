@@ -40,7 +40,7 @@ class LanguageManager: ObservableObject {
             print("🆕 LanguageManager: İlk açılış tespit edildi, sistem dili algılanıyor...")
             
             let preferredLanguages = Locale.preferredLanguages
-            let supportedLanguages = ["tr", "en"] // Uygulamanın desteklediği diller
+            let supportedLanguages = ["tr", "en", "ja"] // Uygulamanın desteklediği diller
             
             print("🌍 LanguageManager: Sistem dili algılama başlatıldı")
             print("🌍 LanguageManager: Kullanıcının tercih ettiği diller: \(preferredLanguages.prefix(3))")

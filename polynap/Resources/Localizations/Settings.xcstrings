@@ -10,6 +10,12 @@
             "value" : "To use alarm features, please grant notification permission from Settings."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム機能を使用するには、設定から通知の許可をお願いします。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go to Settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定に移動"
           }
         },
         "tr" : {
@@ -44,6 +56,12 @@
             "value" : "Notification Permission"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知の許可"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permission granted"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可されました"
           }
         },
         "tr" : {
@@ -78,6 +102,12 @@
             "value" : "Grant"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可する"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notification Permission"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知の許可"
           }
         },
         "tr" : {
@@ -112,6 +148,12 @@
             "value" : "Permission required"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可が必要"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notification permission is required for alarms to work. Please grant permission from Settings."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームが機能するには通知の許可が必要です。設定から許可してください。"
           }
         },
         "tr" : {
@@ -146,6 +194,12 @@
             "value" : "Permission Required"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可が必要"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notification Permission"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知の許可"
           }
         },
         "tr" : {
@@ -180,6 +240,12 @@
             "value" : "Allow Snooze"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズを許可"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable the ability to snooze alarms"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームをスヌーズする機能を有効にします"
           }
         },
         "tr" : {
@@ -214,6 +286,12 @@
             "value" : "Snooze Duration"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズ時間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -229,6 +307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maximum Snoozes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大スヌーズ回数"
           }
         },
         "tr" : {
@@ -248,6 +332,12 @@
             "value" : "{duration} minutes"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{duration}分"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "{count} times"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{count}回"
           }
         },
         "tr" : {
@@ -282,6 +378,12 @@
             "value" : "Snooze Settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズ設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -297,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarm Sound"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム音"
           }
         },
         "tr" : {
@@ -316,6 +424,12 @@
             "value" : "Sound Settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サウンド設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -331,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vibration"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バイブレーション"
           }
         },
         "tr" : {
@@ -350,6 +470,12 @@
             "value" : "Use vibration when alarm sounds"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム時にバイブレーションを使用します"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Volume Level"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音量レベル"
           }
         },
         "tr" : {
@@ -384,6 +516,12 @@
             "value" : "Critical Alarm"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重大なアラーム"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default Alarm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトのアラーム"
           }
         },
         "tr" : {
@@ -418,6 +562,12 @@
             "value" : "System Default"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムのデフォルト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -433,6 +583,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarms active"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム有効"
           }
         },
         "tr" : {
@@ -452,6 +608,12 @@
             "value" : "Alarms disabled"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム無効"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -467,6 +629,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarms will not sound when your sleep blocks end. Don't forget to use your own alarm app."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロックが終了してもアラームは鳴りません。ご自身の別のアラームアプリを使用することをお忘れなく。"
           }
         },
         "tr" : {
@@ -486,6 +654,12 @@
             "value" : "Alarms Disabled"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームが無効です"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -501,6 +675,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sleep Alarms"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠アラーム"
           }
         },
         "tr" : {
@@ -520,6 +700,12 @@
             "value" : "Alarm Status"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームの状態"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -535,6 +721,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Configure alarm settings for when your sleep blocks end"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロック終了時のアラーム設定を行います"
           }
         },
         "tr" : {
@@ -554,6 +746,12 @@
             "value" : "Test alarm will sound in 5 seconds."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストアラームが5秒後に鳴ります。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test Alarm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストアラーム"
           }
         },
         "tr" : {
@@ -588,6 +792,12 @@
             "value" : "This is a test alarm. You can test the Snooze and Dismiss buttons!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これはテストアラームです。スヌーズと停止ボタンをテストできます！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -603,6 +813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test Alarm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストアラーム"
           }
         },
         "tr" : {
@@ -622,6 +838,12 @@
             "value" : "Pending Alarms"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留中のアラーム"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -637,6 +859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Number of alarms scheduled in the system"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムでスケジュールされているアラームの数"
           }
         },
         "tr" : {
@@ -656,6 +884,12 @@
             "value" : "Play Test Alarm"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストアラームを再生"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test your alarm sound and settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム音と設定をテストします"
           }
         },
         "tr" : {
@@ -690,6 +930,12 @@
             "value" : "Test & Info"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テストと情報"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,6 +951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarm Settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム設定"
           }
         },
         "tr" : {
@@ -724,6 +976,12 @@
             "value" : "Cancel"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -736,6 +994,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -758,6 +1022,12 @@
             "value" : "Notification Management"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知管理"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,6 +1043,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Configure when you want to be reminded before your sleep blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロックの前にいつリマインドを受け取るかを設定します"
           }
         },
         "tr" : {
@@ -792,6 +1068,12 @@
             "value" : "minutes"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -807,6 +1089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Off"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
           }
         },
         "tr" : {
@@ -826,6 +1114,12 @@
             "value" : "Notification Permission"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知の許可"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -841,6 +1135,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "How early should we remind you?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのくらい前にリマインドしますか？"
           }
         },
         "tr" : {
@@ -860,6 +1160,12 @@
             "value" : "Reminder Time"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダー時間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -875,6 +1181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notification Settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知設定"
           }
         },
         "tr" : {
@@ -894,6 +1206,12 @@
             "value" : "Active Sleep Program"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効な睡眠プログラム"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -909,6 +1227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No active program"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効なプログラムがありません"
           }
         },
         "tr" : {
@@ -928,6 +1252,12 @@
             "value" : "Reminder Time"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダー時間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -943,6 +1273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Current notification status and settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の通知の状態と設定"
           }
         },
         "tr" : {
@@ -962,6 +1298,12 @@
             "value" : "Notification Status"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知の状態"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +1319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test notification has been sent successfully!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テスト通知が正常に送信されました！"
           }
         },
         "tr" : {
@@ -996,6 +1344,12 @@
             "value" : "Test Notification"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テスト通知"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1011,6 +1365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test notification after 5 seconds"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5秒後にテスト通知"
           }
         },
         "tr" : {
@@ -1030,6 +1390,12 @@
             "value" : "5-Second Test"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5秒テスト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1045,6 +1411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Send a test notification right now"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今すぐテスト通知を送信"
           }
         },
         "tr" : {
@@ -1064,6 +1436,12 @@
             "value" : "Instant Test"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即時テスト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1079,6 +1457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test notification scheduled successfully"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テスト通知が正常にスケジュールされました"
           }
         },
         "tr" : {
@@ -1098,6 +1482,12 @@
             "value" : "Test your notification settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知設定をテストします"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1115,6 +1505,12 @@
             "value" : "Test Notifications"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知のテスト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1130,6 +1526,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2 hours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2時間"
           }
         },
         "tr" : {

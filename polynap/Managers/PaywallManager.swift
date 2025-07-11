@@ -283,14 +283,16 @@ func triggerExitDiscountForTesting() {
 struct SmartPaywallView: View {
     let scenario: PaywallScenario
     let displayCloseButton: Bool
-    
+    let locale: Locale
+
     @State private var offering: Offering?
     @State private var isLoading = true
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
     
-    init(scenario: PaywallScenario, displayCloseButton: Bool = true) {
+    init(scenario: PaywallScenario, displayCloseButton: Bool = true, locale: Locale) {
         self.scenario = scenario
         self.displayCloseButton = displayCloseButton
+        self.locale = locale
     }
     
     var body: some View {
@@ -314,6 +316,7 @@ struct SmartPaywallView: View {
         .task {
             await fetchOffering()
         }
+        .environment(\.locale, locale)
     }
     
     @ViewBuilder
@@ -370,6 +373,7 @@ struct SmartPaywallView: View {
 struct PaywallPresentationModifier: ViewModifier {
     @StateObject private var paywallManager = PaywallManager.shared
     @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @ObservedObject private var languageManager = LanguageManager.shared
     
     func body(content: Content) -> some View {
         content
@@ -381,7 +385,7 @@ struct PaywallPresentationModifier: ViewModifier {
                     paywallManager.handlePaywallDismiss(reason: "user_dismissed")
                 }
             ) {
-                SmartPaywallView(scenario: paywallManager.currentScenario)
+                SmartPaywallView(scenario: paywallManager.currentScenario, locale: languageManager.currentLocale)
                     .environmentObject(revenueCatManager)
                     .onAppear {
                         print("📱 PaywallPresentationModifier: Sheet gösterildi")

@@ -11,6 +11,12 @@
             "value" : "Add"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "tr" : {
@@ -47,6 +59,12 @@
             "value" : "Delete"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Core Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コア睡眠"
           }
         },
         "tr" : {
@@ -83,6 +107,12 @@
             "value" : "Nap"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete Sleep Entry"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠記録を削除"
           }
         },
         "tr" : {
@@ -119,6 +155,12 @@
             "value" : "Are you sure you want to delete this sleep entry? This action cannot be undone."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この睡眠記録、本当に消しちゃう？元には戻せないよ。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Day Summary"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日のまとめ"
           }
         },
         "tr" : {
@@ -155,6 +203,12 @@
             "value" : "Total Sleep"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合計睡眠"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Average Quality"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均の質"
           }
         },
         "tr" : {
@@ -191,6 +251,12 @@
             "value" : "No Sleep Data"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠データなし"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No sleep records found for this day. Add your first entry using the button above."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の睡眠記録はまだないみたい。上のボタンから最初の記録を追加してね。"
           }
         },
         "tr" : {

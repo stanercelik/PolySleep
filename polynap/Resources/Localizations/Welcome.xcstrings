@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "Hazırım!"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "さあ、始めよう！"
+          }
         }
       }
     },
@@ -31,6 +37,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uykudan başlamak bunun için en iyi yol! Çok fazlı uykuya geçerek kendinin daha üretken ve enerjik bir versiyonunu oluşturabilirsin."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まずは睡眠から始めるのが一番！多相睡眠に切り替えて、もっと生産的でエネルギッシュな自分を解放しよう。"
           }
         }
       }
@@ -52,6 +64,12 @@
             "state" : "translated",
             "value" : "Burada olduğuna göre hayatını yoluna koymak istiyorsun."
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ここに来たってことは、自分の人生を本気で変えたいってことだね。"
+          }
         }
       }
     },
@@ -68,6 +86,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaydolarak veya hesabın varsa giriş yaparak başlayabilirsin!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まずは新規登録するか、アカウントがあればログインして始めよう！"
           }
         }
       }
@@ -89,6 +113,12 @@
             "state" : "translated",
             "value" : "Değişikliğe hazır mısın?"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変わる準備はできた？"
+          }
         }
       }
     },
@@ -105,6 +135,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Biliyorum, biraz fazla… Ama bunu PolyNap ile değiştirebilirsin."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すごく長く聞こえるよね…でも、PolyNapがあればそれを変えられるんだ。"
           }
         }
       }
@@ -126,6 +162,12 @@
             "state" : "translated",
             "value" : "Hayatının ortalama 27 yılının, yani 1/3’ünün uykuda geçtiğini biliyor muydun?"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人生の3分の1にあたる平均27年間を、睡眠に費やしているって知ってた？"
+          }
         }
       }
     },
@@ -142,6 +184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Polifazik uyku, uykunu verimli döngülere bölerek beyninin ihtiyacı olan enerjiyi sağlar."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多相睡眠は、休息を効率的なサイクルに分割して、脳が本当に必要とするエネルギーを与えてくれるんだ。"
           }
         }
       }
@@ -163,6 +211,12 @@
             "state" : "translated",
             "value" : "Daha az uyuyup daha enerjik uyanmayı istemez misin?"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もっと短い時間で、もっと元気に目覚められたら最高じゃない？"
+          }
         }
       }
     },
@@ -179,6 +233,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap’e Hoşgeldin!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNapへようこそ！"
           }
         }
       }

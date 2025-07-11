@@ -44,5 +44,15 @@
 	</array>
 	<key>NSCriticalMessagingUsageDescription</key>
 	<string>PolyNap, Sessiz Mod veya Odak modları gibi durumlarda bile acil uyandırma ve hatırlatma bildirimleri göndermek için kritik mesaj izinlerine ihtiyaç duyar.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>PolyNap, uyku programınızın uyku sağlığınız üzerindeki etkisini analiz etmek ve kişiselleştirilmiş öneriler sunmak için Sağlık verilerinizi okumak ister.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>PolyNap, uyku bloklarınızı ve uyku kalite değerlendirmelerinizi Sağlık uygulamasına kaydetmek için bu izne ihtiyaç duyar.</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>tr</string>
+		<string>ja</string>
+	</array>
 </dict>
 </plist>

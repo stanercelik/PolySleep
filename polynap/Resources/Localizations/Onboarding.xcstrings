@@ -10,6 +10,12 @@
             "value" : "Please complete this page first"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まずこのページを完了してください"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Description"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "説明"
           }
         },
         "tr" : {
@@ -44,6 +56,12 @@
             "value" : "Next Page"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次のページ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -61,6 +79,12 @@
             "value" : "Not selected"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未選択"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -76,6 +100,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Previous Page"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前のページ"
           }
         },
         "tr" : {
@@ -96,6 +126,12 @@
             "value" : "%1$d of %2$d pages"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%2$dページ中%1$dページ目"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +149,12 @@
             "value" : "See Results"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "結果を見る"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -128,6 +170,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selected"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択済み"
           }
         },
         "tr" : {
@@ -148,6 +196,12 @@
             "value" : "Age Range"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "年齢層"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -162,6 +216,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "🧑 18-24"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "🧑 18-24"
           }
         },
@@ -182,6 +242,12 @@
             "value" : "👨 25-34"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👨 25-34"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -196,6 +262,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "👨‍🦰 35-44"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "👨‍🦰 35-44"
           }
         },
@@ -216,6 +288,12 @@
             "value" : "👨‍🦳 45-54"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👨‍🦳 45-54"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +311,12 @@
             "value" : "👴 55+"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👴 55歳以上"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -248,6 +332,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👶 Under 18"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👶 18歳未満"
           }
         },
         "tr" : {
@@ -268,6 +358,12 @@
             "value" : "Polyphasic sleep adaptation may vary during adolescence or in older ages."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "多相睡眠への適応は、思春期や年配の方では個人差が出やすいです。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -283,6 +379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Back"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
           }
         },
         "tr" : {
@@ -303,6 +405,12 @@
             "value" : "Sleep Chronotype"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠クロノタイプ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -318,6 +426,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌅 Morning Lark"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌅 朝型"
           }
         },
         "tr" : {
@@ -337,6 +451,12 @@
             "value" : "⚖️ Neutral"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "⚖️ 中間型"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -352,6 +472,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌙 Night Owl"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌙 夜型"
           }
         },
         "tr" : {
@@ -372,6 +498,12 @@
             "value" : "Are you naturally more active in the morning or evening?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "普段、朝と夜、どっちの方が元気？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -388,6 +520,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disruption Tolerance"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠の中断への耐性"
           }
         },
         "tr" : {
@@ -407,6 +545,12 @@
             "value" : "🔇 Not Sensitive"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔇 気にならない"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -424,6 +568,12 @@
             "value" : "🔕 Somewhat Sensitive"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔕 少し気になる"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -439,6 +589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔔 Very Sensitive"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔔 すごく気になる"
           }
         },
         "tr" : {
@@ -459,6 +615,12 @@
             "value" : "How well do you handle disruptions to your sleep schedule?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠のリズムが崩れても平気な方？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -475,6 +637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "There was a problem processing your data, default program has been created."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "データの処理で問題が起きたので、標準のプランを作成しました。"
           }
         },
         "tr" : {
@@ -495,6 +663,12 @@
             "value" : "An error occurred while setting up the default program."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "標準プランの準備中にエラーが起きました。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -511,6 +685,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Some preferences are not set. Please answer all questions."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "まだ答えてない質問があります。全部の質問に答えてね。"
           }
         },
         "tr" : {
@@ -531,6 +711,12 @@
             "value" : "Data could not be saved: ModelContext not found"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "データを保存できませんでした：ModelContextが見つからないよ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -547,6 +733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No suitable program recommendation was found. Default program has been set."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "あなたにピッタリのプランが見つかりませんでした。代わりに標準プランを設定しました。"
           }
         },
         "tr" : {
@@ -567,6 +759,12 @@
             "value" : "Preferences could not be saved locally: %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "設定を保存できませんでした： %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -583,6 +781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "There was a problem setting up the recommended program. Default program will be used."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "おすすめプランの準備で問題が起きたので、代わりに標準プランを使います。"
           }
         },
         "tr" : {
@@ -603,6 +807,12 @@
             "value" : "An unexpected error occurred, default program has been created."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "予期せぬエラーが起きたので、標準プランを作成しました。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -619,6 +829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Health Status"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "健康状態"
           }
         },
         "tr" : {
@@ -638,6 +854,12 @@
             "value" : "💪 Healthy"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "💪 健康"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -655,6 +877,12 @@
             "value" : "🏥 Managed Conditions"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🏥 持病あり（管理中）"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -670,6 +898,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚨 Serious Conditions"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🚨 重い持病あり"
           }
         },
         "tr" : {
@@ -690,6 +924,12 @@
             "value" : "Do you have any medications you use regularly or chronic conditions?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "いつも飲んでいる薬や、持病はありますか？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -706,6 +946,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Knowledge Level"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "知識レベル"
           }
         },
         "tr" : {
@@ -725,6 +971,12 @@
             "value" : "🤓 Well experienced"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🤓 経験豊富"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -742,6 +994,12 @@
             "value" : "🤔 Just starting out"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🤔 初心者"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -757,6 +1015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "😎 Some experience"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "😎 少し経験あり"
           }
         },
         "tr" : {
@@ -777,10 +1041,16 @@
             "value" : "How familiar are you with polyphasic sleep? This helps us provide the right level of guidance and information."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "多相睡眠について、どのくらい知っていますか？ あなたに合ったアドバイスをするための参考にします。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlik ve bilgi sunmamıza yardımcı olur."
+            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlikと情報を提供するのに役立ちます。"
           }
         }
       }
@@ -793,6 +1063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Lifestyle"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "あなたのライフスタイル"
           }
         },
         "tr" : {
@@ -812,6 +1088,12 @@
             "value" : "🧘‍♂️ Calm - Mostly sedentary, low physical activity"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🧘‍♂️ 穏やか - ほとんど座り仕事で、身体活動は少なめ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -829,6 +1111,12 @@
             "value" : "🚶‍♂️ Moderately Active - Regular walking, light exercise"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🚶‍♂️ 適度にアクティブ - 定期的なウォーキング、軽い運動"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -844,6 +1132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏃‍♂️ Very Active - Intense workouts, sports, physical job"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🏃‍♂️ 非常にアクティブ - 激しいトレーニング、スポーツ、肉体労働"
           }
         },
         "tr" : {
@@ -864,6 +1158,12 @@
             "value" : "How would you describe your daily activity level? This helps us recommend a sleep schedule that matches your energy needs."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "普段の活動量はどのくらいですか？ あなたの消費カロリーに合った睡眠プランを提案します。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -880,6 +1180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Almost ready..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "もうすぐ完了..."
           }
         },
         "tr" : {
@@ -900,6 +1206,12 @@
             "value" : "Analyzing your program..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "プログラムを分析中..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -916,6 +1228,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Calculating your sleep schedule..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠スケジュールを計算中..."
           }
         },
         "tr" : {
@@ -936,6 +1254,12 @@
             "value" : "Preparing Your Custom Program"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "あなた専用のプログラムを準備中"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -952,6 +1276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ready!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "準備完了！"
           }
         },
         "tr" : {
@@ -972,6 +1302,12 @@
             "value" : "Saving data locally..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "データをローカルに保存中..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -988,6 +1324,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saving your preferences..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "設定を保存中..."
           }
         },
         "tr" : {
@@ -1008,6 +1350,12 @@
             "value" : "Saving your program..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "プログラムを保存中..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1024,6 +1372,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motivation Level"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "モチベーションレベル"
           }
         },
         "tr" : {
@@ -1043,6 +1397,12 @@
             "value" : "🔥 High - I'm very determined and ready for challenges"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔥 高い - 覚悟はできていて、挑戦する準備は万端"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1060,6 +1420,12 @@
             "value" : "💫 Low - I prefer gradual, easy changes"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "💫 低い - 徐々に、簡単な変化を好む"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1075,6 +1441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "✨ Moderate - I'm willing to try with some effort"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✨ 中程度 - 少し努力して試す意欲はある"
           }
         },
         "tr" : {
@@ -1095,6 +1467,12 @@
             "value" : "How ready are you for a challenging adaptation process?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "ちょっと大変な適応期間、どれくらい頑張れそう？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1111,6 +1489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nap Environment"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "昼寝の環境"
           }
         },
         "tr" : {
@@ -1130,6 +1514,12 @@
             "value" : "🛏️ Ideal - Quiet, dark room with comfortable bed"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🛏️ 理想的 - 静かで暗い、快適なベッドのある部屋"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1145,6 +1535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🪑 Limited - Only chair or desk available for napping"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🪑 限定的 - 昼寝には椅子か机しかない"
           }
         },
         "tr" : {
@@ -1164,6 +1560,12 @@
             "value" : "🛋️ Suitable - Couch or recliner with some privacy"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🛋️ 適切 - プライバシーのあるソファやリクライニングチェア"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1179,6 +1581,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "❌ Unsuitable - Noisy, bright environment with no privacy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "❌ 不適切 - 騒がしく、明るく、プライバシーのない環境"
           }
         },
         "tr" : {
@@ -1199,6 +1607,12 @@
             "value" : "How suitable is your environment for taking naps during the day? Consider factors like noise level, light control, and comfort."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "日中、昼寝をするのにあなたの環境はどれくらい向いていますか？ 騒音、明るさ、快適さなどを考えてみてください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1215,6 +1629,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "次へ"
           }
         },
         "tr" : {
@@ -1235,6 +1655,12 @@
             "value" : "No"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "いいえ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1251,6 +1677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See Results"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "結果を見る"
           }
         },
         "tr" : {
@@ -1271,6 +1703,12 @@
             "value" : "Sleep Experience"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠経験"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1286,6 +1724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌅 Beginner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌅 初心者"
           }
         },
         "tr" : {
@@ -1305,6 +1749,12 @@
             "value" : "☀️ Extensive Experience"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "☀️ 豊富な経験"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1320,6 +1770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌄 Intermediate"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌄 中級者"
           }
         },
         "tr" : {
@@ -1339,6 +1795,12 @@
             "value" : "🌃 Several Months Experience"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌃 数ヶ月以上の経験あり"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1356,6 +1818,12 @@
             "value" : "😴 No Experience"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "😴 経験なし"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1371,6 +1839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌅 Some Experience"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🌅 少し経験あり"
           }
         },
         "tr" : {
@@ -1391,6 +1865,12 @@
             "value" : "Do you have any previous polyphasic (or different) sleep experience?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "これまでに多相睡眠（または変わった睡眠）の経験はありますか？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1407,6 +1887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sleep Goal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "睡眠の目標"
           }
         },
         "tr" : {
@@ -1426,6 +1912,12 @@
             "value" : "⚖️ Balanced Lifestyle"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "⚖️ バランスの取れた生活"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1441,6 +1933,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔍 Curiosity"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔍 好奇心"
           }
         },
         "tr" : {
@@ -1460,6 +1958,12 @@
             "value" : "❤️ Improve Health"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "❤️ 健康改善"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1475,6 +1979,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚡ More Productivity"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "⚡ 生産性向上"
           }
         },
         "tr" : {
@@ -1495,6 +2005,12 @@
             "value" : "What is your primary goal for adopting a polyphasic sleep schedule?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "多相睡眠を始める一番の目標は何ですか？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1511,6 +2027,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Social Obligations"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "人付き合いや用事"
           }
         },
         "tr" : {
@@ -1530,6 +2052,12 @@
             "value" : "🧍 Minimal - I have very few fixed social commitments"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🧍 最小限 - 決まった付き合いや用事はほとんどない"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1547,6 +2075,12 @@
             "value" : "👤 Moderate - I have some regular social activities and family time"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👤 中程度 - 定期的な集まりや家族との時間がある"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1562,6 +2096,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👥 Significant - I have many fixed social commitments and responsibilities"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "👥 多い - 決まった付き合いや責任が多い"
           }
         },
         "tr" : {
@@ -1582,10 +2122,16 @@
             "value" : "How flexible are your social commitments and daily responsibilities? Consider family time, social events, meetings, and other activities that require specific timing."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "人付き合いや日々の用事はどれくらい調整可能ですか？ 家族との時間、イベント、会議など、時間が決まっている用事を考えてみてください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sosyal taahhütleriniz ve günlük sorumluluklarınız ne kadar esnek? Aile zamanı, sosyal etkinlikler, toplantılar ve belirli saatlerde yapılması gereken diğer aktiviteleri düşünün."
+            "value" : "Sosyal taahhütlerinizとgünlük sorumluluklarınızはどれくらい調整可能ですか？ 家族との時間、ソーシャルイベント、会議、そして特定の時間に必要な他の活動を考えてみてください。"
           }
         }
       }
@@ -1597,6 +2143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start Using App"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを使い始める"
           }
         },
         "tr" : {
@@ -1617,6 +2169,12 @@
             "value" : "Work Schedule"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "仕事のスケジュール"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1632,6 +2190,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎯 Flexible - I can adjust my work hours as needed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🎯 フレキシブル - 必要に応じて仕事の時間を調整できる"
           }
         },
         "tr" : {
@@ -1651,10 +2215,16 @@
             "value" : "🎲 Irregular - My schedule changes frequently and unpredictably"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🎲 不規則 - スケジュールが頻繁に、予測不能に変わる"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎲 Düzensiz - Programım sık sık ve öngörülemez şekilde değişiyor"
+            "value" : "🎲 Düzensiz - Programım sık sıkと予測不能な形で変化します"
           }
         }
       }
@@ -1666,6 +2236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "📅 Regular - I have fixed working hours every day"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "📅 定時 - 毎日決まった時間で働いている"
           }
         },
         "tr" : {
@@ -1683,6 +2259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔄 Shift - I work in rotating shifts (day/night/evening)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🔄 シフト制 - 日勤・夜勤・夕勤などの交代勤務"
           }
         },
         "tr" : {
@@ -1703,6 +2285,12 @@
             "value" : "What is your current work or daily schedule?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "現在の仕事や普段のスケジュールはどんな感じですか？"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1719,6 +2307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "はい"
           }
         },
         "tr" : {
@@ -1738,6 +2332,12 @@
             "value" : "Core"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コア睡眠"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1753,6 +2353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nap"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠"
           }
         },
         "tr" : {
@@ -1772,6 +2378,12 @@
             "value" : "Naps"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1787,6 +2399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sleep Blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロック"
           }
         },
         "tr" : {
@@ -1806,6 +2424,12 @@
             "value" : "Total Sleep"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合計睡眠時間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1822,6 +2446,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start Using the App"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "アプリを使い始める"
           }
         },
         "tr" : {

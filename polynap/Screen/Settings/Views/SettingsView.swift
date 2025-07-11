@@ -211,7 +211,7 @@ struct SettingsView: View {
                                     .fontWeight(.semibold)
                                     .foregroundColor(.appText)
                                 
-                                Text("v1.0.0")
+                                Text("v1.2.0")
                                     .font(.caption)
                                     .foregroundColor(.appTextSecondary)
                             }
@@ -252,6 +252,9 @@ struct SettingsView: View {
             Button(L("settings.language.english", table: "Profile")) {
                 languageManager.changeLanguage(to: "en")
             }
+            Button(L("settings.language.japanese", table: "Profile")) {
+                languageManager.changeLanguage(to: "ja")
+            }
             Button(L("general.cancel", table: "Profile"), role: .cancel) { }
         }
         .environment(\.locale, Locale(identifier: languageManager.currentLanguage))
@@ -273,7 +276,14 @@ struct SettingsView: View {
     
     /// Seçili dilin görüntülenen metnini döndürür
     private func getLanguageDisplayText() -> String {
-        return languageManager.currentLanguage == "tr" ? L("settings.language.turkish", table: "Profile") : L("settings.language.english", table: "Profile")
+        switch languageManager.currentLanguage {
+        case "tr":
+            return L("settings.language.turkish", table: "Profile")
+        case "ja":
+            return L("settings.language.japanese", table: "Profile")
+        default:
+            return L("settings.language.english", table: "Profile")
+        }
     }
     
 

@@ -10,6 +10,12 @@
             "value" : "Complete Current Page"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このページを完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Description"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "説明"
           }
         },
         "tr" : {
@@ -44,6 +56,12 @@
             "value" : "Next Page"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次のページ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not Selected"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未選択"
           }
         },
         "tr" : {
@@ -78,6 +102,12 @@
             "value" : "Previous Page"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前のページ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "See Results"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "結果を見る"
           }
         },
         "tr" : {
@@ -112,6 +148,12 @@
             "value" : "Selected"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択済み"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スタート"
           }
         },
         "tr" : {
@@ -146,6 +194,12 @@
             "value" : "Adaptation"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応中"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応"
           }
         },
         "tr" : {
@@ -180,6 +240,12 @@
             "value" : "Advanced Adaptation"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高度な適応"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Full Adaptation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全適応"
           }
         },
         "tr" : {
@@ -214,6 +286,12 @@
             "value" : "Unknown"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不明"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -226,6 +304,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap"
@@ -248,6 +332,12 @@
             "value" : "Sign In Error"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインインエラー"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign Out Error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウトエラー"
           }
         },
         "tr" : {
@@ -282,6 +378,12 @@
             "value" : "Signed In Successfully"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインイン成功！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -297,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Signed Out Successfully"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウト成功！"
           }
         },
         "tr" : {
@@ -316,6 +424,12 @@
             "value" : "Advanced"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上級"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -331,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beginner"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初級"
           }
         },
         "tr" : {
@@ -350,6 +470,12 @@
             "value" : "Extreme"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "達人"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intermediate"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中級"
           }
         },
         "tr" : {
@@ -439,6 +571,12 @@
             "value" : "%lldh %lldm"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld時間 %lld分"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -454,6 +592,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lldh"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld時間"
           }
         },
         "tr" : {
@@ -473,6 +617,12 @@
             "value" : "%lldm"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld分"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -488,6 +638,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld of %2$lld pages"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$lldページ中 %1$lld"
           }
         },
         "tr" : {
@@ -507,6 +663,12 @@
             "value" : "%lld%%"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%lld"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -519,6 +681,12 @@
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ - %@"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ - %@"
@@ -541,6 +709,12 @@
             "value" : "Add"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -556,6 +730,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "tr" : {
@@ -575,6 +755,12 @@
             "value" : "Delete"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -587,6 +773,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -609,6 +801,12 @@
             "value" : "Save"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -624,6 +822,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connection Error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続エラー"
           }
         },
         "tr" : {
@@ -643,6 +847,12 @@
             "value" : "Failed to fetch sleep blocks. Please try again."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロックの取得に失敗しました。もう一度試してみて。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -658,6 +868,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to fetch sleep schedule. Please try again."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠スケジュールの取得に失敗しました。もう一度試してみて。"
           }
         },
         "tr" : {
@@ -677,6 +893,12 @@
             "value" : "Sync Error"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同期エラー"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -692,6 +914,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading data from cloud..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラウドからデータを読み込み中..."
           }
         },
         "tr" : {
@@ -711,6 +939,12 @@
             "value" : "Offline Mode"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフラインモード"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -726,6 +960,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pending Changes..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更を待機中..."
           }
         },
         "tr" : {
@@ -745,6 +985,12 @@
             "value" : "Sync Completed"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同期完了！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -760,6 +1006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Syncing..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同期中..."
           }
         },
         "tr" : {
@@ -779,6 +1031,12 @@
             "value" : "Rate on App Store"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeで評価する"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -794,6 +1052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "tr" : {
@@ -813,6 +1077,12 @@
             "value" : "Share your experience with us!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの体験を教えて！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -828,6 +1098,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not Now"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あとで"
           }
         },
         "tr" : {
@@ -847,6 +1123,12 @@
             "value" : "Send Feedback"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送る"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -862,6 +1144,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your feedback is very valuable to us"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバック、すごく参考になるよ！"
           }
         },
         "tr" : {
@@ -881,6 +1169,12 @@
             "value" : "Thank You!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ありがとう！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -896,6 +1190,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Do you like PolyNap?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap、気に入った？"
           }
         },
         "tr" : {
@@ -915,6 +1215,12 @@
             "value" : "Analytics"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -930,6 +1236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Education"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "学習"
           }
         },
         "tr" : {
@@ -949,6 +1261,12 @@
             "value" : "History"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "履歴"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -966,6 +1284,12 @@
             "value" : "Profile"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -981,6 +1305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schedule"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュール"
           }
         },
         "tr" : {

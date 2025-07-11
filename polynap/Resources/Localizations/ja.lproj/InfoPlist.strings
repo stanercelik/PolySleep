@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Japanese localization for Info.plist permission descriptions
+*/
+
+/* Notification permission description */
+"NSUserNotificationsUsageDescription" = "PolyNapは、睡眠ブロックが終了したときにアラームで通知し、あなたを起こします。この機能は、あなたの睡眠スケジュールが正しく機能するために不可欠です。";
+
+/* Critical messaging permission description */
+"NSCriticalMessagingUsageDescription" = "PolyNapは、サイレントモードやおやすみモード中でも緊急の起床通知やリマインダーを送信するために、重要なメッセージの送信許可が必要です。";

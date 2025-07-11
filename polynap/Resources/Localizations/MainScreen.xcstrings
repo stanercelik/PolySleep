@@ -1,2796 +1,3780 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "dayDetail.averageQuality" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Average Quality"
+  "sourceLanguage": "en",
+  "strings": {
+    "dayDetail.averageQuality": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average Quality"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ortalama Kalite"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平均睡眠質"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ortalama Kalite"
+          }
         }
       }
     },
-    "dayDetail.delete.confirm" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
+    "dayDetail.delete.confirm": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sil"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sil"
+          }
         }
       }
     },
-    "dayDetail.delete.message" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This record will be deleted. Do you confirm?"
+    "dayDetail.delete.message": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This record will be deleted. Do you confirm?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この記録を削除します。よろしいですか？"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu kayıt silinecek. Onaylıyor musunuz?"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu kayıt silinecek. Onaylıyor musunuz?"
           }
         }
       }
     },
-    "dayDetail.delete.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete sleep record"
+    "dayDetail.delete.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete sleep record"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠記録を削除"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku kaydını sil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku kaydını sil"
           }
         }
       }
     },
-    "dayDetail.noRecords.message" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can add a new sleep record by clicking the 'Add' button in the top right"
+    "dayDetail.noRecords.message": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can add a new sleep record by clicking the 'Add' button in the top right"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "右上の「追加」ボタンをタップして新しい睡眠記録を追加できます"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sağ üstteki 'Ekle' butonuna tıklayarak yeni uyku kaydı ekleyebilirsiniz"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sağ üstteki 'Ekle' butonuna tıklayarak yeni uyku kaydı ekleyebilirsiniz"
           }
         }
       }
     },
-    "dayDetail.noRecords.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No sleep records for this day"
+    "dayDetail.noRecords.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sleep records for this day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu güne ait uyku kaydı yok"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この日の睡眠記録はありません"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu güne ait uyku kaydı yok"
+          }
         }
       }
     },
-    "dayDetail.summary.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day Summary"
+    "dayDetail.summary.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day Summary"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günün Özeti"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のまとめ"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün Özeti"
+          }
         }
       }
     },
-    "error.no_active_schedule_found" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No active schedule found"
+    "error.no_active_schedule_found": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No active schedule found"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なスケジュールが見つかりません"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktif program bulunamadı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktif program bulunamadı"
           }
         }
       }
     },
-    "error.schedule_load_failed" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to load schedule"
+    "error.schedule_load_failed": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to load schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スケジュールの読み込みに失敗しました"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program yüklenemedi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program yüklenemedi"
           }
         }
       }
     },
-    "general.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "general.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İptal"
           }
         }
       }
     },
-    "mainScreen.segment.overview" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Overview"
+    "general.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Genel Bakış"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sil"
+          }
         }
       }
     },
-    "mainScreen.segment.details" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
+    "general.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaylar"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenle"
+          }
         }
       }
     },
-    "general.delete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
+    "general.ok": {
+      "comment": "OK button",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okay"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam"
           }
         }
       }
     },
-    "general.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
+    "general.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaydet"
           }
         }
       }
     },
-    "general.ok" : {
-      "comment" : "OK button",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Okay"
+    "history.addNewRecord": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add New Record"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい記録を追加"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamam"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni Kayıt Ekle"
           }
         }
       }
     },
-    "general.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
+    "history.filter.allTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全期間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm Zamanlar"
+          }
         }
       }
     },
-    "history.addNewRecord" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add New Record"
+    "history.filter.thisMonth": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Month"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yeni Kayıt Ekle"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今月"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu Ay"
+          }
         }
       }
     },
-    "history.filter.allTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All Time"
+    "history.filter.thisWeek": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Week"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今週"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tüm Zamanlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu Hafta"
           }
         }
       }
     },
-    "history.filter.thisMonth" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This Month"
+    "history.filter.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu Ay"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün"
           }
         }
       }
     },
-    "history.filter.thisWeek" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This Week"
+    "history.moreBlocks": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ %d more blocks"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu Hafta"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "他%dブロック"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ %d blok daha"
+          }
         }
       }
     },
-    "history.filter.today" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
+    "history.noRecord": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No record"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録なし"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kayıt yok"
           }
         }
       }
     },
-    "history.moreBlocks" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ %d more blocks"
+    "history.noRecords.message": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sleep records found for this time period."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この期間の睡眠記録は見つかりませんでした。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "+ %d blok daha"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu zaman aralığında hiç uyku kaydı bulunamadı."
           }
         }
       }
     },
-    "history.noRecord" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No record"
+    "history.noRecords.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Records Found"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録が見つかりません"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kayıt yok"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kayıt Bulunamadı"
           }
         }
       }
     },
-    "history.noRecords.message" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No sleep records found for this time period."
+    "history.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep History"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu zaman aralığında hiç uyku kaydı bulunamadı."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠履歴"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Geçmişi"
+          }
         }
       }
     },
-    "history.noRecords.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Records Found"
+    "history.today": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kayıt Bulunamadı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün"
+          }
         }
       }
     },
-    "history.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep History"
+    "mainScreen.addSleepBlock": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Sleep Block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックを追加"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Geçmişi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Bloğu Ekle"
           }
         }
       }
     },
-    "history.today" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
+    "mainScreen.afternoonReminder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remember to have dinner at least 2 hours before your sleep block."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックの少なくとも2時間前には夕食を済ませましょう。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Akşam yemeğini uyku bloğundan en az 2 saat önce yemeyi unutmayın."
           }
         }
       }
     },
-    "mainScreen.addSleepBlock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add Sleep Block"
+    "mainScreen.coreBlockIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Bloğu Ekle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️"
           }
         }
       }
     },
-    "mainScreen.afternoonReminder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remember to have dinner at least 2 hours before your sleep block."
+    "mainScreen.customizedSchedule.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This schedule has been customized from its original settings."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Akşam yemeğini uyku bloğundan en az 2 saat önce yemeyi unutmayın."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このスケジュールは元の設定からカスタマイズされています。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu program orijinal ayarlarından özelleştirilmiştir."
+          }
         }
       }
     },
-    "mainscreen.button.refresh" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Refresh"
+    "mainScreen.customizedSchedule.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Customized Schedule"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yenile"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カスタマイズされたスケジュール"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Özelleştirilmiş Program"
+          }
         }
       }
     },
-    "mainScreen.coreBlockIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛏️"
+    "mainScreen.customizedScheduleTooltip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ schedule has been modified."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「%@」スケジュールは変更されました。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛏️"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ programı üzerinde değişiklik yapıldı."
           }
         }
       }
     },
-    "mainScreen.customizedSchedule.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This schedule has been customized from its original settings."
+    "mainScreen.dailyStatus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Status"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のステータス"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu program orijinal ayarlarından özelleştirilmiştir."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük Durum"
           }
         }
       }
     },
-    "mainScreen.customizedSchedule.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Customized Schedule"
+    "mainScreen.dailyTip.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Tip"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のヒント"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özelleştirilmiş Program"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük İpucu"
           }
         }
       }
     },
-    "mainScreen.customizedScheduleTooltip" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ schedule has been modified."
+    "mainScreen.editing.mode": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editing"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ programı üzerinde değişiklik yapıldı."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集中"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenleme"
+          }
         }
       }
     },
-    "mainScreen.dailyStatus" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Status"
+    "mainScreen.error.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An error occurred. Please try again later."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük Durum"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エラーが発生しました。時間をおいてもう一度お試しください。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+          }
         }
       }
     },
-    "mainScreen.dailyTip.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Tip"
+    "mainScreen.errorIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚠️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚠️"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük İpucu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚠️"
           }
         }
       }
     },
-    "mainScreen.editing.mode" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editing"
+    "mainScreen.eveningReminder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduce screen time before your main sleep block and create a relaxing routine."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠ブロックの前に画面を見る時間を減らし、リラックスできる習慣を作りましょう。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana uyku bloğundan önce ekran kullanımını azaltın ve rahatlatıcı bir rutin oluşturun."
           }
         }
       }
     },
-    "mainScreen.error.generic" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An error occurred. Please try again later."
+    "mainScreen.goodNightMessage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Well! 💤💤"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "おやすみなさい！ 💤💤"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İyi Uykular! 💤💤"
           }
         }
       }
     },
-    "mainscreen.error.retry" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try Again"
+    "mainScreen.morningReminder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your alarms to not miss naps during the day."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tekrar Dene"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日中の仮眠を逃さないように、アラームをチェックしましょう。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün içindeki şekerlemeleri kaçırmamak için alarmlarınızı kontrol edin."
+          }
         }
       }
     },
-    "mainScreen.errorIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚠️"
+    "mainScreen.napBlockIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚡️"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚡️"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚠️"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⚡️"
           }
         }
       }
     },
-    "mainScreen.eveningReminder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reduce screen time before your main sleep block and create a relaxing routine."
+    "mainScreen.nextSleepBlock": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana uyku bloğundan önce ekran kullanımını azaltın ve rahatlatıcı bir rutin oluşturun."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki Uyku"
           }
         }
       }
     },
-    "mainScreen.goodNightMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Well! 💤💤"
+    "mainScreen.nextSleepBlock.none": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "-"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İyi Uykular! 💤💤"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "-"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "-"
+          }
         }
       }
     },
-    "mainScreen.morningReminder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Check your alarms to not miss naps during the day."
+    "mainScreen.nextSleepBlockIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün içindeki şekerlemeleri kaçırmamak için alarmlarınızı kontrol edin."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
+          }
         }
       }
     },
-    "mainScreen.napBlockIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚡️"
+    "mainScreen.noSleepPlan": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sleep plan for today"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の睡眠プランはありません"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚡️"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün için uyku planı yok"
           }
         }
       }
     },
-    "mainScreen.nextSleepBlock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next Sleep"
+    "mainScreen.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Progress"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "進捗"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sonraki Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İlerleme"
           }
         }
       }
     },
-    "mainScreen.nextSleepBlock.none" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "-"
+    "mainScreen.progressIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "-"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄"
           }
         }
       }
     },
-    "mainScreen.nextSleepBlockIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰"
+    "mainScreen.scheduleDescription.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule Description"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スケジュールの説明"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program Açıklaması"
+          }
         }
       }
     },
-    "mainScreen.noSleepPlan" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No sleep plan for today"
+    "mainScreen.shareCoreSleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core Sleep"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bugün için uyku planı yok"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
+          }
         }
       }
     },
-    "mainScreen.progress" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Progress"
+    "mainScreen.shareHashtags": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#PolyNap #SleepSchedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#PolyNap #睡眠スケジュール"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İlerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#PolyNap #UykuDüzeni"
           }
         }
       }
     },
-    "mainScreen.progressIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🔄"
+    "mainScreen.shareNap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🔄"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
           }
         }
       }
     },
-    "mainScreen.scheduleDescription.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schedule Description"
+    "mainScreen.shareProgress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📊 Daily Progress: %@%%"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📊 今日の進捗: %@%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program Açıklaması"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📊 Günlük İlerleme: %%%@"
           }
         }
       }
     },
-    "mainScreen.shareCoreSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
+    "mainScreen.shareSchedule": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📋 Schedule: %@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📋 スケジュール: %@"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "📋 Program: %@"
+          }
         }
       }
     },
-    "mainScreen.shareHashtags" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "#PolyNap #SleepSchedule"
+    "mainScreen.shareSleepBlocks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️ Sleep Blocks:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "#PolyNap #UykuDüzeni"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️ 睡眠ブロック:"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛏️ Uyku Blokları:"
+          }
         }
       }
     },
-    "mainScreen.shareNap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "mainScreen.shareStreak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄 Current Streak: %@ days"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄 継続日数: %@日"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔄 Mevcut Seri: %@ gün"
           }
         }
       }
     },
-    "mainScreen.shareProgress" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "📊 Daily Progress: %@%%"
+    "mainScreen.shareTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌙 My PolyNap Schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌙 私のPolyNapスケジュール"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "📊 Günlük İlerleme: %%%@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🌙 PolyNap Uyku Programım"
           }
         }
       }
     },
-    "mainScreen.shareSchedule" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "📋 Schedule: %@"
+    "mainScreen.shareTotalSleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ Total Sleep: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ 合計睡眠: %@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "📋 Program: %@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰ Toplam Uyku: %@"
           }
         }
       }
     },
-    "mainScreen.shareSleepBlocks" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛏️ Sleep Blocks:"
+    "mainScreen.sleepBlockCore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core Sleep"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛏️ Uyku Blokları:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
+          }
         }
       }
     },
-    "mainScreen.shareStreak" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🔄 Current Streak: %@ days"
+    "mainScreen.sleepBlockNap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Power Nap"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🔄 Mevcut Seri: %@ gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kısa Uyku"
+          }
         }
       }
     },
-    "mainScreen.shareTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌙 My PolyNap Schedule"
+    "mainScreen.sleepBlocks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Blocks"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロック"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌙 PolyNap Uyku Programım"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Blokları"
           }
         }
       }
     },
-    "mainScreen.shareTotalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰ Total Sleep: %@"
+    "mainScreen.sleepBlocksIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛌 "
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛌 "
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰ Toplam Uyku: %@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🛌 "
           }
         }
       }
     },
-    "mainScreen.sleepBlockCore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
+    "mainScreen.sleepChart.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Chart"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠チャート"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Grafiği"
+          }
         }
       }
     },
-    "mainScreen.sleepBlockNap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Power Nap"
+    "mainScreen.sleepQuality.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate your sleep from %@ - %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@〜%@の睡眠を評価してください"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kısa Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ - %@ saatleri arasındaki uykunuzu değerlendirin"
           }
         }
       }
     },
-    "mainScreen.sleepBlocks" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Blocks"
+    "mainScreen.sleepQuality.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate Your Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠を評価"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Blokları"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uykunuzu Değerlendirin"
           }
         }
       }
     },
-    "mainScreen.sleepBlocksIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛌 "
+    "mainScreen.sleepTimeIcon": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💤"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💤"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🛌 "
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💤"
           }
         }
       }
     },
-    "mainScreen.sleepChart.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Chart"
+    "mainScreen.sleepTimeRemaining": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@h %@min until sleep time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Grafiği"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠まであと%@時間%@分"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku saatine %@s %@dk kaldı"
+          }
         }
       }
     },
-    "mainScreen.sleepQuality.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate your sleep from %@ - %@"
+    "mainScreen.sleepTimeRemaining.hoursMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@h %@min until sleep time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ - %@ saatleri arasındaki uykunuzu değerlendirin"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠まであと%@時間%@分"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku saatine %@s %@dk kaldı"
+          }
         }
       }
     },
-    "mainScreen.sleepQuality.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate Your Sleep"
+    "mainScreen.sleepTimeRemaining.hoursOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@h until sleep time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠まであと%@時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uykunuzu Değerlendirin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku saatine %@s kaldı"
           }
         }
       }
     },
-    "mainScreen.sleepTimeIcon" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💤"
+    "mainScreen.sleepTimeRemaining.minutesOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@min until sleep time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠まであと%@分"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💤"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku saatine %@dk kaldı"
           }
         }
       }
     },
-    "mainScreen.sleepTimeRemaining" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@h %@min until sleep time"
+    "mainScreen.sleepTimeRemainingMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@min until sleep time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠まであと%@分"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku saatine %@s %@dk kaldı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku saatine %@dk kaldı"
           }
         }
       }
     },
-    "mainScreen.sleepTimeRemaining.hoursMinutes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@h %@min until sleep time"
+    "mainScreen.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current Streak"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku saatine %@s %@dk kaldı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "継続日数"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mevcut Seri"
+          }
         }
       }
     },
-    "mainScreen.sleepTimeRemaining.hoursOnly" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@h until sleep time"
+    "mainScreen.timeFormat.hoursMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@h %@m"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku saatine %@s kaldı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@時間%@分"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@s %@dk"
+          }
         }
       }
     },
-    "mainScreen.sleepTimeRemaining.minutesOnly" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@min until sleep time"
+    "mainScreen.timeFormat.hoursOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@h"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku saatine %@dk kaldı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@s"
           }
         }
       }
     },
-    "mainScreen.sleepTimeRemainingMinutes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@min until sleep time"
+    "mainScreen.timeFormat.minutesOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@m"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@分"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku saatine %@dk kaldı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@dk"
           }
         }
       }
     },
-    "mainScreen.streak" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current Streak"
+    "mainScreen.tipIcon": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💡 "
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💡 "
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mevcut Seri"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "💡 "
           }
         }
       }
     },
-    "mainScreen.timeFormat.hoursMinutes" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@h %@m"
+    "mainScreen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Schedule"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@s %@dk"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュール"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Programı"
+          }
         }
       }
     },
-    "mainScreen.timeFormat.hoursOnly" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@h"
+    "mainScreen.todaysTip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's Tip"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@s"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日のヒント"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün İpucu"
+          }
         }
       }
     },
-    "mainScreen.timeFormat.minutesOnly" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@m"
+    "mainScreen.totalSleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@dk"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku"
           }
         }
       }
     },
-    "mainScreen.tipIcon" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💡 "
+    "mainScreen.totalSleepLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💡 "
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku"
           }
         }
       }
     },
-    "mainScreen.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Schedule"
+    "mainScreen.wakeTimeIcon": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Programı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⏰"
           }
         }
       }
     },
-    "mainScreen.todaysTip" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today's Tip"
+    "mainscreen.button.refresh": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günün İpucu"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenile"
+          }
         }
       }
     },
-    "mainScreen.totalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep"
+    "mainscreen.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Again"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekrar Dene"
           }
         }
       }
     },
-    "mainScreen.totalSleepLabel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep"
+    "mainScreen.segment.details": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "詳細"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detaylar"
           }
         }
       }
     },
-    "mainScreen.wakeTimeIcon" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰"
+    "mainScreen.segment.overview": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏰"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "概要"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genel Bakış"
+          }
         }
       }
     },
-    "schedule.customized" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Customized"
+    "schedule.customized": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Customized"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenlenmiş"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カスタム"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenlenmiş"
+          }
         }
       }
     },
-    "schedule.default.description.en" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
+    "schedule.default.description.en": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トライフェイジック睡眠スケジュールは、1日を通して3つの睡眠期間で構成されています：30分の仮眠2回と4.5時間の主睡眠1回。このパターンは、全体の睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目指しています。多相睡眠を試したい、高い認知能力を維持する必要がある人向けに設計されています。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance."
           }
         }
       }
     },
-    "schedule.default.description.tr" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+    "schedule.default.description.tr": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "三相性睡眠スケジュールは、1日を通して3つの睡眠期間で構成されます：2回の30分の仮眠と、1回の4.5時間の主睡眠期間。このパターンは、総睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目的としています。多相睡眠を試してみたい、そして高い認知能力を維持したい人向けに設計されています。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır."
           }
         }
       }
     },
-    "schedule.default.name" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Triphasic Sleep Schedule"
+    "schedule.default.name": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triphasic Sleep Schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トライフェイジック睡眠スケジュール"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trifazik Uyku Programı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trifazik Uyku Programı"
           }
         }
       }
     },
-    "sleep.blocks" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d blocks"
+    "sleep.blocks": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d blocks"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d blok"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%dブロック"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d blok"
+          }
         }
       }
     },
-    "sleep.type.core" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
+    "sleep.type.core": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core Sleep"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
+          }
         }
       }
     },
-    "sleep.type.nap" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "sleep.type.nap": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
           }
         }
       }
     },
-    "sleepBlock.add" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add Sleep Block"
+    "sleepBlock.add": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Sleep Block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックを追加"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Bloğu Ekle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Bloğu Ekle"
           }
         }
       }
     },
-    "sleepBlock.autoType" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Block type will be automatically determined based on length. Blocks longer than 45 minutes will be Core Sleep, shorter will be Nap."
+    "sleepBlock.autoType": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block type will be automatically determined based on length. Blocks longer than 45 minutes will be Core Sleep, shorter will be Nap."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロックの種類は時間によって自動で決まります。45分より長いブロックは「主睡眠」、それより短い場合は「仮眠」になります。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blok türü süreye bağlı olarak otomatik belirlenecektir. 45 dakikadan uzun bloklar Ana Uyku, daha kısa olanlar Şekerleme olacaktır."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok türü süreye bağlı olarak otomatik belirlenecektir. 45 dakikadan uzun bloklar Ana Uyku, daha kısa olanlar Şekerleme olacaktır."
           }
         }
       }
     },
-    "sleepBlock.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core sleep"
+    "sleepBlock.core": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core sleep"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana uyku"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana uyku"
+          }
         }
       }
     },
-    "sleepBlock.delete.confirm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
+    "sleepBlock.delete.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sil"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sil"
+          }
         }
       }
     },
-    "sleepBlock.delete.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Are you sure you want to delete this sleep block?"
+    "sleepBlock.delete.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Are you sure you want to delete this sleep block?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この睡眠ブロックを削除してもよろしいですか？"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu uyku bloğunu silmek istediğinizden emin misiniz?"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu uyku bloğunu silmek istediğinizden emin misiniz?"
           }
         }
       }
     },
-    "sleepBlock.delete.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Sleep Block"
+    "sleepBlock.delete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Sleep Block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックを削除"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Bloğunu Sil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Bloğunu Sil"
           }
         }
       }
     },
-    "sleepBlock.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Block %1$@: %2$@ from %3$@ to %4$@"
+    "sleepBlock.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block %1$@: %2$@ from %3$@ to %4$@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロック %1$@: %2$@ (%3$@〜%4$@)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blok %1$@: %3$@ ile %4$@ arasında %2$@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok %1$@: %3$@ ile %4$@ arasında %2$@"
           }
         }
       }
     },
-    "sleepBlock.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Duration"
+    "sleepBlock.duration": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Süre"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Süre"
+          }
         }
       }
     },
-    "sleepBlock.edit" : {
-      "comment" : "Edit sleep block navigation title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
+    "sleepBlock.edit": {
+      "comment": "Edit sleep block navigation title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenle"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenle"
+          }
         }
       }
     },
-    "sleepBlock.endTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "End Time"
+    "sleepBlock.endTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End Time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終了時刻"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bitiş Zamanı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitiş Zamanı"
           }
         }
       }
     },
-    "sleepBlock.error.invalidTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "End time must be after start time"
+    "sleepBlock.error.invalidTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End time must be after start time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終了時刻は開始時刻より後に設定してください"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bitiş zamanı başlangıç zamanından sonra olmalıdır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitiş zamanı başlangıç zamanından sonra olmalıdır"
           }
         }
       }
     },
-    "sleepBlock.error.overlap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep blocks cannot overlap"
+    "sleepBlock.error.overlap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep blocks cannot overlap"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku blokları çakışamaz"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックは重複できません"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku blokları çakışamaz"
+          }
         }
       }
     },
-    "sleepBlock.validation.minimumDuration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep block must be at least 15 minutes"
+    "sleepBlock.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid Sleep Block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効な睡眠ブロック"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku bloğu en az 15 dakika olmalıdır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçersiz Uyku Bloğu"
           }
         }
       }
     },
-    "sleepBlock.validation.timeConflict" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This time conflicts with an existing sleep block"
+    "sleepBlock.existing.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Existing Sleep Blocks"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既存の睡眠ブロック"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu saat mevcut bir uyku bloğu ile çakışıyor"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Var Olan Uyku Blokları"
           }
         }
       }
     },
-    "sleepBlock.error.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid Sleep Block"
+    "sleepBlock.isCore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main Sleep Block"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠ブロック"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geçersiz Uyku Bloğu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku Bloğu"
           }
         }
       }
     },
-    "sleepBlock.existing.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Existing Sleep Blocks"
+    "sleepBlock.nap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Var Olan Uyku Blokları"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
+          }
         }
       }
     },
-    "sleepBlock.isCore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Main Sleep Block"
+    "sleepBlock.startTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku Bloğu"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開始時刻"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başlangıç Zamanı"
+          }
         }
       }
     },
-    "sleepBlock.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "sleepBlock.type.core": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
           }
         }
       }
     },
-    "sleepBlock.startTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Time"
+    "sleepBlock.type.nap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başlangıç Zamanı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
           }
         }
       }
     },
-    "sleepBlock.type.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core"
+    "sleepBlock.validation.minimumDuration": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep block must be at least 15 minutes"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ブロックは最低15分必要です"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku bloğu en az 15 dakika olmalıdır"
           }
         }
       }
     },
-    "sleepBlock.type.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "sleepBlock.validation.timeConflict": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This time conflicts with an existing sleep block"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この時間は既存の睡眠ブロックと重複しています"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu saat mevcut bir uyku bloğu ile çakışıyor"
+          }
         }
       }
     },
-    "sleepQuality.later" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Later"
+    "sleepQuality.later": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daha Sonra"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "後で"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha Sonra"
+          }
         }
       }
     },
-    "sleepQuality.notification.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate Your Sleep"
+    "sleepQuality.notification.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate Your Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠を評価しよう"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uykunu Puanla"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uykunu Puanla"
           }
         }
       }
     },
-    "sleepQuality.question" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How was your sleep between"
+    "sleepQuality.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How was your sleep between"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この時間の睡眠はどうでしたか"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu saatler arasında uykun nasıldı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu saatler arasında uykun nasıldı"
           }
         }
       }
     },
-    "sleepQuality.question %@ %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How was your sleep between %1$@ - %2$@?"
+    "sleepQuality.question %@ %@": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How was your sleep between %1$@ - %2$@?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@から%2$@までの睡眠はどうでしたか？"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ ve %2$@ saatleri arasındaki uykun nasıldı?"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ ve %2$@ saatleri arasındaki uykun nasıldı?"
           }
         }
       }
     },
-    "sleepQuality.rating.bad" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bad"
+    "sleepQuality.rating.bad": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bad"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kötü"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "悪い"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kötü"
+          }
         }
       }
     },
-    "sleepQuality.rating.excellent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excellent"
+    "sleepQuality.rating.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excellent"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mükemmel"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最高"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mükemmel"
+          }
         }
       }
     },
-    "sleepQuality.rating.good" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Good"
+    "sleepQuality.rating.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "良い"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İyi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İyi"
           }
         }
       }
     },
-    "sleepQuality.rating.poor" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poor"
+    "sleepQuality.rating.poor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poor"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あまり良くない"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orta"
           }
         }
       }
     },
-    "sleepQuality.rating.veryGood" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Very Good"
+    "sleepQuality.rating.veryGood": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very Good"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "とても良い"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çok İyi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çok İyi"
           }
         }
       }
     },
-    "sleepQuality.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
+    "sleepQuality.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaydet"
+          }
         }
       }
     },
-    "sleepQuality.snackbar.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can still rate your sleep in History page!"
+    "sleepQuality.snackbar.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can still rate your sleep in History page!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "履歴ページで後から睡眠を評価することもできます！"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geçmiş sayfasından uykunu puanlayabilirsin!"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmiş sayfasından uykunu puanlayabilirsin!"
           }
         }
       }
     },
-    "sleepSchedule.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep schedule: %@"
+    "sleepSchedule.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep schedule: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュール: %@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku programı: %@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku programı: %@"
           }
         }
       }
     },
-    "mainScreen.changeSchedule.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change Sleep Schedule"
+    "mainScreen.changeSchedule.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change Sleep Schedule"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Programını Değiştir"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュールを変更"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Programını Değiştir"
+          }
         }
       }
     },
-    "mainScreen.changeSchedule.button" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Different Schedule"
+    "mainScreen.changeSchedule.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Different Schedule"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Farklı Program Seç"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "別のスケジュールを選択"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farklı Program Seç"
+          }
         }
       }
     },
-    "scheduleSelection.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Sleep Schedule"
+    "scheduleSelection.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Sleep Schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュールを選択"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Programı Seç"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Programı Seç"
           }
         }
       }
     },
-    "scheduleSelection.hours" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "hours"
+    "scheduleSelection.hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "saat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saat"
           }
         }
       }
     },
-    "scheduleSelection.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core"
+    "scheduleSelection.core": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana"
           }
         }
       }
     },
-    "scheduleSelection.naps" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Naps"
+    "scheduleSelection.naps": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naps"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
+          }
         }
       }
     },
-    "scheduleSelection.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose a polyphasic sleep schedule that fits your lifestyle"
+    "scheduleSelection.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a polyphasic sleep schedule that fits your lifestyle"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yaşam tarzınıza uygun bir polifazik uyku programı seçin"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなたのライフスタイルに合った多相睡眠スケジュールを選びましょう"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaşam tarzınıza uygun bir polifazik uyku programı seçin"
+          }
         }
       }
     },
-    "scheduleSelection.description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Description"
+    "scheduleSelection.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Description"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "説明"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Açıklama"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açıklama"
           }
         }
       }
     },
-    "scheduleSelection.details" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
+    "scheduleSelection.details": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Details"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "詳細"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaylar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detaylar"
           }
         }
       }
     },
-    "scheduleSelection.hide" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hide"
+    "scheduleSelection.hide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隠す"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gizle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gizle"
           }
         }
       }
     },
-    "scheduleSelection.premiumRequired" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Required"
+    "scheduleSelection.premiumRequired": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Required"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Gerekli"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムが必要です"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Gerekli"
+          }
         }
       }
     },
-    "scheduleSelection.upgradePrompt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to upgrade and unlock advanced schedules"
+    "scheduleSelection.upgradePrompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap to upgrade and unlock advanced schedules"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İleri düzey programları açmak için yükseltin"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タップしてアップグレードし、高度なスケジュールのロックを解除"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İleri düzey programları açmak için yükseltin"
+          }
         }
       }
     },
-    "scheduleSelection.premium.tapToUpgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to upgrade"
+    "scheduleSelection.premium.tapToUpgrade": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap to upgrade"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タップしてアップグレード"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dokunarak yükseltin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokunarak yükseltin"
           }
         }
       }
     },
-    "scheduleSelection.premium.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium"
+    "scheduleSelection.premium.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアム"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium"
           }
         }
       }
     },
-    "scheduleSelection.premiumAlert.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Feature"
+    "scheduleSelection.premiumAlert.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Feature"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアム機能"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Özellik"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Özellik"
           }
         }
       }
     },
-    "scheduleSelection.premiumAlert.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This advanced sleep schedule is available for Premium users. Upgrade to unlock all polyphasic sleep patterns and advanced features."
+    "scheduleSelection.premiumAlert.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This advanced sleep schedule is available for Premium users. Upgrade to unlock all polyphasic sleep patterns and advanced features."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu gelişmiş uyku programı Premium kullanıcılar için mevcuttur. Tüm polifazik uyku düzenlerini ve gelişmiş özellikleri açmak için yükseltin."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この高度な睡眠スケジュールはプレミアムユーザー向けです。アップグレードして、すべての多相睡眠パターンと高度な機能のロックを解除しましょう。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu gelişmiş uyku programı Premium kullanıcılar için mevcuttur. Tüm polifazik uyku düzenlerini ve gelişmiş özellikleri açmak için yükseltin."
+          }
         }
       }
     },
-    "scheduleSelection.premiumAlert.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade to Premium"
+    "scheduleSelection.premiumAlert.upgrade": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upgrade to Premium"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium'a Yükselt"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムにアップグレード"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium'a Yükselt"
+          }
         }
       }
     },
-    "scheduleSelection.freeSchedules" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Free Schedules"
+    "scheduleSelection.freeSchedules": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free Schedules"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料のスケジュール"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ücretsiz Programlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ücretsiz Programlar"
           }
         }
       }
     },
-    "scheduleSelection.premiumSchedules" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Schedules"
+    "scheduleSelection.premiumSchedules": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Schedules"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムスケジュール"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Programlar"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Programlar"
           }
         }
       }
     },
-    "mainScreen.awakeTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Awake Time"
+    "mainScreen.awakeTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Awake Time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyanık Zamanı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyanık Zamanı"
+          }
         }
       }
     },
-    "mainScreen.sleepTime" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Time"
+    "mainScreen.sleepTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Zamanı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Zamanı"
           }
         }
       }
     },
-    "mainScreen.chart.edit" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
+    "mainScreen.chart.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düzenle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenle"
           }
         }
       }
     },
-    "mainScreen.chart.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
+    "mainScreen.chart.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaydet"
           }
         }
       }
     },
-    "mainScreen.chart.editInstructions1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drag & Resize"
+    "mainScreen.chart.editInstructions1": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag & Resize"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sürükle & Boyutlandır"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ドラッグ＆サイズ変更"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sürükle & Boyutlandır"
+          }
         }
       }
     },
-    "mainScreen.chart.editInstructions2" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimum 15min"
+    "mainScreen.chart.editInstructions2": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum 15min"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimum 15dk"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最低15分"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum 15dk"
+          }
         }
       }
     },
-    "common.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "common.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İptal"
           }
         }
       }
     },
-    "common.save" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
+    "common.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaydet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaydet"
           }
         }
       }
     },
-    "mainScreen.chart.editFeedback.moving" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moving: %@ - %@"
+    "mainScreen.chart.editFeedback.moving": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moving: %@ - %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移動中: %@ - %@"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taşınıyor: %@ - %@"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taşınıyor: %@ - %@"
           }
         }
       }
     },
-    "mainScreen.chart.editFeedback.resizing" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resizing: %@ (%@)"
+    "mainScreen.chart.editFeedback.resizing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resizing: %@ (%@)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Boyutlandırılıyor: %@ (%@)"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サイズ変更中: %@ (%@)"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boyutlandırılıyor: %@ (%@)"
+          }
         }
       }
     },
-    "mainScreen.chart.editFeedback.duration" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%dmin"
+    "mainScreen.chart.editFeedback.duration": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%dmin"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%ddk"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d分"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%ddk"
+          }
         }
       }
     },
-    "mainScreen.chart.editMode.instructions" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drag blocks to move around the schedule"
+    "mainScreen.chart.editMode.instructions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag blocks to move around the schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロックをドラッグしてスケジュール内で移動します"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blokları programda hareket ettirmek için sürükleyin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blokları programda hareket ettirmek için sürükleyin"
           }
         }
       }
     },
-    "mainScreen.chart.snapMode.5min" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5min precision"
+    "mainScreen.chart.snapMode.5min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5min precision"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5分単位"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5dk hassasiyet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5dk hassasiyet"
           }
         }
       }
     },
-    "mainScreen.chart.snapMode.10min" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "10min precision"
+    "mainScreen.chart.snapMode.10min": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10min precision"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10分単位"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "10dk hassasiyet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10dk hassasiyet"
           }
         }
       }
     },
-    "mainScreen.chart.editFeedback.collision" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Overlaps with another block"
+    "mainScreen.chart.editFeedback.collision": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overlaps with another block"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Başka bir blokla çakışıyor"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "他のブロックと重複しています"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başka bir blokla çakışıyor"
+          }
         }
       }
     },
-    "mainScreen.chart.editFeedback.tooShort" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimum 15 minutes required"
+    "mainScreen.chart.editFeedback.tooShort": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum 15 minutes required"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En az 15 dakika gerekli"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最低15分必要です"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En az 15 dakika gerekli"
+          }
         }
       }
     },
-    "mainScreen.noUpcomingBlock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No upcoming sleep"
+    "mainScreen.noUpcomingBlock": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No upcoming sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の睡眠予定はありません"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yaklaşan uyku yok"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaklaşan uyku yok"
           }
         }
       }
     },
-    "mainScreen.imminent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Now"
+    "mainScreen.imminent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Now"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şimdi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi"
           }
         }
       }
     },
-    "mainscreen.error.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error"
+    "mainscreen.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エラー"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hata"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hata"
           }
         }
       }
     },
-    "mainScreen.chart.dragToMove" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drag to move blocks"
+    "mainScreen.chart.dragToMove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to move blocks"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blokları taşımak için sürükleyin"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ドラッグしてブロックを移動"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blokları taşımak için sürükleyin"
+          }
         }
       }
     },
-    "mainScreen.chart.editTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editing Sleep Schedule"
+    "mainScreen.chart.editTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editing Sleep Schedule"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュールを編集中"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Programını Düzenleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Programını Düzenleme"
           }
         }
       }
     },
-    "sleepBlock.typeTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Block Type"
+    "sleepBlock.typeTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block Type"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブロックの種類"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blok Türü"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok Türü"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

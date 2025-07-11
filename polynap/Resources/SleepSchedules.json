@@ -5,7 +5,8 @@
       "name": "Biphasic Sleep",
       "description": {
         "en": "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
-        "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir."
+        "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir.",
+        "ja": "夜にまとめて寝る時間のほかに、日中に短いお昼寝を1回とる睡眠スタイル。スペインのシエスタみたいに、文化として根付いている地域もありますよ。"
       },
       "totalSleepHours": 6.5,
       "isPremium": false,
@@ -30,7 +31,8 @@
       "name": "Extended Biphasic Sleep",
       "description": {
         "en": "A longer core sleep at night (5-6 hours) plus a slightly longer midday nap (60-90 minutes). This allows more total rest while still splitting sleep into two segments.",
-        "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır."
+        "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır.",
+        "ja": "夜に5〜6時間の長めのコア睡眠と、昼間に60〜90分の少し長めの昼寝を組み合わせます。睡眠を2回に分けつつ、合計の休息時間をしっかり確保できます。"
       },
       "totalSleepHours": 7.5,
       "isPremium": false,
@@ -55,7 +57,8 @@
       "name": "Everyman",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler.",
+        "ja": "夜のまとまった睡眠は短めにして、その分、日中に何回か短い仮眠をとるスタイル。夜の休息と日中のうたた寝をうまく組み合わせて、短い睡眠時間でも乗り切るのが狙いです。"
       },
       "totalSleepHours": 4.5,
       "isPremium": false,
@@ -92,7 +95,8 @@
       "name": "Everyman 2 (E2)",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep of about 4-5 hours plus 2 short naps (20-30 mins each) during the day.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir.",
+        "ja": "夜に4〜5時間まとめて寝て、日中に2回、20〜30分くらいの短いお昼寝をするパターンです。夜の睡眠と日中の仮眠で、効率よく体を休ませます。"
       },
       "totalSleepHours": 5,
       "isPremium": false,
@@ -123,7 +127,8 @@
       "name": "Everyman 3 (E3)",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep (3-4 hours) plus 3 short naps (20 mins each) spread throughout the day.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. 3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık kısa uykulardan oluşan düzen."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. 3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık kısa uykulardan oluşan düzen.",
+        "ja": "夜の睡眠は3〜4時間に凝縮して、日中に20分のお昼寝を3回するスタイル。短い睡眠をこまめに取ることで、1日を乗り切ります。"
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
@@ -160,7 +165,8 @@
       "name": "Everyman 4 (E4)",
       "description": {
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
-        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3'e göre daha ağır bir düzendir."
+        "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3'e göre daha ağır bir düzendir.",
+        "ja": "夜の睡眠を約3時間まで減らして、その分、日中に20分の仮眠を4回も取るハードなスタイル。E2やE3より、さらに上級者向けですね。"
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
@@ -203,7 +209,8 @@
       "name": "Dymaxion",
       "description": {
         "en": "Four 30-minute naps spaced evenly throughout the day, for a total of just two hours of sleep. It's considered highly challenging to sustain.",
-        "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir."
+        "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir.",
+        "ja": "1日を6時間ごとに区切って、30分ずつ4回だけ寝る超上級者向けの睡眠法。合計睡眠時間はたったの2時間！続けるのは、ものすごく大変です。"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -240,7 +247,8 @@
       "name": "Dymaxion (Alternative)",
       "description": {
         "en": "Same concept as classic Dymaxion (4x30-minute naps) but offset times to fit certain night-shift or late-night routines.",
-        "tr": "Klasik Dymaxion (günde 4 kez 30 dakikalık) konseptini koruyarak, geç/gece vardiyası veya farklı rutinler için saatleri uyarlayan versiyon."
+        "tr": "Klasik Dymaxion (günde 4 kez 30 dakikalık) konseptini koruyarak, geç/gece vardiyası veya farklı rutinler için saatleri uyarlayan versiyon.",
+        "ja": "基本はダイマキシオン（30分仮眠×4回）と同じだけど、夜勤とか夜型の人のために、寝る時間を調整したバージョンです。"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -277,7 +285,8 @@
       "name": "Uberman",
       "description": {
         "en": "A highly extreme pattern featuring six (sometimes more) short naps of about 20 minutes each, spread every 4 hours.",
-        "tr": "Her 4 saatte bir 20 dakikalık altı (bazen daha fazla) kısa uykudan oluşan oldukça ekstrem bir uyku düzenidir."
+        "tr": "Her 4 saatte bir 20 dakikalık altı (bazen daha fazla) kısa uykudan oluşan oldukça ekstrem bir uyku düzenidir.",
+        "ja": "4時間おきに20分間の仮眠を1日に6回以上も取る、かなり過激なスタイル。まさに超人（ウーヴァーメンシュ）向けです。"
       },
       "totalSleepHours": 2,
       "isPremium": false,
@@ -326,7 +335,8 @@
       "name": "Triphasic",
       "description": {
         "en": "A schedule with three separate sleep blocks, each lasting 1 to 2 hours, often aligned around dusk, dawn, and midday.",
-        "tr": "Üç ayrı uyku bloğundan oluşan, her biri 1 ila 2 saat süren ve genellikle gün batımı, gün doğumu ve öğle saatlerine denk gelecek şekilde planlanan bir düzen."
+        "tr": "Üç ayrı uyku bloğundan oluşan, her biri 1 ila 2 saat süren ve genellikle gün batımı, gün doğumu ve öğle saatlerine denk gelecek şekilde planlanan bir düzen.",
+        "ja": "1日を3回に分けて寝るスタイル。夕暮れ、夜明け、お昼ごろに、それぞれ1〜2時間ずつ眠ります。"
       },
       "totalSleepHours": 4,
       "isPremium": false,
@@ -357,7 +367,8 @@
       "name": "Triphasic (Alternative)",
       "description": {
         "en": "Three sleep blocks (1.5-2 hours each) aligned around personal peak times. Often set around 22:00, 04:00, and 10:00 or variations thereof.",
-        "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanır."
+        "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanır.",
+        "ja": "自分の生活リズムに合わせて、1.5〜2時間の睡眠を3回とる方法。例えば22時、4時、10時みたいに、活動の合間に眠ります。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -388,7 +399,8 @@
       "name": "Segmented Sleep",
       "description": {
         "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest. Ideal for a relaxed start.",
-        "tr": "Yaygın olarak 'birinci ve ikinci uyku' şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir."
+        "tr": "Yaygın olarak 'birinci ve ikinci uyku' şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir.",
+        "ja": "昔の人がやっていた『二度寝』スタイル。夜早い時間に一度寝て、真夜中に少し起きてから、また朝まで寝る。時間に縛られない、のんびりした生活向けです。"
       },
       "totalSleepHours": 6,
       "isPremium": false,
@@ -413,7 +425,8 @@
       "name": "Segmented Sleep (Late-Wake)",
       "description": {
         "en": "An alternative segmented schedule with a first sleep soon after dusk (21:00-00:00) and a second sleep closer to morning (02:00-05:00), leaving a long wake period in the late morning.",
-        "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uykudan, sabaha karşı (02:00-05:00) ikinci uykudan oluşan alternatif bir düzendir. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır."
+        "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uykudan, sabaha karşı (02:00-05:00) ikinci uykudan oluşan alternatif bir düzendir. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır.",
+        "ja": "これも『二度寝』スタイルだけど、夜9時〜12時の間に一度寝て、深夜2時〜5時にもう一度寝るパターン。朝遅くまで起きている時間が長くなります。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -438,7 +451,8 @@
       "name": "Dual Core Sleep",
       "description": {
         "en": "A sleep pattern that splits the night into two nearly equal core sleep periods separated by a wakeful period. It mimics segmented sleep in a more structured form.",
-        "tr": "Geceyi iki neredeyse eşit ana uyku periyoduna bölen ve arada uyanıklık dönemi bırakan bir düzen. Bölünmüş uykuyu daha yapılandırılmış bir biçimde taklit eder."
+        "tr": "Geceyi iki neredeyse eşit ana uyku periyoduna bölen ve arada uyanıklık dönemi bırakan bir düzen. Bölünmüş uykuyu daha yapılandırılmış bir biçimde taklit eder.",
+        "ja": "夜の睡眠を、間に起きている時間を挟んで、ほぼ同じ長さの2回に分ける方法。分割睡眠を、もっとカッチリしたスケジュールにした感じです。"
       },
       "totalSleepHours": 6,
       "isPremium": false,
@@ -463,7 +477,8 @@
       "name": "Biphasic E1 (Extended)",
       "description": {
         "en": "An extended biphasic schedule: one core sleep plus a long nap, totaling around 7 hours of rest.",
-        "tr": "Genişletilmiş bir biphasic düzen: bir ana uyku ve ardından uzun bir şekerlemeden oluşarak toplamda yaklaşık 7 saatlik uyku sağlar."
+        "tr": "Genişletilmiş bir biphasic düzen: bir ana uyku ve ardından uzun bir şekerlemeden oluşarak toplamda yaklaşık 7 saatlik uyku sağlar.",
+        "ja": "二相性睡眠のロングバージョン。夜にしっかり寝て、昼にも長めのお昼寝をする。合計で7時間くらい眠れます。"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -488,7 +503,8 @@
       "name": "Biphasic (Siesta)",
       "description": {
         "en": "A biphasic pattern with a single core sleep at night and a midday siesta nap, common in many siesta cultures.",
-        "tr": "Gece tek bir ana uyku ve öğlen siesta uykusundan oluşan biphasic düzen. Pek çok kültürde gelenekseldir."
+        "tr": "Gece tek bir ana uyku ve öğlen siesta uykusundan oluşan biphasic düzen. Pek çok kültürde gelenekseldir.",
+        "ja": "夜にまとめて寝て、お昼にはシエスタ（お昼寝）をとる、多くの文化で見られる定番の二相性睡眠です。"
       },
       "totalSleepHours": 7,
       "isPremium": false,
@@ -513,7 +529,8 @@
       "name": "Biphasic (Segmented)",
       "description": {
         "en": "A biphasic variation that segments the night into two sleep blocks, each around 3 hours, separated by wake time.",
-        "tr": "Geceyi yaklaşık 3'er saatlik iki uyku bloğuna bölen, arada uyanıklık kalınan biphasic bir varyasyon."
+        "tr": "Geceyi yaklaşık 3'er saatlik iki uyku bloğuna bölen, arada uyanıklık kalınan biphasic bir varyasyon.",
+        "ja": "夜の睡眠を、起きている時間を間に挟んで、約3時間ずつ2回に分ける二相性睡眠の変形版です。"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -538,7 +555,8 @@
       "name": "Biphasic X",
       "description": {
         "en": "Another flexible biphasic approach with one nighttime core and one extended nap during the day.",
-        "tr": "Geceleri tek bir ana uyku ve gün içinde genişletilmiş bir şekerlemeden oluşan esnek biphasic yaklaşımı."
+        "tr": "Geceleri tek bir ana uyku ve gün içinde genişletilmiş bir şekerlemeden oluşan esnek biphasic yaklaşımı.",
+        "ja": "夜に1回まとめて寝て、日中に長めのお昼寝を1回とる、柔軟性の高い二相性睡眠のスタイルです。"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -563,7 +581,8 @@
       "name": "Everyman E2 (Extended)",
       "description": {
         "en": "An extended variant of Everyman 2: ~5h core sleep plus two short naps (15-30 mins), aiming for ~5.5h total.",
-        "tr": "Everyman 2'nin genişletilmiş varyasyonu: Yaklaşık 5 saatlik ana uykuya ek olarak günde iki kısa (15-30 dk) şekerleme içerir."
+        "tr": "Everyman 2'nin genişletilmiş varyasyonu: Yaklaşık 5 saatlik ana uykuya ek olarak günde iki kısa (15-30 dk) şekerleme içerir.",
+        "ja": "エブリマン2のロングバージョン。夜に約5時間寝て、さらに15〜30分の短い仮眠を2回とります。合計で5.5時間くらい寝る計算です。"
       },
       "totalSleepHours": 5.5,
       "isPremium": true,
@@ -594,7 +613,8 @@
       "name": "Everyman E3 (Extended)",
       "description": {
         "en": "An extended variant of Everyman 3: ~4h core sleep plus three short naps (15-20 mins).",
-        "tr": "Everyman 3'ün genişletilmiş varyasyonu: Yaklaşık 4 saatlik ana uykuya ek olarak günde 3 kısa (15-20 dk) şekerleme."
+        "tr": "Everyman 3'ün genişletilmiş varyasyonu: Yaklaşık 4 saatlik ana uykuya ek olarak günde 3 kısa (15-20 dk) şekerleme.",
+        "ja": "エブリマン3のロングバージョン。夜に約4時間まとめて寝て、日中に15〜20分の短い仮眠を3回プラスします。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -631,7 +651,8 @@
       "name": "Everyman E4 (Extended)",
       "description": {
         "en": "A more intense Everyman variant: ~3.5h core sleep plus four short naps. Extended version may total ~5h.",
-        "tr": "Daha yoğun bir Everyman varyasyonu: Yaklaşık 3,5 saatlik ana uyku ve dört kısa şekerleme. Genişletilmiş versiyonu yaklaşık 5 saatlik toplam uyku sunar."
+        "tr": "Daha yoğun bir Everyman varyasyonu: Yaklaşık 3,5 saatlik ana uyku ve dört kısa şekerleme. Genişletilmiş versiyonu yaklaşık 5 saatlik toplam uyku sunar.",
+        "ja": "もっとハードなエブリマン。夜の睡眠を約3.5時間にして、短い仮眠を4回とります。合計で5時間くらい寝るロングバージョンです。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -674,7 +695,8 @@
       "name": "Everyman E5",
       "description": {
         "en": "A rare Everyman variant with a short core (~3h) plus five mini-naps throughout the day.",
-        "tr": "Nadir görülen Everyman varyasyonu: Yaklaşık 3 saatlik ana uyku ve gün içinde beş kısa şekerleme."
+        "tr": "Nadir görülen Everyman varyasyonu: Yaklaşık 3 saatlik ana uyku ve gün içinde beş kısa şekerleme.",
+        "ja": "夜の睡眠は約3時間で、あとは5回も短い仮眠をとる、かなり珍しいエブリマンのスタイルです。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -723,7 +745,8 @@
       "name": "Everyman Sevarny",
       "description": {
         "en": "An ultra-compact Everyman variant with a short nighttime core and multiple naps, typically totaling 3-4 hours.",
-        "tr": "Çok kısa gece ana uyku ve birden fazla şekerlemeden oluşan, genelde 3-4 saate düşen bir Everyman varyasyonu."
+        "tr": "Çok kısa gece ana uyku ve birden fazla şekerlemeden oluşan, genelde 3-4 saate düşen bir Everyman varyasyonu.",
+        "ja": "夜の睡眠をさらに短くして、何回かの仮眠と合わせる超コンパクトなエブリマン。合計睡眠時間は3〜4時間ほどです。"
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
@@ -766,7 +789,8 @@
       "name": "Everyman Trimaxion",
       "description": {
         "en": "A mixed polyphasic approach combining aspects of triphasic and Everyman, often around 3-4h of total sleep.",
-        "tr": "Triphasic ve Everyman öğelerini harmanlayan karma bir polyphasic yaklaşım. Genelde 3-4 saat toplam uyku sağlar."
+        "tr": "Triphasic ve Everyman öğelerini harmanlayan karma bir polyphasic yaklaşım. Genelde 3-4 saat toplam uyku sağlar.",
+        "ja": "三相性睡眠とエブリマンを組み合わせたハイブリッド型。合計の睡眠時間は3〜4時間くらいです。"
       },
       "totalSleepHours": 4,
       "isPremium": true,
@@ -797,7 +821,8 @@
       "name": "Dual Core DC1",
       "description": {
         "en": "A basic dual-core pattern with two ~3h cores at night, separated by a wake gap.",
-        "tr": "Gece iki adet yaklaşık 3 saatlik ana uykudan oluşan temel bir dual core düzeni. Uyku blokları arasında uyanıklık dönemi bulunur."
+        "tr": "Gece iki adet yaklaşık 3 saatlik ana uykudan oluşan temel bir dual core düzeni. Uyku blokları arasında uyanıklık dönemi bulunur.",
+        "ja": "夜に約3時間の睡眠を2回とる、基本的なデュアルコア（二つのコア睡眠）のスタイル。2回の睡眠の間は起きています。"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -822,7 +847,8 @@
       "name": "Dual Core DC1 (Extended)",
       "description": {
         "en": "An extended DC1 with slightly longer cores (3.5h each).",
-        "tr": "DC1 düzeninin uzun sürümünde her bir ana uyku yaklaşık 3,5 saat olacak şekilde ayarlanır."
+        "tr": "DC1 düzeninin uzun sürümünde her bir ana uyku yaklaşık 3,5 saat olacak şekilde ayarlanır.",
+        "ja": "デュアルコアDC1のロング版。2回のコア睡眠をそれぞれ3.5時間に延長します。"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -847,7 +873,8 @@
       "name": "Dual Core DC2 (Extended)",
       "description": {
         "en": "A dual-core variant with two core sleeps of ~4 hours each, totaling about 8 hours.",
-        "tr": "Yaklaşık 4'er saatlik iki ana uyku bloğundan oluşan ve toplamda 8 saat uyku sağlayan bir dual-core varyasyonu."
+        "tr": "Yaklaşık 4'er saatlik iki ana uyku bloğundan oluşan ve toplamda 8 saat uyku sağlayan bir dual-core varyasyonu.",
+        "ja": "それぞれ約4時間のコア睡眠を2回とるデュアルコアの変種で、合計睡眠時間は約8時間になります。"
       },
       "totalSleepHours": 8,
       "isPremium": true,
@@ -872,7 +899,8 @@
       "name": "Dual Core DC3",
       "description": {
         "en": "A more flexible dual-core pattern with 2 short cores (2-3h each) and an optional nap.",
-        "tr": "İki kısa ana uyku (her biri 2-3 saat) ve opsiyonel bir şekerlemeye sahip daha esnek bir dual-core düzeni."
+        "tr": "İki kısa ana uyku (her biri 2-3 saat) ve opsiyonel bir şekerlemeye sahip daha esnek bir dual-core düzeni.",
+        "ja": "2〜3時間の短いコア睡眠を2回と、おまけの昼寝を1回組み合わせた、より柔軟なデュアルコアのスタイルです。"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -903,7 +931,8 @@
       "name": "Dual Core DAB",
       "description": {
         "en": "A dual-core arrangement known as DAB: two main sleeps plus a bridging midday nap.",
-        "tr": "DAB olarak bilinen dual-core düzeni: iki ana uyku bloğu ve öğle saatlerinde köprü görevi gören bir şekerleme."
+        "tr": "DAB olarak bilinen dual-core düzeni: iki ana uyku bloğu ve öğle saatlerinde köprü görevi gören bir şekerleme.",
+        "ja": "DAB（ダブ）と呼ばれるデュアルコア。2回の主な睡眠の間に、橋渡しとなる昼寝をとります。"
       },
       "totalSleepHours": 5.5,
       "isPremium": true,
@@ -934,7 +963,8 @@
       "name": "Dual Core Bimaxion",
       "description": {
         "en": "A less common dual-core approach referencing 'bimaxion': two shorter cores plus two short naps for a total near 4h.",
-        "tr": "'Bimaxion' olarak anılan, iki kısa ana uyku ve iki kısa şekerleme ile toplamda 4 saate yakın uyku sunan nadir dual-core yaklaşımı."
+        "tr": "'Bimaxion' olarak anılan, iki kısa ana uyku ve iki kısa şekerleme ile toplamda 4 saate yakın uyku sunan nadir dual-core yaklaşımı.",
+        "ja": "「バイマキシオン」と呼ばれる珍しいデュアルコア。短いコア睡眠2回と短い仮眠2回を組み合わせ、合計睡眠時間は4時間弱です。"
       },
       "totalSleepHours": 4,
       "isPremium": true,
@@ -971,7 +1001,8 @@
       "name": "Tri Core TC1",
       "description": {
         "en": "A tri-core pattern with three sleeps of ~1.5h each, spaced around 8 hours apart.",
-        "tr": "Yaklaşık 1,5 saatlik üç uyku bloğuna sahip, bloklar arası yaklaşık 8 saat mesafe bulunan bir tri-core düzeni."
+        "tr": "Yaklaşık 1,5 saatlik üç uyku bloğuna sahip, bloklar arası yaklaşık 8 saat mesafe bulunan bir tri-core düzeni.",
+        "ja": "約1.5時間の睡眠を3回とるトライコア（3つのコア睡眠）のパターン。それぞれの睡眠は約8時間の間隔を空けます。"
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
@@ -1002,7 +1033,8 @@
       "name": "Tri Core TC2",
       "description": {
         "en": "Another tri-core variant with three ~2h blocks, often used for more total rest (~6h).",
-        "tr": "Üç adet 2 saatlik uyku bloğundan oluşan bir başka tri-core varyasyonu. Toplamda yaklaşık 6 saat dinlenme sağlar."
+        "tr": "Üç adet 2 saatlik uyku bloğundan oluşan bir başka tri-core varyasyonu. Toplamda yaklaşık 6 saat dinlenme sağlar.",
+        "ja": "約2時間の睡眠ブロックを3回とる、もう一つのトライコアの変種。合計で約6時間と、より多くの休息をとるために使われます。"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -1033,7 +1065,8 @@
       "name": "Tesla",
       "description": {
         "en": "A 'nap only' pattern sometimes attributed to Nikola Tesla: ~2 hours of total sleep in short naps.",
-        "tr": "Nikola Tesla'ya atfedilen, kısa şekerlemelerle toplamda yaklaşık 2 saat uyku öngören 'yalnızca şekerleme' düzeni."
+        "tr": "Nikola Tesla'ya atfedilen, kısa şekerlemelerle toplamda yaklaşık 2 saat uyku öngören 'yalnızca şekerleme' düzeni.",
+        "ja": "あの発明家ニコラ・テスラが実践したと言われる「仮眠だけ」のスタイル。短い仮眠を繰り返して、合計睡眠時間を約2時間に抑えます。"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -1082,7 +1115,8 @@
       "name": "Spamayl",
       "description": {
         "en": "A 'sleep polyphasically as much as you like' pattern with no strict schedule, sleeping in short naps whenever tired.",
-        "tr": "Katı bir çizelge olmaksızın, yorgun hissettikçe kısa şekerlemelerle uyunan esnek düzen (Spamayl: Sleep Polyphasically As Much As You Like)."
+        "tr": "Katı bir çizelge olmaksızın, yorgun hissettikçe kısa şekerlemelerle uyunan esnek düzen (Spamayl: Sleep Polyphasically As Much As You Like).",
+        "ja": "「好きなだけ多相睡眠」の略で、決まったスケジュールはありません。眠くなったら短い仮眠をとる、という究極の自由形スタイルです。"
       },
       "totalSleepHours": 0,
       "isPremium": true,

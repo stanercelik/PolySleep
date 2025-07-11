@@ -11,6 +11,12 @@
             "value" : "Add Sleep Entry"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠の記録を追加"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No records found for this period"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この期間の記録はないみたい。"
           }
         },
         "tr" : {
@@ -47,6 +59,12 @@
             "value" : "Edit"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filter"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィルター"
           }
         },
         "tr" : {
@@ -83,6 +107,12 @@
             "value" : "Filters"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィルター"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d sleep blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 回の睡眠"
           }
         },
         "tr" : {
@@ -119,6 +155,12 @@
             "value" : "Add First Record"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最初の記録を追加"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -134,6 +176,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d ブロック"
           }
         },
         "tr" : {
@@ -153,6 +201,12 @@
             "value" : "All Time"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全期間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,6 +222,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This Month"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今月"
           }
         },
         "tr" : {
@@ -187,6 +247,12 @@
             "value" : "This Week"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今週"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -204,6 +270,12 @@
             "value" : "Filter"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィルター"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -219,6 +291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Today"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
           }
         },
         "tr" : {
@@ -239,6 +317,12 @@
             "value" : "+ %d more blocks"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他 %d ブロック"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -254,6 +338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d entries"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 件の記録"
           }
         },
         "tr" : {
@@ -274,6 +364,12 @@
             "value" : "No records for this day"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この日の記録はないよ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -290,6 +386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start tracking your sleep by adding your first entry below."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下のボタンから最初の記録を追加して、睡眠の追跡を始めよう。"
           }
         },
         "tr" : {
@@ -310,6 +412,12 @@
             "value" : "No Sleep Records"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠記録なし"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -325,6 +433,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avg Duration"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均時間"
           }
         },
         "tr" : {
@@ -344,6 +458,12 @@
             "value" : "Avg Rating"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均評価"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -359,6 +479,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Streak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "継続日数"
           }
         },
         "tr" : {
@@ -378,6 +504,12 @@
             "value" : "This Week"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今週"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -393,6 +525,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sleep Statistics"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠の統計"
           }
         },
         "tr" : {
@@ -412,6 +550,12 @@
             "value" : "Total Sessions"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合計回数"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -427,6 +571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 日間"
           }
         },
         "tr" : {
@@ -446,6 +596,12 @@
             "value" : "Sleep Timeline"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠タイムライン"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -461,6 +617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Today"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
           }
         },
         "tr" : {
@@ -480,6 +642,12 @@
             "value" : "Completed"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -495,6 +663,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
         "tr" : {
@@ -514,6 +688,12 @@
             "value" : "Partial"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -529,6 +709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Missed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スキップ"
           }
         },
         "tr" : {
@@ -548,6 +734,12 @@
             "value" : "Sleep History"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠履歴"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -565,6 +757,12 @@
             "value" : "Core Sleep"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コア睡眠"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -580,6 +778,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nap"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠"
           }
         },
         "tr" : {
@@ -600,6 +804,12 @@
             "value" : "Delete Entry"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録を削除"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -616,6 +826,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Done"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
         "tr" : {
@@ -636,6 +852,12 @@
             "value" : "Select Date"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日付を選択"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -652,6 +874,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合計睡眠"
           }
         },
         "tr" : {
@@ -672,6 +900,12 @@
             "value" : "until next sleep"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の睡眠まで"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -688,6 +922,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sleep Type"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠タイプ"
           }
         },
         "tr" : {

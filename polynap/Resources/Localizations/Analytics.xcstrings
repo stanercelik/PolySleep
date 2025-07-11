@@ -1,2874 +1,3882 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "analytics.averageScore" : {
-      "comment" : "Average sleep score metric title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Average Score"
+  "sourceLanguage": "en",
+  "strings": {
+    "analytics.averageScore": {
+      "comment": "Average sleep score metric title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average Score"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ortalama Puan"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平均スコア"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ortalama Puan"
+          }
         }
       }
     },
-    "analytics.bestWorstDays.bestDay" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Best Day"
+    "analytics.bestWorstDays.bestDay": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best Day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En İyi Gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ベストデイ"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En İyi Gün"
+          }
         }
       }
     },
-    "analytics.bestWorstDays.hours" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f hours"
+    "analytics.bestWorstDays.hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f saat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f saat"
           }
         }
       }
     },
-    "analytics.bestWorstDays.noData" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No data"
+    "analytics.bestWorstDays.noData": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No data"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データなし"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Veri yok"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veri yok"
           }
         }
       }
     },
-    "analytics.bestWorstDays.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Best and Worst Days"
+    "analytics.bestWorstDays.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best and Worst Days"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ベストとワーストの日"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En İyi ve En Kötü Günler"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En İyi ve En Kötü Günler"
           }
         }
       }
     },
-    "analytics.bestWorstDays.worstDay" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Worst Day"
+    "analytics.bestWorstDays.worstDay": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Worst Day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En Kötü Gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ワーストデイ"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En Kötü Gün"
+          }
         }
       }
     },
-    "analytics.chart.dayLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
+    "analytics.chart.dayLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün"
+          }
         }
       }
     },
-    "analytics.chart.hoursUnit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d h"
+    "analytics.chart.hoursUnit": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d h"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d s"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d s"
           }
         }
       }
     },
-    "analytics.chart.percentageLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Percentage"
+    "analytics.chart.percentageLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percentage"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "パーセンテージ"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüzde"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüzde"
           }
         }
       }
     },
-    "analytics.chart.percentageShort" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.0f%%"
+    "analytics.chart.percentageShort": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%%%.0f"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%%%.0f"
+          }
         }
       }
     },
-    "analytics.chart.scoreLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Score"
+    "analytics.chart.scoreLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スコア"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skor"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skor"
           }
         }
       }
     },
-    "analytics.chart.sleepScoreLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Score"
+    "analytics.chart.sleepScoreLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スコア"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Skoru"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Skoru"
           }
         }
       }
     },
-    "analytics.comparison.hours" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f h"
+    "analytics.comparison.hours": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f h"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f s"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f s"
           }
         }
       }
     },
-    "analytics.comparison.score" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f pts"
+    "analytics.comparison.score": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f pts"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f puan"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 点"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f puan"
+          }
         }
       }
     },
-    "analytics.consistency.description" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Consistency"
+    "analytics.consistency.description": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consistency"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tutarlılık"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一貫性"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutarlılık"
+          }
         }
       }
     },
-    "analytics.consistency.greatRoutine" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You have a great sleep routine!"
+    "analytics.consistency.greatRoutine": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have a great sleep routine!"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "素晴らしい睡眠ルーティンですね！"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Harika bir uyku rutininiz var!"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harika bir uyku rutininiz var!"
           }
         }
       }
     },
-    "analytics.consistency.improveRoutine" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Work on more regular sleep hours"
+    "analytics.consistency.improveRoutine": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work on more regular sleep hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もっと規則的な睡眠時間を心がけましょう"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daha düzenli uyku saatleri için çalışın"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha düzenli uyku saatleri için çalışın"
           }
         }
       }
     },
-    "analytics.consistency.scoreUnit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Points"
+    "analytics.consistency.scoreUnit": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Points"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ポイント"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puan"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puan"
           }
         }
       }
     },
-    "analytics.consistency.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Schedule Consistency"
+    "analytics.consistency.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Schedule Consistency"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Düzeni Tutarlılığı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スケジュールの一貫性"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Düzeni Tutarlılığı"
+          }
         }
       }
     },
-    "analytics.consistencyTrend.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Higher consistency scores indicate more regular sleep timing. The shaded area shows normal variation. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+    "analytics.consistencyTrend.explanation.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Higher consistency scores indicate more regular sleep timing. The shaded area shows normal variation. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一貫性スコアが高いほど、睡眠タイミングが規則的であることを示します。網掛け部分は正常な変動を示します。最適な多相睡眠適応のためには、80%以上のスコアを目指しましょう。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüksek tutarlılık skorları daha düzenli uyku zamanlamasını gösterir. Gölgeli alan normal varyasyonu gösterir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüksek tutarlılık skorları daha düzenli uyku zamanlamasını gösterir. Gölgeli alan normal varyasyonu gösterir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
           }
         }
       }
     },
-    "analytics.consistencyTrend.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Understanding Consistency"
+    "analytics.consistencyTrend.explanation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Understanding Consistency"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一貫性を理解する"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tutarlılığı Anlamak"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutarlılığı Anlamak"
           }
         }
       }
     },
-    "analytics.consistencyTrend.lowerBound" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lower Bound"
+    "analytics.consistencyTrend.lowerBound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lower Bound"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alt Sınır"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下限"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alt Sınır"
+          }
         }
       }
     },
-    "analytics.consistencyTrend.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily consistency score with deviation bands"
+    "analytics.consistencyTrend.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily consistency score with deviation bands"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sapma bantları ile günlük tutarlılık skoru"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏差バンド付き日次一貫性スコア"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sapma bantları ile günlük tutarlılık skoru"
+          }
         }
       }
     },
-    "analytics.consistencyTrend.target" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Target"
+    "analytics.consistencyTrend.target": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "目標"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hedef"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hedef"
           }
         }
       }
     },
-    "analytics.consistencyTrend.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Consistency Trend"
+    "analytics.consistencyTrend.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Consistency Trend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠一貫性トレンド"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Tutarlılığı Trendi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Tutarlılığı Trendi"
           }
         }
       }
     },
-    "analytics.consistencyTrend.upperBound" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upper Bound"
+    "analytics.consistencyTrend.upperBound": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upper Bound"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上限"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üst Sınır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Üst Sınır"
           }
         }
       }
     },
-    "analytics.dailyAverage" : {
-      "comment" : "Daily average sleep time metric title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Average"
+    "analytics.dailyAverage": {
+      "comment": "Daily average sleep time metric title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Average"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük Ortalama"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1日の平均"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük Ortalama"
+          }
         }
       }
     },
-    "analytics.heatMap.dayLabel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
+    "analytics.heatMap.dayLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün"
+          }
         }
       }
     },
-    "analytics.heatMap.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Each row represents a day, columns show hours (0-23). Colors indicate sleep states: dark for core sleep, medium for naps, light for rest periods."
+    "analytics.heatMap.explanation.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each row represents a day, columns show hours (0-23). Colors indicate sleep states: dark for core sleep, medium for naps, light for rest periods."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "各行は1日を表し、列は時間（0-23）を示します。色は睡眠状態を示します：濃い色はコア睡眠、中間色は仮眠、薄い色は休息期間です。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her satır bir günü, sütunlar saatleri (0-23) gösterir. Renkler uyku durumlarını belirtir: koyu ana uyku, orta şekerleme, açık dinlenme dönemleri."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her satır bir günü, sütunlar saatleri (0-23) gösterir. Renkler uyku durumlarını belirtir: koyu ana uyku, orta şekerleme, açık dinlenme dönemleri."
           }
         }
       }
     },
-    "analytics.heatMap.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How to Read"
+    "analytics.heatMap.explanation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How to Read"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読み方"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nasıl Okunur"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nasıl Okunur"
           }
         }
       }
     },
-    "analytics.heatMap.legend.awake" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Awake"
+    "analytics.heatMap.legend.awake": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Awake"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyanık"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覚醒"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyanık"
+          }
         }
       }
     },
-    "analytics.heatMap.legend.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
+    "analytics.heatMap.legend.core": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
           }
         }
       }
     },
-    "analytics.heatMap.legend.light" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Light Sleep"
+    "analytics.heatMap.legend.light": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "浅い睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hafif Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafif Uyku"
           }
         }
       }
     },
-    "analytics.heatMap.legend.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "analytics.heatMap.legend.nap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
           }
         }
       }
     },
-    "analytics.heatMap.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "24-hour sleep pattern visualization"
+    "analytics.heatMap.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24-hour sleep pattern visualization"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "24 saatlik uyku deseni görselleştirmesi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24時間の睡眠パターンの可視化"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 saatlik uyku deseni görselleştirmesi"
+          }
         }
       }
     },
-    "analytics.heatMap.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Heat Map"
+    "analytics.heatMap.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Heat Map"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Isı Haritası"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠ヒートマップ"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Isı Haritası"
+          }
         }
       }
     },
-    "analytics.heatMap.tooltip.core" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core: %.1fh"
+    "analytics.heatMap.tooltip.core": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana: %.1fs"
           }
         }
       }
     },
-    "analytics.heatMap.tooltip.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap: %.1fh"
+    "analytics.heatMap.tooltip.nap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme: %.1fs"
           }
         }
       }
     },
-    "analytics.heatMap.tooltip.score" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Score: %.1f"
+    "analytics.heatMap.tooltip.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score: %.1f"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スコア: %.1f"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puan: %.1f"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puan: %.1f"
           }
         }
       }
     },
-    "analytics.heatMap.tooltip.total" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
+    "analytics.heatMap.tooltip.total": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %.1fh"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計: %.1f時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam: %.1fs"
+          }
         }
       }
     },
-    "analytics.insufficientData.button" : {
-      "comment" : "Insufficient data button title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "View History"
+    "analytics.insufficientData.button": {
+      "comment": "Insufficient data button title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View History"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "履歴を見る"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geçmişi Görüntüle"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmişi Görüntüle"
           }
         }
       }
     },
-    "analytics.insufficientData.message" : {
-      "comment" : "Insufficient data message",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Not enough sleep data available for analysis."
+    "analytics.insufficientData.message": {
+      "comment": "Insufficient data message",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough sleep data available for analysis."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分析に十分な睡眠データがありません。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Analiz için yeterli uyku verisi yok."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analiz için yeterli uyku verisi yok."
           }
         }
       }
     },
-    "analytics.insufficientData.title" : {
-      "comment" : "Insufficient data title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Insufficient Data"
+    "analytics.insufficientData.title": {
+      "comment": "Insufficient data title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insufficient Data"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yetersiz Veri"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データ不足"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yetersiz Veri"
+          }
         }
       }
     },
-    "analytics.loading" : {
-      "comment" : "Loading indicator text",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading..."
+    "analytics.loading": {
+      "comment": "Loading indicator text",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yükleniyor..."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "読み込み中..."
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yükleniyor..."
+          }
         }
       }
     },
-    "analytics.premium.alert.cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
+    "analytics.premium.alert.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İptal"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İptal"
           }
         }
       }
     },
-    "analytics.premium.alert.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This feature is available with Premium subscription. Upgrade to unlock detailed analytics and insights."
+    "analytics.premium.alert.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This feature is available with Premium subscription. Upgrade to unlock detailed analytics and insights."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この機能はプレミアムサブスクリプションで利用できます。アップグレードして、詳細な分析とインサイトをアンロックしましょう。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu özellik Premium abonelik ile kullanılabilir. Detaylı analitik ve içgörüleri açmak için yükseltin."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu özellik Premium abonelik ile kullanılabilir. Detaylı analitik ve içgörüleri açmak için yükseltin."
           }
         }
       }
     },
-    "analytics.premium.alert.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Feature"
+    "analytics.premium.alert.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Feature"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアム機能"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Özellik"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Özellik"
           }
         }
       }
     },
-    "analytics.premium.alert.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade Now"
+    "analytics.premium.alert.upgrade": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upgrade Now"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şimdi Yükseltin"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今すぐアップグレード"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi Yükseltin"
+          }
         }
       }
     },
-    "analytics.premium.breakdownDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep component breakdown with interactive pie charts"
+    "analytics.premium.breakdownDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep component breakdown with interactive pie charts"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etkileşimli pasta grafikleri ile uyku bileşeni dağılımı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "インタラクティブな円グラフによる睡眠構成要素の内訳"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkileşimli pasta grafikleri ile uyku bileşeni dağılımı"
+          }
         }
       }
     },
-    "analytics.premium.consistencyDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep consistency analysis and routine optimization"
+    "analytics.premium.consistencyDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep consistency analysis and routine optimization"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の一貫性分析とルーティンの最適化"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku tutarlılığı analizi ve rutin optimizasyonu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku tutarlılığı analizi ve rutin optimizasyonu"
           }
         }
       }
     },
-    "analytics.premium.qualityDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detailed sleep quality analysis with distribution charts"
+    "analytics.premium.qualityDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detailed sleep quality analysis with distribution charts"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分布図付きの詳細な睡眠の質分析"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dağılım grafikleri ile detaylı uyku kalitesi analizi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dağılım grafikleri ile detaylı uyku kalitesi analizi"
           }
         }
       }
     },
-    "analytics.premium.required" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Required"
+    "analytics.premium.required": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Required"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium Gerekli"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムが必要です"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium Gerekli"
+          }
         }
       }
     },
-    "analytics.premium.timeGainedDescription" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Track time gained from polyphasic sleep with activity suggestions"
+    "analytics.premium.timeGainedDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track time gained from polyphasic sleep with activity suggestions"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "活動の提案付きで多相睡眠から得られた時間を追跡"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktivite önerileri ile polifazik uykudan kazanılan zamanı takip edin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktivite önerileri ile polifazik uykudan kazanılan zamanı takip edin"
           }
         }
       }
     },
-    "analytics.premium.unlockMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unlock Premium for detailed analytics"
+    "analytics.premium.unlockMessage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Premium for detailed analytics"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムをアンロックして詳細な分析を見る"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaylı analitik için Premium'u açın"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detaylı analitik için Premium'u açın"
           }
         }
       }
     },
-    "analytics.premium.upgrade" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Upgrade to Premium"
+    "analytics.premium.upgrade": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upgrade to Premium"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレミアムにアップグレード"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Premium'a Yükseltin"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium'a Yükseltin"
           }
         }
       }
     },
-    "analytics.previousPeriodComparison.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compared to previous period:"
+    "analytics.previousPeriodComparison.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compared to previous period:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Önceki döneme göre:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "前の期間との比較："
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önceki döneme göre:"
+          }
         }
       }
     },
-    "analytics.qualityConsistency.deviation" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deviation"
+    "analytics.qualityConsistency.deviation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deviation"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sapma"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "偏差"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sapma"
+          }
         }
       }
     },
-    "analytics.qualityConsistency.quality" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality"
+    "analytics.qualityConsistency.quality": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quality"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalite"
           }
         }
       }
     },
-    "analytics.qualityConsistencyCorrelation.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This scatter plot shows how sleep quality relates to timing consistency. Points closer to the bottom-left indicate better quality with more consistent timing. The trend line shows overall correlation."
+    "analytics.qualityConsistencyCorrelation.explanation.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This scatter plot shows how sleep quality relates to timing consistency. Points closer to the bottom-left indicate better quality with more consistent timing. The trend line shows overall correlation."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この散布図は、睡眠の質とタイミングの一貫性の関係を示しています。左下に近い点ほど、タイミングがより一貫しており質が高いことを示します。トレンドラインは全体的な相関関係を示しています。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu dağılım grafiği uyku kalitesinin zamanlama tutarlılığı ile nasıl ilişkili olduğunu gösterir. Sol alt köşeye yakın noktalar daha tutarlı zamanlamayla daha iyi kaliteyi gösterir. Trend çizgisi genel korelasyonu gösterir."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu dağılım grafiği uyku kalitesinin zamanlama tutarlılığı ile nasıl ilişkili olduğunu gösterir. Sol alt köşeye yakın noktalar daha tutarlı zamanlamayla daha iyi kaliteyi gösterir. Trend çizgisi genel korelasyonu gösterir."
           }
         }
       }
     },
-    "analytics.qualityConsistencyCorrelation.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correlation Insights"
+    "analytics.qualityConsistencyCorrelation.explanation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correlation Insights"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "相関のインサイト"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Korelasyon İçgörüleri"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korelasyon İçgörüleri"
           }
         }
       }
     },
-    "analytics.qualityConsistencyCorrelation.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Relationship between sleep quality and schedule consistency"
+    "analytics.qualityConsistencyCorrelation.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relationship between sleep quality and schedule consistency"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku kalitesi ve program tutarlılığı arasındaki ilişki"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の質とスケジュールの一貫性の関係"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku kalitesi ve program tutarlılığı arasındaki ilişki"
+          }
         }
       }
     },
-    "analytics.qualityConsistencyCorrelation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality vs Consistency"
+    "analytics.qualityConsistencyCorrelation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quality vs Consistency"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質 vs 一貫性"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite ve Tutarlılık"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalite ve Tutarlılık"
           }
         }
       }
     },
-    "analytics.qualityDistribution.daysCount" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(%d days)"
+    "analytics.qualityDistribution.daysCount": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%d days)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（%d日）"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(%d gün)"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%d gün)"
           }
         }
       }
     },
-    "analytics.qualityDistribution.percentage" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.0f%%"
+    "analytics.qualityDistribution.percentage": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%%%.0f"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%%%.0f"
+          }
         }
       }
     },
-    "analytics.qualityDistribution.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Quality Distribution"
+    "analytics.qualityDistribution.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Quality Distribution"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kalitesi Dağılımı"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の質分布"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Kalitesi Dağılımı"
+          }
         }
       }
     },
-    "analytics.sleepBreakdown.core" : {
-      "comment" : "Core sleep type",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core"
+    "analytics.sleepBreakdown.core": {
+      "comment": "Core sleep type",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.dailyLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily:"
+    "analytics.sleepBreakdown.dailyLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日："
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük:"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük:"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.dailyValue" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f h"
+    "analytics.sleepBreakdown.dailyValue": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f h"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f s"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f s"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.daysCountLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Days:"
+    "analytics.sleepBreakdown.daysCountLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün sayısı:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日数："
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün sayısı:"
+          }
         }
       }
     },
-    "analytics.sleepBreakdown.hoursPerDay" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "hours/day"
+    "analytics.sleepBreakdown.hoursPerDay": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hours/day"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "saat/gün"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時間/日"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saat/gün"
+          }
         }
       }
     },
-    "analytics.sleepBreakdown.infoBox.message" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your core sleep and nap balance can help optimize your polyphasic sleep schedule. The ideal distribution is 70-80% core sleep, 20-30% naps."
+    "analytics.sleepBreakdown.infoBox.message": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your core sleep and nap balance can help optimize your polyphasic sleep schedule. The ideal distribution is 70-80% core sleep, 20-30% naps."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア睡眠と仮眠のバランスは、多相睡眠スケジュールの最適化に役立ちます。理想的な配分は、コア睡眠70-80%、仮眠20-30%です。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana uyku ve şekerleme dengeniz polyphasic uyku düzeninizi optimize etmenize yardımcı olabilir. İdeal dağılım %70-80 ana uyku, %20-30 şekerleme şeklindedir."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana uyku ve şekerleme dengeniz polyphasic uyku düzeninizi optimize etmenize yardımcı olabilir. İdeal dağılım %70-80 ana uyku, %20-30 şekerleme şeklindedir."
           }
         }
       }
     },
-    "analytics.sleepBreakdown.infoBox.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
+    "analytics.sleepBreakdown.infoBox.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "情報"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bilgi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilgi"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.nap" : {
-      "comment" : "Nap sleep type",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "analytics.sleepBreakdown.nap": {
+      "comment": "Nap sleep type",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
+          }
         }
       }
     },
-    "analytics.sleepBreakdown.percentageLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Percentage:"
+    "analytics.sleepBreakdown.percentageLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percentage:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "パーセンテージ："
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüzde:"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüzde:"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.percentageValue" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.0f%%"
+    "analytics.sleepBreakdown.percentageValue": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%%%.0f"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%%%.0f"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.title" : {
-      "comment" : "Sleep breakdown section title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Breakdown"
+    "analytics.sleepBreakdown.title": {
+      "comment": "Sleep breakdown section title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Breakdown"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の内訳"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Dağılımı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Dağılımı"
           }
         }
       }
     },
-    "analytics.sleepBreakdown.totalLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total:"
+    "analytics.sleepBreakdown.totalLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計："
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam:"
+          }
         }
       }
     },
-    "analytics.sleepBreakdown.totalValue" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f h"
+    "analytics.sleepBreakdown.totalValue": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f h"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f s"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f s"
+          }
         }
       }
     },
-    "analytics.sleepComponentsTrend.core" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core Sleep"
+    "analytics.sleepComponentsTrend.core": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core Sleep"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア睡眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana Uyku"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana Uyku"
           }
         }
       }
     },
-    "analytics.sleepComponentsTrend.nap" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap"
+    "analytics.sleepComponentsTrend.nap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme"
           }
         }
       }
     },
-    "analytics.sleepComponentsTrend.nap1" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap 1"
+    "analytics.sleepComponentsTrend.nap1": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap 1"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠1"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme 1"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme 1"
           }
         }
       }
     },
-    "analytics.sleepComponentsTrend.nap2" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap 2"
+    "analytics.sleepComponentsTrend.nap2": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap 2"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme 2"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠2"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme 2"
+          }
         }
       }
     },
-    "analytics.sleepComponentsTrend.score" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Score"
+    "analytics.sleepComponentsTrend.score": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠スコア"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Skoru"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Skoru"
           }
         }
       }
     },
-    "analytics.sleepComponentsTrend.subtitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Last 7 days breakdown"
+    "analytics.sleepComponentsTrend.subtitle": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 7 days breakdown"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "過去7日間の内訳"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son 7 günün dağılımı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Son 7 günün dağılımı"
           }
         }
       }
     },
-    "analytics.sleepComponentsTrend.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Components Trend"
+    "analytics.sleepComponentsTrend.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Components Trend"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Bileşenleri Trendi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠コンポーネントのトレンド"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Bileşenleri Trendi"
+          }
         }
       }
     },
-    "analytics.sleepDebt.balance" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Balance"
+    "analytics.sleepDebt.balance": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Denge"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バランス"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denge"
+          }
         }
       }
     },
-    "analytics.sleepDebt.cumulative" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cumulative"
+    "analytics.sleepDebt.cumulative": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumulative"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "累積"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kümülatif"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kümülatif"
           }
         }
       }
     },
-    "analytics.sleepDebt.day" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Day"
+    "analytics.sleepDebt.day": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün"
           }
         }
       }
     },
-    "analytics.sleepDebt.explanation.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep debt accumulates when you get less sleep than needed. Red areas show debt, green shows surplus. Persistent debt can impact cognitive performance and adaptation to polyphasic schedules."
+    "analytics.sleepDebt.explanation.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep debt accumulates when you get less sleep than needed. Red areas show debt, green shows surplus. Persistent debt can impact cognitive performance and adaptation to polyphasic schedules."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠負債は、必要な睡眠時間よりも少ない睡眠を取ると蓄積されます。赤い部分は負債を、緑の部分は余剰を示します。持続的な負債は、認知能力や多相睡眠スケジュールへの適応に影響を与える可能性があります。"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku borcu, ihtiyacınızdan az uyuduğunuzda birikir. Kırmızı alanlar borcu, yeşil fazlayı gösterir. Sürekli borç bilişsel performansı ve polifazik programlara adaptasyonu etkileyebilir."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku borcu, ihtiyacınızdan az uyuduğunuzda birikir. Kırmızı alanlar borcu, yeşil fazlayı gösterir. Sürekli borç bilişsel performansı ve polifazik programlara adaptasyonu etkileyebilir."
           }
         }
       }
     },
-    "analytics.sleepDebt.explanation.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt Impact"
+    "analytics.sleepDebt.explanation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Debt Impact"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu Etkisi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠負債の影響"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Borcu Etkisi"
+          }
         }
       }
     },
-    "analytics.sleepDebt.legend.daily" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily Change"
+    "analytics.sleepDebt.legend.daily": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily Change"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük Değişim"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日々の変化"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük Değişim"
+          }
         }
       }
     },
-    "analytics.sleepDebt.legend.debt" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt"
+    "analytics.sleepDebt.legend.debt": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Debt"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠負債"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Borcu"
           }
         }
       }
     },
-    "analytics.sleepDebt.legend.surplus" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Surplus"
+    "analytics.sleepDebt.legend.surplus": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Surplus"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠余剰"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Fazlası"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Fazlası"
           }
         }
       }
     },
-    "analytics.sleepDebt.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cumulative sleep debt tracking over time"
+    "analytics.sleepDebt.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumulative sleep debt tracking over time"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaman içinde kümülatif uyku borcu takibi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時間経過による累積睡眠負債の追跡"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaman içinde kümülatif uyku borcu takibi"
+          }
         }
       }
     },
-    "analytics.sleepDebt.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Debt Analysis"
+    "analytics.sleepDebt.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Debt Analysis"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠負債分析"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Borcu Analizi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Borcu Analizi"
           }
         }
       }
     },
-    "analytics.sleepDebt.value" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Value"
+    "analytics.sleepDebt.value": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "値"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Değer"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Değer"
           }
         }
       }
     },
-    "analytics.sleepDebt.zero" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zero"
+    "analytics.sleepDebt.zero": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zero"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ゼロ"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sıfır"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıfır"
           }
         }
       }
     },
-    "analytics.sleepGoal.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Goal"
+    "analytics.sleepGoal.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Goal"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Hedefi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠目標"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Hedefi"
+          }
         }
       }
     },
-    "analytics.sleepQuality.average" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Average"
+    "analytics.sleepQuality.average": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ortalama"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "平均"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ortalama"
+          }
         }
       }
     },
-    "analytics.sleepQuality.bad" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Very Poor"
+    "analytics.sleepQuality.bad": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very Poor"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "非常に悪い"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çok Kötü"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çok Kötü"
           }
         }
       }
     },
-    "analytics.sleepQuality.excellent" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excellent"
+    "analytics.sleepQuality.excellent": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excellent"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "素晴らしい"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mükemmel"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mükemmel"
           }
         }
       }
     },
-    "analytics.sleepQuality.good" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Good"
+    "analytics.sleepQuality.good": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "良い"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İyi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İyi"
           }
         }
       }
     },
-    "analytics.sleepQuality.poor" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poor"
+    "analytics.sleepQuality.poor": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poor"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kötü"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "悪い"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kötü"
+          }
         }
       }
     },
-    "analytics.sleepQuality.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Quality:"
+    "analytics.sleepQuality.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Quality:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の質："
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kalitesi:"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Kalitesi:"
           }
         }
       }
     },
-    "analytics.sleepQualityTrend.deteriorating" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deteriorating"
+    "analytics.sleepQualityTrend.deteriorating": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deteriorating"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "悪化中"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kötüleşiyor"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kötüleşiyor"
           }
         }
       }
     },
-    "analytics.sleepQualityTrend.improvementRate" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " (%.0f%%)"
+    "analytics.sleepQualityTrend.improvementRate": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " (%.0f%%)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " (%%%.0f)"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " (%.0f%%)"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " (%%%.0f)"
+          }
         }
       }
     },
-    "analytics.sleepQualityTrend.improving" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Improving"
+    "analytics.sleepQualityTrend.improving": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Improving"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İyileşiyor"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "改善中"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İyileşiyor"
+          }
         }
       }
     },
-    "analytics.sleepQualityTrend.stable" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stable"
+    "analytics.sleepQualityTrend.stable": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stable"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安定"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stabil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stabil"
           }
         }
       }
     },
-    "analytics.sleepQualityTrend.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trend:"
+    "analytics.sleepQualityTrend.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trend:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "トレンド："
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trend:"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trend:"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.excellentTarget" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excellent (90%)"
+    "analytics.sleepQualityTrendChart.excellentTarget": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excellent (90%)"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "素晴らしい (90%)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mükemmel (90%)"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mükemmel (90%)"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.goodTarget" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Target (80%)"
+    "analytics.sleepQualityTrendChart.goodTarget": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Target (80%)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hedef (80%)"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "目標 (80%)"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hedef (80%)"
+          }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.infoMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "High quality scores are associated with more regular sleep times and better recovery. Aim for scores above 80% for optimal polyphasic sleep adaptation."
+    "analytics.sleepQualityTrendChart.infoMessage": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "High quality scores are associated with more regular sleep times and better recovery. Aim for scores above 80% for optimal polyphasic sleep adaptation."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質の高いスコアは、より規則的な睡眠時間とより良い回復に関連しています。最適な多相睡眠の適応のために、80%以上のスコアを目指しましょう。"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüksek kalite skorları daha düzenli uyku zamanlarıyla ve daha iyi iyileşmeyle ilişkilidir. Optimal polifazik uyku adaptasyonu için %80'in üzerinde skorlar hedefleyin."
+          }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.infoTitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Understanding Quality"
+    "analytics.sleepQualityTrendChart.infoTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Understanding Quality"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質を理解する"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kaliteyi Anlamak"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaliteyi Anlamak"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily sleep quality scores over time"
+    "analytics.sleepQualityTrendChart.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily sleep quality scores over time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日々の睡眠の質のスコアの推移"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük uyku kalitesi puanlarınızın zamana göre değişimi"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Quality Trend"
+    "analytics.sleepQualityTrendChart.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Quality Trend"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Kalitesi Trendi"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠の質のトレンド"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Kalitesi Trendi"
+          }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.tooltip.category" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Category"
+    "analytics.sleepQualityTrendChart.tooltip.category": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カテゴリ"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategori"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategori"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.tooltip.hoursFormat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f hours"
+    "analytics.sleepQualityTrendChart.tooltip.hoursFormat": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f saat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f saat"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.tooltip.qualityScore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quality Score"
+    "analytics.sleepQualityTrendChart.tooltip.qualityScore": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quality Score"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "質のスコア"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalite Puanı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kalite Puanı"
           }
         }
       }
     },
-    "analytics.sleepQualityTrendChart.tooltip.totalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep:"
+    "analytics.sleepQualityTrendChart.tooltip.totalSleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計睡眠："
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku:"
+          }
         }
       }
     },
-    "analytics.sleepTrends.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Trends"
+    "analytics.sleepTrends.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Trends"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Trendleri"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠トレンド"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Trendleri"
+          }
         }
       }
     },
-    "analytics.summary.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Summary"
+    "analytics.summary.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Summary"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "概要"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Özet"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Özet"
           }
         }
       }
     },
-    "analytics.timeGained.actionsTitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What can you do with this time?"
+    "analytics.timeGained.actionsTitle": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What can you do with this time?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この時間で何ができますか？"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu zamanla neler yapabilirsiniz?"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu zamanla neler yapabilirsiniz?"
           }
         }
       }
     },
-    "analytics.timeGained.activity.movies" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Watch %d movies"
+    "analytics.timeGained.activity.movies": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch %d movies"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "映画を%d本観る"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d film izlemek"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d film izlemek"
           }
         }
       }
     },
-    "analytics.timeGained.activity.projects" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Complete %d projects"
+    "analytics.timeGained.activity.projects": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete %d projects"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d proje tamamlamak"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d個のプロジェクトを完了させる"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d proje tamamlamak"
+          }
         }
       }
     },
-    "analytics.timeGained.activity.reading" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Read %d pages"
+    "analytics.timeGained.activity.reading": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read %d pages"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%dページ読む"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d sayfa kitap okumak"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d sayfa kitap okumak"
           }
         }
       }
     },
-    "analytics.timeGained.activity.walking" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Walk %d km"
+    "analytics.timeGained.activity.walking": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walk %d km"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%dキロ歩く"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d km yürümek"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d km yürümek"
           }
         }
       }
     },
-    "analytics.timeGained.description" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Extra time gained compared to traditional sleep schedule (8 hours per day)"
+    "analytics.timeGained.description": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Extra time gained compared to traditional sleep schedule (8 hours per day)"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geleneksel uyku düzenine (günde 8 saat) kıyasla kazandığınız extra zaman"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "従来の睡眠スケジュール（1日8時間）と比較して得られた余分な時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geleneksel uyku düzenine (günde 8 saat) kıyasla kazandığınız extra zaman"
+          }
         }
       }
     },
-    "analytics.timeGained.efficiency" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Efficiency:"
+    "analytics.timeGained.efficiency": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Efficiency:"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verimlilik:"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "効率："
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verimlilik:"
+          }
         }
       }
     },
-    "analytics.timeGained.efficiencyValue" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.0f%%"
+    "analytics.timeGained.efficiencyValue": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.0f%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%%%.0f"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%%%.0f"
           }
         }
       }
     },
-    "analytics.timeGained.hoursUnit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "hours"
+    "analytics.timeGained.hoursUnit": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "saat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saat"
           }
         }
       }
     },
-    "analytics.timeGained.note1" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1 page per minute"
+    "analytics.timeGained.note1": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 page per minute"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1分あたり1ページ"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dakikada 1 sayfa"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dakikada 1 sayfa"
           }
         }
       }
     },
-    "analytics.timeGained.note2" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 km/h pace"
+    "analytics.timeGained.note2": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 km/h pace"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "saatte 5 km hızla"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時速5kmのペース"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saatte 5 km hızla"
+          }
         }
       }
     },
-    "analytics.timeGained.note3" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2 hours per movie"
+    "analytics.timeGained.note3": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 hours per movie"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "film başına 2 saat"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "映画1本あたり2時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "film başına 2 saat"
+          }
         }
       }
     },
-    "analytics.timeGained.note4" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2 days per project"
+    "analytics.timeGained.note4": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 days per project"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロジェクト1件あたり2日"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "proje başına 2 gün"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "proje başına 2 gün"
           }
         }
       }
     },
-    "analytics.timeGained.subtitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time Gained"
+    "analytics.timeGained.subtitle": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time Gained"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "得られた時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kazanılan Zaman"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kazanılan Zaman"
           }
         }
       }
     },
-    "analytics.timeGained.title" : {
-      "comment" : "Time gained section title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time Gained"
+    "analytics.timeGained.title": {
+      "comment": "Time gained section title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time Gained"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kazanılan Zaman"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "得られた時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kazanılan Zaman"
+          }
         }
       }
     },
-    "analytics.timeRange.month" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Month"
+    "analytics.timeRange.month": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Month"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ay"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ay"
           }
         }
       }
     },
-    "analytics.timeRange.quarter" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quarter"
+    "analytics.timeRange.quarter": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quarter"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "四半期"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Çeyrek"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çeyrek"
           }
         }
       }
     },
-    "analytics.timeRange.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time Range"
+    "analytics.timeRange.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time Range"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "期間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaman Aralığı"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaman Aralığı"
           }
         }
       }
     },
-    "analytics.timeRange.week" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Week"
+    "analytics.timeRange.week": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Week"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hafta"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "週"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafta"
+          }
         }
       }
     },
-    "analytics.timeRange.year" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Year"
+    "analytics.timeRange.year": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Year"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yıl"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yıl"
+          }
         }
       }
     },
-    "analytics.tooltip.barChart.coreLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core: %.1fh"
+    "analytics.tooltip.barChart.coreLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.barChart.nap1Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap1: %.1fh"
+    "analytics.tooltip.barChart.nap1Label": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap1: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠1: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek1: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şek1: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.barChart.nap2Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap2: %.1fh"
+    "analytics.tooltip.barChart.nap2Label": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap2: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠2: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek2: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şek2: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.barChart.totalLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
+    "analytics.tooltip.barChart.totalLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %.1fh"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計: %.1f時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam: %.1fs"
+          }
         }
       }
     },
-    "analytics.tooltip.coreLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Core: %.1fh"
+    "analytics.tooltip.coreLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コア: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ana: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.dailyHoursLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily: %.1fh"
+    "analytics.tooltip.dailyHoursLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Günlük: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günlük: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.daysLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Days: %d"
+    "analytics.tooltip.daysLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days: %d"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gün: %d"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日数: %d"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gün: %d"
+          }
         }
       }
     },
-    "analytics.tooltip.nap1Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap1: %.1fh"
+    "analytics.tooltip.nap1Label": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap1: %.1fh"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek1: %.1fs"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠1: %.1f時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şek1: %.1fs"
+          }
         }
       }
     },
-    "analytics.tooltip.nap2Label" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap2: %.1fh"
+    "analytics.tooltip.nap2Label": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap2: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠2: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şek2: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şek2: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.napLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nap: %.1fh"
+    "analytics.tooltip.napLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nap: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仮眠: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Şekerleme: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şekerleme: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.percentageLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Percentage: %.0f%%"
+    "analytics.tooltip.percentageLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percentage: %.0f%%"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "パーセンテージ: %.0f%%"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüzde: %%%.0f"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüzde: %%%.0f"
           }
         }
       }
     },
-    "analytics.tooltip.scoreLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Score: %.1f/5"
+    "analytics.tooltip.scoreLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score: %.1f/5"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skor: %.1f/5"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スコア: %.1f/5"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skor: %.1f/5"
+          }
         }
       }
     },
-    "analytics.tooltip.totalHoursLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
+    "analytics.tooltip.totalHoursLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %.1fh"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計: %.1f時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam: %.1fs"
+          }
         }
       }
     },
-    "analytics.tooltip.totalLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total: %.1fh"
+    "analytics.tooltip.totalLabel": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %.1fh"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計: %.1f時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam: %.1fs"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam: %.1fs"
           }
         }
       }
     },
-    "analytics.tooltip.totalSleep" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep:"
+    "analytics.tooltip.totalSleep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計睡眠："
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku:"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku:"
           }
         }
       }
     },
-    "analytics.totalSleep" : {
-      "comment" : "Total sleep time metric title",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep"
+    "analytics.totalSleep": {
+      "comment": "Total sleep time metric title",
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計睡眠時間"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku"
+          }
         }
       }
     },
-    "analytics.totalSleepTrend.goal" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Goal"
+    "analytics.totalSleepTrend.goal": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goal"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "目標"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hedef"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hedef"
           }
         }
       }
     },
-    "analytics.totalSleepTrend.subtitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daily sleep duration over time"
+    "analytics.totalSleepTrend.subtitle": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily sleep duration over time"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "日々の睡眠時間の推移"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaman içinde günlük uyku süresi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaman içinde günlük uyku süresi"
           }
         }
       }
     },
-    "analytics.totalSleepTrend.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Total Sleep Duration"
+    "analytics.totalSleepTrend.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total Sleep Duration"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "総睡眠時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toplam Uyku Süresi"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam Uyku Süresi"
           }
         }
       }
     },
-    "analytics.trend.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sleep Trends"
+    "analytics.trend.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep Trends"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uyku Trendleri"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "睡眠トレンド"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku Trendleri"
+          }
         }
       }
     },
-    "analytics.updating" : {
-      "comment" : "Updating indicator text",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Updating..."
+    "analytics.updating": {
+      "comment": "Updating indicator text",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating..."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Güncelleniyor..."
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新中..."
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güncelleniyor..."
+          }
         }
       }
     },
-    "analytics.value.hours" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f hours"
+    "analytics.value.hours": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f hours"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f 時間"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f saat"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f saat"
           }
         }
       }
     },
-    "analytics.value.scoreOf5" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f/5"
+    "analytics.value.scoreOf5": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f/5"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f/5"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%.1f/5"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.1f/5"
           }
         }
       }
     },
-    "analytics.variability.high" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "High"
+    "analytics.variability.high": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "High"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高い"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yüksek"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yüksek"
           }
         }
       }
     },
-    "analytics.variability.moderate" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moderate"
+    "analytics.variability.moderate": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moderate"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta"
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "中程度"
           }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orta"
+          }
         }
       }
     },
-    "analytics.variability.stable" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stable"
+    "analytics.variability.stable": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stable"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "安定"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stabil"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stabil"
           }
         }
       }
     },
-    "analytics.variability.title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Variability"
+    "analytics.variability.title": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Variability"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "変動性"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Değişkenlik"
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Değişkenlik"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

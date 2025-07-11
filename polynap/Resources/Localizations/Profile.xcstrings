@@ -10,6 +10,12 @@
             "value" : "Contact"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お問い合わせ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contact Us"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お問い合わせ"
           }
         },
         "tr" : {
@@ -44,6 +56,12 @@
             "value" : "If you have any questions or concerns about this disclaimer, please contact us at support@polynap.app"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この免責事項に関するご質問やご不明な点がございましたら、support@polynap.app までお問い合わせください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap is designed to help users track and manage their polyphasic sleep schedules. The information provided by this application is for general informational purposes only."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNapは、ユーザーが多相睡眠スケジュールを追跡・管理するのを支援するために設計されています。このアプリケーションによって提供される情報は、一般的な情報提供のみを目的としています。"
           }
         },
         "tr" : {
@@ -78,6 +102,12 @@
             "value" : "General Warning"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般的な警告"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Limitation of Liability"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "責任の制限"
           }
         },
         "tr" : {
@@ -112,6 +148,12 @@
             "value" : "The developers and contributors of PolyNap shall not be liable for any direct, indirect, incidental, special, consequential or exemplary damages resulting from your use of the application or any sleep schedule you implement based on information provided by the application."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNapの開発者および貢献者は、アプリケーションの使用、またはアプリケーションが提供する情報に基づいて実施した睡眠スケジュールに起因する、直接的、間接的、付随的、特別、結果的、または懲罰的な損害について一切責任を負いません。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not Medical Advice"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "医療アドバイスではありません"
           }
         },
         "tr" : {
@@ -146,6 +194,12 @@
             "value" : "The content in this application is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition or sleep-related issues."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリケーションのコンテンツは、専門的な医療アドバイス、診断、または治療の代わりとなることを意図したものではありません。病状や睡眠関連の問題に関して質問がある場合は、必ず医師または他の資格のある医療提供者の助言を求めてください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Important information and terms of use"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重要なお知らせと利用規約"
           }
         },
         "tr" : {
@@ -180,10 +240,361 @@
             "value" : "Disclaimer"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免責事項"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sorumluluk Reddi"
+          }
+        }
+      }
+    },
+    "feedback.alert.failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to send feedback. Please try again later."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックの送信に失敗しました。後でもう一度お試しください。"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildirim gönderilemedi. Lütfen daha sonra tekrar deneyin."
+          }
+        }
+      }
+    },
+    "feedback.alert.noMail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please configure a mail account in Settings to send feedback."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送るには、設定でメールアカウントを設定してください。"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildirim göndermek için Ayarlar'da bir mail hesabı yapılandırın."
+          }
+        }
+      }
+    },
+    "feedback.alert.saved" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your feedback has been saved to drafts."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックが下書きに保存されました。"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildiriminiz taslaklara kaydedildi."
+          }
+        }
+      }
+    },
+    "feedback.alert.sent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you! Your feedback has been sent successfully."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ありがとうございます！フィードバックの送信が完了しました。"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teşekkürler! Geri bildiriminiz başarıyla gönderildi."
+          }
+        }
+      }
+    },
+    "feedback.alert.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバック"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri Bildirim"
+          }
+        }
+      }
+    },
+    "feedback.info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your feedback will be sent directly to our development team. We read every message and appreciate your input!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたのフィードバックは開発チームに直接届きます。すべてのメッセージを読んで、ご意見を大切にしています！"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildirimleriniz doğrudan geliştirme ekibimize iletilecektir. Her mesajı okuyor ve katkılarınızı takdir ediyoruz!"
+          }
+        }
+      }
+    },
+    "feedback.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メッセージ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesaj"
+          }
+        }
+      }
+    },
+    "feedback.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Name"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お名前"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İsminiz"
+          }
+        }
+      }
+    },
+    "feedback.name.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your name"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お名前を入力してください"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İsminizi girin"
+          }
+        }
+      }
+    },
+    "feedback.send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Feedback"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送る"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri Bildirim Gönder"
+          }
+        }
+      }
+    },
+    "feedback.settings.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send us your feedback and suggestions"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ご意見やご提案をお聞かせください"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildirimlerinizi ve önerilerinizi gönderin"
+          }
+        }
+      }
+    },
+    "feedback.subject" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subject"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "件名"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konu"
+          }
+        }
+      }
+    },
+    "feedback.subject.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is your feedback about?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どんなことについてのフィードバックですか？"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri bildiriminiz neyle ilgili?"
+          }
+        }
+      }
+    },
+    "feedback.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help us improve PolyNap by sharing your thoughts and suggestions"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの意見や提案を教えて、PolyNapをより良くするお手伝いをしてください"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düşüncelerinizi ve önerilerinizi paylaşarak PolyNap'i geliştirmemize yardımcı olun"
+          }
+        }
+      }
+    },
+    "feedback.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバック"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri Bildirim"
           }
         }
       }
@@ -195,6 +606,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "tr" : {
@@ -214,6 +631,12 @@
             "value" : "Continue"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "続ける"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -231,6 +654,12 @@
             "value" : "Error"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラー"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -243,6 +672,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -265,6 +700,12 @@
             "value" : "Save"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -280,6 +721,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "An unknown error occurred"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不明なエラーが発生しました"
           }
         },
         "tr" : {
@@ -299,6 +746,12 @@
             "value" : "Personal Information"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "個人情報"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -314,6 +767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Answers"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの回答"
           }
         },
         "tr" : {
@@ -333,6 +792,12 @@
             "value" : "Complete the onboarding process to see your personal information here."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングプロセスを完了すると、ここに個人情報が表示されます。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -348,6 +813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Information Available"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情報がありません"
           }
         },
         "tr" : {
@@ -367,6 +838,12 @@
             "value" : "No personal information available. Please complete the onboarding process."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "個人情報はありません。オンボーディングプロセスを完了してください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -382,6 +859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recommended Schedule"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推奨スケジュール"
           }
         },
         "tr" : {
@@ -401,6 +884,12 @@
             "value" : "hours"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時間"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -416,6 +905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your currently selected sleep schedule"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在選択中の睡眠スケジュール"
           }
         },
         "tr" : {
@@ -435,6 +930,12 @@
             "value" : "Current Schedule"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在のスケジュール"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -450,6 +951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your polyphasic sleep journey information"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの多相睡眠の旅の情報"
           }
         },
         "tr" : {
@@ -469,6 +976,12 @@
             "value" : "Personal Information"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "個人情報"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -484,6 +997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total Sleep Hours: %@ hours"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合計睡眠時間: %@時間"
           }
         },
         "tr" : {
@@ -503,6 +1022,12 @@
             "value" : "achievements"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アチーブメント"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -518,6 +1043,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You've successfully completed your polyphasic sleep adaptation! Your body has fully adapted to your new sleep schedule."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多相睡眠への適応、おめでとうございます！あなたの体は新しい睡眠スケジュールに完全に適応しました。"
           }
         },
         "tr" : {
@@ -537,6 +1068,12 @@
             "value" : "🎉 Congratulations! 🎉"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 おめでとうございます！ 🎉"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -552,6 +1089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tap to Celebrate! 🎆"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タップしてお祝いしましょう！ 🎆"
           }
         },
         "tr" : {
@@ -571,6 +1114,12 @@
             "value" : "Completed in %d days"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d日で完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -586,6 +1135,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Congratulations! You've successfully completed your polyphasic sleep adaptation. Your body has adapted to your new sleep schedule. Well done!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おめでとうございます！多相睡眠への適応を無事に完了しました。あなたの体は新しい睡眠スケジュールに適応しました。素晴らしいです！"
           }
         },
         "tr" : {
@@ -605,6 +1160,12 @@
             "value" : "Your polyphasic sleep adaptation journey is complete!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの多相睡眠適応の旅は完了しました！"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -620,6 +1181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎉 Adaptation Completed!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉 適応完了！"
           }
         },
         "tr" : {
@@ -639,6 +1206,12 @@
             "value" : "Day %d / %d"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d日目 / %d日"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -654,6 +1227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d / %d days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d / %d 日"
           }
         },
         "tr" : {
@@ -673,6 +1252,12 @@
             "value" : "Day %d / %d"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d日目 / %d日"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -688,6 +1273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d日"
           }
         },
         "tr" : {
@@ -707,6 +1298,12 @@
             "value" : "Days Remaining"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "残り日数"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -722,6 +1319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation process continues..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応プロセスは継続中です..."
           }
         },
         "tr" : {
@@ -741,6 +1344,12 @@
             "value" : "Select a sleep program to track your adaptation process"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応プロセスを追跡するために睡眠プログラムを選択してください"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -756,6 +1365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Active Program Yet"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだアクティブなプログラムがありません"
           }
         },
         "tr" : {
@@ -775,6 +1390,12 @@
             "value" : "%d%% Completed"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d%% 完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -790,6 +1411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応"
           }
         },
         "tr" : {
@@ -809,6 +1436,12 @@
             "value" : "Adjustment"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "調整"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -824,6 +1457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Advanced"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上級"
           }
         },
         "tr" : {
@@ -843,6 +1482,12 @@
             "value" : "Beginning"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -858,6 +1503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Complete"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
         "tr" : {
@@ -877,6 +1528,12 @@
             "value" : "Day 1 - Beginning"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1日目 - 開始"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -892,6 +1549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Early Adaptation (Days 1-7)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期適応 (1-7日目)"
           }
         },
         "tr" : {
@@ -911,6 +1574,12 @@
             "value" : "Welcome to your polyphasic sleep journey! Your body is starting to adjust to the new schedule. Some fatigue is normal as your circadian rhythm learns the new pattern."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多相睡眠の旅へようこそ！あなたの体は新しいスケジュールに順応し始めています。サーカディアンリズムが新しいパターンを学習するにつれて、多少の疲労は正常です。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -926,6 +1595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Final Adaptation (Days 22-28)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最終適応 (22-28日目)"
           }
         },
         "tr" : {
@@ -945,6 +1620,12 @@
             "value" : "Full Adaptation"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全適応"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -960,6 +1641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Initial Adaptation (Days 2-7)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期適応 (2-7日目)"
           }
         },
         "tr" : {
@@ -979,6 +1666,12 @@
             "value" : "Late Adaptation (Days 15+)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後期適応 (15日目以降)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -994,6 +1687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Excellent progress! Your sleep efficiency is improving significantly. You should feel more refreshed and have better alertness during wake periods."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "素晴らしい進捗です！睡眠効率が大幅に向上しています。起床中、よりすっきりと感じ、覚醒度も高まっているはずです。"
           }
         },
         "tr" : {
@@ -1013,6 +1712,12 @@
             "value" : "Middle Adaptation (Days 8-14)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中期適応 (8-14日目)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1028,6 +1733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You're making progress! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Keep going!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "順調に進んでいます！睡眠の質が向上し始め、仮眠中のREM睡眠への移行が容易になるかもしれません。その調子で頑張ってください！"
           }
         },
         "tr" : {
@@ -1047,6 +1758,12 @@
             "value" : "Unknown"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不明"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1062,6 +1779,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Welcome to your polyphasic sleep journey! Day %d of %d. Today marks the beginning of your adaptation. You might feel tired and groggy as your body starts adjusting to the new schedule. This is completely normal - your circadian rhythm is learning a new pattern."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多相睡眠の旅へようこそ！ %d日目/%d日。今日から適応期間の始まりです。体が新しいスケジュールに慣れ始めるため、疲れやだるさを感じるかもしれませんが、これは全く正常な反応です。あなたの体内時計が新しいリズムを学んでいる証拠です。"
           }
         },
         "tr" : {
@@ -1081,6 +1804,12 @@
             "value" : "You're in the challenging adjustment phase (day %d, %d days remaining). This is the hardest part! You may experience sleep deprivation, difficulty falling asleep, frequent wake-ups, and mood changes. Stay strong and stick to your schedule - your body is working hard to adapt."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在、最も厳しい調整期間（%d日目、残り%d日）です。ここが正念場です！睡眠不足、寝付きの悪さ、頻繁な中途覚醒、気分の変動などを経験するかもしれません。強い意志を持ち、スケジュールを厳守してください。あなたの体は適応しようと懸命に頑張っています。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1096,6 +1825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You're making progress in the adaptation phase (day %d, %d days remaining)! Sleep quality should start improving and you might notice easier transitions into REM sleep during naps. Some tiredness is still normal, but you're getting there. Keep maintaining consistent sleep times."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応段階で進歩が見られます（%d日目、残り%d日）！睡眠の質が向上し始め、仮眠中にREM睡眠へスムーズに移行できるようになったと感じるかもしれません。まだ多少の疲れは残るかもしれませんが、ゴールはもうすぐです。一貫した睡眠時間を維持し続けましょう。"
           }
         },
         "tr" : {
@@ -1115,6 +1850,12 @@
             "value" : "Excellent progress in the advanced adaptation phase (day %d, %d days remaining)! Your sleep efficiency is improving significantly. You should feel more refreshed after sleep sessions and have better alertness during wake periods. Minor adjustments might still occur as your body fine-tunes the new rhythm."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高度な適応段階で素晴らしい進歩です（%d日目、残り%d日）！睡眠効率が大幅に向上しています。睡眠セッション後にはよりすっきりと感じ、覚醒中の注意力も高まっているはずです。体が新しいリズムを微調整する中で、まだ小さな変化があるかもしれません。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1130,6 +1871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Congratulations! Full adaptation achieved (day %d)! You've successfully adapted to the polyphasic sleep schedule. You should experience consistent energy levels, quick sleep onset, and refreshing sleep quality. Your new sleep pattern is now established!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おめでとうございます！完全適応を達成しました（%d日目）！多相睡眠スケジュールへの適応に成功しました。一貫したエネルギーレベル、素早い入眠、そして爽快な睡眠の質を体験できるはずです。新しい睡眠パターンが確立されました！"
           }
         },
         "tr" : {
@@ -1149,6 +1896,12 @@
             "value" : "You're in the full adaptation phase (day %d, %d days remaining)! Your body has largely adapted to the polyphasic schedule. Sleep onset should be quick, and you should feel consistently alert and energetic. Maintain your routine to solidify these positive changes and avoid schedule disruptions."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全適応段階です（%d日目、残り%d日）！あなたの体は多相睡眠スケジュールにほぼ適応しました。寝付きが早くなり、一貫して覚醒し、エネルギッシュに感じられるはずです。これらの良い変化を定着させるため、ルーティンを維持し、スケジュールの乱れを避けてください。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1164,6 +1917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Outstanding achievement - Full adaptation+ (day %d)! You've mastered even the most challenging polyphasic schedules. Your sleep efficiency is optimized, and you've likely developed excellent sleep flexibility. You're now a polyphasic sleep expert with stable, refreshing sleep patterns."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "素晴らしい達成です - 完全適応+（%d日目）！最も挑戦的な多相睡眠スケジュールさえもマスターしました。睡眠効率は最適化され、優れた睡眠の柔軟性を身につけたことでしょう。今やあなたは、安定した爽快な睡眠パターンを持つ多相睡眠の専門家です。"
           }
         },
         "tr" : {
@@ -1183,6 +1942,12 @@
             "value" : "Your Adaptation Process"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの適応プロセス"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1198,6 +1963,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation Progress"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応の進捗"
           }
         },
         "tr" : {
@@ -1217,6 +1988,12 @@
             "value" : "Reset"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リセット"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1232,6 +2009,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The adaptation process will restart from day 1. Are you sure you want to proceed?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応プロセスが1日目から再開されます。続行してもよろしいですか？"
           }
         },
         "tr" : {
@@ -1251,6 +2034,12 @@
             "value" : "Reset Adaptation"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応のリセット"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1266,6 +2055,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
         "tr" : {
@@ -1285,6 +2080,12 @@
             "value" : "In Progress"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進行中"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1300,6 +2101,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Day 1"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1日目"
           }
         },
         "tr" : {
@@ -1319,6 +2126,12 @@
             "value" : "Beginning Phase"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始フェーズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1334,6 +2147,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1-7 days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1-7日"
           }
         },
         "tr" : {
@@ -1353,6 +2172,12 @@
             "value" : "Adjustment Phase"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "調整フェーズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1368,6 +2193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "8-14 days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8-14日"
           }
         },
         "tr" : {
@@ -1387,6 +2218,12 @@
             "value" : "Adaptation Phase"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応フェーズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1402,6 +2239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "15-20 days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15-20日"
           }
         },
         "tr" : {
@@ -1421,6 +2264,12 @@
             "value" : "Advanced Adaptation"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高度な適応"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1436,6 +2285,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "21+ days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21日以上"
           }
         },
         "tr" : {
@@ -1455,6 +2310,12 @@
             "value" : "21-27 days"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21-27日"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1470,6 +2331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Full Adaptation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全な適応"
           }
         },
         "tr" : {
@@ -1489,6 +2356,12 @@
             "value" : "28+ days"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "28日以上"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1504,6 +2377,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Full Adaptation+"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全な適応+"
           }
         },
         "tr" : {
@@ -1523,6 +2402,12 @@
             "value" : "Waiting"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待機中"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1538,6 +2423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation Tip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応のヒント"
           }
         },
         "tr" : {
@@ -1557,6 +2448,12 @@
             "value" : "Your Adaptation Process"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの適応プロセス"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1572,6 +2469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Undo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "元に戻す"
           }
         },
         "tr" : {
@@ -1591,6 +2494,12 @@
             "value" : "Later"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後で"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1606,6 +2515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can perform the adaptation undo process later from Settings > Advanced section."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応の取り消しは後で「設定」>「詳細設定」セクションから実行できます。"
           }
         },
         "tr" : {
@@ -1625,6 +2540,12 @@
             "value" : "Later"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後で"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1640,6 +2561,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your new schedule will remain the same, you'll just continue from your previous adaptation day."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいスケジュールはそのままに、前回の適応日から続行します。"
           }
         },
         "tr" : {
@@ -1659,6 +2586,12 @@
             "value" : "Schedule change was made today"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本日スケジュールが変更されました"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1674,6 +2607,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation Progress Can Be Undone"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応の進捗は元に戻せます"
           }
         },
         "tr" : {
@@ -1693,6 +2632,12 @@
             "value" : "Done"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1708,6 +2653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Move and scale your photo to fit in the circle"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真を移動・拡大縮小して円に合わせてください"
           }
         },
         "tr" : {
@@ -1727,6 +2678,12 @@
             "value" : "Crop Profile Picture"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール画像のトリミング"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1742,6 +2699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "tr" : {
@@ -1761,6 +2724,12 @@
             "value" : "Edit Profile"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール編集"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1776,6 +2745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Remove Photo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真を削除"
           }
         },
         "tr" : {
@@ -1795,6 +2770,12 @@
             "value" : "Select Photo"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真を選択"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1810,6 +2791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profile Picture Options"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール画像の設定"
           }
         },
         "tr" : {
@@ -1829,6 +2816,12 @@
             "value" : "Backup & Restore"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックアップと復元"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1844,6 +2837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Locked"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ロック中"
           }
         },
         "tr" : {
@@ -1863,6 +2862,12 @@
             "value" : "Badges"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッジ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1878,6 +2883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unlocked"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解放済み"
           }
         },
         "tr" : {
@@ -1897,6 +2908,12 @@
             "value" : "Change"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1912,6 +2929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji for your main sleep blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メインの睡眠ブロック用の絵文字"
           }
         },
         "tr" : {
@@ -1931,6 +2954,12 @@
             "value" : "Core Sleep Block"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メイン睡眠ブロック"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1946,6 +2975,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Core Sleep Emoji"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メイン睡眠の絵文字"
           }
         },
         "tr" : {
@@ -1965,6 +3000,12 @@
             "value" : "Emoji for your main sleep blocks"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メイン睡眠ブロック用の絵文字"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1980,6 +3021,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your selected emojis will be used throughout the app, including calendar view, sleep tracking, and statistics."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選んだ絵文字は、カレンダー表示や睡眠トラッキング、統計など、アプリ全体で使われます。"
           }
         },
         "tr" : {
@@ -1999,6 +3046,12 @@
             "value" : "Emoji for your short sleep blocks"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "短い睡眠ブロック用の絵文字"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2014,6 +3067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nap Block"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠ブロック"
           }
         },
         "tr" : {
@@ -2033,6 +3092,12 @@
             "value" : "Nap Emoji"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠の絵文字"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2048,6 +3113,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji for your short sleep blocks"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "短い睡眠ブロック用の絵文字"
           }
         },
         "tr" : {
@@ -2067,6 +3138,12 @@
             "value" : "Select"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2082,6 +3159,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personalize your sleep tracking experience"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠トラッキングをあなた好みにカスタマイズ"
           }
         },
         "tr" : {
@@ -2101,6 +3184,12 @@
             "value" : "Customization"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタマイズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2116,6 +3205,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can personalize your experience by setting a display name."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示名を設定して、あなたらしい体験にカスタマイズできます。"
           }
         },
         "tr" : {
@@ -2135,6 +3230,12 @@
             "value" : "Your name"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの名前"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2150,6 +3251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save Profile"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィールを保存"
           }
         },
         "tr" : {
@@ -2169,6 +3276,12 @@
             "value" : "Edit Profile"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール編集"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2184,6 +3297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Core Sleep Emoji"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メイン睡眠の絵文字"
           }
         },
         "tr" : {
@@ -2203,6 +3322,12 @@
             "value" : "Nap Emoji"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仮眠の絵文字"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2218,6 +3343,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose Emoji"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "絵文字を選ぶ"
           }
         },
         "tr" : {
@@ -2237,6 +3368,12 @@
             "value" : "Selected Emoji"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択中の絵文字"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2252,6 +3389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Customize Emojis"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "絵文字をカスタマイズ"
           }
         },
         "tr" : {
@@ -2271,6 +3414,12 @@
             "value" : "Save"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2286,6 +3435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select Emoji"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "絵文字を選択"
           }
         },
         "tr" : {
@@ -2305,6 +3460,12 @@
             "value" : "Sign in with Apple"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appleでサインイン"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2320,6 +3481,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Back to Sign In Options"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインイン画面に戻る"
           }
         },
         "tr" : {
@@ -2339,6 +3506,12 @@
             "value" : "Sign In"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインイン"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2354,6 +3527,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This way you won't lose your data when you change your device."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これで端末を変えてもデータが失われません。"
           }
         },
         "tr" : {
@@ -2373,6 +3552,12 @@
             "value" : "Sign in with Email"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールでサインイン"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2388,6 +3573,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign in with Google"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Googleでサインイン"
           }
         },
         "tr" : {
@@ -2407,6 +3598,12 @@
             "value" : "Sign Out"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2422,6 +3619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Signed in as"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインイン中"
           }
         },
         "tr" : {
@@ -2441,6 +3644,12 @@
             "value" : "Not signed in"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインインしていません"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2456,6 +3665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Successfully signed in"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインインできました"
           }
         },
         "tr" : {
@@ -2475,6 +3690,12 @@
             "value" : "Already have an account? Sign In"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もうアカウントある？サインイン"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2490,6 +3711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign in to sync your data"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データを同期するためにサインイン"
           }
         },
         "tr" : {
@@ -2509,6 +3736,12 @@
             "value" : "Account"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウント"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2524,6 +3757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👑 Upgrade to Premium"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 プレミアムにアップグレード"
           }
         },
         "tr" : {
@@ -2543,6 +3782,12 @@
             "value" : "Advanced features and unlimited access"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高機能と無制限アクセス"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2558,6 +3803,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Smart Notifications"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スマート通知"
           }
         },
         "tr" : {
@@ -2577,6 +3828,12 @@
             "value" : "Statistics"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "統計データ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2592,6 +3849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Themes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テーマ"
           }
         },
         "tr" : {
@@ -2611,6 +3874,12 @@
             "value" : "GO"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進む"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2626,6 +3895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "👑 Premium Active"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👑 プレミアム有効"
           }
         },
         "tr" : {
@@ -2645,6 +3920,12 @@
             "value" : "Free Account"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料アカウント"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2660,6 +3941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap Premium"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap プレミアム"
           }
         },
         "tr" : {
@@ -2679,6 +3966,12 @@
             "value" : "Upgrade"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレード"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2694,6 +3987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
           }
         },
         "tr" : {
@@ -2713,6 +4012,12 @@
             "value" : "30-Day Progress"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30日間の進捗"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2728,6 +4033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Undo Reset"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リセットを取り消し"
           }
         },
         "tr" : {
@@ -2747,6 +4058,12 @@
             "value" : "Your adaptation progress and streak were reset due to schedule change. You can undo this today."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュール変更により適応の進捗と連続記録がリセットされました。本日中に取り消すことができます。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2762,6 +4079,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schedule Changed - Undo Available"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュールが変更されました - 取り消し可能"
           }
         },
         "tr" : {
@@ -2781,6 +4104,12 @@
             "value" : "Settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2796,6 +4125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign Up"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアップ"
           }
         },
         "tr" : {
@@ -2815,6 +4150,12 @@
             "value" : "Don't have an account? Sign Up"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウントがない？サインアップ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2830,6 +4171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create Account"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウント作成"
           }
         },
         "tr" : {
@@ -2849,6 +4196,12 @@
             "value" : "completion"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2864,6 +4217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Current Streak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の連続記録"
           }
         },
         "tr" : {
@@ -2883,6 +4242,12 @@
             "value" : "days"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2898,6 +4263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Longest Streak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最長連続記録"
           }
         },
         "tr" : {
@@ -2917,6 +4288,12 @@
             "value" : "sessions"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セッション"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2932,6 +4309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Success Rate"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功率"
           }
         },
         "tr" : {
@@ -2951,6 +4334,12 @@
             "value" : "Statistics"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "統計"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2966,6 +4355,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total Sleep"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "総睡眠時間"
           }
         },
         "tr" : {
@@ -2985,6 +4380,12 @@
             "value" : "Current Streak"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の連続記録"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3000,6 +4401,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "day"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日"
           }
         },
         "tr" : {
@@ -3019,6 +4426,12 @@
             "value" : "days"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3034,6 +4447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Longest Streak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最長連続記録"
           }
         },
         "tr" : {
@@ -3053,6 +4472,12 @@
             "value" : "Streak"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連続記録"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3068,6 +4493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Polyphasic Sleep Tips"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多相睡眠のコツ"
           }
         },
         "tr" : {
@@ -3087,6 +4518,12 @@
             "value" : "Profile"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3102,6 +4539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "User"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ユーザー"
           }
         },
         "tr" : {
@@ -3121,6 +4564,12 @@
             "value" : "Edit Profile"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール編集"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3136,6 +4585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Local User"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ローカルユーザー"
           }
         },
         "tr" : {
@@ -3155,6 +4610,12 @@
             "value" : "Local Account"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ローカルアカウント"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3170,6 +4631,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personal Information"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "個人情報"
           }
         },
         "tr" : {
@@ -3189,6 +4656,12 @@
             "value" : "Edit your profile information"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロフィール情報を編集"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3204,6 +4677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "About Me"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私について"
           }
         },
         "tr" : {
@@ -3223,6 +4702,12 @@
             "value" : "Your new schedule will remain the same, you'll just continue from your previous adaptation day. This action cannot be undone."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいスケジュールはそのままで、前回の適応日から続行します。この操作は取り消せません。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3238,6 +4723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adaptation Undo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応の取り消し"
           }
         },
         "tr" : {
@@ -3257,6 +4748,12 @@
             "value" : "Schedule change was made today, you can undo it"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本日スケジュールが変更されました。取り消すことができます"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3272,6 +4769,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Undo"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取り消し"
           }
         },
         "tr" : {
@@ -3291,6 +4794,12 @@
             "value" : "No schedule change to undo"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取り消すスケジュール変更がありません"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3306,6 +4815,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not Available"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用不可"
           }
         },
         "tr" : {
@@ -3325,6 +4840,12 @@
             "value" : "Adaptation Undo"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応の取り消し"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3340,6 +4861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Advanced"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細設定"
           }
         },
         "tr" : {
@@ -3359,6 +4886,12 @@
             "value" : "Alarms that will sound when sleep blocks end"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロック終了時に鳴るアラーム設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3374,6 +4907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarm Settings"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム設定"
           }
         },
         "tr" : {
@@ -3393,9 +4932,15 @@
             "value" : "© 2025 PolyNap. All rights reserved."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2025 PolyNap. すべての権利を保有します。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "© 2025 PolyNap. Tüm hakları saklıdır."
           }
         }
@@ -3408,6 +4953,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Language"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語"
           }
         },
         "tr" : {
@@ -3427,6 +4978,12 @@
             "value" : "Select Language"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語を選択"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3442,6 +4999,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select Theme"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テーマを選択"
           }
         },
         "tr" : {
@@ -3461,6 +5024,12 @@
             "value" : "Theme"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テーマ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3476,6 +5045,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dark"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダーク"
           }
         },
         "tr" : {
@@ -3495,6 +5070,12 @@
             "value" : "Light"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライト"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3510,6 +5091,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "System"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム"
           }
         },
         "tr" : {
@@ -3529,6 +5116,12 @@
             "value" : "General Settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3546,6 +5139,12 @@
             "value" : "The app language has been changed. The interface will be refreshed to apply the changes."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリの言語が変更されました。変更を適用するためにインターフェースが更新されます。"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3558,6 +5157,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -3580,6 +5185,12 @@
             "value" : "Language Changed"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語が変更されました"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3595,6 +5206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "English"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英語"
           }
         },
         "tr" : {
@@ -3614,6 +5231,12 @@
             "value" : "Applying language settings..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語設定を適用中..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3631,10 +5254,39 @@
             "value" : "Turkish"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トルコ語"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Türkçe"
+          }
+        }
+      }
+    },
+    "settings.language.japanese" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日本語"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japonca"
           }
         }
       }
@@ -3646,6 +5298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
           }
         },
         "tr" : {
@@ -3665,6 +5323,12 @@
             "value" : "Customize reminder times"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダー時間をカスタマイズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3680,6 +5344,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reminders"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダー"
           }
         },
         "tr" : {
@@ -3699,6 +5369,12 @@
             "value" : "Disclaimer"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免責事項"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3714,6 +5390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terms of use and disclaimer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約と免責事項"
           }
         },
         "tr" : {
@@ -3733,6 +5415,12 @@
             "value" : "Send Feedback"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送る"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3748,6 +5436,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate PolyNap"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNapを評価"
           }
         },
         "tr" : {
@@ -3767,6 +5461,12 @@
             "value" : "Share your experience on the App Store"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Storeであなたの体験をシェア"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3782,6 +5482,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate Us"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評価する"
           }
         },
         "tr" : {
@@ -3801,6 +5507,12 @@
             "value" : "Other"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3816,6 +5528,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to restore purchases. Please try again."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入履歴の復元に失敗しました。もう一度お試しください。"
           }
         },
         "tr" : {
@@ -3835,6 +5553,12 @@
             "value" : "Restore Now"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今すぐ復元"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3850,6 +5574,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore your premium purchases"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアム購入を復元"
           }
         },
         "tr" : {
@@ -3869,6 +5599,12 @@
             "value" : "Purchases restored successfully"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入履歴が正常に復元されました"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3884,6 +5620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Purchases"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入履歴の復元"
           }
         },
         "tr" : {
@@ -3903,6 +5645,12 @@
             "value" : "Tap to restore"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タップして復元"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3918,6 +5666,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings and preferences"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定と環境設定"
           }
         },
         "tr" : {
@@ -3937,6 +5691,12 @@
             "value" : "Personalize your app experience"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリの体験をパーソナライズ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3954,265 +5714,16 @@
             "value" : "Settings"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ayarlar"
-          }
-        }
-      }
-    },
-    "feedback.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feedback"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri Bildirim"
-          }
-        }
-      }
-    },
-    "feedback.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Help us improve PolyNap by sharing your thoughts and suggestions"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düşüncelerinizi ve önerilerinizi paylaşarak PolyNap'i geliştirmemize yardımcı olun"
-          }
-        }
-      }
-    },
-    "feedback.settings.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send us your feedback and suggestions"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildirimlerinizi ve önerilerinizi gönderin"
-          }
-        }
-      }
-    },
-    "feedback.name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your Name"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İsminiz"
-          }
-        }
-      }
-    },
-    "feedback.name.placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter your name"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "İsminizi girin"
-          }
-        }
-      }
-    },
-    "feedback.subject" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Subject"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konu"
-          }
-        }
-      }
-    },
-    "feedback.subject.placeholder" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What is your feedback about?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildiriminiz neyle ilgili?"
-          }
-        }
-      }
-    },
-    "feedback.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Message"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mesaj"
-          }
-        }
-      }
-    },
-    "feedback.send" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send Feedback"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri Bildirim Gönder"
-          }
-        }
-      }
-    },
-    "feedback.info" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your feedback will be sent directly to our development team. We read every message and appreciate your input!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildirimleriniz doğrudan geliştirme ekibimize iletilecektir. Her mesajı okuyor ve katkılarınızı takdir ediyoruz!"
-          }
-        }
-      }
-    },
-    "feedback.alert.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feedback"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri Bildirim"
-          }
-        }
-      }
-    },
-    "feedback.alert.noMail" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please configure a mail account in Settings to send feedback."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildirim göndermek için Ayarlar'da bir mail hesabı yapılandırın."
-          }
-        }
-      }
-    },
-    "feedback.alert.sent" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thank you! Your feedback has been sent successfully."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teşekkürler! Geri bildiriminiz başarıyla gönderildi."
-          }
-        }
-      }
-    },
-    "feedback.alert.failed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to send feedback. Please try again later."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildirim gönderilemedi. Lütfen daha sonra tekrar deneyin."
-          }
-        }
-      }
-    },
-    "feedback.alert.saved" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your feedback has been saved to drafts."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri bildiriminiz taslaklara kaydedildi."
           }
         }
       }
