@@ -5,28 +5,22 @@
       "comment" : "Bundle display name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "watchkitapp"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "watchkitapp"
+            "value" : "PolyNap Watch Extension"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "watchkitapp"
+            "value" : "Sambungan Jam Tangan PolyNap"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "watchkitapp"
+            "value" : "ส่วนขยายนาฬิกา PolyNap"
           }
         }
       }
@@ -35,28 +29,40 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "watchkitapp Watch App"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "watchkitapp Watch App"
+            "value" : "PolyNap Watch Extension"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "watchkitapp Watch App"
+            "value" : "Sambungan Jam Tangan PolyNap"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "watchkitapp Watch App"
+            "value" : "ส่วนขยายนาฬิกา PolyNap"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
           }
         }
       }

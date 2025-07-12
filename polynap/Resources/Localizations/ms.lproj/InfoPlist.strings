@@ -1,0 +1,21 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "PolyNap";
+
+/* Bundle name */
+"CFBundleName" = "polynap";
+
+/* Critical messaging permission description */
+"NSCriticalMessagingUsageDescription" = "PolyNap memerlukan kebenaran pemesejan kritikal untuk menghantar pemberitahuan bangun dan peringatan segera walaupun semasa Mod Senyap atau mod Fokus.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "PolyNap ingin membaca data Kesihatan anda untuk menganalisis kesan jadual tidur anda terhadap kesihatan tidur anda dan memberikan cadangan yang diperibadikan.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "PolyNap memerlukan kebenaran ini untuk menyimpan blok tidur dan penilaian kualiti tidur anda ke aplikasi Kesihatan.";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "Output audio diperlukan untuk sistem penggera PolyNap.";
+
+/* Notification permission description */
+"NSUserNotificationsUsageDescription" = "PolyNap menghantar pemberitahuan penggera untuk membangunkan anda apabila blok tidur anda tamat. Ciri ini penting agar jadual tidur anda berfungsi dengan baik.";
+

@@ -22,6 +22,18 @@
             "value" : "アラーム機能を使用するには、設定から通知の許可をお願いします。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untuk menggunakan ciri penggera, sila berikan kebenaran pemberitahuan dari Tetapan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หากต้องการใช้ฟีเจอร์นาฬิกาปลุก โปรดให้สิทธิ์การแจ้งเตือนจากการตั้งค่า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49,6 +61,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定に移動"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pergi ke Tetapan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไปที่การตั้งค่า"
           }
         },
         "tr" : {
@@ -80,6 +104,18 @@
             "value" : "通知の許可"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สิทธิ์การแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +143,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "許可する"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berikan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้สิทธิ์"
           }
         },
         "tr" : {
@@ -138,6 +186,18 @@
             "value" : "許可されました"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran diberikan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้สิทธิ์แล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +225,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通知の許可"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สิทธิ์การแจ้งเตือน"
           }
         },
         "tr" : {
@@ -196,6 +268,18 @@
             "value" : "許可が必要"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran diperlukan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้สิทธิ์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -223,6 +307,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラームが機能するには通知の許可が必要です。設定から許可してください。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran pemberitahuan diperlukan agar penggera berfungsi. Sila berikan kebenaran dari Tetapan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้สิทธิ์การแจ้งเตือนเพื่อให้การปลุกทำงาน โปรดให้สิทธิ์จากการตั้งค่า"
           }
         },
         "tr" : {
@@ -254,6 +350,18 @@
             "value" : "許可が必要"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran Diperlukan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้สิทธิ์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +389,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通知の許可"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สิทธิ์การแจ้งเตือน"
           }
         },
         "tr" : {
@@ -312,6 +432,18 @@
             "value" : "スヌーズを許可"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benarkan Tunda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อนุญาตให้เลื่อนปลุก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -339,6 +471,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラームをスヌーズする機能を有効にします"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dayakan keupayaan untuk menunda penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดใช้งานความสามารถในการเลื่อนปลุก"
           }
         },
         "tr" : {
@@ -370,6 +514,18 @@
             "value" : "スヌーズ時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempoh Tunda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะเวลาเลื่อนปลุก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -397,6 +553,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最大スヌーズ回数"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tunda Maksimum"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จำนวนครั้งเลื่อนปลุกสูงสุด"
           }
         },
         "tr" : {
@@ -428,6 +596,18 @@
             "value" : "{duration}分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{duration} minit"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{duration} นาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -455,6 +635,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "{count}回"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{count} kali"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{count} ครั้ง"
           }
         },
         "tr" : {
@@ -486,6 +678,18 @@
             "value" : "スヌーズ設定"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapan Tunda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่าการเลื่อนปลุก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -513,6 +717,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラーム音"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunyi Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เสียงปลุก"
           }
         },
         "tr" : {
@@ -544,6 +760,18 @@
             "value" : "サウンド設定"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapan Bunyi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่าเสียง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -571,6 +799,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "バイブレーション"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getaran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การสั่น"
           }
         },
         "tr" : {
@@ -602,6 +842,18 @@
             "value" : "アラーム時にバイブレーションを使用します"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gunakan getaran apabila penggera berbunyi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้การสั่นเมื่อเสียงปลุกดัง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -629,6 +881,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "音量レベル"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahap Kelantangan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระดับเสียง"
           }
         },
         "tr" : {
@@ -660,6 +924,18 @@
             "value" : "重大なアラーム"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Kritikal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกที่สำคัญ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -687,6 +963,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デフォルトのアラーム"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Lalai"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกเริ่มต้น"
           }
         },
         "tr" : {
@@ -718,6 +1006,18 @@
             "value" : "システムのデフォルト"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lalai Sistem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค่าเริ่มต้นของระบบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -745,6 +1045,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラーム有効"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera aktif"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกทำงานอยู่"
           }
         },
         "tr" : {
@@ -776,6 +1088,18 @@
             "value" : "アラーム無効"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera dilumpuhkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกถูกปิดใช้งาน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -803,6 +1127,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロックが終了してもアラームは鳴りません。ご自身の別のアラームアプリを使用することをお忘れなく。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera tidak akan berbunyi apabila blok tidur anda tamat. Jangan lupa gunakan aplikasi penggera anda sendiri."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกจะไม่ดังเมื่อช่วงการนอนของคุณสิ้นสุด อย่าลืมใช้แอปนาฬิกาปลุกของคุณเอง"
           }
         },
         "tr" : {
@@ -834,6 +1170,18 @@
             "value" : "アラームが無効です"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Dilumpuhkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกถูกปิดใช้งาน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -861,6 +1209,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠アラーム"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกการนอนหลับ"
           }
         },
         "tr" : {
@@ -892,6 +1252,18 @@
             "value" : "アラームの状態"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถานะการปลุก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -919,6 +1291,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロック終了時のアラーム設定を行います"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfigurasikan tetapan penggera untuk apabila blok tidur anda tamat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำหนดค่าการตั้งค่าการปลุกเมื่อช่วงการนอนของคุณสิ้นสุด"
           }
         },
         "tr" : {
@@ -950,6 +1334,18 @@
             "value" : "テストアラームが5秒後に鳴ります。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera ujian akan berbunyi dalam 5 saat."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกทดสอบจะดังใน 5 วินาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +1373,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "テストアラーム"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกทดสอบ"
           }
         },
         "tr" : {
@@ -1008,6 +1416,18 @@
             "value" : "これはテストアラームです。スヌーズと停止ボタンをテストできます！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ini ialah penggera ujian. Anda boleh menguji butang Tunda dan Tolak!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นี่คือการปลุกทดสอบ คุณสามารถทดสอบปุ่มเลื่อนปลุกและปิดได้!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1035,6 +1455,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "テストアラーム"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกทดสอบ"
           }
         },
         "tr" : {
@@ -1066,6 +1498,18 @@
             "value" : "保留中のアラーム"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Menunggu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปลุกที่รอดำเนินการ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1093,6 +1537,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "システムでスケジュールされているアラームの数"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilangan penggera yang dijadualkan dalam sistem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จำนวนการปลุกที่ตั้งเวลาไว้ในระบบ"
           }
         },
         "tr" : {
@@ -1124,6 +1580,18 @@
             "value" : "テストアラームを再生"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mainkan Penggera Ujian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เล่นการปลุกทดสอบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1151,6 +1619,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラーム音と設定をテストします"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji bunyi dan tetapan penggera anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบเสียงและการตั้งค่าการปลุกของคุณ"
           }
         },
         "tr" : {
@@ -1182,6 +1662,18 @@
             "value" : "テストと情報"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji & Info"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบ & ข้อมูล"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1209,6 +1701,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラーム設定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapan Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่านาฬิกาปลุก"
           }
         },
         "tr" : {
@@ -1240,6 +1744,18 @@
             "value" : "キャンセル"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1267,6 +1783,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตกลง"
           }
         },
         "tr" : {
@@ -1298,6 +1826,18 @@
             "value" : "睡眠ブロックの前にいつリマインドを受け取るかを設定します"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfigurasikan bila anda mahu diingatkan sebelum blok tidur anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำหนดค่าเวลาที่คุณต้องการให้เตือนก่อนช่วงการนอนของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1325,6 +1865,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通知管理"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengurusan Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การจัดการการแจ้งเตือน"
           }
         },
         "tr" : {
@@ -1356,6 +1908,18 @@
             "value" : "分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "minit"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1383,6 +1947,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "オフ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mati"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิด"
           }
         },
         "tr" : {
@@ -1414,6 +1990,18 @@
             "value" : "通知の許可"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebenaran Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สิทธิ์การแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1441,6 +2029,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "どのくらい前にリマインドしますか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berapa awal kami perlu mengingatkan anda?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เราควรเตือนคุณล่วงหน้านานแค่ไหน?"
           }
         },
         "tr" : {
@@ -1472,6 +2072,18 @@
             "value" : "リマインダー時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Peringatan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1499,6 +2111,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通知設定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapan Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่าการแจ้งเตือน"
           }
         },
         "tr" : {
@@ -1530,6 +2154,18 @@
             "value" : "有効な睡眠プログラム"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program Tidur Aktif"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โปรแกรมการนอนที่ใช้งานอยู่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1557,6 +2193,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有効なプログラムがありません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada program aktif"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีโปรแกรมที่ใช้งานอยู่"
           }
         },
         "tr" : {
@@ -1588,6 +2236,18 @@
             "value" : "リマインダー時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Peringatan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1615,6 +2275,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "現在の通知の状態と設定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status dan tetapan pemberitahuan semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถานะและการตั้งค่าการแจ้งเตือนปัจจุบัน"
           }
         },
         "tr" : {
@@ -1646,6 +2318,18 @@
             "value" : "通知の状態"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถานะการแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1673,6 +2357,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "テスト通知が正常に送信されました！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pemberitahuan ujian telah berjaya dihantar!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่งการแจ้งเตือนทดสอบสำเร็จแล้ว!"
           }
         },
         "tr" : {
@@ -1704,6 +2400,18 @@
             "value" : "テスト通知"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pemberitahuan Ujian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแจ้งเตือนทดสอบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1731,6 +2439,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5秒後にテスト通知"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pemberitahuan ujian selepas 5 saat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบการแจ้งเตือนใน 5 วินาที"
           }
         },
         "tr" : {
@@ -1762,6 +2482,18 @@
             "value" : "5秒テスト"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujian 5 Saat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบ 5 วินาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1789,6 +2521,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今すぐテスト通知を送信"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hantar pemberitahuan ujian sekarang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่งการแจ้งเตือนทดสอบทันที"
           }
         },
         "tr" : {
@@ -1820,6 +2564,18 @@
             "value" : "即時テスト"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujian Segera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบทันที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1847,6 +2603,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "テスト通知が正常にスケジュールされました"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pemberitahuan ujian berjaya dijadualkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตั้งเวลาการแจ้งเตือนทดสอบสำเร็จ"
           }
         },
         "tr" : {
@@ -1878,6 +2646,18 @@
             "value" : "通知設定をテストします"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji tetapan pemberitahuan anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบการตั้งค่าการแจ้งเตือนของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1907,6 +2687,18 @@
             "value" : "通知のテスト"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uji Pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบการแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1934,6 +2726,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 ชั่วโมง"
           }
         },
         "tr" : {

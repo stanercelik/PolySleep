@@ -22,6 +22,18 @@
             "value" : "さあ、始めよう！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedia!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พร้อมแล้ว!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +63,18 @@
             "value" : "まずは睡眠から始めるのが一番！多相睡眠に切り替えて、もっと生産的でエネルギッシュな自分を解放しよう。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bermula dengan tidur anda adalah cara terbaik untuk melakukannya! Dengan beralih kepada tidur polifasa, anda boleh membuka kunci versi diri anda yang lebih produktif dan bertenaga."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเริ่มต้นกับการนอนของคุณคือวิธีที่ดีที่สุด! ด้วยการเปลี่ยนไปใช้การนอนหลับแบบหลายเฟส, คุณสามารถปลดล็อกเวอร์ชันที่มีประสิทธิผลและมีพลังมากขึ้นของตัวคุณเองได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -68,6 +92,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "firstPageImage"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "firstPageImage"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "firstPageImage"
@@ -102,6 +138,18 @@
             "value" : "ここに来たってことは、自分の人生を本気で変えたいってことだね。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memandangkan anda berada di sini, jelas anda mahu mengawal hidup anda."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ในเมื่อคุณอยู่ที่นี่, ก็ชัดเจนว่าคุณต้องการควบคุมชีวิตของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -131,6 +179,18 @@
             "value" : "まずは新規登録するか、アカウントがあればログインして始めよう！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda boleh bermula dengan mendaftar atau log masuk jika anda sudah mempunyai akaun!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณสามารถเริ่มต้นด้วยการลงทะเบียนหรือเข้าสู่ระบบหากคุณมีบัญชีอยู่แล้ว!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -148,6 +208,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fourthPageImage"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fourthPageImage"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "fourthPageImage"
@@ -182,6 +254,18 @@
             "value" : "変わる準備はできた？"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bersedia untuk perubahan?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พร้อมสำหรับการเปลี่ยนแปลงหรือยัง?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -211,6 +295,18 @@
             "value" : "すごく長く聞こえるよね…でも、PolyNapがあればそれを変えられるんだ。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saya tahu, ia kedengaran banyak... Tetapi anda boleh mengubahnya dengan PolyNap"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฉันรู้, มันฟังดูเยอะ... แต่คุณสามารถเปลี่ยนแปลงสิ่งนั้นได้ด้วย PolyNap"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +324,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "secondPageImage"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "secondPageImage"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "secondPageImage"
@@ -262,6 +370,18 @@
             "value" : "人生の3分の1にあたる平均27年間を、睡眠に費やしているって知ってた？"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahukah anda bahawa purata 27 tahun, atau 1/3 daripada hidup anda, dihabiskan untuk tidur?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณรู้หรือไม่ว่าโดยเฉลี่ยแล้ว 27 ปี หรือ 1/3 ของชีวิตคุณถูกใช้ไปกับการนอน?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -291,6 +411,18 @@
             "value" : "多相睡眠は、休息を効率的なサイクルに分割して、脳が本当に必要とするエネルギーを与えてくれるんだ。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur polifasa membahagikan rehat anda kepada kitaran yang cekap, memberikan otak anda tenaga yang benar-benar diperlukannya."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลับแบบหลายเฟสแบ่งการพักผ่อนของคุณออกเป็นวงจรที่มีประสิทธิภาพ, ทำให้สมองของคุณได้รับพลังงานที่ต้องการอย่างแท้จริง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -308,6 +440,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "thirdPageImage"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "thirdPageImage"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "thirdPageImage"
@@ -342,6 +486,18 @@
             "value" : "もっと短い時間で、もっと元気に目覚められたら最高じゃない？"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidakkah anda suka bangun dengan rasa lebih bertenaga dalam masa yang lebih singkat?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณจะไม่ชอบเหรอที่ตื่นขึ้นมาแล้วรู้สึกมีพลังมากขึ้นในเวลาน้อยลง?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -369,6 +525,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNapへようこそ！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selamat Datang ke PolyNap!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยินดีต้อนรับสู่ PolyNap!"
           }
         },
         "tr" : {

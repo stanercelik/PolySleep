@@ -1,530 +1,494 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%.1fs" : {
+    "alarm.action.snooze" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1f s"
+            "value" : "Schlummern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snooze"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズ"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1fs"
+            "value" : "Tunda"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1fวินาที"
+            "value" : "เลื่อน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ertele"
           }
         }
       }
     },
-    "%.1fs toplam" : {
+    "alarm.action.stop" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1f s gesamt"
+            "value" : "Stoppen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1fs jumlah"
+            "value" : "Henti"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รวม %.1fวินาที"
+            "value" : "หยุด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapat"
           }
         }
       }
     },
-    "%lld" : {
+    "alarm.sleep.reminder.body" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld"
+            "value" : "'%@' Programm bei %@ Schlaf steht kurz bevor."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@' schedule %@ sleep is about to start."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@'スケジュールの%@睡眠が始まります。"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld"
+            "value" : "Jadual '%@' tidur %@ akan bermula."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld"
+            "value" : "ตารางเวลา '%@' การนอน %@ กำลังจะเริ่ม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@' programındaki %@ uykunuz başlamak üzere."
           }
         }
       }
     },
-    "%lld Gün" : {
+    "alarm.sleep.title" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld Tage"
+            "value" : "⏰ Schlafzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Sleep Time"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ 睡眠時間"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld Hari"
+            "value" : "⏰ Masa Tidur"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld วัน"
+            "value" : "⏰ เวลานอน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Uyku Zamanı"
           }
         }
       }
     },
-    "Adaptasyon" : {
+    "alarm.snoozed.body" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anpassung"
+            "value" : "Zeit zum Aufwachen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time to wake up!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起きる時間です！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adaptasi"
+            "value" : "Masa untuk bangun!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "การปรับตัว"
+            "value" : "ถึงเวลาตื่นแล้ว!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyanma zamanı geldi!"
           }
         }
       }
     },
-    "Adaptasyon Fazı" : {
+    "alarm.snoozed.title" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anpassungsphase"
+            "value" : "😴 Verschobener Alarm"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 Snoozed Alarm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 スヌーズアラーム"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fasa Adaptasi"
+            "value" : "😴 Penggera Ditunda"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ระยะการปรับตัว"
+            "value" : "😴 นาฬิกาปลุกที่เลื่อน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "😴 Ertelenmiş Alarm"
           }
         }
       }
     },
-    "Bilgi yükleniyor..." : {
+    "alarm.test.body" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informationen werden geladen..."
+            "value" : "Dies ist eine Testbenachrichtigung für Ihre Alarmeinstellungen. Tippen Sie auf die Benachrichtigung, um die App zu öffnen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is a test notification for your alarm settings. Tap the notification to open the app!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これはアラーム設定のテスト通知です。通知をタップしてアプリを開いてください！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Memuatkan maklumat..."
+            "value" : "Ini adalah pemberitahuan ujian untuk tetapan penggera anda. Ketik pemberitahuan untuk membuka aplikasi!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "กำลังโหลดข้อมูล..."
+            "value" : "นี่เป็นการแจ้งเตือนทดสอบสำหรับการตั้งค่าปลุกของคุณ แตะการแจ้งเตือนเพื่อเปิดแอป!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu, alarm ayarlarınız için bir test bildirimidir. Bildirime dokunarak uygulamayı açın!"
           }
         }
       }
     },
-    "Bu view artık kullanılmıyor" : {
+    "alarm.test.title" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Ansicht wird nicht mehr verwendet"
+            "value" : "🔔 Test-Alarm"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 Test Alarm"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 テストアラーム"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pandangan ini tidak lagi digunakan"
+            "value" : "🔔 Penggera Ujian"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มุมมองนี้ไม่ได้ใช้งานแล้ว"
+            "value" : "🔔 นาฬิกาปลุกทดสอบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔔 Test Alarmı"
           }
         }
       }
     },
-    "Bugün" : {
+    "alarm.wake.body" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heute"
+            "value" : "Ihr Schlafzeitraum ist beendet. Zeit aufzustehen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your sleep period is complete. Time to get up!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠期間が終了しました。起きる時間です！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hari ini"
+            "value" : "Tempoh tidur anda telah selesai. Masa untuk bangun!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "วันนี้"
+            "value" : "ช่วงการนอนของคุณเสร็จสิ้นแล้ว ถึงเวลาตื่นแล้ว!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku periyodunuz tamamlandı. Haydi güne başla!"
           }
         }
       }
     },
-    "Giriş" : {
+    "alarm.wake.scheduled.body" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anmelden"
+            "value" : "Ihr Schlafblock ist beendet. Guten Morgen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your sleep block has ended. Good morning!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロックが終了しました。おはようございます！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log Masuk"
+            "value" : "Blok tidur anda telah berakhir. Selamat pagi!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เข้าสู่ระบบ"
+            "value" : "ช่วงการนอนของคุณจบแล้ว สวัสดีตอนเช้า!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku bloğunuz sona erdi. Günaydın!"
           }
         }
       }
     },
-    "Gün %lld" : {
+    "alarm.wake.scheduled.title" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tag %lld"
+            "value" : "🚨 Aufwachzeit!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 Wake Up Time!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 起床時間！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hari %lld"
+            "value" : "🚨 Masa Bangun!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "วันที่ %lld"
+            "value" : "🚨 เวลาตื่น!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 Uyanma Zamanı!"
           }
         }
       }
     },
-    "Kalan Süre" : {
+    "alarm.wake.title" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verbleibende Zeit"
+            "value" : "⏰ Aufwachzeit!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Wake Up Time!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ 起床時間！"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Masa Berbaki"
+            "value" : "⏰ Masa Bangun!"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เวลาที่เหลือ"
-          }
-        }
-      }
-    },
-    "Kalite" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qualität"
+            "value" : "⏰ เวลาตื่น!"
           }
         },
-        "ms" : {
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kualiti"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "คุณภาพ"
-          }
-        }
-      }
-    },
-    "Onayla" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bestätigen"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sahkan"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ยืนยัน"
-          }
-        }
-      }
-    },
-    "Program" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Programm"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "โปรแกรม"
-          }
-        }
-      }
-    },
-    "Sonraki Uyku" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nächster Schlaf"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tidur Seterusnya"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "การนอนครั้งต่อไป"
-          }
-        }
-      }
-    },
-    "Tamamlandı!" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abgeschlossen!"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selesai!"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เสร็จสมบูรณ์!"
-          }
-        }
-      }
-    },
-    "Toplam" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gesamt"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jumlah"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "รวม"
-          }
-        }
-      }
-    },
-    "Uyku" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlaf"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tidur"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "การนอน"
-          }
-        }
-      }
-    },
-    "Uyku Başlat" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlaf starten"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mula Tidur"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เริ่มการนอน"
-          }
-        }
-      }
-    },
-    "Uyku Bitir" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlaf beenden"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tamatkan Tidur"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "สิ้นสุดการนอน"
-          }
-        }
-      }
-    },
-    "Uyku Girişi" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlafeintrag"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Catatan Tidur"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "รายการการนอน"
-          }
-        }
-      }
-    },
-    "Uyku Kalitesi" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlafqualität"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kualiti Tidur"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "คุณภาพการนอน"
-          }
-        }
-      }
-    },
-    "Yükleniyor..." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wird geladen..."
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Memuatkan..."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "กำลังโหลด..."
+            "value" : "⏰ Uyanma Zamanı!"
           }
         }
       }

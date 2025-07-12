@@ -23,6 +23,18 @@
             "value" : "平均スコア"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor Purata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนเฉลี่ย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50,6 +62,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ベストデイ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari Terbaik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันที่ดีที่สุด"
           }
         },
         "tr" : {
@@ -81,6 +105,18 @@
             "value" : "%.1f 時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชั่วโมง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -108,6 +144,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "データなし"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada data"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีข้อมูล"
           }
         },
         "tr" : {
@@ -139,6 +187,18 @@
             "value" : "ベストとワーストの日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari Terbaik dan Terburuk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันที่ดีที่สุดและแย่ที่สุด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -166,6 +226,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ワーストデイ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari Terburuk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันที่แย่ที่สุด"
           }
         },
         "tr" : {
@@ -197,6 +269,18 @@
             "value" : "日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -224,6 +308,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d 時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d ชม."
           }
         },
         "tr" : {
@@ -255,6 +351,18 @@
             "value" : "パーセンテージ"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peratusan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปอร์เซ็นต์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -279,6 +387,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.0f%%"
@@ -313,6 +433,18 @@
             "value" : "スコア"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -340,6 +472,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠スコア"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนการนอน"
           }
         },
         "tr" : {
@@ -371,6 +515,18 @@
             "value" : "%.1f 時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -398,6 +554,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.1f 点"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f mata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f คะแนน"
           }
         },
         "tr" : {
@@ -429,6 +597,18 @@
             "value" : "一貫性"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsistensi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความสม่ำเสมอ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -456,6 +636,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "素晴らしい睡眠ルーティンですね！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda mempunyai rutin tidur yang hebat!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณมีกิจวัตรการนอนที่ยอดเยี่ยม!"
           }
         },
         "tr" : {
@@ -487,6 +679,18 @@
             "value" : "もっと規則的な睡眠時間を心がけましょう"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usahakan waktu tidur yang lebih teratur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พยายามทำให้นอนหลับเป็นเวลามากขึ้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -514,6 +718,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ポイント"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนน"
           }
         },
         "tr" : {
@@ -545,6 +761,18 @@
             "value" : "睡眠スケジュールの一貫性"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsistensi Jadual Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความสม่ำเสมอของตารางการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -572,6 +800,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一貫性スコアが高いほど、睡眠タイミングが規則的であることを示します。網掛け部分は正常な変動を示します。最適な多相睡眠適応のためには、80%以上のスコアを目指しましょう。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor konsistensi yang lebih tinggi menunjukkan masa tidur yang lebih teratur. Kawasan berlorek menunjukkan variasi normal. Sasarkan skor melebihi 80% untuk adaptasi tidur polifasa yang optimum."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนความสม่ำเสมอที่สูงขึ้นบ่งชี้ถึงช่วงเวลาการนอนที่เป็นปกติมากขึ้น พื้นที่แรเงาแสดงถึงความแปรปรวนปกติ ตั้งเป้าหมายให้ได้คะแนนสูงกว่า 80% เพื่อการปรับตัวการนอนหลับแบบหลายเฟสที่ดีที่สุด"
           }
         },
         "tr" : {
@@ -603,6 +843,18 @@
             "value" : "一貫性を理解する"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memahami Konsistensi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทำความเข้าใจความสม่ำเสมอ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -630,6 +882,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下限"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batas Bawah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขอบเขตล่าง"
           }
         },
         "tr" : {
@@ -661,6 +925,18 @@
             "value" : "偏差バンド付き日次一貫性スコア"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor konsistensi harian dengan jalur sisihan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนความสม่ำเสมอรายวันพร้อมแถบค่าเบี่ยงเบน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -688,6 +964,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目標"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sasaran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เป้าหมาย"
           }
         },
         "tr" : {
@@ -719,6 +1007,18 @@
             "value" : "睡眠一貫性トレンド"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran Konsistensi Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้มความสม่ำเสมอของการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -746,6 +1046,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上限"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batas Atas"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขอบเขตบน"
           }
         },
         "tr" : {
@@ -778,6 +1090,18 @@
             "value" : "1日の平均"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purata Harian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เฉลี่ยรายวัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -805,6 +1129,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน"
           }
         },
         "tr" : {
@@ -836,6 +1172,18 @@
             "value" : "各行は1日を表し、列は時間（0-23）を示します。色は睡眠状態を示します：濃い色はコア睡眠、中間色は仮眠、薄い色は休息期間です。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap baris mewakili satu hari, lajur menunjukkan jam (0-23). Warna menunjukkan keadaan tidur: gelap untuk tidur teras, sederhana untuk tidur sebentar, terang untuk tempoh rehat."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แต่ละแถวแสดงถึงวัน, คอลัมน์แสดงชั่วโมง (0-23) สีบ่งบอกถึงสถานะการนอน: สีเข้มสำหรับการนอนหลัก, สีปานกลางสำหรับการงีบ, สีอ่อนสำหรับช่วงพัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -863,6 +1211,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "読み方"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cara Membaca"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วิธีอ่าน"
           }
         },
         "tr" : {
@@ -894,6 +1254,18 @@
             "value" : "覚醒"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaga"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตื่น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -921,6 +1293,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コア睡眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
           }
         },
         "tr" : {
@@ -952,6 +1336,18 @@
             "value" : "浅い睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Ringan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลับตื้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -979,6 +1375,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
           }
         },
         "tr" : {
@@ -1010,6 +1418,18 @@
             "value" : "24時間の睡眠パターンの可視化"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visualisasi corak tidur 24 jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ภาพแสดงรูปแบบการนอน 24 ชั่วโมง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1037,6 +1457,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ヒートマップ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peta Haba Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฮีทแมพการนอน"
           }
         },
         "tr" : {
@@ -1068,6 +1500,18 @@
             "value" : "コア: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1095,6 +1539,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ: %.1f ชม."
           }
         },
         "tr" : {
@@ -1126,6 +1582,18 @@
             "value" : "スコア: %.1f"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor: %.1f"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนน: %.1f"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1153,6 +1621,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "合計: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวม: %.1f ชม."
           }
         },
         "tr" : {
@@ -1185,6 +1665,18 @@
             "value" : "履歴を見る"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lihat Sejarah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดูประวัติ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1213,6 +1705,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分析に十分な睡眠データがありません。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data tidur tidak mencukupi untuk analisis."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มีข้อมูลการนอนไม่เพียงพอสำหรับการวิเคราะห์"
           }
         },
         "tr" : {
@@ -1245,6 +1749,18 @@
             "value" : "データ不足"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Tidak Mencukupi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อมูลไม่เพียงพอ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1273,6 +1789,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "読み込み中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลด..."
           }
         },
         "tr" : {
@@ -1304,6 +1832,18 @@
             "value" : "キャンセル"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1331,6 +1871,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この機能はプレミアムサブスクリプションで利用できます。アップグレードして、詳細な分析とインサイトをアンロックしましょう。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciri ini tersedia dengan langganan Premium. Naik taraf untuk membuka kunci analitik dan wawasan terperinci."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟีเจอร์นี้มีให้สำหรับสมาชิกพรีเมียมเท่านั้น อัปเกรดเพื่อปลดล็อกการวิเคราะห์และข้อมูลเชิงลึกโดยละเอียด"
           }
         },
         "tr" : {
@@ -1362,6 +1914,18 @@
             "value" : "プレミアム機能"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciri Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟีเจอร์พรีเมียม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1389,6 +1953,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今すぐアップグレード"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naik Taraf Sekarang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเกรดทันที"
           }
         },
         "tr" : {
@@ -1420,6 +1996,18 @@
             "value" : "インタラクティブな円グラフによる睡眠構成要素の内訳"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pecahan komponen tidur dengan carta pai interaktif"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแบ่งส่วนประกอบการนอนด้วยแผนภูมิวงกลมแบบอินเทอร์แอคทีฟ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1447,6 +2035,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠の一貫性分析とルーティンの最適化"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisis konsistensi tidur dan pengoptimuman rutin"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การวิเคราะห์ความสม่ำเสมอของการนอนและการเพิ่มประสิทธิภาพกิจวัตร"
           }
         },
         "tr" : {
@@ -1478,6 +2078,18 @@
             "value" : "分布図付きの詳細な睡眠の質分析"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisis kualiti tidur terperinci dengan carta pengedaran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การวิเคราะห์คุณภาพการนอนโดยละเอียดพร้อมแผนภูมิการกระจาย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1505,6 +2117,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プレミアムが必要です"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Diperlukan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้พรีเมียม"
           }
         },
         "tr" : {
@@ -1536,6 +2160,18 @@
             "value" : "活動の提案付きで多相睡眠から得られた時間を追跡"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jejaki masa yang diperoleh daripada tidur polifasa dengan cadangan aktiviti"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตามเวลาที่ได้จากการนอนแบบหลายเฟสพร้อมคำแนะนำกิจกรรม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1563,6 +2199,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プレミアムをアンロックして詳細な分析を見る"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buka Kunci Premium untuk analitik terperinci"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปลดล็อกพรีเมียมเพื่อการวิเคราะห์โดยละเอียด"
           }
         },
         "tr" : {
@@ -1594,6 +2242,18 @@
             "value" : "プレミアムにアップグレード"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naik taraf kepada Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเกรดเป็นพรีเมียม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1621,6 +2281,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "前の期間との比較："
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berbanding dengan tempoh sebelumnya:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อเทียบกับช่วงก่อนหน้า:"
           }
         },
         "tr" : {
@@ -1652,6 +2324,18 @@
             "value" : "偏差"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sisihan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค่าเบี่ยงเบน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1679,6 +2363,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "質"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพ"
           }
         },
         "tr" : {
@@ -1710,6 +2406,18 @@
             "value" : "この散布図は、睡眠の質とタイミングの一貫性の関係を示しています。左下に近い点ほど、タイミングがより一貫しており質が高いことを示します。トレンドラインは全体的な相関関係を示しています。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plot serakan ini menunjukkan bagaimana kualiti tidur berkaitan dengan konsistensi masa. Titik yang lebih dekat ke kiri bawah menunjukkan kualiti yang lebih baik dengan masa yang lebih konsisten. Garis aliran menunjukkan korelasi keseluruhan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แผนภูมิกระจายนี้แสดงความสัมพันธ์ระหว่างคุณภาพการนอนกับความสม่ำเสมอของเวลา จุดที่อยู่ใกล้ด้านล่างซ้ายบ่งชี้ถึงคุณภาพที่ดีขึ้นพร้อมกับเวลาที่สม่ำเสมอมากขึ้น เส้นแนวโน้มแสดงความสัมพันธ์โดยรวม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1737,6 +2445,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "相関のインサイト"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wawasan Korelasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อมูลเชิงลึกเกี่ยวกับความสัมพันธ์"
           }
         },
         "tr" : {
@@ -1768,6 +2488,18 @@
             "value" : "睡眠の質とスケジュールの一貫性の関係"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hubungan antara kualiti tidur dan konsistensi jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความสัมพันธ์ระหว่างคุณภาพการนอนกับความสม่ำเสมอของตารางเวลา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1795,6 +2527,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "質 vs 一貫性"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti lwn Konsistensi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพเทียบกับความสม่ำเสมอ"
           }
         },
         "tr" : {
@@ -1826,6 +2570,18 @@
             "value" : "（%d日）"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%d hari)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%d วัน)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1850,6 +2606,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.0f%%"
@@ -1884,6 +2652,18 @@
             "value" : "睡眠の質分布"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengedaran Kualiti Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การกระจายคุณภาพการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1912,6 +2692,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コア睡眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
           }
         },
         "tr" : {
@@ -1943,6 +2735,18 @@
             "value" : "毎日："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harian:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รายวัน:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1970,6 +2774,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.1f 時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชม."
           }
         },
         "tr" : {
@@ -2001,6 +2817,18 @@
             "value" : "日数："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2028,6 +2856,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "時間/日"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jam/hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชั่วโมง/วัน"
           }
         },
         "tr" : {
@@ -2059,6 +2899,18 @@
             "value" : "コア睡眠と仮眠のバランスは、多相睡眠スケジュールの最適化に役立ちます。理想的な配分は、コア睡眠70-80%、仮眠20-30%です。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keseimbangan tidur teras dan tidur sebentar anda boleh membantu mengoptimumkan jadual tidur polifasa anda. Pengedaran yang ideal ialah 70-80% tidur teras, 20-30% tidur sebentar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความสมดุลระหว่างการนอนหลักและการงีบหลับของคุณสามารถช่วยเพิ่มประสิทธิภาพตารางการนอนแบบหลายเฟสได้ การกระจายในอุดมคติคือการนอนหลัก 70-80% และการงีบหลับ 20-30%"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2086,6 +2938,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "情報"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อมูล"
           }
         },
         "tr" : {
@@ -2118,6 +2982,18 @@
             "value" : "仮眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2147,6 +3023,18 @@
             "value" : "パーセンテージ："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peratusan:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปอร์เซ็นต์:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2171,6 +3059,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.0f%%"
@@ -2206,6 +3106,18 @@
             "value" : "睡眠の内訳"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pecahan Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแบ่งส่วนการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2233,6 +3145,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "合計："
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวม:"
           }
         },
         "tr" : {
@@ -2264,6 +3188,18 @@
             "value" : "%.1f 時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2291,6 +3227,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コア睡眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
           }
         },
         "tr" : {
@@ -2322,6 +3270,18 @@
             "value" : "仮眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2349,6 +3309,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠1"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 1"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 1"
           }
         },
         "tr" : {
@@ -2380,6 +3352,18 @@
             "value" : "仮眠2"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 2"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 2"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2407,6 +3391,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠スコア"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนการนอน"
           }
         },
         "tr" : {
@@ -2438,6 +3434,18 @@
             "value" : "過去7日間の内訳"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pecahan 7 hari terakhir"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแบ่งส่วน 7 วันที่ผ่านมา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2465,6 +3473,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠コンポーネントのトレンド"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran Komponen Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้มส่วนประกอบการนอน"
           }
         },
         "tr" : {
@@ -2496,6 +3516,18 @@
             "value" : "バランス"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baki"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สมดุล"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2523,6 +3555,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "累積"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kumulatif"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สะสม"
           }
         },
         "tr" : {
@@ -2554,6 +3598,18 @@
             "value" : "日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2581,6 +3637,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠負債は、必要な睡眠時間よりも少ない睡眠を取ると蓄積されます。赤い部分は負債を、緑の部分は余剰を示します。持続的な負債は、認知能力や多相睡眠スケジュールへの適応に影響を与える可能性があります。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hutang tidur terkumpul apabila anda kurang tidur daripada yang diperlukan. Kawasan merah menunjukkan hutang, hijau menunjukkan lebihan. Hutang yang berterusan boleh memberi kesan kepada prestasi kognitif dan penyesuaian kepada jadual polifasa."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หนี้การนอนจะสะสมเมื่อคุณนอนน้อยกว่าที่ต้องการ พื้นที่สีแดงแสดงหนี้, สีเขียวแสดงส่วนเกิน หนี้ที่คงอยู่เป็นเวลานานอาจส่งผลต่อประสิทธิภาพการรับรู้และการปรับตัวเข้ากับตารางการนอนแบบหลายเฟส"
           }
         },
         "tr" : {
@@ -2612,6 +3680,18 @@
             "value" : "睡眠負債の影響"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesan Hutang Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ผลกระทบของหนี้การนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2639,6 +3719,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日々の変化"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan Harian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเปลี่ยนแปลงรายวัน"
           }
         },
         "tr" : {
@@ -2670,6 +3762,18 @@
             "value" : "睡眠負債"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hutang Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หนี้การนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2697,6 +3801,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠余剰"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lebihan Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนเกิน"
           }
         },
         "tr" : {
@@ -2728,6 +3844,18 @@
             "value" : "時間経過による累積睡眠負債の追跡"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penjejakan hutang tidur kumulatif dari semasa ke semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การติดตามหนี้การนอนสะสมเมื่อเวลาผ่านไป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2755,6 +3883,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠負債分析"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisis Hutang Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การวิเคราะห์หนี้การนอน"
           }
         },
         "tr" : {
@@ -2786,6 +3926,18 @@
             "value" : "値"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nilai"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค่า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2813,6 +3965,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ゼロ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sifar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ศูนย์"
           }
         },
         "tr" : {
@@ -2844,6 +4008,18 @@
             "value" : "睡眠目標"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matlamat Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เป้าหมายการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2871,6 +4047,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "平均"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sederhana"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปานกลาง"
           }
         },
         "tr" : {
@@ -2902,6 +4090,18 @@
             "value" : "非常に悪い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sangat Teruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่มาก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2929,6 +4129,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "素晴らしい"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cemerlang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอดเยี่ยม"
           }
         },
         "tr" : {
@@ -2960,6 +4172,18 @@
             "value" : "良い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2987,6 +4211,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "悪い"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่"
           }
         },
         "tr" : {
@@ -3018,6 +4254,18 @@
             "value" : "睡眠の質："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti Tidur:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพการนอน:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3047,6 +4295,18 @@
             "value" : "悪化中"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merosot"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่ลง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3071,6 +4331,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%.0f%%)"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%.0f%%)"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " (%.0f%%)"
@@ -3105,6 +4377,18 @@
             "value" : "改善中"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meningkat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดีขึ้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3132,6 +4416,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stabil"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คงที่"
           }
         },
         "tr" : {
@@ -3163,6 +4459,18 @@
             "value" : "トレンド："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้ม:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3190,6 +4498,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "素晴らしい (90%)"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cemerlang (90%)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอดเยี่ยม (90%)"
           }
         },
         "tr" : {
@@ -3221,6 +4541,18 @@
             "value" : "目標 (80%)"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sasaran (80%)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เป้าหมาย (80%)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3248,6 +4580,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "質の高いスコアは、より規則的な睡眠時間とより良い回復に関連しています。最適な多相睡眠の適応のために、80%以上のスコアを目指しましょう。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor kualiti tinggi dikaitkan dengan waktu tidur yang lebih teratur dan pemulihan yang lebih baik. Sasarkan skor melebihi 80% untuk adaptasi tidur polifasa yang optimum."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนคุณภาพสูงมีความสัมพันธ์กับเวลาการนอนที่สม่ำเสมอและการฟื้นตัวที่ดีขึ้น ตั้งเป้าหมายให้ได้คะแนนสูงกว่า 80% เพื่อการปรับตัวการนอนหลับแบบหลายเฟสที่ดีที่สุด"
           }
         },
         "tr" : {
@@ -3279,6 +4623,18 @@
             "value" : "質を理解する"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memahami Kualiti"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทำความเข้าใจคุณภาพ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3306,6 +4662,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日々の睡眠の質のスコアの推移"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor kualiti tidur harian dari semasa ke semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนคุณภาพการนอนรายวันเมื่อเวลาผ่านไป"
           }
         },
         "tr" : {
@@ -3337,6 +4705,18 @@
             "value" : "睡眠の質のトレンド"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran Kualiti Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้มคุณภาพการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3364,6 +4744,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カテゴリ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หมวดหมู่"
           }
         },
         "tr" : {
@@ -3395,6 +4787,18 @@
             "value" : "%.1f 時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชั่วโมง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3422,6 +4826,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "質のスコア"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor Kualiti"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนนคุณภาพ"
           }
         },
         "tr" : {
@@ -3453,6 +4869,18 @@
             "value" : "合計睡眠："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนทั้งหมด:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3480,6 +4908,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠トレンド"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้มการนอน"
           }
         },
         "tr" : {
@@ -3511,6 +4951,18 @@
             "value" : "概要"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringkasan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สรุป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3538,6 +4990,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この時間で何ができますか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apa yang boleh anda lakukan dengan masa ini?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณสามารถทำอะไรกับเวลานี้ได้บ้าง?"
           }
         },
         "tr" : {
@@ -3569,6 +5033,18 @@
             "value" : "映画を%d本観る"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonton %d filem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดูหนัง %d เรื่อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3596,6 +5072,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d個のプロジェクトを完了させる"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selesaikan %d projek"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทำโปรเจกต์เสร็จ %d โปรเจกต์"
           }
         },
         "tr" : {
@@ -3627,6 +5115,18 @@
             "value" : "%dページ読む"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baca %d muka surat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อ่านหนังสือ %d หน้า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3654,6 +5154,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%dキロ歩く"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berjalan %d km"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เดิน %d กม."
           }
         },
         "tr" : {
@@ -3685,6 +5197,18 @@
             "value" : "従来の睡眠スケジュール（1日8時間）と比較して得られた余分な時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa tambahan yang diperoleh berbanding jadual tidur tradisional (8 jam sehari)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาพิเศษที่ได้มาเมื่อเทียบกับตารางการนอนแบบดั้งเดิม (8 ชั่วโมงต่อวัน)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3714,6 +5238,18 @@
             "value" : "効率："
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kecekapan:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประสิทธิภาพ:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3738,6 +5274,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f%%"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.0f%%"
@@ -3772,6 +5320,18 @@
             "value" : "時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชั่วโมง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3799,6 +5359,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1分あたり1ページ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 muka surat seminit"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 หน้าต่อนาที"
           }
         },
         "tr" : {
@@ -3830,6 +5402,18 @@
             "value" : "時速5kmのペース"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kadar 5 km/j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความเร็ว 5 กม./ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3857,6 +5441,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "映画1本あたり2時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 jam setiap filem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 ชั่วโมงต่อหนังหนึ่งเรื่อง"
           }
         },
         "tr" : {
@@ -3888,6 +5484,18 @@
             "value" : "プロジェクト1件あたり2日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 hari setiap projek"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 วันต่อโปรเจกต์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3915,6 +5523,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "得られた時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Diperoleh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาที่ได้มา"
           }
         },
         "tr" : {
@@ -3947,6 +5567,18 @@
             "value" : "得られた時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Diperoleh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาที่ได้มา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3974,6 +5606,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "月"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เดือน"
           }
         },
         "tr" : {
@@ -4005,6 +5649,18 @@
             "value" : "四半期"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suku Tahun"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไตรมาส"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4032,6 +5688,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "期間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Julat Masa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงเวลา"
           }
         },
         "tr" : {
@@ -4063,6 +5731,18 @@
             "value" : "週"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minggu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สัปดาห์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4090,6 +5770,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "年"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahun"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปี"
           }
         },
         "tr" : {
@@ -4121,6 +5813,18 @@
             "value" : "コア: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4148,6 +5852,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠1: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 1: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ1: %.1f ชม."
           }
         },
         "tr" : {
@@ -4179,6 +5895,18 @@
             "value" : "仮眠2: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 2: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ2: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4206,6 +5934,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "合計: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวม: %.1f ชม."
           }
         },
         "tr" : {
@@ -4237,6 +5977,18 @@
             "value" : "コア: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4264,6 +6016,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "毎日: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harian: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รายวัน: %.1f ชม."
           }
         },
         "tr" : {
@@ -4295,6 +6059,18 @@
             "value" : "日数: %d"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari: %d"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน: %d"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4322,6 +6098,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠1: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 1: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ1: %.1f ชม."
           }
         },
         "tr" : {
@@ -4353,6 +6141,18 @@
             "value" : "仮眠2: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 2: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ2: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4380,6 +6180,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠: %.1f時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ: %.1f ชม."
           }
         },
         "tr" : {
@@ -4411,6 +6223,18 @@
             "value" : "パーセンテージ: %.0f%%"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peratusan: %.0f%%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปอร์เซ็นต์: %.0f%%"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4438,6 +6262,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スコア: %.1f/5"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skor: %.1f/5"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนน: %.1f/5"
           }
         },
         "tr" : {
@@ -4469,6 +6305,18 @@
             "value" : "合計: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวม: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4498,6 +6346,18 @@
             "value" : "合計: %.1f時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah: %.1fj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวม: %.1f ชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4525,6 +6385,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "合計睡眠："
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนทั้งหมด:"
           }
         },
         "tr" : {
@@ -4557,6 +6429,18 @@
             "value" : "合計睡眠時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4584,6 +6468,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目標"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matlamat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เป้าหมาย"
           }
         },
         "tr" : {
@@ -4615,6 +6511,18 @@
             "value" : "日々の睡眠時間の推移"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempoh tidur harian dari semasa ke semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะเวลาการนอนรายวันเมื่อเวลาผ่านไป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4644,6 +6552,18 @@
             "value" : "総睡眠時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tempoh Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะเวลาการนอนทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4671,6 +6591,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠トレンド"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aliran Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนวโน้มการนอน"
           }
         },
         "tr" : {
@@ -4703,6 +6635,18 @@
             "value" : "更新中..."
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengemas kini..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังอัปเดต..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4732,6 +6676,18 @@
             "value" : "%.1f 時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f ชั่วโมง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4756,6 +6712,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f/5"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f/5"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.1f/5"
@@ -4790,6 +6758,18 @@
             "value" : "高い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tinggi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สูง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4817,6 +6797,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "中程度"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sederhana"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปานกลาง"
           }
         },
         "tr" : {
@@ -4848,6 +6840,18 @@
             "value" : "安定"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stabil"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คงที่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4875,6 +6879,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変動性"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebolehubahan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความแปรปรวน"
           }
         },
         "tr" : {

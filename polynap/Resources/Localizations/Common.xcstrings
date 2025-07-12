@@ -22,6 +22,18 @@
             "value" : "このページを完了"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lengkapkan Halaman Semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เสร็จสิ้นหน้าปัจจุบัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49,6 +61,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "説明"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penerangan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำอธิบาย"
           }
         },
         "tr" : {
@@ -80,6 +104,18 @@
             "value" : "次のページ"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Halaman Seterusnya"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หน้าถัดไป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +143,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未選択"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak Dipilih"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ได้เลือก"
           }
         },
         "tr" : {
@@ -138,6 +186,18 @@
             "value" : "前のページ"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Halaman Sebelumnya"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หน้าก่อนหน้า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +225,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "結果を見る"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lihat Keputusan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดูผลลัพธ์"
           }
         },
         "tr" : {
@@ -196,6 +268,18 @@
             "value" : "選択済み"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dipilih"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -223,6 +307,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スタート"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เริ่มต้น"
           }
         },
         "tr" : {
@@ -254,6 +350,18 @@
             "value" : "適応中"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปรับตัว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +389,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "適応"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปรับตัว"
           }
         },
         "tr" : {
@@ -312,6 +432,18 @@
             "value" : "高度な適応"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasi Lanjutan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปรับตัวขั้นสูง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -339,6 +471,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完全適応"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasi Penuh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปรับตัวเต็มรูปแบบ"
           }
         },
         "tr" : {
@@ -370,6 +514,18 @@
             "value" : "不明"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak diketahui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ทราบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -394,6 +550,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap"
@@ -428,6 +596,18 @@
             "value" : "サインインエラー"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat Log Masuk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาดในการลงชื่อเข้าใช้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -455,6 +635,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サインアウトエラー"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat Log Keluar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาดในการออกจากระบบ"
           }
         },
         "tr" : {
@@ -486,6 +678,18 @@
             "value" : "サインイン成功！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berjaya Log Masuk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลงชื่อเข้าใช้สำเร็จ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -513,6 +717,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サインアウト成功！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berjaya Log Keluar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ออกจากระบบสำเร็จ"
           }
         },
         "tr" : {
@@ -544,6 +760,18 @@
             "value" : "キャンセル"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -571,6 +799,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上級"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjutan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขั้นสูง"
           }
         },
         "tr" : {
@@ -602,6 +842,18 @@
             "value" : "初級"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permulaan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ผู้เริ่มต้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -629,6 +881,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "達人"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekstrem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สุดขั้ว"
           }
         },
         "tr" : {
@@ -660,6 +924,18 @@
             "value" : "中級"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pertengahan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระดับกลาง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -682,6 +958,18 @@
             "state" : "translated",
             "value" : "🛏️"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
+          }
         }
       }
     },
@@ -695,6 +983,18 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎉"
@@ -716,6 +1016,18 @@
             "state" : "translated",
             "value" : "⚡️"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
         }
       }
     },
@@ -733,6 +1045,18 @@
             "state" : "translated",
             "value" : "💡"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡"
+          }
         }
       }
     },
@@ -746,6 +1070,18 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💤"
@@ -772,6 +1108,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld時間 %lld分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldj %lldm"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldชม. %lldน."
           }
         },
         "tr" : {
@@ -803,6 +1151,18 @@
             "value" : "%lld時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldชม."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -830,6 +1190,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldน."
           }
         },
         "tr" : {
@@ -861,6 +1233,18 @@
             "value" : "%2$lldページ中 %1$lld"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld daripada %2$lld halaman"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หน้า %1$lld จาก %2$lld หน้า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -890,6 +1274,18 @@
             "value" : "%%lld"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -914,6 +1310,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ - %@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ - %@"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ - %@"
@@ -948,6 +1356,18 @@
             "value" : "追加"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่ม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -975,6 +1395,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンセル"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
           }
         },
         "tr" : {
@@ -1006,6 +1438,18 @@
             "value" : "削除"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1033,6 +1477,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตกลง"
           }
         },
         "tr" : {
@@ -1064,6 +1520,18 @@
             "value" : "保存"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1091,6 +1559,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App Storeで評価する"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nilaikan di App Store"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้คะแนนบน App Store"
           }
         },
         "tr" : {
@@ -1122,6 +1602,18 @@
             "value" : "あなたの体験を教えて！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kongsi pengalaman anda dengan kami!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แบ่งปันประสบการณ์ของคุณกับเรา!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1149,6 +1641,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "あとで"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bukan Sekarang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไว้ทีหลัง"
           }
         },
         "tr" : {
@@ -1180,6 +1684,18 @@
             "value" : "フィードバックを送る"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hantar Maklum Balas"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่งความคิดเห็น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1207,6 +1723,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フィードバック、すごく参考になるよ！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maklum balas anda sangat berharga bagi kami"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความคิดเห็นของคุณมีค่าสำหรับเรามาก"
           }
         },
         "tr" : {
@@ -1238,6 +1766,18 @@
             "value" : "ありがとう！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terima Kasih!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขอบคุณ!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1265,6 +1805,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap、気に入った？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah anda suka PolyNap?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณชอบ PolyNap ไหม?"
           }
         },
         "tr" : {
@@ -1296,6 +1848,18 @@
             "value" : "接続エラー"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat Sambungan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาดในการเชื่อมต่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1323,6 +1887,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロックの取得に失敗しました。もう一度試してみて。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gagal mendapatkan blok tidur. Sila cuba lagi."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถดึงข้อมูลช่วงการนอนได้ โปรดลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -1354,6 +1930,18 @@
             "value" : "睡眠スケジュールの取得に失敗しました。もう一度試してみて。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gagal mendapatkan jadual tidur. Sila cuba lagi."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถดึงข้อมูลตารางการนอนได้ โปรดลองอีกครั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1381,6 +1969,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "同期エラー"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat Penyegerakan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาดในการซิงค์"
           }
         },
         "tr" : {
@@ -1412,6 +2012,18 @@
             "value" : "クラウドからデータを読み込み中..."
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan data dari awan..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดข้อมูลจากคลาวด์..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1439,6 +2051,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "オフラインモード"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mod Luar Talian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โหมดออฟไลน์"
           }
         },
         "tr" : {
@@ -1470,6 +2094,18 @@
             "value" : "変更を待機中..."
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan Menunggu..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเปลี่ยนแปลงที่รอดำเนินการ..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1497,6 +2133,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "同期完了！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penyegerakan Selesai"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การซิงค์เสร็จสมบูรณ์"
           }
         },
         "tr" : {
@@ -1528,6 +2176,18 @@
             "value" : "同期中..."
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyegerak..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังซิงค์..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1555,6 +2215,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分析"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analitik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การวิเคราะห์"
           }
         },
         "tr" : {
@@ -1586,6 +2258,18 @@
             "value" : "学習"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendidikan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความรู้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1613,6 +2297,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "履歴"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sejarah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประวัติ"
           }
         },
         "tr" : {
@@ -1644,6 +2340,18 @@
             "value" : "プロフィール"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โปรไฟล์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1671,6 +2379,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スケジュール"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลา"
           }
         },
         "tr" : {

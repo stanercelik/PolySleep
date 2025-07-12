@@ -7,7 +7,9 @@
         "en": "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
         "tr": "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir.",
         "ja": "夜にまとめて寝る時間のほかに、日中に短いお昼寝を1回とる睡眠スタイル。スペインのシエスタみたいに、文化として根付いている地域もありますよ。",
-        "de": "Ein Schlafmuster mit einer Kernschlafphase und einem kurzen Nickerchen während des Tages, das in einigen Kulturen oft als Nachmittagssiesta praktiziert wird."
+        "de": "Ein Schlafmuster mit einer Kernschlafphase und einem kurzen Nickerchen während des Tages, das in einigen Kulturen oft als Nachmittagssiesta praktiziert wird.",
+        "ms": "Corak tidur dengan satu tempoh tidur teras dan satu tidur sebentar pendek pada siang hari, sering diamalkan dalam sesetengah budaya sebagai siesta petang.",
+        "th": "รูปแบบการนอนที่มีช่วงการนอนหลักหนึ่งครั้งและการหลับสั้นๆ ในช่วงกลางวัน มักพบในบางวัฒนธรรมเป็นการนอนบ่าย"
       },
       "totalSleepHours": 6.5,
       "isPremium": false,
@@ -34,7 +36,9 @@
         "en": "A longer core sleep at night (5-6 hours) plus a slightly longer midday nap (60-90 minutes). This allows more total rest while still splitting sleep into two segments.",
         "tr": "Geceleri 5-6 saatlik daha uzun bir ana uyku ve öğle saatlerinde 60-90 dakikalık nispeten daha uzun bir şekerlemeden oluşur. İki parçaya bölünmüş olsa da normal Biphasic düzene göre toplam uykuyu artırır.",
         "ja": "夜に5〜6時間の長めのコア睡眠と、昼間に60〜90分の少し長めの昼寝を組み合わせます。睡眠を2回に分けつつ、合計の休息時間をしっかり確保できます。",
-        "de": "Eine längere Kernschlafphase in der Nacht (5-6 Stunden) plus ein etwas längeres Mittagsschläfchen (60-90 Minuten). Dies ermöglicht mehr Gesamterholung, während der Schlaf weiterhin in zwei Segmente aufgeteilt ist."
+        "de": "Eine längere Kernschlafphase in der Nacht (5-6 Stunden) plus ein etwas längeres Mittagsschläfchen (60-90 Minuten). Dies ermöglicht mehr Gesamterholung, während der Schlaf weiterhin in zwei Segmente aufgeteilt ist.",
+        "ms": "Tidur teras yang lebih panjang pada waktu malam (5-6 jam) ditambah tidur sebentar yang lebih lama pada tengah hari (60-90 minit). Ini membolehkan lebih banyak rehat keseluruhan sambil masih membahagikan tidur kepada dua segmen.",
+        "th": "การนอนหลักที่ยาวขึ้นในตอนกลางคืน (5-6 ชั่วโมง) รวมกับการหลับสั้นที่ยาวขึ้นเล็กน้อยในตอนกลางวัน (60-90 นาที) ช่วยให้พักผ่อนรวมได้มากขึ้นในขณะที่ยังคงแบ่งการนอนเป็นสองช่วง"
       },
       "totalSleepHours": 7.5,
       "isPremium": false,
@@ -61,7 +65,9 @@
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps.",
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler.",
         "ja": "夜のまとまった睡眠は短めにして、その分、日中に何回か短い仮眠をとるスタイル。夜の休息と日中のうたた寝をうまく組み合わせて、短い睡眠時間でも乗り切るのが狙いです。",
-        "de": "Eine Kernschlafphase von einigen Stunden plus mehrere kurze Nickerchen über den Tag verteilt. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen."
+        "de": "Eine Kernschlafphase von einigen Stunden plus mehrere kurze Nickerchen über den Tag verteilt. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen.",
+        "ms": "Satu tidur teras selama beberapa jam ditambah beberapa tidur sebentar pendek sepanjang hari. Ia bertujuan untuk mengimbangkan rehat malam dengan tidur sebentar yang kerap.",
+        "th": "การนอนหลักหนึ่งครั้งเป็นเวลาหลายชั่วโมง รวมกับการหลับสั้นๆ หลายครั้งตลอดทั้งวัน มีเป้าหมายเพื่อสร้างสมดุลระหว่างการพักผ่อนยามค่ำคืนกับการงีบหลับพลังงานที่บ่อยครั้ง"
       },
       "totalSleepHours": 4.5,
       "isPremium": false,
@@ -100,7 +106,9 @@
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep of about 4-5 hours plus 2 short naps (20-30 mins each) during the day.",
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 4-5 saatlik bir ana uyku ve gün içinde 2 kısa (20-30 dakikalık) şekerlemeden oluşan düzendir.",
         "ja": "夜に4〜5時間まとめて寝て、日中に2回、20〜30分くらいの短いお昼寝をするパターンです。夜の睡眠と日中の仮眠で、効率よく体を休ませます。",
-        "de": "Eine Kernschlafphase von etwa 4-5 Stunden plus 2 kurze Nickerchen (jeweils 20-30 Min.) während des Tages. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen."
+        "de": "Eine Kernschlafphase von etwa 4-5 Stunden plus 2 kurze Nickerchen (jeweils 20-30 Min.) während des Tages. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen.",
+        "ms": "Satu tidur teras kira-kira 4-5 jam ditambah 2 tidur sebentar pendek (20-30 minit setiap satu) dalam sehari.",
+        "th": "การนอนหลักประมาณ 4-5 ชั่วโมง รวมกับการหลับสั้นๆ 2 ครั้ง (ครั้งละ 20-30 นาที) ในระหว่างวัน"
       },
       "totalSleepHours": 5,
       "isPremium": false,
@@ -133,7 +141,9 @@
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One core sleep (3-4 hours) plus 3 short naps (20 mins each) spread throughout the day.",
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. 3-4 saatlik tek bir ana uyku ve gün içine yayılmış 3 adet 20 dakikalık kısa uykulardan oluşan düzen.",
         "ja": "夜の睡眠は3〜4時間に凝縮して、日中に20分のお昼寝を3回するスタイル。短い睡眠をこまめに取ることで、1日を乗り切ります。",
-        "de": "Eine Kernschlafphase (3-4 Stunden) plus 3 kurze Nickerchen (jeweils 20 Min.), die über den Tag verteilt sind. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen."
+        "de": "Eine Kernschlafphase (3-4 Stunden) plus 3 kurze Nickerchen (jeweils 20 Min.), die über den Tag verteilt sind. Ziel ist es, die Nachtruhe mit häufigen Power-Naps auszugleichen.",
+        "ms": "Satu tidur teras (3-4 jam) ditambah 3 tidur sebentar pendek (20 minit setiap satu) yang tersebar sepanjang hari.",
+        "th": "การนอนหลัก 1 ครั้ง (3-4 ชั่วโมง) รวมกับการหลับสั้นๆ 3 ครั้ง (ครั้งละ 20 นาที) ที่กระจายตลอดทั้งวัน"
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
@@ -172,7 +182,9 @@
         "en": "One core sleep of a few hours plus multiple short naps throughout the day. It aims to balance night rest with frequent power naps. One short core sleep (~3 hours) plus 4 short naps (20 mins each) throughout the day. More intense than E2/E3.",
         "tr": "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur. Gece uykusu ve sık kısa uyuklamalar arasında bir denge kurmayı böylece toplam uyku süresini düşürmeyi hedefler. Yaklaşık 3 saatlik bir ana uyku ve gün içine yayılmış 4 adet 20 dakikalık şekerlemelerden oluşur. E2/E3'e göre daha ağır bir düzendir.",
         "ja": "夜の睡眠を約3時間まで減らして、その分、日中に20分の仮眠を4回も取るハードなスタイル。E2やE3より、さらに上級者向けですね。",
-        "de": "Eine kurze Kernschlafphase (~3 Stunden) plus 4 kurze Nickerchen (jeweils 20 Min.) über den Tag verteilt. Intensiver als E2/E3 und zielt darauf ab, Nachtruhe mit Power-Naps auszugleichen."
+        "de": "Eine kurze Kernschlafphase (~3 Stunden) plus 4 kurze Nickerchen (jeweils 20 Min.) über den Tag verteilt. Intensiver als E2/E3 und zielt darauf ab, Nachtruhe mit Power-Naps auszugleichen.",
+        "ms": "Satu tidur teras pendek (~3 jam) ditambah 4 tidur sebentar pendek (20 minit setiap satu) sepanjang hari. Lebih intensif daripada E2/E3.",
+        "th": "การนอนหลักสั้นๆ (~3 ชั่วโมง) รวมกับการหลับสั้นๆ 4 ครั้ง (ครั้งละ 20 นาที) ตลอดทั้งวัน เข้มข้นกว่า E2/E3"
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
@@ -217,7 +229,9 @@
         "en": "Four 30-minute naps spaced evenly throughout the day, for a total of just two hours of sleep. It's considered highly challenging to sustain.",
         "tr": "Gün içerisine eşit aralıklarla yerleştirilmiş, toplam iki saate denk gelen dört adet 30 dakikalık şekerleme. Sürdürmesi oldukça zor kabul edilir.",
         "ja": "1日を6時間ごとに区切って、30分ずつ4回だけ寝る超上級者向けの睡眠法。合計睡眠時間はたったの2時間！続けるのは、ものすごく大変です。",
-        "de": "Vier 30-minütige Nickerchen, die gleichmäßig über den Tag verteilt sind, für eine Gesamtschlafzeit von nur zwei Stunden. Gilt als extrem schwer aufrechtzuerhalten."
+        "de": "Vier 30-minütige Nickerchen, die gleichmäßig über den Tag verteilt sind, für eine Gesamtschlafzeit von nur zwei Stunden. Gilt als extrem schwer aufrechtzuerhalten.",
+        "ms": "Empat tidur sebentar 30 minit yang tersebar sama rata sepanjang hari, dengan jumlah keseluruhan hanya dua jam tidur. Dianggap sangat sukar untuk dikekalkan.",
+        "th": "การงีบหลับ 4 ครั้ง ครั้งละ 30 นาที กระจายเท่าๆ กันตลอดทั้งวัน รวมเวลานอนเพียงสองชั่วโมง ถือว่าท้าทายมากในการรักษาไว้"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -256,7 +270,9 @@
         "en": "Same concept as classic Dymaxion (4x30-minute naps) but offset times to fit certain night-shift or late-night routines.",
         "tr": "Klasik Dymaxion (günde 4 kez 30 dakikalık) konseptini koruyarak, geç/gece vardiyası veya farklı rutinler için saatleri uyarlayan versiyon.",
         "ja": "基本はダイマキシオン（30分仮眠×4回）と同じだけど、夜勤とか夜型の人のために、寝る時間を調整したバージョンです。",
-        "de": "Gleiches Konzept wie der klassische Dymaxion-Plan (4x30-minütige Nickerchen), aber mit versetzten Zeiten, um sich an bestimmte Nachtschicht- oder Spätnachtroutinen anzupassen."
+        "de": "Gleiches Konzept wie der klassische Dymaxion-Plan (4x30-minütige Nickerchen), aber mit versetzten Zeiten, um sich an bestimmte Nachtschicht- oder Spätnachtroutinen anzupassen.",
+        "ms": "Konsep yang sama seperti pelan Dymaxion klasik (4x30-minit tidur sebentar) tetapi dengan masa yang diubah untuk menyesuaikan syif malam atau rutin lewat malam tertentu.",
+        "th": "แนวคิดเดียวกับแผน Dymaxion แบบคลาสสิก (การงีบหลับ 4x30 นาที) แต่ปรับเวลาให้เหมาะกับกะกลางคืนหรือกิจวัตรดึกๆ บางอย่าง"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -295,7 +311,9 @@
         "en": "A highly extreme pattern featuring six (sometimes more) short naps of about 20 minutes each, spread every 4 hours.",
         "tr": "Her 4 saatte bir 20 dakikalık altı (bazen daha fazla) kısa uykudan oluşan oldukça ekstrem bir uyku düzenidir.",
         "ja": "4時間おきに20分間の仮眠を1日に6回以上も取る、かなり過激なスタイル。まさに超人（ウーヴァーメンシュ）向けです。",
-        "de": "Ein extrem anspruchsvolles Muster mit sechs (manchmal mehr) kurzen Nickerchen von jeweils etwa 20 Minuten, die alle 4 Stunden verteilt sind."
+        "de": "Ein extrem anspruchsvolles Muster mit sechs (manchmal mehr) kurzen Nickerchen von jeweils etwa 20 Minuten, die alle 4 Stunden verteilt sind.",
+        "ms": "Corak yang sangat ekstrem dengan enam (kadang-kadang lebih) tidur sebentar pendek sekitar 20 minit setiap satu, tersebar setiap 4 jam.",
+        "th": "รูปแบบที่รุนแรงมากกับการงีบหลับสั้นๆ 6 ครั้ง (บางครั้งมากกว่า) ครั้งละประมาณ 20 นาที กระจายทุกๆ 4 ชั่วโมง"
       },
       "totalSleepHours": 2,
       "isPremium": false,
@@ -346,7 +364,9 @@
         "en": "A schedule with three separate sleep blocks, each lasting 1 to 2 hours, often aligned around dusk, dawn, and midday.",
         "tr": "Üç ayrı uyku bloğundan oluşan, her biri 1 ila 2 saat süren ve genellikle gün batımı, gün doğumu ve öğle saatlerine denk gelecek şekilde planlanan bir düzen.",
         "ja": "1日を3回に分けて寝るスタイル。夕暮れ、夜明け、お昼ごろに、それぞれ1〜2時間ずつ眠ります。",
-        "de": "Ein Zeitplan mit drei separaten Schlafblöcken von jeweils 1 bis 2 Stunden, die oft um die Dämmerung, den Sonnenaufgang und die Mittagszeit herum ausgerichtet sind."
+        "de": "Ein Zeitplan mit drei separaten Schlafblöcken von jeweils 1 bis 2 Stunden, die oft um die Dämmerung, den Sonnenaufgang und die Mittagszeit herum ausgerichtet sind.",
+        "ms": "Jadual dengan tiga blok tidur berasingan, setiap satu berlangsung 1 hingga 2 jam, sering disusun sekitar senja, subuh, dan tengah hari.",
+        "th": "ตารางเวลาที่มีช่วงการนอนแยกออกเป็น 3 ช่วง แต่ละช่วงเป็นเวลา 1-2 ชั่วโมง มักจัดรอบๆ เวลาพลบค่ำ รุ่งอรุณ และตอนเที่ยงวัน"
       },
       "totalSleepHours": 4,
       "isPremium": false,
@@ -379,7 +399,9 @@
         "en": "Three sleep blocks (1.5-2 hours each) aligned around personal peak times. Often set around 22:00, 04:00, and 10:00 or variations thereof.",
         "tr": "Kişinin kendi biyolojik ritmine göre ayarlanmış 1,5-2 saatlik üç uyku bloğu. Genelde 22:00, 04:00 ve 10:00 civarında planlanır.",
         "ja": "自分の生活リズムに合わせて、1.5〜2時間の睡眠を3回とる方法。例えば22時、4時、10時みたいに、活動の合間に眠ります。",
-        "de": "Drei Schlafblöcke (jeweils 1,5-2 Stunden), die sich an persönlichen Spitzenzeiten orientieren. Oft um 22:00, 04:00 und 10:00 Uhr oder Variationen davon angesetzt."
+        "de": "Drei Schlafblöcke (jeweils 1,5-2 Stunden), die sich an persönlichen Spitzenzeiten orientieren. Oft um 22:00, 04:00 und 10:00 Uhr oder Variationen davon angesetzt.",
+        "ms": "Tiga blok tidur (1.5-2 jam setiap satu) yang diselaraskan dengan masa puncak peribadi. Sering ditetapkan sekitar 22:00, 04:00, dan 10:00 atau variasi daripadanya.",
+        "th": "ช่วงการนอน 3 ช่วง (ช่วงละ 1.5-2 ชั่วโมง) ที่จัดให้สอดคล้องกับช่วงเวลาที่เหมาะสมส่วนบุคคล มักจัดรอบๆ 22:00, 04:00, และ 10:00 หรือเวลาใกล้เคียง"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -412,7 +434,9 @@
         "en": "A traditional schedule sometimes referred to as first and second sleep: a few hours after dusk, a waking period, then another block of rest. Ideal for a relaxed start.",
         "tr": "Yaygın olarak 'birinci ve ikinci uyku' şeklinde anılan geleneksel bir düzendir. Gün batımından sonra birkaç saatlik uykudan, bir uyanıklık döneminin ardından da ikinci bir dinlenme bloğundan oluşur. Başlangıç için rahat bir seçenektir.",
         "ja": "昔の人がやっていた『二度寝』スタイル。夜早い時間に一度寝て、真夜中に少し起きてから、また朝まで寝る。時間に縛られない、のんびりした生活向けです。",
-        "de": "Ein traditioneller Zeitplan, der manchmal als erster und zweiter Schlaf bezeichnet wird: einige Stunden nach der Dämmerung, eine Wachphase, dann ein weiterer Ruheblock. Ideal für einen entspannten Start."
+        "de": "Ein traditioneller Zeitplan, der manchmal als erster und zweiter Schlaf bezeichnet wird: einige Stunden nach der Dämmerung, eine Wachphase, dann ein weiterer Ruheblock. Ideal für einen entspannten Start.",
+        "ms": "Jadual tradisional yang kadang-kadang dirujuk sebagai tidur pertama dan kedua: beberapa jam selepas senja, tempoh terjaga, kemudian blok rehat yang lain. Sesuai untuk permulaan yang santai.",
+        "th": "ตารางเวลาแบบดั้งเดิมที่บางครั้งเรียกว่าการนอนครั้งแรกและครั้งที่สอง: หลายชั่วโมงหลังจากพลบค่ำ ช่วงตื่น แล้วตามด้วยช่วงพักผ่อนอีกครั้ง เหมาะสำหรับการเริ่มต้นแบบผ่อนคลาย"
       },
       "totalSleepHours": 6,
       "isPremium": false,
@@ -439,7 +463,9 @@
         "en": "An alternative segmented schedule with a first sleep soon after dusk (21:00-00:00) and a second sleep closer to morning (02:00-05:00), leaving a long wake period in the late morning.",
         "tr": "Gün batımından hemen sonra (21:00-00:00) birinci uykudan, sabaha karşı (02:00-05:00) ikinci uykudan oluşan alternatif bir düzendir. Sabahın geç saatlerine kadar uzun bir uyanıklık dönemi bırakır.",
         "ja": "これも『二度寝』スタイルだけど、夜9時〜12時の間に一度寝て、深夜2時〜5時にもう一度寝るパターン。朝遅くまで起きている時間が長くなります。",
-        "de": "Ein alternativer segmentierter Zeitplan mit einem ersten Schlaf kurz nach der Dämmerung (21:00-00:00) und einem zweiten Schlaf näher am Morgen (02:00-05:00), was eine lange Wachperiode am späten Vormittag ermöglicht."
+        "de": "Ein alternativer segmentierter Zeitplan mit einem ersten Schlaf kurz nach der Dämmerung (21:00-00:00) und einem zweiten Schlaf näher am Morgen (02:00-05:00), was eine lange Wachperiode am späten Vormittag ermöglicht.",
+        "ms": "Jadual tersegmen alternatif dengan tidur pertama sejurus selepas senja (21:00-00:00) dan tidur kedua lebih dekat dengan pagi (02:00-05:00), meninggalkan tempoh terjaga yang panjang pada lewat pagi.",
+        "th": "ตารางเวลาแบบแบ่งส่วนที่ทางเลือกกับการนอนครั้งแรกหลังจากพลบค่ำ (21:00-00:00) และการนอนครั้งที่สองใกล้เช้า (02:00-05:00) ทำให้มีช่วงตื่นยาวในช่วงสายๆ ของเช้า"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -466,7 +492,9 @@
         "en": "A sleep pattern that splits the night into two nearly equal core sleep periods separated by a wakeful period. It mimics segmented sleep in a more structured form.",
         "tr": "Geceyi iki neredeyse eşit ana uyku periyoduna bölen ve arada uyanıklık dönemi bırakan bir düzen. Bölünmüş uykuyu daha yapılandırılmış bir biçimde taklit eder.",
         "ja": "夜の睡眠を、間に起きている時間を挟んで、ほぼ同じ長さの2回に分ける方法。分割睡眠を、もっとカッチリしたスケジュールにした感じです。",
-        "de": "Ein Schlafmuster, das die Nacht in zwei nahezu gleiche Kernschlafphasen aufteilt, die durch eine Wachphase getrennt sind. Es ahmt den segmentierten Schlaf in einer strukturierteren Form nach."
+        "de": "Ein Schlafmuster, das die Nacht in zwei nahezu gleiche Kernschlafphasen aufteilt, die durch eine Wachphase getrennt sind. Es ahmt den segmentierten Schlaf in einer strukturierteren Form nach.",
+        "ms": "Corak tidur yang membahagikan malam kepada dua tempoh tidur teras yang hampir sama, dipisahkan oleh tempoh terjaga. Ia meniru tidur tersegmen dalam bentuk yang lebih berstruktur.",
+        "th": "รูปแบบการนอนที่แบ่งยามค่ำคืนเป็นสองช่วงการนอนหลักที่เกือบเท่ากัน แยกโดยช่วงตื่น เลียนแบบการนอนแบบแบ่งส่วนในรูปแบบที่มีโครงสร้างมากขึ้น"
       },
       "totalSleepHours": 6,
       "isPremium": false,
@@ -493,7 +521,9 @@
         "en": "An extended biphasic schedule: one core sleep plus a long nap, totaling around 7 hours of rest.",
         "tr": "Genişletilmiş bir biphasic düzen: bir ana uyku ve ardından uzun bir şekerlemeden oluşarak toplamda yaklaşık 7 saatlik uyku sağlar.",
         "ja": "二相性睡眠のロングバージョン。夜にしっかり寝て、昼にも長めのお昼寝をする。合計で7時間くらい眠れます。",
-        "de": "Ein erweiterter biphasischer Zeitplan: eine Kernschlafphase plus ein langes Nickerchen, was insgesamt etwa 7 Stunden Ruhe ergibt."
+        "de": "Ein erweiterter biphasischer Zeitplan: eine Kernschlafphase plus ein langes Nickerchen, was insgesamt etwa 7 Stunden Ruhe ergibt.",
+        "ms": "Jadual bifasik yang diperluas: satu tidur teras ditambah tidur sebentar yang panjang, menghasilkan kira-kira 7 jam rehat keseluruhan.",
+        "th": "ตารางเวลาแบบสองเฟสที่ขยาย: การนอนหลักหนึ่งครั้ง รวมกับการงีบหลับยาว รวมเป็นเวลาพักผ่อนประมาณ 7 ชั่วโมง"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -520,7 +550,9 @@
         "en": "A biphasic pattern with a single core sleep at night and a midday siesta nap, common in many siesta cultures.",
         "tr": "Gece tek bir ana uyku ve öğlen siesta uykusundan oluşan biphasic düzen. Pek çok kültürde gelenekseldir.",
         "ja": "夜にまとめて寝て、お昼にはシエスタ（お昼寝）をとる、多くの文化で見られる定番の二相性睡眠です。",
-        "de": "Ein biphasisches Muster mit einer einzigen Kernschlafphase in der Nacht und einem mittäglichen Siesta-Nickerchen, wie es in vielen Siesta-Kulturen üblich ist."
+        "de": "Ein biphasisches Muster mit einer einzigen Kernschlafphase in der Nacht und einem mittäglichen Siesta-Nickerchen, wie es in vielen Siesta-Kulturen üblich ist.",
+        "ms": "Corak bifasik dengan satu tidur teras tunggal pada waktu malam dan tidur sebentar siesta pada tengah hari, biasa dalam banyak budaya siesta.",
+        "th": "รูปแบบสองเฟสที่มีการนอนหลักครั้งเดียวยามค่ำคืนและการงีบหลับแบบเซียสต้าตอนเที่ยงวัน ซึ่งเป็นเรื่องปกติในหลายวัฒนธรรมเซียสต้า"
       },
       "totalSleepHours": 7,
       "isPremium": false,
@@ -547,7 +579,9 @@
         "en": "A biphasic variation that segments the night into two sleep blocks, each around 3 hours, separated by wake time.",
         "tr": "Geceyi yaklaşık 3'er saatlik iki uyku bloğuna bölen, arada uyanıklık kalınan biphasic bir varyasyon.",
         "ja": "夜の睡眠を、起きている時間を間に挟んで、約3時間ずつ2回に分ける二相性睡眠の変形版です。",
-        "de": "Eine biphasische Variante, die die Nacht in zwei Schlafblöcke von jeweils etwa 3 Stunden unterteilt, die durch eine Wachzeit getrennt sind."
+        "de": "Eine biphasische Variante, die die Nacht in zwei Schlafblöcke von jeweils etwa 3 Stunden unterteilt, die durch eine Wachzeit getrennt sind.",
+        "ms": "Variasi bifasik yang membahagikan malam kepada dua blok tidur, setiap satu sekitar 3 jam, dipisahkan oleh masa terjaga.",
+        "th": "รูปแบบสองเฟสที่แบ่งยามค่ำคืนเป็นช่วงการนอนสองช่วง แต่ละช่วงประมาณ 3 ชั่วโมง แยกโดยช่วงตื่น"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -574,7 +608,9 @@
         "en": "Another flexible biphasic approach with one nighttime core and one extended nap during the day.",
         "tr": "Geceleri tek bir ana uyku ve gün içinde genişletilmiş bir şekerlemeden oluşan esnek biphasic yaklaşımı.",
         "ja": "夜に1回まとめて寝て、日中に長めのお昼寝を1回とる、柔軟性の高い二相性睡眠のスタイルです。",
-        "de": "Ein weiterer flexibler biphasischer Ansatz mit einer nächtlichen Kernschlafphase und einem ausgedehnten Nickerchen während des Tages."
+        "de": "Ein weiterer flexibler biphasischer Ansatz mit einer nächtlichen Kernschlafphase und einem ausgedehnten Nickerchen während des Tages.",
+        "ms": "Pendekatan bifasik yang fleksibel lagi dengan satu tidur teras malam dan satu tidur sebentar yang dipanjangkan pada siang hari.",
+        "th": "แนวทางสองเฟสที่ยืดหยุ่นอีกหนึ่งแบบกับการนอนหลักยามค่ำคืนและการงีบหลับยาวในระหว่างวัน"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -601,7 +637,9 @@
         "en": "An extended variant of Everyman 2: ~5h core sleep plus two short naps (15-30 mins), aiming for ~5.5h total.",
         "tr": "Everyman 2'nin genişletilmiş varyasyonu: Yaklaşık 5 saatlik ana uykuya ek olarak günde iki kısa (15-30 dk) şekerleme içerir.",
         "ja": "エブリマン2のロングバージョン。夜に約5時間寝て、さらに15〜30分の短い仮眠を2回とります。合計で5.5時間くらい寝る計算です。",
-        "de": "Eine erweiterte Variante von Everyman 2: ~5 Std. Kernschlaf plus zwei kurze Nickerchen (15-30 Min.), mit dem Ziel von ~5,5 Std. insgesamt."
+        "de": "Eine erweiterte Variante von Everyman 2: ~5 Std. Kernschlaf plus zwei kurze Nickerchen (15-30 Min.), mit dem Ziel von ~5,5 Std. insgesamt.",
+        "ms": "Varian diperluas Everyman 2: ~5 jam tidur teras ditambah dua tidur sebentar pendek (15-30 minit), bertujuan untuk ~5.5 jam keseluruhan.",
+        "th": "รูปแบบขยายของ Everyman 2: การนอนหลัก ~5 ชม. รวมกับการงีบหลับสั้นๆ สองครั้ง (15-30 นาที) เป้าหมายรวม ~5.5 ชม."
       },
       "totalSleepHours": 5.5,
       "isPremium": true,
@@ -634,7 +672,9 @@
         "en": "An extended variant of Everyman 3: ~4h core sleep plus three short naps (15-20 mins).",
         "tr": "Everyman 3'ün genişletilmiş varyasyonu: Yaklaşık 4 saatlik ana uykuya ek olarak günde 3 kısa (15-20 dk) şekerleme.",
         "ja": "エブリマン3のロングバージョン。夜に約4時間まとめて寝て、日中に15〜20分の短い仮眠を3回プラスします。",
-        "de": "Eine erweiterte Variante von Everyman 3: ~4 Std. Kernschlaf plus drei kurze Nickerchen (15-20 Min.)."
+        "de": "Eine erweiterte Variante von Everyman 3: ~4 Std. Kernschlaf plus drei kurze Nickerchen (15-20 Min.).",
+        "ms": "Varian diperluas Everyman 3: ~4 jam tidur teras ditambah tiga tidur sebentar pendek (15-20 minit).",
+        "th": "รูปแบบขยายของ Everyman 3: การนอนหลัก ~4 ชม. รวมกับการงีบหลับสั้นๆ สามครั้ง (15-20 นาที)"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -673,7 +713,9 @@
         "en": "A more intense Everyman variant: ~3.5h core sleep plus four short naps. Extended version may total ~5h.",
         "tr": "Daha yoğun bir Everyman varyasyonu: Yaklaşık 3,5 saatlik ana uyku ve dört kısa şekerleme. Genişletilmiş versiyonu yaklaşık 5 saatlik toplam uyku sunar.",
         "ja": "もっとハードなエブリマン。夜の睡眠を約3.5時間にして、短い仮眠を4回とります。合計で5時間くらい寝るロングバージョンです。",
-        "de": "Eine intensivere Everyman-Variante: ~3,5 Std. Kernschlaf plus vier kurze Nickerchen. Die erweiterte Version kann insgesamt ~5 Std. betragen."
+        "de": "Eine intensivere Everyman-Variante: ~3,5 Std. Kernschlaf plus vier kurze Nickerchen. Die erweiterte Version kann insgesamt ~5 Std. betragen.",
+        "ms": "Varian Everyman yang lebih intensif: ~3.5 jam tidur teras ditambah empat tidur sebentar pendek. Versi diperluas boleh mencapai ~5 jam keseluruhan.",
+        "th": "รูปแบบ Everyman ที่เข้มข้นกว่า: การนอนหลัก ~3.5 ชม. รวมกับการงีบหลับสั้นๆ สี่ครั้ง เวอร์ชันขยายอาจรวม ~5 ชม."
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -718,7 +760,9 @@
         "en": "A rare Everyman variant with a short core (~3h) plus five mini-naps throughout the day.",
         "tr": "Nadir görülen Everyman varyasyonu: Yaklaşık 3 saatlik ana uyku ve gün içinde beş kısa şekerleme.",
         "ja": "夜の睡眠は約3時間で、あとは5回も短い仮眠をとる、かなり珍しいエブリマンのスタイルです。",
-        "de": "Eine seltene Everyman-Variante mit einer kurzen Kernschlafphase (~3 Std.) plus fünf Mini-Nickerchen über den Tag verteilt."
+        "de": "Eine seltene Everyman-Variante mit einer kurzen Kernschlafphase (~3 Std.) plus fünf Mini-Nickerchen über den Tag verteilt.",
+        "ms": "Varian Everyman yang jarang dengan tidur teras pendek (~3 jam) ditambah lima tidur sebentar mini tersebar sepanjang hari.",
+        "th": "รูปแบบ Everyman ที่หายากกับการนอนหลักสั้นๆ (~3 ชม.) รวมกับการงีบหลับสั้นๆ ห้าครั้งกระจายตลอดทั้งวัน"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -769,7 +813,9 @@
         "en": "An ultra-compact Everyman variant with a short nighttime core and multiple naps, typically totaling 3-4 hours.",
         "tr": "Çok kısa gece ana uyku ve birden fazla şekerlemeden oluşan, genelde 3-4 saate düşen bir Everyman varyasyonu.",
         "ja": "夜の睡眠をさらに短くして、何回かの仮眠と合わせる超コンパクトなエブリマン。合計睡眠時間は3〜4時間ほどです。",
-        "de": "Eine ultrakompakte Everyman-Variante mit einer kurzen nächtlichen Kernschlafphase und mehreren Nickerchen, die typischerweise insgesamt 3-4 Stunden ergeben."
+        "de": "Eine ultrakompakte Everyman-Variante mit einer kurzen nächtlichen Kernschlafphase und mehreren Nickerchen, die typischerweise insgesamt 3-4 Stunden ergeben.",
+        "ms": "Varian Everyman ultra-kompak dengan tidur teras malam yang pendek dan beberapa tidur sebentar, biasanya menghasilkan keseluruhan 3-4 jam.",
+        "th": "รูปแบบ Everyman แบบอัลตราคอมแพคท์กับการนอนหลักยามค่ำคืนสั้นๆ และการงีบหลับหลายครั้ง โดยทั่วไปรวม 3-4 ชั่วโมง"
       },
       "totalSleepHours": 3.5,
       "isPremium": true,
@@ -814,7 +860,9 @@
         "en": "A mixed polyphasic approach combining aspects of triphasic and Everyman, often around 3-4h of total sleep.",
         "tr": "Triphasic ve Everyman öğelerini harmanlayan karma bir polyphasic yaklaşım. Genelde 3-4 saat toplam uyku sağlar.",
         "ja": "三相性睡眠とエブリマンを組み合わせたハイブリッド型。合計の睡眠時間は3〜4時間くらいです。",
-        "de": "Ein gemischter polyphasischer Ansatz, der Aspekte von Triphasic und Everyman kombiniert, oft mit einer Gesamtschlafzeit von 3-4 Stunden."
+        "de": "Ein gemischter polyphasischer Ansatz, der Aspekte von Triphasic und Everyman kombiniert, oft mit einer Gesamtschlafzeit von 3-4 Stunden.",
+        "ms": "Pendekatan polifasik campuran yang menggabungkan aspek Triphasic dan Everyman, sering dengan jumlah masa tidur 3-4 jam.",
+        "th": "แนวทางโพลิเฟสิกแบบผสมที่รวมแง่มุมของ Triphasic และ Everyman มักมีเวลานอนรวม 3-4 ชั่วโมง"
       },
       "totalSleepHours": 4,
       "isPremium": true,
@@ -847,7 +895,9 @@
         "en": "A basic dual-core pattern with two ~3h cores at night, separated by a wake gap.",
         "tr": "Gece iki adet yaklaşık 3 saatlik ana uykudan oluşan temel bir dual core düzeni. Uyku blokları arasında uyanıklık dönemi bulunur.",
         "ja": "夜に約3時間の睡眠を2回とる、基本的なデュアルコア（二つのコア睡眠）のスタイル。2回の睡眠の間は起きています。",
-        "de": "Ein grundlegendes Dual-Core-Muster mit zwei ~3-stündigen Kernschlafphasen in der Nacht, getrennt durch eine Wachlücke."
+        "de": "Ein grundlegendes Dual-Core-Muster mit zwei ~3-stündigen Kernschlafphasen in der Nacht, getrennt durch eine Wachlücke.",
+        "ms": "Corak dwi-teras asas dengan dua tidur teras ~3 jam pada waktu malam, dipisahkan oleh jurang terjaga.",
+        "th": "รูปแบบดูอัลคอร์พื้นฐานกับการนอนหลักสองช่วง ~3 ชั่วโมงยามค่ำคืน แยกโดยช่วงตื่น"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -874,7 +924,9 @@
         "en": "An extended DC1 with slightly longer cores (3.5h each).",
         "tr": "DC1 düzeninin uzun sürümünde her bir ana uyku yaklaşık 3,5 saat olacak şekilde ayarlanır.",
         "ja": "デュアルコアDC1のロング版。2回のコア睡眠をそれぞれ3.5時間に延長します。",
-        "de": "Ein erweiterter DC1-Plan mit etwas längeren Kernschlafphasen (jeweils 3,5 Std.)."
+        "de": "Ein erweiterter DC1-Plan mit etwas längeren Kernschlafphasen (jeweils 3,5 Std.).",
+        "ms": "Pelan DC1 diperluas dengan tidur teras yang sedikit lebih panjang (3.5 jam setiap satu).",
+        "th": "แผน DC1 ขยายกับการนอนหลักที่ยาวขึ้นเล็กน้อย (3.5 ชม. แต่ละครั้ง)"
       },
       "totalSleepHours": 7,
       "isPremium": true,
@@ -901,7 +953,9 @@
         "en": "A dual-core variant with two core sleeps of ~4 hours each, totaling about 8 hours.",
         "tr": "Yaklaşık 4'er saatlik iki ana uyku bloğundan oluşan ve toplamda 8 saat uyku sağlayan bir dual-core varyasyonu.",
         "ja": "それぞれ約4時間のコア睡眠を2回とるデュアルコアの変種で、合計睡眠時間は約8時間になります。",
-        "de": "Eine Dual-Core-Variante mit zwei Kernschlafphasen von jeweils ~4 Stunden, was insgesamt etwa 8 Stunden ergibt."
+        "de": "Eine Dual-Core-Variante mit zwei Kernschlafphasen von jeweils ~4 Stunden, was insgesamt etwa 8 Stunden ergibt.",
+        "ms": "Varian dwi-teras dengan dua tidur teras ~4 jam setiap satu, menghasilkan kira-kira 8 jam keseluruhan.",
+        "th": "รูปแบบดูอัลคอร์กับการนอนหลักสองช่วง ~4 ชม. แต่ละช่วง รวมประมาณ 8 ชั่วโมง"
       },
       "totalSleepHours": 8,
       "isPremium": true,
@@ -928,7 +982,9 @@
         "en": "A more flexible dual-core pattern with 2 short cores (2-3h each) and an optional nap.",
         "tr": "İki kısa ana uyku (her biri 2-3 saat) ve opsiyonel bir şekerlemeye sahip daha esnek bir dual-core düzeni.",
         "ja": "2〜3時間の短いコア睡眠を2回と、おまけの昼寝を1回組み合わせた、より柔軟なデュアルコアのスタイルです。",
-        "de": "Ein flexibleres Dual-Core-Muster mit 2 kurzen Kernschlafphasen (jeweils 2-3 Std.) und einem optionalen Nickerchen."
+        "de": "Ein flexibleres Dual-Core-Muster mit 2 kurzen Kernschlafphasen (jeweils 2-3 Std.) und einem optionalen Nickerchen.",
+        "ms": "Corak dwi-teras yang lebih fleksibel dengan 2 tidur teras pendek (2-3 jam setiap satu) dan tidur sebentar pilihan.",
+        "th": "รูปแบบดูอัลคอร์ที่ยืดหยุ่นกว่ากับการนอนหลักสั้นๆ 2 ช่วง (2-3 ชม. แต่ละช่วง) และการงีบหลับเสริม"
       },
       "totalSleepHours": 5,
       "isPremium": true,
@@ -961,7 +1017,9 @@
         "en": "A dual-core arrangement known as DAB: two main sleeps plus a bridging midday nap.",
         "tr": "DAB olarak bilinen dual-core düzeni: iki ana uyku bloğu ve öğle saatlerinde köprü görevi gören bir şekerleme.",
         "ja": "DAB（ダブ）と呼ばれるデュアルコア。2回の主な睡眠の間に、橋渡しとなる昼寝をとります。",
-        "de": "Eine als DAB bekannte Dual-Core-Anordnung: zwei Hauptschlafphasen plus ein überbrückendes Mittagsnickerchen."
+        "de": "Eine als DAB bekannte Dual-Core-Anordnung: zwei Hauptschlafphasen plus ein überbrückendes Mittagsnickerchen.",
+        "ms": "Susunan dwi-teras yang dikenali sebagai DAB: dua tidur utama ditambah tidur sebentar tengah hari sebagai penghubung.",
+        "th": "การจัดเรียงดูอัลคอร์ที่รู้จักกันในชื่อ DAB: การนอนหลักสองช่วง รวมกับการงีบหลับตอนกลางวันเป็นตัวเชื่อม"
       },
       "totalSleepHours": 5.5,
       "isPremium": true,
@@ -994,7 +1052,9 @@
         "en": "A less common dual-core approach referencing 'bimaxion': two shorter cores plus two short naps for a total near 4h.",
         "tr": "'Bimaxion' olarak anılan, iki kısa ana uyku ve iki kısa şekerleme ile toplamda 4 saate yakın uyku sunan nadir dual-core yaklaşımı.",
         "ja": "「バイマキシオン」と呼ばれる珍しいデュアルコア。短いコア睡眠2回と短い仮眠2回を組み合わせ、合計睡眠時間は4時間弱です。",
-        "de": "Ein seltenerer Dual-Core-Ansatz, der sich auf 'Bimaxion' bezieht: zwei kürzere Kernschlafphasen plus zwei kurze Nickerchen für eine Gesamtdauer von fast 4 Stunden."
+        "de": "Ein seltenerer Dual-Core-Ansatz, der sich auf 'Bimaxion' bezieht: zwei kürzere Kernschlafphasen plus zwei kurze Nickerchen für eine Gesamtdauer von fast 4 Stunden.",
+        "ms": "Pendekatan dwi-teras yang kurang biasa merujuk kepada 'Bimaxion': dua tidur teras yang lebih pendek ditambah dua tidur sebentar pendek dengan jumlah hampir 4 jam.",
+        "th": "แนวทางดูอัลคอร์ที่หายากกว่าอ้างอิงถึง 'Bimaxion': การนอนหลักสั้นๆ สองช่วง รวมกับการงีบหลับสั้นๆ สองครั้ง รวมเกือบ 4 ชั่วโมง"
       },
       "totalSleepHours": 4,
       "isPremium": true,
@@ -1033,7 +1093,9 @@
         "en": "A tri-core pattern with three sleeps of ~1.5h each, spaced around 8 hours apart.",
         "tr": "Yaklaşık 1,5 saatlik üç uyku bloğuna sahip, bloklar arası yaklaşık 8 saat mesafe bulunan bir tri-core düzeni.",
         "ja": "約1.5時間の睡眠を3回とるトライコア（3つのコア睡眠）のパターン。それぞれの睡眠は約8時間の間隔を空けます。",
-        "de": "Ein Tri-Core-Muster mit drei Schlafphasen von jeweils ~1,5 Stunden, die etwa 8 Stunden voneinander entfernt sind."
+        "de": "Ein Tri-Core-Muster mit drei Schlafphasen von jeweils ~1,5 Stunden, die etwa 8 Stunden voneinander entfernt sind.",
+        "ms": "Corak tri-teras dengan tiga tidur ~1.5 jam setiap satu, berjarak kira-kira 8 jam antara satu sama lain.",
+        "th": "รูปแบบไตรคอร์กับการนอนสามช่วง ~1.5 ชม. แต่ละช่วง ห่างกันประมาณ 8 ชั่วโมง"
       },
       "totalSleepHours": 4.5,
       "isPremium": true,
@@ -1066,7 +1128,9 @@
         "en": "Another tri-core variant with three ~2h blocks, often used for more total rest (~6h).",
         "tr": "Üç adet 2 saatlik uyku bloğundan oluşan bir başka tri-core varyasyonu. Toplamda yaklaşık 6 saat dinlenme sağlar.",
         "ja": "約2時間の睡眠ブロックを3回とる、もう一つのトライコアの変種。合計で約6時間と、より多くの休息をとるために使われます。",
-        "de": "Eine weitere Tri-Core-Variante mit drei ~2-stündigen Blöcken, die oft für mehr Gesamterholung (~6 Std.) verwendet wird."
+        "de": "Eine weitere Tri-Core-Variante mit drei ~2-stündigen Blöcken, die oft für mehr Gesamterholung (~6 Std.) verwendet wird.",
+        "ms": "Varian tri-teras lain dengan tiga blok ~2 jam, sering digunakan untuk lebih banyak rehat keseluruhan (~6 jam).",
+        "th": "รูปแบบไตรคอร์อีกหนึ่งแบบกับสามช่วง ~2 ชม. มักใช้สำหรับการพักผ่อนรวมมากขึ้น (~6 ชม.)"
       },
       "totalSleepHours": 6,
       "isPremium": true,
@@ -1099,7 +1163,9 @@
         "en": "A 'nap only' pattern sometimes attributed to Nikola Tesla: ~2 hours of total sleep in short naps.",
         "tr": "Nikola Tesla'ya atfedilen, kısa şekerlemelerle toplamda yaklaşık 2 saat uyku öngören 'yalnızca şekerleme' düzeni.",
         "ja": "あの発明家ニコラ・テスラが実践したと言われる「仮眠だけ」のスタイル。短い仮眠を繰り返して、合計睡眠時間を約2時間に抑えます。",
-        "de": "Ein reines Nickerchen-Muster, das manchmal Nikola Tesla zugeschrieben wird: ~2 Stunden Gesamtschlaf in kurzen Nickerchen."
+        "de": "Ein reines Nickerchen-Muster, das manchmal Nikola Tesla zugeschrieben wird: ~2 Stunden Gesamtschlaf in kurzen Nickerchen.",
+        "ms": "Corak 'tidur sebentar sahaja' yang kadang-kadang dikaitkan dengan Nikola Tesla: ~2 jam jumlah tidur dalam tidur sebentar pendek.",
+        "th": "รูปแบบ 'งีบหลับเท่านั้น' ที่บางครั้งกล่าวกันว่าเป็นของนิโคลา เทสลา: การนอนรวม ~2 ชม. ในการงีบหลับสั้นๆ"
       },
       "totalSleepHours": 2,
       "isPremium": true,
@@ -1150,7 +1216,9 @@
         "en": "A 'sleep polyphasically as much as you like' pattern with no strict schedule, sleeping in short naps whenever tired.",
         "tr": "Katı bir çizelge olmaksızın, yorgun hissettikçe kısa şekerlemelerle uyunan esnek düzen (Spamayl: Sleep Polyphasically As Much As You Like).",
         "ja": "「好きなだけ多相睡眠」の略で、決まったスケジュールはありません。眠くなったら短い仮眠をとる、という究極の自由形スタイルです。",
-        "de": "Ein Muster 'polyphasisch schlafen, so viel du magst' ohne festen Zeitplan, bei dem man bei Müdigkeit kurze Nickerchen macht."
+        "de": "Ein Muster 'polyphasisch schlafen, so viel du magst' ohne festen Zeitplan, bei dem man bei Müdigkeit kurze Nickerchen macht.",
+        "ms": "Corak 'tidur polifasik sebanyak yang anda suka' tanpa jadual tetap, tidur sebentar pendek apabila mengantuk.",
+        "th": "รูปแบบ 'นอนโพลิเฟสิกเท่าที่คุณต้องการ' ไม่มีตารางเวลาแน่นอน งีบหลับสั้นๆ เมื่อรู้สึกเหนื่อย"
       },
       "totalSleepHours": 0,
       "isPremium": true,

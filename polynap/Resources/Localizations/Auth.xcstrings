@@ -23,6 +23,18 @@
             "value" : "ローカルユーザー"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengguna Tempatan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ผู้ใช้ภายในเครื่อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

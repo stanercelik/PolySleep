@@ -23,6 +23,18 @@
             "value" : "この睡眠記録、本当に消しちゃう？元には戻せないよ。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah anda pasti mahu memadam catatan tidur ini? Tindakan ini tidak boleh dibatalkan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจหรือไม่ว่าต้องการลบรายการการนอนหลับนี้? การกระทำนี้ไม่สามารถยกเลิกได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +63,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠記録を削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam Catatan Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบรายการการนอนหลับ"
           }
         },
         "tr" : {
@@ -83,6 +107,18 @@
             "value" : "今日の睡眠記録はまだないみたい。上のボタンから最初の記録を追加してね。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada rekod tidur ditemui untuk hari ini. Tambah catatan pertama anda menggunakan butang di atas."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบบันทึกการนอนหลับสำหรับวันนี้ เพิ่มรายการแรกของคุณโดยใช้ปุ่มด้านบน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -111,6 +147,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠データなし"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada Data Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีข้อมูลการนอนหลับ"
           }
         },
         "tr" : {
@@ -143,6 +191,18 @@
             "value" : "平均の質"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti Purata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพเฉลี่ย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +231,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日のまとめ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringkasan Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สรุปรายวัน"
           }
         },
         "tr" : {
@@ -203,6 +275,18 @@
             "value" : "合計睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลับทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -231,6 +315,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "追加"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่ม"
           }
         },
         "tr" : {
@@ -263,6 +359,18 @@
             "value" : "キャンセル"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -291,6 +399,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
           }
         },
         "tr" : {
@@ -323,6 +443,18 @@
             "value" : "コア睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -351,6 +483,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
           }
         },
         "tr" : {

@@ -2,11 +2,36 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "-" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -21,6 +46,18 @@
             "state" : "translated",
             "value" : "—"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
         }
       }
     },
@@ -31,12 +68,36 @@
             "state" : "translated",
             "value" : "・"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "・"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "・"
+          }
         }
       }
     },
     "%@" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -57,6 +118,18 @@
             "state" : "new",
             "value" : "%1$@ - %2$@"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ - %2$@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ - %2$@"
+          }
         }
       }
     },
@@ -67,12 +140,36 @@
             "state" : "translated",
             "value" : "%@ Std."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม."
+          }
         }
       }
     },
     "%lld" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -86,6 +183,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld Minuten schlummern"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Minit Tunda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลื่อนปลุก %lld นาที"
           }
         }
       }
@@ -103,12 +212,36 @@
             "state" : "new",
             "value" : "%1$lld s %2$lld dk"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld s %2$lld min"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ชม. %2$lld น."
+          }
         }
       }
     },
     "%lld/12" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/12"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/12"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld/12"
@@ -123,6 +256,18 @@
             "state" : "translated",
             "value" : "%lld%%"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
         }
       }
     },
@@ -133,6 +278,18 @@
             "state" : "translated",
             "value" : "%lldMin"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldmin"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldน."
+          }
         }
       }
     },
@@ -142,6 +299,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lldStd"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldj"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldชม."
           }
         }
       }
@@ -159,6 +328,18 @@
             "state" : "new",
             "value" : "%1$lldh %2$lldm"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lldj %2$lldm"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lldชม. %2$lldน."
+          }
         }
       }
     },
@@ -168,6 +349,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lldMin"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldm"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldน."
           }
         }
       }
@@ -179,6 +372,18 @@
             "state" : "translated",
             "value" : "⏰ Schlummern (5 Min.)"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Tunda (5min)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ เลื่อนปลุก (5 นาที)"
+          }
         }
       }
     },
@@ -188,6 +393,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⏰ SCHLAFALARM"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ PENGGERA TIDUR"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ นาฬิกาปลุกการนอน"
           }
         }
       }
@@ -199,12 +416,36 @@
             "state" : "translated",
             "value" : "⏹️ Ausschalten"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏹️ Matikan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏹️ ปิด"
+          }
         }
       }
     },
     "🎉" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎉"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🎉"
@@ -219,6 +460,18 @@
             "state" : "translated",
             "value" : "🎬 1 Film ansehen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎬 Menonton 1 filem"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🎬 ดูหนัง 1 เรื่อง"
+          }
         }
       }
     },
@@ -228,6 +481,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "📚 75 Seiten Buch lesen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📚 Membaca 75 muka surat buku"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📚 อ่านหนังสือ 75 หน้า"
           }
         }
       }
@@ -239,6 +504,18 @@
             "state" : "translated",
             "value" : "🚨 WECK-ALARM!"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 PENGGERA BANGUN!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚨 นาฬิกาปลุกให้ตื่น!"
+          }
         }
       }
     },
@@ -248,6 +525,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🚶‍♂️ 12,5 km gehen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ Berjalan 12.5 km"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚶‍♂️ เดิน 12.5 กม."
           }
         }
       }
@@ -259,12 +548,36 @@
             "state" : "translated",
             "value" : "2,5"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2.5"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2.5"
+          }
         }
       }
     },
     "75" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "75"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "75"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "75"
@@ -279,6 +592,18 @@
             "state" : "translated",
             "value" : "Anpassungsfortschritt wiederherstellen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulihkan Kemajuan Adaptasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กู้คืนความคืบหน้าการปรับตัว"
+          }
         }
       }
     },
@@ -288,6 +613,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anpassung wiederherstellen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulihkan Adaptasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กู้คืนการปรับตัว"
           }
         }
       }
@@ -299,6 +636,18 @@
             "state" : "translated",
             "value" : "Alarmeinstellungen werden geladen..."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan tetapan penggera..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดการตั้งค่านาฬิกาปลุก..."
+          }
         }
       }
     },
@@ -308,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alarm ausschalten"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matikan Penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิดนาฬิกาปลุก"
           }
         }
       }
@@ -319,6 +680,18 @@
             "state" : "translated",
             "value" : "Tippe auf die Schaltfläche oben, um den Alarm auszuschalten"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sentuh butang di atas untuk mematikan penggera"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แตะปุ่มด้านบนเพื่อปิดนาฬิกาปลุก"
+          }
         }
       }
     },
@@ -328,6 +701,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unten"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bawah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต่ำ"
           }
         }
       }
@@ -339,6 +724,18 @@
             "state" : "translated",
             "value" : "Kernschlaf: 75%"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras: 75%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก: 75%"
+          }
         }
       }
     },
@@ -348,6 +745,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bist du sicher, dass du diesen Schlafeintrag löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah anda pasti mahu memadam catatan tidur ini? Tindakan ini tidak boleh dibatalkan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจหรือไม่ว่าต้องการลบรายการการนอนหลับนี้? การกระทำนี้ไม่สามารถยกเลิกได้"
           }
         }
       }
@@ -359,6 +768,18 @@
             "state" : "translated",
             "value" : "Diese Warnung wird angezeigt, da keine Benachrichtigungsberechtigung vorliegt"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amaran ini ditunjukkan kerana tiada kebenaran pemberitahuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแจ้งเตือนนี้แสดงขึ้นเนื่องจากไม่มีสิทธิ์ในการแจ้งเตือน"
+          }
         }
       }
     },
@@ -368,6 +789,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
           }
         }
       }
@@ -379,6 +812,18 @@
             "state" : "translated",
             "value" : "Kern"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
         }
       }
     },
@@ -388,6 +833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erstelle zuerst einen Schlafplan, um Einträge hinzuzufügen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buat jadual tidur dahulu untuk menambah catatan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้างตารางการนอนหลับก่อนเพื่อเพิ่มรายการ"
           }
         }
       }
@@ -399,6 +856,18 @@
             "state" : "translated",
             "value" : "Später"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kemudian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไว้ทีหลัง"
+          }
         }
       }
     },
@@ -408,6 +877,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Variabilität: 25 Punkte"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebolehubahan: 25 Mata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความแปรปรวน: 25 คะแนน"
           }
         }
       }
@@ -419,6 +900,18 @@
             "state" : "translated",
             "value" : "Löschen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
+          }
         }
       }
     },
@@ -428,6 +921,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schlafeintrag löschen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam Catatan Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบรายการการนอนหลับ"
           }
         }
       }
@@ -439,6 +944,18 @@
             "state" : "translated",
             "value" : "Kostenlos 🆓"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percuma 🆓"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟรี 🆓"
+          }
         }
       }
     },
@@ -448,6 +965,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zurück"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kembali"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ย้อนกลับ"
           }
         }
       }
@@ -459,6 +988,18 @@
             "state" : "translated",
             "value" : "Tag"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วัน"
+          }
         }
       }
     },
@@ -468,6 +1009,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Du hast eine großartige Schlafroutine!"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda mempunyai rutin tidur yang hebat!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณมีกิจวัตรการนอนที่ยอดเยี่ยม!"
           }
         }
       }
@@ -479,6 +1032,18 @@
             "state" : "translated",
             "value" : "Ziel"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sasaran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เป้าหมาย"
+          }
         }
       }
     },
@@ -488,6 +1053,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wichtiger Hinweis"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota Penting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หมายเหตุสำคัญ"
           }
         }
       }
@@ -499,6 +1076,18 @@
             "state" : "translated",
             "value" : "Qualität"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพ"
+          }
         }
       }
     },
@@ -508,6 +1097,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speichern"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
           }
         }
       }
@@ -519,6 +1120,18 @@
             "state" : "translated",
             "value" : "Gewonnene Zeit"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Diperoleh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาที่ได้มา"
+          }
         }
       }
     },
@@ -528,6 +1141,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schlecht"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ดี"
           }
         }
       }
@@ -539,6 +1164,18 @@
             "state" : "translated",
             "value" : "Anzahl aktueller Paywalls"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilangan Paywall Semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จำนวน Paywall ปัจจุบัน"
+          }
         }
       }
     },
@@ -548,6 +1185,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ausgezeichnet"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cemerlang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอดเยี่ยม"
           }
         }
       }
@@ -559,6 +1208,18 @@
             "state" : "translated",
             "value" : "Nickerchen 1"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 1"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 1"
+          }
         }
       }
     },
@@ -568,6 +1229,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nickerchen 2"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 2"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 2"
           }
         }
       }
@@ -579,6 +1252,18 @@
             "state" : "translated",
             "value" : "Angebote aktualisieren"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segarkan Semula Tawaran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเฟรชข้อเสนอ"
+          }
         }
       }
     },
@@ -588,6 +1273,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Altersbereich"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.ageRange"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.ageRange"
           }
         }
       }
@@ -599,6 +1296,18 @@
             "state" : "translated",
             "value" : "Die Anpassung an den polyphasischen Schlaf kann während der Jugend oder im Alter variieren."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.ageRangeDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.ageRangeDescription"
+          }
         }
       }
     },
@@ -608,6 +1317,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schlaf-Chronotyp"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.chronotype"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.chronotype"
           }
         }
       }
@@ -619,6 +1340,18 @@
             "state" : "translated",
             "value" : "Bist du von Natur aus morgens oder abends aktiver?"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.chronotypeDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.chronotypeDescription"
+          }
         }
       }
     },
@@ -628,6 +1361,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Störungstoleranz"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.disruptionTolerance"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.disruptionTolerance"
           }
         }
       }
@@ -639,6 +1384,18 @@
             "state" : "translated",
             "value" : "Wie gut gehst du mit Störungen deines Schlafplans um?"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.disruptionToleranceDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.disruptionToleranceDescription"
+          }
         }
       }
     },
@@ -648,6 +1405,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gesundheitszustand"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.healthStatus"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.healthStatus"
           }
         }
       }
@@ -659,6 +1428,18 @@
             "state" : "translated",
             "value" : "Nimmst du regelmäßig Medikamente ein oder hast du chronische Erkrankungen?"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.healthStatusDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.healthStatusDescription"
+          }
         }
       }
     },
@@ -668,6 +1449,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wissensstand"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.knowledgeLevel"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.knowledgeLevel"
           }
         }
       }
@@ -679,6 +1472,18 @@
             "state" : "translated",
             "value" : "Wie vertraut bist du mit dem polyphasischen Schlaf? Dies hilft uns, das richtige Maß an Anleitung und Informationen bereitzustellen."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.knowledgeLevelDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.knowledgeLevelDescription"
+          }
         }
       }
     },
@@ -688,6 +1493,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dein Lebensstil"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.lifestyle"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.lifestyle"
           }
         }
       }
@@ -699,6 +1516,18 @@
             "state" : "translated",
             "value" : "Wie würdest du dein tägliches Aktivitätsniveau beschreiben? Dies hilft uns, einen Schlafplan zu empfehlen, der zu deinem Energiebedarf passt."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.lifestyleDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.lifestyleDescription"
+          }
         }
       }
     },
@@ -708,6 +1537,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motivationslevel"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.motivationLevel"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.motivationLevel"
           }
         }
       }
@@ -719,6 +1560,18 @@
             "state" : "translated",
             "value" : "Wie bereit bist du für einen herausfordernden Anpassungsprozess?"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.motivationLevelQuestion"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.motivationLevelQuestion"
+          }
         }
       }
     },
@@ -728,6 +1581,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nickerchen-Umgebung"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.napEnvironment"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.napEnvironment"
           }
         }
       }
@@ -739,6 +1604,18 @@
             "state" : "translated",
             "value" : "Wie geeignet ist deine Umgebung für Nickerchen während des Tages? Berücksichtige Faktoren wie Lärmpegel, Lichtkontrolle und Komfort."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.napEnvironmentDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.napEnvironmentDescription"
+          }
         }
       }
     },
@@ -748,6 +1625,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weiter"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.next"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.next"
           }
         }
       }
@@ -759,6 +1648,18 @@
             "state" : "translated",
             "value" : "Nein"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.no"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.no"
+          }
         }
       }
     },
@@ -768,6 +1669,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ergebnisse ansehen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.seeResults"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.seeResults"
           }
         }
       }
@@ -779,6 +1692,18 @@
             "state" : "translated",
             "value" : "Schlaferfahrung"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepExperience"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepExperience"
+          }
         }
       }
     },
@@ -788,6 +1713,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hast du bereits Erfahrung mit polyphasischem (oder anderem) Schlaf?"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepExperienceQuestion"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepExperienceQuestion"
           }
         }
       }
@@ -799,6 +1736,18 @@
             "state" : "translated",
             "value" : "Schlafziel"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepGoal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepGoal"
+          }
         }
       }
     },
@@ -808,6 +1757,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Was ist dein Hauptziel bei der Einführung eines polyphasischen Schlafplans?"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepGoalDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.sleepGoalDescription"
           }
         }
       }
@@ -819,6 +1780,18 @@
             "state" : "translated",
             "value" : "Soziale Verpflichtungen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.socialObligations"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.socialObligations"
+          }
         }
       }
     },
@@ -828,6 +1801,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wie flexibel sind deine sozialen Verpflichtungen und täglichen Verantwortlichkeiten? Berücksichtige Familienzeit, gesellschaftliche Veranstaltungen, Treffen und andere Aktivitäten, die eine bestimmte Zeitplanung erfordern."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.socialObligationsDescription"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.socialObligationsDescription"
           }
         }
       }
@@ -839,6 +1824,18 @@
             "state" : "translated",
             "value" : "Arbeitsplan"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.workSchedule"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.workSchedule"
+          }
         }
       }
     },
@@ -848,6 +1845,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wie sieht dein typischer Arbeitsplan aus?"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.workScheduleQuestion"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.workScheduleQuestion"
           }
         }
       }
@@ -859,6 +1868,18 @@
             "state" : "translated",
             "value" : "Ja"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.yes"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "onboarding.yes"
+          }
         }
       }
     },
@@ -868,6 +1889,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wichtiger Hinweis"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota Penting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หมายเหตุสำคัญ"
           }
         }
       }
@@ -879,6 +1912,18 @@
             "state" : "translated",
             "value" : "Paywall-Verlauf zurücksetzen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapkan Semula Sejarah Paywall"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเซ็ตประวัติ Paywall"
+          }
         }
       }
     },
@@ -888,6 +1933,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paywall-Test"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujian Paywall"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทดสอบ Paywall"
           }
         }
       }
@@ -899,12 +1956,36 @@
             "state" : "translated",
             "value" : "Paywall-Testoberfläche"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antara Muka Ujian Paywall"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อินเทอร์เฟซทดสอบ Paywall"
+          }
         }
       }
     },
     "PolyNap" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PolyNap"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PolyNap"
@@ -919,6 +2000,18 @@
             "state" : "translated",
             "value" : "PREMIUM"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PREMIUM"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พรีเมียม"
+          }
         }
       }
     },
@@ -928,6 +2021,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Premium ✅"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium ✅"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พรีเมียม ✅"
           }
         }
       }
@@ -939,6 +2044,18 @@
             "state" : "translated",
             "value" : "Mit Premium freischalten"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buka Kunci dengan Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปลดล็อกด้วยพรีเมียม"
+          }
         }
       }
     },
@@ -948,6 +2065,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Premium-Status:"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status Premium:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถานะพรีเมียม:"
           }
         }
       }
@@ -959,6 +2088,18 @@
             "state" : "translated",
             "value" : "Punkte"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คะแนน"
+          }
         }
       }
     },
@@ -968,6 +2109,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empfohlen"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disyorkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แนะนำ"
           }
         }
       }
@@ -979,6 +2132,18 @@
             "state" : "translated",
             "value" : "Stunde"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชั่วโมง"
+          }
         }
       }
     },
@@ -988,6 +2153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stunde"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชั่วโมง"
           }
         }
       }
@@ -999,6 +2176,18 @@
             "state" : "translated",
             "value" : "Nickerchen 1: 20%"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 1: 20%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 1: 20%"
+          }
         }
       }
     },
@@ -1008,6 +2197,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nickerchen 2: 5%"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar 2: 5%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ 2: 5%"
           }
         }
       }
@@ -1019,6 +2220,18 @@
             "state" : "translated",
             "value" : "Jetzt"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekarang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนนี้"
+          }
         }
       }
     },
@@ -1028,6 +2241,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตกลง"
           }
         }
       }
@@ -1039,6 +2264,18 @@
             "state" : "translated",
             "value" : "Datum"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarikh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันที่"
+          }
         }
       }
     },
@@ -1048,6 +2285,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Angebote werden geladen..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan tawaran..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดข้อเสนอ..."
           }
         }
       }
@@ -1059,6 +2308,18 @@
             "state" : "translated",
             "value" : "Der Testalarm klingelt in 5 Sekunden. Du kannst die App schließen, in den Hintergrund verschieben oder geöffnet lassen."
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera ujian akan berbunyi dalam 5 saat. Anda boleh menutup aplikasi, meletakkannya di latar belakang, atau membiarkannya terbuka."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นาฬิกาปลุกทดสอบจะดังใน 5 วินาที คุณสามารถปิดแอป, ย่อลงพื้นหลัง, หรือเปิดทิ้งไว้ก็ได้"
+          }
         }
       }
     },
@@ -1068,6 +2329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Testalarm eingestellt"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera Ujian Ditetapkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตั้งนาฬิกาปลุกทดสอบแล้ว"
           }
         }
       }
@@ -1079,6 +2352,18 @@
             "state" : "translated",
             "value" : "O"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "U"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "U"
+          }
         }
       }
     },
@@ -1089,11 +2374,36 @@
             "state" : "translated",
             "value" : "Es ist Zeit aufzuwachen!"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa untuk bangun!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ได้เวลาตื่นแล้ว!"
+          }
         }
       }
     },
     "Uyku bloğunuz sona erdi!\nUyanma zamanı!" : {
-
+      "localizations" : {
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok tidur anda telah tamat!\nMasa untuk bangun!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนหลับของคุณสิ้นสุดแล้ว!\nได้เวลาตื่น!"
+          }
+        }
+      }
     },
     "Uyku Dağılımı" : {
       "localizations" : {
@@ -1101,6 +2411,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schlafverteilung"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengagihan Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การกระจายการนอนหลับ"
           }
         }
       }
@@ -1112,6 +2434,18 @@
             "state" : "translated",
             "value" : "Schlafqualitätsverteilung"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengagihan Kualiti Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การกระจายคุณภาพการนอนหลับ"
+          }
         }
       }
     },
@@ -1122,12 +2456,36 @@
             "state" : "translated",
             "value" : "Schlafkonsistenz"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsistensi Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความสม่ำเสมอในการนอน"
+          }
         }
       }
     },
     "v1.2.0" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v1.2.0"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v1.2.0"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "v1.2.0"
@@ -1142,6 +2500,18 @@
             "state" : "translated",
             "value" : "Dein neuer Zeitplan bleibt derselbe, du wirst nur von deinem vorherigen Anpassungstag an weitermachen"
           }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program baharu anda akan kekal sama, anda hanya akan meneruskan dari hari penyesuaian anda sebelum ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โปรแกรมใหม่ของคุณจะยังคงเหมือนเดิม, คุณจะดำเนินการต่อจากวันปรับตัวก่อนหน้าของคุณเท่านั้น"
+          }
         }
       }
     },
@@ -1151,6 +2521,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wird geladen..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลด..."
           }
         }
       }

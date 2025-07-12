@@ -376,7 +376,7 @@ struct HistoryTimelineSection: View {
         let grouped = Dictionary(grouping: items) { item -> String in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM yyyy"
-            formatter.locale = Locale(identifier: languageManager.currentLanguage == "tr" ? "tr_TR" : "en_US")
+            formatter.locale = getLocaleForCurrentLanguage()
             return formatter.string(from: item.date)
         }
         
@@ -384,13 +384,30 @@ struct HistoryTimelineSection: View {
             .sorted { item1, item2 in
                 let formatter = DateFormatter()
                 formatter.dateFormat = "MMMM yyyy"
-                formatter.locale = Locale(identifier: languageManager.currentLanguage == "tr" ? "tr_TR" : "en_US")
+                formatter.locale = getLocaleForCurrentLanguage()
                 guard let date1 = formatter.date(from: item1.month),
                       let date2 = formatter.date(from: item2.month) else {
                     return false
                 }
                 return date1 > date2
             }
+    }
+    
+    private func getLocaleForCurrentLanguage() -> Locale {
+        switch languageManager.currentLanguage {
+        case "tr":
+            return Locale(identifier: "tr_TR")
+        case "de":
+            return Locale(identifier: "de_DE")
+        case "ja":
+            return Locale(identifier: "ja_JP")
+        case "ms":
+            return Locale(identifier: "ms_MY")
+        case "th":
+            return Locale(identifier: "th_TH")
+        default:
+            return Locale(identifier: "en_US")
+        }
     }
 }
 

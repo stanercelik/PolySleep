@@ -22,6 +22,18 @@
             "value" : "キャンセル"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49,6 +61,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
           }
         },
         "tr" : {
@@ -80,6 +104,18 @@
             "value" : "平均睡眠質"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kualiti Purata"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณภาพเฉลี่ย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +143,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
           }
         },
         "tr" : {
@@ -138,6 +186,18 @@
             "value" : "この記録を削除します。よろしいですか？"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rekod ini akan dipadamkan. Adakah anda mengesahkan?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึกนี้จะถูกลบ คุณยืนยันหรือไม่?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +225,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠記録を削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam rekod tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบบันทึกการนอนหลับ"
           }
         },
         "tr" : {
@@ -196,6 +268,18 @@
             "value" : "右上の「追加」ボタンをタップして新しい睡眠記録を追加できます"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda boleh menambah rekod tidur baru dengan mengklik butang 'Tambah' di bahagian atas kanan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณสามารถเพิ่มบันทึกการนอนหลับใหม่ได้โดยคลิกปุ่ม 'เพิ่ม' ที่มุมขวาบน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -223,6 +307,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この日の睡眠記録はありません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada rekod tidur untuk hari ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีบันทึกการนอนหลับสำหรับวันนี้"
           }
         },
         "tr" : {
@@ -254,6 +350,18 @@
             "value" : "今日のまとめ"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringkasan Hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สรุปรายวัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +389,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有効なスケジュールが見つかりません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada jadual aktif ditemui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบตารางเวลาที่ใช้งานอยู่"
           }
         },
         "tr" : {
@@ -312,6 +432,18 @@
             "value" : "スケジュールの読み込みに失敗しました"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gagal memuatkan jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถโหลดตารางเวลาได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -339,6 +471,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンセル"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
           }
         },
         "tr" : {
@@ -370,6 +514,18 @@
             "value" : "削除"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -397,6 +553,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "編集"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แก้ไข"
           }
         },
         "tr" : {
@@ -429,6 +597,18 @@
             "value" : "OK"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตกลง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -456,6 +636,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
           }
         },
         "tr" : {
@@ -487,6 +679,18 @@
             "value" : "新しい記録を追加"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah Rekod Baru"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่มบันทึกใหม่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -514,6 +718,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "全期間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semua Masa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตลอดเวลา"
           }
         },
         "tr" : {
@@ -545,6 +761,18 @@
             "value" : "今月"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulan Ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เดือนนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -572,6 +800,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今週"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minggu Ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สัปดาห์นี้"
           }
         },
         "tr" : {
@@ -603,6 +843,18 @@
             "value" : "今日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari Ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -630,6 +882,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "他%dブロック"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %d blok lagi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %d ช่วงเพิ่มเติม"
           }
         },
         "tr" : {
@@ -661,6 +925,18 @@
             "value" : "記録なし"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada rekod"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีบันทึก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -688,6 +964,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この期間の睡眠記録は見つかりませんでした。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada rekod tidur ditemui untuk tempoh masa ini."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบบันทึกการนอนหลับสำหรับช่วงเวลานี้"
           }
         },
         "tr" : {
@@ -719,6 +1007,18 @@
             "value" : "記録が見つかりません"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada Rekod Ditemui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบบันทึก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -746,6 +1046,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠履歴"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sejarah Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประวัติการนอนหลับ"
           }
         },
         "tr" : {
@@ -777,6 +1089,18 @@
             "value" : "今日"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari Ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -804,6 +1128,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロックを追加"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah Blok Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่มช่วงการนอนหลับ"
           }
         },
         "tr" : {
@@ -835,6 +1171,18 @@
             "value" : "睡眠ブロックの少なくとも2時間前には夕食を済ませましょう。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingat untuk makan malam sekurang-kurangnya 2 jam sebelum blok tidur anda."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อย่าลืมทานอาหารเย็นอย่างน้อย 2 ชั่วโมงก่อนช่วงการนอนหลับของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -862,6 +1210,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "覚醒時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Jaga"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาตื่น"
           }
         },
         "tr" : {
@@ -893,6 +1253,18 @@
             "value" : "更新"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segarkan Semula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเฟรช"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -920,6 +1292,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "別のスケジュールを選択"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih Jadual Berbeza"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกตารางเวลาอื่น"
           }
         },
         "tr" : {
@@ -951,6 +1335,18 @@
             "value" : "睡眠スケジュールを変更"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tukar Jadual Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปลี่ยนตารางการนอนหลับ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -978,6 +1374,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ドラッグしてブロックを移動"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seret untuk menggerakkan blok"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลากเพื่อย้ายช่วงการนอน"
           }
         },
         "tr" : {
@@ -1009,6 +1417,18 @@
             "value" : "編集"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แก้ไข"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1036,6 +1456,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "他のブロックと重複しています"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bertindih dengan blok lain"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทับซ้อนกับช่วงอื่น"
           }
         },
         "tr" : {
@@ -1067,6 +1499,18 @@
             "value" : "%d分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%dmin"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d นาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1094,6 +1538,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移動中: %@ - %@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menggerakkan: %@ - %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังย้าย: %@ - %@"
           }
         },
         "tr" : {
@@ -1125,6 +1581,18 @@
             "value" : "サイズ変更中: %@ (%@)"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengubah Saiz: %@ (%@)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังปรับขนาด: %@ (%@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1152,6 +1620,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最低15分必要です"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum 15 minit diperlukan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้เวลาอย่างน้อย 15 นาที"
           }
         },
         "tr" : {
@@ -1183,6 +1663,18 @@
             "value" : "ドラッグ＆サイズ変更"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seret & Ubah Saiz"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลาก & ปรับขนาด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1210,6 +1702,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最低15分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum 15min"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อย่างน้อย 15 นาที"
           }
         },
         "tr" : {
@@ -1241,6 +1745,18 @@
             "value" : "ブロックをドラッグしてスケジュール内で移動します"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seret blok untuk bergerak di sekitar jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลากช่วงการนอนเพื่อย้ายไปรอบๆ ตารางเวลา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1268,6 +1784,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠スケジュールを編集中"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyunting Jadual Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังแก้ไขตารางการนอนหลับ"
           }
         },
         "tr" : {
@@ -1299,6 +1827,18 @@
             "value" : "保存"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1326,6 +1866,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "5分単位"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ketepatan 5min"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความแม่นยำ 5 นาที"
           }
         },
         "tr" : {
@@ -1357,6 +1909,18 @@
             "value" : "10分単位"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ketepatan 10min"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความแม่นยำ 10 นาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1381,6 +1945,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🛏️"
@@ -1415,6 +1991,18 @@
             "value" : "このスケジュールは元の設定からカスタマイズされています。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual ini telah disesuaikan daripada tetapan asalnya."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลานี้ได้รับการปรับแต่งจากการตั้งค่าเดิม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1442,6 +2030,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタマイズされたスケジュール"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Tersuai"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลาที่กำหนดเอง"
           }
         },
         "tr" : {
@@ -1473,6 +2073,18 @@
             "value" : "「%@」スケジュールは変更されました。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual %@ telah diubah suai."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลา %@ ได้รับการแก้ไขแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1500,6 +2112,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日のステータス"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status Harian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถานะรายวัน"
           }
         },
         "tr" : {
@@ -1531,6 +2155,18 @@
             "value" : "今日のヒント"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petua Harian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เคล็ดลับประจำวัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1558,6 +2194,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "編集中"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyunting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังแก้ไข"
           }
         },
         "tr" : {
@@ -1589,6 +2237,18 @@
             "value" : "エラーが発生しました。時間をおいてもう一度お試しください。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat telah berlaku. Sila cuba lagi kemudian."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิดข้อผิดพลาด โปรดลองอีกครั้งในภายหลัง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1616,6 +2276,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "再試行"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuba Lagi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -1647,6 +2319,18 @@
             "value" : "エラー"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1671,6 +2355,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️"
@@ -1705,6 +2401,18 @@
             "value" : "主睡眠ブロックの前に画面を見る時間を減らし、リラックスできる習慣を作りましょう。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurangkan masa skrin sebelum blok tidur utama anda dan cipta rutin yang menenangkan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลดเวลาหน้าจอก่อนช่วงการนอนหลักและสร้างกิจวัตรที่ผ่อนคลาย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1732,6 +2440,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "おやすみなさい！ 💤💤"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selamat Malam! 💤💤"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นอนหลับฝันดี! 💤💤"
           }
         },
         "tr" : {
@@ -1763,6 +2483,18 @@
             "value" : "現在"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekarang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1792,6 +2524,18 @@
             "value" : "日中の仮眠を逃さないように、アラームをチェックしましょう。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periksa penggera anda agar tidak terlepas tidur sebentar pada waktu siang."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตรวจสอบนาฬิกาปลุกของคุณเพื่อไม่ให้พลาดการงีบในระหว่างวัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1816,6 +2560,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚡️"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚡️"
@@ -1850,6 +2606,18 @@
             "value" : "次の睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Seterusnya"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนครั้งต่อไป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1874,6 +2642,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -1908,6 +2688,18 @@
             "value" : "⏰"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1935,6 +2727,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日の睡眠プランはありません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada rancangan tidur untuk hari ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีแผนการนอนสำหรับวันนี้"
           }
         },
         "tr" : {
@@ -1966,6 +2770,18 @@
             "value" : "次の睡眠予定はありません"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada tidur akan datang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีการนอนหลับที่กำลังจะมาถึง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1995,6 +2811,18 @@
             "value" : "進捗"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kemajuan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความคืบหน้า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2019,6 +2847,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔄"
@@ -2053,6 +2893,18 @@
             "value" : "スケジュールの説明"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penerangan Jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำอธิบายตารางเวลา"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2080,6 +2932,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "詳細"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Butiran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รายละเอียด"
           }
         },
         "tr" : {
@@ -2111,6 +2975,18 @@
             "value" : "概要"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gambaran Keseluruhan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ภาพรวม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2138,6 +3014,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "主睡眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
           }
         },
         "tr" : {
@@ -2169,6 +3057,18 @@
             "value" : "#PolyNap #睡眠スケジュール"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#PolyNap #JadualTidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#PolyNap #ตารางการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2196,6 +3096,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
           }
         },
         "tr" : {
@@ -2227,6 +3139,18 @@
             "value" : "📊 今日の進捗: %@%%"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📊 Kemajuan Harian: %@%%"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📊 ความคืบหน้ารายวัน: %@%%"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2254,6 +3178,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "📋 スケジュール: %@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📋 Jadual: %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📋 ตารางเวลา: %@"
           }
         },
         "tr" : {
@@ -2285,6 +3221,18 @@
             "value" : "🛏️ 睡眠ブロック:"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ Blok Tidur:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛏️ ช่วงการนอน:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2312,6 +3260,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔄 継続日数: %@日"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Rentetan Semasa: %@ hari"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 สถิติต่อเนื่องปัจจุบัน: %@ วัน"
           }
         },
         "tr" : {
@@ -2343,6 +3303,18 @@
             "value" : "🌙 私のPolyNapスケジュール"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 Jadual PolyNap Saya"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌙 ตารางเวลา PolyNap ของฉัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2370,6 +3342,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⏰ 合計睡眠: %@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ Jumlah Tidur: %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰ การนอนทั้งหมด: %@"
           }
         },
         "tr" : {
@@ -2401,6 +3385,18 @@
             "value" : "主睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2428,6 +3424,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar Berkuasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พาวเวอร์แนป"
           }
         },
         "tr" : {
@@ -2459,6 +3467,18 @@
             "value" : "睡眠ブロック"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2483,6 +3503,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛌 "
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🛌 "
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🛌 "
@@ -2517,6 +3549,18 @@
             "value" : "睡眠チャート"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carta Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แผนภูมิการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2544,6 +3588,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@〜%@の睡眠を評価してください"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nilaikan tidur anda dari %@ - %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้คะแนนการนอนของคุณจาก %@ - %@"
           }
         },
         "tr" : {
@@ -2575,6 +3631,18 @@
             "value" : "睡眠を評価"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nilaikan Tidur Anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้คะแนนการนอนของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2604,6 +3672,18 @@
             "value" : "睡眠時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลานอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2628,6 +3708,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💤"
@@ -2662,6 +3754,18 @@
             "value" : "睡眠まであと%@時間%@分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j %@min sehingga waktu tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม. %@นาที จนถึงเวลานอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2689,6 +3793,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠まであと%@時間%@分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j %@min sehingga waktu tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม. %@นาที จนถึงเวลานอน"
           }
         },
         "tr" : {
@@ -2720,6 +3836,18 @@
             "value" : "睡眠まであと%@時間"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j sehingga waktu tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม. จนถึงเวลานอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2747,6 +3875,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠まであと%@分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@min sehingga waktu tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@นาที จนถึงเวลานอน"
           }
         },
         "tr" : {
@@ -2778,6 +3918,18 @@
             "value" : "睡眠まであと%@分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@min sehingga waktu tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@นาที จนถึงเวลานอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2805,6 +3957,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "継続日数"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rentetan Semasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สถิติต่อเนื่องปัจจุบัน"
           }
         },
         "tr" : {
@@ -2836,6 +4000,18 @@
             "value" : "%@時間%@分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j %@m"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม. %@น."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2863,6 +4039,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@j"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ชม."
           }
         },
         "tr" : {
@@ -2894,6 +4082,18 @@
             "value" : "%@分"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@m"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@น."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2918,6 +4118,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 "
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💡 "
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "💡 "
@@ -2952,6 +4164,18 @@
             "value" : "睡眠スケジュール"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอนหลับ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2979,6 +4203,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日のヒント"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petua Hari Ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เคล็ดลับวันนี้"
           }
         },
         "tr" : {
@@ -3010,6 +4246,18 @@
             "value" : "合計睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3039,6 +4287,18 @@
             "value" : "合計睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3063,6 +4323,18 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏰"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "⏰"
@@ -3097,6 +4369,18 @@
             "value" : "カスタム"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disesuaikan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำหนดเอง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3124,6 +4408,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "トライフェイジック睡眠スケジュールは、1日を通して3つの睡眠期間で構成されています：30分の仮眠2回と4.5時間の主睡眠1回。このパターンは、全体の睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目指しています。多相睡眠を試したい、高い認知能力を維持する必要がある人向けに設計されています。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Tidur Trifasa terdiri daripada tiga tempoh tidur yang tersebar sepanjang hari: dua tidur sebentar selama 30 minit dan satu tempoh tidur teras selama 4.5 jam. Corak ini bertujuan untuk memaksimumkan tidur nyenyak dan tidur REM sambil mengurangkan masa tidur keseluruhan. Ia direka untuk mereka yang ingin bereksperimen dengan tidur polifasa dan perlu mengekalkan prestasi kognitif yang tinggi."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอนหลับแบบสามเฟสประกอบด้วยการนอนหลับสามช่วงกระจายอยู่ตลอดทั้งวัน: การงีบ 30 นาทีสองครั้งและการนอนหลัก 4.5 ชั่วโมง รูปแบบนี้มีเป้าหมายเพื่อเพิ่มการนอนหลับลึกและการนอนหลับ REM ให้สูงสุดในขณะที่ลดเวลาการนอนหลับโดยรวม เหมาะสำหรับผู้ที่ต้องการทดลองการนอนหลับแบบหลายเฟสและต้องการรักษาประสิทธิภาพการรับรู้ในระดับสูง"
           }
         },
         "tr" : {
@@ -3155,6 +4451,18 @@
             "value" : "三相性睡眠スケジュールは、1日を通して3つの睡眠期間で構成されます：2回の30分の仮眠と、1回の4.5時間の主睡眠期間。このパターンは、総睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目的としています。多相睡眠を試してみたい、そして高い認知能力を維持したい人向けに設計されています。"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Tidur Trifasa terdiri daripada tiga tempoh tidur yang tersebar sepanjang hari: dua tidur sebentar selama 30 minit dan satu tempoh tidur teras selama 4.5 jam. Corak ini bertujuan untuk memaksimumkan tidur nyenyak dan tidur REM sambil mengurangkan masa tidur keseluruhan. Ia direka untuk mereka yang ingin bereksperimen dengan tidur polifasa dan perlu mengekalkan prestasi kognitif yang tinggi."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอนหลับแบบสามเฟสประกอบด้วยการนอนหลับสามช่วงกระจายอยู่ตลอดทั้งวัน: การงีบ 30 นาทีสองครั้งและการนอนหลัก 4.5 ชั่วโมง รูปแบบนี้มีเป้าหมายเพื่อเพิ่มการนอนหลับลึกและการนอนหลับ REM ให้สูงสุดในขณะที่ลดเวลาการนอนหลับโดยรวม เหมาะสำหรับผู้ที่ต้องการทดลองการนอนหลับแบบหลายเฟสและต้องการรักษาประสิทธิภาพการรับรู้ในระดับสูง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3182,6 +4490,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "トライフェイジック睡眠スケジュール"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Tidur Trifasa"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอนหลับแบบสามเฟส"
           }
         },
         "tr" : {
@@ -3213,6 +4533,18 @@
             "value" : "主"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3240,6 +4572,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "説明"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penerangan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำอธิบาย"
           }
         },
         "tr" : {
@@ -3271,6 +4615,18 @@
             "value" : "詳細"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Butiran"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รายละเอียด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3298,6 +4654,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無料のスケジュール"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Percuma"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลาฟรี"
           }
         },
         "tr" : {
@@ -3329,6 +4697,18 @@
             "value" : "隠す"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sembunyi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ซ่อน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3356,6 +4736,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ชั่วโมง"
           }
         },
         "tr" : {
@@ -3387,6 +4779,18 @@
             "value" : "仮眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การงีบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3414,6 +4818,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タップしてアップグレード"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketik untuk menaik taraf"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แตะเพื่ออัปเกรด"
           }
         },
         "tr" : {
@@ -3445,6 +4861,18 @@
             "value" : "プレミアム"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พรีเมียม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3472,6 +4900,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この高度な睡眠スケジュールはプレミアムユーザー向けです。アップグレードして、すべての多相睡眠パターンと高度な機能のロックを解除しましょう。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual tidur lanjutan ini tersedia untuk pengguna Premium. Naik taraf untuk membuka kunci semua corak tidur polifasa dan ciri lanjutan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอนหลับขั้นสูงนี้มีให้สำหรับผู้ใช้พรีเมียม อัปเกรดเพื่อปลดล็อกรูปแบบการนอนหลับแบบหลายเฟสและฟีเจอร์ขั้นสูงทั้งหมด"
           }
         },
         "tr" : {
@@ -3503,6 +4943,18 @@
             "value" : "プレミアム機能"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciri Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฟีเจอร์พรีเมียม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3530,6 +4982,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プレミアムにアップグレード"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naik Taraf ke Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเกรดเป็นพรีเมียม"
           }
         },
         "tr" : {
@@ -3561,6 +5025,18 @@
             "value" : "プレミアムが必要です"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Diperlukan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้พรีเมียม"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3588,6 +5064,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プレミアムスケジュール"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual Premium"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางเวลาพรีเมียม"
           }
         },
         "tr" : {
@@ -3619,6 +5107,18 @@
             "value" : "あなたのライフスタイルに合った多相睡眠スケジュールを選びましょう"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih jadual tidur polifasa yang sesuai dengan gaya hidup anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกตารางการนอนหลับแบบหลายเฟสที่เหมาะกับวิถีชีวิตของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3646,6 +5146,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠スケジュールを選択"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih Jadual Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกตารางการนอนหลับ"
           }
         },
         "tr" : {
@@ -3677,6 +5189,18 @@
             "value" : "タップしてアップグレードし、高度なスケジュールのロックを解除"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketik untuk menaik taraf dan membuka kunci jadual lanjutan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แตะเพื่ออัปเกรดและปลดล็อกตารางเวลาขั้นสูง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3704,6 +5228,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%dブロック"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d blok"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d ช่วง"
           }
         },
         "tr" : {
@@ -3735,6 +5271,18 @@
             "value" : "主睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3762,6 +5310,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
           }
         },
         "tr" : {
@@ -3793,6 +5353,18 @@
             "value" : "睡眠ブロックを追加"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah Blok Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่มช่วงการนอน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3820,6 +5392,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ブロックの種類は時間によって自動で決まります。45分より長いブロックは「主睡眠」、それより短い場合は「仮眠」になります。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jenis blok akan ditentukan secara automatik berdasarkan panjang. Blok yang lebih lama daripada 45 minit akan menjadi Tidur Teras, yang lebih pendek akan menjadi Tidur Sebentar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประเภทของช่วงการนอนจะถูกกำหนดโดยอัตโนมัติตามความยาว ช่วงที่ยาวกว่า 45 นาทีจะเป็นการนอนหลัก, สั้นกว่าจะเป็นการงีบ"
           }
         },
         "tr" : {
@@ -3851,6 +5435,18 @@
             "value" : "主睡眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3878,6 +5474,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
           }
         },
         "tr" : {
@@ -3909,6 +5517,18 @@
             "value" : "この睡眠ブロックを削除してもよろしいですか？"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah anda pasti mahu memadam blok tidur ini?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจหรือไม่ว่าต้องการลบช่วงการนอนนี้?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3936,6 +5556,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロックを削除"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padam Blok Tidur"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบช่วงการนอน"
           }
         },
         "tr" : {
@@ -3967,6 +5599,18 @@
             "value" : "ブロック %1$@: %2$@ (%3$@〜%4$@)"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok %1$@: %2$@ dari %3$@ hingga %4$@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วง %1$@: %2$@ จาก %3$@ ถึง %4$@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3994,6 +5638,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "時間"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempoh"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะเวลา"
           }
         },
         "tr" : {
@@ -4026,6 +5682,18 @@
             "value" : "編集"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunting"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แก้ไข"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4053,6 +5721,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "終了時刻"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Tamat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาสิ้นสุด"
           }
         },
         "tr" : {
@@ -4084,6 +5764,18 @@
             "value" : "終了時刻は開始時刻より後に設定してください"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa tamat mestilah selepas masa mula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาสิ้นสุดต้องอยู่หลังเวลาเริ่มต้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4111,6 +5803,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠ブロックは重複できません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok tidur tidak boleh bertindih"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนไม่สามารถทับซ้อนกันได้"
           }
         },
         "tr" : {
@@ -4142,6 +5846,18 @@
             "value" : "無効な睡眠ブロック"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok Tidur Tidak Sah"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนไม่ถูกต้อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4169,6 +5885,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "既存の睡眠ブロック"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok Tidur Sedia Ada"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนที่มีอยู่"
           }
         },
         "tr" : {
@@ -4200,6 +5928,18 @@
             "value" : "主睡眠ブロック"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok Tidur Utama"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4227,6 +5967,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仮眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
           }
         },
         "tr" : {
@@ -4258,6 +6010,18 @@
             "value" : "開始時刻"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa Mula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลาเริ่มต้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4285,6 +6049,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "主睡眠"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teras"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลัก"
           }
         },
         "tr" : {
@@ -4316,6 +6092,18 @@
             "value" : "仮眠"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur Sebentar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "งีบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4343,6 +6131,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ブロックの種類"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jenis Blok"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประเภทช่วงการนอน"
           }
         },
         "tr" : {
@@ -4374,6 +6174,18 @@
             "value" : "睡眠ブロックは最低15分必要です"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok tidur mestilah sekurang-kurangnya 15 minit"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงการนอนต้องมีอย่างน้อย 15 นาที"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4401,6 +6213,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この時間は既存の睡眠ブロックと重複しています"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa ini bercanggah dengan blok tidur sedia ada"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวลานี้ขัดแย้งกับช่วงการนอนที่มีอยู่"
           }
         },
         "tr" : {
@@ -4432,6 +6256,18 @@
             "value" : "後で"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kemudian"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไว้ทีหลัง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4459,6 +6295,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠を評価しよう"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nilaikan Tidur Anda"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ให้คะแนนการนอนของคุณ"
           }
         },
         "tr" : {
@@ -4490,6 +6338,18 @@
             "value" : "この時間の睡眠はどうでしたか"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bagaimana tidur anda antara"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนของคุณระหว่าง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4517,6 +6377,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@から%2$@までの睡眠はどうでしたか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bagaimana tidur anda antara %1$@ - %2$@?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนของคุณระหว่าง %1$@ - %2$@ เป็นอย่างไรบ้าง?"
           }
         },
         "tr" : {
@@ -4548,6 +6420,18 @@
             "value" : "悪い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ดี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4575,6 +6459,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最高"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cemerlang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอดเยี่ยม"
           }
         },
         "tr" : {
@@ -4606,6 +6502,18 @@
             "value" : "良い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4633,6 +6541,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "あまり良くない"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurang Baik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่"
           }
         },
         "tr" : {
@@ -4664,6 +6584,18 @@
             "value" : "とても良い"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sangat Baik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดีมาก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4691,6 +6623,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึก"
           }
         },
         "tr" : {
@@ -4722,6 +6666,18 @@
             "value" : "履歴ページで後から睡眠を評価することもできます！"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda masih boleh menilai tidur anda di halaman Sejarah!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณยังสามารถให้คะแนนการนอนของคุณได้ในหน้าประวัติ!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4749,6 +6705,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "睡眠スケジュール: %@"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual tidur: %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตารางการนอน: %@"
           }
         },
         "tr" : {

@@ -1,0 +1,21 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "PolyNap";
+
+/* Bundle name */
+"CFBundleName" = "polynap";
+
+/* Critical messaging permission description */
+"NSCriticalMessagingUsageDescription" = "PolyNap ต้องการสิทธิ์การส่งข้อความที่สำคัญเพื่อส่งการแจ้งเตือนการปลุกและการเตือนที่เร่งด่วนแม้ในโหมดเงียบหรือโหมดโฟกัส";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "PolyNap ต้องการอ่านข้อมูลสุขภาพของคุณเพื่อวิเคราะห์ผลกระทบของตารางการนอนหลับของคุณที่มีต่อสุขภาพการนอนหลับและเพื่อเสนอคำแนะนำส่วนบุคคล";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "PolyNap ต้องการสิทธิ์นี้เพื่อบันทึกช่วงการนอนหลับและการประเมินคุณภาพการนอนหลับของคุณไปยังแอปสุขภาพ";
+
+/* Privacy - Microphone Usage Description */
+"NSMicrophoneUsageDescription" = "จำเป็นต้องใช้เอาต์พุตเสียงสำหรับระบบเตือนภัยของ PolyNap";
+
+/* Notification permission description */
+"NSUserNotificationsUsageDescription" = "PolyNap ส่งการแจ้งเตือนปลุกเพื่อปลุกคุณเมื่อช่วงการนอนหลับของคุณสิ้นสุดลง ฟีเจอร์นี้จำเป็นเพื่อให้ตารางการนอนหลับของคุณทำงานได้อย่างถูกต้อง";
+
