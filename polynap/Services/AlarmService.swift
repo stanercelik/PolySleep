@@ -45,8 +45,8 @@ final class AlarmService: ObservableObject {
     /// "Ertele" ve "Kapat" gibi eylemlerle bildirim kategorilerini kaydeder.
     private func registerNotificationCategories() async {
         // ALARM Kategorisi (Eylemli)
-        let snoozeAction = UNNotificationAction(identifier: "SNOOZE_ACTION", title: "Ertele", options: [])
-        let stopAction = UNNotificationAction(identifier: "STOP_ACTION", title: "Kapat", options: [.destructive])
+        let snoozeAction = UNNotificationAction(identifier: "SNOOZE_ACTION", title: L("alarm.action.snooze", table: "Alarms"), options: [])
+        let stopAction = UNNotificationAction(identifier: "STOP_ACTION", title: L("alarm.action.stop", table: "Alarms"), options: [.destructive])
         let alarmCategory = UNNotificationCategory(
             identifier: Self.alarmCategoryIdentifier,
             actions: [snoozeAction, stopAction],
@@ -157,8 +157,8 @@ final class AlarmService: ObservableObject {
         }
         
         let content = UNMutableNotificationContent()
-        content.title = "⏰ Uyanma Zamanı!"
-        content.body = "Uyku periyodunuz tamamlandı. Haydi güne başla!"
+        content.title = L("alarm.wake.title", table: "Alarms")
+        content.body = L("alarm.wake.body", table: "Alarms")
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: settings.soundName))
         content.categoryIdentifier = Self.alarmCategoryIdentifier
         content.interruptionLevel = .timeSensitive // Bu, "Rahatsız Etme" modunu bile atlamasını sağlar
@@ -198,8 +198,8 @@ final class AlarmService: ObservableObject {
 
     private func scheduleAlarm(at date: Date, with settings: AlarmSettings, for schedule: UserSchedule) async {
         let content = UNMutableNotificationContent()
-        content.title = "🚨 Uyanma Zamanı!"
-        content.body = "Uyku bloğunuz sona erdi. Günaydın!"
+        content.title = L("alarm.wake.scheduled.title", table: "Alarms")
+        content.body = L("alarm.wake.scheduled.body", table: "Alarms")
         content.categoryIdentifier = Self.alarmCategoryIdentifier
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: settings.soundName))
         content.interruptionLevel = .timeSensitive
@@ -220,7 +220,7 @@ final class AlarmService: ObservableObject {
     
     private func scheduleReminder(at date: Date, for block: BlockInstance) async {
         let content = UNMutableNotificationContent()
-        content.title = "⏰ Uyku Zamanı"
+        content.title = L("alarm.sleep.title", table: "Alarms")
         
         // 24 saatlik format için DateFormatter kullan
         let timeFormatter = DateFormatter()
@@ -228,7 +228,7 @@ final class AlarmService: ObservableObject {
         timeFormatter.locale = Locale(identifier: "en_GB")
         let startTimeFormatted = timeFormatter.string(from: block.startDate)
         
-        content.body = "'\(block.scheduleName)' programındaki \(startTimeFormatted) uykunuz başlamak üzere."
+        content.body = String(format: L("alarm.sleep.reminder.body", table: "Alarms"), block.scheduleName, startTimeFormatted)
         content.categoryIdentifier = Self.reminderCategoryIdentifier
         content.sound = .default
         
@@ -305,8 +305,8 @@ final class AlarmService: ObservableObject {
         let snoozeDate = Date().addingTimeInterval(TimeInterval(snoozeMinutes * 60))
         
         let content = notification.request.content.mutableCopy() as! UNMutableNotificationContent
-        content.title = "😴 Ertelenmiş Alarm"
-        content.body = "Uyanma zamanı geldi!"
+        content.title = L("alarm.snoozed.title", table: "Alarms")
+        content.body = L("alarm.snoozed.body", table: "Alarms")
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: snoozeDate.timeIntervalSinceNow, repeats: false)
         let request = UNNotificationRequest(identifier: "snooze-\(UUID().uuidString)", content: content, trigger: trigger)
@@ -331,8 +331,8 @@ final class AlarmService: ObservableObject {
     /// Hızlı, tek seferlik bir test bildirimi planlar.
     public func scheduleTestNotification(soundName: String, volume: Float) async {
         let content = UNMutableNotificationContent()
-        content.title = "🔔 Test Alarmı"
-        content.body = "Bu, alarm ayarlarınız için bir test bildirimidir. Bildirime dokunarak uygulamayı açın!"
+        content.title = L("alarm.test.title", table: "Alarms")
+        content.body = L("alarm.test.body", table: "Alarms")
         content.categoryIdentifier = Self.alarmCategoryIdentifier // Eylemleri göstermek için
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundName))
         content.interruptionLevel = .timeSensitive

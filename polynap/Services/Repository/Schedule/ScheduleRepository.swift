@@ -39,6 +39,9 @@ final class ScheduleRepository: BaseRepository {
     func getActiveSchedule() async throws -> UserScheduleModel? {
         logger.debug("🗂️ ScheduleRepository.getActiveSchedule() çağrıldı")
         
+        // Migration kontrolü - ilk çağrıda yapılır
+        await checkAndPerformDescriptionMigration()
+        
         let predicate = #Predicate<UserSchedule> { $0.isActive == true }
         let descriptor = FetchDescriptor(predicate: predicate)
         
@@ -146,6 +149,15 @@ final class ScheduleRepository: BaseRepository {
         do {
             try save()
             logger.debug("✅ Program ve ilişkili UserSchedule başarıyla kaydedildi/güncellendi")
+            
+            // Notify WatchSyncBridge of schedule change for Watch sync
+            NotificationCenter.default.post(
+                name: Notification.Name("ScheduleDidChange"),
+                object: nil,
+                userInfo: ["scheduleId": scheduleEntity.id.uuidString]
+            )
+            logger.debug("📡 Watch sync notification gönderildi: \(scheduleEntity.name)")
+            
         } catch {
             logger.error("❌ Program ve ilişkili UserSchedule kaydedilirken hata: \(error.localizedDescription)")
             throw RepositoryError.saveFailed
@@ -378,6 +390,144 @@ final class ScheduleRepository: BaseRepository {
         } catch {
             logger.error("❌ Aktif program entity getirilirken hata: \(error.localizedDescription)")
             throw RepositoryError.fetchFailed
+        }
+    }
+    
+    // MARK: - Description Migration Methods
+    
+    /// UserSchedule name'lerini JSON schedule ID'lerine map eden helper
+    private func getScheduleIdMapping() -> [String: String] {
+        return [
+            "Biphasic Sleep": "biphasic",
+            "Extended Biphasic Sleep": "biphasic-extended",
+            "Everyman": "everyman",
+            "Everyman 1": "everyman-1",
+            "Everyman 2": "everyman-2", 
+            "Everyman 3": "everyman-3",
+            "Dual Core 1": "dual-core-1",
+            "Dual Core 2": "dual-core-2",
+            "Triphasic": "triphasic",
+            "Uberman": "uberman",
+            "Dymaxion": "dymaxion",
+            "SPAMAYL": "spamayl",
+            "Tesla": "tesla",
+            "Polyphasic Experimental": "polyphasic-experimental"
+        ]
+    }
+    
+    /// Migration kontrolü yapar ve gerekirse çalıştırır
+    private func checkAndPerformDescriptionMigration() async {
+        let migrationKey = "schedule_description_migration_completed"
+        let userDefaults = UserDefaults.standard
+        
+        // Migration zaten yapıldıysa çık
+        if userDefaults.bool(forKey: migrationKey) {
+            return
+        }
+        
+        logger.debug("🔄 Schedule description migration başlatılıyor...")
+        
+        do {
+            try await migrateScheduleDescriptions()
+            userDefaults.set(true, forKey: migrationKey)
+            logger.debug("✅ Schedule description migration tamamlandı")
+        } catch {
+            logger.error("❌ Schedule description migration hatası: \(error.localizedDescription)")
+            // Migration başarısız olursa da çalışmaya devam et
+        }
+    }
+    
+    /// Mevcut UserSchedule'ların description JSON'larını güncelleyen migration
+    private func migrateScheduleDescriptions() async throws {
+        logger.debug("🔄 UserSchedule description migration başlıyor...")
+        
+        // Tüm UserSchedule'ları getir
+        let allUserSchedulesDescriptor = FetchDescriptor<UserSchedule>()
+        let userSchedules = try fetch(allUserSchedulesDescriptor)
+        
+        logger.debug("📊 Migration için \(userSchedules.count) UserSchedule bulundu")
+        
+        // JSON schedule'larını yükle
+        guard let jsonSchedules = loadSchedulesFromJSON() else {
+            logger.error("❌ JSON schedule'lar yüklenemedi, migration iptal ediliyor")
+            return
+        }
+        
+        let scheduleMapping = getScheduleIdMapping()
+        var migratedCount = 0
+        
+        for userSchedule in userSchedules {
+            // UserSchedule name'ini JSON ID'ye map et
+            var jsonScheduleId: String?
+            
+            // Önce direkt mapping'den kontrol et
+            if let mappedId = scheduleMapping[userSchedule.name] {
+                jsonScheduleId = mappedId
+            } else {
+                // Alternatif olarak name'i normalize ederek ara
+                let normalizedName = userSchedule.name.lowercased()
+                for (mappingName, mappingId) in scheduleMapping {
+                    if mappingName.lowercased() == normalizedName {
+                        jsonScheduleId = mappingId
+                        break
+                    }
+                }
+            }
+            
+            guard let scheduleId = jsonScheduleId,
+                  let jsonSchedule = jsonSchedules.first(where: { $0.id == scheduleId }) else {
+                logger.warning("⚠️ JSON'da eşleşme bulunamadı: \(userSchedule.name)")
+                continue
+            }
+            
+            // Mevcut description JSON'ını kontrol et
+            if let currentDesc = userSchedule.scheduleDescription,
+               let data = currentDesc.data(using: .utf8),
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: String] {
+                
+                // Eğer tüm diller zaten mevcutsa, atla
+                if json["ja"] != nil && json["de"] != nil && json["ms"] != nil && json["th"] != nil {
+                    continue
+                }
+            }
+            
+            // Tam description JSON'ı oluştur ve güncelle
+            do {
+                let completeDescriptionJson = try RepositoryUtils.encodeScheduleDescription(jsonSchedule.description)
+                userSchedule.scheduleDescription = completeDescriptionJson
+                userSchedule.updatedAt = Date()
+                migratedCount += 1
+                
+                logger.debug("✅ UserSchedule güncellendi: \(userSchedule.name) -> \(scheduleId)")
+            } catch {
+                logger.error("❌ \(userSchedule.name) için description encoding hatası: \(error)")
+            }
+        }
+        
+        // Değişiklikleri kaydet
+        if migratedCount > 0 {
+            try save()
+            logger.debug("💾 \(migratedCount) UserSchedule migration ile güncellendi")
+        } else {
+            logger.debug("ℹ️ Migration için güncellenecek UserSchedule bulunamadı")
+        }
+    }
+    
+    /// JSON dosyasından schedule'ları yükler
+    private func loadSchedulesFromJSON() -> [SleepScheduleModel]? {
+        guard let url = Bundle.main.url(forResource: "SleepSchedules", withExtension: "json") else {
+            logger.error("❌ SleepSchedules.json dosyası bulunamadı")
+            return nil
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let response = try JSONDecoder().decode(SleepSchedulesContainer.self, from: data)
+            logger.debug("✅ \(response.sleepSchedules.count) JSON schedule yüklendi")
+            return response.sleepSchedules
+        } catch {
+            logger.error("❌ JSON schedule'lar decode edilemedi: \(error.localizedDescription)")
+            return nil
         }
     }
 } 

@@ -922,7 +922,11 @@ class MainScreenViewModel: ObservableObject {
         // LocalizedDescription'ı UserScheduleModel için uygun formata dönüştür
         let description = LocalizedDescription(
             en: schedule.description.en,
-            tr: schedule.description.tr
+            tr: schedule.description.tr,
+            ja: schedule.description.ja,
+            de: schedule.description.de,
+            ms: schedule.description.ms,
+            th: schedule.description.th
         )
         
         // Schedule blocks'ları kontrollü şekilde kopyala ve validate et

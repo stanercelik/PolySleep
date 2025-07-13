@@ -33,9 +33,13 @@ public enum WatchMessageType: String, Codable {
     case sleepEnded = "sleepEnded"
     case qualityRated = "qualityRated"
     case scheduleUpdate = "scheduleUpdate"
+    case scheduleActivated = "scheduleActivated"
+    case adaptationUpdate = "adaptationUpdate"
+    case sleepEntryAdded = "sleepEntryAdded"
     case userPreferencesUpdate = "userPreferencesUpdate"
     case syncRequest = "syncRequest"
     case syncResponse = "syncResponse"
+    case fullDataSync = "fullDataSync"
 }
 
 // MARK: - Codable Dictionary Support
@@ -836,12 +840,20 @@ extension WatchConnectivityManager: WCSessionDelegate {
             handleQualityRated(data: watchMessage.data.toDictionary())
         case .scheduleUpdate:
             handleScheduleUpdate(data: watchMessage.data.toDictionary())
+        case .scheduleActivated:
+            handleScheduleActivated(data: watchMessage.data.toDictionary())
+        case .adaptationUpdate:
+            handleAdaptationUpdate(data: watchMessage.data.toDictionary())
+        case .sleepEntryAdded:
+            handleSleepEntryAdded(data: watchMessage.data.toDictionary())
         case .userPreferencesUpdate:
             handleUserPreferencesUpdate(data: watchMessage.data.toDictionary())
         case .syncRequest:
             handleSyncRequest(data: watchMessage.data.toDictionary())
         case .syncResponse:
             handleSyncResponse(data: watchMessage.data.toDictionary())
+        case .fullDataSync:
+            handleFullDataSync(data: watchMessage.data.toDictionary())
         }
         
         // Son sync tarihini güncelle
@@ -865,6 +877,20 @@ extension WatchConnectivityManager: WCSessionDelegate {
         // Connection status kontrol et
         if let connStatus = context["connectionStatus"] as? String {
             print("📶 Remote connection status: \(connStatus)")
+        }
+        
+        // Schedule sync kontrol et
+        if let contextType = context["type"] as? String, contextType == "scheduleSync" {
+            print("📅 Application context ile schedule sync alındı")
+            if let scheduleData = context["schedule"] as? [String: Any] {
+                // Schedule güncelleme notification'ı gönder
+                NotificationCenter.default.post(
+                    name: .scheduleDidUpdate,
+                    object: nil,
+                    userInfo: scheduleData
+                )
+                print("📅 Schedule context data notification gönderildi")
+            }
         }
         
         // Context güncellemelerini işle
@@ -932,6 +958,50 @@ extension WatchConnectivityManager: WCSessionDelegate {
         // Schedule değişikliklerini işle
         NotificationCenter.default.post(
             name: .scheduleDidUpdate,
+            object: nil,
+            userInfo: data
+        )
+    }
+    
+    private func handleScheduleActivated(data: [String: Any]) {
+        print("🎯 Schedule aktive edildi: \(data)")
+        
+        // Schedule aktivasyonunu işle
+        NotificationCenter.default.post(
+            name: .scheduleDidUpdate,
+            object: nil,
+            userInfo: data
+        )
+    }
+    
+    private func handleAdaptationUpdate(data: [String: Any]) {
+        print("📈 Adaptation güncellendi: \(data)")
+        
+        // Adaptation güncellemelerini işle
+        NotificationCenter.default.post(
+            name: Notification.Name("adaptationDidUpdate"),
+            object: nil,
+            userInfo: data
+        )
+    }
+    
+    private func handleSleepEntryAdded(data: [String: Any]) {
+        print("💤 Sleep entry eklendi: \(data)")
+        
+        // Sleep entry eklenmelerini işle
+        NotificationCenter.default.post(
+            name: Notification.Name("sleepEntryDidAdd"),
+            object: nil,
+            userInfo: data
+        )
+    }
+    
+    private func handleFullDataSync(data: [String: Any]) {
+        print("🔄 Full data sync isteği: \(data)")
+        
+        // Tam data sync'i işle
+        NotificationCenter.default.post(
+            name: Notification.Name("fullDataSyncRequested"),
             object: nil,
             userInfo: data
         )
@@ -1050,6 +1120,43 @@ extension WatchConnectivityManager: WCSessionDelegate {
     /// Schedule güncellemesini karşı platforma bildir
     public func notifyScheduleUpdate(_ schedule: [String: Any]) {
         let message = WatchMessage(type: .scheduleUpdate, data: schedule)
+        sendMessage(message)
+    }
+    
+    /// Schedule aktivasyonunu karşı platforma bildir
+    public func notifyScheduleActivated(_ schedule: [String: Any]) {
+        let message = WatchMessage(type: .scheduleActivated, data: schedule)
+        sendMessage(message)
+    }
+    
+    /// Adaptation progress güncellemesini karşı platforma bildir
+    public func notifyAdaptationUpdate(_ adaptation: [String: Any]) {
+        let message = WatchMessage(type: .adaptationUpdate, data: adaptation)
+        sendMessage(message)
+    }
+    
+    /// Sleep entry eklenmesini karşı platforma bildir
+    public func notifySleepEntryAdded(_ entry: [String: Any]) {
+        let message = WatchMessage(type: .sleepEntryAdded, data: entry)
+        sendMessage(message)
+    }
+    
+    /// Tam data sync isteğini karşı platforma bildir
+    public func requestFullDataSync() {
+        let syncData = [
+            "timestamp": Date().timeIntervalSince1970,
+            "platform": {
+                #if os(iOS)
+                return "iOS"
+                #elseif os(watchOS)
+                return "watchOS"
+                #else
+                return "Unknown"
+                #endif
+            }()
+        ] as [String: Any]
+        
+        let message = WatchMessage(type: .fullDataSync, data: syncData)
         sendMessage(message)
     }
     

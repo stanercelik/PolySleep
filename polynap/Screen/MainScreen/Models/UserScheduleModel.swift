@@ -58,7 +58,7 @@ struct UserScheduleModel {
         return UserScheduleModel(
             id: "placeholder_id",
             name: " ",
-            description: LocalizedDescription(en: " ", tr: " "),
+            description: LocalizedDescription(en: " ", tr: " ", ja: " ", de: " ", ms: " ", th: " "),
             totalSleepHours: 8, // Ortalama bir değer, grafiğin çizilmesi için
             schedule: [
                 // Shimmer'ın doğru görünmesi için birkaç boş blok ekleyelim.
@@ -107,18 +107,20 @@ struct UserScheduleModel {
         
         let defaultUUID = generateDeterministicUUID(from: "default")
         
-        let currentLang = LanguageManager.shared.currentLanguage
-        let nameKey = currentLang == "tr" ? "schedule.default.name" : "schedule.default.name"
-        let descEnKey = currentLang == "tr" ? "schedule.default.description.en" : "schedule.default.description.en"
-        let descTrKey = currentLang == "tr" ? "schedule.default.description.tr" : "schedule.default.description.tr"
+        // Hard-coded descriptions for consistency with JSON schedules
+        let descriptions = LocalizedDescription(
+            en: "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance.",
+            tr: "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır.",
+            ja: "三相性睡眠スケジュールは、1日を通して3つの睡眠期間で構成されます：2回の30分の仮眠と、1回の4.5時間の主睡眠期間。このパターンは、総睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目的としています。多相睡眠を試してみたい、そして高い認知能力を維持したい人向けに設計されています。",
+            de: "Der triphasische Schlafplan besteht aus drei Schlafperioden, die über den Tag verteilt sind: zwei 30-minütige Nickerchen und eine Kernschlafperiode von 4,5 Stunden. Dieses Muster zielt darauf ab, den Tiefschlaf und den REM-Schlaf zu maximieren und gleichzeitig die Gesamtschlafzeit zu reduzieren. Es ist für diejenigen konzipiert, die mit polyphasischem Schlaf experimentieren und eine hohe kognitive Leistungsfähigkeit beibehalten möchten.",
+            ms: "Jadual Tidur Trifasa terdiri daripada tiga tempoh tidur yang tersebar sepanjang hari: dua tidur sebentar selama 30 minit dan satu tempoh tidur teras selama 4.5 jam. Corak ini bertujuan untuk memaksimumkan tidur nyenyak dan tidur REM sambil mengurangkan masa tidur keseluruhan. Ia direka untuk mereka yang ingin bereksperimen dengan tidur polifasa dan perlu mengekalkan prestasi kognitif yang tinggi.",
+            th: "ตารางการนอนหลับแบบสามเฟสประกอบด้วยการนอนหลับสามช่วงกระจายอยู่ตลอดทั้งวัน: การงีบ 30 นาทีสองครั้งและการนอนหลัก 4.5 ชั่วโมง รูปแบบนี้มีเป้าหมายเพื่อเพิ่มการนอนหลับลึกและการนอนหลับ REM ให้สูงสุดในขณะที่ลดเวลาการนอนหลับโดยรวม เหมาะสำหรับผู้ที่ต้องการทดลองการนอนหลับแบบหลายเฟสและต้องการรักษาประสิทธิภาพการรับรู้ในระดับสูง"
+        )
         
         return UserScheduleModel(
             id: defaultUUID.uuidString,
-            name: L(nameKey, table: "MainScreen"),
-            description: LocalizedDescription(
-                en: L(descEnKey, table: "MainScreen"),
-                tr: L(descTrKey, table: "MainScreen")
-            ),
+            name: L("schedule.default.name", table: "MainScreen"),
+            description: descriptions,
             totalSleepHours: 8.0,
             schedule: schedule,
             isPremium: false

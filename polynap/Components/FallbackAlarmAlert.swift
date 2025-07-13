@@ -43,19 +43,19 @@ struct FallbackAlarmAlert: View {
                 }
                 
                 VStack(spacing: 16) {
-                    Text("⏰ UYKU ALARMI")
+                    Text(L("fallback.alarm.title", table: "Fallback"))
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
-                    Text("Uyku bloğunuz sona erdi!\nUyanma zamanı!")
+                    Text(L("fallback.alarm.message", table: "Fallback"))
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                     
-                    Text("Bildirim izni olmadığı için bu uyarı gösteriliyor")
+                    Text(L("fallback.alarm.permission.note", table: "Fallback"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -71,7 +71,7 @@ struct FallbackAlarmAlert: View {
                         HStack(spacing: 12) {
                             Image(systemName: "stop.circle.fill")
                                 .font(.title2)
-                            Text("⏹️ Kapat")
+                            Text(L("fallback.alarm.stop", table: "Fallback"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                         }
@@ -100,7 +100,7 @@ struct FallbackAlarmAlert: View {
                         HStack(spacing: 12) {
                             Image(systemName: "clock.arrow.circlepath")
                                 .font(.title3)
-                            Text("⏰ Ertele (5dk)")
+                            Text(L("fallback.alarm.snooze", table: "Fallback"))
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                         }

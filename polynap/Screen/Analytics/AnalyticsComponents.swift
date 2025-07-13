@@ -768,7 +768,7 @@ struct AnalyticsSleepComponentsPreview: View {
 struct AnalyticsQualityDistributionPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Uyku Kalitesi Dağılımı")
+            Text(L("analytics.qualityDistribution.title", table: "Analytics"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
@@ -807,7 +807,7 @@ struct AnalyticsQualityDistributionPreview: View {
 struct AnalyticsSleepBreakdownPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Uyku Dağılımı")
+            Text(L("analytics.sleepBreakdown.title", table: "Analytics"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
@@ -838,7 +838,7 @@ struct AnalyticsSleepBreakdownPreview: View {
                         Circle()
                             .fill(Color("AccentColor"))
                             .frame(width: 12, height: 12)
-                        Text("Ana Uyku: 75%")
+                        Text(String(format: L("analytics.sleepBreakdown.core", table: "Analytics"), 75))
                             .font(.system(size: 14))
                             .foregroundColor(Color("TextColor"))
                     }
@@ -847,7 +847,7 @@ struct AnalyticsSleepBreakdownPreview: View {
                         Circle()
                             .fill(Color("PrimaryColor"))
                             .frame(width: 12, height: 12)
-                        Text("Şekerleme 1: 20%")
+                        Text(String(format: L("analytics.sleepBreakdown.nap1", table: "Analytics"), 20))
                             .font(.system(size: 14))
                             .foregroundColor(Color("TextColor"))
                     }
@@ -856,7 +856,7 @@ struct AnalyticsSleepBreakdownPreview: View {
                         Circle()
                             .fill(Color("SecondaryColor"))
                             .frame(width: 12, height: 12)
-                        Text("Şekerleme 2: 5%")
+                        Text(String(format: L("analytics.sleepBreakdown.nap2", table: "Analytics"), 5))
                             .font(.system(size: 14))
                             .foregroundColor(Color("TextColor"))
                     }
@@ -872,7 +872,7 @@ struct AnalyticsSleepBreakdownPreview: View {
 struct AnalyticsConsistencyPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Uyku Tutarlılığı")
+            Text(L("analytics.consistency.title", table: "Analytics"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
@@ -893,7 +893,7 @@ struct AnalyticsConsistencyPreview: View {
                         Text("75")
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(Color("TextColor"))
-                        Text("Puan")
+                        Text(L("analytics.consistency.scoreUnit", table: "Analytics"))
                             .font(.system(size: 12))
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
@@ -902,11 +902,11 @@ struct AnalyticsConsistencyPreview: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Değişkenlik: 25 Puan")
+                    Text(String(format: L("analytics.variability.scoreFormat", table: "Analytics"), 25))
                         .font(.system(size: 14))
                         .foregroundColor(Color("TextColor"))
                     
-                    Text("Harika bir uyku rutininiz var!")
+                    Text(L("analytics.consistency.greatRoutine", table: "Analytics"))
                         .font(.system(size: 12))
                         .foregroundColor(Color("SecondaryTextColor"))
                 }
@@ -921,7 +921,7 @@ struct AnalyticsConsistencyPreview: View {
 struct AnalyticsTimeGainedPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Kazanılan Zaman")
+            Text(L("analytics.timeGained.title", table: "Analytics"))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(Color("TextColor"))
             
@@ -935,7 +935,7 @@ struct AnalyticsTimeGainedPreview: View {
                         Text("2.5")
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(Color("SecondaryColor"))
-                        Text("saat")
+                        Text(L("analytics.timeGained.hoursUnit", table: "Analytics"))
                             .font(.system(size: 12))
                             .foregroundColor(Color("SecondaryColor"))
                     }
@@ -944,15 +944,15 @@ struct AnalyticsTimeGainedPreview: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("📚 75 sayfa kitap okumak")
+                    Text(L("analytics.timeGained.activity.reading", table: "Analytics"))
                         .font(.system(size: 12))
                         .foregroundColor(Color("TextColor"))
                     
-                    Text("🚶‍♂️ 12.5 km yürümek")
+                    Text(L("analytics.timeGained.activity.walking", table: "Analytics"))
                         .font(.system(size: 12))
                         .foregroundColor(Color("TextColor"))
                     
-                    Text("🎬 1 film izlemek")
+                    Text(L("analytics.timeGained.activity.movies", table: "Analytics"))
                         .font(.system(size: 12))
                         .foregroundColor(Color("TextColor"))
                 }

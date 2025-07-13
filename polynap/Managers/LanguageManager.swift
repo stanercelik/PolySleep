@@ -18,6 +18,7 @@ class LanguageManager: ObservableObject {
     
     @Published var currentLanguage: String {
         didSet {
+            print("🔄 LanguageManager: Language changed from '\(oldValue)' to '\(currentLanguage)'")
             UserDefaults.standard.set(currentLanguage, forKey: "appLanguage")
             updateLocale()
             // Force refresh all views
@@ -74,6 +75,11 @@ class LanguageManager: ObservableObject {
         print("✅ LanguageManager: Başlatma tamamlandı. Aktif dil: \(initialLanguage)")
         
         updateLocale()
+        
+        // DEBUG: Schedule descriptions test
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            SleepScheduleService.shared.debugScheduleDescriptions()
+        }
     }
     
     /// Dil ayarını değiştirir ve tüm uygulamayı günceller
@@ -85,7 +91,22 @@ class LanguageManager: ObservableObject {
     
     /// Locale'i günceller
     private func updateLocale() {
-        currentLocale = Locale(identifier: currentLanguage)
+        let localeIdentifier: String
+        switch currentLanguage {
+        case "tr":
+            localeIdentifier = "tr_TR"
+        case "de":
+            localeIdentifier = "de_DE"
+        case "ja":
+            localeIdentifier = "ja_JP"
+        case "ms":
+            localeIdentifier = "ms_MY"
+        case "th":
+            localeIdentifier = "th_TH"
+        default:
+            localeIdentifier = "en_US"
+        }
+        currentLocale = Locale(identifier: localeIdentifier)
     }
     
     /// Mevcut dilde lokalize edilmiş string döndürür

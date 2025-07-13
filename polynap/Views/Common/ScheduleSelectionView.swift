@@ -231,11 +231,7 @@ struct CompactScheduleCard: View {
     
     var scheduleDescription: String {
         let currentLang = languageManager.currentLanguage
-        if currentLang == "tr" {
-            return schedule.description.tr
-        } else {
-            return schedule.description.en
-        }
+        return schedule.description.localized(for: currentLang)
     }
     
     var body: some View {
@@ -444,11 +440,7 @@ struct PremiumLockedScheduleCard: View {
     
     var scheduleDescription: String {
         let currentLang = languageManager.currentLanguage
-        if currentLang == "tr" {
-            return schedule.description.tr
-        } else {
-            return schedule.description.en
-        }
+        return schedule.description.localized(for: currentLang)
     }
     
     var body: some View {
@@ -683,45 +675,3 @@ struct DifficultyLegendItem: View {
         }
     }
 }
-
-#Preview {
-    let schedule1 = SleepScheduleModel(
-        id: "biphasic",
-        name: "Biphasic Sleep",
-        description: LocalizedDescription(
-            en: "A sleep pattern with one core sleep period and one short nap during the day.",
-            tr: "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni."
-        ),
-        totalSleepHours: 6.5,
-        schedule: [
-            SleepBlock(startTime: "23:00", duration: 360, type: "core", isCore: true),
-            SleepBlock(startTime: "14:00", duration: 30, type: "nap", isCore: false)
-        ],
-        isPremium: false
-    )
-    
-    let schedule2 = SleepScheduleModel(
-        id: "everyman",
-        name: "Everyman",
-        description: LocalizedDescription(
-            en: "One core sleep of a few hours plus multiple short naps throughout the day.",
-            tr: "Birkaç saatlik bir ana uyku ile gün içinde birden fazla kısa uykulardan oluşur."
-        ),
-        totalSleepHours: 4.5,
-        schedule: [
-            SleepBlock(startTime: "22:00", duration: 180, type: "core", isCore: true),
-            SleepBlock(startTime: "04:00", duration: 20, type: "nap", isCore: false),
-            SleepBlock(startTime: "08:00", duration: 20, type: "nap", isCore: false),
-            SleepBlock(startTime: "14:00", duration: 20, type: "nap", isCore: false)
-        ],
-        isPremium: true
-    )
-    
-    ScheduleSelectionView(
-        availableSchedules: [schedule1, schedule2],
-        selectedSchedule: .constant(UserScheduleModel.defaultSchedule),
-        onScheduleSelected: { _ in },
-        isPremiumUser: true
-    )
-    .environmentObject(LanguageManager.shared)
-} 

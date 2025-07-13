@@ -10,7 +10,21 @@ class SleepScheduleViewModel: ObservableObject {
     private let analyticsManager = AnalyticsManager.shared
     
     init() {
-        // Monophasic varsayılan
+        // Load default biphasic schedule from JSON (or fallback to hardcoded)
+        let defaultSchedule = Self.loadDefaultSchedule()
+        
+        self.defaultSchedule = defaultSchedule
+        self.schedule = defaultSchedule
+    }
+    
+    private static func loadDefaultSchedule() -> SleepScheduleModel {
+        // Try to load biphasic schedule from JSON first
+        if let schedules = loadSleepSchedulesFromJSON(),
+           let biphasicSchedule = schedules.first(where: { $0.id == "biphasic" }) {
+            return biphasicSchedule
+        }
+        
+        // Fallback to hardcoded simple schedule if JSON loading fails
         let coreBlock = SleepBlock(
             startTime: "23:00",
             duration: 480,
@@ -18,19 +32,29 @@ class SleepScheduleViewModel: ObservableObject {
             isCore: true
         )
         
-        let monophasicSchedule = SleepScheduleModel(
-            id: "monophasic",
+        return SleepScheduleModel(
+            id: "fallback-monophasic",
             name: "Monophasic",
-            description: LocalizedDescription(
-                en: "Traditional single sleep period during the night",
-                tr: "Geleneksel tek parça gece uykusu"
-            ),
+            description: .defaultFallback,
             totalSleepHours: 8.0,
             schedule: [coreBlock]
         )
+    }
+    
+    private static func loadSleepSchedulesFromJSON() -> [SleepScheduleModel]? {
+        guard let url = Bundle.main.url(forResource: "SleepSchedules", withExtension: "json") else {
+            return nil
+        }
         
-        self.defaultSchedule = monophasicSchedule
-        self.schedule = monophasicSchedule
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let container = try decoder.decode(SleepSchedulesContainer.self, from: data)
+            return container.sleepSchedules
+        } catch {
+            print("Error loading schedules: \(error)")
+            return nil
+        }
     }
     
     func setModelContext(_ context: ModelContext) {

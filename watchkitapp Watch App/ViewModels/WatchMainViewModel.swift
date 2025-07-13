@@ -16,7 +16,7 @@ class WatchMainViewModel: ObservableObject {
     @Published var currentSleepBlock: SharedSleepBlock?
     @Published var nextSleepBlock: SharedSleepBlock?
     @Published var nextSleepTime: String?
-    @Published var currentStatusMessage: String = "Program yükleniyor..."
+    @Published var currentStatusMessage: String = L("schedule_loading", table: "ViewModels")
     @Published var isLoading: Bool = false
     
     // Legacy compatibility properties
@@ -80,12 +80,15 @@ class WatchMainViewModel: ObservableObject {
     // MARK: - Watch Connectivity Setup
     
     private func setupWatchConnectivityListeners() {
+        print("🔗 Watch: Connectivity listeners kuruluyor...")
+        
         // Schedule güncellemelerini dinle
         NotificationCenter.default.addObserver(
             forName: Notification.Name("scheduleDidUpdate"),
             object: nil,
             queue: .main
         ) { [weak self] notification in
+            print("📅 Watch: scheduleDidUpdate notification alındı")
             Task { @MainActor in
                 await self?.handleScheduleUpdate(notification.userInfo)
             }
@@ -97,6 +100,7 @@ class WatchMainViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] notification in
+            print("📦 Watch: scheduleDataBatchReceived notification alındı")
             Task { @MainActor in
                 await self?.handleScheduleDataBatch(notification.userInfo)
             }
@@ -108,8 +112,23 @@ class WatchMainViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] notification in
+            print("📶 Watch: watchConnectivityStatusChanged notification alındı")
             self?.handleConnectivityStatusChange(notification.userInfo)
         }
+        
+        // Schedule activated notification'ı da dinle (iOS'tan gelen direkt aktivasyon)
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("scheduleActivated"),
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            print("🎯 Watch: scheduleActivated notification alındı")
+            Task { @MainActor in
+                await self?.handleScheduleUpdate(notification.userInfo)
+            }
+        }
+        
+        print("✅ Watch: Tüm connectivity listeners kuruldu")
     }
     
     // MARK: - Data Loading Methods
@@ -118,18 +137,20 @@ class WatchMainViewModel: ObservableObject {
     private func loadActiveSchedule() async {
         // Repository kontrolü
         guard let repository = sharedRepository else {
-            print("⚠️ SharedRepository henüz configure edilmedi, mock data kullanılıyor")
+            print("⚠️ SharedRepository henüz configure edilmedi, Watch connectivity ile sync bekleniyor")
             await MainActor.run {
-                loadMockData()
+                currentStatusMessage = L("waiting_for_connection", table: "ViewModels")
+                requestDataSync() // iOS'tan data sync isteiği gönder
             }
             return
         }
         
         // ModelContext kontrolü
         guard repository.getModelContext() != nil else {
-            print("⚠️ SharedRepository'de ModelContext bulunamadı, mock data kullanılıyor")
+            print("⚠️ SharedRepository'de ModelContext bulunamadı, Watch connectivity ile sync bekleniyor")
             await MainActor.run {
-                loadMockData()
+                currentStatusMessage = L("waiting_for_connection", table: "ViewModels")
+                requestDataSync() // iOS'tan data sync isteiği gönder
             }
             return
         }
@@ -143,34 +164,44 @@ class WatchMainViewModel: ObservableObject {
             if let activeSchedule = try repository.getActiveSchedule() {
                 await MainActor.run {
                     currentSchedule = activeSchedule
-                    print("✅ Aktif schedule yüklendi: \(activeSchedule.name)")
-                    currentStatusMessage = "Schedule: \(activeSchedule.name)"
+                    print("✅ Watch: Aktif schedule yüklendi: \(activeSchedule.name)")
+                    currentStatusMessage = "📱 \(activeSchedule.name)"
                     calculateNextSleepTime()
                 }
             } else {
-                // Aktif schedule yoksa ilk schedule'ı aktif yap
+                // Aktif schedule yoksa tüm schedule'ları kontrol et
                 let allSchedules = try repository.getAllSchedules()
                 if let firstSchedule = allSchedules.first {
+                    // İlk schedule'ı aktif yap
                     try await repository.setActiveSchedule(firstSchedule.id)
                     await MainActor.run {
                         currentSchedule = firstSchedule
-                        print("✅ İlk schedule aktif yapıldı: \(firstSchedule.name)")
-                        currentStatusMessage = "Schedule: \(firstSchedule.name)"
+                        print("✅ Watch: İlk schedule aktif yapıldı: \(firstSchedule.name)")
+                        currentStatusMessage = "📱 \(firstSchedule.name)"
                         calculateNextSleepTime()
                     }
                 } else {
-                    print("⚠️ Hiç schedule bulunamadı, mock data kullanılıyor")
+                    print("⚠️ Watch: Hiç schedule bulunamadı, iOS'tan sync bekleniyor")
                     await MainActor.run {
-                        currentStatusMessage = "Program bulunamadı"
-                        loadMockData()
+                        currentStatusMessage = L("synchronizing", table: "ViewModels")
+                        // iOS'tan full data sync isteyî gönder
+                        WatchConnectivityManager.shared.requestFullDataSync()
+                        
+                        // 5 saniye sonra tekrar dene
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                            Task {
+                                await self.retryScheduleLoad()
+                            }
+                        }
                     }
                 }
             }
         } catch {
-            print("❌ Schedule yüklenirken hata: \(error.localizedDescription)")
+            print("❌ Watch: Schedule yüklenirken hata: \(error.localizedDescription)")
             await MainActor.run {
-                currentStatusMessage = "Yükleme hatası: \(error.localizedDescription)"
-                loadMockData()
+                currentStatusMessage = L("loading_error", table: "ViewModels")
+                // Hata durumunda iOS'tan sync iste
+                requestDataSync()
             }
         }
         
@@ -182,12 +213,101 @@ class WatchMainViewModel: ObservableObject {
     // MARK: - Watch Connectivity Handlers
     
     private func handleScheduleUpdate(_ userInfo: [AnyHashable: Any]?) async {
-        print("📅 Schedule güncelleme bildirimi alındı")
+        print("📅 Watch: Schedule güncelleme bildirimi alındı")
+        print("📅 Watch: UserInfo: \(String(describing: userInfo))")
+        
+        // Eğer schedule data geliyorsa, bunu parse et ve SharedRepository'ye kaydet
+        if let scheduleData = userInfo as? [String: Any] {
+            await parseAndSaveScheduleFromiOS(scheduleData)
+        }
+        
+        // Repository'den yeniden yükle
         await loadActiveSchedule()
         
         // WatchConnectivityManager'a sync başarısını bildir
-        let response = ["status": "received", "type": "scheduleUpdate"]
+        let response: [String: Any] = ["status": "received", "type": "scheduleUpdate", "timestamp": Date().timeIntervalSince1970]
         WatchConnectivityManager.shared.notifyScheduleUpdate(response)
+    }
+    
+    /// iOS'tan gelen schedule data'sını parse eder ve SharedRepository'ye kaydeder
+    private func parseAndSaveScheduleFromiOS(_ scheduleData: [String: Any]) async {
+        print("🔄 Watch: iOS schedule data parse ediliyor...")
+        
+        guard let repository = sharedRepository,
+              repository.getModelContext() != nil else {
+            print("❌ Watch: SharedRepository kullanılamıyor")
+            return
+        }
+        
+        do {
+            // Schedule bilgilerini parse et
+            guard let scheduleName = scheduleData["name"] as? String,
+                  let scheduleDescription = scheduleData["description"] as? String,
+                  let totalSleepHours = scheduleData["totalSleepHours"] as? Double,
+                  let sleepBlocksData = scheduleData["sleepBlocks"] as? [[String: Any]] else {
+                print("❌ Watch: Schedule data format hatası")
+                return
+            }
+            
+            print("📅 Watch: Schedule parse ediliyor: \(scheduleName)")
+            
+            // User'ı oluştur/al
+            let user = try await repository.createOrGetUser(
+                id: UUID(),
+                email: nil,
+                displayName: "Watch User",
+                isAnonymous: true,
+                isPremium: false
+            )
+            
+            // Mevcut aktif schedule'ı deaktive et
+            if let activeSchedule = try repository.getActiveSchedule() {
+                try await repository.updateSchedule(
+                    activeSchedule,
+                    name: activeSchedule.name,
+                    description: activeSchedule.scheduleDescription,
+                    totalSleepHours: activeSchedule.totalSleepHours,
+                    adaptationPhase: activeSchedule.adaptationPhase,
+                    isActive: false
+                )
+            }
+            
+            // Yeni schedule oluştur
+            let newSchedule = try await repository.createSchedule(
+                user: user,
+                name: scheduleName,
+                description: scheduleDescription,
+                totalSleepHours: totalSleepHours,
+                adaptationPhase: 1,
+                isActive: true
+            )
+            
+            // Sleep blocks'ları ekle
+            for blockData in sleepBlocksData {
+                guard let startTime = blockData["startTime"] as? String,
+                      let endTime = blockData["endTime"] as? String,
+                      let durationMinutes = blockData["durationMinutes"] as? Int,
+                      let isCore = blockData["isCore"] as? Bool else {
+                    continue
+                }
+                
+                let syncId = blockData["id"] as? String ?? UUID().uuidString
+                
+                _ = try await repository.createSleepBlock(
+                    schedule: newSchedule,
+                    startTime: startTime,
+                    endTime: endTime,
+                    durationMinutes: durationMinutes,
+                    isCore: isCore,
+                    syncId: syncId
+                )
+            }
+            
+            print("✅ Watch: Schedule başarıyla kaydedildi: \(scheduleName)")
+            
+        } catch {
+            print("❌ Watch: Schedule kayıt hatası: \(error.localizedDescription)")
+        }
     }
     
     private func handleScheduleDataBatch(_ userInfo: [AnyHashable: Any]?) async {
@@ -274,7 +394,7 @@ class WatchMainViewModel: ObservableObject {
     func calculateNextSleepTime() {
         guard let schedule = currentSchedule else {
             nextSleepTime = nil
-            currentStatusMessage = "Program bulunamadı"
+            currentStatusMessage = L("schedule_not_found", table: "ViewModels")
             return
         }
         
@@ -284,7 +404,7 @@ class WatchMainViewModel: ObservableObject {
         
         guard let sleepBlocks = schedule.sleepBlocks, !sleepBlocks.isEmpty else {
             nextSleepTime = nil
-            currentStatusMessage = "Uyku blokları bulunamadı"
+            currentStatusMessage = L("sleep_blocks_not_found", table: "ViewModels")
             return
         }
         
@@ -329,15 +449,15 @@ class WatchMainViewModel: ObservableObject {
             let minutes = Int(timeUntilNext) % 3600 / 60
             
             if hours > 0 {
-                currentStatusMessage = "Sonraki uyku: \(hours)s \(minutes)dk"
+                currentStatusMessage = String(format: L("next_sleep_hours_minutes", table: "ViewModels"), hours, minutes)
             } else if minutes > 0 {
-                currentStatusMessage = "Sonraki uyku: \(minutes)dk"
+                currentStatusMessage = String(format: L("next_sleep_minutes", table: "ViewModels"), minutes)
             } else {
-                currentStatusMessage = "Uyku zamanı!"
+                currentStatusMessage = L("sleep_time_now", table: "ViewModels")
             }
         } else {
             nextSleepTime = nil
-            currentStatusMessage = "Sonraki uyku bulunamadı"
+            currentStatusMessage = L("next_sleep_not_found", table: "ViewModels")
         }
     }
     
@@ -348,56 +468,44 @@ class WatchMainViewModel: ObservableObject {
         }
     }
     
-    /// Mock data yükler (fallback için)
-    func loadMockData() {
-        // Create mock sleep blocks matching the mobile app's current schedule
-        let mockBlocks = [
-            SharedSleepBlock(
-                id: UUID(),
-                schedule: nil,
-                startTime: "23:00",
-                endTime: "05:00",
-                durationMinutes: 360, // 6 hours
-                isCore: true,
-                createdAt: Date(),
-                updatedAt: Date(),
-                syncId: "mock_core"
-            ),
-            SharedSleepBlock(
-                id: UUID(),
-                schedule: nil,
-                startTime: "14:00",
-                endTime: "14:30",
-                durationMinutes: 30,
-                isCore: false,
-                createdAt: Date(),
-                updatedAt: Date(),
-                syncId: "mock_nap"
-            )
-        ]
+    /// Schedule yüklemeyi yeniden dene (retry mechanism)
+    private func retryScheduleLoad() async {
+        print("🔄 Watch: Schedule yükleme retry deneniyor...")
         
-        let mockSchedule = SharedUserSchedule(
-            id: UUID(),
-            user: nil,
-            name: "Biphasic Schedule",
-            scheduleDescription: "Ana uyku + 1 şekerleme",
-            totalSleepHours: 6.5,
-            adaptationPhase: 2,
-            createdAt: Date(),
-            updatedAt: Date(),
-            isActive: true
-        )
+        // Önce SharedRepository'den tekrar kontrol et
+        guard let repository = sharedRepository else {
+            print("⚠️ Watch: SharedRepository hala kullanılamıyor")
+            return
+        }
         
-        // Set sleep blocks manually since we can't use relationships in mock
-        mockSchedule.sleepBlocks = mockBlocks
+        do {
+            let allSchedules = try repository.getAllSchedules()
+            if let firstSchedule = allSchedules.first {
+                await MainActor.run {
+                    currentSchedule = firstSchedule
+                    print("✅ Watch: Retry ile schedule bulundu: \(firstSchedule.name)")
+                    currentStatusMessage = "📱 \(firstSchedule.name)"
+                    calculateNextSleepTime()
+                }
+            } else {
+                print("⚠️ Watch: Retry'de hala schedule bulunamadı")
+                await MainActor.run {
+                    currentStatusMessage = L("waiting_for_ios", table: "ViewModels")
+                }
+            }
+        } catch {
+            print("❌ Watch: Retry sırasında hata: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Mock data yükler (son çare fallback için - sadece geliştirme aşamasında)
+    private func loadMockDataIfNeeded() {
+        // Mock data yüklemeyi tamamen devre dışı bırak
+        print("❌ Watch: Mock data yüklemesi devre dışı bırakıldı")
+        currentStatusMessage = L("waiting_for_ios_data", table: "ViewModels")
         
-        currentSchedule = mockSchedule
-        currentStatusMessage = "Geçici veri yüklendi"
-        
-        // Calculate next sleep time based on mock data
-        calculateNextSleepTime()
-        
-        print("📱 Mock data loaded for Watch - matching mobile app schedule")
+        // Sync request gönder
+        requestDataSync()
     }
     
     // MARK: - Private Methods
@@ -461,7 +569,7 @@ class WatchMainViewModel: ObservableObject {
             // Sync başarısız olduğunda current schedule yoksa mock data kullan
             if currentSchedule == nil {
                 print("⚠️ Sync başarısız, mock data kullanılıyor")
-                loadMockData()
+                loadMockDataIfNeeded()
             }
         default:
             break
@@ -469,12 +577,15 @@ class WatchMainViewModel: ObservableObject {
     }
     
     private func loadInitialData() {
-        // İlk yükleme için repository available olana kadar mock data kullan
-        if sharedRepository == nil {
-            loadMockData()
-        } else {
-            Task {
-                await loadActiveSchedule()
+        // İlk yükleme: repository'den gerçek veri yüklemeyi dene
+        Task {
+            await loadActiveSchedule()
+            
+            // Eğer hala schedule yok ise ve debug modda isek, mock data yükle
+            if currentSchedule == nil {
+                await MainActor.run {
+                    loadMockDataIfNeeded()
+                }
             }
         }
     }

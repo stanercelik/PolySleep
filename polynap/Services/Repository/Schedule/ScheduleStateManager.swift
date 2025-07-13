@@ -89,6 +89,16 @@ final class ScheduleStateManager: BaseRepository {
             
             try save()
             
+            // Watch sync notification gönder
+            if isActive {
+                logger.debug("📡 Schedule aktivasyonu sonrası Watch sync tetikleniyor")
+                NotificationCenter.default.post(
+                    name: Notification.Name("ScheduleDidChange"),
+                    object: nil,
+                    userInfo: ["scheduleId": scheduleEntityToUpdate.id.uuidString]
+                )
+            }
+            
         } catch {
             logger.error("❌ Program aktiflik durumu güncellenirken hata: \(error.localizedDescription)")
             throw RepositoryError.updateFailed

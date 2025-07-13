@@ -97,48 +97,82 @@ public struct SleepBlock: Codable, Identifiable, Equatable {
 public struct LocalizedDescription: Codable, Equatable {
     public let en: String
     public let tr: String
-    public let ja: String?
-    public let de: String?
+    public let ja: String
+    public let de: String
+    public let ms: String
+    public let th: String
 
-    public init(en: String, tr: String, ja: String? = nil, de: String? = nil) {
+    public init(en: String, tr: String, ja: String, de: String, ms: String, th: String) {
         self.en = en
         self.tr = tr
         self.ja = ja
         self.de = de
+        self.ms = ms
+        self.th = th
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         en = try container.decode(String.self, forKey: .en)
         tr = try container.decode(String.self, forKey: .tr)
-        ja = try container.decodeIfPresent(String.self, forKey: .ja)
-        de = try container.decodeIfPresent(String.self, forKey: .de)
+        ja = try container.decode(String.self, forKey: .ja)
+        de = try container.decode(String.self, forKey: .de)
+        ms = try container.decode(String.self, forKey: .ms)
+        th = try container.decode(String.self, forKey: .th)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(en, forKey: .en)
         try container.encode(tr, forKey: .tr)
-        try container.encodeIfPresent(ja, forKey: .ja)
-        try container.encodeIfPresent(de, forKey: .de)
+        try container.encode(ja, forKey: .ja)
+        try container.encode(de, forKey: .de)
+        try container.encode(ms, forKey: .ms)
+        try container.encode(th, forKey: .th)
     }
     
     private enum CodingKeys: String, CodingKey {
-        case en, tr, ja, de
+        case en, tr, ja, de, ms, th
     }
     
     public func localized(for language: String = "en") -> String {
+        print("🔍 LocalizedDescription.localized - Requested language: '\(language)'")
+        print("🔍 Available descriptions: en='\(en.prefix(50))...', tr='\(tr.prefix(50))...', ja='\(ja.prefix(50))...', de='\(de.prefix(50))...', ms='\(ms.prefix(50))...', th='\(th.prefix(50))...'")
+        
+        let result: String
         switch language {
         case "tr":
-            return tr
+            result = tr
+            print("🔍 Using Turkish description: '\(result.prefix(100))...'")
         case "ja":
-            return ja ?? en
+            result = ja
+            print("🔍 Using Japanese description: '\(result.prefix(100))...'")
         case "de":
-            return de ?? en
+            result = de
+            print("🔍 Using German description: '\(result.prefix(100))...'")
+        case "ms":
+            result = ms
+            print("🔍 Using Malay description: '\(result.prefix(100))...'")
+        case "th":
+            result = th
+            print("🔍 Using Thai description: '\(result.prefix(100))...'")
         default:
-            return en
+            result = en
+            print("🔍 Falling back to English description: '\(result.prefix(100))...'")
         }
+        
+        return result
     }
+    
+    /// Default fallback description when JSON loading fails
+    public static let defaultFallback = LocalizedDescription(
+        en: "Traditional single sleep period during the night",
+        tr: "Geleneksel tek parça gece uykusu",
+        ja: "夜の単一睡眠期間",
+        de: "Traditionelle einstündige Schlafperiode während der Nacht",
+        ms: "Tempoh tidur tunggal tradisional pada waktu malam",
+        th: "ช่วงการนอนครั้งเดียวแบบดั้งเดิมในเวลากลางคืน"
+    )
 }
 
 /// Represents a complete sleep schedule with all its properties

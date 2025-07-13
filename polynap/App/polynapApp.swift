@@ -6,6 +6,7 @@ import UserNotifications
 import RevenueCat
 import FirebaseCore
 import FirebaseAnalytics
+import PolyNapShared
 
 // Uygulama içi iletişim için özel bildirim adları
 extension Notification.Name {
@@ -256,6 +257,7 @@ struct polynapApp: App {
     @StateObject private var revenueCatManager = RevenueCatManager.shared
     @StateObject private var paywallManager = PaywallManager.shared
     @StateObject private var analyticsManager = AnalyticsManager.shared
+    @StateObject private var watchSyncBridge = WatchSyncBridge.shared
     // DEĞİŞİKLİK: AlarmManager artık singleton olarak kullanılıyor
     // @StateObject private var alarmManager = AlarmManager() // KALDIRILDI
     
@@ -293,6 +295,9 @@ struct polynapApp: App {
             let context = modelContainer.mainContext
             Repository.shared.setModelContext(context)
             
+            // SharedRepository'yi de configure et
+            SharedRepository.shared.setModelContext(context)
+            
             print("SwiftData başarıyla yapılandırıldı")
             
             Task {
@@ -318,6 +323,7 @@ struct polynapApp: App {
                 .environmentObject(revenueCatManager)
                 .environmentObject(paywallManager)
                 .environmentObject(analyticsManager)
+                .environmentObject(watchSyncBridge)
                 // YENİ: Singleton AlarmManager.shared kullanımı
                 .environmentObject(AlarmManager.shared)
                 .withLanguageEnvironment()
@@ -326,6 +332,11 @@ struct polynapApp: App {
                     // YENİ: ModelContext'i singleton AlarmManager'a ver
                     AlarmManager.shared.setModelContext(modelContainer.mainContext)
                     print("📱 polynapApp: AlarmManager ModelContext ayarlandı")
+                    
+                    // WatchSyncBridge'i configure et
+                    watchSyncBridge.configureModelContext(modelContainer.mainContext)
+                    watchSyncBridge.enableSync()
+                    print("📱 polynapApp: WatchSyncBridge başlatıldı")
                     
                     // 📊 Analytics: App açılış event'ı
                     analyticsManager.logAppOpen()

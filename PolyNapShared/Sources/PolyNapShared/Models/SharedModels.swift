@@ -211,7 +211,25 @@ public final class SharedSleepEntry {
         self.rating = rating
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        self.syncId = syncId
+        self.syncId = syncId ?? UUID().uuidString
+    }
+    
+    /// Watch connectivity için dictionary formatına çevirir
+    public var dictionary: [String: Any] {
+        return [
+            "id": id.uuidString,
+            "date": date.timeIntervalSince1970,
+            "startTime": startTime.timeIntervalSince1970,
+            "endTime": endTime.timeIntervalSince1970,
+            "durationMinutes": durationMinutes,
+            "isCore": isCore,
+            "blockId": blockId ?? "",
+            "emoji": emoji ?? "",
+            "rating": rating,
+            "createdAt": createdAt.timeIntervalSince1970,
+            "updatedAt": updatedAt.timeIntervalSince1970,
+            "syncId": syncId ?? ""
+        ]
     }
 }
 

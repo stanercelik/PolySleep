@@ -1,0 +1,1360 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "adaptation_phase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsphase"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation Phase"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応段階"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fasa Adaptasi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะการปรับตัว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyum Fazı"
+          }
+        }
+      }
+    },
+    "adaptation_started" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmanpassung hat begonnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule adaptation has started"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プログラム適応が始まりました"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasi program telah bermula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การปรับตัวของโปรแกรมเริ่มแล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program adaptasyonu başladı"
+          }
+        }
+      }
+    },
+    "adaptation_starting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsprozess beginnt..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptation process starting..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応プロセスが開始されています..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proses adaptasi bermula..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กระบวนการปรับตัวกำลังเริ่มต้น..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon süreci başlıyor..."
+          }
+        }
+      }
+    },
+    "beginning_phase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anfangsphase"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginning Phase"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始段階"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fasa Permulaan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระยะเริ่มต้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlangıç Fazı"
+          }
+        }
+      }
+    },
+    "body_adapting_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Körper beginnt sich an den neuen Schlafrhythmus zu gewöhnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body is starting to adapt to the new sleep pattern"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "体が新しい睡眠パターンに慣れ始めています"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Badan mula menyesuaikan diri dengan corak tidur baharu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ร่างกายเริ่มปรับตัวกับรูปแบบการนอนใหม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vücut yeni uyku düzenine alışmaya başlıyor"
+          }
+        }
+      }
+    },
+    "loading_adaptation_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassungsdaten werden geladen..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading adaptation data..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適応データを読み込み中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan data adaptasi..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดข้อมูลการปรับตัว..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptasyon verisi yükleniyor..."
+          }
+        }
+      }
+    },
+    "loading_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Ladefehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Loading error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 読み込みエラー"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Ralat memuatkan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ ข้อผิดพลาดในการโหลด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Yükleme hatası"
+          }
+        }
+      }
+    },
+    "next_sleep_hours_minutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächster Schlaf: %llds %lldmin"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next sleep: %lldh %lldmin"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の睡眠: %lld時間%lld分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur seterusnya: %lldj %lldmin"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนครั้งต่อไป: %lldชม. %lldนาที"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonraki uyku: %llds %llddk"
+          }
+        }
+      }
+    },
+    "next_sleep_minutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächster Schlaf: %lldmin"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next sleep: %lldmin"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の睡眠: %lld分"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur seterusnya: %lldmin"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนครั้งต่อไป: %lldนาที"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonraki uyku: %llddk"
+          }
+        }
+      }
+    },
+    "next_sleep_not_found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächster Schlaf nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next sleep not found"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の睡眠が見つかりません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur seterusnya tidak ditemui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบการนอนครั้งต่อไป"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonraki uyku bulunamadı"
+          }
+        }
+      }
+    },
+    "quality_average" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnittlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sederhana"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปานกลาง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orta"
+          }
+        }
+      }
+    },
+    "quality_bad" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlecht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "悪い"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kötü"
+          }
+        }
+      }
+    },
+    "quality_excellent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgezeichnet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excellent"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "優秀"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cemerlang"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยอดเยี่ยม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mükemmel"
+          }
+        }
+      }
+    },
+    "quality_good" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gut"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "良い"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baik"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดี"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İyi"
+          }
+        }
+      }
+    },
+    "quality_very_bad" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sehr schlecht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very Bad"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "とても悪い"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sangat Buruk"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แย่มาก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çok Kötü"
+          }
+        }
+      }
+    },
+    "save_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Speicherfehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Save error"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ 保存エラー"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Ralat menyimpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ ข้อผิดพลาดในการบันทึก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❌ Kayıt hatası"
+          }
+        }
+      }
+    },
+    "schedule_loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm wird geladen..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading schedule..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュールを読み込み中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuatkan jadual..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังโหลดตารางเวลา..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program yükleniyor..."
+          }
+        }
+      }
+    },
+    "schedule_not_found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule not found"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュールが見つかりません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jadual tidak ditemui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบตารางเวลา"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program bulunamadı"
+          }
+        }
+      }
+    },
+    "sleep_blocks_not_found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafblöcke nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep blocks not found"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠ブロックが見つかりません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blok tidur tidak ditemui"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบช่วงการนอน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku blokları bulunamadı"
+          }
+        }
+      }
+    },
+    "sleep_entry_saved" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Schlafqualität gespeichert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Sleep quality saved"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ 睡眠の質が保存されました"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Kualiti tidur disimpan"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ คุณภาพการนอนถูกบันทึกแล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ Uyku kalitesi kaydedildi"
+          }
+        }
+      }
+    },
+    "sleep_time_now" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlafzeit!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep time!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睡眠時間です！"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masa tidur!"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถึงเวลานอน!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uyku zamanı!"
+          }
+        }
+      }
+    },
+    "synchronizing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Synchronisierung..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Synchronizing..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 同期中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Menyegerakkan..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 กำลังซิงค์..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Senkronize ediliyor..."
+          }
+        }
+      }
+    },
+    "waiting_for_connection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warten auf Verbindung..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for connection..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続を待機中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menunggu sambungan..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รอการเชื่อมต่อ..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bağlantı bekleniyor..."
+          }
+        }
+      }
+    },
+    "waiting_for_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten werden erwartet..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for data..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データを待機中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menunggu data..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รอข้อมูล..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veri bekleniyor..."
+          }
+        }
+      }
+    },
+    "waiting_for_ios" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Warten auf iOS..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Waiting for iOS..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 iOSを待機中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Menunggu iOS..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 รอ iOS..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 iOS'tan bekleniyor..."
+          }
+        }
+      }
+    },
+    "waiting_for_ios_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Warten auf iOS-Daten..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Waiting for iOS data..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 iOSデータを待機中..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 Menunggu data iOS..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 รอข้อมูล iOS..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "📱 iOS'tan data bekleniyor..."
+          }
+        }
+      }
+    }
+  },
+  "watch.loading" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Wird geladen..."
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Loading..."
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "読み込み中..."
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Memuatkan..."
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "กำลังโหลด..."
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Yükleniyor..."
+        }
+      }
+    }
+  },
+  "watch.sleep.next" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Nächster Schlaf"
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Next Sleep"
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "次の睡眠"
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Tidur Seterusnya"
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "การนอนครั้งต่อไป"
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Sonraki Uyku"
+        }
+      }
+    }
+  },
+  "watch.sleep.quality" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Schlafqualität"
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Sleep Quality"
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "睡眠の質"
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Kualiti Tidur"
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "คุณภาพการนอน"
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Uyku Kalitesi"
+        }
+      }
+    }
+  },
+  "watch.sleep.start" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Schlaf starten"
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Start Sleep"
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "睡眠開始"
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Mula Tidur"
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "เริ่มการนอน"
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Uyku Başlat"
+        }
+      }
+    }
+  },
+  "watch.sleep.stop" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Schlaf beenden"
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "End Sleep"
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "睡眠終了"
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Tamatkan Tidur"
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "สิ้นสุดการนอน"
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Uyku Bitir"
+        }
+      }
+    }
+  },
+  "watch.hoursTotal.suffix" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "h insgesamt"
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "h total"
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "時間の合計"
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "j jumlah"
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "ชม. รวม"
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "s toplam"
+        }
+      }
+    }
+  },
+  "watch.schedule.loading" : {
+    "extractionState" : "manual",
+    "localizations" : {
+      "de" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Programm wird geladen..."
+        }
+      },
+      "en" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Loading Schedule..."
+        }
+      },
+      "ja" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "スケジュール読み込み中..."
+        }
+      },
+      "ms" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Memuatkan Jadual..."
+        }
+      },
+      "th" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "กำลังโหลดตารางเวลา..."
+        }
+      },
+      "tr" : {
+        "stringUnit" : {
+          "state" : "translated",
+          "value" : "Program Yükleniyor..."
+        }
+      }
+    }
+  }
+},
+  "version" : "1.0"
+}

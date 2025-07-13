@@ -14,7 +14,7 @@ final class SleepScheduleStore {
     init(scheduleId: String, 
          selectedDate: Date = Date(),
          name: String = "",
-         scheduleDescription: LocalizedDescription = LocalizedDescription(en: "", tr: ""),
+         scheduleDescription: LocalizedDescription = LocalizedDescription(en: "", tr: "", ja: "", de: "", ms: "", th: ""),
          totalSleepHours: Double = 0.0,
          schedule: [SleepBlock] = [],
          isPremium: Bool = false) {

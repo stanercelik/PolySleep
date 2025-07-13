@@ -108,7 +108,7 @@ struct ProfileHeaderCard: View {
         VStack(alignment: .leading, spacing: PSSpacing.xs) {
             if let user = authManager.currentUser {
                 HStack(alignment: .firstTextBaseline, spacing: PSSpacing.sm) { // İsim ve Düzenle ikonu için
-                    let displayName = user.displayName.isEmpty ? L("profile.user.local", table: "Profile") : user.displayName
+                    let displayName = user.displayName.isEmpty ? L("profile.user.localAccount", table: "Profile") : user.displayName
                     Text(displayName)
                         .font(dynamicDisplayNameFont(forName: displayName))
                         .foregroundColor(.appText)

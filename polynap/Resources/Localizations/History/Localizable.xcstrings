@@ -366,6 +366,7 @@
       }
     },
     "⏰ Ertele (5dk)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -388,6 +389,7 @@
       }
     },
     "⏰ UYKU ALARMI" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -410,6 +412,7 @@
       }
     },
     "⏹️ Kapat" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -454,6 +457,7 @@
       }
     },
     "🎬 1 film izlemek" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -476,6 +480,7 @@
       }
     },
     "📚 75 sayfa kitap okumak" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -520,6 +525,7 @@
       }
     },
     "🚶‍♂️ 12.5 km yürümek" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -718,6 +724,7 @@
       }
     },
     "Ana Uyku: 75%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -762,6 +769,7 @@
       }
     },
     "Bildirim izni olmadığı için bu uyarı gösteriliyor" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -872,6 +880,7 @@
       }
     },
     "Değişkenlik: 25 Puan" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1004,6 +1013,7 @@
       }
     },
     "Harika bir uyku rutininiz var!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1114,6 +1124,7 @@
       }
     },
     "Kazanılan Zaman" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2082,6 +2093,7 @@
       }
     },
     "Puan" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2126,6 +2138,7 @@
       }
     },
     "saat" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2170,6 +2183,7 @@
       }
     },
     "Şekerleme 1: 20%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2192,6 +2206,7 @@
       }
     },
     "Şekerleme 2: 5%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2390,6 +2405,7 @@
       }
     },
     "Uyku bloğunuz sona erdi!\nUyanma zamanı!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ms" : {
           "stringUnit" : {
@@ -2406,6 +2422,7 @@
       }
     },
     "Uyku Dağılımı" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2428,6 +2445,7 @@
       }
     },
     "Uyku Kalitesi Dağılımı" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2450,6 +2468,7 @@
       }
     },
     "Uyku Tutarlılığı" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

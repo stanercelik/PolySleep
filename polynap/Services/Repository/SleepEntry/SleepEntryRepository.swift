@@ -37,6 +37,19 @@ final class SleepEntryRepository: BaseRepository {
             try insert(entry)
             try save()
             logger.debug("✅ Uyku girdisi başarıyla kaydedildi, ID: \(entry.id.uuidString)")
+            
+            // Watch sync notification gönder
+            logger.debug("📡 Sleep entry ekleme sonrası Watch sync tetikleniyor")
+            NotificationCenter.default.post(
+                name: .sleepEntryDidAdd,
+                object: nil,
+                userInfo: [
+                    "entryId": entry.id.uuidString,
+                    "blockId": blockId,
+                    "rating": rating,
+                    "emoji": emoji
+                ]
+            )
         } catch {
             logger.error("❌ Uyku girdisi kaydedilirken hata: \(error.localizedDescription)")
             throw RepositoryError.saveFailed

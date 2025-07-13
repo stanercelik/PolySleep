@@ -7,6 +7,19 @@ enum SortOption: String, CaseIterable {
     case oldestFirst = "Oldest First"
     case highestRated = "Highest Rated"
     case lowestRated = "Lowest Rated"
+    
+    var localizedTitle: String {
+        switch self {
+        case .newestFirst:
+            return LanguageManager.shared.localizedString("history.sort.newestFirst", tableName: "History", fallback: "Newest First")
+        case .oldestFirst:
+            return LanguageManager.shared.localizedString("history.sort.oldestFirst", tableName: "History", fallback: "Oldest First")
+        case .highestRated:
+            return LanguageManager.shared.localizedString("history.sort.highestRated", tableName: "History", fallback: "Highest Rated")
+        case .lowestRated:
+            return LanguageManager.shared.localizedString("history.sort.lowestRated", tableName: "History", fallback: "Lowest Rated")
+        }
+    }
 }
 
 enum CompletionStatus: Int, Codable {
@@ -28,11 +41,11 @@ enum CompletionStatus: Int, Codable {
     var localizedTitle: String {
         switch self {
         case .completed:
-            return NSLocalizedString("history.status.completed", tableName: "History", comment: "")
+            return LanguageManager.shared.localizedString("history.status.completed", tableName: "History")
         case .partial:
-            return NSLocalizedString("history.status.partial", tableName: "History", comment: "")
+            return LanguageManager.shared.localizedString("history.status.partial", tableName: "History")
         case .missed:
-            return NSLocalizedString("history.status.missed", tableName: "History", comment: "")
+            return LanguageManager.shared.localizedString("history.status.missed", tableName: "History")
         }
     }
 }

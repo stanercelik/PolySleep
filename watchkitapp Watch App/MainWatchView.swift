@@ -16,7 +16,7 @@ struct MainWatchView: View {
             CurrentScheduleView(viewModel: mainViewModel)
                 .tabItem {
                     Image(systemName: "moon.fill")
-                    Text("Program")
+                    Text(L("watch.tab.schedule", table: "Watch"))
                 }
                 .tag(0)
             
@@ -24,7 +24,7 @@ struct MainWatchView: View {
             AdaptationProgressView(viewModel: adaptationViewModel)
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text("Adaptasyon")
+                    Text(L("watch.tab.adaptation", table: "Watch"))
                 }
                 .tag(1)
             
@@ -36,7 +36,7 @@ struct MainWatchView: View {
             )
                 .tabItem {
                     Image(systemName: "plus.circle.fill")
-                    Text("Giriş")
+                    Text(L("watch.tab.entry", table: "Watch"))
                 }
                 .tag(2)
         }
@@ -49,6 +49,8 @@ struct MainWatchView: View {
             
             // ViewModels'i configure et
             mainViewModel.configureSharedRepository(with: modelContext)
+            sleepEntryViewModel.configureRepository(SharedRepository.shared)
+            adaptationViewModel.configureRepository(SharedRepository.shared)
             
             // İlk data sync
             mainViewModel.requestDataSync()

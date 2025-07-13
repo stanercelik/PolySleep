@@ -19,15 +19,16 @@ class SleepEntryViewModel: ObservableObject {
     // Quality rating
     @Published var qualityEmojis: [String] = ["😩", "😪", "😐", "😊", "🤩"]
     @Published var qualityDescriptions: [String] = [
-        "Çok Kötü",
-        "Kötü", 
-        "Orta",
-        "İyi",
-        "Mükemmel"
+        L("quality_very_bad", table: "ViewModels"),
+        L("quality_bad", table: "ViewModels"),
+        L("quality_average", table: "ViewModels"),
+        L("quality_good", table: "ViewModels"),
+        L("quality_excellent", table: "ViewModels")
     ]
     
     // MARK: - Private Properties
     private let watchConnectivity = WatchConnectivityManager.shared
+    private var sharedRepository: SharedRepository?
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Computed Properties
@@ -47,9 +48,16 @@ class SleepEntryViewModel: ObservableObject {
     
     // MARK: - Initialization
     init() {
+        self.sharedRepository = SharedRepository.shared
         setupConnectivityObservers()
         loadInitialData()
         setupQualityObserver()
+    }
+    
+    // MARK: - Configuration
+    func configureRepository(_ repository: SharedRepository) {
+        self.sharedRepository = repository
+        loadRecentEntries()
     }
     
     // MARK: - Public Methods
@@ -159,44 +167,72 @@ class SleepEntryViewModel: ObservableObject {
     
     private func saveEntryToStorage(_ entry: SharedSleepEntry) async {
         do {
-            // Try to save to repository
-            // For Milestone 2.2, we'll use mock behavior
-            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
-            
-            // Add to recent entries
-            recentEntries.insert(entry, at: 0)
-            
-            // Keep only last 10 entries
-            if recentEntries.count > 10 {
-                recentEntries.removeLast()
+            // Try to save to SharedRepository if available
+            if let repository = sharedRepository,
+               repository.getModelContext() != nil {
+                
+                // Create a user if doesn't exist
+                let user = try await repository.createOrGetUser(
+                    id: UUID(),
+                    isAnonymous: true
+                )
+                
+                // Save to SharedRepository
+                let savedEntry = try await repository.createSleepEntry(
+                    user: user,
+                    date: entry.date,
+                    startTime: entry.startTime,
+                    endTime: entry.endTime,
+                    durationMinutes: entry.durationMinutes,
+                    isCore: entry.isCore,
+                    blockId: entry.blockId,
+                    emoji: entry.emoji,
+                    rating: entry.rating,
+                    syncId: entry.syncId
+                )
+                
+                print("✅ Watch: Sleep entry saved to SharedRepository: \(savedEntry.rating) stars")
+                
+                // Update local recent entries
+                await MainActor.run {
+                    recentEntries.insert(savedEntry, at: 0)
+                    if recentEntries.count > 10 {
+                        recentEntries.removeLast()
+                    }
+                }
+            } else {
+                print("⚠️ Watch: SharedRepository not available, saving locally only")
+                // Add to recent entries for local display
+                await MainActor.run {
+                    recentEntries.insert(entry, at: 0)
+                    if recentEntries.count > 10 {
+                        recentEntries.removeLast()
+                    }
+                }
             }
             
             // Update UI
             await MainActor.run {
                 self.isSaving = false
                 self.lastSaveDate = Date()
-                self.saveMessage = "Kayıt başarıyla eklendi"
+                self.saveMessage = L("sleep_entry_saved", table: "ViewModels")
                 self.showSaveConfirmation = true
             }
             
             // Send to iPhone via WatchConnectivity
-            let message = WatchMessage(
-                type: .sleepEnded,
-                data: entry.dictionary
-            )
-            watchConnectivity.sendMessage(message)
+            watchConnectivity.notifySleepEntryAdded(entry.dictionary)
             
             // Hide confirmation after delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
                 self?.showSaveConfirmation = false
             }
             
-            print("💾 Sleep entry saved successfully: \(entry.rating) stars")
+            print("💾 Watch: Sleep entry processed successfully: \(entry.rating) stars")
             
         } catch {
             await MainActor.run {
                 self.isSaving = false
-                self.saveMessage = "Kayıt hatası: \(error.localizedDescription)"
+                self.saveMessage = L("save_error", table: "ViewModels")
                 self.showSaveConfirmation = true
             }
             

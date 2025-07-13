@@ -32,9 +32,16 @@ struct SleepScheduleDescriptionCard: View {
                     }
                 }
                 HStack(spacing: 8) {
-                    Text(schedule.description.localized(for: LanguageManager.shared.currentLanguage))
+                    let currentLang = LanguageManager.shared.currentLanguage
+                    let localizedDesc = schedule.description.localized(for: currentLang)
+                    
+                    Text(localizedDesc)
                         .font(.body)
                         .foregroundColor(Color.appTextSecondary)
+                        .onAppear {
+                            print("🔍 SleepScheduleDescriptionCard - Schedule ID: '\(schedule.id)', Current Language: '\(currentLang)'")
+                            print("🔍 SleepScheduleDescriptionCard - Final description: '\(localizedDesc.prefix(100))...'")
+                        }
                     Spacer()
                 }
                 ScheduleDetails(schedule: schedule)
@@ -113,32 +120,4 @@ struct ScheduleInfoRow: View {
                 .foregroundColor(Color.appTextSecondary)
         }
     }
-}
-
-// MARK: - Preview
-
-#Preview {
-    let schedule = SleepScheduleModel(
-        id: "monophasic",
-        name: "Monophasic",
-        description: LocalizedDescription(
-            en: "Traditional single sleep period during the night",
-            tr: "Tek parça gece uykusu"
-        ),
-        totalSleepHours: 8.0,
-        schedule: [
-            SleepBlock(
-                startTime: "23:00",
-                duration: 480,
-                type: "core",
-                isCore: true
-            )
-        ]
-    )
-    
-    SleepScheduleDescriptionCard(
-        schedule: schedule,
-        isRecommended: true,
-        selectedSchedule: .constant(schedule)
-    )
 }

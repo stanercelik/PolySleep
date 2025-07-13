@@ -34,12 +34,14 @@ struct DayDetailView: View {
     var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
+        formatter.locale = languageManager.currentLocale
         return formatter.string(from: viewModel.selectedDay ?? Date())
     }
     
     var dayOfWeek: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE"
+        formatter.locale = languageManager.currentLocale
         return formatter.string(from: viewModel.selectedDay ?? Date())
     }
     
