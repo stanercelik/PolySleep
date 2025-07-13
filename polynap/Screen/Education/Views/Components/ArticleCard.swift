@@ -166,7 +166,7 @@ struct ArticleCardButtonStyle: ButtonStyle {
                     titleKey: "education.article.risks.title",
                     summaryKey: "education.article.risks.summary",
                     contentKey: "education.article.risks.content",
-                    category: .risks,
+                    category: .adaptation,
                     readTimeMinutes: 8,
                     difficulty: .intermediate
                 ),

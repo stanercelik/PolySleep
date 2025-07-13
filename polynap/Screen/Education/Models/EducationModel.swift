@@ -7,7 +7,6 @@ enum EducationCategory: String, CaseIterable, Identifiable {
     case schedules = "schedules" 
     case adaptation = "adaptation"
     case myths = "myths"
-    case risks = "risks"
     case preparation = "preparation"
     case faq = "faq"
     
@@ -23,8 +22,6 @@ enum EducationCategory: String, CaseIterable, Identifiable {
             return L("education.categories.adaptation", table: "Education")
         case .myths:
             return L("education.categories.myths", table: "Education")
-        case .risks:
-            return L("education.categories.risks", table: "Education")
         case .preparation:
             return L("education.categories.preparation", table: "Education")
         case .faq:
@@ -42,8 +39,6 @@ enum EducationCategory: String, CaseIterable, Identifiable {
             return "chart.line.uptrend.xyaxis"
         case .myths:
             return "questionmark.bubble.fill"
-        case .risks:
-            return "exclamationmark.triangle.fill"
         case .preparation:
             return "checklist"
         case .faq:
@@ -61,12 +56,10 @@ enum EducationCategory: String, CaseIterable, Identifiable {
             return .purple
         case .myths:
             return .orange
-        case .risks:
-            return .red
         case .preparation:
             return .cyan
         case .faq:
-            return .teal
+            return .red
         }
     }
 }
@@ -183,6 +176,14 @@ class EducationContentProvider: ObservableObject {
             contentKey: "education.article.famousPeople.content",
             category: EducationCategory.basics,
             readTimeMinutes: 4,
+            difficulty: nil
+        ),
+        EducationArticle(
+            titleKey: "education.article.benefits.title",
+            summaryKey: "education.article.benefits.summary",
+            contentKey: "education.article.benefits.content",
+            category: EducationCategory.basics,
+            readTimeMinutes: 6,
             difficulty: nil
         ),
         
@@ -336,47 +337,6 @@ class EducationContentProvider: ObservableObject {
             difficulty: nil
         ),
         
-        // MARK: - Bölüm 5: Avantajlar ve Riskler
-        EducationArticle(
-            titleKey: "education.article.benefits.title",
-            summaryKey: "education.article.benefits.summary",
-            contentKey: "education.article.benefits.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 6,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.healthRisks.title",
-            summaryKey: "education.article.healthRisks.summary",
-            contentKey: "education.article.healthRisks.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 8,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.cognitiveEffects.title",
-            summaryKey: "education.article.cognitiveEffects.summary",
-            contentKey: "education.article.cognitiveEffects.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 6,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.socialPsychRisks.title",
-            summaryKey: "education.article.socialPsychRisks.summary",
-            contentKey: "education.article.socialPsychRisks.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 5,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.safetyRisks.title",
-            summaryKey: "education.article.safetyRisks.summary",
-            contentKey: "education.article.safetyRisks.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 4,
-            difficulty: nil
-        ),
         
         // MARK: - Bölüm 6: Hazırlık
         EducationArticle(
@@ -428,47 +388,6 @@ class EducationContentProvider: ObservableObject {
             difficulty: nil
         ),
         
-        // MARK: - Bölüm 7: Bilimsel Bakış ve Güvenlik
-        EducationArticle(
-            titleKey: "education.article.scientificResearch.title",
-            summaryKey: "education.article.scientificResearch.summary",
-            contentKey: "education.article.scientificResearch.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 8,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.riskGroups.title",
-            summaryKey: "education.article.riskGroups.summary",
-            contentKey: "education.article.riskGroups.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 6,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.alternatives.title",
-            summaryKey: "education.article.alternatives.summary",
-            contentKey: "education.article.alternatives.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 5,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.warningSignals.title",
-            summaryKey: "education.article.warningSignals.summary",
-            contentKey: "education.article.warningSignals.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 4,
-            difficulty: nil
-        ),
-        EducationArticle(
-            titleKey: "education.article.legalDisclaimer.title",
-            summaryKey: "education.article.legalDisclaimer.summary",
-            contentKey: "education.article.legalDisclaimer.content",
-            category: EducationCategory.risks,
-            readTimeMinutes: 3,
-            difficulty: nil
-        )
     ]
     
     // MARK: - FAQ Items

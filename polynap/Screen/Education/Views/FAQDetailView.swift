@@ -40,7 +40,7 @@ struct FAQDetailView: View {
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.appPrimary)
                 
-                Text(L("faq_section", table: "Education"))
+                Text(L("education.faq_section", table: "Education"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.appPrimary)

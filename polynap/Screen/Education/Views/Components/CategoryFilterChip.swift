@@ -61,13 +61,6 @@ struct CategoryFilterChip: View {
             isSelected: false,
             category: .basics
         ) { }
-        
-        CategoryFilterChip(
-            title: "Risks",
-            icon: "exclamationmark.triangle.fill",
-            isSelected: false,
-            category: .risks
-        ) { }
     }
     .padding()
 } 
