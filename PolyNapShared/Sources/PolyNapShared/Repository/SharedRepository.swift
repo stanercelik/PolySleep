@@ -5,6 +5,7 @@ import OSLog
 
 /// Ana Shared Repository hub'ı - Tüm shared repository modüllerini koordine eder
 /// iOS ve watchOS platformları arasında ortak data access katmanı sağlar
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @MainActor
 public class SharedRepository: ObservableObject {
     public static let shared = SharedRepository()

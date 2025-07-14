@@ -10,6 +10,6 @@ public func L(_ key: String, tableName: String? = nil, fallback: String? = nil) 
 }
 
 /// Table-specific helper for better organization
-public func L(_ key: String, table: String, fallback: String? = nil) -> String {
+public func LTable(_ key: String, table: String, fallback: String? = nil) -> String {
     return L(key, tableName: table, fallback: fallback)
 }

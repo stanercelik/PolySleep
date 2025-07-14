@@ -12,7 +12,7 @@ import WatchKit
 #endif
 
 // MARK: - Notification Extensions
-extension Notification.Name {
+public extension Notification.Name {
     static let sleepDidStart = Notification.Name("sleepDidStart")
     static let sleepDidEnd = Notification.Name("sleepDidEnd")
     static let sleepQualityDidRate = Notification.Name("sleepQualityDidRate")
@@ -49,15 +49,36 @@ public struct CodableDictionary: Codable {
     public init(_ dict: [String: Any]) {
         var stringDict: [String: String] = [:]
         for (key, value) in dict {
-            if let stringValue = value as? String {
-                stringDict[key] = stringValue
-            } else if let numberValue = value as? NSNumber {
-                stringDict[key] = numberValue.stringValue
-            } else if let boolValue = value as? Bool {
-                stringDict[key] = boolValue ? "true" : "false"
-            } else {
-                stringDict[key] = String(describing: value)
+            // Validate key - must be non-empty string
+            let trimmedKey = key.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmedKey.isEmpty else {
+                print("⚠️ WatchMessage: Skipping empty key in dictionary")
+                continue
             }
+            
+            // Convert value to string with type preservation
+            let stringValue: String
+            if let stringVal = value as? String {
+                stringValue = stringVal
+            } else if let numberValue = value as? NSNumber {
+                // Preserve number type information
+                if numberValue === kCFBooleanTrue || numberValue === kCFBooleanFalse {
+                    stringValue = numberValue.boolValue ? "true" : "false"
+                } else {
+                    stringValue = numberValue.stringValue
+                }
+            } else if let boolValue = value as? Bool {
+                stringValue = boolValue ? "true" : "false"
+            } else if let dateValue = value as? Date {
+                stringValue = String(dateValue.timeIntervalSince1970)
+            } else if let uuidValue = value as? UUID {
+                stringValue = uuidValue.uuidString
+            } else {
+                // Fallback for other types
+                stringValue = String(describing: value)
+            }
+            
+            stringDict[trimmedKey] = stringValue
         }
         self.value = stringDict
     }
@@ -111,15 +132,34 @@ public struct WatchMessage: Codable {
         ]
     }
     
-    // Dictionary'den oluşturmak için
+    // Dictionary'den oluşturmak için - improved with validation
     public static func from(dictionary: [String: Any]) -> WatchMessage? {
-        guard 
-            let typeString = dictionary["type"] as? String,
-            let type = WatchMessageType(rawValue: typeString),
-            let timestampInterval = dictionary["timestamp"] as? TimeInterval,
-            let messageIdString = dictionary["messageId"] as? String,
-            let messageId = UUID(uuidString: messageIdString)
-        else {
+        // Validate required fields
+        guard let typeString = dictionary["type"] as? String,
+              !typeString.isEmpty,
+              let type = WatchMessageType(rawValue: typeString) else {
+            print("❌ WatchMessage: Invalid or missing message type")
+            return nil
+        }
+        
+        guard let timestampInterval = dictionary["timestamp"] as? TimeInterval,
+              timestampInterval > 0 else {
+            print("❌ WatchMessage: Invalid or missing timestamp")
+            return nil
+        }
+        
+        guard let messageIdString = dictionary["messageId"] as? String,
+              !messageIdString.isEmpty,
+              let messageId = UUID(uuidString: messageIdString) else {
+            print("❌ WatchMessage: Invalid or missing messageId")
+            return nil
+        }
+        
+        // Validate timestamp range (reasonable bounds)
+        let minTimestamp = Date(timeIntervalSince1970: 946684800).timeIntervalSince1970 // 2000-01-01
+        let maxTimestamp = Date(timeIntervalSince1970: 4102444800).timeIntervalSince1970 // 2100-01-01
+        guard timestampInterval >= minTimestamp && timestampInterval <= maxTimestamp else {
+            print("❌ WatchMessage: Timestamp out of reasonable range: \(timestampInterval)")
             return nil
         }
         
@@ -128,11 +168,17 @@ public struct WatchMessage: Codable {
         if let stringDict = dictionary["data"] as? [String: String] {
             // CodableDictionary format - String to Any convert et
             for (key, value) in stringDict {
-                dataDict[key] = convertStringToAppropriateType(value)
+                let trimmedKey = key.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmedKey.isEmpty else { continue }
+                dataDict[trimmedKey] = convertStringToAppropriateType(value)
             }
         } else if let anyDict = dictionary["data"] as? [String: Any] {
-            // Direct Any dictionary format
-            dataDict = anyDict
+            // Direct Any dictionary format - validate keys
+            for (key, value) in anyDict {
+                let trimmedKey = key.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmedKey.isEmpty else { continue }
+                dataDict[trimmedKey] = value
+            }
         }
         
         var message = WatchMessage(type: type, data: dataDict)
@@ -141,18 +187,49 @@ public struct WatchMessage: Codable {
         return message
     }
     
-    // String'i uygun type'a convert eder
+    // String'i uygun type'a convert eder - improved with validation
     private static func convertStringToAppropriateType(_ value: String) -> Any {
-        // Bool check
-        if value == "true" { return true }
-        if value == "false" { return false }
+        // Trim whitespace
+        let trimmedValue = value.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // Number check
-        if let intValue = Int(value) { return intValue }
-        if let doubleValue = Double(value) { return doubleValue }
+        // Empty string check
+        guard !trimmedValue.isEmpty else { return "" }
         
-        // String olarak bırak
-        return value
+        // Bool check - more robust
+        let lowercased = trimmedValue.lowercased()
+        if lowercased == "true" || lowercased == "yes" || lowercased == "1" { return true }
+        if lowercased == "false" || lowercased == "no" || lowercased == "0" { return false }
+        
+        // Number check with validation
+        // First try Int to preserve precision for integer values
+        if let intValue = Int(trimmedValue) {
+            // Validate range for safety
+            if intValue >= Int.min && intValue <= Int.max {
+                return intValue
+            }
+        }
+        
+        // Then try Double for decimal values
+        if let doubleValue = Double(trimmedValue) {
+            // Validate for NaN and infinity
+            if doubleValue.isFinite {
+                return doubleValue
+            }
+        }
+        
+        // Date string check (ISO format or timestamp)
+        if let timestampValue = Double(trimmedValue), timestampValue > 0 {
+            // Reasonable timestamp range check (year 2000 to 2100)
+            let minTimestamp = Date(timeIntervalSince1970: 946684800).timeIntervalSince1970 // 2000-01-01
+            let maxTimestamp = Date(timeIntervalSince1970: 4102444800).timeIntervalSince1970 // 2100-01-01
+            
+            if timestampValue >= minTimestamp && timestampValue <= maxTimestamp {
+                return timestampValue
+            }
+        }
+        
+        // Return as string if no other type matches
+        return trimmedValue
     }
 }
 
@@ -176,6 +253,12 @@ public class WatchConnectivityManager: NSObject, ObservableObject {
     private var retryAttempts: Int = 0
     private let maxRetryAttempts: Int = 3
     private var retryTimer: Timer?
+    
+    // İlk senkronizasyon takibi
+    private var hasInitialSyncCompleted = false
+    private var initialSyncTimeout: Timer?
+    private let initialSyncTimeoutInterval: TimeInterval = 30.0 // 30 saniye timeout
+    private var pendingInitialDataRequest = false
     
     // MARK: - Connection Status
     public enum ConnectionStatus {
@@ -773,6 +856,9 @@ extension WatchConnectivityManager: WCSessionDelegate {
         } else {
             print("✅ WCSession başarıyla aktive edildi: \(activationState.rawValue)")
             updateConnectionStatus()
+            
+            // Session aktive olduktan sonra ilk senkronizasyon stratejisini başlat
+            initiateInitialSyncStrategy()
         }
     }
     
@@ -879,23 +965,119 @@ extension WatchConnectivityManager: WCSessionDelegate {
             print("📶 Remote connection status: \(connStatus)")
         }
         
-        // Schedule sync kontrol et
-        if let contextType = context["type"] as? String, contextType == "scheduleSync" {
-            print("📅 Application context ile schedule sync alındı")
-            if let scheduleData = context["schedule"] as? [String: Any] {
-                // Schedule güncelleme notification'ı gönder
-                NotificationCenter.default.post(
-                    name: .scheduleDidUpdate,
-                    object: nil,
-                    userInfo: scheduleData
-                )
-                print("📅 Schedule context data notification gönderildi")
-            }
+        // Context type'ına göre işle
+        if let contextType = context["type"] as? String {
+            handleContextByType(contextType, context: context)
+        } else {
+            print("⚠️ Application context'te type bulunamadı")
         }
         
         // Context güncellemelerini işle
         processContextUpdate(context)
         lastSyncDate = Date()
+    }
+    
+    /// Context type'ına göre işleme yapar
+    private func handleContextByType(_ type: String, context: [String: Any]) {
+        switch type {
+        case "scheduleSync":
+            handleScheduleContext(context)
+        case "userPreferencesSync":
+            handleUserPreferencesContext(context)
+        case "sleepDataSync":
+            handleSleepDataContext(context)
+        case "fullSync":
+            handleFullSyncContext(context)
+        case "appState":
+            handleAppStateContext(context)
+        default:
+            print("❓ Bilinmeyen context type: \(type)")
+        }
+    }
+    
+    /// Schedule context'ini işler
+    private func handleScheduleContext(_ context: [String: Any]) {
+        print("📅 Application context ile schedule sync alındı")
+        
+        if let scheduleData = context["schedule"] as? [String: Any] {
+            // Schedule güncelleme notification'ı gönder
+            NotificationCenter.default.post(
+                name: .scheduleDidUpdate,
+                object: nil,
+                userInfo: scheduleData
+            )
+            print("📅 Schedule context data notification gönderildi")
+        } else {
+            print("❌ Schedule context'te schedule data bulunamadı")
+        }
+    }
+    
+    /// User preferences context'ini işler
+    private func handleUserPreferencesContext(_ context: [String: Any]) {
+        print("⚙️ Application context ile user preferences sync alındı")
+        
+        if let preferencesData = context["preferences"] as? [String: Any] {
+            // User preferences güncelleme notification'ı gönder
+            NotificationCenter.default.post(
+                name: .userPreferencesDidUpdate,
+                object: nil,
+                userInfo: preferencesData
+            )
+            print("⚙️ User preferences context data notification gönderildi")
+        } else {
+            print("❌ User preferences context'te preferences data bulunamadı")
+        }
+    }
+    
+    /// Sleep data context'ini işler
+    private func handleSleepDataContext(_ context: [String: Any]) {
+        print("💤 Application context ile sleep data sync alındı")
+        
+        if let sleepEntries = context["entries"] as? [[String: Any]] {
+            // Sleep data batch notification'ı gönder
+            NotificationCenter.default.post(
+                name: .sleepDataBatchReceived,
+                object: nil,
+                userInfo: ["entries": sleepEntries]
+            )
+            print("💤 Sleep data context notification gönderildi: \(sleepEntries.count) entries")
+        } else {
+            print("❌ Sleep data context'te entries bulunamadı")
+        }
+    }
+    
+    /// Full sync context'ini işler
+    private func handleFullSyncContext(_ context: [String: Any]) {
+        print("🔄 Application context ile full sync alındı")
+        
+        // Full sync request notification'ı gönder
+        NotificationCenter.default.post(
+            name: Notification.Name("fullDataSyncRequested"),
+            object: nil,
+            userInfo: context
+        )
+        print("🔄 Full sync context notification gönderildi")
+    }
+    
+    /// App state context'ini işler
+    private func handleAppStateContext(_ context: [String: Any]) {
+        print("📱 Application context ile app state sync alındı")
+        
+        // App state bilgilerini process et
+        if let appVersion = context["appVersion"] as? String {
+            print("📱 Remote app version: \(appVersion)")
+        }
+        
+        if let isPremium = context["isPremium"] as? Bool {
+            print("💎 Remote premium status: \(isPremium)")
+        }
+        
+        // Detailed app state processing için notification gönder
+        NotificationCenter.default.post(
+            name: Notification.Name("appStateDidUpdate"),
+            object: nil,
+            userInfo: context
+        )
     }
     
     private func handleReceivedUserInfo(_ userInfo: [String: Any]) {
@@ -1021,6 +1203,14 @@ extension WatchConnectivityManager: WCSessionDelegate {
     private func handleSyncRequest(data: [String: Any]) {
         print("🔄 Sync isteği alındı")
         
+        #if os(iOS)
+        // iOS'ta sync request geldiğinde otomatik olarak active schedule'ı gönder
+        print("📱 iOS: Watch'tan sync isteği alındı - active schedule gönderiliyor")
+        Task { @MainActor in
+            await triggerAutoScheduleSync()
+        }
+        #endif
+        
         // Mevcut veriyi sync response olarak gönder
         let responseData: [String: Any] = [
             "timestamp": Date().timeIntervalSince1970,
@@ -1039,6 +1229,20 @@ extension WatchConnectivityManager: WCSessionDelegate {
         let syncResponse = WatchMessage(type: .syncResponse, data: responseData)
         sendMessage(syncResponse)
     }
+    
+    #if os(iOS)
+    /// iOS'ta Watch'tan sync request geldiğinde otomatik schedule sync tetikler
+    private func triggerAutoScheduleSync() async {
+        print("🔄 iOS: Otomatik schedule sync tetikleniyor...")
+        
+        // WatchSyncBridge üzerinden full sync başlat
+        NotificationCenter.default.post(
+            name: Notification.Name("watchAppLaunchDetected"),
+            object: nil,
+            userInfo: ["timestamp": Date().timeIntervalSince1970]
+        )
+    }
+    #endif
     
     private func handleSyncResponse(data: [String: Any]) {
         print("✅ Sync response alındı: \(data)")
@@ -1164,6 +1368,199 @@ extension WatchConnectivityManager: WCSessionDelegate {
     public func notifyUserPreferencesUpdate(_ preferences: [String: Any]) {
         let message = WatchMessage(type: .userPreferencesUpdate, data: preferences)
         sendMessage(message)
+    }
+    
+    // MARK: - İlk Senkronizasyon Stratejisi
+    
+    /// İlk senkronizasyon stratejisini başlatır
+    private func initiateInitialSyncStrategy() {
+        guard !hasInitialSyncCompleted else {
+            print("✅ İlk senkronizasyon zaten tamamlandı")
+            return
+        }
+        
+        print("🔄 İlk senkronizasyon stratejisi başlatılıyor...")
+        
+        // Timeout timer'ını başlat
+        startInitialSyncTimeout()
+        
+        #if os(iOS)
+        initiateInitialSyncForiOS()
+        #elseif os(watchOS)
+        initiateInitialSyncForWatchOS()
+        #endif
+    }
+    
+    #if os(iOS)
+    /// iOS için ilk senkronizasyon stratejisi
+    private func initiateInitialSyncForiOS() {
+        print("📱 iOS: İlk senkronizasyon stratejisi başlatılıyor...")
+        
+        // 1. Mevcut active schedule'ı application context olarak gönder
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.sendInitialScheduleContext()
+        }
+        
+        // 2. Watch'tan gelen receivedApplicationContext'i kontrol et
+        if !session.receivedApplicationContext.isEmpty {
+            print("📦 iOS: Mevcut receivedApplicationContext bulundu")
+            handleReceivedContext(session.receivedApplicationContext)
+        }
+        
+        // 3. Kısa süre sonra ilk senkronizasyonu tamamlandı olarak işaretle
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.completeInitialSync()
+        }
+    }
+    
+    /// Active schedule'ı application context olarak gönder
+    private func sendInitialScheduleContext() {
+        // iOS app'ten active schedule bilgilerini al ve gönder
+        let initialContext: [String: Any] = [
+            "type": "scheduleSync",
+            "timestamp": Date().timeIntervalSince1970,
+            "platform": "iOS",
+            "initialSync": true
+        ]
+        
+        // Repository'den active schedule bilgilerini al
+        NotificationCenter.default.post(
+            name: Notification.Name("requestActiveScheduleForWatchSync"),
+            object: nil,
+            userInfo: initialContext
+        )
+        
+        print("📱 iOS: Active schedule context gönderim isteği yapıldı")
+    }
+    #endif
+    
+    #if os(watchOS)
+    /// watchOS için ilk senkronizasyon stratejisi
+    private func initiateInitialSyncForWatchOS() {
+        print("⌚ watchOS: İlk senkronizasyon stratejisi başlatılıyor...")
+        
+        // 1. Önce mevcut receivedApplicationContext'i kontrol et
+        if !session.receivedApplicationContext.isEmpty {
+            print("📦 watchOS: Mevcut receivedApplicationContext bulundu")
+            handleReceivedContext(session.receivedApplicationContext)
+            completeInitialSync()
+        } else {
+            print("📦 watchOS: ApplicationContext boş - iOS'tan veri isteği gönderiliyor")
+            // 2. iOS'tan veri isteği gönder
+            requestInitialDataFromiOS()
+        }
+    }
+    
+    /// iOS'tan ilk veri isteği gönder
+    private func requestInitialDataFromiOS() {
+        guard !pendingInitialDataRequest else {
+            print("⚠️ watchOS: Zaten bekleyen veri isteği var")
+            return
+        }
+        
+        pendingInitialDataRequest = true
+        
+        if isReachable {
+            // Reachable ise direct message gönder
+            let syncRequest = WatchMessage(type: .fullDataSync, data: [
+                "requestType": "initialData",
+                "timestamp": Date().timeIntervalSince1970,
+                "platform": "watchOS"
+            ])
+            sendMessage(syncRequest)
+            print("📤 watchOS: iOS'a ilk veri isteği gönderildi (message)")
+        } else {
+            // Reachable değilse application context güncelle
+            updateApplicationContext([
+                "type": "fullSync",
+                "requestType": "initialData",
+                "timestamp": Date().timeIntervalSince1970,
+                "platform": "watchOS"
+            ])
+            print("📤 watchOS: iOS'a ilk veri isteği gönderildi (context)")
+        }
+    }
+    #endif
+    
+    /// İlk senkronizasyon timeout'unu başlat
+    private func startInitialSyncTimeout() {
+        initialSyncTimeout?.invalidate()
+        initialSyncTimeout = Timer.scheduledTimer(withTimeInterval: initialSyncTimeoutInterval, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.handleInitialSyncTimeout()
+            }
+        }
+        print("⏰ İlk senkronizasyon timeout başlatıldı: \(initialSyncTimeoutInterval) saniye")
+    }
+    
+    /// İlk senkronizasyon timeout'unu handle et
+    private func handleInitialSyncTimeout() {
+        guard !hasInitialSyncCompleted else { return }
+        
+        print("⏰ watchOS: İlk senkronizasyon timeout - fallback mekanizması başlatılıyor")
+        
+        #if os(watchOS)
+        // watchOS'ta timeout olursa fallback mekanizması
+        print("⚠️ watchOS: Timeout - SharedRepository fallback ile başlatılacak")
+        
+        // SharedRepository'e fallback mekanizmasını tetikle
+        NotificationCenter.default.post(
+            name: Notification.Name("initiateWatchAppFallback"),
+            object: nil,
+            userInfo: [
+                "reason": "initialSyncTimeout",
+                "timestamp": Date().timeIntervalSince1970
+            ]
+        )
+        #endif
+        
+        completeInitialSync()
+    }
+    
+    /// İlk senkronizasyonu tamamlandı olarak işaretle
+    private func completeInitialSync() {
+        guard !hasInitialSyncCompleted else { return }
+        
+        hasInitialSyncCompleted = true
+        pendingInitialDataRequest = false
+        
+        // Timeout timer'ını temizle
+        initialSyncTimeout?.invalidate()
+        initialSyncTimeout = nil
+        
+        print("✅ İlk senkronizasyon tamamlandı")
+        
+        // İlk senkronizasyon tamamlandı notification'ı gönder
+        NotificationCenter.default.post(
+            name: Notification.Name("initialWatchSyncCompleted"),
+            object: nil,
+            userInfo: [
+                "timestamp": Date().timeIntervalSince1970,
+                "platform": {
+                    #if os(iOS)
+                    return "iOS"
+                    #elseif os(watchOS)
+                    return "watchOS"
+                    #else
+                    return "Unknown"
+                    #endif
+                }()
+            ]
+        )
+    }
+    
+    /// İlk senkronizasyon durumunu sıfırla (test için)
+    public func resetInitialSyncState() {
+        hasInitialSyncCompleted = false
+        pendingInitialDataRequest = false
+        initialSyncTimeout?.invalidate()
+        initialSyncTimeout = nil
+        print("🔄 İlk senkronizasyon durumu sıfırlandı")
+    }
+    
+    /// İlk senkronizasyon tamamlandı mı?
+    public var isInitialSyncCompleted: Bool {
+        return hasInitialSyncCompleted
     }
 } 
 

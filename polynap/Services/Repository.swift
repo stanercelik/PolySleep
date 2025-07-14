@@ -100,6 +100,11 @@ class Repository: ObservableObject {
         return try await sleepEntryRepository.addSleepEntry(blockId: blockId, emoji: emoji, rating: rating, date: date)
     }
     
+    /// Son sleep entries'leri getirir (Watch sync için)
+    func getRecentSleepEntries(limit: Int = 10) async throws -> [SleepEntryEntity] {
+        return try sleepEntryRepository.getRecentSleepEntries(dayCount: 30).prefix(limit).map { $0 }
+    }
+    
     // MARK: - User Management (Delegated to UserRepository)
     
     /// Kullanıcıyı SwiftData'da oluşturur veya mevcut kullanıcıyı getirir

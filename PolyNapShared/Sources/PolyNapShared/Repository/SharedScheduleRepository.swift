@@ -4,6 +4,7 @@ import OSLog
 
 /// Shared schedule yönetimi işlemleri için Repository
 /// iOS ve watchOS platformları arasında SharedUserSchedule ve SharedSleepBlock modelleri ile çalışır
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @MainActor
 public final class SharedScheduleRepository: SharedBaseRepository {
     

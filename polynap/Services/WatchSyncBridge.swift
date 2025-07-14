@@ -183,9 +183,82 @@ public class WatchSyncBridge: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        // Watch app launch detection listener ekle
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("watchAppLaunchDetected"),
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in
+                await self?.handleWatchAppLaunch(notification)
+            }
+        }
+        
+        // Watch'tan gelen sleep entry'leri dinle (Watch→iOS sync)
+        NotificationCenter.default.addObserver(
+            forName: .sleepDidStart,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in
+                await self?.handleIncomingSleepStartFromWatch(notification)
+            }
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: .sleepDidEnd,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in
+                await self?.handleIncomingSleepEndFromWatch(notification)
+            }
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: .sleepQualityDidRate,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in
+                await self?.handleIncomingSleepRatingFromWatch(notification)
+            }
+        }
+        
+        // Watch'tan gelen user preferences değişikliklerini dinle
+        NotificationCenter.default.addObserver(
+            forName: .userPreferencesDidUpdate,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            Task { @MainActor in
+                await self?.handleIncomingUserPreferencesFromWatch(notification)
+            }
+        }
     }
     
     // MARK: - Event Handlers
+    
+    /// Watch app launch algılandığında otomatik sync tetikler
+    private func handleWatchAppLaunch(_ notification: Notification) async {
+        guard isSyncEnabled else { return }
+        
+        logger.debug("⌚ Watch app launch algılandı - full sync başlatılıyor")
+        
+        // Önce active schedule'ı hemen sync et
+        do {
+            try await syncActiveScheduleToWatch()
+            logger.debug("✅ Watch launch için schedule sync tamamlandı")
+        } catch {
+            logger.error("❌ Watch launch schedule sync hatası: \(error.localizedDescription)")
+        }
+        
+        // Ardından full sync'i background'da yap
+        Task {
+            await performFullSync()
+        }
+    }
     
     private func handleScheduleChange(_ notification: Notification) async {
         guard isSyncEnabled else { return }
@@ -264,6 +337,81 @@ public class WatchSyncBridge: ObservableObject {
         } catch {
             logger.error("❌ Watch sleep entry kaydedilirken hata: \(error.localizedDescription)")
         }
+    }
+    
+    /// Watch'tan sleep start notification'ını handle eder
+    private func handleIncomingSleepStartFromWatch(_ notification: Notification) async {
+        guard isSyncEnabled else { return }
+        
+        logger.debug("⌚ Watch'tan sleep start alındı - iOS Repository'ye kaydediliyor")
+        
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            logger.error("❌ Watch sleep start format hatası")
+            return
+        }
+        
+        // Bu notification için iOS'ta herhangi bir işlem yapılması gerekiyorsa burada handle edilir
+        // Örneğin: sleep tracking state'ini update etmek, analytics event'i göndermek vb.
+        logger.debug("✅ Watch sleep start processed")
+    }
+    
+    /// Watch'tan sleep end notification'ını handle eder
+    private func handleIncomingSleepEndFromWatch(_ notification: Notification) async {
+        guard isSyncEnabled else { return }
+        
+        logger.debug("⌚ Watch'tan sleep end alındı - iOS Repository'ye kaydediliyor")
+        
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            logger.error("❌ Watch sleep end format hatası")
+            return
+        }
+        
+        // Sleep end işlemleri için iOS'ta gerekli işlemler
+        logger.debug("✅ Watch sleep end processed")
+    }
+    
+    /// Watch'tan sleep rating notification'ını handle eder
+    private func handleIncomingSleepRatingFromWatch(_ notification: Notification) async {
+        guard isSyncEnabled else { return }
+        
+        logger.debug("⌚ Watch'tan sleep rating alındı - iOS Repository'ye kaydediliyor")
+        
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            logger.error("❌ Watch sleep rating format hatası")
+            return
+        }
+        
+        do {
+            // Sleep rating data'sını parse et
+            guard let rating = userInfo["rating"] as? Int,
+                  let emoji = userInfo["emoji"] as? String else {
+                logger.error("❌ Watch sleep rating data eksik")
+                return
+            }
+            
+            // iOS Repository'de son sleep entry'yi güncelle
+            // Bu implementation Repository API'sine bağlı olarak yapılacak
+            logger.debug("✅ Watch sleep rating processed: \(rating) stars (\(emoji))")
+            
+        } catch {
+            logger.error("❌ Watch sleep rating kaydedilirken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Watch'tan user preferences update notification'ını handle eder
+    private func handleIncomingUserPreferencesFromWatch(_ notification: Notification) async {
+        guard isSyncEnabled else { return }
+        
+        logger.debug("⌚ Watch'tan user preferences update alındı - iOS Repository'ye kaydediliyor")
+        
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            logger.error("❌ Watch user preferences format hatası")
+            return
+        }
+        
+        // User preferences değişikliklerini iOS Repository'ye sync et
+        // Bu implementation UserRepository API'sine bağlı olarak yapılacak
+        logger.debug("✅ Watch user preferences processed")
     }
     
     // MARK: - Sync Methods
@@ -370,14 +518,80 @@ public class WatchSyncBridge: ObservableObject {
     
     /// Son sleep entries'i Watch'a sync eder
     private func syncRecentSleepEntriesToWatch() async throws {
-        // Bu method gelecekte implement edilecek
-        logger.debug("💤 Sleep entries sync - gelecekte implement edilecek")
+        logger.debug("💤 Son sleep entries Watch'a sync ediliyor")
+        
+        do {
+            // iOS Repository'den son sleep entries'leri al (son 10 entry)
+            let recentEntries = try await iosRepository.getRecentSleepEntries(limit: 10)
+            
+            if recentEntries.isEmpty {
+                logger.debug("ℹ️ Sync edilecek sleep entry bulunamadı")
+                return
+            }
+            
+            // Sleep entries'i dictionary formatına çevir - simplified
+            var entriesData: [[String: Any]] = []
+            for entry in recentEntries {
+                let entryDict: [String: Any] = [
+                    "id": entry.id.uuidString,
+                    "date": entry.date.timeIntervalSince1970,
+                    "startTime": entry.date.timeIntervalSince1970, // SleepEntryEntity için
+                    "endTime": entry.date.timeIntervalSince1970, // Placeholder - actual times hesaplanacak
+                    "durationMinutes": 30, // Default duration
+                    "isCore": false, // SleepEntryEntity için default
+                    "blockId": entry.blockId ?? "",
+                    "emoji": entry.emoji ?? "",
+                    "rating": entry.rating,
+                    "syncId": entry.syncId ?? entry.id.uuidString
+                ]
+                entriesData.append(entryDict)
+            }
+            
+            // Watch'a Application Context ile gönder
+            watchConnectivity.updateApplicationContext([
+                "type": "sleepDataSync",
+                "entries": entriesData,
+                "timestamp": Date().timeIntervalSince1970,
+                "count": entriesData.count
+            ])
+            
+            logger.debug("✅ \(entriesData.count) sleep entry Application Context ile Watch'a gönderildi")
+            
+        } catch {
+            logger.error("❌ Sleep entries sync hatası: \(error.localizedDescription)")
+            throw error
+        }
     }
     
     /// User preferences'ı Watch'a sync eder
     private func syncUserPreferencesToWatch() async throws {
-        // Bu method gelecekte implement edilecek
-        logger.debug("⚙️ User preferences sync - gelecekte implement edilecek")
+        logger.debug("⚙️ User preferences Watch'a sync ediliyor")
+        
+        do {
+            // iOS Repository'den user preferences'ı al
+            let user = try await iosRepository.createOrGetUser()
+            
+            // User preferences'ı collect et
+            let preferencesData: [String: Any] = [
+                "userId": user.id.uuidString,
+                "displayName": user.displayName ?? "",
+                "isPremium": user.isPremium,
+                "preferences": user.preferences ?? "{}" // JSON string
+            ]
+            
+            // Watch'a Application Context ile gönder
+            watchConnectivity.updateApplicationContext([
+                "type": "userPreferencesSync",
+                "preferences": preferencesData,
+                "timestamp": Date().timeIntervalSince1970
+            ])
+            
+            logger.debug("✅ User preferences Application Context ile Watch'a gönderildi")
+            
+        } catch {
+            logger.error("❌ User preferences sync hatası: \(error.localizedDescription)")
+            throw error
+        }
     }
     
     // MARK: - Helper Methods

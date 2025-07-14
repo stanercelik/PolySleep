@@ -41,6 +41,7 @@ public enum SleepQuality: Int, Codable, CaseIterable {
 // MARK: - Shared Data Models
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @Model
 public final class SharedUser {
     @Attribute(.unique) public var id: UUID
@@ -82,6 +83,7 @@ public final class SharedUser {
 }
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @Model
 public final class SharedUserSchedule {
     @Attribute(.unique) public var id: UUID
@@ -120,6 +122,7 @@ public final class SharedUserSchedule {
 }
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @Model
 public final class SharedSleepBlock {
     @Attribute(.unique) public var id: UUID
@@ -158,6 +161,7 @@ public final class SharedSleepBlock {
 }
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @Model
 public final class SharedSleepEntry {
     @Attribute(.unique) public var id: UUID
@@ -236,6 +240,7 @@ public final class SharedSleepEntry {
 // MARK: - Adaptation Progress Model
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @Model
 public final class SharedAdaptationProgress {
     @Attribute(.unique) public var id: UUID

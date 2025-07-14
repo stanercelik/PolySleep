@@ -16,7 +16,7 @@ struct MainWatchView: View {
             CurrentScheduleView(viewModel: mainViewModel)
                 .tabItem {
                     Image(systemName: "moon.fill")
-                    Text(L("watch.tab.schedule", table: "Watch"))
+                    Text(L("watch.tab.schedule", tableName: "Watch"))
                 }
                 .tag(0)
             
@@ -24,7 +24,7 @@ struct MainWatchView: View {
             AdaptationProgressView(viewModel: adaptationViewModel)
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text(L("watch.tab.adaptation", table: "Watch"))
+                    Text(L("watch.tab.adaptation", tableName: "Watch"))
                 }
                 .tag(1)
             
@@ -36,24 +36,14 @@ struct MainWatchView: View {
             )
                 .tabItem {
                     Image(systemName: "plus.circle.fill")
-                    Text(L("watch.tab.entry", table: "Watch"))
+                    Text(L("watch.tab.entry", tableName: "Watch"))
                 }
                 .tag(2)
         }
         .onAppear {
-            // Environment'dan gelen modelContext'i ViewModel'e ayarla
-            if SharedRepository.shared.getModelContext() == nil {
-                print("⚠️ SharedRepository'de ModelContext bulunamadı, Environment'dan ayarlanıyor")
-                SharedRepository.shared.setModelContext(modelContext)
+            Task { @MainActor in
+                await setupWatchApp()
             }
-            
-            // ViewModels'i configure et
-            mainViewModel.configureSharedRepository(with: modelContext)
-            sleepEntryViewModel.configureRepository(SharedRepository.shared)
-            adaptationViewModel.configureRepository(SharedRepository.shared)
-            
-            // İlk data sync
-            mainViewModel.requestDataSync()
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSExtensionHostDidBecomeActive)) { _ in
             // Uygulama aktif olduğunda sync et
@@ -66,6 +56,103 @@ struct MainWatchView: View {
     }
     
     // MARK: - Private Methods
+    
+    /// Watch app'i sequential olarak setup eder
+    @MainActor
+    private func setupWatchApp() async {
+        print("🚀 Watch: App setup başlatılıyor...")
+        
+        // 1. ModelContext'i setup et
+        await setupModelContext()
+        
+        // 2. ViewModels'i configure et
+        await configureViewModels()
+        
+        // 3. WatchConnectivity'yi başlat
+        await setupWatchConnectivity()
+        
+        // 4. İlk data sync'i başlat
+        await performInitialSync()
+        
+        print("✅ Watch: App setup tamamlandı")
+    }
+    
+    /// ModelContext'i setup eder
+    @MainActor
+    private func setupModelContext() async {
+        print("🔧 Watch: ModelContext setup ediliyor...")
+        
+        // SharedRepository'nin ModelContext'ini kontrol et
+        if SharedRepository.shared.getModelContext() == nil {
+            print("⚙️ Watch: SharedRepository'de ModelContext bulunamadı, Environment'dan ayarlanıyor")
+            SharedRepository.shared.setModelContext(modelContext)
+            
+            // ModelContext'in doğru ayarlandığını doğrula
+            if SharedRepository.shared.getModelContext() != nil {
+                print("✅ Watch: ModelContext başarıyla ayarlandı")
+            } else {
+                print("❌ Watch: ModelContext ayarlanamadı!")
+            }
+        } else {
+            print("✅ Watch: ModelContext zaten mevcut")
+        }
+        
+        // Kısa bir delay ModelContext'in tamamen hazır olması için
+        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 saniye
+    }
+    
+    /// ViewModels'i configure eder
+    @MainActor
+    private func configureViewModels() async {
+        print("📱 Watch: ViewModels configure ediliyor...")
+        
+        // MainViewModel'i configure et
+        mainViewModel.configureSharedRepository(with: modelContext)
+        
+        // SleepEntryViewModel'i configure et
+        sleepEntryViewModel.configureRepository(SharedRepository.shared)
+        
+        // AdaptationViewModel'i configure et
+        adaptationViewModel.configureRepository(SharedRepository.shared)
+        
+        print("✅ Watch: ViewModels configure edildi")
+        
+        // ViewModels'in hazır olması için kısa bir delay
+        try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 saniye
+    }
+    
+    /// WatchConnectivity'yi setup eder
+    @MainActor
+    private func setupWatchConnectivity() async {
+        print("🔗 Watch: WatchConnectivity setup ediliyor...")
+        
+        // WatchConnectivityManager zaten singleton olarak başlatıldı
+        // Health check yap
+        let isHealthy = watchConnectivity.performHealthCheck()
+        
+        if isHealthy {
+            print("✅ Watch: WatchConnectivity healthy")
+        } else {
+            print("⚠️ Watch: WatchConnectivity health check failed, retry yapılacak")
+        }
+        
+        // Connectivity'nin stabilize olması için kısa bir delay
+        try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 saniye
+    }
+    
+    /// İlk data sync'i yapar
+    @MainActor
+    private func performInitialSync() async {
+        print("🔄 Watch: İlk data sync başlatılıyor...")
+        
+        // İlk sync'i request et
+        mainViewModel.requestDataSync()
+        
+        // Sync'in başlaması için kısa bir delay
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye
+        
+        print("📤 Watch: İlk sync request gönderildi")
+    }
     
     /// Sync durumu değişikliklerini handle eder
     private func handleSyncStatusChange(_ syncStatus: SyncStatus) {

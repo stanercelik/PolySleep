@@ -5,6 +5,7 @@ import OSLog
 
 /// Shared temel Repository işlevlerini sağlayan base class
 /// iOS ve watchOS platformları arasında ortak ModelContext yönetimi ve CRUD operasyonları
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 @MainActor
 public class SharedBaseRepository: ObservableObject {
     

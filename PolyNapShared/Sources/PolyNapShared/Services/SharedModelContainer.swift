@@ -9,6 +9,7 @@ import SwiftData
 import Foundation
 
 /// Shared ModelContainer yapılandırması ve yönetimi
+@available(iOS 17.0, watchOS 10.0, macOS 14.0, *)
 public final class SharedModelContainer {
     
     // MARK: - Public Factory Methods
@@ -18,7 +19,28 @@ public final class SharedModelContainer {
     /// - Returns: Yapılandırılmış ModelContainer
     /// - Throws: ModelContainer oluşturma hatası
     public static func createSharedModelContainer(inMemory: Bool = false) throws -> ModelContainer {
-        let config = ModelConfiguration(isStoredInMemoryOnly: inMemory)
+        let config: ModelConfiguration
+        
+        if inMemory {
+            config = ModelConfiguration(isStoredInMemoryOnly: true)
+        } else {
+            // Production için App Group ile shared container kullan
+            guard let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.tanercelik.polynap.shared") else {
+                throw NSError(domain: "SharedModelContainer", code: 1001, userInfo: [
+                    NSLocalizedDescriptionKey: "App Group container URL bulunamadı"
+                ])
+            }
+            
+            let storeURL = appGroupURL.appendingPathComponent("PolyNapShared.sqlite")
+            print("🗄️ SharedModelContainer store URL: \(storeURL.path)")
+            
+            config = ModelConfiguration(
+                url: storeURL,
+                allowsSave: true,
+                cloudKitDatabase: .none
+            )
+        }
+        
         return try ModelContainer(
             for: SharedUser.self, 
                  SharedUserSchedule.self, 

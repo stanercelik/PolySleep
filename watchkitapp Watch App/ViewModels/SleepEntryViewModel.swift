@@ -19,11 +19,11 @@ class SleepEntryViewModel: ObservableObject {
     // Quality rating
     @Published var qualityEmojis: [String] = ["😩", "😪", "😐", "😊", "🤩"]
     @Published var qualityDescriptions: [String] = [
-        L("quality_very_bad", table: "ViewModels"),
-        L("quality_bad", table: "ViewModels"),
-        L("quality_average", table: "ViewModels"),
-        L("quality_good", table: "ViewModels"),
-        L("quality_excellent", table: "ViewModels")
+        L("quality_very_bad", tableName: "ViewModels"),
+        L("quality_bad", tableName: "ViewModels"),
+        L("quality_average", tableName: "ViewModels"),
+        L("quality_good", tableName: "ViewModels"),
+        L("quality_excellent", tableName: "ViewModels")
     ]
     
     // MARK: - Private Properties
@@ -215,7 +215,7 @@ class SleepEntryViewModel: ObservableObject {
             await MainActor.run {
                 self.isSaving = false
                 self.lastSaveDate = Date()
-                self.saveMessage = L("sleep_entry_saved", table: "ViewModels")
+                self.saveMessage = L("sleep_entry_saved", tableName: "ViewModels")
                 self.showSaveConfirmation = true
             }
             
@@ -232,7 +232,7 @@ class SleepEntryViewModel: ObservableObject {
         } catch {
             await MainActor.run {
                 self.isSaving = false
-                self.saveMessage = L("save_error", table: "ViewModels")
+                self.saveMessage = L("save_error", tableName: "ViewModels")
                 self.showSaveConfirmation = true
             }
             

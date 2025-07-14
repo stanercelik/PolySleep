@@ -21,6 +21,34 @@
                ReferencedContainer = "container:polynap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "20D266BF2E196EFE001EA025"
+               BuildableName = "watchkitapp Watch App.app"
+               BlueprintName = "watchkitapp Watch App"
+               ReferencedContainer = "container:polynap.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "20D266BA2E196EFE001EA025"
+               BuildableName = "watchkitapp.app"
+               BlueprintName = "watchkitapp"
+               ReferencedContainer = "container:polynap.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

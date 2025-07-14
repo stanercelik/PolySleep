@@ -18,6 +18,7 @@
 		20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 20D266F52E197168001EA025 /* PolyNap Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20D267132E197294001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267122E197294001EA025 /* PolyNapShared */; };
 		20D267152E1972A1001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267142E1972A1001EA025 /* PolyNapShared */; };
+		20F240412E24FF19007FC87A /* watchkitapp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20D266C02E196EFE001EA025 /* watchkitapp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,17 @@
 				20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		20F240442E24FF19007FC87A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				20F240412E24FF19007FC87A /* watchkitapp Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -273,10 +285,12 @@
 				2032D6AC2D1E9E2300170F56 /* Sources */,
 				2032D6AD2D1E9E2300170F56 /* Frameworks */,
 				2032D6AE2D1E9E2300170F56 /* Resources */,
+				20F240442E24FF19007FC87A /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				20D266C32E196EFE001EA025 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				2032D6B22D1E9E2300170F56 /* polynap */,
@@ -814,7 +828,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = polynap/polynap.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"polynap/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
@@ -857,7 +871,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = polynap/polynap.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"polynap/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
@@ -986,7 +1000,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKWatchOnly = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tanercelik.polynap;
+				INFOPLIST_KEY_WKWatchOnly = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1017,7 +1032,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKWatchOnly = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tanercelik.polynap;
+				INFOPLIST_KEY_WKWatchOnly = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1152,6 +1168,7 @@
 		20D267012E197168001EA025 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1182,6 +1199,7 @@
 		20D267022E197168001EA025 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;

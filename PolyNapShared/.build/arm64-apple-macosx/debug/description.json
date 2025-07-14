@@ -48,7 +48,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/SharedModelContainer.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Utils/SharedLocalization.swift"
         },
         {
           "kind" : "file",
@@ -69,7 +77,9 @@
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedScheduleRepository.swift.o",
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedSleepEntryRepository.swift.o",
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedUserRepository.swift.o",
-        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/WatchConnectivityManager.swift.o"
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedModelContainer.swift.o",
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/WatchConnectivityManager.swift.o",
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedLocalization.swift.o"
       ],
       "otherArguments" : [
         "-target",
@@ -89,7 +99,6 @@
         "-emit-objc-header",
         "-emit-objc-header-path",
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/PolyNapShared-Swift.h",
-        "-color-diagnostics",
         "-swift-version",
         "5",
         "-sdk",
@@ -144,7 +153,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedModelContainer.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/WatchConnectivityManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/SharedLocalization.swift.o"
         },
         {
           "kind" : "file",
@@ -159,7 +176,9 @@
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedScheduleRepository.swift",
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedSleepEntryRepository.swift",
         "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedUserRepository.swift",
-        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift"
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/SharedModelContainer.swift",
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift",
+        "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Utils/SharedLocalization.swift"
       ],
       "tempsPath" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build",
       "wholeModuleOptimization" : false
@@ -183,7 +202,9 @@
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedScheduleRepository.swift",
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedSleepEntryRepository.swift",
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedUserRepository.swift",
+      "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/SharedModelContainer.swift",
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift",
+      "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Utils/SharedLocalization.swift",
       "-I",
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/Modules",
       "-target",
@@ -203,7 +224,6 @@
       "-emit-objc-header",
       "-emit-objc-header-path",
       "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/PolyNapShared-Swift.h",
-      "-color-diagnostics",
       "-swift-version",
       "5",
       "-sdk",
@@ -278,7 +298,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/SharedModelContainer.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Utils/SharedLocalization.swift"
         }
       ],
       "outputFilePath" : "/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/.build/arm64-apple-macosx/debug/PolyNapShared.build/sources"

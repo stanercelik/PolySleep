@@ -152,7 +152,7 @@ final class ScheduleRepository: BaseRepository {
             
             // Notify WatchSyncBridge of schedule change for Watch sync
             NotificationCenter.default.post(
-                name: Notification.Name("ScheduleDidChange"),
+                name: .scheduleDidChange,
                 object: nil,
                 userInfo: ["scheduleId": scheduleEntity.id.uuidString]
             )

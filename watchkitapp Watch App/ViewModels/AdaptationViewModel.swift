@@ -8,8 +8,8 @@ class AdaptationViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var adaptationProgress: SharedAdaptationProgress?
-    @Published var currentPhaseDescription: String = L("beginning_phase", table: "ViewModels")
-    @Published var phaseDescription: String = L("adaptation_starting", table: "ViewModels")
+    @Published var currentPhaseDescription: String = L("beginning_phase", tableName: "ViewModels")
+    @Published var phaseDescription: String = L("adaptation_starting", tableName: "ViewModels")
     @Published var isLoading: Bool = false
     
     // MARK: - Private Properties
@@ -82,8 +82,8 @@ class AdaptationViewModel: ObservableObject {
                 estimatedTotalDays: 21,
                 progressPercentage: 1.0/21.0,
                 isCompleted: false,
-                phaseName: L("beginning_phase", table: "ViewModels"),
-                phaseDescription: L("adaptation_started", table: "ViewModels")
+                phaseName: L("beginning_phase", tableName: "ViewModels"),
+                phaseDescription: L("adaptation_started", tableName: "ViewModels")
             )
             
             adaptationProgress = mockProgress
@@ -110,8 +110,8 @@ class AdaptationViewModel: ObservableObject {
             estimatedTotalDays: 30,
             progressPercentage: 7.0/30.0,
             isCompleted: false,
-            phaseName: L("adaptation_phase", table: "ViewModels"),
-            phaseDescription: L("body_adapting_description", table: "ViewModels")
+            phaseName: L("adaptation_phase", tableName: "ViewModels"),
+            phaseDescription: L("body_adapting_description", tableName: "ViewModels")
         )
         
         adaptationProgress = mockProgress
@@ -120,8 +120,8 @@ class AdaptationViewModel: ObservableObject {
         
         print("📊 Watch: Development adaptation data loaded")
         #else
-        currentPhaseDescription = L("waiting_for_data", table: "ViewModels")
-        phaseDescription = L("loading_adaptation_data", table: "ViewModels")
+        currentPhaseDescription = L("waiting_for_data", tableName: "ViewModels")
+        phaseDescription = L("loading_adaptation_data", tableName: "ViewModels")
         #endif
     }
 } 

@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "-" : {
+
+    },
     "%.1fs" : {
       "localizations" : {
         "de" : {
@@ -24,6 +27,7 @@
       }
     },
     "%.1fs toplam" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -66,6 +70,9 @@
           }
         }
       }
+    },
+    "%lld blok" : {
+
     },
     "%lld Gün" : {
       "localizations" : {
@@ -200,6 +207,7 @@
       }
     },
     "Giriş" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -330,6 +338,9 @@
           }
         }
       }
+    },
+    "Senkronize ediliyor..." : {
+
     },
     "Sonraki Uyku" : {
       "localizations" : {
@@ -508,6 +519,7 @@
       }
     },
     "Yükleniyor..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -2,68 +2,110 @@ import SwiftUI
 import WatchKit
 import PolyNapShared
 
-/// Watch için optimize edilmiş CircularSleepChart - kompakt ve çakışmasız layout
+enum WatchChartSize {
+    case small
+    case medium
+    case large
+    
+    var radius: CGFloat {
+        switch self {
+        case .small: return 50
+        case .medium: return 65
+        case .large: return 80
+        }
+    }
+    
+    var strokeWidth: CGFloat {
+        switch self {
+        case .small: return 16
+        case .medium: return 20
+        case .large: return 24
+        }
+    }
+}
+
+/// Watch için optimize edilmiş CircularSleepChart - telefon ile aynı tasarım + current time indicator
 struct WatchCircularSleepChart: View {
     let schedule: SharedUserSchedule
+    let chartSize: WatchChartSize
+    @State private var currentTime = Date()
+    @Environment(\.colorScheme) var colorScheme
     
-    private var circleRadius: CGFloat { 55 }
-    private var strokeWidth: CGFloat { 14 }
-    private let majorHourMarkers = [0, 6, 12, 18] // Sadece ana saatler
+    private var circleRadius: CGFloat { chartSize.radius }
+    private var strokeWidth: CGFloat { chartSize.strokeWidth }
+    private let hourMarkers = [0, 3, 6, 9, 12, 15, 18, 21]
+    
+    private let timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect() // Her 30 saniye güncelle
+    
+    init(schedule: SharedUserSchedule, chartSize: WatchChartSize = .large) {
+        self.schedule = schedule
+        self.chartSize = chartSize
+    }
     
     var body: some View {
         GeometryReader { geometry in
-            let size = min(geometry.size.width, geometry.size.height)
-            let center = CGPoint(x: size / 2, y: size / 2)
+            let availableSize = min(geometry.size.width, geometry.size.height)
+            let labelPadding: CGFloat = 12
+            let totalPadding = strokeWidth + labelPadding + 16 // 16 for label width
+            let chartDiameter = availableSize - totalPadding
+            let adjustedRadius = max(circleRadius, chartDiameter / 2)
+            let center = CGPoint(x: availableSize / 2, y: availableSize / 2)
             
             ZStack {
-                // Background circle
-                backgroundCircle(center: center)
+                // Background circle - telefon ile aynı tasarım
+                backgroundCircle(center: center, radius: adjustedRadius)
                 
-                // Hour tick marks (sadece ana saatler)
-                hourTickMarks(center: center)
+                // Hour tick marks - telefon ile aynı tasarım
+                hourTickMarks(center: center, radius: adjustedRadius)
                 
-                // Sleep blocks
-                sleepBlocksView(center: center)
+                // Sleep blocks - telefon ile aynı tasarım
+                sleepBlocksView(center: center, radius: adjustedRadius)
                 
-                // Hour markers (sadece ana saatler)
-                hourMarkersView(center: center)
+                // Hour markers - telefon ile aynı tasarım
+                hourMarkersView(center: center, radius: adjustedRadius, labelPadding: labelPadding)
                 
-                // Current time indicator
-                currentTimeIndicator(center: center)
+                // Sleep block time labels - telefon ile aynı tasarım
+                sleepBlockTimeLabels(center: center, radius: adjustedRadius)
                 
-                // Sleep block time labels (optimize edilmiş)
-                sleepBlockTimeLabels(center: center)
-                
-                // Center time info
-                centerTimeInfo(center: center)
+                // Current time indicator - sadece saat için özel
+                currentTimeIndicator(center: center, radius: adjustedRadius)
             }
-            .frame(width: size, height: size)
+            .frame(width: availableSize, height: availableSize)
         }
         .aspectRatio(1, contentMode: .fit)
+        .onReceive(timer) { time in
+            currentTime = time
+        }
+        .onAppear {
+            currentTime = Date()
+        }
     }
     
     // MARK: - Background Circle
-    private func backgroundCircle(center: CGPoint) -> some View {
+    private func backgroundCircle(center: CGPoint, radius: CGFloat) -> some View {
         Circle()
-            .stroke(Color.secondary.opacity(0.2), lineWidth: strokeWidth)
-            .frame(width: circleRadius * 2, height: circleRadius * 2)
+            .stroke(
+                colorScheme == .dark ? Color.white.opacity(0.12) : Color.black.opacity(0.12),
+                lineWidth: strokeWidth
+            )
+            .frame(width: radius * 2, height: radius * 2)
             .position(center)
     }
     
-    // MARK: - Hour Tick Marks (sadece ana saatler)
-    private func hourTickMarks(center: CGPoint) -> some View {
+    // MARK: - Hour Tick Marks
+    private func hourTickMarks(center: CGPoint, radius: CGFloat) -> some View {
         ZStack {
-            ForEach(majorHourMarkers, id: \.self) { hour in
-                createTickMark(for: hour, center: center)
+            ForEach(0..<24, id: \.self) { hour in
+                createTickMark(for: hour, center: center, radius: radius)
             }
         }
     }
     
-    private func createTickMark(for hour: Int, center: CGPoint) -> some View {
-        let angle = angleForHour(hour)
+    private func createTickMark(for hour: Int, center: CGPoint, radius: CGFloat) -> some View {
+        let angle = Double(hour) * (360.0 / 24.0) - 90
         
-        let outerRadius = circleRadius + strokeWidth / 2
-        let innerRadius = circleRadius - strokeWidth / 2
+        let outerRadius = radius + strokeWidth / 2
+        let innerRadius = radius - strokeWidth / 2
         
         let startX = center.x + outerRadius * cos(angle * .pi / 180)
         let startY = center.y + outerRadius * sin(angle * .pi / 180)
@@ -71,169 +113,211 @@ struct WatchCircularSleepChart: View {
         let endX = center.x + innerRadius * cos(angle * .pi / 180)
         let endY = center.y + innerRadius * sin(angle * .pi / 180)
         
+        let isMainHour = hour % 3 == 0
+        let strokeColor = colorScheme == .dark ? Color.white : Color.black
+        
         return Path { path in
             path.move(to: CGPoint(x: startX, y: startY))
             path.addLine(to: CGPoint(x: endX, y: endY))
         }
-        .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
+        .stroke(
+            style: StrokeStyle(
+                lineWidth: 1,
+                dash: isMainHour ? [] : [4, 4]
+            )
+        )
+        .foregroundColor(strokeColor.opacity(isMainHour ? 0.3 : 0.2))
     }
     
     // MARK: - Sleep Blocks View
-    private func sleepBlocksView(center: CGPoint) -> some View {
+    private func sleepBlocksView(center: CGPoint, radius: CGFloat) -> some View {
         ZStack {
             if let sleepBlocks = schedule.sleepBlocks {
                 ForEach(sleepBlocks.indices, id: \.self) { index in
-                    sleepBlockArc(for: sleepBlocks[index], center: center)
+                    sleepBlockArc(for: sleepBlocks[index], center: center, radius: radius)
                 }
             }
         }
     }
     
     @ViewBuilder
-    private func sleepBlockArc(for block: SharedSleepBlock, center: CGPoint) -> some View {
-        let startAngle = angleForTime(from: block.startTime)
-        let durationHours = Double(block.durationMinutes) / 60.0
-        let endAngle = startAngle + (durationHours * (360.0 / 24.0))
-        
-        Path { path in
-            path.addArc(
-                center: center,
-                radius: circleRadius,
-                startAngle: .degrees(startAngle),
-                endAngle: .degrees(endAngle),
-                clockwise: false
-            )
+    private func sleepBlockArc(for block: SharedSleepBlock, center: CGPoint, radius: CGFloat) -> some View {
+        Group {
+            let startAngle = angleForTime(timeString: block.startTime)
+            let endAngle = angleForTime(timeString: block.endTime)
+            
+            // Gece yarısını geçen blokları handle et
+            let adjustedEndAngle = endAngle < startAngle ? endAngle + 360 : endAngle
+            let blockColor = block.isCore ? Color.blue : Color.orange
+            
+            Path { path in
+                path.addArc(
+                    center: center,
+                    radius: radius,
+                    startAngle: .degrees(startAngle),
+                    endAngle: .degrees(adjustedEndAngle),
+                    clockwise: false
+                )
+            }
+            .stroke(blockColor, lineWidth: strokeWidth)
+            .opacity(0.85)
         }
-        .stroke(
-            block.isCore ? Color.blue : Color.orange,
-            lineWidth: strokeWidth
-        )
-        .opacity(0.9)
     }
     
-    // MARK: - Hour Markers View (sadece ana saatler)
-    private func hourMarkersView(center: CGPoint) -> some View {
+    // MARK: - Hour Markers View
+    private func hourMarkersView(center: CGPoint, radius: CGFloat, labelPadding: CGFloat) -> some View {
         ZStack {
-            ForEach(majorHourMarkers, id: \.self) { hour in
-                hourMarker(for: hour, center: center)
+            ForEach(hourMarkers, id: \.self) { hour in
+                hourMarkerLabel(for: hour, center: center, radius: radius, labelPadding: labelPadding)
             }
         }
     }
     
-    @ViewBuilder
-    private func hourMarker(for hour: Int, center: CGPoint) -> some View {
-        let angle = angleForHour(hour)
-        let markerRadius = circleRadius + strokeWidth/2 + 10
+    private func hourMarkerLabel(for hour: Int, center: CGPoint, radius: CGFloat, labelPadding: CGFloat) -> some View {
+        let angle = Double(hour) * (360.0 / 24.0) - 90
+        let labelRadius = radius + strokeWidth / 2 + labelPadding + 6
+        let xPosition = center.x + labelRadius * cos(angle * .pi / 180)
+        let yPosition = center.y + labelRadius * sin(angle * .pi / 180)
         
-        let x = center.x + cos(angle * .pi / 180) * markerRadius
-        let y = center.y + sin(angle * .pi / 180) * markerRadius
-        
-        Text(String(format: "%02d", hour))
-            .font(.system(size: 8, weight: .medium))
-            .foregroundColor(.secondary)
-            .position(x: x, y: y)
+        let fontSize = max(7, radius / 12)
+        let textColor = colorScheme == .dark ? Color.white : Color.black
+
+        return Text(String(format: "%02d:00", hour))
+            .font(.system(size: fontSize, weight: .medium))
+            .foregroundColor(textColor.opacity(0.8))
+            .position(x: xPosition, y: yPosition)
     }
     
     // MARK: - Current Time Indicator
-    @ViewBuilder
-    private func currentTimeIndicator(center: CGPoint) -> some View {
-        let now = Date()
-        let currentAngle = angleForTime(from: now)
-        let indicatorRadius = circleRadius + strokeWidth/2 + 2
+    private func currentTimeIndicator(center: CGPoint, radius: CGFloat) -> some View {
+        let currentAngle = angleForCurrentTime()
+        let indicatorLength = strokeWidth / 2 + 6
         
-        let x = center.x + cos(currentAngle * .pi / 180) * indicatorRadius
-        let y = center.y + sin(currentAngle * .pi / 180) * indicatorRadius
-        
-        Circle()
-            .fill(Color.red)
-            .frame(width: 4, height: 4)
-            .position(x: x, y: y)
+        return Group {
+            // Kırmızı ibre çizgisi
+            Path { path in
+                let startRadius = radius - indicatorLength
+                let endRadius = radius + indicatorLength
+                
+                let startX = center.x + startRadius * cos(currentAngle * .pi / 180)
+                let startY = center.y + startRadius * sin(currentAngle * .pi / 180)
+                
+                let endX = center.x + endRadius * cos(currentAngle * .pi / 180)
+                let endY = center.y + endRadius * sin(currentAngle * .pi / 180)
+                
+                path.move(to: CGPoint(x: startX, y: startY))
+                path.addLine(to: CGPoint(x: endX, y: endY))
+            }
+            .stroke(Color.red, lineWidth: 2)
+            
+            // Merkezdeki kırmızı nokta
+            Circle()
+                .fill(Color.red)
+                .frame(width: 4, height: 4)
+                .position(center)
+            
+            // İbre ucundaki kırmızı nokta
+            Circle()
+                .fill(Color.red)
+                .frame(width: 3, height: 3)
+                .position(
+                    x: center.x + (radius + indicatorLength) * cos(currentAngle * .pi / 180),
+                    y: center.y + (radius + indicatorLength) * sin(currentAngle * .pi / 180)
+                )
+        }
     }
     
-    // MARK: - Sleep Block Time Labels (optimize edilmiş)
-    @ViewBuilder
-    private func sleepBlockTimeLabels(center: CGPoint) -> some View {
+    // MARK: - Sleep Block Time Labels
+    private func sleepBlockTimeLabels(center: CGPoint, radius: CGFloat) -> some View {
         ZStack {
             if let sleepBlocks = schedule.sleepBlocks {
                 ForEach(sleepBlocks.indices, id: \.self) { index in
-                    sleepBlockTimeLabel(for: sleepBlocks[index], index: index, center: center)
+                    sleepBlockTimeLabel(for: sleepBlocks[index], center: center, radius: radius)
                 }
             }
         }
     }
     
     @ViewBuilder
-    private func sleepBlockTimeLabel(for block: SharedSleepBlock, index: Int, center: CGPoint) -> some View {
-        let startAngle = angleForTime(from: block.startTime)
-        let durationHours = Double(block.durationMinutes) / 60.0
-        let midAngle = startAngle + (durationHours * (360.0 / 24.0)) / 2
-        
-        // Daha kompakt label pozisyonu
-        let labelRadius = circleRadius - strokeWidth/2 - 4
-        let x = center.x + cos(midAngle * .pi / 180) * labelRadius
-        let y = center.y + sin(midAngle * .pi / 180) * labelRadius
-        
-        // Sadece önemli bloklar için label göster
-        if block.durationMinutes > 45 {
-            VStack(spacing: 0) {
-                Text(formatTime(block.startTime))
-                    .font(.system(size: 6, weight: .semibold))
-                Text(formatTime(block.endTime))
-                    .font(.system(size: 6, weight: .semibold))
-            }
-            .foregroundColor(.white)
-            .padding(.horizontal, 2)
-            .padding(.vertical, 1)
-            .background(
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(Color.black.opacity(0.7))
-            )
-            .position(x: x, y: y)
-        }
-    }
-    
-    // MARK: - Center Time Info
-    @ViewBuilder
-    private func centerTimeInfo(center: CGPoint) -> some View {
-        VStack(spacing: 1) {
-            Text(schedule.name)
-                .font(.system(size: 7, weight: .semibold))
-                .foregroundColor(.primary)
-                .lineLimit(1)
+    private func sleepBlockTimeLabel(for block: SharedSleepBlock, center: CGPoint, radius: CGFloat) -> some View {
+        Group {
+            let startAngle = angleForTime(timeString: block.startTime)
+            let endAngle = angleForTime(timeString: block.endTime)
             
-            Text("\(schedule.totalSleepHours ?? 0, specifier: "%.1f")s")
-                .font(.system(size: 6))
-                .foregroundColor(.secondary)
-                
-            // Show current time
-            Text(currentTimeString())
-                .font(.system(size: 6))
-                .foregroundColor(.red)
-                .fontWeight(.medium)
+            // Gece yarısını geçen blokları handle et
+            let adjustedEndAngle = endAngle < startAngle ? endAngle + 360 : endAngle
+            
+            // Bloğun ortasında tek bir etiket göster
+            let midAngle = (startAngle + adjustedEndAngle) / 2
+            let normalizedAngle = normalizeAngle(midAngle)
+            
+            // Label positioning
+            let labelRadius = radius - strokeWidth / 2 - 16
+            let xPosition = center.x + labelRadius * cos(midAngle * .pi / 180)
+            let yPosition = center.y + labelRadius * sin(midAngle * .pi / 180)
+            
+            // Check if block is long enough to show labels
+            let angleDifference = abs(adjustedEndAngle - startAngle)
+            let isLongBlock = angleDifference > 20 // Minimum 20 derece
+            
+            // Etiket yönünü belirle
+            let isVertical = (normalizedAngle >= 315 || normalizedAngle <= 45) || (normalizedAngle >= 135 && normalizedAngle <= 225)
+            
+            if isLongBlock {
+            Group {
+                if isVertical {
+                    // Dikey layout - sağ/sol tarafta (alt alta)
+                    VStack(spacing: 1) {
+                        Text(formatTime(block.startTime))
+                            .font(.system(size: max(6, radius / 15), weight: .semibold))
+                        Text(formatTime(block.endTime))
+                            .font(.system(size: max(6, radius / 15), weight: .semibold))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 3)
+                    .padding(.vertical, 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color.black.opacity(0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 3)
+                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
+                            )
+                    )
+                    .position(x: xPosition, y: yPosition)
+                } else {
+                    // Yatay layout - üst/alt tarafta (yan yana)
+                    HStack(spacing: 1) {
+                        Text(formatTime(block.startTime))
+                            .font(.system(size: max(6, radius / 15), weight: .semibold))
+                        Text("-")
+                            .font(.system(size: max(5, radius / 16), weight: .medium))
+                        Text(formatTime(block.endTime))
+                            .font(.system(size: max(6, radius / 15), weight: .semibold))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 3)
+                    .padding(.vertical, 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color.black.opacity(0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 3)
+                                    .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
+                            )
+                    )
+                    .position(x: xPosition, y: yPosition)
+                }
+            }
         }
-        .position(center)
+        }
     }
     
-    // MARK: - Helper Methods
     
-    /// Saat için açıyı hesaplar (12 saat = 0°, 6 saat = 180°)
-    private func angleForHour(_ hour: Int) -> Double {
-        return Double(hour) * (360.0 / 24.0) - 90.0
-    }
+    // MARK: - Helper Functions
     
-    /// Date'den açıyı hesaplar
-    private func angleForTime(from date: Date) -> Double {
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minute = calendar.component(.minute, from: date)
-        
-        let totalMinutes = Double(hour * 60 + minute)
-        return (totalMinutes / (24 * 60)) * 360 - 90
-    }
-    
-    /// String time'dan açıyı hesaplar - mobil ile tutarlı
-    private func angleForTime(from timeString: String) -> Double {
-        let components = timeString.components(separatedBy: ":")
+    private func angleForTime(timeString: String) -> Double {
+        let components = timeString.split(separator: ":")
         guard components.count == 2,
               let hour = Int(components[0]),
               let minute = Int(components[1]) else {
@@ -245,23 +329,35 @@ struct WatchCircularSleepChart: View {
         return (totalMinutes / (24 * 60)) * 360 - 90
     }
     
-    /// Time'ı display için formatlar
-    private func formatTime(_ timeString: String) -> String {
-        // HH:mm formatını kısalt
-        let components = timeString.components(separatedBy: ":")
-        if components.count == 2 {
-            let hour = components[0]
-            let minute = components[1]
-            return "\(hour):\(minute)"
-        }
-        return timeString
+    private func angleForCurrentTime() -> Double {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: currentTime)
+        let minute = calendar.component(.minute, from: currentTime)
+        
+        let totalMinutes = Double(hour * 60 + minute)
+        return (totalMinutes / (24 * 60)) * 360 - 90
     }
     
-    /// Current time'ı display için formatlar
-    private func currentTimeString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: Date())
+    private func normalizeAngle(_ angle: Double) -> Double {
+        var normalizedAngle = angle
+        while normalizedAngle < 0 {
+            normalizedAngle += 360
+        }
+        while normalizedAngle >= 360 {
+            normalizedAngle -= 360
+        }
+        return normalizedAngle
+    }
+    
+    private func formatTime(_ timeString: String) -> String {
+        let components = timeString.split(separator: ":")
+        guard components.count == 2,
+              let hour = Int(components[0]),
+              let minute = Int(components[1]) else {
+            return timeString
+        }
+        
+        return String(format: "%02d:%02d", hour, minute)
     }
 }
 
