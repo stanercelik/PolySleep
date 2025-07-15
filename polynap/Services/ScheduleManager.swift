@@ -98,6 +98,12 @@ class ScheduleManager: ObservableObject {
             self.activeSchedule = schedule
             await self.updateNotificationsForActiveSchedule()
             
+            // Watch'a senkronizasyon için tam bir sync gerçekleştir
+            await WatchSyncBridge.shared.performFullSync()
+            
+            // Schedule değişikliği notification'ı gönder
+            NotificationCenter.default.post(name: .scheduleDidChange, object: nil, userInfo: ["schedule": schedule])
+            
             print("✅ ScheduleManager: Program başarıyla aktifleştirildi: \(schedule.name)")
         } catch {
             print("🚨 ScheduleManager: Program aktifleştirilemedi: \(error)")

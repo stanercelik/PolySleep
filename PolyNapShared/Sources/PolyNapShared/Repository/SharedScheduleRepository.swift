@@ -174,19 +174,91 @@ public final class SharedScheduleRepository: SharedBaseRepository {
         
         logger.debug("🔄 Tüm SharedUserSchedule'lar deaktive edildi")
     }
-    
+
     /// Belirli schedule'ı aktive eder, diğerlerini deaktive eder
-    public func setActiveSchedule(_ scheduleId: UUID) async throws {
-        // Önce tüm schedule'ları deaktive et
+    public func setActiveSchedule(id: UUID) async throws {
         try await deactivateAllSchedules()
-        
-        // Belirtilen schedule'ı aktive et
-        if let schedule = try getScheduleById(scheduleId) {
-            try await updateSchedule(schedule, isActive: true)
-            logger.debug("✅ SharedUserSchedule aktive edildi: \(schedule.name)")
+        if let scheduleToActivate = try getScheduleById(id) {
+            try await updateSchedule(scheduleToActivate, isActive: true)
+            logger.debug("✅ Schedule aktive edildi: \(scheduleToActivate.name)")
         } else {
+            logger.error("❌ Aktive edilecek schedule bulunamadı: \(id.uuidString)")
             throw SharedRepositoryError.entityNotFound
         }
+    }
+    
+    /// Belirli schedule'ı deaktive eder
+    public func deactivateSchedule(id: UUID) async throws {
+        if let schedule = try getScheduleById(id) {
+            try await updateSchedule(schedule, isActive: false)
+        }
+    }
+
+    /// WSSchedulePayload'dan bir schedule oluşturur veya günceller
+    public func createOrUpdateSchedule(from payload: WSSchedulePayload) async throws -> SharedUserSchedule {
+        let schedule: SharedUserSchedule
+        
+        // Mevcut schedule'ı ID ile bul
+        if let existingSchedule = try getScheduleById(payload.id) {
+            schedule = existingSchedule
+            logger.debug("🔄 Mevcut schedule güncelleniyor: \(payload.name)")
+            
+            // Özellikleri güncelle
+            schedule.name = payload.name
+            schedule.scheduleDescription = payload.description
+            schedule.totalSleepHours = payload.totalSleepHours
+            schedule.isActive = payload.isActive
+            schedule.adaptationPhase = payload.adaptationPhase
+            schedule.updatedAt = Date()
+            
+            // Mevcut sleep block'ları sil
+            if let existingBlocks = schedule.sleepBlocks {
+                for block in existingBlocks {
+                    try delete(block)
+                }
+                schedule.sleepBlocks?.removeAll()
+            }
+            
+        } else {
+            // Yeni schedule oluştur
+            logger.debug("✨ Yeni schedule oluşturuluyor: \(payload.name)")
+            // Geçici olarak varsayılan bir kullanıcı al/oluştur.
+            // TODO: Kullanıcı senkronizasyonunu daha sağlam hale getir.
+            let user = try await SharedUserRepository.shared.createOrGetUser(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, displayName: "Watch User")
+
+            schedule = SharedUserSchedule(
+                id: payload.id,
+                user: user,
+                name: payload.name,
+                scheduleDescription: payload.description,
+                totalSleepHours: payload.totalSleepHours,
+                adaptationPhase: payload.adaptationPhase,
+                isActive: payload.isActive
+            )
+            try insert(schedule)
+        }
+        
+        // Yeni sleep block'ları ekle
+        var newBlocks: [SharedSleepBlock] = []
+        for blockPayload in payload.sleepBlocks {
+            let newBlock = SharedSleepBlock(
+                id: blockPayload.id,
+                schedule: schedule,
+                startTime: blockPayload.startTime,
+                endTime: blockPayload.endTime,
+                durationMinutes: blockPayload.durationMinutes,
+                isCore: blockPayload.isCore,
+                syncId: blockPayload.id.uuidString
+            )
+            newBlocks.append(newBlock)
+            try insert(newBlock)
+        }
+        schedule.sleepBlocks = newBlocks
+        
+        try save()
+        logger.debug("✅ Schedule başarıyla kaydedildi: \(schedule.name)")
+        
+        return schedule
     }
     
     // MARK: - Sleep Block Methods

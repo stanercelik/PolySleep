@@ -49,7 +49,7 @@ struct QuickSleepEntryView: View {
     
     @ViewBuilder
     private var sleepStatusSection: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             // Status Icon
             Image(systemName: sleepTrackingService.sleepTrackingState.isSleeping ? "moon.zzz.fill" : "moon.fill")
                 .font(.system(size: 24))
@@ -82,17 +82,23 @@ struct QuickSleepEntryView: View {
             sleepTrackingService.toggleSleepState()
         }) {
             HStack(spacing: 6) {
-                Image(systemName: sleepTrackingService.sleepTrackingState.isSleeping ? "stop.fill" : "play.fill")
-                    .font(.system(size: 12))
+                if sleepTrackingService.isProcessing {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: sleepTrackingService.sleepTrackingState.isSleeping ? "stop.fill" : "play.fill")
+                        .font(.system(size: 12))
+                }
                 
                 Text(sleepTrackingService.sleepTrackingState.isSleeping ? "Uyku Bitir" : "Uyku Başlat")
                     .font(.system(size: 14, weight: .semibold))
             }
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
-            .frame(height: 36)
+            .frame(height: 40)
             .background(sleepTrackingService.sleepTrackingState.isSleeping ? Color.red : Color.blue)
-            .cornerRadius(18)
+            .cornerRadius(20)
         }
         .disabled(sleepTrackingService.isProcessing)
         .opacity(sleepTrackingService.isProcessing ? 0.6 : 1.0)
@@ -140,8 +146,14 @@ struct QuickSleepEntryView: View {
                 confirmRating()
             }) {
                 HStack(spacing: 4) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 12))
+                    if sleepTrackingService.isProcessing {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(0.8)
+                    } else {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 12))
+                    }
                     Text("Onayla")
                         .font(.system(size: 13, weight: .semibold))
                 }

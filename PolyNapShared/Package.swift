@@ -20,7 +20,13 @@ let package = Package(
         .target(
             name: "PolyNapShared",
             dependencies: [],
-            path: "Sources/PolyNapShared"
+            path: "Sources/PolyNapShared",
+            sources: [
+                "Models",
+                "Repository",
+                "Services",
+                "Utils"
+            ]
         ),
         .testTarget(
             name: "PolyNapSharedTests",

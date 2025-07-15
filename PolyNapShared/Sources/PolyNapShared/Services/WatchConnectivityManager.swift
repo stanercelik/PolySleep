@@ -599,6 +599,33 @@ public class WatchConnectivityManager: NSObject, ObservableObject {
         print("📤 Message gönderildi: \(message.type.rawValue)")
     }
     
+    /// Instant message sending with priority and immediate delivery
+    public func sendInstantMessage(_ message: WatchMessage) {
+        guard isReachable else {
+            print("⚠️ Instant message gönderilemedi - bağlantı yok: \(message.type.rawValue)")
+            // Fallback: Application context ile gönder
+            updateApplicationContext(message.dictionary)
+            return
+        }
+        
+        // Instant message için reply handler ekle - daha hızlı delivery
+        session.sendMessage(message.dictionary, replyHandler: { [weak self] reply in
+            Task { @MainActor in
+                print("⚡ Instant message başarıyla teslim edildi: \(message.type.rawValue)")
+                self?.lastSyncDate = Date()
+            }
+        }) { [weak self] error in
+            Task { @MainActor in
+                print("❌ Instant message gönderim hatası (\(message.type.rawValue)): \(error.localizedDescription)")
+                // Fallback: Application context ile tekrar dene
+                self?.updateApplicationContext(message.dictionary)
+                self?.handleCommunicationError(error)
+            }
+        }
+        
+        print("⚡ Instant message gönderildi: \(message.type.rawValue)")
+    }
+    
     // MARK: - Background Transfer Methods
     
     /// Application Context günceller - son durum bilgisi için
@@ -1324,13 +1351,13 @@ extension WatchConnectivityManager: WCSessionDelegate {
     /// Schedule güncellemesini karşı platforma bildir
     public func notifyScheduleUpdate(_ schedule: [String: Any]) {
         let message = WatchMessage(type: .scheduleUpdate, data: schedule)
-        sendMessage(message)
+        sendInstantMessage(message)
     }
     
     /// Schedule aktivasyonunu karşı platforma bildir
     public func notifyScheduleActivated(_ schedule: [String: Any]) {
         let message = WatchMessage(type: .scheduleActivated, data: schedule)
-        sendMessage(message)
+        sendInstantMessage(message)
     }
     
     /// Adaptation progress güncellemesini karşı platforma bildir

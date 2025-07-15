@@ -134,12 +134,17 @@ public class SharedRepository: ObservableObject {
     
     /// Belirli schedule'ı aktive eder, diğerlerini deaktive eder
     public func setActiveSchedule(_ scheduleId: UUID) async throws {
-        try await scheduleRepository.setActiveSchedule(scheduleId)
+        try await scheduleRepository.setActiveSchedule(id: scheduleId)
     }
     
-    /// Tüm schedule'ları deaktive eder
-    public func deactivateAllSchedules() async throws {
-        try await scheduleRepository.deactivateAllSchedules()
+    /// Belirli schedule'ı deaktive eder
+    public func deactivateSchedule(id: UUID) async throws {
+        try await scheduleRepository.deactivateSchedule(id: id)
+    }
+
+    /// WSSchedulePayload'dan schedule oluşturur veya günceller
+    public func createOrUpdateSchedule(from payload: WSSchedulePayload) async throws -> SharedUserSchedule {
+        return try await scheduleRepository.createOrUpdateSchedule(from: payload)
     }
     
     // MARK: - Sleep Block Management (Delegated to SharedScheduleRepository)

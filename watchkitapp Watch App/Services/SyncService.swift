@@ -42,6 +42,7 @@ class SyncService: ObservableObject {
     @Published var hasPendingSync: Bool = false
     @Published var offlineEntries: [SharedSleepEntry] = []
     @Published var isConnected: Bool = false
+    @Published var latestAdaptationData: [String: Any]? = nil
     
     // MARK: - Private Properties
     private let watchConnectivity = WatchConnectivityManager.shared
@@ -113,6 +114,20 @@ class SyncService: ObservableObject {
         syncStatus = .success(Date())
         lastSyncTime = Date()
         syncRetryCount = 0
+        
+        // Adaptasyon verisini işle
+        if let syncData = data,
+           let adaptationData = syncData["adaptationData"] as? [String: Any] {
+            self.latestAdaptationData = adaptationData
+            print("📊 Adaptasyon verisi güncellendi: \(adaptationData)")
+            
+            // Adaptasyon verisi güncellemesi notification'ı gönder
+            NotificationCenter.default.post(
+                name: .adaptationDataDidUpdate,
+                object: nil,
+                userInfo: ["adaptationData": adaptationData]
+            )
+        }
         
         // Offline entries'i sync et
         if hasPendingSync {
@@ -213,4 +228,9 @@ extension SyncService {
     var isSyncing: Bool {
         isCurrentlySyncing
     }
+}
+
+// MARK: - Notification Names Extension
+extension Notification.Name {
+    static let adaptationDataDidUpdate = Notification.Name("AdaptationDataDidUpdate")
 } 

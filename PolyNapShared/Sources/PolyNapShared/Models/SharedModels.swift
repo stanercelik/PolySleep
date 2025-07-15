@@ -293,4 +293,94 @@ public final class SharedAdaptationProgress {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
+}
+
+// MARK: - Watch Sync Models
+
+public enum WatchSyncMessageType: String, Codable {
+    case scheduleSync
+    case scheduleUpdate
+    case scheduleActivated
+    case userPreferencesSync
+    case sleepDataBatch
+    case fullDataSyncRequest
+    case syncComplete
+}
+
+public struct WatchSyncPayload<T: Codable>: Codable {
+    public var type: WatchSyncMessageType
+    public var timestamp: Date
+    public var data: T?
+    
+    public init(type: WatchSyncMessageType, data: T?) {
+        self.type = type
+        self.timestamp = Date()
+        self.data = data
+    }
+}
+
+public struct WSSchedulePayload: Codable {
+    public let id: UUID
+    public let name: String
+    public let description: String
+    public let totalSleepHours: Double
+    public let isActive: Bool
+    public let adaptationPhase: Int
+    public let sleepBlocks: [WSSleepBlock]
+    public let adaptationData: WSAdaptationData?
+
+    public init(id: UUID, name: String, description: String, totalSleepHours: Double, isActive: Bool, adaptationPhase: Int, sleepBlocks: [WSSleepBlock], adaptationData: WSAdaptationData?) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.totalSleepHours = totalSleepHours
+        self.isActive = isActive
+        self.adaptationPhase = adaptationPhase
+        self.sleepBlocks = sleepBlocks
+        self.adaptationData = adaptationData
+    }
+}
+
+public struct WSSleepBlock: Codable, Identifiable {
+    public let id: UUID
+    public let startTime: String
+    public let endTime: String
+    public let durationMinutes: Int
+    public let isCore: Bool
+
+    public init(id: UUID, startTime: String, endTime: String, durationMinutes: Int, isCore: Bool) {
+        self.id = id
+        self.startTime = startTime
+        self.endTime = endTime
+        self.durationMinutes = durationMinutes
+        self.isCore = isCore
+    }
+}
+
+public struct WSAdaptationData: Codable {
+    public let adaptationPhase: Int
+    public let adaptationPercentage: Double
+    public let totalEntries: Int
+    public let last7DaysEntries: Int
+    public let averageRating: Double
+
+    public init(adaptationPhase: Int, adaptationPercentage: Double, totalEntries: Int, last7DaysEntries: Int, averageRating: Double) {
+        self.adaptationPhase = adaptationPhase
+        self.adaptationPercentage = adaptationPercentage
+        self.totalEntries = totalEntries
+        self.last7DaysEntries = last7DaysEntries
+        self.averageRating = averageRating
+    }
+}
+
+public struct WSUserPreferences: Codable {
+    public let userId: UUID
+    public let displayName: String
+    public let isPremium: Bool
+
+    public init(userId: UUID, displayName: String, isPremium: Bool) {
+        self.userId = userId
+        self.displayName = displayName
+        self.isPremium = isPremium
+    }
 } 

@@ -4,4 +4,6 @@
 /Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedScheduleRepository.swift
 /Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedSleepEntryRepository.swift
 /Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Repository/SharedUserRepository.swift
+/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/SharedModelContainer.swift
 /Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Services/WatchConnectivityManager.swift
+/Users/tanercelik/Desktop/Projects/PolySleep/polynap/PolyNapShared/Sources/PolyNapShared/Utils/SharedLocalization.swift

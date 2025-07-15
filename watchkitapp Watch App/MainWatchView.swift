@@ -31,8 +31,8 @@ struct MainWatchView: View {
             // Sayfa 3: Quick Sleep Entry (Hızlı Uyku Girişi)
             QuickSleepEntryView(
                 viewModel: sleepEntryViewModel,
-                sleepTrackingService: mainViewModel.sleepTracking,
-                statisticsService: mainViewModel.statistics
+                sleepTrackingService: mainViewModel.sleepTrackingService,
+                statisticsService: mainViewModel.statisticsService
             )
                 .tabItem {
                     Image(systemName: "plus.circle.fill")
@@ -47,9 +47,9 @@ struct MainWatchView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSExtensionHostDidBecomeActive)) { _ in
             // Uygulama aktif olduğunda sync et
-            mainViewModel.requestDataSync()
+            mainViewModel.syncService.requestDataSync()
         }
-        .onReceive(mainViewModel.sync.$syncStatus) { syncStatus in
+        .onReceive(mainViewModel.syncService.$syncStatus) { syncStatus in
             // Sync durumunda değişiklikleri handle et
             handleSyncStatusChange(syncStatus)
         }
@@ -146,7 +146,7 @@ struct MainWatchView: View {
         print("🔄 Watch: İlk data sync başlatılıyor...")
         
         // İlk sync'i request et
-        mainViewModel.requestDataSync()
+        mainViewModel.syncService.requestDataSync()
         
         // Sync'in başlaması için kısa bir delay
         try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 saniye

@@ -11,11 +11,14 @@ struct AdaptationProgressView: View {
                 // Adaptasyon Fazı Header
                 phaseHeaderSection
                 
+                // Yeni Adaptasyon Verisi Bölümü
+                adaptationDataSection
+                
                 // İlerleme Çubuğu
                 progressBarSection
                 
-                // Kalan Süre veya Tamamlanma Durumu
-                remainingTimeSection
+                // İstatistik Kartları
+                statisticsSection
                 
                 // Faz Açıklaması
                 phaseDescriptionSection
@@ -114,6 +117,101 @@ struct AdaptationProgressView: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal, 6)
             .lineLimit(4)
+    }
+    
+    @ViewBuilder
+    private var adaptationDataSection: some View {
+        let data = viewModel.adaptationData
+        
+        VStack(spacing: 8) {
+            // Ana Adaptasyon Yüzdesi
+            VStack(spacing: 2) {
+                Text("\(data.adaptationPercentage)%")
+                    .font(.system(size: 22, weight: .bold))
+                    .foregroundColor(.blue)
+                
+                Text("Adaptasyon")
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+            }
+            
+            // Daire Grafik
+            ZStack {
+                Circle()
+                    .stroke(Color.secondary.opacity(0.2), lineWidth: 4)
+                    .frame(width: 50, height: 50)
+                
+                Circle()
+                    .trim(from: 0, to: CGFloat(data.adaptationPercentage) / 100.0)
+                    .stroke(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.blue, .blue.opacity(0.6)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        style: StrokeStyle(lineWidth: 4, lineCap: .round)
+                    )
+                    .frame(width: 50, height: 50)
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeInOut(duration: 1.0), value: data.adaptationPercentage)
+            }
+        }
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(Color.blue.opacity(0.05))
+        .cornerRadius(12)
+    }
+    
+    @ViewBuilder
+    private var statisticsSection: some View {
+        let data = viewModel.adaptationData
+        
+        HStack(spacing: 8) {
+            // Ortalama Rating
+            statCard(
+                title: "Ortalama",
+                value: String(format: "%.1f", data.averageRating),
+                subtitle: "⭐",
+                color: .orange
+            )
+            
+            // Son 7 Gün Entry
+            statCard(
+                title: "Bu Hafta",
+                value: "\(data.last7DaysEntries)",
+                subtitle: "uyku",
+                color: .green
+            )
+            
+            // Adaptasyon Fazı
+            statCard(
+                title: "Faz",
+                value: "\(data.adaptationPhase)",
+                subtitle: "/4",
+                color: .purple
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func statCard(title: String, value: String, subtitle: String, color: Color) -> some View {
+        VStack(spacing: 2) {
+            Text(title)
+                .font(.system(size: 8))
+                .foregroundColor(.secondary)
+            
+            Text(value)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundColor(color)
+            
+            Text(subtitle)
+                .font(.system(size: 8))
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
+        .background(color.opacity(0.1))
+        .cornerRadius(8)
     }
 }
 

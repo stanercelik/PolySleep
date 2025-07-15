@@ -1,10 +1,11 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "-" : {
+    "--:--" : {
 
     },
     "%.1fs" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -96,6 +97,9 @@
         }
       }
     },
+    "%lld%%" : {
+
+    },
     "Adaptasyon" : {
       "localizations" : {
         "de" : {
@@ -141,6 +145,7 @@
       }
     },
     "Bilgi yükleniyor..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -251,6 +256,9 @@
         }
       }
     },
+    "Kalan" : {
+
+    },
     "Kalan Süre" : {
       "localizations" : {
         "de" : {
@@ -342,7 +350,11 @@
     "Senkronize ediliyor..." : {
 
     },
+    "Sonraki" : {
+
+    },
     "Sonraki Uyku" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

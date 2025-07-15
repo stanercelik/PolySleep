@@ -335,7 +335,6 @@ struct polynapApp: App {
                     
                     // WatchSyncBridge'i configure et
                     watchSyncBridge.configureModelContext(modelContainer.mainContext)
-                    watchSyncBridge.enableSync()
                     print("📱 polynapApp: WatchSyncBridge başlatıldı")
                     
                     // 📊 Analytics: App açılış event'ı

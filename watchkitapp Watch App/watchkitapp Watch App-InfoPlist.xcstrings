@@ -7,25 +7,25 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "watchkitapp"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "watchkitapp"
+            "value" : "PolyNap-Watch"
           }
         },
         "ms" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "watchkitapp"
           }
         },
         "th" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "watchkitapp"
           }
         }
