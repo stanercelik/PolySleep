@@ -1,6 +1,7 @@
 import SwiftUI
 import RevenueCat
 import RevenueCatUI
+import HealthKit
 
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -123,6 +124,18 @@ struct SettingsView: View {
                     ) {
                         VStack(spacing: PSSpacing.md) {
                             AdaptationUndoRow()
+                        }
+                    }
+                    
+                    // Integrations Section
+                    ModernSettingsSection(
+                        title: "Entegrasyonlar",
+                        icon: "link.circle.fill",
+                        iconColor: .green,
+                        isMinimal: true
+                    ) {
+                        VStack(spacing: PSSpacing.md) {
+                            HealthKitIntegrationRow()
                         }
                     }
                     
@@ -690,7 +703,161 @@ struct AdaptationUndoRow: View {
     }
 }
 
-
+// MARK: - HealthKit Integration Row
+struct HealthKitIntegrationRow: View {
+    @StateObject private var healthKitManager = HealthKitManager.shared
+    @State private var isConnecting = false
+    @State private var showingError = false
+    @State private var errorMessage = ""
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            // Icon with background
+            ZStack {
+                Circle()
+                    .fill(Color.green.opacity(0.1))
+                    .frame(width: 36, height: 36)
+                
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.green)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Apple Sağlık")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.appText)
+                
+                Text(getStatusText())
+                    .font(.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .lineLimit(2)
+            }
+            
+            Spacer()
+            
+            // Status badge or action button
+            statusBadge
+        }
+        .padding(.vertical, 8)
+        .onAppear {
+            Task {
+                await healthKitManager.getAuthorizationStatus { status in
+                    DispatchQueue.main.async {
+                        healthKitManager.authorizationStatus = status
+                    }
+                }
+            }
+        }
+        .alert("Hata", isPresented: $showingError) {
+            Button("Tamam", role: .cancel) {
+                showingError = false
+            }
+        } message: {
+            Text(errorMessage)
+        }
+    }
+    
+    @ViewBuilder
+    private var statusBadge: some View {
+        switch healthKitManager.authorizationStatus {
+        case .notDetermined:
+            if isConnecting {
+                ProgressView()
+                    .scaleEffect(0.8)
+                    .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+            } else {
+                PSStatusBadge(
+                    "Bağlan",
+                    icon: "plus.circle.fill",
+                    color: .green,
+                    backgroundColor: Color.green.opacity(0.15)
+                )
+                .onTapGesture {
+                    Task {
+                        await requestHealthKitPermission()
+                    }
+                }
+            }
+            
+        case .sharingAuthorized:
+            PSStatusBadge(
+                "Bağlandı",
+                icon: "checkmark.circle.fill",
+                color: .green,
+                backgroundColor: Color.green.opacity(0.15)
+            )
+            
+        case .sharingDenied:
+            PSStatusBadge(
+                "Reddedildi",
+                icon: "xmark.circle.fill",
+                color: .red,
+                backgroundColor: Color.red.opacity(0.15)
+            )
+            .onTapGesture {
+                openHealthSettings()
+            }
+            
+        @unknown default:
+            PSStatusBadge(
+                "Bilinmiyor",
+                icon: "questionmark.circle.fill",
+                color: .appTextSecondary,
+                backgroundColor: Color.appTextSecondary.opacity(0.1)
+            )
+        }
+    }
+    
+    private func getStatusText() -> String {
+        if !healthKitManager.isHealthDataAvailable {
+            return "Bu cihazda HealthKit kullanılamıyor"
+        }
+        
+        switch healthKitManager.authorizationStatus {
+        case .notDetermined:
+            return "Uyku verilerinizi Apple Sağlık ile senkronize edin"
+        case .sharingAuthorized:
+            return "Uyku verileriniz Apple Sağlık ile senkronize ediliyor"
+        case .sharingDenied:
+            return "İzin reddedildi. Ayarlardan değiştirin"
+        @unknown default:
+            return "Durum bilinmiyor"
+        }
+    }
+    
+    private func requestHealthKitPermission() async {
+        guard !isConnecting else { return }
+        
+        isConnecting = true
+        defer { isConnecting = false }
+        
+        let result = await healthKitManager.requestAuthorization()
+        
+        switch result {
+        case .success(_):
+            // Success, status will be updated automatically
+            break
+        case .failure(let error):
+            errorMessage = error.localizedDescription
+            showingError = true
+        }
+    }
+    
+    private func openHealthSettings() {
+        guard let url = URL(string: "x-apple-health://") else { return }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            // Fallback to general settings
+            if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+    }
+}
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {

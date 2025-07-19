@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import HealthKit
 
 /// Aktif uyku programını yöneten ve bildirimlerin planlanmasını tetikleyen sınıf.
 @MainActor
@@ -126,5 +127,104 @@ class ScheduleManager: ObservableObject {
         } catch {
             print("🚨 ScheduleManager: Aktif program sıfırlanırken hata: \(error)")
         }
+    }
+    
+    // MARK: - HealthKit Integration
+    
+    /// Uyku seansı tamamlandığında HealthKit'e veri kaydetme fonksiyonu
+    func saveSleepSessionToHealthKit(startDate: Date, endDate: Date, sleepType: SleepType = .core) async {
+        print("💤 ScheduleManager: HealthKit'e uyku seansı kaydediliyor...")
+        
+        // TODO: HealthKit entegrasyonu tamamlandıktan sonra aktif edilecek
+        /*
+        // HealthKit authorization kontrolü
+        let healthKitManager = HealthKitManager.shared
+        guard healthKitManager.authorizationStatus == .sharingAuthorized else {
+            print("⚠️ ScheduleManager: HealthKit izni yok, kaydetme atlandı")
+            return
+        }
+        
+        // SleepType'ı HealthKit SleepAnalysisType'a çevir
+        let healthKitSleepType: SleepAnalysisType
+        switch sleepType {
+        case .core:
+            healthKitSleepType = .asleep
+        case .nap:
+            healthKitSleepType = .asleep
+        case .powerNap:
+            healthKitSleepType = .asleep
+        }
+        
+        // HealthKit'e kaydet
+        let result = await healthKitManager.saveSleepAnalysis(
+            startDate: startDate,
+            endDate: endDate,
+            sleepType: healthKitSleepType
+        )
+        
+        switch result {
+        case .success():
+            print("✅ ScheduleManager: Uyku seansı HealthKit'e başarıyla kaydedildi")
+            
+            // Analytics event gönder
+            let duration = endDate.timeIntervalSince(startDate)
+            AnalyticsManager.shared.logEvent("healthkit_sleep_saved", parameters: [
+                "duration_minutes": duration / 60,
+                "sleep_type": String(describing: sleepType)
+            ])
+            
+        case .failure(let error):
+            print("🚨 ScheduleManager: HealthKit'e kaydetme hatası: \(error.localizedDescription)")
+            
+            // Analytics event gönder
+            AnalyticsManager.shared.logEvent("healthkit_save_error", parameters: [
+                "error": error.localizedDescription
+            ])
+        }
+        */
+    }
+    
+    /// Uyku bloğu tamamlandığında çağrılacak fonksiyon
+    func completeSleepBlock(blockId: String, actualEndTime: Date) async {
+        print("🏁 ScheduleManager: Uyku bloğu tamamlanıyor: \(blockId)")
+        
+        guard let schedule = activeSchedule else {
+            print("⚠️ ScheduleManager: Aktif program bulunamadı")
+            return
+        }
+        
+        // Uyku bloğunu bul
+        guard let blockUUID = UUID(uuidString: blockId),
+              let block = schedule.schedule.first(where: { $0.id == blockUUID }) else {
+            print("⚠️ ScheduleManager: Uyku bloğu bulunamadı: \(blockId)")
+            return
+        }
+        
+        // Başlangıç zamanını hesapla
+        let startTimeComponents = block.startTimeComponents
+        let startTime = Calendar.current.date(bySettingHour: startTimeComponents.hour, minute: startTimeComponents.minute, second: 0, of: Date()) ?? Date()
+        
+        // String'i SleepType'a çevir
+        let sleepType: SleepType
+        switch block.type.lowercased() {
+        case "core":
+            sleepType = .core
+        case "nap":
+            sleepType = .nap
+        case "powernap":
+            sleepType = .powerNap
+        default:
+            sleepType = .core // varsayılan
+        }
+        
+        // HealthKit'e kaydet
+        await saveSleepSessionToHealthKit(
+            startDate: startTime,
+            endDate: actualEndTime,
+            sleepType: sleepType
+        )
+        
+        // Diğer işlemleri yap (SleepEntry kaydetme vs.)
+        // Bu kısım mevcut işlemlerin devamı olacak
     }
 }

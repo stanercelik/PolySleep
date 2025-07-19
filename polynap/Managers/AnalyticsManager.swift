@@ -82,6 +82,19 @@ class AnalyticsManager: ObservableObject {
     ///   - timeTaken: Tamamlanma süresi (saniye)
     ///   - stepsCompleted: Tamamlanan adım sayısı
     ///   - selectedSchedule: Seçilen uyku programı
+    func logOnboardingSkipped() {
+        print("📊 AnalyticsManager: logOnboardingSkipped called")
+        
+        let parameters: [String: Any] = [
+            "timestamp": Date().timeIntervalSince1970,
+            "user_type": "anonymous",
+            "default_schedule_set": true
+        ]
+        
+        logEvent("onboarding_skipped", parameters: parameters)
+        print("📊 Analytics: Onboarding skipped event logged")
+    }
+    
     func logOnboardingCompleted(timeTaken: TimeInterval? = nil, stepsCompleted: Int? = nil, selectedSchedule: String? = nil) {
         print("🔥 AnalyticsManager: logOnboardingCompleted BAŞLADI")
         

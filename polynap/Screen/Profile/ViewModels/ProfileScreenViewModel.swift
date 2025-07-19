@@ -48,7 +48,7 @@ class ProfileScreenViewModel: ObservableObject {
         guard let schedule = activeSchedule else { return 0 }
         
         let calendar = Calendar.current
-        let startDate = schedule.updatedAt
+        let startDate = schedule.adaptationStartDate ?? schedule.createdAt
         let currentDate = Date()
         
         let startOfStartDate = calendar.startOfDay(for: startDate)
@@ -257,7 +257,7 @@ class ProfileScreenViewModel: ObservableObject {
     
     private func calculateAdaptationPhase(schedule: UserSchedule) -> Int {
         let currentDate = Date()
-        let startDate = schedule.updatedAt
+        let startDate = schedule.adaptationStartDate ?? schedule.createdAt
         
         let calendar = Calendar.current
         
@@ -410,7 +410,7 @@ class ProfileScreenViewModel: ObservableObject {
 
             // Adaptasyonu bugünden başlat (1. gün)
             scheduleToUpdate.adaptationPhase = 0  // İlk faz (1. gün)
-            scheduleToUpdate.updatedAt = Date()   // Şu anki zaman - adaptasyon bugün başlıyor
+            scheduleToUpdate.adaptationStartDate = Date()   // Şu anki zaman - adaptasyon bugün başlıyor
             
             try context.save()
             

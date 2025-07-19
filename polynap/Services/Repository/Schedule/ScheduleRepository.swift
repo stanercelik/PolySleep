@@ -308,12 +308,19 @@ final class ScheduleRepository: BaseRepository {
         do {
             if let existingUserSchedule = try fetch(descriptor).first {
                 // Güncelle
+                let wasInactive = !existingUserSchedule.isActive
                 existingUserSchedule.user = user
                 existingUserSchedule.name = scheduleModel.name
                 existingUserSchedule.scheduleDescription = try RepositoryUtils.encodeScheduleDescription(scheduleModel.description)
                 existingUserSchedule.totalSleepHours = scheduleModel.totalSleepHours
                 existingUserSchedule.isActive = true
                 existingUserSchedule.updatedAt = Date()
+                
+                // Eğer schedule daha önce inaktif idi veya adaptationStartDate yoksa, yeni adaptasyon başlat
+                if wasInactive || existingUserSchedule.adaptationStartDate == nil {
+                    existingUserSchedule.adaptationStartDate = Date()
+                    existingUserSchedule.adaptationPhase = 0
+                }
                 
                 // Mevcut UserSleepBlock'ları temizle
                 if let existingBlocks = existingUserSchedule.sleepBlocks {
@@ -348,6 +355,7 @@ final class ScheduleRepository: BaseRepository {
                     scheduleDescription: try RepositoryUtils.encodeScheduleDescription(scheduleModel.description),
                     totalSleepHours: scheduleModel.totalSleepHours,
                     adaptationPhase: 0,
+                    adaptationStartDate: Date(), // Yeni schedule için adaptasyon başlangıç tarihi
                     isActive: true
                 )
                 

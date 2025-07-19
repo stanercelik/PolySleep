@@ -1860,7 +1860,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlikと情報を提供するのに役立ちます。"
+            "value" : "Polifazik uyku hakkında ne kadar bilginiz var? Bu, size uygun seviyede rehberlik ve bilgi sağlamamıza yardımcı olur."
           }
         }
       }
@@ -2989,6 +2989,174 @@
         }
       }
     },
+    "onboarding.skip" : {
+      "comment" : "Button text to skip the onboarding process",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スキップ"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langkau"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้าม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atla"
+          }
+        }
+      }
+    },
+    "onboarding.skipped.action" : {
+      "comment" : "Action button text on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einen anderen Zeitplan auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a different schedule"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別のスケジュールを選択"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih jadual lain"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกตารางเวลาอื่น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farklı bir program seç"
+          }
+        }
+      }
+    },
+    "onboarding.skipped.message" : {
+      "comment" : "Message on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplanvorschlag konnte nicht gemacht werden, da das Onboarding nicht abgeschlossen wurde."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule suggestion could not be made because onboarding was not completed."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングが完了していないため、スケジュールの提案はできませんでした。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadangan jadual tidak dapat dibuat kerana orientasi tidak selesai."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถให้คำแนะนำตารางเวลาได้เนื่องจากการเริ่มต้นใช้งานยังไม่เสร็จสมบูรณ์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding tamamlanmadığı için çizelge önerisi yapılamadı."
+          }
+        }
+      }
+    },
+    "onboarding.skipped.title" : {
+      "comment" : "Title on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Zeitplanempfehlung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Schedule Recommendation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュールのおすすめはありません"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada Cadangan Jadual"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีคำแนะนำตารางเวลา"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çizelge Önerisi Yok"
+          }
+        }
+      }
+    },
     "onboarding.sleepExperience" : {
       "comment" : "Section title for previous sleep experience",
       "extractionState" : "stale",
@@ -3769,7 +3937,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sosyal taahhütlerinizとgünlük sorumluluklarınızはどれくらい調整可能ですか？ 家族との時間、ソーシャルイベント、会議、そして特定の時間に必要な他の活動を考えてみてください。"
+            "value" : "Sosyal taahhütleriniz ve günlük sorumluluklarınız ne kadar esnek? Aile zamanı, sosyal etkinlikler, toplantılar ve belirli zamanlama gerektiren diğer etkinlikleri göz önünde bulundurun."
           }
         }
       }
@@ -3934,7 +4102,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎲 Düzensiz - Programım sık sıkと予測不能な形で変化します"
+            "value" : "🎲 Düzensiz - Programım sık sık ve öngörülemeyen bir şekilde değişiyor"
           }
         }
       }

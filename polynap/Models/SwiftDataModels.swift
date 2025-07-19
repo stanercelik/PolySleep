@@ -55,6 +55,7 @@ final class UserSchedule {
     var scheduleDescription: String? // JSONB için String veya Data, 'description' Swift'te özel bir anlam taşıdığı için 'scheduleDescription'
     var totalSleepHours: Double?
     var adaptationPhase: Int?
+    var adaptationStartDate: Date?
     var createdAt: Date
     var updatedAt: Date
     var isActive: Bool
@@ -69,6 +70,7 @@ final class UserSchedule {
          scheduleDescription: String? = nil, // JSON string
          totalSleepHours: Double? = nil,
          adaptationPhase: Int? = nil,
+         adaptationStartDate: Date? = nil,
          createdAt: Date = Date(),
          updatedAt: Date = Date(),
          isActive: Bool = false) {
@@ -78,6 +80,7 @@ final class UserSchedule {
         self.scheduleDescription = scheduleDescription
         self.totalSleepHours = totalSleepHours
         self.adaptationPhase = adaptationPhase
+        self.adaptationStartDate = adaptationStartDate
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.isActive = isActive

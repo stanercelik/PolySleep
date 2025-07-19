@@ -6,10 +6,10 @@ import Combine
 
 // MARK: - Paywall Scenario Types
 
-enum PaywallScenario {
-    case allPlans        // Senaryo 1-2: İlk ve ikinci karşılaşma (tüm planları göster)
+enum PaywallScenario {      // Senaryo 1-2: İlk ve ikinci karşılaşma (tüm planları göster)
     case exitDiscount    // Senaryo 3: Özel indirim teklifi (bir kerelik son şans)
-    case trialFocus      // Senaryo 4: Standart teklif (ücretsiz deneme odaklı)
+     // Senaryo 4: Standart teklif (ücretsiz deneme odaklı)
+    case threePlansPaywall
 }
 
 // MARK: - Paywall Trigger Types
@@ -26,7 +26,7 @@ final class PaywallManager: ObservableObject {
     
     static let shared = PaywallManager()
     
-    @Published var currentScenario: PaywallScenario = .allPlans
+    @Published var currentScenario: PaywallScenario = .threePlansPaywall
     @Published var isPaywallPresented = false
     
     private let userDefaults = UserDefaults.standard
@@ -101,10 +101,10 @@ private func checkShouldShowExitDiscount(reason: String) -> Bool {
     print("   Mevcut scenario: \(currentScenario)")
     
     // Sadece kullanıcı manuel olarak kapattıysa ve all_plans scenario'suysa
-    guard currentScenario == .allPlans && 
+    guard currentScenario == .threePlansPaywall &&
           reason == "user_dismissed" else {
         print("   ❌ Exit discount koşulları karşılanmadı:")
-        print("      - Scenario all_plans mi? \(currentScenario == .allPlans)")
+        print("      - Scenario all_plans mi? \(currentScenario == .threePlansPaywall)")
         print("      - User dismissed mi? \(reason == "user_dismissed")")
         print("🔍 =========================================\n")
         return false
@@ -148,12 +148,10 @@ private func checkShouldShowExitDiscount(reason: String) -> Bool {
     /// Hangi offering'in kullanılacağını belirler
     func getOfferingIdentifier(for scenario: PaywallScenario) -> String? {
         switch scenario {
-        case .allPlans:
-            return "all_plans"
         case .exitDiscount:
-            return "exit_discount" 
-        case .trialFocus:
-            return "trial_focus"
+            return "exit_discount"
+        case .threePlansPaywall:
+            return "three_plans_offer"
         }
     }
     
@@ -203,7 +201,7 @@ func triggerExitDiscountForTesting() {
         print("🎯 Beklenen Akış:")
         print("   Count 0: all_plans (onboarding sonrası)")
         print("   Count 1: all_plans (ikinci gösterim)")
-        print("   Count 2+: trial_focus (üçüncü ve sonraki)")
+        print("   Count 2+: threePlansPaywall (üçüncü ve sonraki)")
         print("   Exit discount: sadece count=2'de all_plans kapatıldığında otomatik")
         print("🎯 ==========================================\n")
     }
@@ -220,31 +218,31 @@ func triggerExitDiscountForTesting() {
         case .onboardingComplete:
             // Senaryo 1: İlk karşılaşma (onboarding sonrası)
             print("📱 PaywallManager: Onboarding tamamlandı -> all_plans")
-            return .allPlans
+            return .threePlansPaywall
             
         case .premiumFeatureAccess:
             if currentCount == 0 {
                 // İlk kez premium özelliğe erişmeye çalışıyor - all_plans
                 print("📱 PaywallManager: İlk premium erişim (count=0) -> all_plans")
-                return .allPlans
+                return .threePlansPaywall
             } else if currentCount == 1 {
                 // İkinci kez - tekrar all_plans
                 print("📱 PaywallManager: İkinci premium erişim (count=1) -> all_plans")
-                return .allPlans
+                return .threePlansPaywall
             } else {
                 // Üçüncü ve sonraki gösterimler - trial_focus
-                print("📱 PaywallManager: Üçüncü+ premium erişim (count=\(currentCount)) -> trial_focus")
-                return .trialFocus
+                print("📱 PaywallManager: Üçüncü+ premium erişim (count=\(currentCount)) -> three_plans_offer")
+                return .threePlansPaywall
             }
             
         case .manualTrigger:
             // Manuel tetiklemede mevcut sayıya göre scenario belirle
             if currentCount <= 1 {
-                print("📱 PaywallManager: Manuel tetikleme (count=\(currentCount)) -> all_plans")
-                return .allPlans
+                print("📱 PaywallManager: Manuel tetikleme (count=\(currentCount)) -> threePlansPaywall")
+                return .threePlansPaywall
             } else {
-                print("📱 PaywallManager: Manuel tetikleme (count=\(currentCount)) -> trial_focus")
-                return .trialFocus
+                print("📱 PaywallManager: Manuel tetikleme (count=\(currentCount)) -> threePlansPaywall")
+                return .threePlansPaywall
             }
         }
     }

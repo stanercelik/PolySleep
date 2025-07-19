@@ -102,6 +102,7 @@ public final class SharedScheduleRepository: SharedBaseRepository {
             scheduleDescription: description,
             totalSleepHours: totalSleepHours,
             adaptationPhase: adaptationPhase,
+            adaptationStartDate: Date(), // Yeni schedule için adaptasyon başlangıç tarihi
             isActive: isActive
         )
         
@@ -204,12 +205,19 @@ public final class SharedScheduleRepository: SharedBaseRepository {
             logger.debug("🔄 Mevcut schedule güncelleniyor: \(payload.name)")
             
             // Özellikleri güncelle
+            let wasInactive = !schedule.isActive
             schedule.name = payload.name
             schedule.scheduleDescription = payload.description
             schedule.totalSleepHours = payload.totalSleepHours
             schedule.isActive = payload.isActive
             schedule.adaptationPhase = payload.adaptationPhase
             schedule.updatedAt = Date()
+            
+            // Eğer schedule daha önce inaktif idi veya adaptationStartDate yoksa, yeni adaptasyon başlat
+            if wasInactive || schedule.adaptationStartDate == nil {
+                schedule.adaptationStartDate = Date()
+                schedule.adaptationPhase = 0
+            }
             
             // Mevcut sleep block'ları sil
             if let existingBlocks = schedule.sleepBlocks {
@@ -233,6 +241,7 @@ public final class SharedScheduleRepository: SharedBaseRepository {
                 scheduleDescription: payload.description,
                 totalSleepHours: payload.totalSleepHours,
                 adaptationPhase: payload.adaptationPhase,
+                adaptationStartDate: Date(), // Yeni schedule için adaptasyon başlangıç tarihi
                 isActive: payload.isActive
             )
             try insert(schedule)

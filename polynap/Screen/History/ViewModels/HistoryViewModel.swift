@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Combine
+import HealthKit
 
 enum TimeFilter: String, CaseIterable {
     case today = "history.filter.today"
@@ -33,6 +34,8 @@ class HistoryViewModel: ObservableObject {
     @Published var isSyncing = false
     @Published var syncError: String?
     @Published var syncStatus: SyncStatus = .synced
+    @Published var healthKitData: [HealthKitSleepSample] = []
+    @Published var isHealthKitDataLoaded = false
     
     // MARK: - Private Properties
     var modelContext: ModelContext?
@@ -172,6 +175,11 @@ class HistoryViewModel: ObservableObject {
         // Data'yı yeniden yükle
         loadHistoryItems()
         
+        // HealthKit verilerini yükle
+        Task {
+            await loadHealthKitData()
+        }
+        
         // UI'ı güncelle
         objectWillChange.send()
     }
@@ -213,6 +221,11 @@ class HistoryViewModel: ObservableObject {
             
             syncStatus = .synced
             print("\(self.historyItems.count) adet HistoryModel yüklendi (Filtre: \(selectedFilter.rawValue))")
+            
+            // HealthKit verilerini de yükle
+            Task {
+                await loadHealthKitData()
+            }
             
         } catch {
             handleError("Failed to load history: \(error.localizedDescription)")
@@ -292,8 +305,90 @@ class HistoryViewModel: ObservableObject {
         // Data'yı yeniden yükle
         loadHistoryItems()
         
+        // HealthKit verilerini yükle
+        Task {
+            await loadHealthKitData()
+        }
+        
         // Published property'leri güncelle
         objectWillChange.send()
+    }
+    
+    // MARK: - HealthKit Integration
+    
+    /// HealthKit verilerini yükler
+    func loadHealthKitData() async {
+        let healthKitManager = HealthKitManager.shared
+        
+        // Authorization kontrolü
+        guard healthKitManager.authorizationStatus == .sharingAuthorized else {
+            print("ℹ️ HistoryViewModel: HealthKit izni yok, veriler yüklenmeyecek")
+            await MainActor.run {
+                isHealthKitDataLoaded = false
+                healthKitData = []
+            }
+            return
+        }
+        
+        // Filtre durumuna göre tarih aralığını belirle
+        let (startDate, endDate) = getDateRangeForFilter()
+        
+        // HealthKit verilerini çek
+        let result = await healthKitManager.fetchSleepAnalysis(
+            startDate: startDate,
+            endDate: endDate
+        )
+        
+        await MainActor.run {
+            switch result {
+            case .success(let samples):
+                healthKitData = samples
+                isHealthKitDataLoaded = true
+                print("✅ HistoryViewModel: \(samples.count) adet HealthKit verisi yüklendi")
+                
+            case .failure(let error):
+                healthKitData = []
+                isHealthKitDataLoaded = false
+                print("🚨 HistoryViewModel: HealthKit verisi yüklenemedi: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Belirtilen tarih için HealthKit verilerini döndürür
+    func getHealthKitData(for date: Date) -> [HealthKitSleepSample] {
+        let calendar = Calendar.current
+        return healthKitData.filter { sample in
+            calendar.isDate(sample.startDate, inSameDayAs: date)
+        }
+    }
+    
+    /// Seçili filtre için tarih aralığını döndürür
+    private func getDateRangeForFilter() -> (startDate: Date, endDate: Date) {
+        let calendar = Calendar.current
+        let now = Date()
+        let endDate = now
+        
+        let startDate: Date
+        switch selectedFilter {
+        case .today:
+            startDate = calendar.startOfDay(for: now)
+        case .thisWeek:
+            startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) ?? now
+        case .thisMonth:
+            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+        case .allTime:
+            startDate = calendar.date(byAdding: .month, value: -3, to: now) ?? now // Son 3 ay
+        }
+        
+        return (startDate, endDate)
+    }
+    
+    /// HealthKit ve PolyNap verilerini birleştirerek kombine günlük data döndürür
+    func getCombinedDayData(for date: Date) -> (polyNapEntry: HistoryModel?, healthKitData: [HealthKitSleepSample]) {
+        let polyNapEntry = getHistoryItem(for: date)
+        let healthKitEntries = getHealthKitData(for: date)
+        
+        return (polyNapEntry, healthKitEntries)
     }
 }
 

@@ -746,6 +746,9 @@
         }
       }
     },
+    "Apple Sağlık" : {
+
+    },
     "Are you sure you want to delete this sleep entry? This action cannot be undone." : {
       "localizations" : {
         "de" : {
@@ -1034,6 +1037,9 @@
           }
         }
       }
+    },
+    "Hata" : {
+
     },
     "Hedef" : {
       "localizations" : {

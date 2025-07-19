@@ -44,6 +44,10 @@
 	<string>PolyNap, Sessiz Mod veya Odak modları gibi durumlarda bile acil uyandırma ve hatırlatma bildirimleri göndermek için kritik mesaj izinlerine ihtiyaç duyar.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>PolyNap uyku bloklarınız bittiğinde sizi uyandırmak için alarm bildirimleri gönderir. Bu özellik uyku programınızın düzgün çalışması için gereklidir.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Uyku ve nap verilerinizi Apple Sağlık uygulamasına kaydetmek ve uyku düzeninizi tek bir yerden takip etmenizi sağlamak için izin istiyoruz.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Uygulama içindeki geçmiş uyku verilerinizi Apple Sağlık ile senkronize tutmak ve size daha bütünsel bir analiz sunmak için izin istiyoruz.</string>
 	<key>RevenueCatAPIKey</key>
 	<string>$(REVENUECAT_API_KEY)</string>
 	<key>UIAppFonts</key>

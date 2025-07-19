@@ -26,6 +26,9 @@ let package = Package(
                 "Repository",
                 "Services",
                 "Utils"
+            ],
+            linkerSettings: [
+                .linkedFramework("HealthKit")
             ]
         ),
         .testTarget(

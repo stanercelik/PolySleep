@@ -8,3 +8,16 @@ GoogleService-Info.plist
 
 # Secret Keys
 Keys.xcconfig
+CLAUDE.md
+CODEBASE_SUMMARY.md
+.gitignore
+HEALTHKIT_INTEGRATION_PLAN.md
+GEMINI.md
+AppleWatchDocs/APPLE_WATCH_CLEANUP_SUMMARY.md
+AppleWatchDocs/APPLE_WATCH_MILESTONES.md
+AppleWatchDocs/APPLE_WATCH_INTEGRATION.md
+AppleWatchDocs/APPLE_WATCH_SYNC_SUMMARY.md
+AppleWatchDocs/apple-watch-rules.mdc
+.claude/settings.local.json
+.gemini/settings.json
+.gitignore

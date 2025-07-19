@@ -92,6 +92,7 @@ public final class SharedUserSchedule {
     public var scheduleDescription: String? // JSON string
     public var totalSleepHours: Double?
     public var adaptationPhase: Int?
+    public var adaptationStartDate: Date?
     public var createdAt: Date
     public var updatedAt: Date
     public var isActive: Bool
@@ -106,6 +107,7 @@ public final class SharedUserSchedule {
                 scheduleDescription: String? = nil,
                 totalSleepHours: Double? = nil,
                 adaptationPhase: Int? = nil,
+                adaptationStartDate: Date? = nil,
                 createdAt: Date = Date(),
                 updatedAt: Date = Date(),
                 isActive: Bool = false) {
@@ -115,6 +117,7 @@ public final class SharedUserSchedule {
         self.scheduleDescription = scheduleDescription
         self.totalSleepHours = totalSleepHours
         self.adaptationPhase = adaptationPhase
+        self.adaptationStartDate = adaptationStartDate
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.isActive = isActive

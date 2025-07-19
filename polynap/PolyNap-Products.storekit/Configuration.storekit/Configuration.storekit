@@ -15,7 +15,7 @@
   ],
   "products" : [
     {
-      "displayPrice" : "99.99",
+      "displayPrice" : "79.99",
       "familyShareable" : true,
       "internalID" : "90476A64",
       "localizations" : [
@@ -107,11 +107,15 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "4.99",
+          "displayPrice" : "13.99",
           "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "482865C3",
-          "introductoryOffer" : null,
+          "introductoryOffer" : {
+            "internalID" : "847AD7D3",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
           "localizations" : [
             {
               "description" : "Unlock premium sleep tools monthly\n",
@@ -125,7 +129,6 @@
             }
           ],
           "productID" : "polynap_premium_month",
-          "promotionalImageID" : "B113E365",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Polynap Premium Monthly",
           "subscriptionGroupID" : "52C2F6B0",
@@ -141,12 +144,13 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "34.99",
+          "displayPrice" : "49.99",
           "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "1054DF9C",
           "introductoryOffer" : {
-            "internalID" : "CC2270BC",
+            "displayPrice" : "0.99",
+            "internalID" : "5B0FCC6D",
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
           },
@@ -163,7 +167,6 @@
             }
           ],
           "productID" : "polynap_premium_year",
-          "promotionalImageID" : "7E0F0357",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Polynap Premium Yearly",
           "subscriptionGroupID" : "52C2F6B0",
@@ -179,7 +182,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "24.99",
+          "displayPrice" : "29.99",
           "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "E8831C03",
@@ -194,6 +197,34 @@
           "productID" : "polynap_premium_annual_discount",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Polynap Premium Annual Discount",
+          "subscriptionGroupID" : "52C2F6B0",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "AC4167E0",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "polynap_premium_weekly",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Polynap Premium Weekly",
           "subscriptionGroupID" : "52C2F6B0",
           "type" : "RecurringSubscription",
           "winbackOffers" : [

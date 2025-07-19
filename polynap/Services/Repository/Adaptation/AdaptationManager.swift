@@ -40,7 +40,8 @@ final class AdaptationManager: BaseRepository {
         
         do {
             if let schedule = try fetch(descriptor).first {
-                return schedule.updatedAt
+                // Önce adaptationStartDate'i kontrol et, yoksa createdAt'i kullan
+                return schedule.adaptationStartDate ?? schedule.createdAt
             }
         } catch {
             logger.error("❌ Adaptasyon başlangıç tarihi alınırken hata: \(error)")
@@ -62,7 +63,7 @@ final class AdaptationManager: BaseRepository {
             }
             
             schedule.adaptationPhase = newPhase
-            schedule.updatedAt = Date()
+            // updatedAt'i güncellemiyoruz çünkü bu adaptasyon başlangıç tarihini bozuyor
             
             try save()
             logger.debug("✅ UserSchedule (ID: \(scheduleId.uuidString)) adaptasyon fazı başarıyla güncellendi: \(newPhase)")
@@ -163,8 +164,54 @@ final class AdaptationManager: BaseRepository {
     
     /// Adaptasyon fazını sıfırla (yeni program başlangıcı)
     func resetAdaptationPhase(scheduleId: UUID) throws {
-        try updateAdaptationPhase(scheduleId: scheduleId, newPhase: 0)
-        logger.debug("🔄 Adaptasyon fazı sıfırlandı: \(scheduleId.uuidString)")
+        let descriptor = FetchDescriptor<UserSchedule>(
+            predicate: #Predicate<UserSchedule> { $0.id == scheduleId }
+        )
+        
+        do {
+            guard let schedule = try fetch(descriptor).first else {
+                logger.error("❌ Adaptasyon fazı sıfırlanacak UserSchedule (ID: \(scheduleId.uuidString)) bulunamadı.")
+                throw RepositoryError.entityNotFound
+            }
+            
+            schedule.adaptationPhase = 0
+            schedule.adaptationStartDate = Date() // Yeni adaptasyon başlangıç tarihi
+            
+            try save()
+            logger.debug("🔄 Adaptasyon fazı sıfırlandı: \(scheduleId.uuidString)")
+        } catch {
+            logger.error("❌ Adaptasyon fazı sıfırlanırken hata: \(error.localizedDescription)")
+            throw RepositoryError.updateFailed
+        }
+    }
+    
+    // MARK: - Migration Methods
+    
+    /// Mevcut schedule'lar için adaptationStartDate migration'ı
+    func migrateExistingSchedules() async throws {
+        let descriptor = FetchDescriptor<UserSchedule>()
+        
+        do {
+            let allSchedules = try fetch(descriptor)
+            var migratedCount = 0
+            
+            for schedule in allSchedules {
+                if schedule.adaptationStartDate == nil {
+                    // adaptationStartDate yoksa, createdAt'i kullan
+                    schedule.adaptationStartDate = schedule.createdAt
+                    migratedCount += 1
+                    logger.debug("📱 Schedule migration: \(schedule.name) için adaptationStartDate = \(schedule.createdAt)")
+                }
+            }
+            
+            if migratedCount > 0 {
+                try save()
+                logger.debug("✅ \(migratedCount) schedule için adaptationStartDate migration tamamlandı")
+            }
+        } catch {
+            logger.error("❌ Schedule migration hatası: \(error)")
+            throw error
+        }
     }
     
     // MARK: - Private Helper Methods

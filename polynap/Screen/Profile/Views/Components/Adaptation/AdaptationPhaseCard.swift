@@ -269,7 +269,7 @@ struct AdaptationProgressCard: View {
     private func calculateRealCompletedDays() -> Int {
         if let schedule = viewModel.activeSchedule {
             let calendar = Calendar.current
-            let startDate = schedule.updatedAt
+            let startDate = schedule.adaptationStartDate ?? schedule.createdAt
             let currentDate = Date()
             
             // İki tarih arasındaki tam gün farkını hesapla

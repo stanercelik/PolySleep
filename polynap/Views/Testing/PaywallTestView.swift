@@ -37,7 +37,7 @@ struct PaywallTestView: View {
                     
                     PaywallTestButton(
                         title: "Senaryo 2/3: Premium Feature",
-                        subtitle: "exit_discount veya trial_focus",
+                        subtitle: "exit_discount veya threePlansPaywall",
                         color: .orange
                     ) {
                         paywallManager.presentPaywall(trigger: .premiumFeatureAccess)

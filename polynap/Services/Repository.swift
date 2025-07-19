@@ -117,6 +117,8 @@ class Repository: ObservableObject {
     /// Mevcut ScheduleEntity'ler için eksik UserSchedule'ları oluşturur
     func migrateScheduleEntitiesToUserSchedules() async throws {
         try await migrationService.migrateScheduleEntitiesToUserSchedules()
+        // Adaptasyon startDate migration'ı da çalıştır
+        try await adaptation.migrateExistingSchedules()
     }
     
     /// Silinmiş olarak işaretlenmiş blokları fiziksel olarak siler
