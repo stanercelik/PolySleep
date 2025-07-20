@@ -739,6 +739,47 @@
         }
       }
     },
+    "feedback.message.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geben Sie Ihre Nachricht hier ein..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your message here..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ここにメッセージを入力してください..."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan mesej anda di sini..."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใส่ข้อความของคุณที่นี่..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesajınızı buraya yazın..."
+          }
+        }
+      }
+    },
     "feedback.name" : {
       "extractionState" : "manual",
       "localizations" : {
