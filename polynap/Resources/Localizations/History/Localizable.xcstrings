@@ -199,6 +199,9 @@
         }
       }
     },
+    "%lld min" : {
+
+    },
     "%lld s %lld dk" : {
       "localizations" : {
         "de" : {
@@ -635,6 +638,9 @@
         }
       }
     },
+    "Add new sleep block" : {
+
+    },
     "Alarm ayarları yükleniyor..." : {
       "localizations" : {
         "de" : {
@@ -927,6 +933,9 @@
         }
       }
     },
+    "Delete area" : {
+
+    },
     "Delete Sleep Entry" : {
       "localizations" : {
         "de" : {
@@ -945,6 +954,25 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ลบรายการการนอนหลับ"
+          }
+        }
+      }
+    },
+    "Drag sleep blocks here to delete them" : {
+
+    },
+    "Drag to chart to add a 45-minute sleep block" : {
+
+    },
+    "Dragging sleep block" : {
+
+    },
+    "Duration: %lld minutes, Time: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Duration: %1$lld minutes, Time: %2$@"
           }
         }
       }
@@ -1085,6 +1113,12 @@
         }
       }
     },
+    "Inactive" : {
+
+    },
+    "Invalid position" : {
+
+    },
     "Kalite" : {
       "localizations" : {
         "de" : {
@@ -1217,6 +1251,9 @@
           }
         }
       }
+    },
+    "Nap" : {
+
     },
     "Nap 1" : {
       "localizations" : {
@@ -2098,6 +2135,9 @@
         }
       }
     },
+    "Preview sleep block" : {
+
+    },
     "Puan" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2120,6 +2160,9 @@
           }
         }
       }
+    },
+    "Ready to delete" : {
+
     },
     "Recommended" : {
       "localizations" : {
@@ -2517,6 +2560,9 @@
           }
         }
       }
+    },
+    "Valid position" : {
+
     },
     "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz" : {
       "localizations" : {

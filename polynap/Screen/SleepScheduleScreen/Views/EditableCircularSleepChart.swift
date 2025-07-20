@@ -10,6 +10,10 @@ struct EditableCircularSleepChart: View {
     @State private var center: CGPoint = .zero
     @State private var radius: CGFloat = 0
     @State private var strokeWidth: CGFloat = 0
+    
+    // Threshold constants for better UX
+    private let dragThreshold: CGFloat = 40 // Chart'tan bu mesafede floating mode'a geçer
+    private let snapBackThreshold: CGFloat = 40 // Bu mesafede chart'a geri snap olur
 
     private var circleRadius: CGFloat { chartSize.radius }
     private var defaultStrokeWidth: CGFloat { chartSize.strokeWidth }
@@ -31,7 +35,7 @@ struct EditableCircularSleepChart: View {
             let totalPadding = defaultStrokeWidth + labelPadding + labelWidthApproximation
             let chartDiameter = availableWidth - totalPadding
             let adjustedRadius = chartDiameter / 2
-            let chartCenter = CGPoint(x: availableWidth / 2, y: availableWidth / 2)
+            let chartCenter = CGPoint(x: adjustedRadius + totalPadding/2, y: adjustedRadius + totalPadding/2)
             let adjustedStrokeWidth = adjustedRadius * (defaultStrokeWidth / circleRadius)
 
             VStack {
@@ -44,6 +48,34 @@ struct EditableCircularSleepChart: View {
                     
                     if viewModel.isChartEditMode {
                         snapIndicators(center: chartCenter, radius: adjustedRadius)
+                        
+                        // Plus Button - Sağ alt köşe (her zaman görünür)
+                        plusButton(center: chartCenter, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                        
+                        // Trash Area - Sol alt köşe (her zaman görünür)
+                        trashArea(center: chartCenter, radius: adjustedRadius, strokeWidth: adjustedStrokeWidth)
+                        
+                        // Preview Block (deprecated - keeping for backward compatibility)
+                        if let previewBlock = viewModel.previewBlock {
+                            previewBlockView(
+                                block: previewBlock,
+                                center: chartCenter,
+                                radius: adjustedRadius,
+                                strokeWidth: adjustedStrokeWidth
+                            )
+                        }
+                        
+                        // Floating Block System - Sadece threshold dışına çıktığında göster
+                        if let floatingBlock = viewModel.floatingBlock, 
+                           viewModel.isFloatingBlockVisible, 
+                           viewModel.isBlockFloating {
+                            handDraggedBlockView(
+                                block: floatingBlock,
+                                position: viewModel.floatingBlockPosition,
+                                center: chartCenter,
+                                radius: adjustedRadius
+                            )
+                        }
                     }
                 }
                 .onAppear {
@@ -184,21 +216,49 @@ struct EditableCircularSleepChart: View {
                     block.isCore ? Color.appPrimary : Color.appSecondary,
                     lineWidth: strokeWidth
                 )
-                .opacity(isDragged ? 0.7 : 0.85)
+                .opacity(isDragged && viewModel.isBlockFloating ? 0.2 : (isDragged ? 0.7 : 0.85))
                 .scaleEffect(isDragged ? 1.05 : 1.0)
-                .animation(.easeInOut(duration: 0.2), value: isDragged)
                 .gesture(
                     viewModel.isChartEditMode ?
                     DragGesture(coordinateSpace: .local)
                         .onChanged { value in
                             if viewModel.draggedBlockId == nil && !viewModel.isResizing {
-                                viewModel.startDragging(blockId: block.id, at: value.location)
+                                viewModel.startDragging(blockId: block.id, at: value.startLocation)
+                                // Center bilgisini floating block sistemine ver
+                                if let floatingBlock = viewModel.floatingBlock {
+                                    viewModel.startFloatingBlock(floatingBlock, at: value.startLocation, center: center, radius: radius)
+                                }
                             }
                             
                             if viewModel.draggedBlockId == block.id {
-                                updateBlockPosition(
-                                    blockId: block.id,
-                                    to: value.location,
+                                // Gerçek drag pozisyonunu hesapla (startLocation + translation)
+                                let actualDragPosition = CGPoint(
+                                    x: value.startLocation.x + value.translation.width,
+                                    y: value.startLocation.y + value.translation.height
+                                )
+                                
+                                // Threshold kontrolü yap
+                                let distance = distanceFromCenter(actualDragPosition, center: center)
+                                let isWithinThreshold = distance <= (radius + dragThreshold)
+                                
+                                if isWithinThreshold {
+                                    // Threshold içinde - normal chart editing
+                                    updateBlockPosition(
+                                        blockId: block.id,
+                                        to: actualDragPosition,
+                                        center: center,
+                                        radius: radius
+                                    )
+                                    // Floating block'u gizle
+                                    viewModel.isBlockFloating = false
+                                } else {
+                                    // Threshold dışında - floating mode
+                                    viewModel.isBlockFloating = true
+                                }
+                                
+                                // Her durumda floating sistemi güncelle (trash detection için)
+                                viewModel.updateFloatingBlock(
+                                    to: actualDragPosition,
                                     center: center,
                                     radius: radius
                                 )
@@ -297,7 +357,6 @@ struct EditableCircularSleepChart: View {
         }
         .position(x: posX, y: posY)
         .scaleEffect(viewModel.draggedBlockId == block.id ? 1.15 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: viewModel.draggedBlockId == block.id)
         
     }
     
@@ -359,8 +418,7 @@ struct EditableCircularSleepChart: View {
                     .position(x: labelData.xPosition, y: labelData.yPosition)
                 }
             }
-            .opacity(viewModel.isChartEditMode && isDragged ? 0 : 1)
-            .animation(.easeInOut(duration: 0.2), value: viewModel.draggedBlockId)
+            .opacity(viewModel.isChartEditMode && isDragged && viewModel.isBlockFloating ? 0 : (viewModel.isChartEditMode && isDragged ? 0.3 : 1))
         }
     }
     
@@ -392,6 +450,13 @@ struct EditableCircularSleepChart: View {
     private func angleForTime(hour: Int, minute: Int) -> Double {
         let totalMinutes = Double(hour * 60 + minute)
         return (totalMinutes / (24 * 60)) * 360 - 90
+    }
+    
+    /// Merkez noktaya olan mesafeyi hesaplar
+    private func distanceFromCenter(_ position: CGPoint, center: CGPoint) -> CGFloat {
+        let dx = position.x - center.x
+        let dy = position.y - center.y
+        return sqrt(dx * dx + dy * dy)
     }
     
     private func normalizeAngle(_ angle: Double) -> Double {
@@ -457,55 +522,15 @@ struct EditableCircularSleepChart: View {
     private func updateBlockPosition(blockId: UUID, to position: CGPoint, center: CGPoint, radius: CGFloat) {
         guard viewModel.draggedBlockId == blockId else { return }
         
-        // Pozisyondan açıyı hesapla
-        let dx = position.x - center.x
-        let dy = position.y - center.y
-        
-        // Sadece sürükleme işlemi başladıysa açıyı hesapla
-        guard let startAngle = viewModel.dragStartAngle else {
-            // Sürükleme başlangıcındaki açıyı sakla
-            let initialAngle = atan2(dy, dx)
-            
-            // Başlangıç bloğunun açısını al
-            guard let blockIndex = viewModel.tempScheduleBlocks.firstIndex(where: { $0.id == blockId }),
-                  let startTime = TimeFormatter.time(from: viewModel.tempScheduleBlocks[blockIndex].startTime) else {
-                return
-            }
-            let blockStartAngle = angleForTime(hour: startTime.hour, minute: startTime.minute) * .pi / 180
-            
-            // Dokunma açısı ile blok açısı arasındaki farkı sakla
-            viewModel.dragAngleOffset = initialAngle - blockStartAngle
-            viewModel.dragStartAngle = initialAngle
-            return
-        }
-
-        let currentAngle = atan2(dy, dx)
-        let angleDifference = currentAngle - startAngle
-        
-        // Bloğun başlangıç açısını al
-        guard let originalStartTimeString = viewModel.initialDragState[blockId]?.startTime,
-              let originalStartTime = TimeFormatter.time(from: originalStartTimeString) else {
-            return
-        }
-
-        let originalStartAngle = angleForTime(hour: originalStartTime.hour, minute: originalStartTime.minute) * .pi / 180
-        
-        // Yeni açıyı hesapla
-        let newAngleInRadians = originalStartAngle + angleDifference
-        let newAngleInDegrees = newAngleInRadians * 180 / .pi
-        
-        // 5 dakika snap
-        let snappedAngle = viewModel.snapAngleToFiveMinutes(newAngleInDegrees)
-        
-        // Açıdan zamanı hesapla
-        let newStartTime = viewModel.timeFromAngle(snappedAngle)
+        // Pozisyondan direkt zamanı hesapla (basit ve güvenilir)
+        let newStartTime = viewModel.getCurrentTimeFromPosition(position, center: center)
         
         // Temp schedule'da bloğu güncelle
         if let blockIndex = viewModel.tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
             let currentBlock = viewModel.tempScheduleBlocks[blockIndex]
             
             // Yeni start time ile end time'ı hesapla
-            let newEndTime = TimeFormatter.addMinutes(currentBlock.duration, to: newStartTime)
+            let newEndTime = TimeUtility.adjustTime(newStartTime, byMinutes: currentBlock.duration) ?? newStartTime
             
             // Canlı zaman gösterimini güncelle
             let timeString = "\(newStartTime) - \(newEndTime)"
@@ -569,7 +594,6 @@ struct ResizeHandleView: View {
                 .frame(width: touchAreaSize, height: touchAreaSize)
         }
         .position(x: posX, y: posY)
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isBeingResized)
         .gesture(
             DragGesture(coordinateSpace: .local)
                 .onChanged { value in
@@ -621,4 +645,178 @@ struct ShimmerCircle: View {
                 }
             }
     }
+}
+
+// MARK: - Plus Button Component
+
+extension EditableCircularSleepChart {
+    
+    // MARK: - Plus Button
+    
+    private func plusButton(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+        let buttonRadius: CGFloat = 28
+        // Kartın sağ alt köşesine hizala (butonun merkezi köşede olacak)
+        let buttonPosition = CGPoint(
+            x: center.x + radius - strokeWidth / 2 + buttonRadius * 1.5,
+            y: center.y + radius + strokeWidth + buttonRadius * 0.5
+        )
+        
+        return ZStack {
+            // Background circle - FAB style with drag state
+            Circle()
+                .fill(viewModel.isDraggingNewBlock ? Color.appAccent.opacity(0.8) : Color.appAccent)
+                .frame(width: buttonRadius * 2, height: buttonRadius * 2)
+                .shadow(
+                    color: viewModel.isDraggingNewBlock ? Color.appAccent.opacity(0.2) : Color.appAccent.opacity(0.3), 
+                    radius: viewModel.isDraggingNewBlock ? 6 : 8, 
+                    x: 0, 
+                    y: viewModel.isDraggingNewBlock ? 3 : 4
+                )
+                .overlay(
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+            
+            // Plus icon
+            Image(systemName: "plus")
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(.white)
+            
+            // Touch area (invisible, larger for better UX)
+            Circle()
+                .fill(Color.clear)
+                .frame(width: 70, height: 70)
+        }
+        .position(buttonPosition)
+        //.scaleEffect(viewModel.isDraggingNewBlock ? 1. : 1.0)
+        .opacity(1.0)
+        .accessibilityLabel("Add new sleep block")
+        .accessibilityHint("Drag to chart to add a 45-minute sleep block")
+        .gesture(
+            DragGesture(coordinateSpace: .local)
+                .onChanged { value in
+                    if !viewModel.isDraggingNewBlock {
+                        viewModel.startDraggingNewBlock(at: value.location, center: center, radius: radius)
+                    }
+                    viewModel.updateNewBlockDrag(to: value.location, center: center, radius: radius)
+                }
+                .onEnded { _ in
+                    viewModel.endNewBlockDrag()
+                }
+        )
+    }
+    
+    // MARK: - Trash Area
+    
+    private func trashArea(center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+        let trashRadius: CGFloat = 28 // + butonu ile aynı boyut
+        // Kartın sol alt köşesine hizala (butonun merkezi köşede olacak)
+        let trashPosition = CGPoint(
+            x: center.x - radius + strokeWidth / 2 - trashRadius * 1.5,
+            y: center.y + radius + strokeWidth + trashRadius * 0.5
+        )
+        
+        return ZStack {
+            // Background circle - FAB style matching plus button
+            Circle()
+                .fill(viewModel.isInTrashZone ? Color.appError : Color.appError.opacity(0.9))
+                .frame(width: trashRadius * 2, height: trashRadius * 2)
+                .shadow(
+                    color: viewModel.isInTrashZone ? Color.appError.opacity(0.3) : Color.appError.opacity(0.2), 
+                    radius: viewModel.isInTrashZone ? 6 : 8, 
+                    x: 0, 
+                    y: viewModel.isInTrashZone ? 3 : 4
+                )
+                .overlay(
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+            
+            // Trash icon
+            Image(systemName: "trash")
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(.white)
+            
+            // Touch area (invisible, larger for better UX)
+            Circle()
+                .fill(Color.clear)
+                .frame(width: 70, height: 70)
+        }
+        .position(trashPosition)
+        .opacity(1.0)
+        .accessibilityLabel("Delete area")
+        .accessibilityHint("Drag sleep blocks here to delete them")
+        .accessibilityValue(viewModel.isInTrashZone ? "Ready to delete" : "Inactive")
+    }
+    
+    // MARK: - Preview Block
+    
+    private func previewBlockView(block: SleepBlock, center: CGPoint, radius: CGFloat, strokeWidth: CGFloat) -> some View {
+        guard let startTimeComponents = TimeFormatter.time(from: block.startTime) else {
+            return AnyView(EmptyView())
+        }
+        
+        let startAngle = angleForTime(hour: startTimeComponents.hour, minute: startTimeComponents.minute)
+        let durationHours = Double(block.duration) / 60.0
+        let endAngle = startAngle + (durationHours * (360.0 / 24.0))
+        
+        // Normal sleep block gibi göster - 45 dk olduğu için secondary color
+        let blockColor = viewModel.isDragFromPlusValid ? 
+            (block.isCore ? Color.appPrimary : Color.appSecondary) : 
+            Color.appError
+        
+        return AnyView(
+            Path { path in
+                path.addArc(
+                    center: center,
+                    radius: radius,
+                    startAngle: .degrees(startAngle),
+                    endAngle: .degrees(endAngle),
+                    clockwise: false
+                )
+            }
+            .stroke(
+                blockColor,
+                lineWidth: strokeWidth
+            )
+            .opacity(viewModel.isDragFromPlusValid ? 0.8 : 0.5)
+            .scaleEffect(1.02) // Biraz büyük göster ki dikkat çeksin
+            .accessibilityLabel("Preview sleep block")
+            .accessibilityValue(viewModel.isDragFromPlusValid ? "Valid position" : "Invalid position")
+        )
+    }
+    
+    // MARK: - Hand-Dragged Block Visual
+    
+    private func handDraggedBlockView(block: SleepBlock, position: CGPoint, center: CGPoint, radius: CGFloat) -> some View {
+        let blockColor = block.isCore ? Color.appPrimary : Color.appSecondary
+        let isInTrash = viewModel.isInTrashZone
+        let blockEmoji = block.isCore ? "🌙" : "💤"
+        let timeRange = "\(TimeFormatter.formattedString(from: block.startTime)) - \(block.endTime)"
+        
+        return VStack(spacing: 4) {
+            Text(blockEmoji)
+                .font(.system(size: 24))
+            
+            Text(timeRange)
+                .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                .foregroundColor(.white)
+            
+            Text("\(block.duration) min")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.white.opacity(0.8))
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(isInTrash ? Color.red : blockColor)
+                .shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 4)
+        )
+        .scaleEffect(isInTrash ? 1.1 : 1.0)
+        .position(position)
+        .accessibilityLabel("Dragging sleep block")
+        .accessibilityValue("Duration: \(block.duration) minutes, Time: \(timeRange)")
+        }
+    
 }

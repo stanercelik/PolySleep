@@ -407,12 +407,6 @@ struct MinimalSegmentView: View {
                 // Circular Sleep Chart with Edit Mode
                 PSCard(padding: PSSpacing.md) {
                     VStack(spacing: PSSpacing.sm) {
-                        // Chart edit controls
-                        if viewModel.isChartEditMode {
-                            ChartEditControls(viewModel: viewModel)
-                                .transition(.move(edge: .top).combined(with: .opacity))
-                        }
-                        
                         // Chart
                         EditableCircularSleepChart(
                             viewModel: viewModel,
@@ -422,17 +416,21 @@ struct MinimalSegmentView: View {
                         .aspectRatio(1, contentMode: .fit)
                         .frame(minHeight: 280)
                         
-                        // Edit mode info text
+                        // Chart edit instructions
                         if viewModel.isChartEditMode {
-                            let infoText = chartDragInfo ?? L("mainScreen.chart.dragToMove", table: "MainScreen")
-                            let isDefaultText = chartDragInfo == nil
-                            
-                            Text(infoText)
-                                .font(isDefaultText ? .caption : .system(.caption, design: .monospaced).weight(.medium))
-                                .foregroundColor(isDefaultText ? .appTextSecondary : .appPrimary)
-                                .padding(.top, PSSpacing.sm)
-                                .transition(.opacity)
-                                .id(infoText) // Animates text content changes
+                            if let dragInfo = chartDragInfo {
+                                // Canlı sürükleme feedback'i
+                                Text(dragInfo)
+                                    .font(.system(.caption, design: .monospaced).weight(.medium))
+                                    .foregroundColor(.appPrimary)
+                                    .padding(.top, PSSpacing.sm)
+                                    .transition(.opacity)
+                                    .id(dragInfo)
+                            } else {
+                                // Edit mode talimatları
+                                ChartEditControls(viewModel: viewModel)
+                                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                            }
                         }
                     }
                     .padding(PSSpacing.sm)
@@ -451,12 +449,40 @@ struct ChartEditControls: View {
     @ObservedObject var viewModel: MainScreenViewModel
     
     var body: some View {
-        VStack(spacing: PSSpacing.sm) {
-            Text(L("mainScreen.chart.editTitle", table: "MainScreen"))
-                .font(PSTypography.headline.weight(.semibold))
-                .foregroundColor(.appPrimary)
+        VStack(spacing: PSSpacing.xs) {
+            HStack(spacing: PSSpacing.xs) {
+                Image(systemName: "hand.draw")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.appTextSecondary)
+                Text(L("mainScreen.chart.instruction.move", table: "MainScreen"))
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+            }
+            
+            HStack(spacing: PSSpacing.xs) {
+                Image(systemName: "trash")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.appTextSecondary)
+                Text(L("mainScreen.chart.instruction.delete", table: "MainScreen"))
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+            }
+            
+            HStack(spacing: PSSpacing.xs) {
+                Image(systemName: "plus")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.appTextSecondary)
+                Text(L("mainScreen.chart.instruction.add", table: "MainScreen"))
+                    .font(PSTypography.caption)
+                    .foregroundColor(.appTextSecondary)
+            }
         }
-        .padding(.top, PSSpacing.sm)
+        .padding(.horizontal, PSSpacing.md)
+        .padding(.vertical, PSSpacing.sm)
+        .background(
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .fill(Color.appTextSecondary.opacity(0.05))
+        )
     }
 
 }
@@ -1086,182 +1112,7 @@ struct EditSleepBlockSheet: View {
     }
 }
 
-// MARK: - Legacy Components (Backward Compatibility)
 
-// MARK: - Header Section (Legacy - now ScheduleManagementSection)
-struct HeaderSection: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        ScheduleManagementSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Header Card
-struct HeaderCard: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    @State private var showScheduleDescription: Bool = false
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        ScheduleManagementSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Sleep Chart Card
-struct SleepChartCard: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        SleepChartSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Sleep Blocks Card
-struct SleepBlocksCard: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        SleepBlocksSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Info Cards Section (Legacy - now ProgressInfoSection)
-struct InfoCardsSection: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        ProgressInfoSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Daily Tip Card
-struct DailyTipCard: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        DailyTipSection(viewModel: viewModel)
-    }
-}
-
-// MARK: - Add Block Button
-struct AddBlockButton: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        AddSleepBlockCard(viewModel: viewModel)
-    }
-}
-
-// MARK: - Tip Section
-struct TipSection: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        Text(viewModel.dailyTip, tableName: "Tips")
-            .font(.subheadline)
-            .foregroundColor(.appTextSecondary)
-            .lineSpacing(4)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(12)
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
-    }
-}
-
-// MARK: - Main Info Card
-struct MainInfoCard: View {
-    let icon: String
-    let title: String
-    let value: String
-    let color: Color
-    
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        StatusCard(icon: icon, title: title, value: value, color: color)
-    }
-}
-
-// MARK: - Edit Action Button
-struct EditActionButton: View {
-    let systemImage: String
-    let backgroundColor: Color
-    let isPressed: Bool
-    let action: () -> Void
-    
-    @Environment(\.colorScheme) var colorScheme
-    
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(.white)
-                .frame(width: 28, height: 28)
-                .background(backgroundColor, in: Circle())
-                .scaleEffect(isPressed ? 0.9 : 1.0)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-// MARK: - Chart Edit Action Buttons
-struct ChartEditActionButtons: View {
-    @ObservedObject var viewModel: MainScreenViewModel
-    
-    var body: some View {
-        HStack(spacing: PSSpacing.md) {
-            // Cancel button
-            Button(action: {
-                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-                impactFeedback.impactOccurred()
-                viewModel.cancelChartEdit()
-            }) {
-                HStack(spacing: PSSpacing.xs) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 16))
-                    Text(L("common.cancel", table: "MainScreen"))
-                        .font(PSTypography.subheadline.weight(.medium))
-                }
-                .foregroundColor(.appError)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, PSSpacing.sm)
-                .background(
-                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                        .fill(Color.appError.opacity(0.1))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                                .stroke(Color.appError.opacity(0.3), lineWidth: 1)
-                        )
-                )
-            }
-            
-            // Save button
-            Button(action: {
-                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-                impactFeedback.impactOccurred()
-                viewModel.saveChartEdit() // Değişiklikleri kaydet
-            }) {
-                HStack(spacing: PSSpacing.xs) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 16))
-                    Text(L("common.save", table: "MainScreen"))
-                        .font(PSTypography.subheadline.weight(.medium))
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, PSSpacing.sm)
-                .background(
-                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                        .fill(Color.appSuccess)
-                        .shadow(color: Color.appSuccess.opacity(0.3), radius: 4, x: 0, y: 2)
-                )
-            }
-        }
-        .padding(.horizontal, PSSpacing.sm)
-    }
-}
 
 #Preview {
     let config = ModelConfiguration()
@@ -1270,5 +1121,169 @@ struct ChartEditActionButtons: View {
         .modelContainer(container)
         .environmentObject(LanguageManager.shared)
 }
+
+
+
+
+// MARK: - FloatingSleepBlockView
+struct FloatingSleepBlockView: View {
+    let block: SleepBlock
+    let position: CGPoint
+    let isReadyToDelete: Bool
+    let isValidDrop: Bool
+    
+    var body: some View {
+        VStack(spacing: PSSpacing.xs) {
+            Text(block.isCore ? "Core" : "Nap")
+                .font(PSTypography.caption.weight(.bold))
+                .foregroundColor(isReadyToDelete ? .white : .appText)
+            
+            Text("\(block.startTime) - \(block.endTime)")
+                .font(.system(.caption, design: .monospaced))
+                .foregroundColor(isReadyToDelete ? .white.opacity(0.8) : .appTextSecondary)
+        }
+        .padding(.horizontal, PSSpacing.md)
+        .padding(.vertical, PSSpacing.sm)
+        .background(
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .fill(isReadyToDelete ? Color.appError : (isValidDrop ? Color.appSuccess.opacity(0.2) : Color.appCardBackground))
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .stroke(isReadyToDelete ? Color.clear : (isValidDrop ? Color.appSuccess : Color.appPrimary.opacity(0.2)), lineWidth: 1)
+        )
+        .scaleEffect(isReadyToDelete ? 1.1 : 1.0)
+        .animation(.spring(response: 0.4, dampingFraction: 0.6), value: isReadyToDelete)
+        .position(position)
+        .allowsHitTesting(false)
+        .drawingGroup() // Animasyon performansı için
+    }
+}
+
+// MARK: - PlusButtonView
+struct PlusButtonView: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    let center: CGPoint
+    let radius: CGFloat
+    
+    var body: some View {
+        Image(systemName: "plus.circle.fill")
+            .font(.system(size: 44))
+            .foregroundColor(.appAccent)
+            .background(Circle().fill(Color.appBackground))
+            .position(x: center.x + radius + 40, y: center.y + radius + 40)
+            .allowsHitTesting(!viewModel.isDraggingNewBlock)
+            .gesture(
+                DragGesture(minimumDistance: 5, coordinateSpace: .local)
+                    .onChanged { value in
+                        if !viewModel.isDraggingNewBlock {
+                            viewModel.startDraggingNewBlock(at: value.location, center: center, radius: radius)
+                        }
+                        viewModel.updateNewBlockDrag(to: value.location, center: center, radius: radius)
+                    }
+                    .onEnded { _ in
+                        viewModel.endNewBlockDrag()
+                    }
+            )
+    }
+}
+
+// MARK: - TrashAreaView
+struct TrashAreaView: View {
+    @ObservedObject var viewModel: MainScreenViewModel
+    let center: CGPoint
+    let radius: CGFloat
+    
+    var body: some View {
+        let trashRadius: CGFloat = viewModel.isInTrashZone ? 45 : 40
+        
+        ZStack {
+            Circle()
+                .fill(viewModel.isInTrashZone ? Color.appError.opacity(0.3) : Color.appTextSecondary.opacity(0.1))
+                .frame(width: trashRadius * 2, height: trashRadius * 2)
+                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: viewModel.isInTrashZone)
+                .allowsHitTesting(false)
+            
+            Image(systemName: "trash.fill")
+                .font(.system(size: viewModel.isInTrashZone ? 28 : 24))
+                .foregroundColor(viewModel.isInTrashZone ? .white : .appTextSecondary)
+                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: viewModel.isInTrashZone)
+                .allowsHitTesting(false)
+        }
+        .position(x: center.x - radius - 40, y: center.y + radius + 40)
+        .transition(.scale.combined(with: .opacity))
+        .allowsHitTesting(false)
+    }
+}
+
+
+
+// MARK: - ArcGestureArea
+struct ArcGestureArea: Shape {
+    let startAngle: Double
+    let endAngle: Double
+    let center: CGPoint
+    let radius: CGFloat
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addArc(
+            center: center,
+            radius: radius,
+            startAngle: .degrees(startAngle),
+            endAngle: .degrees(endAngle),
+            clockwise: false
+        )
+        return path.strokedPath(.init(lineWidth: 40)) // Geniş bir dokunma alanı
+    }
+}
+
+// MARK: - TimeMarkersView
+struct TimeMarkersView: View {
+    let center: CGPoint
+    let radius: CGFloat
+    
+    var body: some View {
+        ForEach(0..<24) { hour in
+            let angle = Double(hour) * 15.0 - 90
+            let position = CGPoint(
+                x: center.x + radius * cos(angle * .pi / 180),
+                y: center.y + radius * sin(angle * .pi / 180)
+            )
+            
+            Text("\(hour)")
+                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                .foregroundColor(.appTextSecondary)
+                .position(position)
+        }
+    }
+}
+
+// MARK: - CurrentTimeIndicator
+struct CurrentTimeIndicator: View {
+    let center: CGPoint
+    let radius: CGFloat
+    
+    var body: some View {
+        let now = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: now)
+        let minute = calendar.component(.minute, from: now)
+        let totalMinutes = hour * 60 + minute
+        let angle = (Double(totalMinutes) / 1440.0) * 360.0 - 90
+        
+        let indicatorPosition = CGPoint(
+            x: center.x + radius * cos(angle * .pi / 180),
+            y: center.y + radius * sin(angle * .pi / 180)
+        )
+        
+        Circle()
+            .fill(Color.appAccent)
+            .frame(width: 10, height: 10)
+            .position(indicatorPosition)
+    }
+}
+
 
 

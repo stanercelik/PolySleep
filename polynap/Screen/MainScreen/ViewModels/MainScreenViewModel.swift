@@ -53,6 +53,26 @@ class MainScreenViewModel: ObservableObject {
     @Published var draggedBlockPosition: CGPoint = .zero
     @Published var snapInterval: Int = 10 // 5 veya 10 dakika
     
+    // MARK: - Floating Block System
+    @Published var floatingBlock: SleepBlock? = nil
+    @Published var floatingBlockPosition: CGPoint = .zero
+    @Published var isFloatingBlockVisible: Bool = false
+    @Published var isBlockFloating: Bool = false // Chart dışında mı?
+    @Published var canSnapToChart: Bool = false // Chart'a yakın mı?
+    @Published var originalBlockPosition: CGPoint = .zero // Snap-back için
+    @Published var originalBlockId: UUID? = nil // Hangi blok sürükleniyor
+    
+    // MARK: - Drag Zones and Thresholds
+    @Published var chartExitThreshold: CGFloat = 80 // Chart'tan çıkma mesafesi (floating mode threshold)
+    @Published var chartEnterThreshold: CGFloat = 60 // Chart'a girme mesafesi (snap back threshold)
+    @Published var trashZoneThreshold: CGFloat = 50 // Trash zone aktivasyon mesafesi
+    
+    // MARK: - Trash Area Features
+    @Published var showTrashArea: Bool = false
+    @Published var isInTrashZone: Bool = false
+    @Published var isReadyToDelete: Bool = false
+    @Published var dragDistanceFromCenter: CGFloat = 0
+    
     // Canlı zaman gösterimi için yeni değişken
     @Published var liveBlockTimeString: String? = nil
     
@@ -76,6 +96,15 @@ class MainScreenViewModel: ObservableObject {
     @Published var currentEditingTime: String = ""
     @Published var currentEditingDuration: String = ""
     @Published var isValidEdit: Bool = true
+    
+    // MARK: - Plus Button Drag Features
+    @Published var isDraggingNewBlock: Bool = false
+    @Published var newBlockDragPosition: CGPoint = .zero
+    @Published var previewBlock: SleepBlock? = nil
+    @Published var showPlusButton: Bool = true
+    @Published var isDragFromPlusValid: Bool = false
+    
+    
     
     // Cached calculation values for performance
     private var cachedAngleCalculations: [String: Double] = [:]
@@ -1256,6 +1285,10 @@ class MainScreenViewModel: ObservableObject {
         initialDragState = Dictionary(uniqueKeysWithValues: tempScheduleBlocks.map { ($0.id, (startTime: $0.startTime, duration: $0.duration)) })
         isChartEditMode = true
         
+        // Enable plus button and trash area for edit mode - both always visible
+        showPlusButton = true
+        showTrashArea = true
+        
         analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_started", action: "edit_started")
     }
     
@@ -1268,6 +1301,7 @@ class MainScreenViewModel: ObservableObject {
         
         isChartEditMode = false
         resetDragState()
+        resetDragAndDropState()
         
         Task {
             await saveSchedule()
@@ -1281,6 +1315,7 @@ class MainScreenViewModel: ObservableObject {
         isChartEditMode = false
         tempScheduleBlocks = []
         resetDragState()
+        resetDragAndDropState()
         analyticsManager.logFeatureUsed(featureName: "chart_edit_mode_cancelled", action: "edit_cancelled")
     }
     
@@ -1290,28 +1325,41 @@ class MainScreenViewModel: ObservableObject {
         
         if draggedBlockId == nil {
             draggedBlockId = blockId
-            // Diğer sürükleme başlangıç durumu `updateBlockPosition` içinde ayarlanacak
+            // showTrashArea = true // Already visible in edit mode
+            
+            // Mevcut bloku bul ve floating sistemi başlat
+            if let blockIndex = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
+                let currentBlock = tempScheduleBlocks[blockIndex]
+                
+                // Orijinal pozisyonu kaydet (snap-back için)
+                originalBlockPosition = position
+                
+                // Floating block sistemini başlat
+                startFloatingBlock(currentBlock, at: position, center: CGPoint.zero) // Center EditableChart'da hesaplanacak
+            }
         }
     }
     
     /// Bloğu sürüklemeyi bitirir
     func endDragging() {
-        if let blockId = draggedBlockId {
-            // Başarılı bir sürükleme sonrası geri bildirim
-            if let index = tempScheduleBlocks.firstIndex(where: { $0.id == blockId }) {
-                let block = tempScheduleBlocks[index]
-                let originalStartTime = initialDragState[blockId]?.startTime
-                
-                if block.startTime != originalStartTime {
-                    // Bir sonraki sürüklemenin yeni pozisyondan başlaması için başlangıç durumunu güncelle
-                    initialDragState[blockId]?.startTime = block.startTime
-                    
-                    // Final mesajı kaldırıldı - sadece smooth bir şekilde kaybolsun
-                }
-            }
+        guard let blockId = draggedBlockId else { return }
+        
+        // Eğer trash zone'daysa sil
+        if isInTrashZone {
+            deleteBlockFromTemp(blockId)
+            analyticsManager.logFeatureUsed(featureName: "drag_to_trash_completed", action: "block_deleted")
+        } else {
+            // Normal chart içi pozisyon güncellemesi zaten updateBlockPosition'da yapıldı
+            // Hiçbir ek işlem gerekmez
         }
         
         resetDragState()
+        resetFloatingBlockState()
+        
+        // Trash area state'ini sıfırla - keep trash area visible in edit mode
+        // showTrashArea = false // Keep visible in edit mode
+        isInTrashZone = false
+        isReadyToDelete = false
     }
     
     /// Sürükleme durumunu sıfırlar
@@ -1320,6 +1368,7 @@ class MainScreenViewModel: ObservableObject {
         dragStartAngle = nil
         dragAngleOffset = 0
         liveBlockTimeString = nil // Canlı zaman gösterimini temizle
+        previewBlock = nil // Preview block'u da temizle
         
         isResizing = false
         resizeBlockId = nil
@@ -1505,5 +1554,369 @@ class MainScreenViewModel: ObservableObject {
         return false
     }
     
+    // MARK: - Floating Block System Functions
+    
+    /// Floating block sistemi başlatır
+    func startFloatingBlock(_ block: SleepBlock, at position: CGPoint, center: CGPoint, radius: CGFloat = 100) {
+        floatingBlock = block
+        floatingBlockPosition = position
+        isFloatingBlockVisible = true
+        isBlockFloating = false
+        originalBlockPosition = position
+        originalBlockId = block.id
+        
+        // Chart mesafesini hesapla
+        updateFloatingBlockState(position: position, center: center, radius: radius)
+    }
+    
+    /// Floating block pozisyonunu günceller
+    func updateFloatingBlock(to position: CGPoint, center: CGPoint, radius: CGFloat) {
+        guard isFloatingBlockVisible else { return }
+        
+        floatingBlockPosition = position
+        updateFloatingBlockState(position: position, center: center, radius: radius)
+        
+        // Floating block'un zamanını pozisyona göre güncelle
+        updateFloatingBlockTime(position: position, center: center)
+        
+        // Trash zone kontrolü
+        updateTrashZoneForFloatingBlock(position: position, center: center, radius: radius)
+    }
+    
+    /// Floating block'un zamanını pozisyona göre günceller
+    private func updateFloatingBlockTime(position: CGPoint, center: CGPoint) {
+        guard let currentFloatingBlock = floatingBlock else { return }
+        
+        // Pozisyondan yeni zamanı hesapla
+        let newStartTime = getCurrentTimeFromPosition(position, center: center)
+        
+        // Floating block'u güncellenmiş zamanla yeniden oluştur
+        floatingBlock = SleepBlock(
+            id: currentFloatingBlock.id,
+            startTime: newStartTime,
+            duration: currentFloatingBlock.duration,
+            type: currentFloatingBlock.type,
+            isCore: currentFloatingBlock.isCore
+        )
+    }
+    
+    /// Floating block'un chart ile ilişkisini günceller
+    private func updateFloatingBlockState(position: CGPoint, center: CGPoint, radius: CGFloat) {
+        let distance = distanceFromCenter(position, center: center)
+        
+        // Chart threshold mesafesi (chart merkezinden olan mesafe)
+        let thresholdDistance = radius + chartExitThreshold
+        
+        if isBlockFloating {
+            // Floating durumda, chart threshold'ına yaklaşıp yaklaşmadığını kontrol et
+            canSnapToChart = distance <= (radius + chartEnterThreshold)
+        } else {
+            // Chart içinde, threshold'ı aşıp aşmadığını kontrol et
+            if distance > thresholdDistance {
+                isBlockFloating = true
+                canSnapToChart = false
+                
+                // Chart'tan çıkma haptic feedback
+                let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                impactFeedback.impactOccurred()
+            }
+        }
+    }
+    
+    /// Floating block'u sonlandırır
+    func endFloatingBlock() -> FloatingBlockEndResult {
+        guard isFloatingBlockVisible, let block = floatingBlock else {
+            return .cancelled
+        }
+        
+        if isInTrashZone {
+            // Trash zone'a bırakıldı - sil
+            deleteBlockFromTemp(block.id)
+            
+            let notificationFeedback = UINotificationFeedbackGenerator()
+            notificationFeedback.notificationOccurred(.warning)
+            
+            resetFloatingBlockState()
+            return .deleted
+        } else if canSnapToChart {
+            // Chart'a snap et
+            let successFeedback = UINotificationFeedbackGenerator()
+            successFeedback.notificationOccurred(.success)
+            
+            resetFloatingBlockState()
+            return .snappedToChart
+        } else if isBlockFloating {
+            // Chart dışında bırakıldı - orijinal yerine döndür
+            let errorFeedback = UINotificationFeedbackGenerator()
+            errorFeedback.notificationOccurred(.error)
+            
+            resetFloatingBlockState()
+            return .snappedBack
+        } else {
+            // Chart içinde bırakıldı
+            resetFloatingBlockState()
+            return .stayedInChart
+        }
+    }
+    
+    /// Floating block için trash zone kontrolü
+    private func updateTrashZoneForFloatingBlock(position: CGPoint, center: CGPoint, radius: CGFloat) {
+        // Trash area pozisyonu - EditableCircularSleepChart.swift ile aynı hesaplama (sol alt köşe)
+        let trashRadius: CGFloat = 28 // + butonu ile aynı boyut
+        let trashX = center.x - radius - trashRadius - 12
+        let trashY = center.y + radius + trashRadius + 12
+        let trashCenter = CGPoint(x: trashX, y: trashY)
+        
+        let distanceToTrash = sqrt(pow(position.x - trashCenter.x, 2) + pow(position.y - trashCenter.y, 2))
+        
+        let previousTrashZone = isInTrashZone
+        // Trash zone activation distance - trash circle radius (28pt)
+        isInTrashZone = distanceToTrash <= trashRadius
+        isReadyToDelete = isInTrashZone
+        
+        // Trash zone'a girme haptic feedback
+        if isInTrashZone && !previousTrashZone {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
+            impactFeedback.impactOccurred()
+        }
+    }
+    
+    /// Floating block state'ini sıfırlar
+    private func resetFloatingBlockState() {
+        floatingBlock = nil
+        floatingBlockPosition = .zero
+        isFloatingBlockVisible = false
+        isBlockFloating = false
+        canSnapToChart = false
+        originalBlockPosition = .zero
+        originalBlockId = nil
+        previewBlock = nil
+    }
+    
+    enum FloatingBlockEndResult {
+        case snappedToChart
+        case deleted
+        case snappedBack
+        case stayedInChart
+        case cancelled
+    }
+
+    // MARK: - Plus Button Drag Functions
+    
+    /// Plus button'dan yeni blok sürüklemeye başlar
+    func startDraggingNewBlock(at position: CGPoint, center: CGPoint, radius: CGFloat) {
+        isDraggingNewBlock = true
+        // showTrashArea = true // Already visible in edit mode
+        
+        // Haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        // 45 dakikalık varsayılan block oluştur
+        let currentTime = getCurrentTimeFromPosition(position, center: center)
+        
+        let newBlock = SleepBlock(
+            id: UUID(),
+            startTime: currentTime,
+            duration: 45,
+            type: "nap",
+            isCore: false
+        )
+        
+        // Başlangıçta floating mode'da başla
+        isBlockFloating = true
+        
+        // Floating block sistemini başlat
+        startFloatingBlock(newBlock, at: position, center: center, radius: radius)
+        
+        analyticsManager.logFeatureUsed(featureName: "plus_button_drag_started", action: "new_block_drag")
+    }
+    
+    /// Plus button sürüklemesini günceller
+    func updateNewBlockDrag(to position: CGPoint, center: CGPoint, radius: CGFloat) {
+        guard isDraggingNewBlock else { return }
+        
+        // Threshold kontrolü - aynı mantık normal block sürükleme gibi
+        let distance = distanceFromCenter(position, center: center)
+        let isWithinThreshold = distance <= (radius + chartExitThreshold) // 80pt threshold
+        
+        if isWithinThreshold {
+            // Threshold içinde - chart'ta preview block olarak göster
+            let currentTime = getCurrentTimeFromPosition(position, center: center)
+            let endTime = TimeUtility.adjustTime(currentTime, byMinutes: 45) ?? currentTime
+            
+            // Collision check
+            let hasCollision = hasCollisionInTemp(
+                blockId: UUID(), // Temporary ID for collision check
+                startTime: currentTime,
+                endTime: endTime
+            )
+            
+            isDragFromPlusValid = !hasCollision
+            
+            if !hasCollision {
+                // Preview block'u chart'ta göster
+                previewBlock = SleepBlock(
+                    id: UUID(),
+                    startTime: currentTime,
+                    duration: 45,
+                    type: "nap",
+                    isCore: false
+                )
+                
+                // Floating block'u güncelle ama gizle
+                if let block = floatingBlock {
+                    floatingBlock = SleepBlock(
+                        id: block.id,
+                        startTime: currentTime,
+                        duration: 45,
+                        type: "nap",
+                        isCore: false
+                    )
+                }
+                isBlockFloating = false // Chart'ta göster
+            } else {
+                // Collision varsa preview'i temizle
+                previewBlock = nil
+                isDragFromPlusValid = false
+                isBlockFloating = true // Floating mode'da göster
+            }
+        } else {
+            // Threshold dışında - floating card olarak göster
+            previewBlock = nil // Chart preview'ini gizle
+            isBlockFloating = true // Floating mode
+            isDragFromPlusValid = false
+            
+            // Floating block pozisyonunu güncelle
+            if let block = floatingBlock {
+                let currentTime = getCurrentTimeFromPosition(position, center: center)
+                floatingBlock = SleepBlock(
+                    id: block.id,
+                    startTime: currentTime,
+                    duration: 45,
+                    type: "nap",
+                    isCore: false
+                )
+            }
+        }
+        
+        // Her durumda floating sistemi güncelle (trash detection için)
+        updateFloatingBlock(to: position, center: center, radius: radius)
+    }
+    
+    /// Plus button sürüklemesini bitirir
+    func endNewBlockDrag() {
+        guard isDraggingNewBlock else { return }
+        
+        // Eğer trash zone'da değilse ve geçerli pozisyondaysa ekle
+        if !isInTrashZone && isDragFromPlusValid {
+            // Preview block varsa onu kullan, yoksa floating block'u kullan
+            let blockToAdd: SleepBlock?
+            if let preview = previewBlock {
+                blockToAdd = preview
+            } else if let floating = floatingBlock {
+                blockToAdd = floating
+            } else {
+                blockToAdd = nil
+            }
+            
+            if let block = blockToAdd {
+                // Chart'a başarıyla eklendi
+                tempScheduleBlocks.append(block)
+                analyticsManager.logFeatureUsed(featureName: "plus_button_drag_completed", action: "block_added")
+                
+                // Yeni eklenen block'ı hemen sürüklenebilir hale getir
+                draggedBlockId = block.id
+                DispatchQueue.main.async {
+                    // Kısa bir gecikme sonrası drag state'ini sıfırla ki kullanıcı hemen tekrar sürükleyebilsin
+                    self.draggedBlockId = nil
+                }
+            }
+        } else {
+            // İptal edildi veya geçersiz pozisyon
+            analyticsManager.logFeatureUsed(featureName: "plus_button_drag_cancelled", action: "invalid_drop")
+        }
+        
+        // State'i sıfırla
+        resetFloatingBlockState()
+        previewBlock = nil // Preview block'u temizle
+        isDraggingNewBlock = false
+        // showTrashArea = false // Keep visible in edit mode
+        isDragFromPlusValid = false
+    }
+    
+    // MARK: - Trash Area Functions
+    
+    /// Bir bloğun trash zone'da olup olmadığını kontrol eder
+    func updateTrashZoneStatus(for blockId: UUID, at position: CGPoint, center: CGPoint) {
+        guard draggedBlockId == blockId else { return }
+        
+        dragDistanceFromCenter = distanceFromCenter(position, center: center)
+        let trashThreshold: CGFloat = 20 // Çemberden 20pt uzaklık
+        
+        let previousTrashZone = isInTrashZone
+        isInTrashZone = dragDistanceFromCenter > trashThreshold
+        isReadyToDelete = isInTrashZone
+        // showTrashArea = draggedBlockId != nil // Always visible in edit mode
+        
+        // Trash zone'a ilk giriş için haptic feedback
+        if isInTrashZone && !previousTrashZone {
+            let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
+            impactFeedback.impactOccurred()
+        }
+    }
+    
+    /// Blok sürüklemesi bittiğinde trash zone kontrolü
+    func checkForTrashDeletion() -> Bool {
+        if isReadyToDelete, let blockId = draggedBlockId {
+            deleteBlockFromTemp(blockId)
+            
+            // Delete haptic feedback
+            let notificationFeedback = UINotificationFeedbackGenerator()
+            notificationFeedback.notificationOccurred(.warning)
+            
+            analyticsManager.logFeatureUsed(featureName: "drag_to_trash_completed", action: "block_deleted")
+            return true
+        }
+        return false
+    }
+    
+    /// Temp schedule'dan blok siler
+    private func deleteBlockFromTemp(_ blockId: UUID) {
+        tempScheduleBlocks.removeAll { $0.id == blockId }
+    }
+    
+    // MARK: - Helper Functions
+    
+    /// Merkez noktaya olan mesafeyi hesaplar
+    func distanceFromCenter(_ position: CGPoint, center: CGPoint) -> CGFloat {
+        let dx = position.x - center.x
+        let dy = position.y - center.y
+        return sqrt(dx * dx + dy * dy)
+    }
+    
+    /// Pozisyondan saat hesaplar
+    func getCurrentTimeFromPosition(_ position: CGPoint, center: CGPoint) -> String {
+        let dx = position.x - center.x
+        let dy = position.y - center.y
+        let angle = atan2(dy, dx) * 180 / .pi
+        let snappedAngle = snapAngleToFiveMinutes(angle)
+        return timeFromAngle(snappedAngle)
+    }
+    
+    /// Drag and drop state'ini sıfırlar
+    func resetDragAndDropState() {
+        isDraggingNewBlock = false
+        isDragFromPlusValid = false
+        showPlusButton = false
+        showTrashArea = false
+        isInTrashZone = false
+        isReadyToDelete = false
+        dragDistanceFromCenter = 0
+        previewBlock = nil
+        
+        // Floating block state'ini de sıfırla
+        resetFloatingBlockState()
+    }
 
 }
