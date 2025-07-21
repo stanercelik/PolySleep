@@ -146,6 +146,16 @@ struct MainScreenView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
+                    // Skipped Onboarding Card - Show at top when needed
+                    if viewModel.shouldShowSkippedOnboardingCard {
+                        SkippedOnboardingCardView(isPresented: $viewModel.showSkippedOnboardingCard)
+                            .onDisappear {
+                                viewModel.dismissSkippedOnboardingCard()
+                            }
+                            .padding(.top, PSSpacing.lg)
+                            .safeAreaPadding(.top)
+                    }
+                    
                     // Modern Segmented Control
                     ModernSegmentedControl(selectedSegment: $viewModel.selectedSegment)
                         .padding(.horizontal, PSSpacing.lg)

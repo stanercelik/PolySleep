@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import RevenueCat
 import RevenueCatUI
 import HealthKit
@@ -124,6 +125,10 @@ struct SettingsView: View {
                     ) {
                         VStack(spacing: PSSpacing.md) {
                             AdaptationUndoRow()
+                            
+                            ModernDivider()
+                            
+                            RestartOnboardingRow()
                         }
                     }
                     
@@ -857,6 +862,180 @@ struct HealthKitIntegrationRow: View {
             }
         }
     }
+}
+
+// MARK: - Restart Onboarding Row
+struct RestartOnboardingRow: View {
+    @State private var showingRestartAlert = false
+    @State private var isRestarting = false
+    @State private var userPreferences: UserPreferences?
+    @State private var restartCount = 0
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @StateObject private var paywallManager = PaywallManager.shared
+    
+    var isPremiumRequired: Bool {
+        return restartCount >= 1
+    }
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            // Icon with background
+            ZStack {
+                Circle()
+                    .fill(Color.appPrimary.opacity(0.1))
+                    .frame(width: 36, height: 36)
+                
+                Image(systemName: "arrow.clockwise.circle.fill")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.appPrimary)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 4) {
+                    Text(L("settings.onboarding.restart.title", table: "Profile"))
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appText)
+                    
+                    // Crown icon for premium requirement
+                    if isPremiumRequired {
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.yellow)
+                    }
+                }
+                
+                Text(L("settings.onboarding.restart.subtitle", table: "Profile"))
+                    .font(.caption)
+                    .foregroundColor(.appTextSecondary)
+                    .lineLimit(2)
+            }
+            
+            Spacer()
+            
+            // Action button
+            PSStatusBadge(
+                L("settings.onboarding.restart.button", table: "Profile"),
+                icon: "arrow.clockwise",
+                color: isPremiumRequired && revenueCatManager.userState != .premium ? .yellow : .appPrimary,
+                backgroundColor: isPremiumRequired && revenueCatManager.userState != .premium ? Color.yellow.opacity(0.15) : Color.appPrimary.opacity(0.15)
+            )
+            .onTapGesture {
+                handleRestartTap()
+            }
+        }
+        .padding(.vertical, 8)
+        .contentShape(Rectangle())
+        .alert(
+            L("settings.onboarding.restart.alert.title", table: "Profile"),
+            isPresented: $showingRestartAlert
+        ) {
+            Button(L("common.cancel", table: "Common"), role: .cancel) {}
+            Button(L("settings.onboarding.restart.alert.confirm", table: "Profile"), role: .destructive) {
+                Task {
+                    await restartOnboarding()
+                }
+            }
+        } message: {
+            Text(L("settings.onboarding.restart.alert.message", table: "Profile"))
+        }
+        .overlay {
+            if isRestarting {
+                ProgressView()
+                    .scaleEffect(1.2)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.ultraThinMaterial)
+            }
+        }
+        .onAppear {
+            loadUserPreferences()
+        }
+    }
+    
+    private func loadUserPreferences() {
+        do {
+            let descriptor = FetchDescriptor<UserPreferences>()
+            let preferences = try modelContext.fetch(descriptor)
+            
+            if let preference = preferences.first {
+                userPreferences = preference
+                restartCount = preference.onboardingRestartCount
+            }
+        } catch {
+            print("❌ RestartOnboardingRow: UserPreferences yüklenirken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    private func handleRestartTap() {
+        // Check if premium is required and user is not premium
+        if isPremiumRequired && revenueCatManager.userState != .premium {
+            paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
+            return
+        }
+        
+        showingRestartAlert = true
+    }
+    
+    private func restartOnboarding() async {
+        isRestarting = true
+        defer { isRestarting = false }
+        
+        // Increment restart count
+        await incrementRestartCount()
+        
+        // Reset user preferences to restart onboarding
+        await resetUserPreferencesForOnboarding()
+        
+        // Dismiss settings and trigger onboarding restart
+        await MainActor.run {
+            dismiss()
+            
+            // Trigger onboarding restart by posting notification
+            NotificationCenter.default.post(name: .restartOnboarding, object: nil)
+        }
+    }
+    
+    private func incrementRestartCount() async {
+        do {
+            let descriptor = FetchDescriptor<UserPreferences>()
+            let preferences = try modelContext.fetch(descriptor)
+            
+            for preference in preferences {
+                preference.onboardingRestartCount += 1
+                restartCount = preference.onboardingRestartCount
+            }
+            
+            try modelContext.save()
+            print("✅ RestartOnboardingRow: Restart count artırıldı: \(restartCount)")
+        } catch {
+            print("❌ RestartOnboardingRow: Restart count artırılırken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    private func resetUserPreferencesForOnboarding() async {
+        do {
+            let descriptor = FetchDescriptor<UserPreferences>()
+            let preferences = try modelContext.fetch(descriptor)
+            
+            for preference in preferences {
+                preference.hasCompletedOnboarding = false
+                preference.hasSkippedOnboarding = false
+                preference.hasCompletedQuestions = false
+                // onboardingRestartCount'ı sıfırlamıyoruz - kullanıcının geçmişi
+            }
+            
+            try modelContext.save()
+            print("✅ RestartOnboardingRow: UserPreferences onboarding için sıfırlandı")
+        } catch {
+            print("❌ RestartOnboardingRow: UserPreferences sıfırlanırken hata: \(error.localizedDescription)")
+        }
+    }
+}
+
+extension Notification.Name {
+    static let restartOnboarding = Notification.Name("restartOnboarding")
 }
 
 struct SettingsView_Previews: PreviewProvider {

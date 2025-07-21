@@ -8119,6 +8119,334 @@
         }
       }
     },
+    "profile.skippedOnboarding.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast das Onboarding übersprungen. Ein Standard-Schlafprogramm wurde für dich eingerichtet. Für personalisierte Empfehlungen, überdenke das Onboarding in den Einstellungen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You skipped the onboarding process. A default sleep program has been set up for you. For personalized recommendations, consider re-taking the onboarding from settings."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングをスキップしました。デフォルトの睡眠プログラムが設定されています。個人に合わせた推奨事項については、設定からオンボーディングを再実行することを検討してください。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda melangkau proses onboarding. Program tidur lalai telah disediakan untuk anda. Untuk cadangan yang diperibadikan, pertimbangkan untuk mengambil semula onboarding dari tetapan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณข้ามขั้นตอนการเริ่มต้นใช้งานโปรแกรมการนอนหลับเริ่มต้นถูกตั้งค่าสำหรับคุณแล้ว สำหรับคำแนะนำส่วนบุคคลโปรดพิจารณาทำการเริ่มต้นใหม่อีกครั้งจากการตั้งค่า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtım sürecini atladınız. Sizin için varsayılan bir uyku programı ayarlandı. Kişiselleştirilmiş öneriler için ayarlardan tanıtımı yeniden almayı düşünebilirsiniz."
+          }
+        }
+      }
+    },
+    "profile.skippedOnboarding.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding übersprungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding Skipped"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングをスキップしました"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding Dilangkau"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้ามการเริ่มต้นใช้งาน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtım Atlandı"
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.alert.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neu starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再開始"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulakan Semula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เริ่มใหม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeniden Başlat"
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.alert.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine aktuellen Einstellungen werden zurückgesetzt und du wirst durch den Onboarding-Prozess geführt, um personalisierte Empfehlungen zu erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your current settings will be reset and you'll be guided through the onboarding process to get personalized recommendations."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の設定がリセットされ、パーソナライズされた推奨事項を得るためのオンボーディングプロセスをご案内します。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapan semasa anda akan ditetapkan semula dan anda akan dipandu melalui proses onboarding untuk mendapatkan cadangan yang diperibadikan."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่าปัจจุบันของคุณจะถูกรีเซ็ต และคุณจะได้รับคำแนะนำผ่านกระบวนการเริ่มต้นใช้งานเพื่อรับคำแนะนำที่เหมาะสมกับคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevcut ayarlarınız sıfırlanacak ve kişiselleştirilmiş öneriler almak için tanıtım sürecinden geçirileceksiniz."
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.alert.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding neu starten?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Onboarding?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングを再開始しますか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulakan Semula Onboarding?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เริ่มต้นการใช้งานใหม่?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtımı Yeniden Başlat?"
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mula"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เริ่ม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlat"
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Einrichtungsassistenten erneut durchlaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go through the setup wizard again"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セットアップウィザードをもう一度実行する"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lalui wizard persediaan sekali lagi"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ผ่านตัวช่วยการตั้งค่าอีกครั้ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurulum sihirbazını tekrar geçin"
+          }
+        }
+      }
+    },
+    "settings.onboarding.restart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding neu starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Onboarding"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングを再開始"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulakan Semula Onboarding"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เริ่มต้นการใช้งานใหม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtımı Yeniden Başlat"
+          }
+        }
+      }
+    },
     "profile.user.defaultName" : {
       "extractionState" : "manual",
       "localizations" : {

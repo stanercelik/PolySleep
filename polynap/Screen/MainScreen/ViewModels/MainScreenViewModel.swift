@@ -46,6 +46,20 @@ class MainScreenViewModel: ObservableObject {
     @Published var isPremium: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
+    @Published var userPreferences: UserPreferences?
+    @Published var showSkippedOnboardingCard: Bool = false
+    
+    // MARK: - Computed Properties
+    var hasSkippedOnboardingWithoutSchedule: Bool {
+        // Always return false now since we want to show normal main screen
+        // The skipped onboarding card will handle informing the user
+        return false
+    }
+    
+    var shouldShowSkippedOnboardingCard: Bool {
+        guard let preferences = userPreferences else { return false }
+        return preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions && showSkippedOnboardingCard
+    }
     
     // MARK: - Chart Edit Mode
     @Published var isChartEditMode: Bool = false
@@ -373,8 +387,72 @@ class MainScreenViewModel: ObservableObject {
         self.modelContext = context
         print("🗂️ MainScreenViewModel: ModelContext ayarlandı.")
         Task {
+            await loadUserPreferences()
             await loadScheduleFromRepository()
         }
+    }
+    
+    func loadUserPreferences() async {
+        guard let modelContext = modelContext else {
+            print("❌ MainScreenViewModel: ModelContext yok, UserPreferences yüklenemedi.")
+            return
+        }
+        
+        do {
+            let fetchDescriptor = FetchDescriptor<UserPreferences>()
+            let preferences = try modelContext.fetch(fetchDescriptor).first
+            
+            await MainActor.run {
+                self.userPreferences = preferences
+                
+                // Show the skipped onboarding card if user skipped onboarding
+                if let preferences = preferences, 
+                   preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions {
+                    self.showSkippedOnboardingCard = true
+                    print("📱 MainScreenViewModel: Onboarding atlandı - bilgi kartı gösterilecek")
+                }
+                
+                print("✅ MainScreenViewModel: UserPreferences yüklendi - hasSkippedOnboarding: \(preferences?.hasSkippedOnboarding ?? false)")
+            }
+        } catch {
+            print("❌ MainScreenViewModel: UserPreferences yüklenirken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    func dismissSkippedOnboardingCard() {
+        showSkippedOnboardingCard = false
+        print("📱 MainScreenViewModel: Atlandı kartı gizlendi")
+    }
+    
+    private func createDefaultBiphasicSchedule() -> UserScheduleModel {
+        return UserScheduleModel(
+            id: "biphasic",
+            name: "Biphasic Sleep",
+            description: LocalizedDescription(
+                en: "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
+                tr: "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir.",
+                ja: "夜にまとめて寝る時間のほかに、日中に短いお昼寝を1回とる睡眠スタイル。スペインのシエスタみたいに、文化として根付いている地域もありますよ。",
+                de: "Ein Schlafmuster mit einer Kernschlafphase und einem kurzen Nickerchen während des Tages, das in einigen Kulturen oft als Nachmittagssiesta praktiziert wird.",
+                ms: "Corak tidur dengan satu tempoh tidur teras dan satu tidur sebentar pendek pada siang hari, sering diamalkan dalam sesetengah budaya sebagai siesta petang.",
+                th: "รูปแบบการนอนที่มีช่วงการนอนหลักหนึ่งครั้งและการหลับสั้นๆ ในช่วงกลางวัน มักพบในบางวัฒนธรรมเป็นการนอนบ่าย"
+            ),
+            totalSleepHours: 6.5,
+            schedule: [
+                SleepBlock(
+                    startTime: "23:00",
+                    duration: 360, // 6 hours core sleep
+                    type: "core",
+                    isCore: true
+                ),
+                SleepBlock(
+                    startTime: "14:00",
+                    duration: 30, // 30 minutes nap
+                    type: "nap",
+                    isCore: false
+                )
+            ],
+            isPremium: false
+        )
     }
     
     // MARK: - ViewModel Fonksiyonları
@@ -792,12 +870,12 @@ class MainScreenViewModel: ObservableObject {
                     self.updateAlarms()
                 }
             } else {
-                // Aktif program bulunamadı, varsayılan programı yükle (sadece UI için, kaydetme)
+                // Aktif program bulunamadı, biphasic varsayılan programı yükle (sadece UI için, kaydetme)
                 await MainActor.run {
-                    print("⚠️ Aktif program bulunamadı, varsayılan program UI'ya yükleniyor...")
-                    let defaultSchedule = UserScheduleModel.defaultSchedule
-                    self.selectedSchedule = defaultSchedule
-                    self.model = MainScreenModel(schedule: defaultSchedule)
+                    print("⚠️ Aktif program bulunamadı, biphasic varsayılan program UI'ya yükleniyor...")
+                    let biphasicSchedule = self.createDefaultBiphasicSchedule()
+                    self.selectedSchedule = biphasicSchedule
+                    self.model = MainScreenModel(schedule: biphasicSchedule)
                     self.isLoading = false
                     self.errorMessage = nil
                     self.updateAlarms()
@@ -1015,6 +1093,11 @@ class MainScreenViewModel: ObservableObject {
                 // Apple Watch'a schedule güncellemesini bildir
                 await notifyWatchOfScheduleUpdate()
                 
+                // Onboarding'i atlayan kullanıcı bir program seçtiğinde, onboarding'i tamamlanmış say
+                if self.userPreferences?.hasSkippedOnboarding == true {
+                    await self.markOnboardingAsCompletedAfterSkip()
+                }
+                
                 await MainActor.run {
                     isLoading = false
                     print("✅ Yeni schedule başarıyla seçildi ve kaydedildi: \(schedule.name)")
@@ -1051,6 +1134,31 @@ class MainScreenViewModel: ObservableObject {
         }
         digest[6] = (digest[6] & 0x0F) | 0x50; digest[8] = (digest[8] & 0x3F) | 0x80
         return NSUUID(uuidBytes: digest) as UUID
+    }
+    
+    private func markOnboardingAsCompletedAfterSkip() async {
+        guard let modelContext = self.modelContext else {
+            print("❌ MainScreenViewModel: UserPreferences güncellenemedi, ModelContext yok.")
+            return
+        }
+        
+        let fetchDescriptor = FetchDescriptor<UserPreferences>()
+        do {
+            if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                userPreferences.hasCompletedOnboarding = true
+                userPreferences.hasSkippedOnboarding = false
+                userPreferences.hasCompletedQuestions = false // Still false
+                try modelContext.save()
+                
+                // Update local property to trigger UI change
+                await MainActor.run {
+                    self.userPreferences = userPreferences
+                }
+                print("✅ MainScreenViewModel: UserPreferences güncellendi, onboarding 'tamamlandı' olarak işaretlendi.")
+            }
+        } catch {
+            print("❌ MainScreenViewModel: UserPreferences güncellenirken hata: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - Premium Status Listener
@@ -1852,7 +1960,7 @@ class MainScreenViewModel: ObservableObject {
         guard draggedBlockId == blockId else { return }
         
         dragDistanceFromCenter = distanceFromCenter(position, center: center)
-        let trashThreshold: CGFloat = 20 // Çemberden 20pt uzaklık
+        let trashThreshold: CGFloat = 120 // Çemberden 120pt uzaklık
         
         let previousTrashZone = isInTrashZone
         isInTrashZone = dragDistanceFromCenter > trashThreshold

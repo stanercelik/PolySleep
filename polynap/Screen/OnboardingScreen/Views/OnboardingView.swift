@@ -13,6 +13,7 @@ struct OnboardingView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var analyticsManager: AnalyticsManager
     @StateObject private var viewModel = OnboardingViewModel()
+    @State private var showSkipAlert = false
     
     var body: some View {
         NavigationStack {
@@ -134,6 +135,14 @@ struct OnboardingView: View {
                     .padding(.bottom, PSSpacing.md)
                 }
                 .padding(.top, PSSpacing.lg)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(L("general.skip", table: "Common")) {
+                            showSkipAlert = true
+                        }
+                        .tint(Color.appPrimary)
+                    }
+                }
                 .onAppear {
                     viewModel.setModelContext(modelContext)
                     
@@ -145,7 +154,7 @@ struct OnboardingView: View {
                     // 📊 Analytics: Onboarding adım tracking
                     let stepNames = [
                         0: "sleep_experience",
-                        1: "age_range", 
+                        1: "age_range",
                         2: "work_schedule",
                         3: "nap_environment",
                         4: "lifestyle",
@@ -190,15 +199,16 @@ struct OnboardingView: View {
                     navigateToMainScreen: $viewModel.navigateToMainScreen
                 )
             }
-            .background(
-                // Görünmeyen bir view ile MainTabBarView'a geçişi sağlar
-                NavigationLink(
-                    destination: MainTabBarView()
-                        .navigationBarBackButtonHidden(true),
-                    isActive: $viewModel.goToMainScreen,
-                    label: { EmptyView() }
-                )
-            )
+            .alert(L("onboarding.skip.title", table: "Onboarding"), isPresented: $showSkipAlert) {
+                Button(L("onboarding.skip.confirm", table: "Onboarding"), role: .destructive) {
+                    Task {
+                        await viewModel.skipOnboarding()
+                    }
+                }
+                Button(L("general.cancel", table: "Common"), role: .cancel) {}
+            } message: {
+                Text(L("onboarding.skip.message", table: "Onboarding"))
+            }
             .alert(L("general.error", table: "Common"), isPresented: $viewModel.showError) {
                 Button(L("general.ok", table: "Common"), role: .cancel) {}
             } message: {

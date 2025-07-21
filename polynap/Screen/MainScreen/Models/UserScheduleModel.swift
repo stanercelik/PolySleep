@@ -75,33 +75,15 @@ struct UserScheduleModel {
         let schedule = [
             SleepBlock(
                 startTime: "23:00",
-                duration: 120,
+                duration: 360, // 6 hours core sleep
                 type: "core",
                 isCore: true
             ),
             SleepBlock(
-                startTime: "04:00",
-                duration: 30,
+                startTime: "14:00",
+                duration: 30, // 30 minutes nap
                 type: "nap",
                 isCore: false
-            ),
-            SleepBlock(
-                startTime: "08:00",
-                duration: 30,
-                type: "nap",
-                isCore: false
-            ),
-            SleepBlock(
-                startTime: "12:00",
-                duration: 30,
-                type: "nap",
-                isCore: false
-            ),
-            SleepBlock(
-                startTime: "19:00",
-                duration: 120,
-                type: "core",
-                isCore: true
             )
         ]
         
@@ -109,19 +91,19 @@ struct UserScheduleModel {
         
         // Hard-coded descriptions for consistency with JSON schedules
         let descriptions = LocalizedDescription(
-            en: "The Triphasic Sleep Schedule consists of three sleep periods spread throughout the day: two 30-minute naps and one core sleep period of 4.5 hours. This pattern aims to maximize deep sleep and REM sleep while reducing overall sleep time. It's designed for those who want to experiment with polyphasic sleep and need to maintain high cognitive performance.",
-            tr: "Trifazik Uyku Programı, gün boyunca dağılmış üç uyku periyodundan oluşur: iki 30 dakikalık şekerleme ve bir 4.5 saatlik ana uyku dönemi. Bu düzen, toplam uyku süresini azaltırken derin uyku ve REM uykusunu en üst düzeye çıkarmayı amaçlar. Polifazik uyku denemek ve yüksek bilişsel performans sürdürmek isteyenler için tasarlanmıştır.",
-            ja: "三相性睡眠スケジュールは、1日を通して3つの睡眠期間で構成されます：2回の30分の仮眠と、1回の4.5時間の主睡眠期間。このパターンは、総睡眠時間を短縮しながら、深い睡眠とレム睡眠を最大化することを目的としています。多相睡眠を試してみたい、そして高い認知能力を維持したい人向けに設計されています。",
-            de: "Der triphasische Schlafplan besteht aus drei Schlafperioden, die über den Tag verteilt sind: zwei 30-minütige Nickerchen und eine Kernschlafperiode von 4,5 Stunden. Dieses Muster zielt darauf ab, den Tiefschlaf und den REM-Schlaf zu maximieren und gleichzeitig die Gesamtschlafzeit zu reduzieren. Es ist für diejenigen konzipiert, die mit polyphasischem Schlaf experimentieren und eine hohe kognitive Leistungsfähigkeit beibehalten möchten.",
-            ms: "Jadual Tidur Trifasa terdiri daripada tiga tempoh tidur yang tersebar sepanjang hari: dua tidur sebentar selama 30 minit dan satu tempoh tidur teras selama 4.5 jam. Corak ini bertujuan untuk memaksimumkan tidur nyenyak dan tidur REM sambil mengurangkan masa tidur keseluruhan. Ia direka untuk mereka yang ingin bereksperimen dengan tidur polifasa dan perlu mengekalkan prestasi kognitif yang tinggi.",
-            th: "ตารางการนอนหลับแบบสามเฟสประกอบด้วยการนอนหลับสามช่วงกระจายอยู่ตลอดทั้งวัน: การงีบ 30 นาทีสองครั้งและการนอนหลัก 4.5 ชั่วโมง รูปแบบนี้มีเป้าหมายเพื่อเพิ่มการนอนหลับลึกและการนอนหลับ REM ให้สูงสุดในขณะที่ลดเวลาการนอนหลับโดยรวม เหมาะสำหรับผู้ที่ต้องการทดลองการนอนหลับแบบหลายเฟสและต้องการรักษาประสิทธิภาพการรับรู้ในระดับสูง"
+            en: "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
+            tr: "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir.",
+            ja: "夜にまとめて寝る時間のほかに、日中に短いお昼寝を1回とる睡眠スタイル。スペインのシエスタみたいに、文化として根付いている地域もありますよ。",
+            de: "Ein Schlafmuster mit einer Kernschlafphase und einem kurzen Nickerchen während des Tages, das in einigen Kulturen oft als Nachmittagssiesta praktiziert wird.",
+            ms: "Corak tidur dengan satu tempoh tidur teras dan satu tidur sebentar pendek pada siang hari, sering diamalkan dalam sesetengah budaya sebagai siesta petang.",
+            th: "รูปแบบการนอนที่มีช่วงการนอนหลักหนึ่งครั้งและการหลับสั้นๆ ในช่วงกลางวัน มักพบในบางวัฒนธรรมเป็นการนอนบ่าย"
         )
         
         return UserScheduleModel(
             id: defaultUUID.uuidString,
-            name: L("schedule.default.name", table: "MainScreen"),
+            name: "Biphasic Sleep",
             description: descriptions,
-            totalSleepHours: 8.0,
+            totalSleepHours: 6.5,
             schedule: schedule,
             isPremium: false
         )

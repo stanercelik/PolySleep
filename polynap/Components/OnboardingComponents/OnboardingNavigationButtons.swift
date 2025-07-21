@@ -6,7 +6,6 @@ struct OnboardingNavigationButtons: View {
     let totalPages: Int
     let onNext: () -> Void
     let onBack: () -> Void
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
     var body: some View {
         HStack(spacing: 16) {
@@ -30,43 +29,43 @@ struct OnboardingNavigationButtons: View {
             }
             
             Spacer()
-            
-            if currentPage < totalPages {
-                Button(action: {
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    onNext()
-                }) {
-                    HStack(spacing: 8) {
-                        Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next", tableName: "Onboarding")
-                            .font(.body.weight(.semibold))
-                        
-                        Image(systemName: "chevron.right")
-                            .font(.body.weight(.semibold))
-                    }
-                    .padding(.horizontal, 16)
-                    .frame(minWidth: 44, minHeight: 44)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(canMoveNext ? Color("PrimaryColor") : Color("PrimaryColor").opacity(0.5))
-                    )
-                    .foregroundColor(Color("TextOnPrimaryColor"))
-                    .contentShape(Rectangle())
+        
+        if currentPage < totalPages {
+            Button(action: {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                onNext()
+            }) {
+                HStack(spacing: 8) {
+                    Text(currentPage == totalPages - 1 ? "onboarding.seeResults" : "onboarding.next", tableName: "Onboarding")
+                        .font(.body.weight(.semibold))
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.body.weight(.semibold))
                 }
-                .buttonStyle(.plain)
-                .disabled(!canMoveNext)
-                .accessibilityLabel(currentPage == totalPages - 1 ? 
-                                    NSLocalizedString("accessibility.seeResults", tableName: "Onboarding", comment: "") :
-                                        NSLocalizedString("accessibility.nextPage", tableName: "Onboarding", comment: ""))
-                .accessibilityHint(canMoveNext ? "" : NSLocalizedString("accessibility.completeCurrentPage", tableName: "Onboarding", comment: ""))
+                .padding(.horizontal, 16)
+                .frame(minWidth: 44, minHeight: 44)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(canMoveNext ? Color("PrimaryColor") : Color("PrimaryColor").opacity(0.5))
+                )
+                .foregroundColor(Color("TextOnPrimaryColor"))
+                .contentShape(Rectangle())
             }
+            .buttonStyle(.plain)
+            .disabled(!canMoveNext)
+            .accessibilityLabel(currentPage == totalPages - 1 ?
+                                NSLocalizedString("accessibility.seeResults", tableName: "Onboarding", comment: "") :
+                                    NSLocalizedString("accessibility.nextPage", tableName: "Onboarding", comment: ""))
+            .accessibilityHint(canMoveNext ? "" : NSLocalizedString("accessibility.completeCurrentPage", tableName: "Onboarding", comment: ""))
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
-        .background(
-            Rectangle()
-                .fill(Color("BackgroundColor"))
-                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: -4)
-        )
+    }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 8)
+    .background(
+        Rectangle()
+            .fill(Color("BackgroundColor"))
+            .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: -4)
+    )
     }
 }
 

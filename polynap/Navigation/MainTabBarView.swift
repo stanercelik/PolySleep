@@ -23,12 +23,14 @@ struct MainTabBarView: View {
                 .ignoresSafeArea()
                 
             TabView(selection: $selectedTab) {
-                MainScreenView(viewModel: mainScreenViewModel)
-                    .tabItem {
-                        Image(systemName: "house.fill")
-                        Text(L("tabbar.schedule", table: "Common"))
-                    }
-                    .tag(0)
+                NavigationStack {
+                    MainScreenView(viewModel: mainScreenViewModel)
+                }
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text(L("tabbar.schedule", table: "Common"))
+                }
+                .tag(0)
                 
                 EducationView()
                     .tabItem {

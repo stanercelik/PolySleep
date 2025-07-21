@@ -124,6 +124,108 @@ final class OnboardingViewModel: ObservableObject {
         }
     }
     
+    func skipOnboarding() async {
+        print("⏭️ OnboardingViewModel: Onboarding atlandı")
+        
+        // Skip analytics event
+        analyticsManager.logOnboardingSkipped()
+        
+        // Mark onboarding as skipped in UserPreferences
+        await markOnboardingAsSkippedInSwiftData()
+        
+        // Set up default biphasic sleep schedule
+        await setupDefaultBiphasicSchedule()
+        
+        // ContentView will automatically navigate to MainTabBarView since hasCompletedOnboarding = true
+        print("✅ OnboardingViewModel: Skip tamamlandı, ContentView otomatik olarak MainTabBarView'a geçecek")
+    }
+    
+    private func markOnboardingAsSkippedInSwiftData() async {
+        guard let modelContext = self.modelContext else {
+            print("❌ OnboardingViewModel: Onboarding atlandı olarak işaretlenemedi, ModelContext yok.")
+            return
+        }
+        
+        let fetchDescriptor = FetchDescriptor<UserPreferences>()
+        do {
+            if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                userPreferences.hasSkippedOnboarding = true
+                userPreferences.hasCompletedOnboarding = true // Skip edilse de onboarding tamamlandı sayılır
+                userPreferences.hasCompletedQuestions = false // Sorular tamamlanmadı
+                try modelContext.save()
+                print("✅ OnboardingViewModel: UserPreferences'da onboarding atlandı olarak işaretlendi.")
+            } else {
+                let newPreferences = UserPreferences(
+                    hasCompletedOnboarding: true, // Skip edilse de onboarding tamamlandı sayılır
+                    hasCompletedQuestions: false,
+                    hasSkippedOnboarding: true
+                )
+                modelContext.insert(newPreferences)
+                try modelContext.save()
+                print("✅ OnboardingViewModel: UserPreferences oluşturuldu ve onboarding atlandı olarak işaretlendi.")
+            }
+        } catch {
+            print("❌ OnboardingViewModel: UserPreferences güncellenirken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    private func setupDefaultBiphasicSchedule() async {
+        print("🔧 OnboardingViewModel: Varsayılan biphasic schedule ayarlanıyor...")
+        
+        // Create a biphasic schedule based on the JSON data
+        let biphasicSchedule = UserScheduleModel(
+            id: "biphasic",
+            name: "Biphasic Sleep",
+            description: LocalizedDescription(
+                en: "A sleep pattern with one core sleep period and one short nap during the day, often practiced in some cultures as an afternoon siesta.",
+                tr: "Bir ana uyku dönemi ve gün içinde kısa bir şekerlemeden oluşan uyku düzeni. Özellikle bazı kültürlerde öğleden sonra yapılan siesta şeklinde uygulanabilir.",
+                ja: "夜にまとめて寝る時間のほかに、日中に短いお昼寝を1回とる睡眠スタイル。スペインのシエスタみたいに、文化として根付いている地域もありますよ。",
+                de: "Ein Schlafmuster mit einer Kernschlafphase und einem kurzen Nickerchen während des Tages, das in einigen Kulturen oft als Nachmittagssiesta praktiziert wird.",
+                ms: "Corak tidur dengan satu tempoh tidur teras dan satu tidur sebentar pendek pada siang hari, sering diamalkan dalam sesetengah budaya sebagai siesta petang.",
+                th: "รูปแบบการนอนที่มีช่วงการนอนหลักหนึ่งครั้งและการหลับสั้นๆ ในช่วงกลางวัน มักพบในบางวัฒนธรรมเป็นการนอนบ่าย"
+            ),
+            totalSleepHours: 6.5,
+            schedule: [
+                SleepBlock(
+                    startTime: "23:00",
+                    duration: 360, // 6 hours core sleep
+                    type: "core",
+                    isCore: true
+                ),
+                SleepBlock(
+                    startTime: "14:00",
+                    duration: 30, // 30 minutes nap
+                    type: "nap",
+                    isCore: false
+                )
+            ],
+            isPremium: false
+        )
+        
+        do {
+            // Save the schedule using the Repository
+            _ = try await Repository.shared.saveSchedule(biphasicSchedule)
+            print("✅ OnboardingViewModel: Varsayılan biphasic schedule kaydedildi ve aktif edildi.")
+            
+            // Update ScheduleManager with the new active schedule
+            await ScheduleManager.shared.loadActiveScheduleFromRepository()
+            print("✅ OnboardingViewModel: ScheduleManager güncellendi.")
+            
+        } catch {
+            print("❌ OnboardingViewModel: Varsayılan biphasic schedule kaydedilirken hata: \(error.localizedDescription)")
+            
+            // Fallback to current default schedule if biphasic setup fails
+            let fallbackSchedule = UserScheduleModel.defaultSchedule
+            do {
+                _ = try await Repository.shared.saveSchedule(fallbackSchedule)
+                await ScheduleManager.shared.loadActiveScheduleFromRepository()
+                print("⚠️ OnboardingViewModel: Fallback schedule kullanıldı.")
+            } catch {
+                print("❌ OnboardingViewModel: Fallback schedule bile kaydedilemedi: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     // MARK: - Recommendation Process
     func startRecommendationProcess() async {
         // Kullanıcı seçimlerinin tam olup olmadığını kontrol et
