@@ -4,6 +4,7 @@
 // Created by Taner Çelik on 27.12.2024.
 
 import SwiftUI
+import SwiftData
 
 struct WelcomeView: View {
     @StateObject private var viewModel = WelcomeViewModel()
@@ -45,12 +46,11 @@ struct WelcomeView: View {
                             OnboardingView()
                                 .transition(.opacity)
                                 .zIndex(1)
+                                .onAppear {
+                                    print("🎯 WelcomeView: OnboardingView APPEARED!")
+                                }
                                 .onDisappear {
-                                    // Onboarding tamamlandı bildirimini gönder
-                                    NotificationCenter.default.post(
-                                        name: NSNotification.Name("OnboardingCompleted"),
-                                        object: nil
-                                    )
+                                    print("🎯 WelcomeView: OnboardingView DISAPPEARED!")
                                 }
                         }
                     }
@@ -61,6 +61,30 @@ struct WelcomeView: View {
                         
                         // ModelContext'i ViewModel'e ilet
                         viewModel.setModelContext(modelContext)
+                        
+                        #if DEBUG
+                        // DEVELOPMENT ONLY: Reset onboarding state for testing and debug current state
+                        do {
+                            let fetchDescriptor = FetchDescriptor<UserPreferences>()
+                            if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                                print("🔍 WelcomeView: DEBUG - Current UserPreferences state:")
+                                print("    - hasCompletedOnboarding: \(userPreferences.hasCompletedOnboarding)")
+                                print("    - hasCompletedQuestions: \(userPreferences.hasCompletedQuestions)")  
+                                print("    - hasSkippedOnboarding: \(userPreferences.hasSkippedOnboarding)")
+                                let shouldShowMainApp = userPreferences.hasCompletedOnboarding && (userPreferences.hasCompletedQuestions || userPreferences.hasSkippedOnboarding)
+                                print("    - shouldShowMainApp calculation: \(shouldShowMainApp)")
+                                
+                                // Reset for testing
+                                userPreferences.hasCompletedOnboarding = false
+                                userPreferences.hasCompletedQuestions = false
+                                userPreferences.hasSkippedOnboarding = false
+                                try modelContext.save()
+                                print("🔧 DEBUG: Force reset onboarding state to false")
+                            }
+                        } catch {
+                            print("❌ DEBUG: Error resetting onboarding state: \(error)")
+                        }
+                        #endif
                         
                         // Analytics: Welcome screen görüntüleme
                         analyticsManager.logScreenView(
@@ -142,13 +166,17 @@ struct WelcomeView: View {
     
     private var continueButton: some View {
         PSPrimaryButton(NSLocalizedString("continue", tableName: "Welcome", comment: "")) {
+            print("🔥 WelcomeView: Continue button CLICKED!")
+            
             // Analytics: Get Started button tap
             analyticsManager.logFeatureUsed(
                 featureName: "welcome_get_started",
                 action: "button_tap"
             )
             
+            print("🔥 WelcomeView: Calling viewModel.animateAndPresentOnboarding()")
             viewModel.animateAndPresentOnboarding()
+            print("🔥 WelcomeView: viewModel.animateAndPresentOnboarding() COMPLETED")
         }
         .padding(.bottom, PSSpacing.lg)
         .opacity(viewModel.isContinueButtonVisible ? 1 : 0)

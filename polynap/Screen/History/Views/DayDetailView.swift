@@ -5,6 +5,7 @@ struct DayDetailView: View {
     @ObservedObject var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var mainScreenViewModel: MainScreenViewModel
     @State private var isAddingSleepEntry = false
     
     // Analytics
@@ -110,7 +111,11 @@ struct DayDetailView: View {
             }
             .sheet(isPresented: $isAddingSleepEntry) {
                 if let selectedDay = viewModel.selectedDay {
-                    AddSleepEntrySheet(viewModel: viewModel, initialDate: selectedDay)
+                    AddSleepEntrySheet(
+                        viewModel: viewModel,
+                        availableBlocks: mainScreenViewModel.model.schedule.schedule,
+                        initialDate: selectedDay
+                    )
                 }
             }
             .onAppear {

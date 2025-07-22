@@ -134,7 +134,7 @@ struct SettingsView: View {
                     
                     // Integrations Section
                     ModernSettingsSection(
-                        title: "Entegrasyonlar",
+                        title: L("settings.integrations", table: "Settings"),
                         icon: "link.circle.fill",
                         iconColor: .green,
                         isMinimal: true
@@ -774,7 +774,7 @@ struct HealthKitIntegrationRow: View {
                     .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
             } else {
                 PSStatusBadge(
-                    "Bağlan",
+                    L("settings.health.connect", table: "Settings"),
                     icon: "plus.circle.fill",
                     color: .green,
                     backgroundColor: Color.green.opacity(0.15)
@@ -788,7 +788,7 @@ struct HealthKitIntegrationRow: View {
             
         case .sharingAuthorized:
             PSStatusBadge(
-                "Bağlandı",
+                L("settings.health.connected", table: "Settings"),
                 icon: "checkmark.circle.fill",
                 color: .green,
                 backgroundColor: Color.green.opacity(0.15)
@@ -796,7 +796,7 @@ struct HealthKitIntegrationRow: View {
             
         case .sharingDenied:
             PSStatusBadge(
-                "Reddedildi",
+                L("settings.health.denied", table: "Settings"),
                 icon: "xmark.circle.fill",
                 color: .red,
                 backgroundColor: Color.red.opacity(0.15)
@@ -822,13 +822,13 @@ struct HealthKitIntegrationRow: View {
         
         switch healthKitManager.authorizationStatus {
         case .notDetermined:
-            return "Uyku verilerinizi Apple Sağlık ile senkronize edin"
+            return L("settings.health.status.notDetermined", table: "Settings")
         case .sharingAuthorized:
-            return "Uyku verileriniz Apple Sağlık ile senkronize ediliyor"
+            return L("settings.health.status.authorized", table: "Settings")
         case .sharingDenied:
-            return "İzin reddedildi. Ayarlardan değiştirin"
+            return L("settings.health.status.denied", table: "Settings")
         @unknown default:
-            return "Durum bilinmiyor"
+            return L("settings.health.status.unknown", table: "Settings")
         }
     }
     

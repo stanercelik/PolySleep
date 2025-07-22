@@ -40,6 +40,7 @@ struct MainTabBarView: View {
                     .tag(1)
                 
                 HistoryView()
+                    .environmentObject(mainScreenViewModel)
                     .tabItem {
                         Image(systemName: "clock.fill")
                         Text(L("tabbar.history", table: "Common"))

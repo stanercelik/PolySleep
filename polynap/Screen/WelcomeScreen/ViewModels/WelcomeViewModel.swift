@@ -22,7 +22,11 @@ class WelcomeViewModel: ObservableObject {
     
     @Published var isPrimaryCircleExpanded: Bool = false
     @Published var isBackgroundCircleExpanded: Bool = false
-    @Published var isOnboardingPresented: Bool = false
+    @Published var isOnboardingPresented: Bool = false {
+        didSet {
+            print("🔄 WelcomeViewModel: isOnboardingPresented changed from \(oldValue) to \(isOnboardingPresented)")
+        }
+    }
     @Published var isContinueButtonVisible: Bool = true
     
     private var modelContext: ModelContext?
@@ -48,7 +52,7 @@ class WelcomeViewModel: ObservableObject {
             }
     }
     
-    private func stopTimer() {
+    func stopTimer() {
         timer?.cancel()
     }
     
@@ -134,6 +138,8 @@ class WelcomeViewModel: ObservableObject {
     
     // Button Animation Controller
     func animateAndPresentOnboarding() {
+        print("🚀 WelcomeViewModel: animateAndPresentOnboarding() STARTED")
+        
         // Timer'ı durdur
         stopTimer()
         
@@ -141,6 +147,8 @@ class WelcomeViewModel: ObservableObject {
         withAnimation(.easeInOut(duration: 0.3)) {
             isContinueButtonVisible = false
         }
+        
+        print("🚀 WelcomeViewModel: Button visibility set to false, starting circle animations...")
         
         // 1) PrimaryColor Circle - Butondan çıkıp tüm ekranı kaplar
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -158,32 +166,15 @@ class WelcomeViewModel: ObservableObject {
         
         // 3) OnboardingView smooth fade in
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
+            print("🚀 WelcomeViewModel: Setting isOnboardingPresented = true")
             withAnimation(.easeInOut(duration: 0.6)) {
                 self.isOnboardingPresented = true
             }
+            print("🚀 WelcomeViewModel: isOnboardingPresented set to true, OnboardingView should now appear")
             
-            // NotificationCenter listener'ı ekle
-            NotificationCenter.default.addObserver(
-                forName: NSNotification.Name("OnboardingCompleted"),
-                object: nil,
-                queue: .main) { [weak self] _ in
-                
-                guard let self = self, let modelContext = self.modelContext else { return }
-                
-                // UserPreferences güncellemesi
-                let fetchDescriptor = FetchDescriptor<UserPreferences>()
-                do {
-                    if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
-                        userPreferences.hasCompletedOnboarding = true
-                        try modelContext.save()
-                        print("✅ Onboarding marked as completed")
-                    } else {
-                        print("❌ No UserPreferences found")
-                    }
-                } catch {
-                    print("❌ Error updating UserPreferences: \(error.localizedDescription)")
-                }
-            }
+            // OnboardingCompleted notification is handled automatically by the app's ContentView
+            // The OnboardingViewModel itself handles all UserPreferences updates
+            // No need for additional handling here
         }
     }
     

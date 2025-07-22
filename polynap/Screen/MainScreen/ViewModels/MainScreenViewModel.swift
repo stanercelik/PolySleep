@@ -58,7 +58,7 @@ class MainScreenViewModel: ObservableObject {
     
     var shouldShowSkippedOnboardingCard: Bool {
         guard let preferences = userPreferences else { return false }
-        return preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions && showSkippedOnboardingCard
+        return preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions && !preferences.hasSeenSkippedOnboardingCard && showSkippedOnboardingCard
     }
     
     // MARK: - Chart Edit Mode
@@ -384,6 +384,9 @@ class MainScreenViewModel: ObservableObject {
     
     /// ModelContext'i ayarlar ve ilk veri yüklemesini + alarm planlamasını tetikler.
     func setModelContext(_ context: ModelContext) {
+        // Zaten ayarlandıysa tekrar ayarlama
+        guard self.modelContext == nil else { return }
+        
         self.modelContext = context
         print("🗂️ MainScreenViewModel: ModelContext ayarlandı.")
         Task {
@@ -405,9 +408,9 @@ class MainScreenViewModel: ObservableObject {
             await MainActor.run {
                 self.userPreferences = preferences
                 
-                // Show the skipped onboarding card if user skipped onboarding
+                // Show the skipped onboarding card if user skipped onboarding and hasn't seen the card yet
                 if let preferences = preferences, 
-                   preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions {
+                   preferences.hasSkippedOnboarding && !preferences.hasCompletedQuestions && !preferences.hasSeenSkippedOnboardingCard {
                     self.showSkippedOnboardingCard = true
                     print("📱 MainScreenViewModel: Onboarding atlandı - bilgi kartı gösterilecek")
                 }
@@ -421,7 +424,36 @@ class MainScreenViewModel: ObservableObject {
     
     func dismissSkippedOnboardingCard() {
         showSkippedOnboardingCard = false
-        print("📱 MainScreenViewModel: Atlandı kartı gizlendi")
+        
+        // Mark the card as seen so it won't show again
+        Task {
+            await markSkippedOnboardingCardAsSeen()
+        }
+        
+        print("📱 MainScreenViewModel: Atlandı kartı gizlendi ve bir daha gösterilmeyecek şekilde işaretlendi")
+    }
+    
+    private func markSkippedOnboardingCardAsSeen() async {
+        guard let modelContext = self.modelContext else {
+            print("❌ MainScreenViewModel: Skipped onboarding card işaretlenemedi, ModelContext yok.")
+            return
+        }
+        
+        let fetchDescriptor = FetchDescriptor<UserPreferences>()
+        do {
+            if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
+                userPreferences.hasSeenSkippedOnboardingCard = true
+                try modelContext.save()
+                
+                // Update local property
+                await MainActor.run {
+                    self.userPreferences = userPreferences
+                }
+                print("✅ MainScreenViewModel: hasSeenSkippedOnboardingCard true olarak işaretlendi")
+            }
+        } catch {
+            print("❌ MainScreenViewModel: hasSeenSkippedOnboardingCard güncellenirken hata: \(error.localizedDescription)")
+        }
     }
     
     private func createDefaultBiphasicSchedule() -> UserScheduleModel {
@@ -976,11 +1008,10 @@ class MainScreenViewModel: ObservableObject {
     }
     
     /// Dil değişikliklerini dinler ve UI'yi günceller
+    /// Artık gereksiz - SwiftUI EnvironmentObject değişikliklerini otomatik takip ediyor
     private func setupLanguageChangeListener() {
-        languageManager.$currentLanguage
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in self?.objectWillChange.send() }
-            .store(in: &cancellables)
+        // Bu metod artık boş - SwiftUI otomatik olarak EnvironmentObject değişikliklerini handle ediyor
+        // languageManager.$currentLanguage değiştiğinde view otomatik olarak yeniden render olur
     }
     
     private func resetNewBlockValues() {
@@ -1146,8 +1177,13 @@ class MainScreenViewModel: ObservableObject {
         do {
             if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
                 userPreferences.hasCompletedOnboarding = true
-                userPreferences.hasSkippedOnboarding = false
-                userPreferences.hasCompletedQuestions = false // Still false
+                // hasSkippedOnboarding durumunu değiştirmiyoruz - kullanıcı skip ettiyse true kalmalı
+                // userPreferences.hasSkippedOnboarding = false // Kaldırıldı - mevcut durumu koru
+                // hasCompletedQuestions false kalabilir çünkü questions atlandı
+                
+                // Schedule seçildi, artık skipped onboarding card'ını gösterme
+                userPreferences.hasSeenSkippedOnboardingCard = true
+                
                 try modelContext.save()
                 
                 // Update local property to trigger UI change

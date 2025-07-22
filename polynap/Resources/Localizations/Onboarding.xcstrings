@@ -3031,8 +3031,132 @@
         }
       }
     },
+    "onboarding.skip.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen & Standard einrichten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip & Set Default"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スキップしてデフォルトを設定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langkau & Tetapkan Lalai"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้ามและตั้งค่าเริ่มต้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atla ve Varsayılanı Ayarla"
+          }
+        }
+      }
+    },
+    "onboarding.skip.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie das Onboarding überspringen, wird ein Standard-Schlafprogramm für Sie eingerichtet. Möchten Sie fortfahren?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skipping the onboarding process will set up a default sleep program for you. Do you want to proceed?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングをスキップすると、デフォルトの睡眠プログラムが設定されます。続行しますか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melangkau proses onboarding akan menyediakan program tidur lalai untuk anda. Adakah anda mahu meneruskan?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การข้ามขั้นตอนการเริ่มต้นใช้งานจะตั้งค่าโปรแกรมการนอนหลับเริ่มต้นสำหรับคุณ คุณต้องการดำเนินการต่อหรือไม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtım sürecini atlamak, sizin için varsayılan bir uyku programı ayarlayacaktır. Devam etmek istiyor musunuz?"
+          }
+        }
+      }
+    },
+    "onboarding.skip.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding überspringen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip Onboarding?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンボーディングをスキップしますか？"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langkau Onboarding?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้ามการเริ่มต้นใช้งานหรือไม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanıtımı Atla?"
+          }
+        }
+      }
+    },
     "onboarding.skipped.action" : {
       "comment" : "Action button text on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3074,6 +3198,7 @@
     },
     "onboarding.skipped.message" : {
       "comment" : "Message on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3115,6 +3240,7 @@
     },
     "onboarding.skipped.title" : {
       "comment" : "Title on the main screen when onboarding is skipped",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4513,129 +4639,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uygulamayı Kullanmaya Başla"
-          }
-        }
-      }
-    },
-    "onboarding.skip.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Onboarding überspringen?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skip Onboarding?"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "オンボーディングをスキップしますか？"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Langkau Onboarding?"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ข้ามการเริ่มต้นใช้งานหรือไม่"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tanıtımı Atla?"
-          }
-        }
-      }
-    },
-    "onboarding.skip.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wenn Sie das Onboarding überspringen, wird ein Standard-Schlafprogramm für Sie eingerichtet. Möchten Sie fortfahren?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skipping the onboarding process will set up a default sleep program for you. Do you want to proceed?"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "オンボーディングをスキップすると、デフォルトの睡眠プログラムが設定されます。続行しますか？"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Melangkau proses onboarding akan menyediakan program tidur lalai untuk anda. Adakah anda mahu meneruskan?"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "การข้ามขั้นตอนการเริ่มต้นใช้งานจะตั้งค่าโปรแกรมการนอนหลับเริ่มต้นสำหรับคุณ คุณต้องการดำเนินการต่อหรือไม่"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tanıtım sürecini atlamak, sizin için varsayılan bir uyku programı ayarlayacaktır. Devam etmek istiyor musunuz?"
-          }
-        }
-      }
-    },
-    "onboarding.skip.confirm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Überspringen & Standard einrichten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skip & Set Default"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スキップしてデフォルトを設定"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Langkau & Tetapkan Lalai"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ข้ามและตั้งค่าเริ่มต้น"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Atla ve Varsayılanı Ayarla"
           }
         }
       }

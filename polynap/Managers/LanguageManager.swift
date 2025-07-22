@@ -76,10 +76,10 @@ class LanguageManager: ObservableObject {
         
         updateLocale()
         
-        // DEBUG: Schedule descriptions test
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            SleepScheduleService.shared.debugScheduleDescriptions()
-        }
+        // DEBUG: Schedule descriptions test (devre dışı - performance sorunları)
+        // DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        //     SleepScheduleService.shared.debugScheduleDescriptions()
+        // }
     }
     
     /// Dil ayarını değiştirir ve tüm uygulamayı günceller

@@ -38,6 +38,28 @@
     <key>WKWatchKitApp</key>
     <true/>
     
+    <key>CFBundleIconFiles</key>
+    <array>
+        <string>AppIcon-24@2x</string>
+        <string>AppIcon-27.5@2x</string>
+        <string>AppIcon-29@2x</string>
+        <string>AppIcon-29@3x</string>
+        <string>AppIcon-complication-40@2x</string>
+        <string>AppIcon-44@2x-longLook</string>
+        <string>AppIcon-50@2x-longLook</string>
+        <string>AppIcon-86@2x</string>
+        <string>AppIcon-98@2x</string>
+        <string>AppIcon-108@2x</string>
+        <string>AppIcon-38@2x</string>
+        <string>AppIcon-40@2x</string>
+        <string>AppIcon-44@2x</string>
+        <string>AppIcon-50@2x</string>
+        <string>AppIcon-1024</string>
+    </array>
+    
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
+    
     <key>LSRequiresIPhoneOS</key>
     <false/>
 </dict>

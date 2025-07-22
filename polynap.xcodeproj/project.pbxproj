@@ -18,7 +18,6 @@
 		20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 20D266F52E197168001EA025 /* PolyNap Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20D267132E197294001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267122E197294001EA025 /* PolyNapShared */; };
 		20D267152E1972A1001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267142E1972A1001EA025 /* PolyNapShared */; };
-		20F240412E24FF19007FC87A /* watchkitapp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20D266C02E196EFE001EA025 /* watchkitapp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,17 +86,6 @@
 				20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20F240442E24FF19007FC87A /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				20F240412E24FF19007FC87A /* watchkitapp Watch App.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -285,12 +273,10 @@
 				2032D6AC2D1E9E2300170F56 /* Sources */,
 				2032D6AD2D1E9E2300170F56 /* Frameworks */,
 				2032D6AE2D1E9E2300170F56 /* Resources */,
-				20F240442E24FF19007FC87A /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				20D266C32E196EFE001EA025 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				2032D6B22D1E9E2300170F56 /* polynap */,
@@ -492,23 +478,6 @@
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = 2032D6AF2D1E9E2300170F56;
 					};
-					20D266BA2E196EFE001EA025 = {
-						CreatedOnToolsVersion = 16.1;
-					};
-					20D266BF2E196EFE001EA025 = {
-						CreatedOnToolsVersion = 16.1;
-					};
-					20D266D12E196F00001EA025 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = 20D266BF2E196EFE001EA025;
-					};
-					20D266DB2E196F00001EA025 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = 20D266BF2E196EFE001EA025;
-					};
-					20D266F42E197168001EA025 = {
-						CreatedOnToolsVersion = 16.1;
-					};
 				};
 			};
 			buildConfigurationList = 2032D6AB2D1E9E2300170F56 /* Build configuration list for PBXProject "polynap" */;
@@ -540,11 +509,6 @@
 				2032D6AF2D1E9E2300170F56 /* polynap */,
 				2032D6C42D1E9E2400170F56 /* polynapTests */,
 				2032D6CE2D1E9E2400170F56 /* polynapUITests */,
-				20D266BA2E196EFE001EA025 /* watchkitapp */,
-				20D266BF2E196EFE001EA025 /* watchkitapp Watch App */,
-				20D266D12E196F00001EA025 /* watchkitapp Watch AppTests */,
-				20D266DB2E196F00001EA025 /* watchkitapp Watch AppUITests */,
-				20D266F42E197168001EA025 /* PolyNap Watch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -826,9 +790,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = polynap/polynap.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"polynap/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
@@ -850,7 +815,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -869,9 +834,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = polynap/polynap.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"polynap/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
@@ -893,7 +859,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -912,7 +878,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
@@ -933,7 +899,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
@@ -953,7 +919,7 @@
 			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -972,7 +938,7 @@
 			baseConfigurationReferenceRelativePath = Keys.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -993,7 +959,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"watchkitapp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
@@ -1027,7 +993,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"watchkitapp Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				ENABLE_PREVIEWS = YES;
@@ -1057,13 +1023,14 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1073,12 +1040,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1089,7 +1057,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1111,7 +1079,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1131,7 +1099,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1152,7 +1120,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1173,7 +1141,7 @@
 				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1204,7 +1172,7 @@
 				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3CL3A52KNG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "PolyNap Watch Extension/Info.plist";

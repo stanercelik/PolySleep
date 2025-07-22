@@ -130,6 +130,7 @@ struct MainScreenView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var alarmManager: AlarmManager
+    @State private var hasLoggedScreenView = false
     
     // Analytics
     private let analyticsManager = AnalyticsManager.shared
@@ -148,12 +149,17 @@ struct MainScreenView: View {
                 VStack(spacing: 0) {
                     // Skipped Onboarding Card - Show at top when needed
                     if viewModel.shouldShowSkippedOnboardingCard {
-                        SkippedOnboardingCardView(isPresented: $viewModel.showSkippedOnboardingCard)
-                            .onDisappear {
-                                viewModel.dismissSkippedOnboardingCard()
+                        SkippedOnboardingCardView(
+                            isPresented: $viewModel.showSkippedOnboardingCard,
+                            onChooseSchedule: {
+                                viewModel.showScheduleSelectionSheet()
                             }
-                            .padding(.top, PSSpacing.lg)
-                            .safeAreaPadding(.top)
+                        )
+                        .onDisappear {
+                            viewModel.dismissSkippedOnboardingCard()
+                        }
+                        .padding(.top, PSSpacing.lg)
+                        .safeAreaPadding(.top)
                     }
                     
                     // Modern Segmented Control
@@ -304,11 +310,14 @@ struct MainScreenView: View {
             .onAppear {
                 viewModel.setModelContext(modelContext)
                 
-                // Analytics: Main screen görüntüleme
-                analyticsManager.logScreenView(
-                    screenName: "main_screen",
-                    screenClass: "MainScreenView"
-                )
+                // Analytics: Main screen görüntüleme (sadece bir defa)
+                if !hasLoggedScreenView {
+                    analyticsManager.logScreenView(
+                        screenName: "main_screen",
+                        screenClass: "MainScreenView"
+                    )
+                    hasLoggedScreenView = true
+                }
             }
         }
         .sheet(isPresented: $viewModel.showAddBlockSheet) {
@@ -335,7 +344,6 @@ struct MainScreenView: View {
             )
             .environmentObject(languageManager)
         }
-        .id(languageManager.currentLanguage)
     }
     
     private func shareSchedule() {

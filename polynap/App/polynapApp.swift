@@ -391,20 +391,48 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let preferences = userPreferences.first {
-                if preferences.hasCompletedOnboarding {
+                // Debug reset will be handled in WelcomeView.onAppear
+                
+                // FIXED: Ensure proper onboarding flow
+                // Only show MainTabBarView if user has truly completed the full onboarding process
+                // This prevents cases where hasCompletedOnboarding is true but user never went through questions
+                let shouldShowMainApp = preferences.hasCompletedOnboarding && (preferences.hasCompletedQuestions || preferences.hasSkippedOnboarding)
+                
+                if shouldShowMainApp {
                     MainTabBarView()
+                        .transition(.opacity.combined(with: .scale(scale: 1.02)))
+                        .onAppear {
+                            print("🏠 ContentView: SHOWING MAIN APP - shouldShowMainApp = true")
+                        }
                 } else {
+                    // If hasCompletedOnboarding is true but questions weren't completed and onboarding wasn't skipped,
+                    // this indicates corrupted state - reset it and show Welcome
                     WelcomeView()
+                        .onAppear {
+                            // DEBUG: Log current UserPreferences state
+                            print("🔍 ContentView: SHOWING WELCOME VIEW - shouldShowMainApp = false")
+                            print("🔍 ContentView: UserPreferences found - hasCompletedOnboarding: \(preferences.hasCompletedOnboarding), hasSkippedOnboarding: \(preferences.hasSkippedOnboarding), hasCompletedQuestions: \(preferences.hasCompletedQuestions)")
+                            
+                            if preferences.hasCompletedOnboarding && !preferences.hasCompletedQuestions && !preferences.hasSkippedOnboarding {
+                                print("⚠️ ContentView: Detected corrupted onboarding state - resetting to allow proper flow")
+                                preferences.hasCompletedOnboarding = false
+                                try? modelContext.save()
+                            }
+                        }
                 }
             } else {
                 WelcomeView()
                     .onAppear {
+                        print("🔍 ContentView: No UserPreferences found, creating new one with hasCompletedOnboarding: false")
                         let newPreferences = UserPreferences()
                         modelContext.insert(newPreferences)
                         try? modelContext.save()
+                        print("🔍 ContentView: New UserPreferences created and saved")
                     }
             }
         }
+        .animation(.easeInOut(duration: 0.6), value: userPreferences.first?.hasCompletedOnboarding)
+        .animation(.easeInOut(duration: 0.6), value: userPreferences.first?.hasSkippedOnboarding)
         .preferredColorScheme(getPreferredColorScheme())
         .fullScreenCover(isPresented: $alarmManager.isAlarmFiring) {
             AlarmFiringView()

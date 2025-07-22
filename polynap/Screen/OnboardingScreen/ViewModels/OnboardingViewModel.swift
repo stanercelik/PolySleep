@@ -140,6 +140,29 @@ final class OnboardingViewModel: ObservableObject {
         print("✅ OnboardingViewModel: Skip tamamlandı, ContentView otomatik olarak MainTabBarView'a geçecek")
     }
     
+    /// Skip onboarding without immediately completing - for circular transition
+    func skipOnboardingForTransition() async {
+        print("⏭️ OnboardingViewModel: Skip başlatıldı (transition için)")
+        
+        // Skip analytics event
+        analyticsManager.logOnboardingSkipped()
+        
+        // Set up default biphasic sleep schedule
+        await setupDefaultBiphasicSchedule()
+        
+        print("✅ OnboardingViewModel: Skip hazırlandı, transition sonrası complete edilecek")
+    }
+    
+    /// Complete the skip process after transition
+    func completeSkipAfterTransition() async {
+        print("⏭️ OnboardingViewModel: Skip transition sonrası tamamlanıyor")
+        
+        // Mark onboarding as skipped and completed
+        await markOnboardingAsSkippedInSwiftData()
+        
+        print("✅ OnboardingViewModel: Skip tamamen tamamlandı")
+    }
+    
     private func markOnboardingAsSkippedInSwiftData() async {
         guard let modelContext = self.modelContext else {
             print("❌ OnboardingViewModel: Onboarding atlandı olarak işaretlenemedi, ModelContext yok.")
@@ -270,11 +293,17 @@ final class OnboardingViewModel: ObservableObject {
         do {
             if let userPreferences = try modelContext.fetch(fetchDescriptor).first {
                 userPreferences.hasCompletedOnboarding = true
+                userPreferences.hasCompletedQuestions = true // FIXED: Set this when user completes full flow
+                userPreferences.hasSkippedOnboarding = false // Ensure this is false for completed flow
                 try modelContext.save()
                 print("✅ OnboardingViewModel: UserPreferences'da onboarding tamamlandı olarak işaretlendi.")
             } else {
                 // WelcomeView'da oluşturulmuş olmalı. Eğer yoksa burada oluşturmak bir yedek plan.
-                let newPreferences = UserPreferences(hasCompletedOnboarding: true)
+                let newPreferences = UserPreferences(
+                    hasCompletedOnboarding: true, 
+                    hasCompletedQuestions: true, // FIXED: Set this when user completes full flow
+                    hasSkippedOnboarding: false
+                )
                 modelContext.insert(newPreferences)
                 try modelContext.save()
                 print("✅ OnboardingViewModel: UserPreferences oluşturuldu ve onboarding tamamlandı olarak işaretlendi.")

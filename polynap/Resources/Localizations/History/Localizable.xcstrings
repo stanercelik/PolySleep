@@ -729,6 +729,9 @@
         }
       }
     },
+    "Ana Ekran" : {
+
+    },
     "Ana Uyku: 75%" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -752,8 +755,30 @@
         }
       }
     },
-    "Apple Sağlık" : {
+    "Any Screen" : {
 
+    },
+    "Apple Sağlık" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Health"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Health"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Health"
+          }
+        }
+      }
     },
     "Are you sure you want to delete this sleep entry? This action cannot be undone." : {
       "localizations" : {
@@ -866,6 +891,12 @@
         }
       }
     },
+    "Custom Config Example" : {
+
+    },
+    "Custom Destination" : {
+
+    },
     "Daha Sonra" : {
       "localizations" : {
         "de" : {
@@ -958,6 +989,12 @@
         }
       }
     },
+    "Destination Screen" : {
+
+    },
+    "Different timing and colors!" : {
+
+    },
     "Drag sleep blocks here to delete them" : {
 
     },
@@ -976,6 +1013,9 @@
           }
         }
       }
+    },
+    "Extension Destination" : {
+
     },
     "Free 🆓" : {
       "localizations" : {
@@ -1208,6 +1248,9 @@
         }
       }
     },
+    "Main Screen" : {
+
+    },
     "Mevcut Paywall Sayısı" : {
       "localizations" : {
         "de" : {
@@ -1320,6 +1363,12 @@
           }
         }
       }
+    },
+    "Onboarding başarıyla atlandı!" : {
+
+    },
+    "Onboarding was skipped successfully!" : {
+
     },
     "onboarding.ageRange" : {
       "localizations" : {
@@ -1959,6 +2008,9 @@
         }
       }
     },
+    "Original Screen" : {
+
+    },
     "Paywall Geçmişini Sıfırla" : {
       "localizations" : {
         "de" : {
@@ -2138,6 +2190,9 @@
     "Preview sleep block" : {
 
     },
+    "Profile Screen" : {
+
+    },
     "Puan" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2277,6 +2332,12 @@
         }
       }
     },
+    "Skipped successfully with circular transition!" : {
+
+    },
+    "Source Screen" : {
+
+    },
     "Şu An" : {
       "localizations" : {
         "de" : {
@@ -2408,6 +2469,12 @@
           }
         }
       }
+    },
+    "This uses red primary circle and black background" : {
+
+    },
+    "Transition completed successfully!" : {
+
     },
     "U" : {
       "localizations" : {
@@ -2585,6 +2652,9 @@
           }
         }
       }
+    },
+    "You can use circular transition from any screen to any other screen" : {
+
     },
     "Yükleniyor..." : {
       "localizations" : {

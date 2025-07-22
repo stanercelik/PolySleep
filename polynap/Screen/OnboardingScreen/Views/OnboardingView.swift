@@ -15,9 +15,51 @@ struct OnboardingView: View {
     @StateObject private var viewModel = OnboardingViewModel()
     @State private var showSkipAlert = false
     
+    // Circular transition states
+    @State private var skipButtonPosition: CGPoint = .zero
+    @State private var startSkipTransition = false {
+        didSet {
+            print("🔥 OnboardingView: startSkipTransition changed from \(oldValue) to \(startSkipTransition)")
+        }
+    }
+    
     var body: some View {
         NavigationStack {
-            ZStack {
+            mainContent
+                .circularTransition(
+                    to: Color.appBackground
+                        .ignoresSafeArea()
+                        .onAppear {
+                            print("🔥 OnboardingView: Transition destination appeared - MainTabBarView should fade in through ContentView")
+                        },
+                    startPosition: skipButtonPosition,
+                    isActive: $startSkipTransition
+                )
+                .navigationBarTitleDisplayMode(.inline)
+                .onChange(of: startSkipTransition) { oldValue, newValue in
+                    if newValue == true && oldValue == false {
+                        print("🔥 OnboardingView: startSkipTransition became true - starting skip completion")
+                        // Complete the skip process with perfect timing for circular transition
+                        Task {
+                            // Complete skip logic immediately
+                            print("🔥 OnboardingView: Calling completeSkipAfterTransition immediately")
+                            await viewModel.completeSkipAfterTransition()
+                            
+                            // Send notification immediately after skip completion
+                            // This allows ContentView to prepare MainTabBarView for the transition
+                            print("🔥 OnboardingView: Sending OnboardingCompleted notification immediately")
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name("OnboardingCompleted"),
+                                object: nil
+                            )
+                        }
+                    }
+                }
+        }
+    }
+    
+    private var mainContent: some View {
+        ZStack {
                 Color.appBackground
                     .ignoresSafeArea()
                 
@@ -141,6 +183,18 @@ struct OnboardingView: View {
                             showSkipAlert = true
                         }
                         .tint(Color.appPrimary)
+                        .background(
+                            GeometryReader { proxy in
+                                Color.clear
+                                    .onAppear {
+                                        let screenBounds = UIScreen.main.bounds
+                                        skipButtonPosition = CGPoint(
+                                            x: screenBounds.width - 40,
+                                            y: 60
+                                        )
+                                    }
+                            }
+                        )
                     }
                 }
                 .onAppear {
@@ -172,7 +226,6 @@ struct OnboardingView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .fullScreenCover(isPresented: $viewModel.showLoadingView, onDismiss: {
                 print("📱 OnboardingView: LoadingView DISMISSED!")
                 print("📱 OnboardingView: navigateToMainScreen değeri: \(viewModel.navigateToMainScreen)")
@@ -201,8 +254,22 @@ struct OnboardingView: View {
             }
             .alert(L("onboarding.skip.title", table: "Onboarding"), isPresented: $showSkipAlert) {
                 Button(L("onboarding.skip.confirm", table: "Onboarding"), role: .destructive) {
+                    print("🔥 OnboardingView: Skip confirmed by user, starting process...")
                     Task {
-                        await viewModel.skipOnboarding()
+                        print("🔥 OnboardingView: Calling skipOnboardingForTransition()...")
+                        // Use the transition-specific skip function
+                        await viewModel.skipOnboardingForTransition()
+                        print("🔥 OnboardingView: skipOnboardingForTransition() completed!")
+                        
+                        // Start circular transition after skip logic completes
+                        await MainActor.run {
+                            print("🔥 OnboardingView: Setting startSkipTransition = true after 0.1s delay...")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                print("🔥 OnboardingView: About to set startSkipTransition = true")
+                                startSkipTransition = true
+                                print("🔥 OnboardingView: startSkipTransition set to true!")
+                            }
+                        }
                     }
                 }
                 Button(L("general.cancel", table: "Common"), role: .cancel) {}
@@ -217,7 +284,7 @@ struct OnboardingView: View {
             }
         }
     }
-}
+
 
 #Preview {
     return OnboardingView()

@@ -21,12 +21,13 @@ struct AddSleepEntrySheet: View {
     @State private var showDateWarning = false
     @State private var dateWarningMessage = ""
     
-    // MainScreenViewModel'den aktif uyku programını almak için
-    @StateObject private var mainViewModel = MainScreenViewModel()
+    // Schedule bilgisini dışarıdan alacak şekilde değiştirdik
+    let availableBlocks: [SleepBlock]
     
-    // İlk tarih değerini dışarıdan alacak şekilde init
-    init(viewModel: HistoryViewModel, initialDate: Date? = nil) {
+    // İlk tarih değerini ve schedule'ı dışarıdan alacak şekilde init
+    init(viewModel: HistoryViewModel, availableBlocks: [SleepBlock], initialDate: Date? = nil) {
         self.viewModel = viewModel
+        self.availableBlocks = availableBlocks
         _selectedDate = State(initialValue: initialDate ?? Date())
     }
     
@@ -48,9 +49,10 @@ private var napEmoji: String {
     UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
 }
     
-    // MainViewModel'in aktif programından uyku bloklarını alır
+    // Schedule bilgisini property olarak aldığımız için artık gerekmez
+    // ancak kod değişikliğini minimize etmek için alias oluşturuyoruz
     private var availableBlocksFromSchedule: [SleepBlock] {
-        mainViewModel.model.schedule.schedule
+        availableBlocks
     }
     
     // Seçilen tarih bugün veya geçmişte mi?
@@ -700,8 +702,4 @@ private var napEmoji: String {
         // ViewModel aracılığıyla kaydet
         viewModel.addSleepEntry(newEntry)
     }
-}
-
-#Preview {
-    AddSleepEntrySheet(viewModel: HistoryViewModel())
 }

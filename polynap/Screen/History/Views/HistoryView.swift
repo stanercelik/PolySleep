@@ -6,6 +6,7 @@ struct HistoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var mainScreenViewModel: MainScreenViewModel
     
     // Analytics
     private let analyticsManager = AnalyticsManager.shared
@@ -76,7 +77,10 @@ struct HistoryView: View {
                     viewModel.reloadData()
                 }
             } content: {
-                AddSleepEntrySheet(viewModel: viewModel)
+                AddSleepEntrySheet(
+                    viewModel: viewModel,
+                    availableBlocks: mainScreenViewModel.model.schedule.schedule
+                )
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
