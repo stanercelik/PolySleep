@@ -701,5 +701,15 @@ private var napEmoji: String {
         
         // ViewModel aracılığıyla kaydet
         viewModel.addSleepEntry(newEntry)
+        
+        // HealthKit'e de kaydet
+        Task {
+            let sleepType: SleepType = scheduledBlock.isCore ? .core : .powerNap
+            await ScheduleManager.shared.saveSleepSessionToHealthKit(
+                startDate: finalStartTime,
+                endDate: finalEndTime,
+                sleepType: sleepType
+            )
+        }
     }
 }

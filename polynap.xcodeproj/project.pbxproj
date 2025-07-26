@@ -7,17 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		203133F52E1D956500124001 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 203133F42E1D956500124001 /* PolyNapShared */; };
 		206D2A9C2DF33CC40013D385 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9B2DF33CC40013D385 /* RevenueCat */; };
 		206D2A9E2DF33CC40013D385 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 206D2A9D2DF33CC40013D385 /* RevenueCatUI */; settings = {ATTRIBUTES = (Required, ); }; };
 		206D5B062DF357EC00366C90 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 206D5B052DF357EC00366C90 /* StoreKit.framework */; };
 		206DE0792DF195E7007EE33B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 206DE0782DF195E7007EE33B /* Lottie */; };
 		20D266AA2E113B9D001EA025 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20D266A92E113B9D001EA025 /* FirebaseAnalytics */; };
 		20D266AC2E113B9D001EA025 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20D266AB2E113B9D001EA025 /* FirebaseCrashlytics */; };
-		20D266C12E196EFE001EA025 /* watchkitapp Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 20D266C02E196EFE001EA025 /* watchkitapp Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 20D266F52E197168001EA025 /* PolyNap Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		20D267132E197294001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267122E197294001EA025 /* PolyNapShared */; };
-		20D267152E1972A1001EA025 /* PolyNapShared in Frameworks */ = {isa = PBXBuildFile; productRef = 20D267142E1972A1001EA025 /* PolyNapShared */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,60 +31,7 @@
 			remoteGlobalIDString = 2032D6AF2D1E9E2300170F56;
 			remoteInfo = polynap;
 		};
-		20D266C22E196EFE001EA025 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2032D6A82D1E9E2300170F56 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 20D266BF2E196EFE001EA025;
-			remoteInfo = "watchkitapp Watch App";
-		};
-		20D266D32E196F00001EA025 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2032D6A82D1E9E2300170F56 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 20D266BF2E196EFE001EA025;
-			remoteInfo = "watchkitapp Watch App";
-		};
-		20D266DD2E196F00001EA025 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2032D6A82D1E9E2300170F56 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 20D266BF2E196EFE001EA025;
-			remoteInfo = "watchkitapp Watch App";
-		};
-		20D266FC2E197168001EA025 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2032D6A82D1E9E2300170F56 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 20D266F42E197168001EA025;
-			remoteInfo = "PolyNap Watch Extension";
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		20D266E72E196F00001EA025 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				20D266C12E196EFE001EA025 /* watchkitapp Watch App.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D267032E197168001EA025 /* Embed ExtensionKit Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
-			dstSubfolderSpec = 16;
-			files = (
-				20D266FE2E197168001EA025 /* PolyNap Watch Extension.appex in Embed ExtensionKit Extensions */,
-			);
-			name = "Embed ExtensionKit Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2032D6B02D1E9E2300170F56 /* polynap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polynap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,15 +50,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Keys.xcconfig,
 			);
 			target = 2032D6AF2D1E9E2300170F56 /* polynap */;
-		};
-		20D266FF2E197168001EA025 /* Exceptions for "PolyNap Watch Extension" folder in "PolyNap Watch Extension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 20D266F42E197168001EA025 /* PolyNap Watch Extension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -155,9 +92,6 @@
 		};
 		20D266F62E197168001EA025 /* PolyNap Watch Extension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				20D266FF2E197168001EA025 /* Exceptions for "PolyNap Watch Extension" folder in "PolyNap Watch Extension" target */,
-			);
 			path = "PolyNap Watch Extension";
 			sourceTree = "<group>";
 		};
@@ -189,36 +123,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266BD2E196EFE001EA025 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				203133F52E1D956500124001 /* PolyNapShared in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266CF2E196F00001EA025 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266D92E196F00001EA025 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266F22E197168001EA025 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				20D267152E1972A1001EA025 /* PolyNapShared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,119 +244,6 @@
 			productReference = 2032D6CF2D1E9E2400170F56 /* polynapUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		20D266BA2E196EFE001EA025 /* watchkitapp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20D266E82E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp" */;
-			buildPhases = (
-				20D266B92E196EFE001EA025 /* Resources */,
-				20D266E72E196F00001EA025 /* Embed Watch Content */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				20D266C32E196EFE001EA025 /* PBXTargetDependency */,
-			);
-			name = watchkitapp;
-			packageProductDependencies = (
-			);
-			productName = watchkitapp;
-			productReference = 20D266BB2E196EFE001EA025 /* watchkitapp.app */;
-			productType = "com.apple.product-type.application.watchapp2-container";
-		};
-		20D266BF2E196EFE001EA025 /* watchkitapp Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20D266E42E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch App" */;
-			buildPhases = (
-				20D266BC2E196EFE001EA025 /* Sources */,
-				20D266BD2E196EFE001EA025 /* Frameworks */,
-				20D266BE2E196EFE001EA025 /* Resources */,
-				20D267032E197168001EA025 /* Embed ExtensionKit Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				20D266FD2E197168001EA025 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				20D266C42E196EFE001EA025 /* watchkitapp Watch App */,
-			);
-			name = "watchkitapp Watch App";
-			packageProductDependencies = (
-				203133F42E1D956500124001 /* PolyNapShared */,
-			);
-			productName = "watchkitapp Watch App";
-			productReference = 20D266C02E196EFE001EA025 /* watchkitapp Watch App.app */;
-			productType = "com.apple.product-type.application";
-		};
-		20D266D12E196F00001EA025 /* watchkitapp Watch AppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20D266EB2E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch AppTests" */;
-			buildPhases = (
-				20D266CE2E196F00001EA025 /* Sources */,
-				20D266CF2E196F00001EA025 /* Frameworks */,
-				20D266D02E196F00001EA025 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				20D266D42E196F00001EA025 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				20D266D52E196F00001EA025 /* watchkitapp Watch AppTests */,
-			);
-			name = "watchkitapp Watch AppTests";
-			packageProductDependencies = (
-			);
-			productName = "watchkitapp Watch AppTests";
-			productReference = 20D266D22E196F00001EA025 /* watchkitapp Watch AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		20D266DB2E196F00001EA025 /* watchkitapp Watch AppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20D266EE2E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch AppUITests" */;
-			buildPhases = (
-				20D266D82E196F00001EA025 /* Sources */,
-				20D266D92E196F00001EA025 /* Frameworks */,
-				20D266DA2E196F00001EA025 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				20D266DE2E196F00001EA025 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				20D266DF2E196F00001EA025 /* watchkitapp Watch AppUITests */,
-			);
-			name = "watchkitapp Watch AppUITests";
-			packageProductDependencies = (
-			);
-			productName = "watchkitapp Watch AppUITests";
-			productReference = 20D266DC2E196F00001EA025 /* watchkitapp Watch AppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		20D266F42E197168001EA025 /* PolyNap Watch Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20D267002E197168001EA025 /* Build configuration list for PBXNativeTarget "PolyNap Watch Extension" */;
-			buildPhases = (
-				20D266F12E197168001EA025 /* Sources */,
-				20D266F22E197168001EA025 /* Frameworks */,
-				20D266F32E197168001EA025 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				20D266F62E197168001EA025 /* PolyNap Watch Extension */,
-			);
-			name = "PolyNap Watch Extension";
-			packageProductDependencies = (
-				20D267142E1972A1001EA025 /* PolyNapShared */,
-			);
-			productName = "PolyNap Watch Extension";
-			productReference = 20D266F52E197168001EA025 /* PolyNap Watch Extension.appex */;
-			productType = "com.apple.product-type.extensionkit-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -535,41 +326,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		20D266B92E196EFE001EA025 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266BE2E196EFE001EA025 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266D02E196F00001EA025 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266DA2E196F00001EA025 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266F32E197168001EA025 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -594,34 +350,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		20D266BC2E196EFE001EA025 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266CE2E196F00001EA025 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266D82E196F00001EA025 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20D266F12E197168001EA025 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -634,26 +362,6 @@
 			isa = PBXTargetDependency;
 			target = 2032D6AF2D1E9E2300170F56 /* polynap */;
 			targetProxy = 2032D6D02D1E9E2400170F56 /* PBXContainerItemProxy */;
-		};
-		20D266C32E196EFE001EA025 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 20D266BF2E196EFE001EA025 /* watchkitapp Watch App */;
-			targetProxy = 20D266C22E196EFE001EA025 /* PBXContainerItemProxy */;
-		};
-		20D266D42E196F00001EA025 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 20D266BF2E196EFE001EA025 /* watchkitapp Watch App */;
-			targetProxy = 20D266D32E196F00001EA025 /* PBXContainerItemProxy */;
-		};
-		20D266DE2E196F00001EA025 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 20D266BF2E196EFE001EA025 /* watchkitapp Watch App */;
-			targetProxy = 20D266DD2E196F00001EA025 /* PBXContainerItemProxy */;
-		};
-		20D266FD2E197168001EA025 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 20D266F42E197168001EA025 /* PolyNap Watch Extension */;
-			targetProxy = 20D266FC2E197168001EA025 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -951,251 +659,6 @@
 			};
 			name = Release;
 		};
-		20D266E52E196F00001EA025 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_ASSET_PATHS = "\"watchkitapp Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PolyNap-Watch";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tanercelik.polynap;
-				INFOPLIST_KEY_WKWatchOnly = NO;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Debug;
-		};
-		20D266E62E196F00001EA025 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"watchkitapp Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PolyNap-Watch";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.tanercelik.polynap;
-				INFOPLIST_KEY_WKWatchOnly = NO;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Release;
-		};
-		20D266E92E196F00001EA025 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		20D266EA2E196F00001EA025 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				INFOPLIST_KEY_CFBundleDisplayName = watchkitapp;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		20D266EC2E196F00001EA025 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tanercelik.polynap.watchkitapp-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/watchkitapp Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/watchkitapp Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Debug;
-		};
-		20D266ED2E196F00001EA025 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tanercelik.polynap.watchkitapp-Watch-AppTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/watchkitapp Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/watchkitapp Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Release;
-		};
-		20D266EF2E196F00001EA025 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "watchkitapp Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Debug;
-		};
-		20D266F02E196F00001EA025 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				TEST_TARGET_NAME = "watchkitapp Watch App";
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Release;
-		};
-		20D267012E197168001EA025 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "PolyNap Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "PolyNap Watch Extension";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Debug;
-		};
-		20D267022E197168001EA025 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "PolyNap Watch Extension/PolyNap Watch Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 3CL3A52KNG;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "PolyNap Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "PolyNap Watch Extension";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tanercelik.polynap.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.1;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1231,51 +694,6 @@
 			buildConfigurations = (
 				2032D6E02D1E9E2400170F56 /* Debug */,
 				2032D6E12D1E9E2400170F56 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		20D266E42E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				20D266E52E196F00001EA025 /* Debug */,
-				20D266E62E196F00001EA025 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		20D266E82E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				20D266E92E196F00001EA025 /* Debug */,
-				20D266EA2E196F00001EA025 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		20D266EB2E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				20D266EC2E196F00001EA025 /* Debug */,
-				20D266ED2E196F00001EA025 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		20D266EE2E196F00001EA025 /* Build configuration list for PBXNativeTarget "watchkitapp Watch AppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				20D266EF2E196F00001EA025 /* Debug */,
-				20D266F02E196F00001EA025 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		20D267002E197168001EA025 /* Build configuration list for PBXNativeTarget "PolyNap Watch Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				20D267012E197168001EA025 /* Debug */,
-				20D267022E197168001EA025 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1317,11 +735,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		203133F42E1D956500124001 /* PolyNapShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20D267112E197294001EA025 /* XCLocalSwiftPackageReference "PolyNapShared" */;
-			productName = PolyNapShared;
-		};
 		206D2A9B2DF33CC40013D385 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 206D2A9A2DF33CC40013D385 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
@@ -1348,11 +761,6 @@
 			productName = FirebaseCrashlytics;
 		};
 		20D267122E197294001EA025 /* PolyNapShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20D267112E197294001EA025 /* XCLocalSwiftPackageReference "PolyNapShared" */;
-			productName = PolyNapShared;
-		};
-		20D267142E1972A1001EA025 /* PolyNapShared */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 20D267112E197294001EA025 /* XCLocalSwiftPackageReference "PolyNapShared" */;
 			productName = PolyNapShared;

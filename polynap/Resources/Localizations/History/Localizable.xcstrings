@@ -133,6 +133,16 @@
         }
       }
     },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
     "%@h" : {
       "localizations" : {
         "de" : {
@@ -437,6 +447,9 @@
         }
       }
     },
+    "🌙" : {
+
+    },
     "🎉" : {
       "localizations" : {
         "de" : {
@@ -481,6 +494,9 @@
           }
         }
       }
+    },
+    "💤" : {
+
     },
     "📚 75 sayfa kitap okumak" : {
       "extractionState" : "stale",
@@ -781,6 +797,7 @@
       }
     },
     "Are you sure you want to delete this sleep entry? This action cannot be undone." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -826,6 +843,7 @@
       }
     },
     "Cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -943,6 +961,7 @@
       }
     },
     "Delete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -968,6 +987,7 @@
 
     },
     "Delete Sleep Entry" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1127,6 +1147,151 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "เป้าหมาย"
+          }
+        }
+      }
+    },
+    "history.relative.daysAgo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vor %d Tagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d days ago"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d hari yang lalu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d วันที่แล้ว"
+          }
+        }
+      }
+    },
+    "history.relative.oneWeekAgo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vor 1 Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 week ago"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 minggu yang lalu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 สัปดาห์ที่แล้ว"
+          }
+        }
+      }
+    },
+    "history.relative.today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hari ini"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันนี้"
+          }
+        }
+      }
+    },
+    "history.relative.weeksAgo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vor %d Wochen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d weeks ago"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d minggu yang lalu"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d สัปดาห์ที่แล้ว"
+          }
+        }
+      }
+    },
+    "history.relative.yesterday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yesterday"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semalam"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อวาน"
           }
         }
       }
@@ -2629,6 +2794,9 @@
       }
     },
     "Valid position" : {
+
+    },
+    "x %lld" : {
 
     },
     "Yeni programınız aynı kalacak, sadece önceki adaptasyon gününüzden devam edeceksiniz" : {

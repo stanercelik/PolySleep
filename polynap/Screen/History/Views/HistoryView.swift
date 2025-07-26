@@ -25,8 +25,8 @@ struct HistoryView: View {
                         // Filter Section
                         FilterSectionCard(viewModel: viewModel)
                         
-                        // History Content
-                        if viewModel.historyItems.isEmpty {
+                        // Unified Sleep Timeline - includes both manual and HealthKit data
+                        if viewModel.historyItems.isEmpty && viewModel.healthKitData.isEmpty {
                             EmptyStateCard()
                         } else {
                             HistoryTimelineSection(viewModel: viewModel)
@@ -34,6 +34,7 @@ struct HistoryView: View {
                     }
                     .padding(.horizontal, PSSpacing.lg)
                     .padding(.vertical, PSSpacing.sm)
+                    .padding(.bottom, 100)
                 }
                 
                 // Floating Action Button
@@ -334,7 +335,7 @@ struct EmptyStateCard: View {
     }
 }
 
-// MARK: - History Timeline Section
+// MARK: - Modern Sleep Timeline Section
 struct HistoryTimelineSection: View {
     @ObservedObject var viewModel: HistoryViewModel
     @EnvironmentObject private var languageManager: LanguageManager
@@ -352,368 +353,475 @@ struct HistoryTimelineSection: View {
                     )
                     
                     PSStatusBadge(
-                        String(format: L("history.timeline.count", table: "History"), viewModel.historyItems.count),
+                        String(format: L("history.timeline.count", table: "History"), getTotalDaysCount()),
                         color: .appAccent
                     )
                 }
                 .padding(.horizontal, PSSpacing.lg)
                 .padding(.top, PSSpacing.lg)
                 
-                // Timeline Content
-                LazyVStack(spacing: 0) {
-                    let monthGroups = groupedByMonth(items: viewModel.historyItems)
-                    ForEach(monthGroups, id: \.month) { monthGroup in
-                        HistoryMonthSection(
-                            month: monthGroup.month,
-                            items: monthGroup.days,
+                // Unified Timeline Content with Visual Connectors
+                // Using PSSpacing.sm (8pt) for tighter timeline flow as requested by UX designer
+                LazyVStack(spacing: PSSpacing.sm) {
+                    let unifiedDays = getUnifiedDailyData()
+                    ForEach(Array(unifiedDays.enumerated()), id: \.element.date) { index, dayData in
+                        TimelineCardWrapper(
+                            dayData: dayData,
                             viewModel: viewModel,
-                            isLastMonth: monthGroup.month == monthGroups.last?.month
+                            isFirst: index == 0,
+                            isLast: index == unifiedDays.count - 1
                         )
+                        .padding(.horizontal, PSSpacing.sm)
                     }
                 }
-                .padding(.bottom, PSSpacing.lg)
+                .padding(.vertical, PSSpacing.md)
             }
         }
     }
     
-    private func groupedByMonth(items: [HistoryModel]) -> [(month: String, days: [HistoryModel])] {
-        let grouped = Dictionary(grouping: items) { item -> String in
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMMM yyyy"
-            formatter.locale = languageManager.currentLocale
-            return formatter.string(from: item.date)
+    private func getTotalDaysCount() -> Int {
+        return getUnifiedDailyData().count
+    }
+    
+    private func getUnifiedDailyData() -> [UnifiedDayData] {
+        var unifiedDays: [UnifiedDayData] = []
+        
+        // Merge manual entries and HealthKit data
+        let allDates = Set(viewModel.historyItems.map { Calendar.current.startOfDay(for: $0.date) })
+            .union(Set(viewModel.healthKitData.map { Calendar.current.startOfDay(for: $0.startDate) }))
+        
+        for date in allDates.sorted(by: >) {
+            let manualEntries = viewModel.historyItems.filter { 
+                Calendar.current.isDate($0.date, inSameDayAs: date) 
+            }
+            
+            let healthKitEntries = viewModel.healthKitData.filter { 
+                Calendar.current.isDate($0.startDate, inSameDayAs: date) 
+            }
+            
+            let dayData = UnifiedDayData(
+                date: date,
+                manualEntries: manualEntries.first?.sleepEntries ?? [],
+                healthKitEntries: healthKitEntries,
+                rating: manualEntries.first?.averageRating ?? 0
+            )
+            
+            unifiedDays.append(dayData)
         }
         
-        return grouped.map { (month: $0.key, days: $0.value) }
-            .sorted { item1, item2 in
-                let formatter = DateFormatter()
-                formatter.dateFormat = "MMMM yyyy"
-                formatter.locale = languageManager.currentLocale
-                guard let date1 = formatter.date(from: item1.month),
-                      let date2 = formatter.date(from: item2.month) else {
-                    return false
-                }
-                return date1 > date2
-            }
+        return unifiedDays
     }
 }
 
-// MARK: - History Month Section
-struct HistoryMonthSection: View {
-    let month: String
-    let items: [HistoryModel]
+// MARK: - Unified Day Data Model
+struct UnifiedDayData {
+    let date: Date
+    let manualEntries: [SleepEntry]
+    let healthKitEntries: [HealthKitSleepSample]
+    let rating: Double
+    
+    var totalSleepDuration: TimeInterval {
+        let manualDuration = manualEntries.reduce(0) { $0 + $1.duration }
+        let healthKitDuration = healthKitEntries.reduce(0) { $0 + $1.duration }
+        return manualDuration + healthKitDuration
+    }
+    
+    var coreBlocksCount: Int {
+        return manualEntries.filter { $0.isCore }.count
+    }
+    
+    var napBlocksCount: Int {
+        return manualEntries.filter { !$0.isCore }.count + healthKitEntries.count
+    }
+    
+    var totalBlocksCount: Int {
+        return manualEntries.count + healthKitEntries.count
+    }
+}
+
+// MARK: - Timeline Card Wrapper with Visual Connectors
+struct TimelineCardWrapper: View {
+    let dayData: UnifiedDayData
     @ObservedObject var viewModel: HistoryViewModel
-    let isLastMonth: Bool
+    let isFirst: Bool
+    let isLast: Bool
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: PSSpacing.md) {
+            // Timeline Connector
+            TimelineConnector(
+                isFirst: isFirst,
+                isLast: isLast,
+                hasData: dayData.totalBlocksCount > 0
+            )
+            
+            // Main Card Content
+            DailySleepCard(
+                dayData: dayData,
+                viewModel: viewModel
+            )
+        }
+    }
+}
+
+// MARK: - Timeline Visual Connector
+struct TimelineConnector: View {
+    let isFirst: Bool
+    let isLast: Bool
+    let hasData: Bool
+    
+    private let lineWidth: CGFloat = 2
+    private let nodeSize: CGFloat = 10 // Slightly larger for better visibility
     
     var body: some View {
         VStack(spacing: 0) {
-            // Month Header with enhanced design
-            VStack(spacing: PSSpacing.md) {
-                HStack {
-                    HStack(spacing: PSSpacing.sm) {
-                        Image(systemName: "calendar.badge.clock")
-                            .font(.system(size: PSIconSize.medium))
-                            .foregroundColor(.appPrimary)
-                        
-                        Text(month)
-                            .font(PSTypography.title1)
-                            .foregroundColor(.appPrimary)
-                    }
-                    
-                    Spacer()
-                    
-                    PSStatusBadge(
-                        String(format: L("history.month.entries", table: "History"), items.count),
-                        icon: "calendar",
-                        color: .appPrimary
-                    )
-                }
-                
-                // Month separator with gradient
-                Rectangle()
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.appPrimary.opacity(0.6), .appPrimary.opacity(0.1)]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .frame(height: 2)
-            }
-            .padding(.horizontal, PSSpacing.lg)
-            .padding(.vertical, PSSpacing.lg)
-            .background(Color.appPrimary.opacity(0.03))
+            // Top line (hidden for first item)
+            Rectangle()
+                .fill(isFirst ? Color.clear : lineColor)
+                .frame(width: lineWidth, height: PSSpacing.xl)
             
-            // Days in month
-            LazyVStack(spacing: PSSpacing.lg) {
-                ForEach(items.sorted { $0.date > $1.date }) { item in
-                    ModernDayCard(item: item, viewModel: viewModel)
-                        .padding(.horizontal, PSSpacing.lg)
-                }
-            }
-            .padding(.vertical, PSSpacing.lg)
+            // Timeline node with enhanced styling
+            Circle()
+                .fill(nodeColor)
+                .frame(width: nodeSize, height: nodeSize)
+                .overlay(
+                    Circle()
+                        .stroke(Color.appCardBackground, lineWidth: 2)
+                )
+                .overlay(
+                    // Inner dot for data indicators
+                    Circle()
+                        .fill(hasData ? Color.white : Color.clear)
+                        .frame(width: nodeSize * 0.4, height: nodeSize * 0.4)
+                )
+                .shadow(color: nodeColor.opacity(0.4), radius: 3, x: 0, y: 1)
             
-            // Month bottom separator (if not last month)
-            if !isLastMonth {
-                Rectangle()
-                    .fill(Color.appBorder.opacity(0.3))
-                    .frame(height: 1)
-                    .padding(.horizontal, PSSpacing.lg)
-            }
+            // Bottom line (hidden for last item) - Height adjusted for PSSpacing.sm
+            Rectangle()
+                .fill(isLast ? Color.clear : lineColor)
+                .frame(width: lineWidth)
+                .frame(minHeight: PSSpacing.xl + PSSpacing.sm) // Reduced from PSSpacing.lg to PSSpacing.sm
         }
+        .frame(width: max(nodeSize, lineWidth))
+    }
+    
+    private var nodeColor: Color {
+        hasData ? Color.appPrimary : Color.appBorder.opacity(0.6)
+    }
+    
+    private var lineColor: Color {
+        hasData ? Color.appPrimary.opacity(0.3) : Color.appBorder.opacity(0.3)
     }
 }
 
-// MARK: - Modern Day Card with Edit/Delete capabilities
-struct ModernDayCard: View {
-    let item: HistoryModel
+// MARK: - Daily Sleep Card - Expandable Design
+struct DailySleepCard: View {
+    let dayData: UnifiedDayData
     @ObservedObject var viewModel: HistoryViewModel
     @EnvironmentObject private var languageManager: LanguageManager
+    @State private var isExpanded = false
+    @State private var showingActionsMenu = false
     @State private var showingDeleteAlert = false
     @State private var entryToDelete: SleepEntry?
-    
+
+    private var displayRating: Double {
+        dayData.manualEntries.isEmpty ? 0.0 : dayData.rating
+    }
+
+    private var hasManualActions: Bool {
+        !dayData.manualEntries.isEmpty
+    }
+
     var body: some View {
         PSCard {
-            VStack(alignment: .leading, spacing: PSSpacing.md) {
-                // Header: Date and Actions
-                HStack {
-                    VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                        Text(item.date, style: .date)
-                            .font(PSTypography.headline)
-                            .foregroundColor(.appText)
-                        Text(dayOfWeek(from: item.date))
-                            .font(PSTypography.caption)
+            VStack(alignment: .leading, spacing: 0) {
+                closedCardContent
+                
+                if isExpanded {
+                    expandedCardContent
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+            }
+        }
+        .shadow(color: Color.appPrimary.opacity(0.08), radius: 8, x: 0, y: 2)
+        .shadow(color: Color.black.opacity(0.04), radius: 1, x: 0, y: 1)
+        .alert(L("history.alert.delete.title", table: "History"), isPresented: $showingDeleteAlert) {
+            Button(L("history.alert.delete.cancel", table: "History"), role: .cancel) {}
+            Button(L("history.alert.delete.confirm", table: "History"), role: .destructive) {
+                if let entry = entryToDelete {
+                    viewModel.deleteSleepEntry(entry)
+                    entryToDelete = nil
+                }
+            }
+        }
+        .actionSheet(isPresented: $showingActionsMenu) {
+            ActionSheet(
+                title: Text(L("history.actions.title", table: "History")),
+                buttons: [
+                    .default(Text(L("history.actions.edit", table: "History"))) {
+                        // Handle edit action
+                    },
+                    .destructive(Text(L("history.actions.delete", table: "History"))) {
+                        // Handle delete day action
+                    },
+                    .cancel()
+                ]
+            )
+        }
+    }
+    
+    private var closedCardContent: some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) { isExpanded.toggle() }
+        }) {
+            HStack(alignment: .center, spacing: PSSpacing.sm) {
+                // MARK: - Date Section
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(alignment: .firstTextBaseline, spacing: 4) {
+                        Text("\(Calendar.current.component(.day, from: dayData.date))")
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(.appPrimary)
+                        
+                        Text(monthString(from: dayData.date, format: "MMM"))
+                            .font(.system(size: 15, weight: .semibold, design: .rounded))
                             .foregroundColor(.appTextSecondary)
+                            .padding(.top, 5) // Align with day number
+                    }
+                    
+                    Text(relativeTimeString(from: dayData.date))
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundColor(relativeTimeColor(from: dayData.date))
+                        .padding(.leading, 2)
+                }
+                .padding(.trailing, PSSpacing.xxs)
+                .frame(maxHeight: .infinity, alignment: .top)
+                
+                // MARK: - Sleep Details Section
+                VStack(alignment: .leading, spacing: 0) {
+                    // Top part: Total duration and block counts
+                    VStack(alignment: .leading, spacing: PSSpacing.sm) {
+                        Text("\(L("history.card.total", table: "History")): \(formatDuration(Int(dayData.totalSleepDuration / 60)))")
+                            .font(PSTypography.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.appText)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        HStack(spacing: PSSpacing.sm) {
+                            if dayData.coreBlocksCount > 0 {
+                                HStack(spacing: PSSpacing.xs) { Text("🌙").font(.system(size: 14)); Text("x \(dayData.coreBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
+                            }
+                            if dayData.coreBlocksCount > 0 && dayData.napBlocksCount > 0 {
+                                Text("・").font(PSTypography.caption).foregroundColor(.appTextSecondary.opacity(0.5))
+                            }
+                            if dayData.napBlocksCount > 0 {
+                                HStack(spacing: PSSpacing.xs) { Text("💤").font(.system(size: 14)); Text("x \(dayData.napBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
+                            }
+                        }
+                    }
+                    
+                    Spacer(minLength: PSSpacing.md)
+                    
+                    // Bottom part: Star rating
+                    HStack(spacing: PSSpacing.sm) {
+                        StarsView(rating: displayRating, size: PSIconSize.small, primaryColor: .appAccent, emptyColor: .appTextSecondary.opacity(0.2))
+                        Text(String(format: "%.1f", displayRating))
+                            .font(PSTypography.caption.weight(.semibold))
+                            .foregroundColor(.appTextSecondary)
+                            .lineLimit(1)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, PSSpacing.sm)
+                
+                
+                // MARK: - Action Buttons Section
+                VStack(alignment: .trailing) {
+                    Button(action: {
+                        if hasManualActions { showingActionsMenu = true } 
+                    }) {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: PSIconSize.small))
+                            .foregroundColor(.appTextSecondary)
+                            .rotationEffect(.degrees(90))
+                            .padding(PSSpacing.lg) // Increase tappable area
+                    }
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
+                    .disabled(!hasManualActions)
+                    .opacity(hasManualActions ? 1.0 : 0.4)
+                    .onTapGesture {
+                        if hasManualActions { showingActionsMenu = true }
                     }
                     
                     Spacer()
                     
-                    HStack(spacing: PSSpacing.sm) {
-                        if Calendar.current.isDateInToday(item.date) {
-                            PSStatusBadge(L("history.today", table: "History"), color: .appPrimary)
-                        }
-                        
-                        // Edit day button
-                        PSIconButton(
-                            icon: "square.and.pencil",
-                            size: PSIconSize.medium,
-                            backgroundColor: Color.appSecondary.opacity(0.15),
-                            foregroundColor: .appSecondary
-                        ) {
-                            viewModel.selectDateForDetail(item.date)
-                        }
-                    }
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: PSIconSize.small, weight: .medium))
+                        .foregroundColor(.appTextSecondary)
+                        .animation(.easeInOut(duration: 0.2), value: isExpanded)
+                        .padding(PSSpacing.lg)
                 }
-                
-                // Rating Stars with half-star support
-                if let entries = item.sleepEntries, !entries.isEmpty, item.averageRating > 0 {
-                    HStack(spacing: PSSpacing.xs) {
-                        StarsView(
-                            rating: item.averageRating,
-                            size: PSIconSize.small,
-                            primaryColor: .appAccent,
-                            emptyColor: .appTextSecondary.opacity(0.3)
-                        )
-                        Text(String(format: "%.1f", item.averageRating))
-                            .font(PSTypography.caption)
-                            .foregroundColor(.appTextSecondary)
-                    }
-                }
-                
-                // Separator
-                if let entries = item.sleepEntries, !entries.isEmpty {
-                    Divider()
-                        .background(Color.appBorder.opacity(0.3))
-                }
-                
-                // Sleep Entries with enhanced design
-                if let entries = item.sleepEntries, !entries.isEmpty {
-                    VStack(spacing: PSSpacing.md) {
-                        ForEach(entries) { entry in
-                            ModernSleepEntryRow(
-                                entry: entry,
-                                onDelete: {
-                                    entryToDelete = entry
-                                    showingDeleteAlert = true
-                                }
-                            )
-                        }
-                    }
-                } else {
-                    HStack {
-                        Image(systemName: "moon.zzz")
-                            .font(.system(size: PSIconSize.medium))
-                            .foregroundColor(.appTextSecondary.opacity(0.5))
-                        
-                        Text(L("history.noRecord", table: "History"))
-                            .font(PSTypography.body)
-                            .foregroundColor(.appTextSecondary)
-                        
-                        Spacer()
-                    }
-                    .padding(.vertical, PSSpacing.lg)
-                }
-                
-                // Footer Stats with enhanced design
-                if let entries = item.sleepEntries, !entries.isEmpty {
-                    Divider()
-                        .background(Color.appBorder.opacity(0.3))
-                    
-                    HStack(spacing: PSSpacing.lg) {
-                        StatPill(
-                            icon: "clock",
-                            value: formatDuration(Int(item.totalSleepDuration / 60)),
-                            color: .appPrimary
-                        )
-                        
-                        StatPill(
-                            icon: "bed.double",
-                            value: String(format: L("history.blocksCount", table: "History"), entries.count),
-                            color: .appSecondary
-                        )
-                        
-                        Spacer()
-                        
-                        PSStatusBadge(
-                            item.completionStatus.localizedTitle,
-                            icon: "circle.fill",
-                            color: item.completionStatus.color
-                        )
-                    }
-                }
+                .padding(.leading, PSSpacing.xxs)
+                .frame(maxHeight: .infinity, alignment: .center)
             }
         }
-        .alert("Delete Sleep Entry", isPresented: $showingDeleteAlert) {
-            Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
-                if let entry = entryToDelete {
-                    // Delete işlemini async olarak yap
-                    Task { @MainActor in
-                        viewModel.deleteSleepEntry(entry)
-                        
-                        // Local state'i temizle
-                        entryToDelete = nil
-                        
-                        // Haptic feedback
-                        let generator = UINotificationFeedbackGenerator()
-                        generator.notificationOccurred(.success)
-                    }
-                }
-            }
-        } message: {
-            Text("Are you sure you want to delete this sleep entry? This action cannot be undone.")
-        }
-        .onTapGesture {
-            viewModel.selectDateForDetail(item.date)
-            let generator = UIImpactFeedbackGenerator(style: .light)
-            generator.impactOccurred()
-        }
+        .buttonStyle(.plain)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
     
-    private func dayOfWeek(from date: Date) -> String {
+    private var expandedCardContent: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Divider().background(Color.appBorder.opacity(0.3)).padding(.horizontal, PSSpacing.lg).padding(.vertical, PSSpacing.sm)
+            VStack(spacing: PSSpacing.sm) {
+                ForEach(dayData.manualEntries) { entry in
+                    SleepEntryDetailRow(entry: .manual(entry), onDelete: {
+                        entryToDelete = entry
+                        showingDeleteAlert = true
+                    })
+                }
+                ForEach(dayData.healthKitEntries, id: \.startDate) { sample in
+                    SleepEntryDetailRow(entry: .healthKit(sample), onDelete: nil)
+                }
+            }
+            .padding(.vertical, PSSpacing.lg)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
+    private func monthString(from date: Date, format: String = "MMMM") -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
+        formatter.dateFormat = format
         formatter.locale = languageManager.currentLocale
         return formatter.string(from: date)
     }
-}
-
-// MARK: - Modern Sleep Entry Row with Delete capability
-struct ModernSleepEntryRow: View {
-    let entry: SleepEntry
-    let onDelete: () -> Void
     
-    // Kullanıcının seçtiği emojiler
-    private var coreEmoji: String {
-        UserDefaults.standard.string(forKey: "selectedCoreEmoji") ?? "🌙"
+    private func relativeTimeString(from date: Date) -> String {
+        let calendar = Calendar.current, now = Date()
+        if calendar.isDateInToday(date) { return L("history.relative.today", table: "History") }
+        if calendar.isDateInYesterday(date) { return L("history.relative.yesterday", table: "History") }
+        let days = calendar.dateComponents([.day], from: date, to: now).day ?? 0
+        if days <= 7 { return String(format: L("history.relative.daysAgo", table: "History"), days) }
+        let weeks = days / 7
+        return weeks == 1 ? L("history.relative.oneWeekAgo", table: "History") : String(format: L("history.relative.weeksAgo", table: "History"), weeks)
     }
     
-    private var napEmoji: String {
-        UserDefaults.standard.string(forKey: "selectedNapEmoji") ?? "💤"
+    private func relativeTimeColor(from date: Date) -> Color {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(date) { return .appPrimary.opacity(0.9) }
+        if calendar.isDateInYesterday(date) { return .appSecondary.opacity(0.8) }
+        return .appAccent.opacity(0.7)
+    }
+}
+
+// MARK: - Sleep Entry Detail Row for Expanded State
+struct SleepEntryDetailRow: View {
+    let entry: SleepEntryType
+    let onDelete: (() -> Void)?
+    
+    enum SleepEntryType {
+        case manual(SleepEntry)
+        case healthKit(HealthKitSleepSample)
     }
     
     var body: some View {
         HStack(spacing: PSSpacing.md) {
-            // Kişiselleştirilmiş emoji kullan
-            Text(entry.isCore ? coreEmoji : napEmoji)
-                .font(.system(size: PSIconSize.small))
-                .frame(width: PSIconSize.medium + 8, height: PSIconSize.medium + 8)
-                .background(
-                    Circle()
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: entry.isCore ? [.appPrimary, .blue] : [.appSecondary, .green]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                )
-                .shadow(color: (entry.isCore ? Color.appPrimary : Color.appSecondary).opacity(0.3), radius: PSSpacing.xs, x: 0, y: PSSpacing.xs / 2)
+            Image(systemName: iconName)
+                .font(.system(size: PSIconSize.medium))
+                .foregroundColor(iconColor)
+                .frame(width: 30, alignment: .center)
             
-            // Entry Info
             VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                Text("\(formatTime(entry.startTime)) - \(formatTime(entry.endTime))")
-                    .font(PSTypography.body)
+                Text(timeRange)
+                    .font(PSTypography.subheadline)
+                    .fontWeight(.medium)
                     .foregroundColor(.appText)
+                    .fixedSize(horizontal: false, vertical: true)
                 
-                Text(entry.isCore ? L("sleep.type.core", table: "History") : L("sleep.type.nap", table: "History"))
-                    .font(PSTypography.caption)
-                    .foregroundColor(.appTextSecondary)
+                HStack {
+                    Text(duration)
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Spacer()
+                    
+                    DataSourceIndicator(isFromHealthKit: isFromHealthKit)
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
-            Spacer()
-            
-            // Duration Badge
-            PSStatusBadge(
-                formatEntryDuration(entry.duration),
-                color: entry.isCore ? .appPrimary : .appSecondary
-            )
-            
-            // Delete Button
-            PSIconButton(
-                icon: "trash",
-                size: PSIconSize.medium,
-                backgroundColor: Color.red.opacity(0.15),
-                foregroundColor: .red
-            ) {
-                onDelete()
+            if let onDelete = onDelete {
+                Button(action: onDelete) {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.system(size: PSIconSize.medium))
+                        .foregroundColor(.red.opacity(0.7))
+                }
+                .buttonStyle(.plain)
+                .frame(width: 30, alignment: .center)
+            } else {
+                Spacer().frame(width: 30)
             }
         }
-        .padding(PSSpacing.md)
-        .background(
-            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                .fill(Color.appBackground.opacity(0.6))
-                .overlay(
-                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                        .stroke(Color.appBorder.opacity(0.2), lineWidth: 0.5)
-                )
-        )
-        .shadow(color: Color.black.opacity(0.04), radius: 2, x: 0, y: 1)
+        .padding(.vertical, PSSpacing.sm)
+        .padding(.horizontal, PSSpacing.md)
+        .background(RoundedRectangle(cornerRadius: PSCornerRadius.small).fill(Color.appBackground.opacity(0.3)))
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var iconName: String {
+        switch entry {
+        case .manual(let sleepEntry): return sleepEntry.isCore ? "moon.fill" : "powersleep"
+        case .healthKit(let sample): return sample.type == .asleep ? "moon.fill" : "powersleep"
+        }
+    }
+    
+    private var iconColor: Color {
+        switch entry {
+        case .manual(let sleepEntry): return sleepEntry.isCore ? .appPrimary : .appSecondary
+        case .healthKit: return .green
+        }
+    }
+    
+    private var timeRange: String {
+        switch entry {
+        case .manual(let sleepEntry): return "\(formatTime(sleepEntry.startTime)) - \(formatTime(sleepEntry.endTime))"
+        case .healthKit(let sample): return "\(formatTime(sample.startDate)) - \(formatTime(sample.endDate))"
+        }
+    }
+    
+    private var duration: String {
+        switch entry {
+        case .manual(let sleepEntry): return formatEntryDuration(sleepEntry.duration)
+        case .healthKit(let sample):
+            let hours = Int(sample.duration) / 3600, minutes = (Int(sample.duration) % 3600) / 60
+            return String(format: "%dh %dm", hours, minutes)
+        }
+    }
+    
+    private var isFromHealthKit: Bool {
+        switch entry {
+        case .manual: return false
+        case .healthKit: return true
+        }
     }
 }
 
-// MARK: - Stat Pill
-struct StatPill: View {
-    let icon: String
-    let value: String
-    let color: Color
+// MARK: - Data Source Indicator
+struct DataSourceIndicator: View {
+    let isFromHealthKit: Bool
     
     var body: some View {
         HStack(spacing: PSSpacing.xs) {
-            Image(systemName: icon)
-                .font(PSTypography.caption)
-                .foregroundColor(color)
+            Image(systemName: isFromHealthKit ? "heart.circle.fill" : "pencil.circle.fill")
+                .font(.system(size: PSIconSize.small - 2))
+                .foregroundColor(isFromHealthKit ? .green : .appSecondary)
             
-            Text(value)
-                .font(PSTypography.caption)
-                .foregroundColor(.appText)
+            Text(isFromHealthKit ? L("history.source.health", table: "History") : L("history.source.manual", table: "History"))
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.appTextSecondary)
         }
-        .padding(.horizontal, PSSpacing.sm)
-        .padding(.vertical, PSSpacing.xs)
-        .background(
-            Capsule()
-                .fill(color.opacity(0.1))
-        )
+        .padding(.horizontal, PSSpacing.xs)
+        .padding(.vertical, 2)
+        .background(RoundedRectangle(cornerRadius: PSCornerRadius.small - 2).fill(Color.appBackground.opacity(0.5)))
     }
 }
 
@@ -781,5 +889,3 @@ private func formatEntryDuration(_ duration: TimeInterval) -> String {
     let minutes = Int(duration / 60)
     return formatDuration(minutes)
 }
-
-

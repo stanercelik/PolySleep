@@ -134,9 +134,7 @@ class ScheduleManager: ObservableObject {
     /// Uyku seansı tamamlandığında HealthKit'e veri kaydetme fonksiyonu
     func saveSleepSessionToHealthKit(startDate: Date, endDate: Date, sleepType: SleepType = .core) async {
         print("💤 ScheduleManager: HealthKit'e uyku seansı kaydediliyor...")
-        
-        // TODO: HealthKit entegrasyonu tamamlandıktan sonra aktif edilecek
-        /*
+
         // HealthKit authorization kontrolü
         let healthKitManager = HealthKitManager.shared
         guard healthKitManager.authorizationStatus == .sharingAuthorized else {
@@ -181,7 +179,7 @@ class ScheduleManager: ObservableObject {
                 "error": error.localizedDescription
             ])
         }
-        */
+        
     }
     
     /// Uyku bloğu tamamlandığında çağrılacak fonksiyon
