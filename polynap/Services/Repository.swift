@@ -96,7 +96,7 @@ class Repository: ObservableObject {
     // MARK: - Sleep Entry Methods (Delegated to SleepEntryRepository)
     
     /// Uyku girdisi ekler
-    func addSleepEntry(blockId: String, emoji: String, rating: Int, date: Date) async throws -> SleepEntryEntity {
+    func addSleepEntry(blockId: String, emoji: String, rating: Double, date: Date) async throws -> SleepEntryEntity {
         return try await sleepEntryRepository.addSleepEntry(blockId: blockId, emoji: emoji, rating: rating, date: date)
     }
     

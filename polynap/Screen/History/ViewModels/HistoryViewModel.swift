@@ -5,10 +5,11 @@ import Combine
 import HealthKit
 
 enum TimeFilter: String, CaseIterable {
-    case today = "history.filter.today"
-    case thisWeek = "history.filter.thisWeek"
-    case thisMonth = "history.filter.thisMonth"
     case allTime = "history.filter.allTime"
+    case thisMonth = "history.filter.thisMonth"
+    case thisWeek = "history.filter.thisWeek"
+    case today = "history.filter.today"
+    
     
     var localizedTitle: String {
         return L(self.rawValue, table: "History")
@@ -358,7 +359,11 @@ class HistoryViewModel: ObservableObject {
         await MainActor.run {
             switch result {
             case .success(let samples):
-                healthKitData = samples
+                // Rating'leri yükle ve samples ile eşleştir
+                var updatedSamples = samples
+                loadHealthKitRatingsFromPersistence(for: &updatedSamples)
+                
+                healthKitData = updatedSamples
                 isHealthKitDataLoaded = true
                 print("✅ HistoryViewModel: \(samples.count) adet HealthKit verisi yüklendi (Filtre: \(selectedFilter.rawValue), Tarih aralığı: \(startDate) - \(endDate))")
                 objectWillChange.send() // UI güncelleme için explicit trigger
@@ -406,6 +411,165 @@ class HistoryViewModel: ObservableObject {
         let healthKitEntries = getHealthKitData(for: date)
         
         return (polyNapEntry, healthKitEntries)
+    }
+    
+    // MARK: - HealthKit Data Management
+    
+    /// HealthKit verisi için puan günceller ve kaydeder
+    func updateHealthKitRating(for sampleId: UUID, rating: Double) {
+        guard let modelContext = modelContext else {
+            print("🚨 ModelContext not available for HealthKit rating")
+            return
+        }
+        
+        if let index = healthKitData.firstIndex(where: { $0.id == sampleId }) {
+            let sample = healthKitData[index]
+            healthKitData[index].rating = rating
+            
+            // Database'e kalıcı olarak kaydet
+            saveHealthKitRatingToPersistence(sample: sample, rating: rating)
+            
+            // UI'ı güncelle (günün ortalama rating'i değişebilir)
+            reloadData()
+            
+            print("✅ HealthKit sample rating güncellendi ve kaydedildi: \(rating)")
+        }
+    }
+    
+    /// HealthKit rating'ini SleepEntry olarak SwiftData'ya kaydeder
+    private func saveHealthKitRatingToPersistence(sample: HealthKitSleepSample, rating: Double) {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            let calendar = Calendar.current
+            let entryDate = calendar.startOfDay(for: sample.startDate)
+            
+            // Önce aynı HealthKit sample için SleepEntry olup olmadığını kontrol et  
+            let sampleStartDate = sample.startDate
+            let sampleEndDate = sample.endDate
+            let predicate = #Predicate<SleepEntry> { entry in
+                entry.source == "health" &&
+                entry.startTime == sampleStartDate &&
+                entry.endTime == sampleEndDate
+            }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            
+            if let existingEntry = try modelContext.fetch(descriptor).first {
+                // Mevcut SleepEntry'yi güncelle
+                existingEntry.rating = rating
+                existingEntry.updatedAt = Date()
+                print("✅ Mevcut HealthKit SleepEntry rating'i güncellendi: \(rating)")
+            } else {
+                // Yeni SleepEntry oluştur (HealthKit verisi olarak işaretle)
+                let durationMinutes = Int(sample.endDate.timeIntervalSince(sample.startDate) / 60)
+                
+                let newEntry = SleepEntry(
+                    date: entryDate,
+                    startTime: sample.startDate,
+                    endTime: sample.endDate,
+                    durationMinutes: durationMinutes,
+                    isCore: sample.type == .inBed || sample.type == .asleep, // HealthKit core sleep types
+                    blockId: nil, // HealthKit verileri schedule block'una bağlı değil
+                    emoji: nil, // HealthKit verileri emoji içermez
+                    rating: rating,
+                    source: "health" // HealthKit verisi olduğunu belirt
+                )
+                
+                // HistoryModel'i bul veya oluştur
+                let historyPredicate = #Predicate<HistoryModel> { $0.date == entryDate }
+                let historyDescriptor = FetchDescriptor(predicate: historyPredicate)
+                
+                var historyModel = try modelContext.fetch(historyDescriptor).first
+                if historyModel == nil {
+                    historyModel = HistoryModel(date: entryDate)
+                    modelContext.insert(historyModel!)
+                }
+                
+                // SleepEntry'yi HistoryModel'e bağla
+                newEntry.historyDay = historyModel
+                historyModel?.sleepEntries?.append(newEntry)
+                modelContext.insert(newEntry)
+                
+                print("✅ Yeni HealthKit SleepEntry oluşturuldu: \(rating)")
+            }
+            
+            try modelContext.save()
+            print("✅ HealthKit rating SleepEntry olarak kaydedildi")
+            
+        } catch {
+            print("🚨 HealthKit rating SleepEntry kaydetme hatası: \(error.localizedDescription)")
+        }
+    }
+    
+    /// HealthKit samples'ları için kaydedilmiş rating'leri SleepEntry'lerden yükler
+    private func loadHealthKitRatingsFromPersistence(for samples: inout [HealthKitSleepSample]) {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            // HealthKit kaynaklı SleepEntry'leri çek
+            let predicate = #Predicate<SleepEntry> { $0.source == "health" }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            let healthSleepEntries = try modelContext.fetch(descriptor)
+            
+            // Her sample için ilgili SleepEntry'yi bul ve rating'i ata
+            for index in samples.indices {
+                let sample = samples[index]
+                
+                // Aynı başlangıç ve bitiş zamanına sahip SleepEntry'yi bul
+                if let matchingEntry = healthSleepEntries.first(where: { entry in
+                    entry.startTime == sample.startDate && entry.endTime == sample.endDate
+                }) {
+                    samples[index].rating = matchingEntry.rating
+                }
+            }
+            
+            let ratedCount = samples.filter { $0.rating != nil }.count
+            print("✅ \(ratedCount) adet HealthKit sample için rating SleepEntry'lerden yüklendi")
+            
+        } catch {
+            print("🚨 HealthKit rating'leri SleepEntry'lerden yüklenirken hata: \(error.localizedDescription)")
+        }
+    }
+    
+    /// HealthKit verisini siler (sadece uygulama içinde)
+    func deleteHealthKitSample(_ sample: HealthKitSleepSample) {
+        healthKitData.removeAll { $0.id == sample.id }
+        
+        // Rating'i de veritabanından sil
+        deleteHealthKitRatingFromPersistence(sample: sample)
+        
+        print("✅ HealthKit sample silindi: \(sample.id)")
+    }
+    
+    /// HealthKit için oluşturulan SleepEntry'yi veritabanından siler
+    private func deleteHealthKitRatingFromPersistence(sample: HealthKitSleepSample) {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            // İlgili SleepEntry'yi bul
+            let sampleStartDate = sample.startDate
+            let sampleEndDate = sample.endDate
+            let predicate = #Predicate<SleepEntry> { entry in
+                entry.source == "health" &&
+                entry.startTime == sampleStartDate &&
+                entry.endTime == sampleEndDate
+            }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            
+            if let entryToDelete = try modelContext.fetch(descriptor).first {
+                modelContext.delete(entryToDelete)
+                try modelContext.save()
+                print("✅ HealthKit SleepEntry veritabanından silindi")
+            }
+            
+        } catch {
+            print("🚨 HealthKit rating silme hatası: \(error.localizedDescription)")
+        }
+    }
+    
+    /// HealthKit verisini düzenler
+    func editHealthKitSample(_ sample: HealthKitSleepSample, newRating: Double) {
+        updateHealthKitRating(for: sample.id, rating: newRating)
     }
 }
 

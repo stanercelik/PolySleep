@@ -143,6 +143,9 @@
         }
       }
     },
+    "%@/5" : {
+
+    },
     "%@h" : {
       "localizations" : {
         "de" : {
@@ -446,6 +449,9 @@
           }
         }
       }
+    },
+    "⭐ %@" : {
+
     },
     "🌙" : {
 
@@ -916,6 +922,7 @@
 
     },
     "Daha Sonra" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1324,6 +1331,12 @@
     "Invalid position" : {
 
     },
+    "İptal" : {
+
+    },
+    "İşlem Seçin" : {
+
+    },
     "Kalite" : {
       "localizations" : {
         "de" : {
@@ -1347,6 +1360,7 @@
       }
     },
     "Kaydet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1392,6 +1406,7 @@
       }
     },
     "Kötü" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1439,6 +1454,7 @@
       }
     },
     "Mükemmel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2381,6 +2397,9 @@
         }
       }
     },
+    "Puanla" : {
+
+    },
     "Ready to delete" : {
 
     },
@@ -2496,6 +2515,9 @@
           }
         }
       }
+    },
+    "Sil" : {
+
     },
     "Skipped successfully with circular transition!" : {
 

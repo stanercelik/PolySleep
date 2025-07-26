@@ -17,7 +17,8 @@ final class SleepEntry {
     
     var blockId: String? // Hangi schedule block'una ait olduğu (opsiyonel)
     var emoji: String?
-    var rating: Int // 1-5 arası
+    var rating: Double // 1-5 arası (0.5 increment'li buçuklu puanlar)
+    var source: String // "manual" veya "health" - veri kaynağını belirtir
 
     // Supabase'deki user_sleep_blocks tablosundan gelen alanlar:
     var startTime: Date // Bloğun kesin başlangıç zamanı (saat ve dakika dahil)
@@ -49,7 +50,8 @@ final class SleepEntry {
          isCore: Bool,
          blockId: String? = nil,
          emoji: String? = nil,
-         rating: Int = 0,
+         rating: Double = 0.0,
+         source: String = "manual",
          createdAt: Date = Date(),
          updatedAt: Date = Date(),
          syncId: String? = UUID().uuidString,
@@ -64,6 +66,7 @@ final class SleepEntry {
         self.blockId = blockId
         self.emoji = emoji
         self.rating = rating
+        self.source = source
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.syncId = syncId

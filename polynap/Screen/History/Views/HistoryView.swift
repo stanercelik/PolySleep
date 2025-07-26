@@ -408,17 +408,27 @@ struct HistoryTimelineSection: View {
                 Calendar.current.isDate($0.startDate, inSameDayAs: date) 
             }
             
+            // Separate manual entries from health entries based on source field
+            let allSleepEntries = manualEntries.first?.sleepEntries ?? []
+            let actualManualEntries = allSleepEntries.filter { $0.source == "manual" }
+            
             // Smart deduplication: Filter out HealthKit entries that overlap with manual entries
             let filteredHealthKitEntries = filterOverlappingHealthKitEntries(
                 healthKitEntries: healthKitEntries,
-                manualEntries: manualEntries.first?.sleepEntries ?? []
+                manualEntries: actualManualEntries
+            )
+            
+            // Calculate combined rating including both manual and HealthKit ratings
+            let combinedRating = calculateCombinedDayRating(
+                manualEntries: actualManualEntries,
+                healthKitEntries: filteredHealthKitEntries
             )
             
             let dayData = UnifiedDayData(
                 date: date,
-                manualEntries: manualEntries.first?.sleepEntries ?? [],
+                manualEntries: actualManualEntries,
                 healthKitEntries: filteredHealthKitEntries,
-                rating: manualEntries.first?.averageRating ?? 0
+                rating: combinedRating
             )
             
             unifiedDays.append(dayData)
@@ -449,6 +459,34 @@ struct HistoryTimelineSection: View {
     private func timeRangesOverlap(start1: Date, end1: Date, start2: Date, end2: Date) -> Bool {
         // Two ranges overlap if start1 < end2 AND start2 < end1
         return start1 < end2 && start2 < end1
+    }
+    
+    /// Calculates combined day rating including both manual and HealthKit entries
+    private func calculateCombinedDayRating(
+        manualEntries: [SleepEntry],
+        healthKitEntries: [HealthKitSleepSample]
+    ) -> Double {
+        var totalRating: Double = 0
+        var ratedEntriesCount: Int = 0
+        
+        // Add manual entry ratings
+        for entry in manualEntries {
+            if entry.rating > 0 {
+                totalRating += entry.rating
+                ratedEntriesCount += 1
+            }
+        }
+        
+        // Add HealthKit entry ratings
+        for sample in healthKitEntries {
+            if let rating = sample.rating, rating > 0 {
+                totalRating += rating
+                ratedEntriesCount += 1
+            }
+        }
+        
+        // Return average rating or 0 if no rated entries
+        return ratedEntriesCount > 0 ? totalRating / Double(ratedEntriesCount) : 0
     }
 }
 
@@ -559,16 +597,13 @@ struct DailySleepCard: View {
     @ObservedObject var viewModel: HistoryViewModel
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isExpanded = false
-    @State private var showingActionsMenu = false
     @State private var showingDeleteAlert = false
     @State private var entryToDelete: SleepEntry?
 
     private var displayRating: Double {
-        dayData.manualEntries.isEmpty ? 0.0 : dayData.rating
-    }
-
-    private var hasManualActions: Bool {
-        !dayData.manualEntries.isEmpty
+        // Hem manual hem HealthKit verileri varsa kombine rating'i göster
+        // Hiç veri yoksa 0.0 döndür
+        return (dayData.manualEntries.isEmpty && dayData.healthKitEntries.isEmpty) ? 0.0 : dayData.rating
     }
 
     var body: some View {
@@ -597,28 +632,10 @@ struct DailySleepCard: View {
                 }
             }
         }
-        .actionSheet(isPresented: $showingActionsMenu) {
-            ActionSheet(
-                title: Text(L("history.actions.title", table: "History")),
-                buttons: [
-                    .default(Text(L("history.actions.edit", table: "History"))) {
-                        // Handle edit action
-                    },
-                    .destructive(Text(L("history.actions.delete", table: "History"))) {
-                        // Handle delete day action
-                    },
-                    .cancel()
-                ]
-            )
-        }
     }
     
     private var closedCardContent: some View {
-        Button(action: {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0)) { 
-                isExpanded.toggle() 
-            }
-        }) {
+        // Removed button action - expand now handled by chevron button
             HStack(alignment: .center, spacing: PSSpacing.sm) {
                 // MARK: - Date Section
                 VStack(alignment: .leading, spacing: 2) {
@@ -663,8 +680,8 @@ struct DailySleepCard: View {
                             }
                         }
                     }
+                    .padding(.top, PSSpacing.md)
                     
-                    Spacer(minLength: PSSpacing.md)
                     
                     // Bottom part: Star rating
                     HStack(spacing: PSSpacing.sm) {
@@ -675,44 +692,32 @@ struct DailySleepCard: View {
                             .lineLimit(1)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, PSSpacing.md)
                 }
-                .padding(.horizontal, PSSpacing.sm)
+                
                 
                 
                 // MARK: - Action Buttons Section
                 VStack(alignment: .trailing) {
                     Button(action: {
-                        if hasManualActions { showingActionsMenu = true } 
+                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0)) { 
+                            isExpanded.toggle() 
+                        }
                     }) {
-                        Image(systemName: "ellipsis")
-                            .font(.system(size: PSIconSize.small))
+                        Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                            .font(.system(size: PSIconSize.medium, weight: .medium))
                             .foregroundColor(.appTextSecondary)
-                            .rotationEffect(.degrees(90))
-                            .padding(PSSpacing.lg) // Increase tappable area
+                            .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                            .animation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0), value: isExpanded)
+                            .frame(width: PSIconSize.medium, height: PSIconSize.medium) // Bigger tappable area
                     }
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
-                    .disabled(!hasManualActions)
-                    .opacity(hasManualActions ? 1.0 : 0.4)
-                    .onTapGesture {
-                        if hasManualActions { showingActionsMenu = true }
-                    }
-                    
-                    Spacer()
-                    
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .font(.system(size: PSIconSize.small, weight: .medium))
-                        .foregroundColor(.appTextSecondary)
-                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0), value: isExpanded)
-                        .padding(PSSpacing.lg)
                 }
                 .padding(.leading, PSSpacing.xxs)
                 .frame(maxHeight: .infinity, alignment: .center)
             }
-        }
-        .buttonStyle(.plain)
-        .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
     
     private var expandedCardContent: some View {
@@ -724,14 +729,22 @@ struct DailySleepCard: View {
             
             LazyVStack(spacing: PSSpacing.sm) {
                 ForEach(dayData.manualEntries) { entry in
-                    SleepEntryDetailRow(entry: .manual(entry), onDelete: {
-                        entryToDelete = entry
-                        showingDeleteAlert = true
-                    })
+                    SleepEntryDetailRow(
+                        entry: .manual(entry), 
+                        onDelete: {
+                            entryToDelete = entry
+                            showingDeleteAlert = true
+                        },
+                        viewModel: viewModel
+                    )
                     .drawingGroup() // GPU acceleration for complex views
                 }
-                ForEach(dayData.healthKitEntries, id: \.startDate) { sample in
-                    SleepEntryDetailRow(entry: .healthKit(sample), onDelete: nil)
+                ForEach(dayData.healthKitEntries, id: \.id) { sample in
+                    SleepEntryDetailRow(
+                        entry: .healthKit(sample), 
+                        onDelete: nil,
+                        viewModel: viewModel
+                    )
                         .drawingGroup() // GPU acceleration for complex views
                 }
             }
@@ -770,6 +783,10 @@ struct DailySleepCard: View {
 struct SleepEntryDetailRow: View {
     let entry: SleepEntryType
     let onDelete: (() -> Void)?
+    let viewModel: HistoryViewModel
+    @State private var showingActionsMenu = false
+    @State private var showingRatingSheet = false
+    @State private var tempRating: Double = 3.0
     
     enum SleepEntryType {
         case manual(SleepEntry)
@@ -790,29 +807,52 @@ struct SleepEntryDetailRow: View {
                     .foregroundColor(.appText)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                HStack {
+                HStack(spacing: PSSpacing.xs) {
                     Text(duration)
                         .font(PSTypography.caption)
                         .foregroundColor(.appTextSecondary)
+                        .lineLimit(1)
                     
-                    Spacer()
+                    // Rating veya ünlem ikonu
+                    if let rating = currentRating {
+                        Text("⭐ \(String(format: "%.1f", rating))")
+                            .font(PSTypography.caption)
+                            .foregroundColor(.orange)
+                            .lineLimit(1)
+                    } else {
+                        Button(action: {
+                            // Tooltip action - rating sheet açılacak
+                            tempRating = 3.0
+                            showingRatingSheet = true
+                        }) {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundColor(.orange)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    
+                    Spacer(minLength: 0)
                     
                     DataSourceIndicator(isFromHealthKit: isFromHealthKit)
+                        .layoutPriority(1) // Bu component'in layout priority'si yüksek olsun
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if let onDelete = onDelete {
-                Button(action: onDelete) {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.system(size: PSIconSize.medium))
-                        .foregroundColor(.red.opacity(0.7))
-                }
-                .buttonStyle(.plain)
-                .frame(width: 30, alignment: .center)
-            } else {
-                Spacer().frame(width: 30)
+            // Üç nokta menüsü
+            Button(action: {
+                print("🔥 Üç nokta butonuna basıldı")
+                showingActionsMenu = true
+            }) {
+                Image(systemName: "ellipsis")
+                    .font(.system(size: PSIconSize.medium))
+                    .foregroundColor(.appTextSecondary)
+                    .rotationEffect(.degrees(90))
             }
+            .frame(width: 44, height: 44) // Standard iOS tappable area
+            .contentShape(Rectangle())
+            .buttonStyle(.plain)
         }
         .padding(.vertical, PSSpacing.sm)
         .padding(.horizontal, PSSpacing.md)
@@ -822,6 +862,31 @@ struct SleepEntryDetailRow: View {
         )
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle()) // Better hit testing performance
+        .confirmationDialog(
+            "İşlem Seçin", // L("history.entry.actions.title", table: "History")
+            isPresented: $showingActionsMenu
+        ) {
+            Button("Puanla") { // L("history.entry.actions.rate", table: "History")
+                tempRating = currentRating ?? 3.0
+                showingRatingSheet = true
+            }
+            
+            Button("Sil", role: .destructive) { // L("history.entry.actions.delete", table: "History")
+                deleteEntry()
+            }
+            
+            Button("İptal", role: .cancel) { }
+        }
+        .sheet(isPresented: $showingRatingSheet) {
+            SleepEntryRatingSheet(
+                rating: $tempRating,
+                onSave: { newRating in
+                    saveRating(newRating)
+                }
+            )
+            .presentationDetents([.height(400), .medium])
+            .presentationDragIndicator(.visible)
+        }
     }
     
     private var iconName: String {
@@ -860,6 +925,212 @@ struct SleepEntryDetailRow: View {
         case .healthKit: return true
         }
     }
+    
+    private var currentRating: Double? {
+        switch entry {
+        case .manual(let sleepEntry): return sleepEntry.rating > 0 ? sleepEntry.rating : nil
+        case .healthKit(let sample): return sample.rating
+        }
+    }
+    
+    private func saveRating(_ rating: Double) {
+        switch entry {
+        case .manual(let sleepEntry):
+            sleepEntry.rating = rating
+            viewModel.updateSleepEntry(sleepEntry)
+        case .healthKit(let sample):
+            viewModel.updateHealthKitRating(for: sample.id, rating: rating)
+        }
+    }
+    
+    private func deleteEntry() {
+        switch entry {
+        case .manual(let sleepEntry):
+            viewModel.deleteSleepEntry(sleepEntry)
+        case .healthKit(let sample):
+            viewModel.deleteHealthKitSample(sample)
+        }
+    }
+}
+
+// MARK: - Sleep Entry Rating Sheet
+struct SleepEntryRatingSheet: View {
+    @Binding var rating: Double
+    let onSave: (Double) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var sliderValue: Double = 2 // 0-4 arası değer (5 emoji için)
+    
+    private let emojis = ["😩", "😪", "😐", "😊", "😄"]
+    private let emojiLabels = [
+        "😩": L("sleep.quality.awful", table: "MainScreen"),
+        "😪": L("sleep.quality.bad", table: "MainScreen"), 
+        "😐": L("sleep.quality.okay", table: "MainScreen"),
+        "😊": L("sleep.quality.good", table: "MainScreen"),
+        "😄": L("sleep.quality.great", table: "MainScreen")
+    ]
+    
+    // Slider değerine göre emoji seçimi
+    private var currentEmoji: String {
+        let index = min(Int(sliderValue.rounded()), emojis.count - 1)
+        return emojis[index]
+    }
+    
+    // Slider değerine göre emoji etiketi
+    private var currentEmojiLabel: String {
+        return emojiLabels[currentEmoji] ?? L("sleep.quality.okay", table: "MainScreen")
+    }
+    
+    // 1-5 rating'e çevir (0.5 increment'li)
+    private var finalRating: Double {
+        return (sliderValue + 1.0) // 0-4 -> 1-5
+    }
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            // Compact Header
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L("history.rating.title", table: "History"))
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.appText)
+                    
+                    Text(L("history.rating.subtitle", table: "History"))
+                        .font(.subheadline)
+                        .foregroundColor(.appTextSecondary)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.title3)
+                        .foregroundColor(.appTextSecondary)
+                }
+            }
+            
+            // Rating Section - Kompakt design
+            VStack(spacing: 16) {
+                // Emoji
+                Text(currentEmoji)
+                    .font(.system(size: 60))
+                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentEmoji)
+                
+                // Emoji Label
+                Text(currentEmojiLabel)
+                    .font(PSTypography.subheadline)
+                    .foregroundColor(.appTextSecondary)
+                
+                // Yıldız Puanlama
+                HStack(spacing: 6) {
+                    ForEach(0..<5) { index in
+                        let starValue = Double(index)
+                        let isFilled = finalRating >= starValue + 1.0
+                        let isHalfFilled = !isFilled && finalRating >= starValue + 0.5
+                        
+                        Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
+                            .foregroundColor(isFilled || isHalfFilled ? getSliderColor() : Color.appTextSecondary.opacity(0.3))
+                            .font(.title3)
+                    }
+                }
+                
+                // Slider (0.5 increment'li)
+                VStack(spacing: 6) {
+                    Slider(value: $sliderValue, in: 0...4, step: 0.5)
+                        .tint(getSliderColor())
+                        .onChange(of: sliderValue) { newValue in
+                            let generator = UIImpactFeedbackGenerator(style: .light)
+                            generator.impactOccurred()
+                        }
+                    
+                    // Rating Display
+                    Text("\(String(format: "%.1f", finalRating))/5")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                    
+                    // Slider Labels
+                    HStack {
+                        Text(L("sleep.quality.worst", table: "MainScreen"))
+                            .font(.caption2)
+                            .foregroundColor(.appTextSecondary)
+                        
+                        Spacer()
+                        
+                        Text(L("sleep.quality.best", table: "MainScreen"))
+                            .font(.caption2)
+                            .foregroundColor(.appTextSecondary)
+                    }
+                }
+            }
+            
+            // Action Buttons - Kompakt
+            HStack(spacing: 12) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Text(L("common.cancel", table: "Common"))
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.appCardBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.appTextSecondary.opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                        .foregroundColor(.appText)
+                }
+                
+                Button(action: {
+                    onSave(finalRating)
+                    dismiss()
+                }) {
+                    Text(L("history.rating.save", table: "History"))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.appPrimary)
+                        )
+                        .foregroundColor(.appTextOnPrimary)
+                }
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.appCardBackground)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        )
+        .onAppear {
+            // Mevcut rating'i slider değerine çevir (1-5 -> 0-4)
+            sliderValue = max(0, min(4, rating - 1.0))
+        }
+    }
+    
+    private func getSliderColor() -> Color {
+        let index = Int(sliderValue.rounded())
+        switch index {
+        case 0:
+            return Color.red
+        case 1:
+            return Color.orange
+        case 2:
+            return Color.yellow
+        case 3:
+            return Color.blue
+        case 4:
+            return Color.green
+        default:
+            return Color.yellow
+        }
+    }
 }
 
 // MARK: - Data Source Indicator
@@ -875,10 +1146,14 @@ struct DataSourceIndicator: View {
             Text(isFromHealthKit ? L("history.source.health", table: "History") : L("history.source.manual", table: "History"))
                 .font(.system(size: 10, weight: .medium))
                 .foregroundColor(.appTextSecondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: true, vertical: false)
         }
         .padding(.horizontal, PSSpacing.xs)
         .padding(.vertical, 2)
         .background(RoundedRectangle(cornerRadius: PSCornerRadius.small - 2).fill(Color.appBackground.opacity(0.5)))
+        .fixedSize(horizontal: true, vertical: false)
     }
 }
 

@@ -71,15 +71,19 @@ struct SleepQualityRatingView: View {
                 // Yıldız Puanlama
                 HStack(spacing: 6) {
                     ForEach(0..<5) { index in
-                        Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
-                            .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
+                        let starValue = Double(index)
+                        let isFilled = sliderValue >= starValue
+                        let isHalfFilled = !isFilled && sliderValue >= starValue - 0.5
+                        
+                        Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
+                            .foregroundColor(isFilled || isHalfFilled ? getSliderColor() : Color("SecondaryTextColor").opacity(0.3))
                             .font(.title3)
                     }
                 }
                 
-                // Slider
+                // Slider (0.5 increment'li)
                 VStack(spacing: 6) {
-                    Slider(value: $sliderValue, in: 0...4, step: 1)
+                    Slider(value: $sliderValue, in: 0...4, step: 0.5)
                         .tint(getSliderColor())
                         .onChange(of: sliderValue) { newValue in
                             let generator = UIImpactFeedbackGenerator(style: .light)
@@ -89,13 +93,13 @@ struct SleepQualityRatingView: View {
                     
                     // Slider Labels
                     HStack {
-                        Text("Kötü")
+                        Text(L("sleepQuality.rating.bad", table: "SleepQuality"))
                             .font(.caption2)
                             .foregroundColor(Color("SecondaryTextColor"))
                         
                         Spacer()
                         
-                        Text("Mükemmel")
+                        Text(L("sleepQuality.rating.excellent", table: "SleepQuality"))
                             .font(.caption2)
                             .foregroundColor(Color("SecondaryTextColor"))
                     }
@@ -115,7 +119,7 @@ struct SleepQualityRatingView: View {
                         }
                     }
                 }) {
-                    Text("Daha Sonra")
+                    Text(L("sleepQuality.button.later", table: "SleepQuality"))
                         .font(.subheadline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
@@ -138,7 +142,7 @@ struct SleepQualityRatingView: View {
                         saveSleepQuality()
                     }
                 }) {
-                    Text("Kaydet")
+                    Text(L("sleepQuality.button.save", table: "SleepQuality"))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
@@ -165,7 +169,7 @@ struct SleepQualityRatingView: View {
             return
         }
         
-        let rating = Int(sliderValue.rounded()) + 1 // 1-5 arası puanlama
+        let rating = Double(sliderValue + 1.0) // 1-5 arası puanlama (0.5 increment'li)
         print("💾 Uyku kalitesi kaydediliyor: \(rating)")
         
         // SleepEntry oluştur - History ile uyumlu

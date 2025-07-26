@@ -206,7 +206,7 @@ final class SleepEntryEntity {
     var date: Date
     var blockId: String?
     var emoji: String?
-    var rating: Int
+    var rating: Double
     var isDeleted: Bool
     var createdAt: Date
     var updatedAt: Date
@@ -217,7 +217,7 @@ final class SleepEntryEntity {
          date: Date = Date(),
          blockId: String? = nil,
          emoji: String? = nil,
-         rating: Int = 0,
+         rating: Double = 0.0,
          isDeleted: Bool = false,
          createdAt: Date = Date(),
          updatedAt: Date = Date(),
@@ -343,5 +343,33 @@ final class AlarmNotification {
         self.createdAt = createdAt
         self.firedAt = firedAt
         self.snoozedCount = snoozedCount
+    }
+}
+
+// MARK: - HealthKit Rating Model
+@Model
+final class HealthKitSleepRating {
+    @Attribute(.unique) var id: UUID
+    var healthKitIdentifier: String // HealthKit sample'ın unique identifier'ı
+    var startDate: Date // HealthKit sample'ın start date'i (ek identifier olarak)
+    var endDate: Date // HealthKit sample'ın end date'i (ek identifier olarak) 
+    var rating: Double // Kullanıcının verdiği puan (1-5)
+    var createdAt: Date
+    var updatedAt: Date
+    
+    init(id: UUID = UUID(),
+         healthKitIdentifier: String,
+         startDate: Date,
+         endDate: Date,
+         rating: Double,
+         createdAt: Date = Date(),
+         updatedAt: Date = Date()) {
+        self.id = id
+        self.healthKitIdentifier = healthKitIdentifier
+        self.startDate = startDate
+        self.endDate = endDate
+        self.rating = rating
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 }

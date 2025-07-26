@@ -285,7 +285,7 @@ enum HealthKitError: LocalizedError {
     }
 }
 
-enum SleepAnalysisType: CaseIterable {
+enum SleepAnalysisType: String, CaseIterable {
     case inBed
     case asleep
     case awake
@@ -372,14 +372,25 @@ enum SleepAnalysisType: CaseIterable {
     }
 }
 
-struct HealthKitSleepSample {
+struct HealthKitSleepSample: Identifiable {
+    let id = UUID()
     let startDate: Date
     let endDate: Date
     let type: SleepAnalysisType
     let source: String
+    var rating: Double? = nil // Kullanıcı tarafından verilen puan
     
     var duration: TimeInterval {
         return endDate.timeIntervalSince(startDate)
+    }
+    
+    var hasRating: Bool {
+        return rating != nil
+    }
+    
+    // HealthKit sample'ı için unique identifier
+    var healthKitIdentifier: String {
+        return "\(startDate.timeIntervalSince1970)_\(endDate.timeIntervalSince1970)_\(type.rawValue)_\(source)"
     }
 }
 

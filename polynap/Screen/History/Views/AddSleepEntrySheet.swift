@@ -439,8 +439,12 @@ private var napEmoji: String {
                         
                         HStack(spacing: 6) {
                             ForEach(0..<5) { index in
-                                Image(systemName: index <= Int(sliderValue.rounded()) ? "star.fill" : "star")
-                                    .foregroundColor(index <= Int(sliderValue.rounded()) ? getSliderColor() : Color.appTextSecondary.opacity(0.3))
+                                let starValue = Double(index)
+                                let isFilled = sliderValue >= starValue
+                                let isHalfFilled = !isFilled && sliderValue >= starValue - 0.5
+                                
+                                Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
+                                    .foregroundColor(isFilled || isHalfFilled ? getSliderColor() : Color.appTextSecondary.opacity(0.3))
                                     .font(.system(size: 14))
                             }
                         }
@@ -671,7 +675,7 @@ private var napEmoji: String {
         }
         
         let durationMinutes = Int(finalEndTime.timeIntervalSince(finalStartTime) / 60)
-        let ratingValue = Int(sliderValue.rounded()) + 1 // Slider 0(kötü)-4(iyi) -> Rating 1(kötü)-5(iyi)
+        let ratingValue = sliderValue + 1.0 // Slider 0(kötü)-4(iyi) -> Rating 1(kötü)-5(iyi), buçuklu değerlerle
         
         // Yeni SleepEntry @Model nesnesi oluştur
         let newEntry = SleepEntry(

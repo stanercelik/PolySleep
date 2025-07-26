@@ -199,12 +199,16 @@ struct SleepEntryDetailCard: View {
                 
                 Spacer()
                 
-                // Kalite yıldızları - tam yıldız gösterimi korundu (tekli entry için)
+                // Kalite yıldızları - buçuklu değer desteği ile
                 HStack(spacing: 2) {
                     ForEach(1...5, id: \.self) { star in
-                        Image(systemName: star <= entry.rating ? "star.fill" : "star")
+                        let starValue = Double(star)
+                        let isFilled = entry.rating >= starValue
+                        let isHalfFilled = !isFilled && entry.rating >= starValue - 0.5
+                        
+                        Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
                             .font(.system(size: 12))
-                            .foregroundColor(star <= entry.rating ? ratingColor : Color.gray.opacity(0.3))
+                            .foregroundColor(isFilled || isHalfFilled ? ratingColor : Color.gray.opacity(0.3))
                     }
                 }
                 

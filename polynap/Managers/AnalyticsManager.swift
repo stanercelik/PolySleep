@@ -190,7 +190,7 @@ class AnalyticsManager: ObservableObject {
     /// - Parameters:
     ///   - rating: Puan (1-5)
     ///   - sleepType: Uyku tipi
-    func logSleepQualityRated(rating: Int, sleepType: String) {
+    func logSleepQualityRated(rating: Double, sleepType: String) {
         logEvent("sleep_quality_rated", parameters: [
             "rating": rating,
             "sleep_type": sleepType
@@ -312,7 +312,7 @@ class AnalyticsManager: ObservableObject {
     ///   - duration: Süre (dakika)
     ///   - quality: Kalite puanı (1-5)
     ///   - isFirstEntry: İlk uyku girişi mi?
-    func logSleepEntryAdded(sleepType: String, duration: Int, quality: Int? = nil, isFirstEntry: Bool = false) {
+    func logSleepEntryAdded(sleepType: String, duration: Int, quality: Double? = nil, isFirstEntry: Bool = false) {
         var parameters: [String: Any] = [
             "sleep_type": sleepType,
             "duration_minutes": duration,

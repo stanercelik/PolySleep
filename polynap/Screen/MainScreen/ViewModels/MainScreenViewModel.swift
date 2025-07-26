@@ -667,7 +667,7 @@ class MainScreenViewModel: ObservableObject {
     
 
     
-    private func saveSleepQuality(rating: Int, startTime: Date, endTime: Date) {
+    private func saveSleepQuality(rating: Double, startTime: Date, endTime: Date) {
         // Repository kullanarak uyku girdisini kaydet
         Task {
             do {

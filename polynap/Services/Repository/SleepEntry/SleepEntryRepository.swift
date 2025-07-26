@@ -16,7 +16,7 @@ final class SleepEntryRepository: BaseRepository {
     // MARK: - Sleep Entry CRUD Methods
     
     /// Uyku girdisi ekler
-    func addSleepEntry(blockId: String, emoji: String, rating: Int, date: Date) async throws -> SleepEntryEntity {
+    func addSleepEntry(blockId: String, emoji: String, rating: Double, date: Date) async throws -> SleepEntryEntity {
         // Kullanıcı kimliğini yerel kullanıcı modeline göre al ve UUID'ye dönüştür
         let userIdString = authManager.currentUser?.id ?? "unknown" 
         let userId = UUID(uuidString: userIdString) ?? UUID() // Geçerli değilse yeni UUID oluştur
@@ -101,7 +101,7 @@ final class SleepEntryRepository: BaseRepository {
     }
     
     /// Uyku girdisini günceller
-    func updateSleepEntry(_ entry: SleepEntryEntity, emoji: String? = nil, rating: Int? = nil) throws {
+    func updateSleepEntry(_ entry: SleepEntryEntity, emoji: String? = nil, rating: Double? = nil) throws {
         if let emoji = emoji {
             entry.emoji = emoji
         }
@@ -190,7 +190,7 @@ final class SleepEntryRepository: BaseRepository {
         }
         
         let totalEntries = userEntries.count
-        let averageRating = Double(userEntries.map { $0.rating }.reduce(0, +)) / Double(totalEntries)
+        let averageRating = userEntries.map { $0.rating }.reduce(0, +) / Double(totalEntries)
         
         // En çok kullanılan emoji
         let emojiCounts = Dictionary(grouping: userEntries) { $0.emoji }
