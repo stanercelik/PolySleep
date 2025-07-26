@@ -372,9 +372,11 @@ struct HistoryTimelineSection: View {
                             isLast: index == unifiedDays.count - 1
                         )
                         .padding(.horizontal, PSSpacing.sm)
+                        .id(dayData.date) // Stable identity for better animation performance
                     }
                 }
                 .padding(.vertical, PSSpacing.md)
+                .animation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0), value: viewModel.historyItems.count)
             }
         }
     }
@@ -569,7 +571,11 @@ struct DailySleepCard: View {
                 
                 if isExpanded {
                     expandedCardContent
-                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)).combined(with: .offset(y: -10)),
+                            removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)).combined(with: .offset(y: -10))
+                        ))
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0), value: isExpanded)
                 }
             }
         }
@@ -602,7 +608,9 @@ struct DailySleepCard: View {
     
     private var closedCardContent: some View {
         Button(action: {
-            withAnimation(.easeInOut(duration: 0.3)) { isExpanded.toggle() }
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0)) { 
+                isExpanded.toggle() 
+            }
         }) {
             HStack(alignment: .center, spacing: PSSpacing.sm) {
                 // MARK: - Date Section
@@ -688,7 +696,8 @@ struct DailySleepCard: View {
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         .font(.system(size: PSIconSize.small, weight: .medium))
                         .foregroundColor(.appTextSecondary)
-                        .animation(.easeInOut(duration: 0.2), value: isExpanded)
+                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        .animation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0), value: isExpanded)
                         .padding(PSSpacing.lg)
                 }
                 .padding(.leading, PSSpacing.xxs)
@@ -701,21 +710,28 @@ struct DailySleepCard: View {
     
     private var expandedCardContent: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Divider().background(Color.appBorder.opacity(0.3)).padding(.horizontal, PSSpacing.lg).padding(.vertical, PSSpacing.sm)
-            VStack(spacing: PSSpacing.sm) {
+            Divider()
+                .background(Color.appBorder.opacity(0.3))
+                .padding(.horizontal, PSSpacing.lg)
+                .padding(.vertical, PSSpacing.sm)
+            
+            LazyVStack(spacing: PSSpacing.sm) {
                 ForEach(dayData.manualEntries) { entry in
                     SleepEntryDetailRow(entry: .manual(entry), onDelete: {
                         entryToDelete = entry
                         showingDeleteAlert = true
                     })
+                    .drawingGroup() // GPU acceleration for complex views
                 }
                 ForEach(dayData.healthKitEntries, id: \.startDate) { sample in
                     SleepEntryDetailRow(entry: .healthKit(sample), onDelete: nil)
+                        .drawingGroup() // GPU acceleration for complex views
                 }
             }
             .padding(.vertical, PSSpacing.lg)
         }
         .frame(maxWidth: .infinity, alignment: .center)
+        .clipped() // Prevents layout issues during animation
     }
     
     private func monthString(from date: Date, format: String = "MMMM") -> String {
@@ -793,8 +809,12 @@ struct SleepEntryDetailRow: View {
         }
         .padding(.vertical, PSSpacing.sm)
         .padding(.horizontal, PSSpacing.md)
-        .background(RoundedRectangle(cornerRadius: PSCornerRadius.small).fill(Color.appBackground.opacity(0.3)))
+        .background(
+            RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                .fill(Color.appBackground.opacity(0.3))
+        )
         .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle()) // Better hit testing performance
     }
     
     private var iconName: String {
