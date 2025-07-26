@@ -89,6 +89,7 @@ class HistoryViewModel: ObservableObject {
             modelContext.insert(newSleepEntry)
             try modelContext.save()
             
+            // Manuel veri eklendiğinde çakışan HealthKit verileri otomatik filtrelenir (view level'da yapılıyor)
             loadHistoryItems()
             print("SleepEntry başarıyla eklendi: \(newSleepEntry.id)")
             

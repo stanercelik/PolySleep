@@ -386,7 +386,7 @@ struct HistoryTimelineSection: View {
     private func getUnifiedDailyData() -> [UnifiedDayData] {
         var unifiedDays: [UnifiedDayData] = []
         
-        // Merge manual entries and HealthKit data
+        // Merge manual entries and HealthKit data with time-based deduplication
         let allDates = Set(viewModel.historyItems.map { Calendar.current.startOfDay(for: $0.date) })
             .union(Set(viewModel.healthKitData.map { Calendar.current.startOfDay(for: $0.startDate) }))
         
@@ -399,10 +399,16 @@ struct HistoryTimelineSection: View {
                 Calendar.current.isDate($0.startDate, inSameDayAs: date) 
             }
             
+            // Smart deduplication: Filter out HealthKit entries that overlap with manual entries
+            let filteredHealthKitEntries = filterOverlappingHealthKitEntries(
+                healthKitEntries: healthKitEntries,
+                manualEntries: manualEntries.first?.sleepEntries ?? []
+            )
+            
             let dayData = UnifiedDayData(
                 date: date,
                 manualEntries: manualEntries.first?.sleepEntries ?? [],
-                healthKitEntries: healthKitEntries,
+                healthKitEntries: filteredHealthKitEntries,
                 rating: manualEntries.first?.averageRating ?? 0
             )
             
@@ -410,6 +416,30 @@ struct HistoryTimelineSection: View {
         }
         
         return unifiedDays
+    }
+    
+    /// Filters HealthKit entries that overlap with manual entries
+    private func filterOverlappingHealthKitEntries(
+        healthKitEntries: [HealthKitSleepSample],
+        manualEntries: [SleepEntry]
+    ) -> [HealthKitSleepSample] {
+        return healthKitEntries.filter { healthKitEntry in
+            // Check if this HealthKit entry overlaps with any manual entry
+            !manualEntries.contains { manualEntry in
+                timeRangesOverlap(
+                    start1: healthKitEntry.startDate,
+                    end1: healthKitEntry.endDate,
+                    start2: manualEntry.startTime,
+                    end2: manualEntry.endTime
+                )
+            }
+        }
+    }
+    
+    /// Checks if two time ranges overlap
+    private func timeRangesOverlap(start1: Date, end1: Date, start2: Date, end2: Date) -> Bool {
+        // Two ranges overlap if start1 < end2 AND start2 < end1
+        return start1 < end2 && start2 < end1
     }
 }
 
