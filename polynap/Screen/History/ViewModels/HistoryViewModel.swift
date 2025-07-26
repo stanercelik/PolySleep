@@ -40,6 +40,7 @@ class HistoryViewModel: ObservableObject {
     // MARK: - Private Properties
     var modelContext: ModelContext?
     private var cancellables = Set<AnyCancellable>()
+    private var hasInitialLoadCompleted = false
     
     // MARK: - Initialization
     init(modelContext: ModelContext? = nil) {
@@ -53,6 +54,14 @@ class HistoryViewModel: ObservableObject {
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
         loadHistoryItems()
+        
+        // HealthKit verilerini her zaman yükle (initial load'da)
+        Task {
+            await loadHealthKitData()
+            await MainActor.run {
+                hasInitialLoadCompleted = true
+            }
+        }
     }
     
     func setFilter(_ filter: TimeFilter) {
@@ -321,9 +330,15 @@ class HistoryViewModel: ObservableObject {
     func loadHealthKitData() async {
         let healthKitManager = HealthKitManager.shared
         
-        // Authorization kontrolü
-        guard healthKitManager.authorizationStatus == .sharingAuthorized else {
-            print("ℹ️ HistoryViewModel: HealthKit izni yok, veriler yüklenmeyecek")
+        // Authorization kontrolü - asenkron authorization check
+        let authStatus = await withCheckedContinuation { continuation in
+            healthKitManager.getAuthorizationStatus { status in
+                continuation.resume(returning: status)
+            }
+        }
+        
+        guard authStatus == .sharingAuthorized else {
+            print("ℹ️ HistoryViewModel: HealthKit izni yok (\(authStatus)), veriler yüklenmeyecek")
             await MainActor.run {
                 isHealthKitDataLoaded = false
                 healthKitData = []
@@ -345,7 +360,8 @@ class HistoryViewModel: ObservableObject {
             case .success(let samples):
                 healthKitData = samples
                 isHealthKitDataLoaded = true
-                print("✅ HistoryViewModel: \(samples.count) adet HealthKit verisi yüklendi")
+                print("✅ HistoryViewModel: \(samples.count) adet HealthKit verisi yüklendi (Filtre: \(selectedFilter.rawValue), Tarih aralığı: \(startDate) - \(endDate))")
+                objectWillChange.send() // UI güncelleme için explicit trigger
                 
             case .failure(let error):
                 healthKitData = []

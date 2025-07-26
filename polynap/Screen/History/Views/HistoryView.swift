@@ -86,6 +86,13 @@ struct HistoryView: View {
             .onAppear {
                 viewModel.setModelContext(modelContext)
                 
+                // HealthKit verilerini direkt yükle (first load için) - küçük delay ile
+                Task {
+                    // Context'in set edilmesini bekle
+                    try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 saniye
+                    await viewModel.loadHealthKitData()
+                }
+                
                 // Analytics: History screen görüntüleme
                 analyticsManager.logScreenView(
                     screenName: "history_screen",
