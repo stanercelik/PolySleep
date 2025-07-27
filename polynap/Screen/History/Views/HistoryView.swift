@@ -3,6 +3,7 @@ import SwiftData
 
 struct HistoryView: View {
     @StateObject private var viewModel = HistoryViewModel()
+    @StateObject private var profileViewModel = ProfileScreenViewModel()
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var languageManager: LanguageManager
@@ -29,7 +30,7 @@ struct HistoryView: View {
                         if viewModel.historyItems.isEmpty && viewModel.healthKitData.isEmpty {
                             EmptyStateCard()
                         } else {
-                            HistoryTimelineSection(viewModel: viewModel)
+                            HistoryTimelineSection(viewModel: viewModel, profileViewModel: profileViewModel)
                         }
                     }
                     .padding(.horizontal, PSSpacing.lg)
@@ -85,6 +86,7 @@ struct HistoryView: View {
             }
             .onAppear {
                 viewModel.setModelContext(modelContext)
+                profileViewModel.setModelContext(modelContext)
                 
                 // HealthKit verilerini direkt yükle (first load için) - küçük delay ile
                 Task {
@@ -98,6 +100,16 @@ struct HistoryView: View {
                     screenName: "history_screen",
                     screenClass: "HistoryView"
                 )
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("EmojiPreferencesChanged"))) { notification in
+                // Emoji tercihleri değiştiğinde ProfileViewModel'i güncelle
+                if let userInfo = notification.userInfo,
+                   let coreEmoji = userInfo["selectedCoreEmoji"] as? String,
+                   let napEmoji = userInfo["selectedNapEmoji"] as? String {
+                    profileViewModel.selectedCoreEmoji = coreEmoji
+                    profileViewModel.selectedNapEmoji = napEmoji
+                    print("HistoryView: Emoji tercihleri güncellendi - Core: \(coreEmoji), Nap: \(napEmoji)")
+                }
             }
 
         }
@@ -345,6 +357,7 @@ struct EmptyStateCard: View {
 // MARK: - Modern Sleep Timeline Section
 struct HistoryTimelineSection: View {
     @ObservedObject var viewModel: HistoryViewModel
+    @ObservedObject var profileViewModel: ProfileScreenViewModel
     @EnvironmentObject private var languageManager: LanguageManager
     
     var body: some View {
@@ -375,6 +388,7 @@ struct HistoryTimelineSection: View {
                         TimelineCardWrapper(
                             dayData: dayData,
                             viewModel: viewModel,
+                            profileViewModel: profileViewModel,
                             isFirst: index == 0,
                             isLast: index == unifiedDays.count - 1
                         )
@@ -520,6 +534,7 @@ struct UnifiedDayData {
 struct TimelineCardWrapper: View {
     let dayData: UnifiedDayData
     @ObservedObject var viewModel: HistoryViewModel
+    @ObservedObject var profileViewModel: ProfileScreenViewModel
     let isFirst: Bool
     let isLast: Bool
     
@@ -535,7 +550,8 @@ struct TimelineCardWrapper: View {
             // Main Card Content
             DailySleepCard(
                 dayData: dayData,
-                viewModel: viewModel
+                viewModel: viewModel,
+                profileViewModel: profileViewModel
             )
         }
     }
@@ -595,6 +611,7 @@ struct TimelineConnector: View {
 struct DailySleepCard: View {
     let dayData: UnifiedDayData
     @ObservedObject var viewModel: HistoryViewModel
+    @ObservedObject var profileViewModel: ProfileScreenViewModel
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var isExpanded = false
     @State private var showingDeleteAlert = false
@@ -604,6 +621,33 @@ struct DailySleepCard: View {
         // Hem manual hem HealthKit verileri varsa kombine rating'i göster
         // Hiç veri yoksa 0.0 döndür
         return (dayData.manualEntries.isEmpty && dayData.healthKitEntries.isEmpty) ? 0.0 : dayData.rating
+    }
+    
+    private var hasAdjustments: Bool {
+        return !getCompactAdjustmentIndicators().isEmpty
+    }
+    
+    private func getCompactAdjustmentIndicators() -> [AdjustmentIndicator] {
+        var indicators: [AdjustmentIndicator] = []
+        
+        // Check manual entries for adjustments
+        for entry in dayData.manualEntries {
+            if entry.blockId == nil {
+                indicators.append(AdjustmentIndicator(color: .purple)) // Custom
+            }
+            // TODO: Add schedule comparison for time adjustments
+        }
+        
+        // HealthKit entries are typically custom
+        if !dayData.healthKitEntries.isEmpty {
+            indicators.append(AdjustmentIndicator(color: .purple))
+        }
+        
+        return Array(Set(indicators)) // Remove duplicates
+    }
+    
+    private struct AdjustmentIndicator: Hashable {
+        let color: Color
     }
 
     var body: some View {
@@ -670,26 +714,37 @@ struct DailySleepCard: View {
 
                         HStack(spacing: PSSpacing.sm) {
                             if dayData.coreBlocksCount > 0 {
-                                HStack(spacing: PSSpacing.xs) { Text("🌙").font(.system(size: 14)); Text("x \(dayData.coreBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
+                                HStack(spacing: PSSpacing.xs) { Text(profileViewModel.selectedCoreEmoji).font(.system(size: 14)); Text("x \(dayData.coreBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
                             }
                             if dayData.coreBlocksCount > 0 && dayData.napBlocksCount > 0 {
                                 Text("・").font(PSTypography.caption).foregroundColor(.appTextSecondary.opacity(0.5))
                             }
                             if dayData.napBlocksCount > 0 {
-                                HStack(spacing: PSSpacing.xs) { Text("💤").font(.system(size: 14)); Text("x \(dayData.napBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
+                                HStack(spacing: PSSpacing.xs) { Text(profileViewModel.selectedNapEmoji).font(.system(size: 14)); Text("x \(dayData.napBlocksCount)").font(PSTypography.caption).foregroundColor(.appTextSecondary) }
                             }
                         }
                     }
                     .padding(.top, PSSpacing.md)
                     
                     
-                    // Bottom part: Star rating
+                    // Bottom part: Star rating and adjustment indicators
                     HStack(spacing: PSSpacing.sm) {
                         StarsView(rating: displayRating, size: PSIconSize.small, primaryColor: .appAccent, emptyColor: .appTextSecondary.opacity(0.2))
                         Text(String(format: "%.1f", displayRating))
                             .font(PSTypography.caption.weight(.semibold))
                             .foregroundColor(.appTextSecondary)
                             .lineLimit(1)
+                        
+                        // Compact adjustment indicators
+                        if hasAdjustments {
+                            HStack(spacing: 2) {
+                                ForEach(getCompactAdjustmentIndicators(), id: \.self) { indicator in
+                                    Circle()
+                                        .fill(indicator.color)
+                                        .frame(width: 4, height: 4)
+                                }
+                            }
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, PSSpacing.md)
@@ -735,7 +790,8 @@ struct DailySleepCard: View {
                             entryToDelete = entry
                             showingDeleteAlert = true
                         },
-                        viewModel: viewModel
+                        viewModel: viewModel,
+                        profileViewModel: profileViewModel
                     )
                     .drawingGroup() // GPU acceleration for complex views
                 }
@@ -743,7 +799,8 @@ struct DailySleepCard: View {
                     SleepEntryDetailRow(
                         entry: .healthKit(sample), 
                         onDelete: nil,
-                        viewModel: viewModel
+                        viewModel: viewModel,
+                        profileViewModel: profileViewModel
                     )
                         .drawingGroup() // GPU acceleration for complex views
                 }
@@ -784,6 +841,7 @@ struct SleepEntryDetailRow: View {
     let entry: SleepEntryType
     let onDelete: (() -> Void)?
     let viewModel: HistoryViewModel
+    let profileViewModel: ProfileScreenViewModel
     @State private var showingActionsMenu = false
     @State private var showingRatingSheet = false
     @State private var tempRating: Double = 3.0
@@ -794,84 +852,149 @@ struct SleepEntryDetailRow: View {
     }
     
     var body: some View {
-        HStack(spacing: PSSpacing.md) {
-            Image(systemName: iconName)
-                .font(.system(size: PSIconSize.medium))
-                .foregroundColor(iconColor)
-                .frame(width: 30, alignment: .center)
-            
-            VStack(alignment: .leading, spacing: PSSpacing.xs) {
-                Text(timeRange)
-                    .font(PSTypography.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appText)
-                    .fixedSize(horizontal: false, vertical: true)
-                
+        // Modern vertical card layout for better readability
+        VStack(spacing: 0) {
+            // Header section with icon, time range and action button
+            HStack(alignment: .center, spacing: PSSpacing.sm) {
+                // Icon with type indicator
                 HStack(spacing: PSSpacing.xs) {
-                    Text(duration)
-                        .font(PSTypography.caption)
-                        .foregroundColor(.appTextSecondary)
-                        .lineLimit(1)
+                    Text(emojiIcon)
+                        .font(.system(size: 18))
+                        .frame(width: 20, height: 20)
                     
-                    // Rating veya ünlem ikonu
-                    if let rating = currentRating {
-                        Text("⭐ \(String(format: "%.1f", rating))")
-                            .font(PSTypography.caption)
+                    // Type indicator dot
+                    Circle()
+                        .fill(iconColor)
+                        .frame(width: 4, height: 4)
+                }
+                .frame(width: 32, alignment: .leading)
+                
+                // Time range - prominent display
+                Text(timeRange)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.appText)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Action menu button
+                Button(action: {
+                    showingActionsMenu = true
+                }) {
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.appTextSecondary)
+                        .rotationEffect(.degrees(90))
+                        .frame(width: 30, height: 30)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.bottom, PSSpacing.sm)
+            
+            // Details section with duration, rating and badges
+            HStack(alignment: .center, spacing: PSSpacing.md) {
+                // Duration with icon
+                HStack(spacing: PSSpacing.xs) {
+                    Image(systemName: "clock.fill")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(duration)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.appText)
+                        .lineLimit(1)
+                }
+                
+                // Separator dot
+                Circle()
+                    .fill(Color.appTextSecondary.opacity(0.4))
+                    .frame(width: 3, height: 3)
+                
+                // Rating section
+                if let rating = currentRating {
+                    HStack(spacing: PSSpacing.xs) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.orange)
+                        
+                        Text(String(format: "%.1f", rating))
+                            .font(.system(size: 14, weight: .medium))
                             .foregroundColor(.orange)
                             .lineLimit(1)
-                    } else {
-                        Button(action: {
-                            // Tooltip action - rating sheet açılacak
-                            tempRating = 3.0
-                            showingRatingSheet = true
-                        }) {
-                            Image(systemName: "exclamationmark.circle.fill")
-                                .font(.system(size: 12))
-                                .foregroundColor(.orange)
+                    }
+                } else if !isFromHealthKit {
+                    Button(action: {
+                        tempRating = 3.0
+                        showingRatingSheet = true
+                    }) {
+                        HStack(spacing: PSSpacing.xs) {
+                            Image(systemName: "star")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.appTextSecondary)
+                            
+                            Text("Rate")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.appTextSecondary)
+                                .lineLimit(1)
                         }
-                        .buttonStyle(.plain)
+                    }
+                    .buttonStyle(.plain)
+                }
+                
+                Spacer()
+                
+                // Source and adjustment badges
+                HStack(spacing: PSSpacing.xs) {
+                    // Adjustment badge
+                    if let adjustmentType = getAdjustmentType(), shouldShowAdjustmentBadge() {
+                        SleepAdjustmentBadge(
+                            adjustmentType: adjustmentType,
+                            adjustmentMinutes: getCalculatedAdjustmentMinutes(),
+                            isCompact: true
+                        )
                     }
                     
-                    Spacer(minLength: 0)
-                    
-                    DataSourceIndicator(isFromHealthKit: isFromHealthKit)
-                        .layoutPriority(1) // Bu component'in layout priority'si yüksek olsun
+                    // Source indicator badge
+                    HStack(spacing: 4) {
+                        Image(systemName: isFromHealthKit ? "heart.fill" : "pencil")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(isFromHealthKit ? .green : .appSecondary)
+                        
+                        Text(isFromHealthKit ? "Health" : "Manual")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(isFromHealthKit ? .green : .appSecondary)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, PSSpacing.xs)
+                    .padding(.vertical, 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill((isFromHealthKit ? Color.green : Color.appSecondary).opacity(0.1))
+                    )
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            // Üç nokta menüsü
-            Button(action: {
-                print("🔥 Üç nokta butonuna basıldı")
-                showingActionsMenu = true
-            }) {
-                Image(systemName: "ellipsis")
-                    .font(.system(size: PSIconSize.medium))
-                    .foregroundColor(.appTextSecondary)
-                    .rotationEffect(.degrees(90))
-            }
-            .frame(width: 44, height: 44) // Standard iOS tappable area
-            .contentShape(Rectangle())
-            .buttonStyle(.plain)
         }
-        .padding(.vertical, PSSpacing.sm)
+        .padding(.vertical, PSSpacing.md)
         .padding(.horizontal, PSSpacing.md)
         .background(
-            RoundedRectangle(cornerRadius: PSCornerRadius.small)
-                .fill(Color.appBackground.opacity(0.3))
+            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                .fill(Color.appCardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: PSCornerRadius.medium)
+                        .stroke(Color.appBorder.opacity(0.2), lineWidth: 1)
+                )
         )
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle()) // Better hit testing performance
+        .shadow(color: Color.black.opacity(0.03), radius: 2, x: 0, y: 1)
+        .contentShape(Rectangle())
         .confirmationDialog(
-            "İşlem Seçin", // L("history.entry.actions.title", table: "History")
+            "İşlem Seçin", 
             isPresented: $showingActionsMenu
         ) {
-            Button("Puanla") { // L("history.entry.actions.rate", table: "History")
+            Button("Puanla") {
                 tempRating = currentRating ?? 3.0
                 showingRatingSheet = true
             }
             
-            Button("Sil", role: .destructive) { // L("history.entry.actions.delete", table: "History")
+            Button("Sil", role: .destructive) {
                 deleteEntry()
             }
             
@@ -889,10 +1012,13 @@ struct SleepEntryDetailRow: View {
         }
     }
     
-    private var iconName: String {
+    private var emojiIcon: String {
         switch entry {
-        case .manual(let sleepEntry): return sleepEntry.isCore ? "moon.fill" : "powersleep"
-        case .healthKit(let sample): return sample.type == .asleep ? "moon.fill" : "powersleep"
+        case .manual(let sleepEntry): 
+            return sleepEntry.isCore ? profileViewModel.selectedCoreEmoji : profileViewModel.selectedNapEmoji
+        case .healthKit(let sample): 
+            // HealthKit samples are usually naps (unless specifically core sleep)
+            return sample.type == .asleep ? profileViewModel.selectedCoreEmoji : profileViewModel.selectedNapEmoji
         }
     }
     
@@ -905,17 +1031,40 @@ struct SleepEntryDetailRow: View {
     
     private var timeRange: String {
         switch entry {
-        case .manual(let sleepEntry): return "\(formatTime(sleepEntry.startTime)) - \(formatTime(sleepEntry.endTime))"
+        case .manual(let sleepEntry): 
+            // For skipped entries, show original scheduled times if available
+            if sleepEntry.adjustmentInfo == .skipped,
+               let originalStart = sleepEntry.originalScheduledStartTime,
+               let originalEnd = sleepEntry.originalScheduledEndTime {
+                return "\(formatTime(originalStart)) - \(formatTime(originalEnd))"
+            } else {
+                return "\(formatTime(sleepEntry.startTime)) - \(formatTime(sleepEntry.endTime))"
+            }
         case .healthKit(let sample): return "\(formatTime(sample.startDate)) - \(formatTime(sample.endDate))"
         }
     }
     
     private var duration: String {
         switch entry {
-        case .manual(let sleepEntry): return formatEntryDuration(sleepEntry.duration)
+        case .manual(let sleepEntry): 
+            return formatCompactDuration(Int(sleepEntry.duration / 60))
         case .healthKit(let sample):
-            let hours = Int(sample.duration) / 3600, minutes = (Int(sample.duration) % 3600) / 60
-            return String(format: "%dh %dm", hours, minutes)
+            let totalMinutes = Int(sample.duration / 60)
+            return formatCompactDuration(totalMinutes)
+        }
+    }
+    
+    /// Format duration in compact format for single-line display
+    private func formatCompactDuration(_ minutes: Int) -> String {
+        let hours = minutes / 60
+        let mins = minutes % 60
+        
+        if hours > 0 && mins > 0 {
+            return "\(hours)h\(mins)m"
+        } else if hours > 0 {
+            return "\(hours)h"
+        } else {
+            return "\(mins)m"
         }
     }
     
@@ -949,6 +1098,77 @@ struct SleepEntryDetailRow: View {
             viewModel.deleteSleepEntry(sleepEntry)
         case .healthKit(let sample):
             viewModel.deleteHealthKitSample(sample)
+        }
+    }
+    
+    private func getAdjustmentType() -> SleepAdjustmentType? {
+        switch entry {
+        case .manual(let sleepEntry):
+            // Use the stored adjustment type from SleepEntry
+            return sleepEntry.adjustmentInfo
+        case .healthKit:
+            // HealthKit entries are typically custom unless matched with schedule
+            return .custom
+        }
+    }
+    
+    private func getAdjustmentMinutes() -> Int? {
+        switch entry {
+        case .manual(let sleepEntry):
+            return sleepEntry.adjustmentMinutes
+        case .healthKit:
+            return nil // HealthKit entries don't have specific minute adjustments
+        }
+    }
+    
+    // MARK: - New helper methods for improved UI
+    
+    /// Calculate actual adjustment minutes by comparing scheduled vs actual times
+    private func getCalculatedAdjustmentMinutes() -> Int? {
+        switch entry {
+        case .manual(let sleepEntry):
+            // If we have stored adjustment minutes, use them
+            if let storedMinutes = sleepEntry.adjustmentMinutes, storedMinutes != 0 {
+                return storedMinutes
+            }
+            
+            // Otherwise, calculate from scheduled vs actual times
+            if let originalStart = sleepEntry.originalScheduledStartTime,
+               let originalEnd = sleepEntry.originalScheduledEndTime {
+                let scheduledDuration = Int(originalEnd.timeIntervalSince(originalStart) / 60)
+                let actualDuration = Int(sleepEntry.duration / 60)
+                let difference = actualDuration - scheduledDuration
+                return difference != 0 ? difference : nil
+            }
+            
+            return nil
+        case .healthKit:
+            return nil
+        }
+    }
+    
+    /// Determine if adjustment badge should be shown (only for significant adjustments)
+    private func shouldShowAdjustmentBadge() -> Bool {
+        switch entry {
+        case .manual(let sleepEntry):
+            // Always show for skipped entries
+            if sleepEntry.adjustmentInfo == .skipped {
+                return true
+            }
+            
+            // Show for custom entries
+            if sleepEntry.adjustmentInfo == .custom {
+                return true
+            }
+            
+            // For time adjustments, only show if difference is > 5 minutes
+            if let adjustmentMinutes = getCalculatedAdjustmentMinutes() {
+                return abs(adjustmentMinutes) > 5
+            }
+            
+            return false
+        case .healthKit:
+            return true // HealthKit entries are typically custom
         }
     }
 }

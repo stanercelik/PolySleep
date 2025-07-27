@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import Foundation
 
 struct DayDetailView: View {
     @ObservedObject var viewModel: HistoryViewModel
@@ -147,7 +148,7 @@ struct SleepEntryDetailCard: View {
     }
     
     private var timeText: String {
-        return "\(timeFormatter.string(from: entry.startTime)) - \(timeFormatter.string(from: entry.endTime))"
+        return entry.displayTimeRange
     }
     
     private var durationText: String {
@@ -188,9 +189,15 @@ struct SleepEntryDetailCard: View {
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(entry.isCore ? L("sleep.type.core", table: "DayDetail") : L("sleep.type.nap", table: "DayDetail"))
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(Color("TextColor"))
+                    HStack {
+                        Text(entry.isCore ? L("sleep.type.core", table: "DayDetail") : L("sleep.type.nap", table: "DayDetail"))
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(Color("TextColor"))
+                        
+                        if entry.hasAdjustment {
+                            entry.adjustmentBadge
+                        }
+                    }
                     
                     Text(timeText)
                         .font(.caption)
@@ -199,16 +206,18 @@ struct SleepEntryDetailCard: View {
                 
                 Spacer()
                 
-                // Kalite yıldızları - buçuklu değer desteği ile
-                HStack(spacing: 2) {
-                    ForEach(1...5, id: \.self) { star in
-                        let starValue = Double(star)
-                        let isFilled = entry.rating >= starValue
-                        let isHalfFilled = !isFilled && entry.rating >= starValue - 0.5
-                        
-                        Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
-                            .font(.system(size: 12))
-                            .foregroundColor(isFilled || isHalfFilled ? ratingColor : Color.gray.opacity(0.3))
+                // Kalite yıldızları - skipped entries için gizle
+                if entry.shouldShowRating {
+                    HStack(spacing: 2) {
+                        ForEach(1...5, id: \.self) { star in
+                            let starValue = Double(star)
+                            let isFilled = entry.rating >= starValue
+                            let isHalfFilled = !isFilled && entry.rating >= starValue - 0.5
+                            
+                            Image(systemName: isFilled ? "star.fill" : (isHalfFilled ? "star.leadinghalf.filled" : "star"))
+                                .font(.system(size: 12))
+                                .foregroundColor(isFilled || isHalfFilled ? ratingColor : Color.gray.opacity(0.3))
+                        }
                     }
                 }
                 
@@ -222,23 +231,51 @@ struct SleepEntryDetailCard: View {
                 }
             }
             
-            // Süre ve emoji
-            HStack {
-                Text(durationText)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color("PrimaryColor"))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color("PrimaryColor").opacity(0.1))
-                    )
-                
-                Spacer()
-                
-                if ((entry.emoji?.isEmpty) == nil) {
-                    Text(entry.emoji ?? "")
-                        .font(.system(size: 20))
+            // Süre ve emoji - skipped entries için farklı görünüm
+            if entry.adjustmentInfo == .skipped {
+                HStack {
+                    Text("SKIPPED")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.red)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.red.opacity(0.1))
+                        )
+                    
+                    Spacer()
+                    
+                    if let originalStart = entry.originalScheduledStartTime,
+                       let originalEnd = entry.originalScheduledEndTime {
+                        let scheduledDuration = Int(originalEnd.timeIntervalSince(originalStart) / 60)
+                        let hours = scheduledDuration / 60
+                        let minutes = scheduledDuration % 60
+                        let scheduledText = hours > 0 ? "\(hours) s \(minutes) dk" : "\(minutes) dk"
+                        
+                        Text("Scheduled: \(scheduledText)")
+                            .font(.caption)
+                            .foregroundColor(Color("SecondaryTextColor"))
+                    }
+                }
+            } else {
+                HStack {
+                    Text(durationText)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(Color("PrimaryColor"))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color("PrimaryColor").opacity(0.1))
+                        )
+                    
+                    Spacer()
+                    
+                    if ((entry.emoji?.isEmpty) == nil) {
+                        Text(entry.emoji ?? "")
+                            .font(.system(size: 20))
+                    }
                 }
             }
         }

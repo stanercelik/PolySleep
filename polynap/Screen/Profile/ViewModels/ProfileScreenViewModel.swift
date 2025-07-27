@@ -370,6 +370,16 @@ class ProfileScreenViewModel: ObservableObject {
         // Tercihleri UserDefaults'a kaydet
         saveEmojiPreferences()
         
+        // Emoji değişikliklerini broadcast et
+        NotificationCenter.default.post(
+            name: NSNotification.Name("EmojiPreferencesChanged"),
+            object: nil,
+            userInfo: [
+                "selectedCoreEmoji": selectedCoreEmoji,
+                "selectedNapEmoji": selectedNapEmoji
+            ]
+        )
+        
         print("Emoji tercihleri kaydedildi. Core: \(selectedCoreEmoji), Nap: \(selectedNapEmoji)")
     }
     

@@ -8,6 +8,14 @@ enum SleepTypeEnum: String, Codable, CaseIterable {
     // Gerekirse diğer türler eklenebilir
 }
 
+// Sleep adjustment types
+enum SleepAdjustmentType: String, Codable, CaseIterable {
+    case asScheduled = "as_scheduled"
+    case differentTime = "different_time"
+    case custom = "custom"
+    case skipped = "skipped"
+}
+
 @Model
 final class SleepEntry {
     @Attribute(.unique) var id: UUID
@@ -19,6 +27,12 @@ final class SleepEntry {
     var emoji: String?
     var rating: Double // 1-5 arası (0.5 increment'li buçuklu puanlar)
     var source: String // "manual" veya "health" - veri kaynağını belirtir
+    
+    // Sleep adjustment metadata
+    var adjustmentType: String? // Adjustment type as string for SwiftData compatibility
+    var adjustmentMinutes: Int? // For different_time adjustments (+5, -15, etc.)
+    var originalScheduledStartTime: Date? // Original scheduled start time
+    var originalScheduledEndTime: Date? // Original scheduled end time
 
     // Supabase'deki user_sleep_blocks tablosundan gelen alanlar:
     var startTime: Date // Bloğun kesin başlangıç zamanı (saat ve dakika dahil)
@@ -28,6 +42,11 @@ final class SleepEntry {
 
     var type: SleepType { // isCore'a göre hesaplanır
         isCore ? .core : .powerNap
+    }
+    
+    var adjustmentInfo: SleepAdjustmentType? {
+        guard let adjustmentType = adjustmentType else { return nil }
+        return SleepAdjustmentType(rawValue: adjustmentType)
     }
     
     var duration: TimeInterval { // Saniye cinsinden süre (hesaplanmış)
@@ -52,6 +71,10 @@ final class SleepEntry {
          emoji: String? = nil,
          rating: Double = 0.0,
          source: String = "manual",
+         adjustmentType: String? = nil,
+         adjustmentMinutes: Int? = nil,
+         originalScheduledStartTime: Date? = nil,
+         originalScheduledEndTime: Date? = nil,
          createdAt: Date = Date(),
          updatedAt: Date = Date(),
          syncId: String? = UUID().uuidString,
@@ -67,6 +90,10 @@ final class SleepEntry {
         self.emoji = emoji
         self.rating = rating
         self.source = source
+        self.adjustmentType = adjustmentType
+        self.adjustmentMinutes = adjustmentMinutes
+        self.originalScheduledStartTime = originalScheduledStartTime
+        self.originalScheduledEndTime = originalScheduledEndTime
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.syncId = syncId

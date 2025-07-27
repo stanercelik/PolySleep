@@ -39,6 +39,9 @@
         }
       }
     },
+    "-60m" : {
+
+    },
     "—" : {
       "localizations" : {
         "de" : {
@@ -145,6 +148,16 @@
     },
     "%@/5" : {
 
+    },
+    "%@%lldm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$lldm"
+          }
+        }
+      }
     },
     "%@h" : {
       "localizations" : {
@@ -381,6 +394,12 @@
         }
       }
     },
+    "+%lld min" : {
+
+    },
+    "+120m" : {
+
+    },
     "⏰ Ertele (5dk)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -450,12 +469,6 @@
         }
       }
     },
-    "⭐ %@" : {
-
-    },
-    "🌙" : {
-
-    },
     "🎉" : {
       "localizations" : {
         "de" : {
@@ -500,9 +513,6 @@
           }
         }
       }
-    },
-    "💤" : {
-
     },
     "📚 75 sayfa kitap okumak" : {
       "extractionState" : "stale",
@@ -571,6 +581,9 @@
           }
         }
       }
+    },
+    "0" : {
+
     },
     "2.5" : {
       "localizations" : {
@@ -894,6 +907,7 @@
       }
     },
     "Create a sleep schedule first to add entries" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1134,6 +1148,9 @@
       }
     },
     "Hata" : {
+
+    },
+    "Health" : {
 
     },
     "Hedef" : {
@@ -1429,6 +1446,9 @@
       }
     },
     "Main Screen" : {
+
+    },
+    "Manual" : {
 
     },
     "Mevcut Paywall Sayısı" : {
@@ -2400,6 +2420,9 @@
     "Puanla" : {
 
     },
+    "Rate" : {
+
+    },
     "Ready to delete" : {
 
     },
@@ -2470,6 +2493,12 @@
         }
       }
     },
+    "Scheduled duration: %@" : {
+
+    },
+    "Scheduled: %@" : {
+
+    },
     "Şekerleme 1: 20%" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2517,6 +2546,12 @@
       }
     },
     "Sil" : {
+
+    },
+    "SKIP" : {
+
+    },
+    "SKIPPED" : {
 
     },
     "Skipped successfully with circular transition!" : {
