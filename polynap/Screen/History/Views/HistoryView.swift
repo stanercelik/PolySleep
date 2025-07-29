@@ -27,7 +27,8 @@ struct HistoryView: View {
                         FilterSectionCard(viewModel: viewModel)
                         
                         // Unified Sleep Timeline - includes both manual and HealthKit data
-                        if viewModel.historyItems.isEmpty && viewModel.healthKitData.isEmpty {
+                        let healthKitDataToUse = viewModel.filteredHealthKitData.isEmpty ? viewModel.healthKitData : viewModel.filteredHealthKitData
+                        if viewModel.historyItems.isEmpty && healthKitDataToUse.isEmpty {
                             EmptyStateCard()
                         } else {
                             HistoryTimelineSection(viewModel: viewModel, profileViewModel: profileViewModel)
@@ -252,38 +253,202 @@ struct QuickStatCard: View {
 // MARK: - Filter Section Card
 struct FilterSectionCard: View {
     @ObservedObject var viewModel: HistoryViewModel
+    @State private var showAdvancedFilters = false
     
     var body: some View {
         PSCard {
             VStack(alignment: .leading, spacing: PSSpacing.lg) {
-                PSSectionHeader(
-                    L("history.filter.title", table: "History"),
-                    icon: "line.3.horizontal.decrease.circle.fill"
-                )
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: PSSpacing.md) {
-                        ForEach(TimeFilter.allCases, id: \.self) { filter in
-                            ModernFilterChip(
-                                title: filter.localizedTitle,
-                                isSelected: viewModel.selectedFilter == filter,
-                                action: { 
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                        viewModel.setFilter(filter)
-                                    }
-                                }
-                            )
+                // Header with expand/collapse button
+                HStack {
+                    PSSectionHeader(
+                        L("history.filter.title", table: "History"),
+                        icon: "line.3.horizontal.decrease.circle.fill"
+                    )
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            showAdvancedFilters.toggle()
+                        }
+                    }) {
+                        HStack(spacing: PSSpacing.xs) {
+                            Text(showAdvancedFilters ? "Less" : "More")
+                                .font(PSTypography.caption)
+                                .foregroundColor(.appPrimary)
+                            
+                            Image(systemName: showAdvancedFilters ? "chevron.up" : "chevron.down")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.appPrimary)
                         }
                     }
-                    .padding(.horizontal, PSSpacing.xs)
+                    .buttonStyle(.plain)
+                }
+                
+                // Time filters (always visible)
+                VStack(alignment: .leading, spacing: PSSpacing.md) {
+                    Text("Time Range")
+                        .font(PSTypography.caption)
+                        .foregroundColor(.appTextSecondary)
+                        .fontWeight(.semibold)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: PSSpacing.sm) {
+                            ForEach(TimeFilter.allCases, id: \.self) { filter in
+                                FilterChip(
+                                    title: filter == .specificDate ? "Specific Date" : filter.localizedTitle,
+                                    isSelected: viewModel.selectedFilter == filter,
+                                    action: { 
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                            viewModel.setFilter(filter)
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                        .padding(.horizontal, PSSpacing.xs)
+                    }
+                    
+                    // Date picker for specific date filter
+                    if viewModel.selectedFilter == .specificDate {
+                        DatePicker(
+                            "Select Date",
+                            selection: Binding(
+                                get: { viewModel.selectedSpecificDate },
+                                set: { viewModel.setSpecificDate($0) }
+                            ),
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(.compact)
+                        .padding(.top, PSSpacing.xs)
+                        .transition(.opacity.combined(with: .slide))
+                    }
+                }
+                
+                // Advanced filters (collapsible)
+                if showAdvancedFilters {
+                    VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                        Divider()
+                            .background(Color.appBorder.opacity(0.3))
+                        
+                        // Sleep Type Filter
+                        FilterSection(
+                            title: "Sleep Type",
+                            filters: SleepTypeFilter.allCases,
+                            selectedFilter: viewModel.selectedSleepTypeFilter,
+                            onFilterSelected: { viewModel.setSleepTypeFilter($0) }
+                        )
+                        
+                        // Rating Filter
+                        FilterSection(
+                            title: "Rating",
+                            filters: RatingFilter.allCases,
+                            selectedFilter: viewModel.selectedRatingFilter,
+                            onFilterSelected: { viewModel.setRatingFilter($0) }
+                        )
+                        
+                        // Source Filter
+                        FilterSection(
+                            title: "Data Source",
+                            filters: SourceFilter.allCases,
+                            selectedFilter: viewModel.selectedSourceFilter,
+                            onFilterSelected: { viewModel.setSourceFilter($0) }
+                        )
+                        
+                        // Adjustment Filter
+                        FilterSection(
+                            title: "Adjustment Type",
+                            filters: AdjustmentFilter.allCases,
+                            selectedFilter: viewModel.selectedAdjustmentFilter,
+                            onFilterSelected: { viewModel.setAdjustmentFilter($0) }
+                        )
+                        
+                        // Reset filters button
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    viewModel.resetAllFilters()
+                                }
+                            }) {
+                                HStack(spacing: PSSpacing.xs) {
+                                    Image(systemName: "arrow.clockwise")
+                                        .font(.system(size: 12))
+                                    Text("Reset All")
+                                        .font(PSTypography.caption)
+                                }
+                                .foregroundColor(.appSecondary)
+                                .padding(.horizontal, PSSpacing.md)
+                                .padding(.vertical, PSSpacing.sm)
+                                .background(
+                                    RoundedRectangle(cornerRadius: PSCornerRadius.small)
+                                        .fill(Color.appSecondary.opacity(0.1))
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .transition(.asymmetric(
+                        insertion: .opacity.combined(with: .move(edge: .top)),
+                        removal: .opacity.combined(with: .move(edge: .top))
+                    ))
                 }
             }
         }
     }
 }
 
-// MARK: - Modern Filter Chip
-struct ModernFilterChip: View {
+// MARK: - Filter Section Component
+struct FilterSection<T: RawRepresentable & CaseIterable & Hashable>: View where T.RawValue == String {
+    let title: String
+    let filters: [T]
+    let selectedFilter: T
+    let onFilterSelected: (T) -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: PSSpacing.sm) {
+            Text(title)
+                .font(PSTypography.caption)
+                .foregroundColor(.appTextSecondary)
+                .fontWeight(.semibold)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: PSSpacing.sm) {
+                    ForEach(filters, id: \.self) { filter in
+                        FilterChip(
+                            title: getLocalizedTitle(for: filter),
+                            isSelected: selectedFilter == filter,
+                            action: { 
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    onFilterSelected(filter)
+                                }
+                            }
+                        )
+                    }
+                }
+                .padding(.horizontal, PSSpacing.xs)
+            }
+        }
+    }
+    
+    private func getLocalizedTitle(for filter: T) -> String {
+        if let timeFilter = filter as? TimeFilter {
+            return timeFilter.localizedTitle
+        } else if let sleepTypeFilter = filter as? SleepTypeFilter {
+            return sleepTypeFilter.localizedTitle
+        } else if let ratingFilter = filter as? RatingFilter {
+            return ratingFilter.localizedTitle
+        } else if let sourceFilter = filter as? SourceFilter {
+            return sourceFilter.localizedTitle
+        } else if let adjustmentFilter = filter as? AdjustmentFilter {
+            return adjustmentFilter.localizedTitle
+        }
+        return filter.rawValue
+    }
+}
+
+// MARK: - Filter Chip
+struct FilterChip: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
@@ -293,19 +458,20 @@ struct ModernFilterChip: View {
             HStack(spacing: PSSpacing.xs) {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(PSTypography.caption)
+                        .font(.system(size: 12))
                         .foregroundColor(.appTextOnPrimary)
                         .transition(.scale.combined(with: .opacity))
                 }
                 
                 Text(title)
-                    .font(PSTypography.button)
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundColor(isSelected ? .appTextOnPrimary : .appText)
+                    .lineLimit(1)
             }
-            .padding(.horizontal, PSSpacing.lg)
-            .padding(.vertical, PSSpacing.sm + PSSpacing.xs)
+            .padding(.horizontal, PSSpacing.md)
+            .padding(.vertical, PSSpacing.sm)
             .background(
-                RoundedRectangle(cornerRadius: PSCornerRadius.button)
+                RoundedRectangle(cornerRadius: PSCornerRadius.small)
                     .fill(
                         isSelected ? 
                         LinearGradient(
@@ -320,21 +486,21 @@ struct ModernFilterChip: View {
                         )
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: PSCornerRadius.button)
+                        RoundedRectangle(cornerRadius: PSCornerRadius.small)
                             .stroke(
                                 isSelected ? Color.clear : Color.appBorder.opacity(0.5),
                                 lineWidth: 1
                             )
                     )
                     .shadow(
-                        color: isSelected ? Color.appPrimary.opacity(0.3) : Color.clear,
-                        radius: isSelected ? PSSpacing.sm : 0,
+                        color: isSelected ? Color.appPrimary.opacity(0.2) : Color.clear,
+                        radius: isSelected ? 4 : 0,
                         x: 0,
-                        y: isSelected ? PSSpacing.xs : 0
+                        y: isSelected ? 2 : 0
                     )
             )
         }
-        .buttonStyle(ScaleButtonStyle())
+        .buttonStyle(.plain)
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 }
@@ -409,38 +575,46 @@ struct HistoryTimelineSection: View {
     private func getUnifiedDailyData() -> [UnifiedDayData] {
         var unifiedDays: [UnifiedDayData] = []
         
+        // Use filtered HealthKit data instead of raw data
+        let healthKitDataToUse = viewModel.filteredHealthKitData.isEmpty ? viewModel.healthKitData : viewModel.filteredHealthKitData
+        
         // Merge manual entries and HealthKit data with time-based deduplication
         let allDates = Set(viewModel.historyItems.map { Calendar.current.startOfDay(for: $0.date) })
-            .union(Set(viewModel.healthKitData.map { Calendar.current.startOfDay(for: $0.startDate) }))
+            .union(Set(healthKitDataToUse.map { Calendar.current.startOfDay(for: $0.startDate) }))
         
         for date in allDates.sorted(by: >) {
             let manualEntries = viewModel.historyItems.filter { 
                 Calendar.current.isDate($0.date, inSameDayAs: date) 
             }
             
-            let healthKitEntries = viewModel.healthKitData.filter { 
+            let healthKitEntries = healthKitDataToUse.filter { 
                 Calendar.current.isDate($0.startDate, inSameDayAs: date) 
             }
             
             // Separate manual entries from health entries based on source field
             let allSleepEntries = manualEntries.first?.sleepEntries ?? []
-            let actualManualEntries = allSleepEntries.filter { $0.source == "manual" }
+            let filteredManualEntries = applyManualEntryFilters(allSleepEntries.filter { $0.source == "manual" })
             
             // Smart deduplication: Filter out HealthKit entries that overlap with manual entries
             let filteredHealthKitEntries = filterOverlappingHealthKitEntries(
                 healthKitEntries: healthKitEntries,
-                manualEntries: actualManualEntries
+                manualEntries: filteredManualEntries
             )
+            
+            // Skip this day if no entries remain after filtering
+            if filteredManualEntries.isEmpty && filteredHealthKitEntries.isEmpty {
+                continue
+            }
             
             // Calculate combined rating including both manual and HealthKit ratings
             let combinedRating = calculateCombinedDayRating(
-                manualEntries: actualManualEntries,
+                manualEntries: filteredManualEntries,
                 healthKitEntries: filteredHealthKitEntries
             )
             
             let dayData = UnifiedDayData(
                 date: date,
-                manualEntries: actualManualEntries,
+                manualEntries: filteredManualEntries,
                 healthKitEntries: filteredHealthKitEntries,
                 rating: combinedRating
             )
@@ -449,6 +623,74 @@ struct HistoryTimelineSection: View {
         }
         
         return unifiedDays
+    }
+    
+    private func applyManualEntryFilters(_ entries: [SleepEntry]) -> [SleepEntry] {
+        return entries.filter { entry in
+            // Apply sleep type filter
+            if viewModel.selectedSleepTypeFilter != .all {
+                switch viewModel.selectedSleepTypeFilter {
+                case .core:
+                    if !entry.isCore { return false }
+                case .nap:
+                    if entry.isCore { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply rating filter
+            if viewModel.selectedRatingFilter != .all {
+                let rating = entry.rating
+                switch viewModel.selectedRatingFilter {
+                case .zeroOne:
+                    if rating < 0 || rating > 1 { return false }
+                case .oneTwo:
+                    if rating < 1 || rating > 2 { return false }
+                case .twoThree:
+                    if rating < 2 || rating > 3 { return false }
+                case .threeFour:
+                    if rating < 3 || rating > 4 { return false }
+                case .fourFive:
+                    if rating < 4 || rating > 5 { return false }
+                case .unrated:
+                    if rating > 0 { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply source filter
+            if viewModel.selectedSourceFilter != .all {
+                switch viewModel.selectedSourceFilter {
+                case .manual:
+                    if entry.source != "manual" { return false }
+                case .health:
+                    if entry.source != "health" { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply adjustment filter
+            if viewModel.selectedAdjustmentFilter != .all {
+                let adjustmentType = entry.adjustmentInfo
+                switch viewModel.selectedAdjustmentFilter {
+                case .asScheduled:
+                    if adjustmentType != .asScheduled { return false }
+                case .differentTime:
+                    if adjustmentType != .differentTime { return false }
+                case .custom:
+                    if adjustmentType != .custom { return false }
+                case .skipped:
+                    if adjustmentType != .skipped { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            return true
+        }
     }
     
     /// Filters HealthKit entries that overlap with manual entries
@@ -881,11 +1123,12 @@ struct SleepEntryDetailRow: View {
                     showingActionsMenu = true
                 }) {
                     Image(systemName: "ellipsis")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: PSIconSize.medium, weight: .medium))
                         .foregroundColor(.appTextSecondary)
                         .rotationEffect(.degrees(90))
-                        .frame(width: 30, height: 30)
+                        .frame(width: 44, height: 44)
                 }
+                .contentShape(Rectangle())
                 .buttonStyle(.plain)
             }
             .padding(.bottom, PSSpacing.sm)
@@ -938,6 +1181,12 @@ struct SleepEntryDetailRow: View {
                         }
                     }
                     .buttonStyle(.plain)
+                } else {
+                    // HealthKit entry without rating - show warning icon with tooltip
+                    UnratedHealthKitIndicator {
+                        tempRating = 3.0
+                        showingRatingSheet = true
+                    }
                 }
                 
                 Spacer()
@@ -1440,4 +1689,76 @@ private func formatTime(_ date: Date) -> String {
 private func formatEntryDuration(_ duration: TimeInterval) -> String {
     let minutes = Int(duration / 60)
     return formatDuration(minutes)
+}
+
+// MARK: - Unrated HealthKit Indicator with Tooltip
+struct UnratedHealthKitIndicator: View {
+    let onTap: () -> Void
+    @State private var showTooltip = false
+    
+    var body: some View {
+        Button(action: {
+            onTap()
+        }) {
+            HStack(spacing: PSSpacing.xs) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.orange)
+                
+                Text("Rate")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.orange)
+                    .lineLimit(1)
+            }
+        }
+        .buttonStyle(.plain)
+        .onLongPressGesture(minimumDuration: 0.5) {
+            showTooltip = true
+            
+            // Auto-hide tooltip after 3 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                showTooltip = false
+            }
+        }
+        .overlay(
+            tooltipOverlay,
+            alignment: .topTrailing
+        )
+    }
+    
+    @ViewBuilder
+    private var tooltipOverlay: some View {
+        if showTooltip {
+            VStack {
+                Text(L("history.healthkit.unrated.tooltip", table: "History"))
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.appTextOnPrimary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.appText.opacity(0.9))
+                            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    )
+                    .frame(maxWidth: 200)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                // Arrow pointing down
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: 8, y: 8))
+                    path.addLine(to: CGPoint(x: 16, y: 0))
+                    path.closeSubpath()
+                }
+                .fill(Color.appText.opacity(0.9))
+                .frame(width: 16, height: 8)
+                .offset(x: -40) // Adjust arrow position
+            }
+            .offset(y: -60) // Position tooltip above the button
+            .zIndex(1000)
+            .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: showTooltip)
+        }
+    }
 }

@@ -2226,6 +2226,48 @@
           }
         }
       }
+    },
+    "sleepModification.customTimeDescription" : {
+      "comment" : "Description for custom time selection",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eigene Start- und Endzeiten festlegen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set your own start and end times"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独自の開始時間と終了時間を設定"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetapkan masa mula dan tamat sendiri"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำหนดเวลาเริ่มต้นและสิ้นสุดของคุณเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kendi başlangıç ve bitiş saatlerini belirle"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

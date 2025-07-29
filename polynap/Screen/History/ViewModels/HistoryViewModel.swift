@@ -9,10 +9,57 @@ enum TimeFilter: String, CaseIterable {
     case thisMonth = "history.filter.thisMonth"
     case thisWeek = "history.filter.thisWeek"
     case today = "history.filter.today"
-    
+    case specificDate = "history.filter.specificDate"
     
     var localizedTitle: String {
         return L(self.rawValue, table: "History")
+    }
+}
+
+// New filter types
+enum SleepTypeFilter: String, CaseIterable {
+    case all = "history.filter.allTypes"
+    case core = "history.filter.coreOnly"
+    case nap = "history.filter.napOnly"
+    
+    var localizedTitle: String {
+        return L(self.rawValue, table: "Localizable")
+    }
+}
+
+enum RatingFilter: String, CaseIterable {
+    case all = "history.filter.allRatings"
+    case zeroOne = "history.filter.rating01"
+    case oneTwo = "history.filter.rating12"
+    case twoThree = "history.filter.rating23"
+    case threeFour = "history.filter.rating34"
+    case fourFive = "history.filter.rating45"
+    case unrated = "history.filter.unrated"
+    
+    var localizedTitle: String {
+        return L(self.rawValue, table: "Localizable")
+    }
+}
+
+enum SourceFilter: String, CaseIterable {
+    case all = "history.filter.allSources"
+    case manual = "history.filter.manualOnly"
+    case health = "history.filter.healthOnly"
+    
+    var localizedTitle: String {
+        return L(self.rawValue, table: "Localizable")
+    }
+}
+
+enum AdjustmentFilter: String, CaseIterable {
+    case all = "history.filter.allAdjustments"
+    case asScheduled = "history.filter.asScheduledOnly"
+    case differentTime = "history.filter.differentTimeOnly"
+    case custom = "history.filter.customOnly"
+    case skipped = "history.filter.skippedOnly"
+    
+    var localizedTitle: String {
+        return L(self.rawValue, table: "Localizable")
     }
 }
 
@@ -28,6 +75,11 @@ class HistoryViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var historyItems: [HistoryModel] = []
     @Published var selectedFilter: TimeFilter = .allTime
+    @Published var selectedSpecificDate: Date = Date()
+    @Published var selectedSleepTypeFilter: SleepTypeFilter = .all
+    @Published var selectedRatingFilter: RatingFilter = .all
+    @Published var selectedSourceFilter: SourceFilter = .all
+    @Published var selectedAdjustmentFilter: AdjustmentFilter = .all
     @Published var isFilterMenuPresented = false
     @Published var selectedDay: Date?
     @Published var isDayDetailPresented = false
@@ -37,6 +89,7 @@ class HistoryViewModel: ObservableObject {
     @Published var syncStatus: SyncStatus = .synced
     @Published var healthKitData: [HealthKitSleepSample] = []
     @Published var isHealthKitDataLoaded = false
+    @Published var filteredHealthKitData: [HealthKitSleepSample] = []
     
     // MARK: - Private Properties
     var modelContext: ModelContext?
@@ -67,7 +120,45 @@ class HistoryViewModel: ObservableObject {
     
     func setFilter(_ filter: TimeFilter) {
         selectedFilter = filter
-        loadHistoryItems()
+        if filter != .specificDate {
+            applyFilters()
+        }
+    }
+    
+    func setSleepTypeFilter(_ filter: SleepTypeFilter) {
+        selectedSleepTypeFilter = filter
+        applyFilters()
+    }
+    
+    func setRatingFilter(_ filter: RatingFilter) {
+        selectedRatingFilter = filter
+        applyFilters()
+    }
+    
+    func setSourceFilter(_ filter: SourceFilter) {
+        selectedSourceFilter = filter
+        applyFilters()
+    }
+    
+    func setAdjustmentFilter(_ filter: AdjustmentFilter) {
+        selectedAdjustmentFilter = filter
+        applyFilters()
+    }
+    
+    func setSpecificDate(_ date: Date) {
+        selectedSpecificDate = date
+        if selectedFilter == .specificDate {
+            applyFilters()
+        }
+    }
+    
+    func resetAllFilters() {
+        selectedFilter = .allTime
+        selectedSleepTypeFilter = .all
+        selectedRatingFilter = .all
+        selectedSourceFilter = .all
+        selectedAdjustmentFilter = .all
+        applyFilters()
     }
     
     func selectDateForDetail(_ date: Date) {
@@ -216,7 +307,7 @@ class HistoryViewModel: ObservableObject {
         }
         
         do {
-            let predicate = createFilterPredicate()
+            let predicate = createTimeFilterPredicate()
             let descriptor = FetchDescriptor<HistoryModel>(
                 predicate: predicate,
                 sortBy: [SortDescriptor(\HistoryModel.date, order: .reverse)]
@@ -225,11 +316,12 @@ class HistoryViewModel: ObservableObject {
             let allHistoryItems = try modelContext.fetch(descriptor)
             
             // Sadece en az bir SleepEntry'si olan günleri filtrele
-            self.historyItems = allHistoryItems.filter { historyModel in
+            let validHistoryItems = allHistoryItems.filter { historyModel in
                 guard let sleepEntries = historyModel.sleepEntries else { return false }
                 return !sleepEntries.isEmpty
             }
             
+            self.historyItems = validHistoryItems
             syncStatus = .synced
             print("\(self.historyItems.count) adet HistoryModel yüklendi (Filtre: \(selectedFilter.rawValue))")
             
@@ -243,7 +335,79 @@ class HistoryViewModel: ObservableObject {
         }
     }
     
-    private func createFilterPredicate() -> Predicate<HistoryModel>? {
+    private func applyFilters() {
+        loadHistoryItems()
+        Task {
+            await loadHealthKitData()
+            await MainActor.run {
+                applyHealthKitFilters()
+            }
+        }
+    }
+    
+    private func applyHealthKitFilters() {
+        filteredHealthKitData = healthKitData.filter { sample in
+            // Apply sleep type filter
+            if selectedSleepTypeFilter != .all {
+                let isCore = sample.type == .asleep || sample.type == .inBed
+                switch selectedSleepTypeFilter {
+                case .core:
+                    if !isCore { return false }
+                case .nap:
+                    if isCore { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply rating filter
+            if selectedRatingFilter != .all {
+                let rating = sample.rating ?? 0
+                switch selectedRatingFilter {
+                case .zeroOne:
+                    if rating < 0 || rating > 1 { return false }
+                case .oneTwo:
+                    if rating < 1 || rating > 2 { return false }
+                case .twoThree:
+                    if rating < 2 || rating > 3 { return false }
+                case .threeFour:
+                    if rating < 3 || rating > 4 { return false }
+                case .fourFive:
+                    if rating < 4 || rating > 5 { return false }
+                case .unrated:
+                    if rating > 0 { return false }
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply source filter
+            if selectedSourceFilter != .all {
+                switch selectedSourceFilter {
+                case .manual:
+                    return false // HealthKit data should be filtered out for manual-only
+                case .health:
+                    break // HealthKit data should be included for health-only
+                case .all:
+                    break
+                }
+            }
+            
+            // Apply adjustment filter
+            if selectedAdjustmentFilter != .all {
+                switch selectedAdjustmentFilter {
+                case .custom:
+                    break // HealthKit is typically custom
+                default:
+                    return false // HealthKit doesn't have other adjustment types
+                }
+            }
+            
+            return true
+        }
+    }
+    
+    private func createTimeFilterPredicate() -> Predicate<HistoryModel>? {
         let calendar = Calendar.current
         let now = Date()
         
@@ -269,6 +433,10 @@ class HistoryViewModel: ObservableObject {
                 return nil
             }
              return #Predicate<HistoryModel> { $0.date >= startOfMonth && $0.date < endOfMonth }
+         
+         case .specificDate:
+             let selectedDayStart = calendar.startOfDay(for: selectedSpecificDate)
+             return #Predicate<HistoryModel> { $0.date == selectedDayStart }
             
         case .allTime:
             return nil
@@ -398,6 +566,8 @@ class HistoryViewModel: ObservableObject {
             startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) ?? now
         case .thisMonth:
             startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+        case .specificDate:
+            startDate = calendar.startOfDay(for: selectedSpecificDate)
         case .allTime:
             startDate = calendar.date(byAdding: .month, value: -3, to: now) ?? now // Son 3 ay
         }

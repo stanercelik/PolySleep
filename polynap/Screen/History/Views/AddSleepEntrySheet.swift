@@ -88,7 +88,7 @@ struct AddSleepEntrySheet: View {
     }
     
     private var isValidEntry: Bool {
-        selectedBlockFromSchedule != nil && !isDateInFuture
+        (selectedBlockFromSchedule != nil || showCustomAdjustment) && !isDateInFuture
     }
     
     private var scheduledDuration: Int {
@@ -132,6 +132,9 @@ struct AddSleepEntrySheet: View {
                             if durationAdjustment != .skipped {
                                 qualityCard
                             }
+                        } else if showCustomAdjustment {
+                            customOnlyCard
+                            qualityCard
                         }
                         
                         Spacer(minLength: PSSpacing.xl)
@@ -329,6 +332,19 @@ struct AddSleepEntrySheet: View {
                                 }
                             )
                         }
+                        
+                        // Custom Block Option
+                        CustomBlockSelectionButton(
+                            isSelected: selectedBlockFromSchedule == nil && showCustomAdjustment,
+                            onTap: {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    selectedBlockFromSchedule = nil
+                                    showCustomAdjustment = true
+                                    setupCustomAdjustment()
+                                }
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            }
+                        )
                     }
                 }
             }
@@ -906,6 +922,74 @@ struct AddSleepEntrySheet: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
     
+    private func CustomBlockSelectionButton(
+        isSelected: Bool,
+        onTap: @escaping () -> Void
+    ) -> some View {
+        Button(action: onTap) {
+            HStack(spacing: PSSpacing.md) {
+                // Custom Icon
+                Image(systemName: "slider.horizontal.3")
+                    .font(.title2)
+                    .foregroundColor(isSelected ? .white : .purple)
+                    .frame(width: PSIconSize.extraLarge, height: PSIconSize.extraLarge)
+                    .background(
+                        Circle()
+                            .fill(Color.purple.opacity(isSelected ? 1.0 : 0.2))
+                    )
+                
+                // Custom Info
+                VStack(alignment: .leading, spacing: PSSpacing.xs) {
+                    Text(L("sleepModification.customTime", table: "AddSleepEntrySheet"))
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.appText)
+                    
+                    Text(L("sleepModification.customTimeDescription", table: "AddSleepEntrySheet"))
+                        .font(.caption)
+                        .foregroundColor(.appTextSecondary)
+                }
+                
+                Spacer()
+                
+                // Selection Indicator
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.title)
+                    .foregroundColor(isSelected ? .purple : .appBorder)
+            }
+            .padding(PSSpacing.lg)
+            .background(
+                RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                    .fill(isSelected ? Color.purple.opacity(0.1) : Color.appCardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: PSCornerRadius.large)
+                            .stroke(isSelected ? Color.purple : Color.appBorder.opacity(0.2), lineWidth: isSelected ? 2 : 1)
+                    )
+                    .shadow(
+                        color: isSelected ? Color.purple.opacity(0.1) : Color.clear,
+                        radius: isSelected ? 4 : 0,
+                        x: 0,
+                        y: isSelected ? 2 : 0
+                    )
+            )
+            .scaleEffect(isSelected ? 1.02 : 1.0)
+        }
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+    }
+    
+    private var customOnlyCard: some View {
+        PSCard {
+            VStack(alignment: .leading, spacing: PSSpacing.lg) {
+                PSSectionHeader(
+                    L("sleepModification.customTimes", table: "AddSleepEntrySheet"),
+                    icon: "slider.horizontal.3"
+                )
+                
+                CustomAdjustmentView()
+            }
+        }
+    }
+    
     private func EmptyBlocksView() -> some View {
         VStack(spacing: PSSpacing.xl) {
             ZStack {
@@ -980,11 +1064,18 @@ struct AddSleepEntrySheet: View {
     }
     
     private func setupCustomAdjustment() {
-        guard let block = selectedBlockFromSchedule,
-              let times = calculateBlockTimes(for: block, on: selectedDate) else { return }
-        
-        customStartTime = times.start
-        customEndTime = times.end
+        if let block = selectedBlockFromSchedule,
+           let times = calculateBlockTimes(for: block, on: selectedDate) {
+            customStartTime = times.start
+            customEndTime = times.end
+        } else {
+            // For custom entries without scheduled block, set reasonable defaults
+            let calendar = Calendar.current
+            let now = Date()
+            customStartTime = calendar.date(byAdding: .hour, value: -8, to: now) ?? now
+            customEndTime = now
+        }
+        durationAdjustment = .custom(startTime: customStartTime, endTime: customEndTime)
     }
     
     private func saveEntry() {
@@ -1080,7 +1171,8 @@ struct AddSleepEntrySheet: View {
     }
     
     private func saveSleepEntry() {
-        guard let scheduledBlock = selectedBlockFromSchedule else { return }
+        // For custom entries, create a temporary block or use nil
+        let scheduledBlock = selectedBlockFromSchedule
         
         let finalStartTime: Date
         let finalEndTime: Date
@@ -1088,43 +1180,54 @@ struct AddSleepEntrySheet: View {
         let finalRating: Double
         let adjustmentType: String
         let adjustmentMinutes: Int?
-        let originalScheduledTimes = calculateBlockTimes(for: scheduledBlock, on: selectedDate)
+        let originalScheduledTimes = scheduledBlock != nil ? calculateBlockTimes(for: scheduledBlock!, on: selectedDate) : nil
         
-        switch durationAdjustment {
-        case .none:
-            guard let times = originalScheduledTimes else { return }
-            finalStartTime = times.start
-            finalEndTime = times.end
-            finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
-            finalRating = sliderValue + 1.0
-            adjustmentType = SleepAdjustmentType.asScheduled.rawValue
-            adjustmentMinutes = nil
-            
-        case .differentTime(let minutes):
-            guard let times = originalScheduledTimes else { return }
-            finalStartTime = times.start
-            finalEndTime = Calendar.current.date(byAdding: .minute, value: minutes, to: times.end)!
-            finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
-            finalRating = sliderValue + 1.0
-            adjustmentType = SleepAdjustmentType.differentTime.rawValue
-            adjustmentMinutes = minutes
-            
-        case .custom(let startTime, let endTime):
-            finalStartTime = startTime
-            finalEndTime = endTime < startTime ? Calendar.current.date(byAdding: .day, value: 1, to: endTime)! : endTime
+        // For custom entries without scheduled block, use custom times directly
+        if scheduledBlock == nil && showCustomAdjustment {
+            finalStartTime = customStartTime
+            finalEndTime = customEndTime < customStartTime ? Calendar.current.date(byAdding: .day, value: 1, to: customEndTime)! : customEndTime
             finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
             finalRating = sliderValue + 1.0
             adjustmentType = SleepAdjustmentType.custom.rawValue
             adjustmentMinutes = nil
-            
-        case .skipped:
-            guard let times = originalScheduledTimes else { return }
-            finalStartTime = times.start
-            finalEndTime = times.start // Zero duration
-            finalEmoji = "🚫"
-            finalRating = 0 // Represents skipped
-            adjustmentType = SleepAdjustmentType.skipped.rawValue
-            adjustmentMinutes = nil
+        } else {
+            // Original logic for scheduled blocks
+            switch durationAdjustment {
+            case .none:
+                guard let times = originalScheduledTimes else { return }
+                finalStartTime = times.start
+                finalEndTime = times.end
+                finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
+                finalRating = sliderValue + 1.0
+                adjustmentType = SleepAdjustmentType.asScheduled.rawValue
+                adjustmentMinutes = nil
+                
+            case .differentTime(let minutes):
+                guard let times = originalScheduledTimes else { return }
+                finalStartTime = times.start
+                finalEndTime = Calendar.current.date(byAdding: .minute, value: minutes, to: times.end)!
+                finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
+                finalRating = sliderValue + 1.0
+                adjustmentType = SleepAdjustmentType.differentTime.rawValue
+                adjustmentMinutes = minutes
+                
+            case .custom(let startTime, let endTime):
+                finalStartTime = startTime
+                finalEndTime = endTime < startTime ? Calendar.current.date(byAdding: .day, value: 1, to: endTime)! : endTime
+                finalEmoji = SleepQualitySlider.getEmoji(for: sliderValue)
+                finalRating = sliderValue + 1.0
+                adjustmentType = SleepAdjustmentType.custom.rawValue
+                adjustmentMinutes = nil
+                
+            case .skipped:
+                guard let times = originalScheduledTimes else { return }
+                finalStartTime = times.start
+                finalEndTime = times.start // Zero duration
+                finalEmoji = "🚫"
+                finalRating = 0 // Represents skipped
+                adjustmentType = SleepAdjustmentType.skipped.rawValue
+                adjustmentMinutes = nil
+            }
         }
         
         let durationMinutes = Int(finalEndTime.timeIntervalSince(finalStartTime) / 60)
@@ -1134,8 +1237,8 @@ struct AddSleepEntrySheet: View {
             startTime: finalStartTime,
             endTime: finalEndTime,
             durationMinutes: durationMinutes,
-            isCore: scheduledBlock.isCore,
-            blockId: scheduledBlock.id.uuidString,
+            isCore: scheduledBlock?.isCore ?? true, // Default to core for custom entries
+            blockId: scheduledBlock?.id.uuidString,
             emoji: finalEmoji,
             rating: finalRating,
             adjustmentType: adjustmentType,
@@ -1147,8 +1250,9 @@ struct AddSleepEntrySheet: View {
         viewModel.addSleepEntry(newEntry)
         
         // Log analytics
+        let isCore = scheduledBlock?.isCore ?? true
         analyticsManager.logSleepEntryAdded(
-            sleepType: scheduledBlock.isCore ? "core" : "nap",
+            sleepType: isCore ? "core" : "nap",
             duration: durationMinutes,
             quality: finalRating
         )
@@ -1156,12 +1260,12 @@ struct AddSleepEntrySheet: View {
         if durationAdjustment != .skipped {
             analyticsManager.logSleepQualityRated(
                 rating: finalRating,
-                sleepType: scheduledBlock.isCore ? "core" : "nap"
+                sleepType: isCore ? "core" : "nap"
             )
             
             // Save to HealthKit only if not skipped
             Task {
-                let sleepType: SleepType = scheduledBlock.isCore ? .core : .powerNap
+                let sleepType: SleepType = isCore ? .core : .powerNap
                 await ScheduleManager.shared.saveSleepSessionToHealthKit(
                     startDate: finalStartTime,
                     endDate: finalEndTime,

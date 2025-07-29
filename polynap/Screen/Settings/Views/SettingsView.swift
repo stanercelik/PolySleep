@@ -711,6 +711,8 @@ struct AdaptationUndoRow: View {
 // MARK: - HealthKit Integration Row
 struct HealthKitIntegrationRow: View {
     @StateObject private var healthKitManager = HealthKitManager.shared
+    @EnvironmentObject private var revenueCatManager: RevenueCatManager
+    @StateObject private var paywallManager = PaywallManager.shared
     @State private var isConnecting = false
     @State private var showingError = false
     @State private var errorMessage = ""
@@ -729,10 +731,17 @@ struct HealthKitIntegrationRow: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("Apple Sağlık")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.appText)
+                HStack(spacing: 4) {
+                    Text("Apple Sağlık")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.appText)
+                    
+                    // Premium crown icon
+                    Image(systemName: "crown.fill")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.yellow)
+                }
                 
                 Text(getStatusText())
                     .font(.caption)
@@ -766,56 +775,73 @@ struct HealthKitIntegrationRow: View {
     
     @ViewBuilder
     private var statusBadge: some View {
-        switch healthKitManager.authorizationStatus {
-        case .notDetermined:
-            if isConnecting {
-                ProgressView()
-                    .scaleEffect(0.8)
-                    .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
-            } else {
+        // Premium check first
+        if revenueCatManager.userState != .premium {
+            PSStatusBadge(
+                "Premium",
+                icon: "crown.fill",
+                color: .yellow,
+                backgroundColor: Color.yellow.opacity(0.15)
+            )
+            .onTapGesture {
+                paywallManager.presentPaywall(trigger: .premiumFeatureAccess)
+            }
+        } else {
+            switch healthKitManager.authorizationStatus {
+            case .notDetermined:
+                if isConnecting {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                        .progressViewStyle(CircularProgressViewStyle(tint: .appPrimary))
+                } else {
+                    PSStatusBadge(
+                        L("settings.health.connect", table: "Settings"),
+                        icon: "plus.circle.fill",
+                        color: .green,
+                        backgroundColor: Color.green.opacity(0.15)
+                    )
+                    .onTapGesture {
+                        Task {
+                            await requestHealthKitPermission()
+                        }
+                    }
+                }
+            
+            case .sharingAuthorized:
                 PSStatusBadge(
-                    L("settings.health.connect", table: "Settings"),
-                    icon: "plus.circle.fill",
+                    L("settings.health.connected", table: "Settings"),
+                    icon: "checkmark.circle.fill",
                     color: .green,
                     backgroundColor: Color.green.opacity(0.15)
                 )
+                
+            case .sharingDenied:
+                PSStatusBadge(
+                    L("settings.health.denied", table: "Settings"),
+                    icon: "xmark.circle.fill",
+                    color: .red,
+                    backgroundColor: Color.red.opacity(0.15)
+                )
                 .onTapGesture {
-                    Task {
-                        await requestHealthKitPermission()
-                    }
+                    openHealthSettings()
                 }
+                
+            @unknown default:
+                PSStatusBadge(
+                    "Bilinmiyor",
+                    icon: "questionmark.circle.fill",
+                    color: .appTextSecondary,
+                    backgroundColor: Color.appTextSecondary.opacity(0.1)
+                )
             }
-            
-        case .sharingAuthorized:
-            PSStatusBadge(
-                L("settings.health.connected", table: "Settings"),
-                icon: "checkmark.circle.fill",
-                color: .green,
-                backgroundColor: Color.green.opacity(0.15)
-            )
-            
-        case .sharingDenied:
-            PSStatusBadge(
-                L("settings.health.denied", table: "Settings"),
-                icon: "xmark.circle.fill",
-                color: .red,
-                backgroundColor: Color.red.opacity(0.15)
-            )
-            .onTapGesture {
-                openHealthSettings()
-            }
-            
-        @unknown default:
-            PSStatusBadge(
-                "Bilinmiyor",
-                icon: "questionmark.circle.fill",
-                color: .appTextSecondary,
-                backgroundColor: Color.appTextSecondary.opacity(0.1)
-            )
         }
     }
     
     private func getStatusText() -> String {
+        if revenueCatManager.userState != .premium {
+            return "Premium üyelik gerekli"
+        }
+        
         if !healthKitManager.isHealthDataAvailable {
             return "Bu cihazda HealthKit kullanılamıyor"
         }

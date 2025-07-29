@@ -2313,6 +2313,47 @@
           }
         }
       }
+    },
+    "history.healthkit.unrated.tooltip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Schlaf wurde noch nicht bewertet. Tippen Sie, um eine Bewertung hinzuzufügen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This sleep has not been rated yet. Tap to add a rating."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この睡眠はまだ評価されていません。タップして評価を追加してください。"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidur ini belum dinilai lagi. Ketik untuk menambah penilaian."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การนอนหลับนี้ยังไม่ได้รับการให้คะแนน แตะเพื่อเพิ่มคะแนน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu uyku henüz puanlanmamış. Puan eklemek için dokunun."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
