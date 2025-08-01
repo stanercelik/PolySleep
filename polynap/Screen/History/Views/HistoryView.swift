@@ -936,6 +936,12 @@ struct DailySleepCard: View {
                             .padding(.top, 5) // Align with day number
                     }
                     
+                    // Day of week - abbreviated
+                    Text(dayOfWeekString(from: dayData.date))
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.appTextSecondary.opacity(0.8))
+                        .padding(.leading, 2)
+                    
                     Text(relativeTimeString(from: dayData.date))
                         .font(.system(size: 11, weight: .bold))
                         .foregroundColor(relativeTimeColor(from: dayData.date))
@@ -1056,6 +1062,13 @@ struct DailySleepCard: View {
     private func monthString(from date: Date, format: String = "MMMM") -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
+        formatter.locale = languageManager.currentLocale
+        return formatter.string(from: date)
+    }
+    
+    private func dayOfWeekString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE" // Abbreviated day name (Mon, Tue, etc.)
         formatter.locale = languageManager.currentLocale
         return formatter.string(from: date)
     }

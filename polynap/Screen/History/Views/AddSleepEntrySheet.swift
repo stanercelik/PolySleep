@@ -378,45 +378,7 @@ struct AddSleepEntrySheet: View {
                         ))
                 }
                 
-                // Custom Adjustment Section
-                if showCustomAdjustment {
-                    CustomAdjustmentView()
-                        .transition(.asymmetric(
-                            insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
-                            removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
-                        ))
-                }
                 
-                // Custom Time Toggle
-                Button(action: {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        showCustomAdjustment.toggle()
-                        if showCustomAdjustment {
-                            setupCustomAdjustment()
-                        }
-                    }
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                }) {
-                    HStack(spacing: PSSpacing.sm) {
-                        Image(systemName: "slider.horizontal.3")
-                            .font(.subheadline)
-                            .foregroundColor(.appPrimary)
-                        
-                        Text(L("sleepModification.customAdjustment", table: "AddSleepEntrySheet"))
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundColor(.appPrimary)
-                        
-                        Spacer()
-                        
-                        Image(systemName: showCustomAdjustment ? "chevron.up" : "chevron.down")
-                            .font(.caption)
-                            .foregroundColor(.appPrimary)
-                            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: showCustomAdjustment)
-                    }
-                    .padding(.vertical, PSSpacing.sm)
-                    .padding(.horizontal, PSSpacing.xs)
-                }
             }
         }
     }
@@ -795,6 +757,12 @@ struct AddSleepEntrySheet: View {
                         DatePicker("", selection: $customStartTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .tint(Color.appPrimary)
+                            .onChange(of: customStartTime) { _ in
+                                // Automatically update when time changes
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    durationAdjustment = .custom(startTime: customStartTime, endTime: customEndTime)
+                                }
+                            }
                     }
                     
                     VStack(alignment: .leading, spacing: PSSpacing.xs) {
@@ -805,25 +773,13 @@ struct AddSleepEntrySheet: View {
                         DatePicker("", selection: $customEndTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .tint(Color.appPrimary)
+                            .onChange(of: customEndTime) { _ in
+                                // Automatically update when time changes
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    durationAdjustment = .custom(startTime: customStartTime, endTime: customEndTime)
+                                }
+                            }
                     }
-                }
-                
-                Button(action: {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        durationAdjustment = .custom(startTime: customStartTime, endTime: customEndTime)
-                    }
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                }) {
-                    Text(L("sleepModification.applyCustom", table: "AddSleepEntrySheet"))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, PSSpacing.sm)
-                        .background(
-                            RoundedRectangle(cornerRadius: PSCornerRadius.medium)
-                                .fill(Color.appPrimary)
-                        )
                 }
             }
         }

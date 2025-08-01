@@ -44,7 +44,7 @@ struct SleepAdjustmentBadge: View {
             }
         case .custom:
             return BadgeConfiguration(
-                text: isCompact ? "" : "Custom",
+                text: isCompact ? "Custom" : "Custom",
                 icon: "slider.horizontal.3",
                 color: .purple,
                 showInCompact: true
@@ -81,6 +81,19 @@ struct SleepAdjustmentBadge: View {
                 } else if adjustmentType == .skipped {
                     // Show "SKIP" text for skipped entries
                     Text("SKIP")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 2)
+                        .padding(.vertical, 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(config.color)
+                        )
+                        .lineLimit(1)
+                        .accessibilityLabel(accessibilityLabel)
+                } else if adjustmentType == .custom {
+                    // Show "Custom" text for custom entries
+                    Text("Custom")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundColor(.white)
                         .padding(.horizontal, 2)
