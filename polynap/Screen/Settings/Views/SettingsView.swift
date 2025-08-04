@@ -229,7 +229,7 @@ struct SettingsView: View {
                                     .fontWeight(.semibold)
                                     .foregroundColor(.appText)
                                 
-                                Text("v1.2.0")
+                                Text("v1.2.3")
                                     .font(.caption)
                                     .foregroundColor(.appTextSecondary)
                             }

@@ -725,9 +725,9 @@ struct HistoryTimelineSection: View {
         var totalRating: Double = 0
         var ratedEntriesCount: Int = 0
         
-        // Add manual entry ratings
+        // Add manual entry ratings (skip edilmiş entry'leri hariç tut)
         for entry in manualEntries {
-            if entry.rating > 0 {
+            if entry.rating > 0 && entry.adjustmentInfo != .skipped {
                 totalRating += entry.rating
                 ratedEntriesCount += 1
             }
@@ -1165,40 +1165,42 @@ struct SleepEntryDetailRow: View {
                     .fill(Color.appTextSecondary.opacity(0.4))
                     .frame(width: 3, height: 3)
                 
-                // Rating section
-                if let rating = currentRating {
-                    HStack(spacing: PSSpacing.xs) {
-                        Image(systemName: "star.fill")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.orange)
-                        
-                        Text(String(format: "%.1f", rating))
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(.orange)
-                            .lineLimit(1)
-                    }
-                } else if !isFromHealthKit {
-                    Button(action: {
-                        tempRating = 3.0
-                        showingRatingSheet = true
-                    }) {
+                // Rating section - Skip edilmiş entry'ler için rating gösterme
+                if !isSkipped {
+                    if let rating = currentRating {
                         HStack(spacing: PSSpacing.xs) {
-                            Image(systemName: "star")
+                            Image(systemName: "star.fill")
                                 .font(.system(size: 12, weight: .medium))
-                                .foregroundColor(.appTextSecondary)
+                                .foregroundColor(.orange)
                             
-                            Text("Rate")
-                                .font(.system(size: 12, weight: .medium))
-                                .foregroundColor(.appTextSecondary)
+                            Text(String(format: "%.1f", rating))
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(.orange)
                                 .lineLimit(1)
                         }
-                    }
-                    .buttonStyle(.plain)
-                } else {
-                    // HealthKit entry without rating - show warning icon with tooltip
-                    UnratedHealthKitIndicator {
-                        tempRating = 3.0
-                        showingRatingSheet = true
+                    } else if !isFromHealthKit {
+                        Button(action: {
+                            tempRating = 3.0
+                            showingRatingSheet = true
+                        }) {
+                            HStack(spacing: PSSpacing.xs) {
+                                Image(systemName: "star")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(.appTextSecondary)
+                                
+                                Text(L("history.action.rate", table: "Localizable"))
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(.appTextSecondary)
+                                    .lineLimit(1)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        // HealthKit entry without rating - show warning icon with tooltip
+                        UnratedHealthKitIndicator {
+                            tempRating = 3.0
+                            showingRatingSheet = true
+                        }
                     }
                 }
                 
@@ -1221,7 +1223,7 @@ struct SleepEntryDetailRow: View {
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(isFromHealthKit ? .green : .appSecondary)
                         
-                        Text(isFromHealthKit ? "Health" : "Manual")
+                        Text(isFromHealthKit ? L("history.source.health", table: "History") : L("history.source.manual", table: "History"))
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(isFromHealthKit ? .green : .appSecondary)
                             .lineLimit(1)
@@ -1248,19 +1250,22 @@ struct SleepEntryDetailRow: View {
         .shadow(color: Color.black.opacity(0.03), radius: 2, x: 0, y: 1)
         .contentShape(Rectangle())
         .confirmationDialog(
-            "İşlem Seçin", 
+            L("history.action.selectAction", table: "History"), 
             isPresented: $showingActionsMenu
         ) {
-            Button("Puanla") {
-                tempRating = currentRating ?? 3.0
-                showingRatingSheet = true
+            // Skip edilmiş entry'ler için rating seçeneği gösterme
+            if !isSkipped {
+                Button(L("Rate", table: "Localizable")) {
+                    tempRating = currentRating ?? 3.0
+                    showingRatingSheet = true
+                }
             }
             
-            Button("Sil", role: .destructive) {
+            Button(L("general.delete", table: "Common"), role: .destructive) {
                 deleteEntry()
             }
             
-            Button("İptal", role: .cancel) { }
+            Button(L("common.cancel", table: "Common"), role: .cancel) { }
         }
         .sheet(isPresented: $showingRatingSheet) {
             SleepEntryRatingSheet(
@@ -1341,6 +1346,13 @@ struct SleepEntryDetailRow: View {
         switch entry {
         case .manual(let sleepEntry): return sleepEntry.rating > 0 ? sleepEntry.rating : nil
         case .healthKit(let sample): return sample.rating
+        }
+    }
+    
+    private var isSkipped: Bool {
+        switch entry {
+        case .manual(let sleepEntry): return sleepEntry.adjustmentInfo == .skipped
+        case .healthKit: return false
         }
     }
     
@@ -1436,6 +1448,7 @@ struct SleepEntryDetailRow: View {
 }
 
 // MARK: - Sleep Entry Rating Sheet
+// @polynap/Components/LocalizedText.swift - All localization handled via L() function
 struct SleepEntryRatingSheet: View {
     @Binding var rating: Double
     let onSave: (Double) -> Void
@@ -1444,11 +1457,11 @@ struct SleepEntryRatingSheet: View {
     
     private let emojis = ["😩", "😪", "😐", "😊", "😄"]
     private let emojiLabels = [
-        "😩": L("sleep.quality.awful", table: "MainScreen"),
-        "😪": L("sleep.quality.bad", table: "MainScreen"), 
-        "😐": L("sleep.quality.okay", table: "MainScreen"),
-        "😊": L("sleep.quality.good", table: "MainScreen"),
-        "😄": L("sleep.quality.great", table: "MainScreen")
+        "😩": L("sleep.quality.awful", table: "SleepQuality"),
+        "😪": L("sleep.quality.bad", table: "SleepQuality"), 
+        "😐": L("sleep.quality.okay", table: "SleepQuality"),
+        "😊": L("sleep.quality.good", table: "SleepQuality"),
+        "😄": L("sleep.quality.great", table: "SleepQuality")
     ]
     
     // Slider değerine göre emoji seçimi
@@ -1459,7 +1472,7 @@ struct SleepEntryRatingSheet: View {
     
     // Slider değerine göre emoji etiketi
     private var currentEmojiLabel: String {
-        return emojiLabels[currentEmoji] ?? L("sleep.quality.okay", table: "MainScreen")
+        return emojiLabels[currentEmoji] ?? L("sleep.quality.okay", table: "SleepQuality")
     }
     
     // 1-5 rating'e çevir (0.5 increment'li)
@@ -1472,12 +1485,12 @@ struct SleepEntryRatingSheet: View {
             // Compact Header
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(L("history.rating.title", table: "History"))
+                    LocalizedText("history.rating.title", tableName: "History")
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.appText)
                     
-                    Text(L("history.rating.subtitle", table: "History"))
+                    LocalizedText("history.rating.subtitle", tableName: "History")
                         .font(.subheadline)
                         .foregroundColor(.appTextSecondary)
                 }
@@ -1534,13 +1547,13 @@ struct SleepEntryRatingSheet: View {
                     
                     // Slider Labels
                     HStack {
-                        Text(L("sleep.quality.worst", table: "MainScreen"))
+                        LocalizedText("sleep.quality.worst", tableName: "SleepQuality")
                             .font(.caption2)
                             .foregroundColor(.appTextSecondary)
                         
                         Spacer()
                         
-                        Text(L("sleep.quality.best", table: "MainScreen"))
+                        LocalizedText("sleep.quality.best", tableName: "SleepQuality")
                             .font(.caption2)
                             .foregroundColor(.appTextSecondary)
                     }
@@ -1552,7 +1565,7 @@ struct SleepEntryRatingSheet: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Text(L("common.cancel", table: "Common"))
+                    LocalizedText("common.cancel", tableName: "Common")
                         .font(.subheadline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
@@ -1571,7 +1584,7 @@ struct SleepEntryRatingSheet: View {
                     onSave(finalRating)
                     dismiss()
                 }) {
-                    Text(L("history.rating.save", table: "History"))
+                    LocalizedText("history.rating.save", tableName: "History")
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
@@ -1718,7 +1731,7 @@ struct UnratedHealthKitIndicator: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.orange)
                 
-                Text("Rate")
+                Text(L("history.action.rate", table: "History"))
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.orange)
                     .lineLimit(1)
